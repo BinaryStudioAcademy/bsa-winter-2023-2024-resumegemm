@@ -1,0 +1,39 @@
+{
+    "name": "frontend",
+    "private": true,
+    "type": "module",
+    "engines": {
+        "node": "18.x.x",
+        "npm": "9.x.x"
+    },
+    "scripts": {
+        "lint:css": "npx stylelint \"src/**/*.scss\"",
+        "lint:js": "npx eslint \"src/**/*.{ts,tsx}\"",
+        "lint:type": "npx tsc --noEmit",
+        "lint": "npm run lint:type && npm run lint:js",
+        "start:dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@hookform/resolvers": "2.9.11",
+        "@reduxjs/toolkit": "1.9.3",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-hook-form": "7.43.5",
+        "react-redux": "8.0.5",
+        "react-router-dom": "6.8.2"
+    },
+    "devDependencies": {
+        "@types/react": "18.0.26",
+        "@types/react-dom": "18.0.9",
+        "@vitejs/plugin-react": "3.0.0",
+        "eslint-plugin-jsx-a11y": "6.7.1",
+        "eslint-plugin-react": "7.32.0",
+        "eslint-plugin-react-hooks": "4.6.0",
+        "sass": "1.58.3",
+        "stylelint-config-standard-scss": "7.0.1",
+        "vite": "4.0.0",
+        "vite-tsconfig-paths": "4.0.5"
+    }
+}
