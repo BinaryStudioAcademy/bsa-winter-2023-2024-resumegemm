@@ -40,7 +40,23 @@ TBA
 
 ### 💽 DB Schema
 
-TBA
+```mermaid
+erDiagram
+   foo {
+    int id PK
+    varchar quux
+   }
+   bar {
+    int id PK
+    int foo_id FK
+   }
+   baz {
+    int id PK
+    int bar_id FK
+   }
+   foo ||--|| bar : foo_id
+   bar ||--|{ baz : bar_id
+```
 
 ### 🌑 Backend
 
