@@ -21,7 +21,8 @@ This is the repository responsible for ResumeGemm's apps.
 -   [NodeJS](https://nodejs.org/en/) (18.x.x);
 -   [NPM](https://www.npmjs.com/) (9.x.x);
 -   [PostgreSQL](https://www.postgresql.org/) (15.2)
--   run **`npx simple-git-hooks`** at the root of the project, before the start (it will set the [pre-commit hook](https://www.npmjs.com/package/simple-git-hooks) for any commits).
+-   run **`npx simple-git-hooks`** at the root of the project, before the start (it will set
+    the [pre-commit hook](https://www.npmjs.com/package/simple-git-hooks) for any commits).
 
 ## 🏃‍♂️ Simple Start
 
@@ -41,21 +42,112 @@ TBA
 ### 💽 DB Schema
 
 ```mermaid
-erDiagram
-   foo {
-    int id PK
-    varchar quux
-   }
-   bar {
-    int id PK
-    int foo_id FK
-   }
-   baz {
-    int id PK
-    int bar_id FK
-   }
-   foo ||--|| bar : foo_id
-   bar ||--|{ baz : bar_id
+    erDiagram
+    users {
+        int id PK
+        varchar email
+        varchar username
+        varchar password_hash
+        varchar password_salt
+        varchar recovery_code
+        int image_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    images {
+        int id PK
+        varchar image_source
+        timestamp created_at
+        timestamp updated_at
+    }
+    personal_information {
+        int id PK
+        varchar profession
+        varchar address
+        varhar city
+        varchar state
+        timestamp created_at
+        timestamp updated_at
+        int resume_id FK
+    }
+    experience {
+        int id PK
+        varchar job_title
+        varchar employer
+        varchar employment_type
+        timestamp created_at
+        timestamp updated_at
+        Date start_date
+        Date end_date
+        int resume_id FK
+    }
+    technical_skills {
+        int id PK
+        varchar skill_name
+        varchar skill_level
+        timestamp created_at
+        timestamp updated_at
+        int resume_id FK
+    }
+    education {
+        int id PK
+        varchar major_name
+        varchar degree
+        varchar location
+        Date start_date
+        Date end_date
+        timestamp created_at
+        timestamp updated_at
+        int resume_id FK
+    }
+    contact_details {
+        int id PK
+        varchar mobile_number
+        varchar home_number
+        varchar address
+        varchar social_contact
+        timestamp created_at
+        timestamp updated_at
+        int resume_id FK
+    }
+    resumes {
+        int id PK
+        varchar resume_title
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+        int user_id FK
+        int image_id FK
+    }
+    templates {
+        int id PK
+        boolean isOwner
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+        int user_id FK
+        int resume_id FK
+    }
+    reviews {
+        int id PK
+        varchar content
+        int score
+        timestamp created_at
+        timestamp updated_at
+        int resume_id FK
+    }
+
+    resumes |o--|| users : user_id
+    templates |o--|| users : user_id
+    users ||--|| images : image_id
+    education |o--|| resumes : resume_id
+    contact_details |o--|| resumes : resume_id
+    experience |o--|| resumes : resume_id
+    technical_skills |o--|| resumes : resume_id
+    personal_information |o--|| resumes : resume_id
+    resumes ||--|| images : image_id
+    reviews ||--|| resumes : resume_id
+    resumes ||--|| templates : resume_id
 ```
 
 ### 🌑 Backend
@@ -75,7 +167,8 @@ erDiagram
 -   [lint-staged](https://www.npmjs.com/package/lint-staged) — run linters on git staged files.
 -   [dangerjs](https://danger.systems/js/) — automate common code review chores.
 -   [commitlint](https://commitlint.js.org/) — helps your team adhere to a commit convention.
--   [editorconfig](https://editorconfig.org/) — helps maintain consistent coding styles for multiple developers working on the same project across various editors and IDEs.
+-   [editorconfig](https://editorconfig.org/) — helps maintain consistent coding styles for multiple developers working on
+    the same project across various editors and IDEs.
 -   [prettier](https://prettier.io/) — an opinionated code formatter.
 -   [ls-lint](https://ls-lint.org/) — file and directory name linter.
 -   [eslint](https://eslint.org/) — find problems in your JS code.
