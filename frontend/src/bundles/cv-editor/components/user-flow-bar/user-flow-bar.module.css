@@ -1,0 +1,58 @@
+.userFlow {
+    display: flex;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.userFlow__sidebar {
+    background-color: #687A9C;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.userFlow__sidebarList {
+    list-style: none;
+    padding: 45px 0 50px;
+}
+
+.userFlow__sidebarBtn {
+    width: 100%;
+    padding: 17px 65px 22px;
+    text-align: center;
+    color: white;
+    background-color: inherit;
+    border: none;
+}
+
+.active {
+    background-color: #768FBE;
+}
+
+.userFlow__output {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 36px 32px;
+}
+
+.userFlow__outputMockup {
+    width: 380px;
+    height: 435px;
+    background-color: grey;
+    text-align: center;
+}
+
+.userFlow__outputBtn {
+    border-radius: 50px;
+    border: none;
+    background-color: #687A9C;
+    padding: 15px 24px;
+    color: white;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.userFlow__outputBtn:hover {
+    background-color: #3F557E;
+}
