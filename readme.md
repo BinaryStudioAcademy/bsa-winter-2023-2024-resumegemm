@@ -136,7 +136,13 @@ TBA
         timestamp updated_at
         int resume_id FK
     }
-
+    recently_viewed {
+        int id PK
+        date viewed_at
+        int user_id FK
+        int resume_id FK
+        int template_id FK
+    }
     resumes |o--|| users : user_id
     templates |o--|| users : user_id
     users ||--|| images : image_id
@@ -148,6 +154,9 @@ TBA
     resumes ||--|| images : image_id
     reviews ||--|| resumes : resume_id
     resumes ||--|| templates : resume_id
+    recently_viewed ||--|| users: user_id
+    recently_viewed ||--|| resumes: resume_id
+    recently_viewed ||--|| templates: template_id
 ```
 
 ### 🌑 Backend
