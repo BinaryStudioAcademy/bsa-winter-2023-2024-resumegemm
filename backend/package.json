@@ -18,6 +18,7 @@
         "build": "tsc && tsc-alias"
     },
     "devDependencies": {
+        "@types/bcrypt": "5.0.2",
         "@types/convict": "6.1.1",
         "@types/swagger-jsdoc": "6.0.1",
         "nodemon": "2.0.21",
@@ -28,6 +29,7 @@
     "dependencies": {
         "@fastify/swagger": "8.3.1",
         "@fastify/swagger-ui": "1.4.0",
+        "bcrypt": "5.1.1",
         "convict": "6.2.4",
         "dotenv": "16.0.3",
         "fastify": "4.11.0",
