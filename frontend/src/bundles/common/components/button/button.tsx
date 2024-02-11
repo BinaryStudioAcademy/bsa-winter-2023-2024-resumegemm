@@ -1,9 +1,8 @@
 import clsx from 'clsx';
-import { type ReactNode } from 'react';
 
 import {
+    type ButtonTheme,
     ButtonSize,
-    ButtonTheme,
     IconName,
     IconSize,
 } from '~/bundles/common/enums/enums';
@@ -19,7 +18,6 @@ type ButtonProperties = {
     size?: ValueOf<typeof ButtonSize>;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
     isDisabled?: boolean;
-    isSecondary?: boolean;
     className?: string;
     isRightIcon?: boolean;
     isLeftIcon?: boolean;
@@ -29,7 +27,7 @@ const Button: React.FC<ButtonProperties> = ({
     label,
     onClick,
     type = 'button',
-    theme = ButtonTheme.BLUE,
+    theme,
     size = ButtonSize.MEDIUM,
     isDisabled = false,
     className,
@@ -41,10 +39,10 @@ const Button: React.FC<ButtonProperties> = ({
             disabled={isDisabled}
             onClick={onClick}
             className={clsx(
-                styles['btn'],
+                styles.btn,
                 styles[`btn__${size}`],
-                styles[`theme-${theme}`],
-                styles['disabled'],
+                theme && styles[`theme-${theme}`],
+                // styles.disabled,
                 className,
             )}
             type={type}

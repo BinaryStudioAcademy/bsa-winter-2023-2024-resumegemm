@@ -6,12 +6,14 @@
     min-height: 16px;
     margin: 0;
     padding: 8px 24px;
+    color: var(--black);
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     text-align: center;
     text-decoration: none;
     vertical-align: baseline;
+    background: var(--white);
     border: none;
     border-radius: 52px;
     outline: 0;
@@ -32,6 +34,11 @@
     padding: 8px 24px;
 }
 
+.btn:disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
 .theme-blue {
     color: var(--white);
     background-color: var(--gray-1);
@@ -43,8 +50,6 @@
 
 .theme-blue:disabled {
     background-color: var(--gray-2);
-    pointer-events: none;
-    cursor: not-allowed;
 }
 
 .theme-transparent-with-borders {
@@ -62,8 +67,6 @@
     color: var(--white);
     background-color: var(--gray-2);
     border: none;
-    pointer-events: none;
-    cursor: not-allowed;
 }
 
 .theme-transparent-without-borders {
@@ -78,6 +81,4 @@
 
 .theme-transparent-without-borders:disabled {
     color: var(--gray-2);
-    pointer-events: none;
-    cursor: not-allowed;
 }
