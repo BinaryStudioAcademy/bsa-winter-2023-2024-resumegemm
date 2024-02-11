@@ -1,9 +1,8 @@
 const IconName = {
-    PLUS : 'plus',
+    PLUS: 'plus',
     CHEVRON_DOWN: 'chevron_down',
     GOOGLE: 'google',
-    FACEBOOK: 'facebook'
-  } as const;
-  
-  export { IconName };
-  
+    FACEBOOK: 'facebook',
+} as const;
+
+export { IconName };

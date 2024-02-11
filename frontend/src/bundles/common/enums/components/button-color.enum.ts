@@ -3,7 +3,7 @@ const ButtonColor = {
     DARK_GRAY: 'dark-gray',
     GRAY: 'gray',
     LIGHT_GRAY: 'light-gray',
-    TRANSPARENT: 'transparent'
-  } as const;
-  
-  export { ButtonColor };
+    TRANSPARENT: 'transparent',
+} as const;
+
+export { ButtonColor };

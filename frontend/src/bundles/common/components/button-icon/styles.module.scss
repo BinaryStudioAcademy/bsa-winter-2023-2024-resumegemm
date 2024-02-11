@@ -1,10 +1,10 @@
 .iconButton {
-    cursor: pointer;
-    background: var(--yellow-4);
+    width: 48px;
+    height: 48px;
     color: var(--white);
+    background: var(--yellow-4);
     border: none;
     border-radius: 9px;
-    width: 3rem;
-    height: 3rem;
     outline: none;
-  }
+    cursor: pointer;
+}

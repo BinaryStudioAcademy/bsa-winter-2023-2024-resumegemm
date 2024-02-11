@@ -1,12 +1,12 @@
 export { AppRoute } from './app-route.enum.js';
-export { DataStatus } from './data-status.enum.js';
-export { 
+export {
     ButtonColor,
     ButtonSize,
     ButtonTheme,
     IconName,
-    IconSize
+    IconSize,
 } from './components/components.js';
+export { DataStatus } from './data-status.enum.js';
 export {
     ApiPath,
     AppEnvironment,
