@@ -46,8 +46,8 @@ type SaveEducationDto = {
     major_name: string;
     degree: string;
     location: string;
-    start_date: number;
-    end_date: number;
+    start_date: Date;
+    end_date: Date;
 };
 
 type Education = SaveEducationDto & {
@@ -69,8 +69,8 @@ type SaveExperienceDto = {
     job_title: string;
     employer: string;
     employment_type: string;
-    start_date: number;
-    end_date: number;
+    start_date: Date;
+    end_date: Date;
 };
 
 type Experience = SaveExperienceDto & {

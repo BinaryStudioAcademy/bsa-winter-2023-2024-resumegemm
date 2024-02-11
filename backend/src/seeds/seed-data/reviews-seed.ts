@@ -1,4 +1,4 @@
-import { DatabaseColumnName } from '~/common/database/enums/database-column-name.enum';
+import { DatabaseColumnName } from '~/common/database/enums/enums.js';
 
 const reviewsSeed = [
     {

@@ -1,9 +1,6 @@
 import { type Knex } from 'knex';
 
-import {
-    DatabaseColumnName,
-    DatabaseTableName,
-} from '~/common/database/enums/enums.js';
+import { DatabaseColumnName, DatabaseTableName } from '~/common/database/enums/enums.js';
 
 import {
     contactsSeed,
@@ -16,7 +13,7 @@ import {
     templatesSeed,
     userImagesSeed,
     usersSeed,
-} from './seed-data/seed-data';
+} from './seed-data/seed-data.js';
 import {
     type ContactDetails,
     type Education,
@@ -87,7 +84,7 @@ async function seed(knex: Knex): Promise<void> {
         const resumesMappedSeed = resumesSeed.map((resume, index) => ({
             ...resume,
             [DatabaseColumnName.USER_ID]:
-                insertedUsers[getRandomIndex(insertedUsers.length)].id,
+            insertedUsers[getRandomIndex(insertedUsers.length)].id,
             [DatabaseColumnName.IMAGE_ID]: userImages[index]
                 ? userImages[index].id
                 : null,
@@ -101,7 +98,7 @@ async function seed(knex: Knex): Promise<void> {
         const templatesMappedSeed = templatesSeed.map((template, index) => ({
             ...template,
             [DatabaseColumnName.USER_ID]:
-                insertedUsers[getRandomIndex(insertedUsers.length)].id,
+            insertedUsers[getRandomIndex(insertedUsers.length)].id,
             [DatabaseColumnName.RESUME_ID]: insertedResumes[index]
                 ? insertedResumes[index].id
                 : null,
@@ -116,8 +113,8 @@ async function seed(knex: Knex): Promise<void> {
         //REVIEWS
         const reviewsMappedSeed = reviewsSeed.map((review) => ({
             ...review,
-            [DatabaseColumnName.USER_ID]:
-                insertedUsers[getRandomIndex(insertedUsers.length)].id,
+            [DatabaseColumnName.RESUME_ID]:
+            insertedUsers[getRandomIndex(insertedUsers.length)].id,
         }));
 
         await trx<Review>(DatabaseTableName.REVIEWS)
@@ -128,7 +125,7 @@ async function seed(knex: Knex): Promise<void> {
         const educationMappedSeed = educationSeed.map((education) => ({
             ...education,
             [DatabaseColumnName.RESUME_ID]:
-                insertedResumes[getRandomIndex(insertedResumes.length)].id,
+            insertedResumes[getRandomIndex(insertedResumes.length)].id,
         }));
 
         await trx<Education>(DatabaseTableName.EDUCATION)
@@ -139,7 +136,7 @@ async function seed(knex: Knex): Promise<void> {
         const contactsMappedSeed = contactsSeed.map((contact) => ({
             ...contact,
             [DatabaseColumnName.RESUME_ID]:
-                insertedResumes[getRandomIndex(insertedResumes.length)].id,
+            insertedResumes[getRandomIndex(insertedResumes.length)].id,
         }));
 
         await trx<ContactDetails>(DatabaseTableName.CONTACT_DETAILS)
@@ -150,7 +147,7 @@ async function seed(knex: Knex): Promise<void> {
         const experienceMappedSeed = experienceSeed.map((experience) => ({
             ...experience,
             [DatabaseColumnName.RESUME_ID]:
-                insertedResumes[getRandomIndex(insertedResumes.length)].id,
+            insertedResumes[getRandomIndex(insertedResumes.length)].id,
         }));
 
         await trx<Experience>(DatabaseTableName.EXPERIENCE)
@@ -161,7 +158,7 @@ async function seed(knex: Knex): Promise<void> {
         const technicalSkillsMappedSeed = technicalSkillsSeed.map((skill) => ({
             ...skill,
             [DatabaseColumnName.RESUME_ID]:
-                insertedResumes[getRandomIndex(insertedResumes.length)].id,
+            insertedResumes[getRandomIndex(insertedResumes.length)].id,
         }));
 
         await trx<TechnicalSkill>(DatabaseTableName.TECHNICAL_SKILLS)
@@ -173,7 +170,7 @@ async function seed(knex: Knex): Promise<void> {
             (info) => ({
                 ...info,
                 [DatabaseColumnName.RESUME_ID]:
-                    insertedResumes[getRandomIndex(insertedResumes.length)].id,
+                insertedResumes[getRandomIndex(insertedResumes.length)].id,
             }),
         );
 
@@ -187,12 +184,12 @@ async function seed(knex: Knex): Promise<void> {
         const recentlyViewedSeed = Array.from({ length: numberOfRows }).map(
             () => ({
                 [DatabaseColumnName.USER_ID]:
-                    insertedUsers[getRandomIndex(insertedUsers.length)].id,
+                insertedUsers[getRandomIndex(insertedUsers.length)].id,
                 [DatabaseColumnName.RESUME_ID]:
-                    insertedResumes[getRandomIndex(insertedResumes.length)].id,
+                insertedResumes[getRandomIndex(insertedResumes.length)].id,
                 [DatabaseColumnName.TEMPLATE_ID]:
-                    insertedTemplates[getRandomIndex(insertedTemplates.length)]
-                        .id,
+                insertedTemplates[getRandomIndex(insertedTemplates.length)]
+                    .id,
             }),
         );
 
