@@ -10,6 +10,7 @@ enum DatabaseTableName {
     RESUMES = 'resumes',
     TEMPLATES = 'templates',
     REVIEWS = 'reviews',
+    RECENTLY_VIEWED = 'recently_viewed',
 }
 
 export { DatabaseTableName };

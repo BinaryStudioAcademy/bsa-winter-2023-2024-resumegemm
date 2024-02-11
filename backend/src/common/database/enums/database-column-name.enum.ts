@@ -33,6 +33,8 @@ enum DatabaseColumnName {
     IS_OWNER = 'is_owner',
     COMMENT = 'comment',
     SCORE = 'score',
+    VIEWED_AT = 'viewed_at',
+    TEMPLATE_ID = 'template_id',
 }
 
 export { DatabaseColumnName };
