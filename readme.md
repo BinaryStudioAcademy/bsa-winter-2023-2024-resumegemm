@@ -45,34 +45,35 @@ TBA
 ```mermaid
     erDiagram
     users {
-        int id PK
+        uuid id PK
         varchar email
         varchar username
         varchar password_hash
         varchar password_salt
-        varchar recovery_code
-        int image_id FK
+        uuid profile_id FK
         timestamp created_at
         timestamp updated_at
     }
-    images {
-        int id PK
-        varchar image_source
+    user_profile {
+        uuid id PK
+        varchar first_name
+        varchar last_name
+        varchar avatar
         timestamp created_at
         timestamp updated_at
     }
     personal_information {
-        int id PK
+        uuid id PK
         varchar profession
         varchar address
-        varhar city
+        varchar city
         varchar state
         timestamp created_at
         timestamp updated_at
-        int resume_id FK
+        uuid resume_id FK
     }
     experience {
-        int id PK
+        uuid id PK
         varchar job_title
         varchar employer
         varchar employment_type
@@ -80,18 +81,18 @@ TBA
         timestamp updated_at
         Date start_date
         Date end_date
-        int resume_id FK
+        uuid resume_id FK
     }
     technical_skills {
-        int id PK
+        uuid id PK
         varchar skill_name
         varchar skill_level
         timestamp created_at
         timestamp updated_at
-        int resume_id FK
+        uuid resume_id FK
     }
     education {
-        int id PK
+        uuid id PK
         varchar major_name
         varchar degree
         varchar location
@@ -99,65 +100,74 @@ TBA
         Date end_date
         timestamp created_at
         timestamp updated_at
-        int resume_id FK
+        uuid resume_id FK
     }
     contact_details {
-        int id PK
+        uuid id PK
         varchar mobile_number
         varchar home_number
         varchar address
         varchar social_contact
         timestamp created_at
         timestamp updated_at
-        int resume_id FK
+        uuid resume_id FK
     }
     resumes {
-        int id PK
+        uuid id PK
         varchar resume_title
+        varchar image
         timestamp created_at
         timestamp updated_at
         timestamp deleted_at
-        int user_id FK
-        int image_id FK
+        uuid user_id FK
     }
     templates {
-        int id PK
+        uuid id PK
         boolean isOwner
+        varchar image
         timestamp created_at
         timestamp updated_at
         timestamp deleted_at
-        int user_id FK
-        int resume_id FK
+        uuid user_id FK
+        uuid resume_id FK
     }
     reviews {
-        int id PK
+        uuid id PK
         varchar content
         int score
         timestamp created_at
         timestamp updated_at
-        int resume_id FK
+        uuid resume_id FK
     }
     recently_viewed {
-        int id PK
+        uuid id PK
         date viewed_at
-        int user_id FK
-        int resume_id FK
-        int template_id FK
+        uuid user_id FK
+        uuid resume_id FK
+        uuid template_id FK
+    }
+    user_templates {
+        uuid id PK
+        uuid user_id FK
+        uuid template_id FK
     }
     resumes |o--|| users : user_id
     templates |o--|| users : user_id
-    users ||--|| images : image_id
     education |o--|| resumes : resume_id
     contact_details |o--|| resumes : resume_id
     experience |o--|| resumes : resume_id
+    users ||--|| user_profile: profile_id
     technical_skills |o--|| resumes : resume_id
     personal_information |o--|| resumes : resume_id
-    resumes ||--|| images : image_id
     reviews ||--|| resumes : resume_id
     resumes ||--|| templates : resume_id
     recently_viewed ||--|| users: user_id
     recently_viewed ||--|| resumes: resume_id
     recently_viewed ||--|| templates: template_id
+    users ||--o{ user_templates : "user_id"
+    templates ||--o{ user_templates : "template_id"
+    user_templates }o--|| users : "BELONGS TO"
+    user_templates }o--|| templates : "BELONGS TO"
 ```
 
 ### 🌑 Backend
