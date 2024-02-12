@@ -22,6 +22,7 @@
         "@types/bcrypt": "5.0.2",
         "@types/convict": "6.1.1",
         "@types/swagger-jsdoc": "6.0.1",
+        "guid-typescript": "1.0.9",
         "nodemon": "2.0.21",
         "ts-node": "10.9.1",
         "ts-paths-esm-loader": "1.4.1",
