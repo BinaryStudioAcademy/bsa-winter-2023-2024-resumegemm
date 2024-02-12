@@ -2,17 +2,29 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    color: #848d96;
 }
 
+.container input:checked + .label_text {
+    color: #1d2433;
+}
+
+.radio,
+.checkbox,
 .switch {
     position: relative;
-    width: 40px;
-    height: 20px;
+    margin: 0;
     border: 2px solid #ccd7dc;
-    border-radius: 12px;
     outline: none;
     appearance: none;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.switch {
+    width: 40px;
+    height: 20px;
+    border-radius: 12px;
     transition: 0.3s;
 }
 
@@ -29,11 +41,60 @@
     transition: 0.3s;
 }
 
-.switch:checked {
+.radio {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.radio::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 8px;
+    height: 8px;
+    background-color: #ccd7dc;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.checkbox {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+}
+
+.checkbox::after {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    content: "";
+    width: 10px;
+    height: 8px;
+    background-image: url("../../../../assets/img/check.svg");
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.switch:checked,
+.radio:checked,
+.checkbox:checked {
     border-color: #dbae2d;
+}
+
+.checkbox:checked,
+.radio:checked::after {
+    background-color: #dbae2d;
 }
 
 .switch:checked::after {
     background-color: #dbae2d;
     transform: translateX(20px) translateY(-50%);
+}
+
+.checkbox:checked::after,
+.radio:checked::after {
+    opacity: 1;
 }

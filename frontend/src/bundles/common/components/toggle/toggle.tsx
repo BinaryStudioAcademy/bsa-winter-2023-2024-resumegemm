@@ -30,7 +30,7 @@ const Toggle = <T extends FieldValues>({
                 className={styles[type]}
                 type={type === 'radio' ? 'radio' : 'checkbox'}
             />
-            <span>{label}</span>
+            <span className={styles['label_text']}>{label}</span>
         </label>
     );
 };
