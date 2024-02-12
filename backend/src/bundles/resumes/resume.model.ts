@@ -1,27 +1,17 @@
-import { type RelationMappings } from 'objection';
-import { Model } from 'objection';
+import { type RelationMappings,Model } from 'objection';
 
-import { ImageModel } from '~/bundles/images/images';
-import { UserModel } from '~/bundles/users/users';
-import { AbstractModel, DatabaseTableName } from '~/common/database/database';
+import { UserModel } from '~/bundles/users/users.js';
+import { AbstractModel, DatabaseTableName } from '~/common/database/database.js';
 
 class ResumeModel extends AbstractModel {
     public 'userId': number;
-    public 'imageId': number;
+    public 'image': string;
     public 'deletedAt': string;
     public static override get tableName(): typeof DatabaseTableName.RESUMES {
         return DatabaseTableName.RESUMES;
     }
     public static getRelationMappings(): RelationMappings {
         return {
-            images: {
-                relation: Model.HasOneRelation,
-                modelClass: ImageModel,
-                join: {
-                    from: `${DatabaseTableName.RESUMES}.imageId`,
-                    to: `${DatabaseTableName.IMAGES}.id`,
-                },
-            },
             users: {
                 relation: Model.HasOneRelation,
                 modelClass: UserModel,

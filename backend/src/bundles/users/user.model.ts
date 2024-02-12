@@ -1,6 +1,7 @@
 import { type RelationMappings,Model } from 'objection';
 
-import { ImageModel } from '~/bundles/images/images.js';
+import { ProfileModel } from '~/bundles/profile/profile.js';
+import { TemplateModel } from '~/bundles/templates/templates.js';
 import { AbstractModel, DatabaseTableName } from '~/common/database/database.js';
 
 class UserModel extends AbstractModel {
@@ -8,9 +9,7 @@ class UserModel extends AbstractModel {
 
     public 'username': string;
 
-    public 'recoveryCode': string;
-
-    public 'imageId': number;
+    public 'profileId': string;
 
     public 'passwordHash': string;
 
@@ -22,12 +21,24 @@ class UserModel extends AbstractModel {
 
     public static getRelationMappings(): RelationMappings {
         return {
-            images: {
+            user_profile: {
                 relation: Model.HasOneRelation,
-                modelClass: ImageModel,
+                modelClass: ProfileModel,
                 join: {
-                    from: `${DatabaseTableName.USERS}.imageId`,
-                    to: `${DatabaseTableName.IMAGES}.id`,
+                    from: `${DatabaseTableName.USERS}.profileId`,
+                    to: `${DatabaseTableName.PROFILE}.id`,
+                },
+            },
+            templates: {
+                relation: Model.ManyToManyRelation,
+                modelClass: TemplateModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.id`,
+                    through: {
+                        from: `${DatabaseTableName.USER_TEMPLATES}.userId`,
+                        to: `${DatabaseTableName.USER_TEMPLATES}.templateId`,
+                    },
+                    to: `${DatabaseTableName.TEMPLATES}.id`,
                 },
             },
         };

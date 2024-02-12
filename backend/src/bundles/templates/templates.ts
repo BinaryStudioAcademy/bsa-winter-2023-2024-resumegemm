@@ -1,1 +1,1 @@
-export { TemplateModel } from './template.model';
+export { TemplateModel } from './template.model.js';
