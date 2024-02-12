@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import styles from './styles.module.scss';
 
 type Properties = {
@@ -12,7 +14,7 @@ const PanelContainer: React.FC<Properties> = ({
     classname,
 }: Properties) => {
     return (
-        <div className={`${styles.panelContainer} ${classname ?? ''}`}>
+        <div className={clsx(styles.panelContainer, classname)}>
             <div className={styles.panelContainer__topBar}>{name}</div>
             <div className={styles.panelContainer__content}>{children}</div>
         </div>
