@@ -5,27 +5,24 @@ import {
     type FieldValues,
 } from 'react-hook-form';
 
-import { useFormController } from '~/bundles/common/hooks/hooks.js';
-
+import { useFormController } from '../../hooks/hooks';
 import styles from './styles.module.scss';
 
 type Properties<T extends FieldValues> = {
     control: Control<T, null>;
     errors: FieldErrors<T>;
-    label: string;
+    label?: string;
     name: FieldPath<T>;
     placeholder?: string;
-    type?: 'text' | 'email';
     disabled?: boolean;
 };
 
-const Input = <T extends FieldValues>({
+const TextArea = <T extends FieldValues>({
     control,
     errors,
-    label,
+    label = '',
     name,
     placeholder = '',
-    type = 'text',
     disabled = false,
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
@@ -33,19 +30,18 @@ const Input = <T extends FieldValues>({
     const hasError = Boolean(error);
     return (
         <label className={styles.label}>
-            <span className={styles.labelName}>{label}</span>
-            <input
+            <span>{label}</span>
+            <textarea
                 className={`
-                ${styles.input}
-                ${hasError && !disabled && styles.error}
-                ${!hasError && field.value.length > 0 && styles.filled}
-                ${disabled && styles.disabled}
-                `}
+            ${styles.textArea}
+            ${disabled && styles.disabled}
+            ${hasError && !disabled && styles.error}
+            ${!hasError && field.value.length > 0 && styles.filled}
+            `}
                 {...field}
-                type={type}
                 placeholder={placeholder}
                 disabled={disabled}
-            />
+            ></textarea>
             {hasError && !disabled && (
                 <span className={styles.errorText}>{error as string}</span>
             )}
@@ -53,4 +49,4 @@ const Input = <T extends FieldValues>({
     );
 };
 
-export { Input };
+export { TextArea };
