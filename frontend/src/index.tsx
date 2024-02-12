@@ -12,6 +12,9 @@ import {
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { store } from '~/framework/store/store';
 
+import { Home } from './bundles/home/pages/home';
+import { Templates } from './bundles/home/pages/templates';
+
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
         <StoreProvider store={store.instance}>
@@ -32,6 +35,14 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             {
                                 path: AppRoute.SIGN_UP,
                                 element: <Auth />,
+                            },
+                            {
+                                path: '/home',
+                                element: <Home />,
+                            },
+                            {
+                                path: '/templates',
+                                element: <Templates />,
                             },
                         ],
                     },
