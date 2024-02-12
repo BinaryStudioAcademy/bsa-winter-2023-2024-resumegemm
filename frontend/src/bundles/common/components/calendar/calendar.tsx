@@ -5,6 +5,7 @@ import { type CalendarDate, type CalendarMonth } from '../../types/types';
 import { CalendarMonthComponent } from './components/calendar-month';
 import { monthRegex,yearRegex } from './constants/calendar-regex';
 import { CalendarMonths } from './constants/month';
+import styles from './styles.module.scss';
 
 type Properties = {
     showPresent?: boolean;
@@ -110,7 +111,7 @@ const Calendar: React.FC<Properties> = ({
     }, [month, year, present, onDateChange]);
 
     return (
-        <div className="calendar__container" ref={reference}>
+        <div className={styles.calendar__container} ref={reference}>
             <input
                 placeholder="MM/YYYY"
                 value={text}
@@ -118,18 +119,18 @@ const Calendar: React.FC<Properties> = ({
                 type="text"
                 className={
                     focused
-                        ? 'calendar__date-input focused'
-                        : 'calendar__date-input'
+                        ? `${styles['calendar__date-input']} ${styles.focused}`
+                        : styles['calendar__date-input']
                 }
                 onFocus={setCurrentlyFocused}
             />
             {focused && (
-                <div className="calendar__date-picker">
-                    <div className="date-picker__header">
+                <div className={styles['calendar__date-picker']}>
+                    <div className={styles['date-picker__header']}>
                         <svg
                             type="button"
                             onClick={decreaseYear}
-                            className="date-picker__header-arrow"
+                            className={styles['date-picker__header-arrow']}
                             width="24"
                             height="24"
                             style={{ transform: 'scale(-1,1)' }}
@@ -143,8 +144,8 @@ const Calendar: React.FC<Properties> = ({
                         <button
                             className={
                                 selected === 0
-                                    ? 'date-picker__option date-picker__selected'
-                                    : 'date-picker__option'
+                                    ? `${styles['date-picker__option']} ${styles['date-picker__selected']} ${styles['date-picker__option-year']}`
+                                    : `${styles['date-picker__option']} ${styles['date-picker__option-year']}`
                             }
                             onClick={selectYear}
                             onKeyDown={selectYear}
@@ -154,7 +155,7 @@ const Calendar: React.FC<Properties> = ({
 
                         <svg
                             onClick={increaseYear}
-                            className="date-picker__header-arrow"
+                            className={styles['date-picker__header-arrow']}
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
@@ -165,7 +166,7 @@ const Calendar: React.FC<Properties> = ({
                         </svg>
                     </div>
 
-                    <div className="date-picker__body">
+                    <div className={styles['date-picker__body']}>
                         {CalendarMonths.map((month) => (
                             <CalendarMonthComponent
                                 selected={selected === month.num}
@@ -177,9 +178,9 @@ const Calendar: React.FC<Properties> = ({
                     </div>
 
                     {showPresent && (
-                        <div className="date-picker__present">
+                        <div className={styles['date-picker__present']}>
                             <input
-                                className="date-picker__present-checkbox"
+                            className={styles['date-picker__present-checkbox']}
                                 type="checkbox"
                                 onChange={handlePresentChange}
                             />

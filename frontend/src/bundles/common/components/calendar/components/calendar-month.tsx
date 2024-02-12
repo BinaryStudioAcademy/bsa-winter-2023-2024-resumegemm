@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 
 import { type CalendarMonth } from '~/bundles/common/types/types';
 
+import styles from '../styles.module.scss';
+
 type Properties = {
     month: CalendarMonth
     onClick: (number_: CalendarMonth) => void;
@@ -22,8 +24,8 @@ const CalendarMonthComponent: React.FC<Properties> = ({
             role="presentation"
             className={
                 selected
-                    ? 'calendar__month date-picker__option date-picker__selected'
-                    : 'calendar__month date-picker__option'
+                    ? `${styles['date-picker__option']} ${styles['date-picker__selected']}`
+                    : styles['date-picker__option']
             }
             onClick={handleClick}
             onKeyDown={handleClick}
