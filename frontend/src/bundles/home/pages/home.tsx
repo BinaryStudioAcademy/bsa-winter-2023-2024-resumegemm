@@ -18,7 +18,7 @@ const Home: React.FC = () => {
                 <Greeting />
                 <CreateResumeButton />
             </HomeTopSection>
-            <ResumeSection name="My Resumes">
+            <ResumeSection name="Recently viewed">
                 <ResumeCard
                     title="My Resume"
                     subtitle="Updated - Jan 25"
@@ -26,14 +26,14 @@ const Home: React.FC = () => {
                 />
                 <CreateNewCard />
             </ResumeSection>
-            <ResumeSection name="My Templates">
+            <ResumeSection name="Users' resume">
                 <ResumeCard
                     title="My Resume"
                     subtitle="Updated - Jan 25"
                     image={mockResume}
                 />
             </ResumeSection>
-            <TemplateSection name="My Templates">
+            <TemplateSection name="Templates">
                 <ResumeCard title="My Resume" image={mockResume} />
             </TemplateSection>
         </div>
