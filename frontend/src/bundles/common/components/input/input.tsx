@@ -7,6 +7,8 @@ import {
 
 import { useFormController } from '~/bundles/common/hooks/hooks.js';
 
+import styles from './styles.module.scss';
+
 type Properties<T extends FieldValues> = {
     control: Control<T, null>;
     errors: FieldErrors<T>;
@@ -14,6 +16,7 @@ type Properties<T extends FieldValues> = {
     name: FieldPath<T>;
     placeholder?: string;
     type?: 'text' | 'email';
+    disabled?: boolean;
 };
 
 const Input = <T extends FieldValues>({
@@ -23,17 +26,29 @@ const Input = <T extends FieldValues>({
     name,
     placeholder = '',
     type = 'text',
+    disabled = false,
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
-
     const error = errors[name]?.message;
     const hasError = Boolean(error);
-
     return (
-        <label>
-            <span>{label}</span>
-            <input {...field} type={type} placeholder={placeholder} />
-            {hasError && <span>{error as string}</span>}
+        <label className={styles.label}>
+            <span className={styles.labelName}>{label}</span>
+            <input
+                className={`
+                ${styles.input}
+                ${hasError && !disabled && styles.error}
+                ${!hasError && field.value.length > 0 && styles.filled}
+                ${disabled && styles.disabled}
+                `}
+                {...field}
+                type={type}
+                placeholder={placeholder}
+                disabled={disabled}
+            />
+            {hasError && !disabled && (
+                <span className={styles.errorText}>{error as string}</span>
+            )}
         </label>
     );
 };
