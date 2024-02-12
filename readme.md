@@ -166,8 +166,8 @@ TBA
     recently_viewed ||--|| templates: template_id
     users ||--o{ user_templates : "user_id"
     templates ||--o{ user_templates : "template_id"
-    user_templates }o--|| users : "BELONGS TO"
-    user_templates }o--|| templates : "BELONGS TO"
+    user_templates }o--|| users : ""
+    user_templates }o--|| templates : ""
 ```
 
 ### 🌑 Backend
