@@ -1,4 +1,4 @@
-import { PanelContainer } from '../panel-container/panel-container';
+import { PanelContainer } from '../components';
 import styles from './styles.module.scss';
 
 type Properties = {

@@ -1,12 +1,14 @@
 import mockResume from '~/assets/img/mockResume.png';
+import {
+    CreateNewCard,
+    CreateResumeButton,
+    Greeting,
+    HomeTopSection,
+    ResumeCard,
+    ResumeSection,
+    TemplateSection,
+} from '~/bundles/home/components/components';
 
-import { CreateNewCard } from '../components/cards/create-new-card/create-new-card';
-import { ResumeCard } from '../components/cards/resume-card/resume-card';
-import { CreateResumeButton } from '../components/home-top-section/components/create-resume-button/create-resume-button';
-import { Greeting } from '../components/home-top-section/components/greeting/greeting';
-import { HomeTopSection } from '../components/home-top-section/home-top-section';
-import { ResumeSection } from '../components/resume-section/resume-section';
-import { TemplateSection } from '../components/template-section/template-section';
 import styles from './styles.module.scss';
 
 const Home: React.FC = () => {
