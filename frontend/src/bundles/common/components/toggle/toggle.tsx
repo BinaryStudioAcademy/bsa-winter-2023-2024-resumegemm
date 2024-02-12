@@ -24,13 +24,13 @@ const Toggle = <T extends FieldValues>({
     const { field } = useFormController({ name, control });
 
     return (
-        <label className={styles['container']}>
+        <label className={styles.container}>
             <input
                 {...field}
                 className={styles[type]}
                 type={type === 'radio' ? 'radio' : 'checkbox'}
             />
-            <span className={styles['label_text']}>{label}</span>
+            <span className={styles.label_text}>{label}</span>
         </label>
     );
 };
