@@ -1,10 +1,12 @@
 import { type ChangeEvent,useCallback } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
+import { useAppForm, useFormController } from '../../hooks/hooks';
+import { type DateDto } from '../../types/calendar/calendar-date.dto';
 import { type CalendarDate, type CalendarMonth } from '../../types/types';
+import { Toggle } from '../components';
 import { CalendarMonthComponent } from './components/calendar-month';
-import { monthRegex,yearRegex } from './constants/calendar-regex';
-import { CalendarMonths } from './constants/month';
+import { CalendarMonths, DEFAULT_DATE_PAYLOAD, monthRegex,yearRegex } from './constants/calendar.constants';
 import styles from './styles.module.scss';
 
 type Properties = {
@@ -12,10 +14,18 @@ type Properties = {
     onDateChange?: ({ present, month, year }: CalendarDate) => void;
 };
 
-const Calendar: React.FC<Properties> = ({
+const Calendar = ({
     showPresent = false,
     onDateChange,
-}: Properties) => {
+}: Properties): JSX.Element => {
+    const { control } = useAppForm<DateDto>({
+        defaultValues: DEFAULT_DATE_PAYLOAD,
+    });
+
+    const { field: presentField } = useFormController({ name:'present', control });
+    const { field: yearField } = useFormController({ name:'year', control });
+    const { field: monthField } = useFormController({ name:'month', control });
+
     const reference = useRef<HTMLDivElement>(null);
 
     const [text, setText] = useState('');
@@ -68,12 +78,6 @@ const Calendar: React.FC<Properties> = ({
         setSelected(month.num);
     }, []);
 
-    const [present, setPresent] = useState(false);
-
-    const handlePresentChange = useCallback((): void => {
-        setPresent(!present);
-    }, [present]);
-
     const selectYear = useCallback((): void => {
         setMonth(null);
         setSelected(0);
@@ -91,24 +95,27 @@ const Calendar: React.FC<Properties> = ({
         };
     }, [setUnfocused]);
 
-    useEffect(() => {
-        function setMonthYearAsText(): void {
-            if (present) {
-                setText('Present');
-            } else {
-                setText(month ? `${month.name}, ${year}` : String(year));
-            }
+    const setMonthYearAsText = useCallback((): void => {
+        if (presentField.value) {
+            setText('Present');
+        } else {
+            setText(month ? `${month.name}, ${year}` : String(year));
         }
+    }, [month, year, presentField]);
+
+    useEffect(() => {
+        monthField.onChange(month);
+        yearField.onChange(year);
 
         setMonthYearAsText();
         if(onDateChange) {
             onDateChange({
                 month: month,
                 year: year,
-                present: present,
+                present: presentField.value,
             });
         }
-    }, [month, year, present, onDateChange]);
+    }, [month, year, onDateChange, presentField, setMonthYearAsText, monthField, yearField]);
 
     return (
         <div className={styles.calendar__container} ref={reference}>
@@ -179,12 +186,7 @@ const Calendar: React.FC<Properties> = ({
 
                     {showPresent && (
                         <div className={styles['date-picker__present']}>
-                            <input
-                            className={styles['date-picker__present-checkbox']}
-                                type="checkbox"
-                                onChange={handlePresentChange}
-                            />
-                            <p>Present</p>
+                            <Toggle type='switch' label='Present' name='present' control={control} />
                         </div>
                     )}
                 </div>

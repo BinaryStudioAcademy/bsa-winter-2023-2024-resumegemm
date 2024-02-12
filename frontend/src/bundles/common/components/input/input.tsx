@@ -28,7 +28,7 @@ const Input = <T extends FieldValues>({
 
     const error = errors[name]?.message;
     const hasError = Boolean(error);
-
+    
     return (
         <label>
             <span>{label}</span>
