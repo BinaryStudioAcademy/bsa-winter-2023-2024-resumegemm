@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #848d96;
+}
+
+.container input:checked + .text {
+    color: #1d2433;
+}
+
+.switch {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    margin: 0;
+    border: 2px solid #ccd7dc;
+    border-radius: 12px;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    appearance: none;
+}
+
+.switch::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #ccd7dc;
+    border-radius: 50%;
+    transform: translateX(4px) translateY(-50%);
+    transition: 0.3s;
+}
+
+.switch:checked {
+    border-color: #dbae2d;
+}
+
+.switch:checked::after {
+    background-color: #dbae2d;
+    transform: translateX(20px) translateY(-50%);
+}
