@@ -1,8 +1,14 @@
-import { Checkbox, RadioButton, Switch,Tooltip  } from '../common/components/components';
+import { Checkbox, RadioButton, Switch, Tooltip } from '../common/components/components';
 import { TooltipDimensions } from '../common/enums/enums';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import styles from './styles.module.scss';
+
+const navbarItems = [
+    { label: 'Home', path: AppRoute.ROOT },
+    { label: 'Signin', path: AppRoute.SIGN_IN },
+    { label: 'Signup', path: AppRoute.SIGN_UP },
+];
 
 const PreviewPage: React.FC = () => {
     return (
@@ -34,6 +40,7 @@ const PreviewPage: React.FC = () => {
                     <Templates />
                 </li>
             </ul>
+            <NavTabs items={navbarItems}></NavTabs>
         </div>
     );
 };
