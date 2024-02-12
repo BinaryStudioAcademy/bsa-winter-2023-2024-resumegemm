@@ -1,0 +1,36 @@
+.label {
+    font-size: 16px;
+}
+
+button {
+    border: 0;
+}
+
+.dropdown {
+    width: fit-content;
+    overflow: hidden;
+    border-radius: 51px;
+}
+
+.dropdown.active {
+    border-radius: 15px;
+}
+
+.dropdown_button {
+    width: 100%;
+    padding: 8.5px 12px;
+    color: #302e36;
+    text-align: left;
+    background-color: #ebeff1;
+    cursor: pointer;
+}
+
+.dropdown_list {
+    display: flex;
+    flex-direction: column;
+    max-height: 33px * 4;
+    margin: 0;
+    padding-left: 0;
+    overflow-x: auto;
+    border-top: 1px solid #768fbe;
+}
