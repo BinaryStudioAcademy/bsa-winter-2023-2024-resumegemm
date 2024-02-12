@@ -1,6 +1,5 @@
 import reactLogo from '~/assets/img/react.svg';
 import {
-    Calendar,
     Link,
     RouterOutlet,
 } from '~/bundles/common/components/components.js';
@@ -32,7 +31,7 @@ const App: React.FC = () => {
     return (
         <>
             <img src={reactLogo} className="App-logo" width="30" alt="logo" />
-            <Calendar showPresent={true} />
+
             <ul className="App-navigation-list">
                 <li>
                     <Link to={AppRoute.ROOT}>Root</Link>
