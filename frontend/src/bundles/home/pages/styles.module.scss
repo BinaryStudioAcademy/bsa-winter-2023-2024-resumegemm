@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+.layout {
+    display: grid;
+    grid-template-rows: 136px auto auto;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 20px;
+}
