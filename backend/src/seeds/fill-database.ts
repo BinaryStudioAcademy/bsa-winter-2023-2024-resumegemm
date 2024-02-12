@@ -1,40 +1,35 @@
+import { Guid as guid } from 'guid-typescript';
 import { type Knex } from 'knex';
 
 import { DatabaseColumnName, DatabaseTableName } from '~/common/database/enums/enums.js';
+import {
+    type ContactDetails,
+    type Education,
+    type Experience,
+    type PersonalInformation,
+    type Profile,
+    type Resume,
+    type Review,
+    type TechnicalSkill,
+    type Template,
+    type User,
+} from '~/seeds/seed-types/seed-data.type';
 
 import {
     contactsSeed,
     educationSeed,
     experienceSeed,
+    imagesSeed,
     personalInformationSeed,
+    profileSeeds,
     resumesSeed,
     reviewsSeed,
     technicalSkillsSeed,
     templatesSeed,
-    userImagesSeed,
     usersSeed,
 } from './seed-data/seed-data.js';
-import {
-    type ContactDetails,
-    type Education,
-    type Experience,
-    type Image,
-    type PersonalInformation,
-    type Resume,
-    type Review,
-    type SaveImageDto,
-    type TechnicalSkill,
-    type Template,
-    type User,
-} from './seed-types/seed-data.type';
 
-const getRandomIndex = (length: number): number => {
-    return Math.floor(Math.random() * length);
-};
-
-const mapImageSources = (images: SaveImageDto[]): string[] => {
-    return images.map((image) => image.image_source);
-};
+const NUMBER_OF_ROWS = 4;
 
 const deleteFromTables = async (
     trx: Knex.Transaction,
@@ -50,8 +45,8 @@ async function seed(knex: Knex): Promise<void> {
         const tableNames = [
             DatabaseTableName.USERS,
             DatabaseTableName.TEMPLATES,
+            DatabaseTableName.USER_TEMPLATES,
             DatabaseTableName.RESUMES,
-            DatabaseTableName.IMAGES,
             DatabaseTableName.REVIEWS,
             DatabaseTableName.CONTACT_DETAILS,
             DatabaseTableName.EDUCATION,
@@ -62,18 +57,23 @@ async function seed(knex: Knex): Promise<void> {
         ];
         await deleteFromTables(trx, tableNames);
 
-        await trx(DatabaseTableName.IMAGES).insert([...userImagesSeed]);
+        // PROFILE
 
-        const userImages = await trx<Image>(DatabaseTableName.IMAGES)
-            .select('id')
-            .whereIn('image_source', mapImageSources(userImagesSeed));
+        const profileMappedSeed = profileSeeds.map((profile, index) => ({
+            ...profile,
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.AVATAR]: imagesSeed[index].image,
+        }));
+
+        const createdProfile = await trx<Profile>(DatabaseTableName.PROFILE)
+            .insert(profileMappedSeed)
+            .returning('*');
 
         //USERS
         const usersMappedSeed = usersSeed.map((user, index) => ({
             ...user,
-            [DatabaseColumnName.IMAGE_ID]: userImages[index]
-                ? userImages[index].id
-                : null,
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.PROFILE_ID]: createdProfile[index].id,
         }));
 
         const insertedUsers = await trx<User>(DatabaseTableName.USERS)
@@ -83,11 +83,9 @@ async function seed(knex: Knex): Promise<void> {
         // RESUMES
         const resumesMappedSeed = resumesSeed.map((resume, index) => ({
             ...resume,
-            [DatabaseColumnName.USER_ID]:
-            insertedUsers[getRandomIndex(insertedUsers.length)].id,
-            [DatabaseColumnName.IMAGE_ID]: userImages[index]
-                ? userImages[index].id
-                : null,
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
+            [DatabaseColumnName.IMAGE]: imagesSeed[index].image,
         }));
 
         const insertedResumes = await trx<Resume>(DatabaseTableName.RESUMES)
@@ -97,11 +95,10 @@ async function seed(knex: Knex): Promise<void> {
         // TEMPLATES
         const templatesMappedSeed = templatesSeed.map((template, index) => ({
             ...template,
-            [DatabaseColumnName.USER_ID]:
-            insertedUsers[getRandomIndex(insertedUsers.length)].id,
-            [DatabaseColumnName.RESUME_ID]: insertedResumes[index]
-                ? insertedResumes[index].id
-                : null,
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
+            [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
+            [DatabaseColumnName.IMAGE]: imagesSeed[index].image,
         }));
 
         const insertedTemplates = await trx<Template>(
@@ -110,86 +107,68 @@ async function seed(knex: Knex): Promise<void> {
             .insert(templatesMappedSeed)
             .returning('*');
 
-        //REVIEWS
-        const reviewsMappedSeed = reviewsSeed.map((review) => ({
-            ...review,
-            [DatabaseColumnName.RESUME_ID]:
-            insertedUsers[getRandomIndex(insertedUsers.length)].id,
+        // Resume content
+
+        const mapResumeContent = <T>(it: T[]): T[] => it.map((entity, index) => ({
+            ...entity,
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
         }));
 
         await trx<Review>(DatabaseTableName.REVIEWS)
-            .insert(reviewsMappedSeed)
+            .insert(mapResumeContent(reviewsSeed))
             .returning('*');
 
         // EDUCATION
-        const educationMappedSeed = educationSeed.map((education) => ({
-            ...education,
-            [DatabaseColumnName.RESUME_ID]:
-            insertedResumes[getRandomIndex(insertedResumes.length)].id,
-        }));
 
         await trx<Education>(DatabaseTableName.EDUCATION)
-            .insert(educationMappedSeed)
+            .insert(mapResumeContent(educationSeed))
             .returning('*');
 
         // CONTACT_DETAILS
-        const contactsMappedSeed = contactsSeed.map((contact) => ({
-            ...contact,
-            [DatabaseColumnName.RESUME_ID]:
-            insertedResumes[getRandomIndex(insertedResumes.length)].id,
-        }));
 
         await trx<ContactDetails>(DatabaseTableName.CONTACT_DETAILS)
-            .insert(contactsMappedSeed)
+            .insert(mapResumeContent(contactsSeed))
             .returning('*');
 
         // EXPERIENCE
-        const experienceMappedSeed = experienceSeed.map((experience) => ({
-            ...experience,
-            [DatabaseColumnName.RESUME_ID]:
-            insertedResumes[getRandomIndex(insertedResumes.length)].id,
-        }));
 
         await trx<Experience>(DatabaseTableName.EXPERIENCE)
-            .insert(experienceMappedSeed)
+            .insert(mapResumeContent(experienceSeed))
             .returning('*');
 
-        // TECHNICAL_SKILLS
-        const technicalSkillsMappedSeed = technicalSkillsSeed.map((skill) => ({
-            ...skill,
-            [DatabaseColumnName.RESUME_ID]:
-            insertedResumes[getRandomIndex(insertedResumes.length)].id,
-        }));
+        // // TECHNICAL_SKILLS
 
         await trx<TechnicalSkill>(DatabaseTableName.TECHNICAL_SKILLS)
-            .insert(technicalSkillsMappedSeed)
+            .insert(mapResumeContent(technicalSkillsSeed))
             .returning('*');
 
         // PERSONAL_INFORMATION
-        const personalInformationMappedSeed = personalInformationSeed.map(
-            (info) => ({
-                ...info,
-                [DatabaseColumnName.RESUME_ID]:
-                insertedResumes[getRandomIndex(insertedResumes.length)].id,
-            }),
-        );
 
         await trx<PersonalInformation>(DatabaseTableName.PERSONAL_INFORMATION)
-            .insert(personalInformationMappedSeed)
+            .insert(mapResumeContent(personalInformationSeed))
+            .returning('*');
+
+        // USER_TEMPLATES junction table
+
+        const userTemplatesSeed = Array.from({ length: NUMBER_OF_ROWS }).map((_, index) => ({
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
+            [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
+        }));
+
+        await trx(DatabaseTableName.USER_TEMPLATES)
+            .insert(userTemplatesSeed)
             .returning('*');
 
         //RECENTLY_VIEWED
-        const numberOfRows = 4;
 
-        const recentlyViewedSeed = Array.from({ length: numberOfRows }).map(
-            () => ({
-                [DatabaseColumnName.USER_ID]:
-                insertedUsers[getRandomIndex(insertedUsers.length)].id,
-                [DatabaseColumnName.RESUME_ID]:
-                insertedResumes[getRandomIndex(insertedResumes.length)].id,
-                [DatabaseColumnName.TEMPLATE_ID]:
-                insertedTemplates[getRandomIndex(insertedTemplates.length)]
-                    .id,
+        const recentlyViewedSeed = Array.from({ length: NUMBER_OF_ROWS }).map(
+            (_, index) => ({
+                [DatabaseColumnName.ID]: guid.raw(),
+                [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
+                [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
+                [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
             }),
         );
 

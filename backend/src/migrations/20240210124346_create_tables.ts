@@ -1,18 +1,14 @@
 import { type Knex } from 'knex';
 
-import {
-    DatabaseColumnName,
-    DatabaseTableName,
-} from '~/common/database/enums/enums.js';
+import { DatabaseColumnName, DatabaseTableName } from '~/common/database/enums/enums.js';
 
 async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(DatabaseTableName.USERS, (table) => {
-        table.increments(DatabaseColumnName.ID).primary();
+        table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.EMAIL).unique().notNullable();
         table.string(DatabaseColumnName.USERNAME).notNullable();
         table.text(DatabaseColumnName.PASSWORD_HASH).notNullable();
         table.text(DatabaseColumnName.PASSWORD_SALT).notNullable();
-        table.string(DatabaseColumnName.RECOVERY_CODE).notNullable();
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
@@ -22,9 +18,11 @@ async function up(knex: Knex): Promise<void> {
             .notNullable()
             .defaultTo(knex.fn.now());
     });
-    await knex.schema.createTable(DatabaseTableName.IMAGES, (table) => {
-        table.increments(DatabaseColumnName.ID).primary();
-        table.string(DatabaseColumnName.IMAGE_SOURCE).unique().notNullable();
+    await knex.schema.createTable(DatabaseTableName.PROFILE, table => {
+        table.uuid(DatabaseColumnName.ID).primary();
+        table.string(DatabaseColumnName.FIRST_NAME).notNullable();
+        table.string(DatabaseColumnName.LAST_NAME).notNullable();
+        table.string(DatabaseColumnName.AVATAR).notNullable();
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
@@ -37,7 +35,7 @@ async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(
         DatabaseTableName.PERSONAL_INFORMATION,
         (table) => {
-            table.increments(DatabaseColumnName.ID).primary();
+            table.uuid(DatabaseColumnName.ID).primary();
             table.string(DatabaseColumnName.PROFESSION).notNullable();
             table.string(DatabaseColumnName.ADDRESS).notNullable();
             table.string(DatabaseColumnName.CITY).notNullable();
@@ -53,7 +51,7 @@ async function up(knex: Knex): Promise<void> {
         },
     );
     await knex.schema.createTable(DatabaseTableName.EXPERIENCE, (table) => {
-        table.increments(DatabaseColumnName.ID).primary();
+        table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.JOB_TITLE).notNullable();
         table.string(DatabaseColumnName.EMPLOYER).notNullable();
         table.string(DatabaseColumnName.EMPLOYMENT_TYPE).notNullable();
@@ -71,7 +69,7 @@ async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(
         DatabaseTableName.TECHNICAL_SKILLS,
         (table) => {
-            table.increments(DatabaseColumnName.ID).primary();
+            table.uuid(DatabaseColumnName.ID).primary();
             table.string(DatabaseColumnName.SKILL_NAME).notNullable();
             table.string(DatabaseColumnName.SKILL_LEVEL).notNullable();
             table
@@ -85,7 +83,7 @@ async function up(knex: Knex): Promise<void> {
         },
     );
     await knex.schema.createTable(DatabaseTableName.EDUCATION, (table) => {
-        table.increments(DatabaseColumnName.ID).primary();
+        table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.MAJOR_NAME).notNullable();
         table.string(DatabaseColumnName.DEGREE).notNullable();
         table.string(DatabaseColumnName.LOCATION).notNullable();
@@ -103,7 +101,7 @@ async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(
         DatabaseTableName.CONTACT_DETAILS,
         (table) => {
-            table.increments(DatabaseColumnName.ID).primary();
+            table.uuid(DatabaseColumnName.ID).primary();
             table
                 .string(DatabaseColumnName.MOBILE_NUMBER)
                 .unique()
@@ -122,8 +120,9 @@ async function up(knex: Knex): Promise<void> {
         },
     );
     await knex.schema.createTable(DatabaseTableName.RESUMES, (table) => {
-        table.increments(DatabaseColumnName.ID).primary();
+        table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.RESUME_TITLE).notNullable();
+        table.string(DatabaseColumnName.IMAGE).notNullable();
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
@@ -138,7 +137,8 @@ async function up(knex: Knex): Promise<void> {
             .defaultTo(knex.fn.now());
     });
     await knex.schema.createTable(DatabaseTableName.TEMPLATES, (table) => {
-        table.increments(DatabaseColumnName.ID).primary();
+        table.uuid(DatabaseColumnName.ID).primary();
+        table.string(DatabaseColumnName.IMAGE).notNullable();
         table
             .boolean(DatabaseColumnName.IS_OWNER)
             .notNullable()
@@ -157,7 +157,7 @@ async function up(knex: Knex): Promise<void> {
             .defaultTo(knex.fn.now());
     });
     await knex.schema.createTable(DatabaseTableName.REVIEWS, (table) => {
-        table.increments(DatabaseColumnName.ID).primary();
+        table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.COMMENT).notNullable();
         table.integer(DatabaseColumnName.SCORE).notNullable();
         table
@@ -172,18 +172,24 @@ async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(
         DatabaseTableName.RECENTLY_VIEWED,
         (table) => {
-            table.increments(DatabaseColumnName.ID).primary();
+            table.uuid(DatabaseColumnName.ID).primary();
             table
                 .dateTime(DatabaseColumnName.VIEWED_AT)
                 .notNullable()
                 .defaultTo(knex.fn.now());
         },
     );
+    await knex.schema.createTable(DatabaseTableName.USER_TEMPLATES, table => {
+        table.uuid(DatabaseColumnName.ID);
+        table.uuid(DatabaseColumnName.USER_ID).notNullable();
+        table.uuid(DatabaseColumnName.TEMPLATE_ID).notNullable();
+        table.unique([DatabaseColumnName.USER_ID, DatabaseColumnName.TEMPLATE_ID]);
+    });
 }
 
 async function down(knex: Knex): Promise<void> {
     await knex.schema.dropTableIfExists(DatabaseTableName.USERS);
-    await knex.schema.dropTableIfExists(DatabaseTableName.IMAGES);
+    await knex.schema.dropTableIfExists(DatabaseTableName.PROFILE);
     await knex.schema.dropTableIfExists(DatabaseTableName.PERSONAL_INFORMATION);
     await knex.schema.dropTableIfExists(DatabaseTableName.EXPERIENCE);
     await knex.schema.dropTableIfExists(DatabaseTableName.TECHNICAL_SKILLS);
@@ -193,6 +199,7 @@ async function down(knex: Knex): Promise<void> {
     await knex.schema.dropTableIfExists(DatabaseTableName.TEMPLATES);
     await knex.schema.dropTableIfExists(DatabaseTableName.REVIEWS);
     await knex.schema.dropTableIfExists(DatabaseTableName.RECENTLY_VIEWED);
+    await knex.schema.dropTableIfExists(DatabaseTableName.USER_TEMPLATES);
 }
 
 export { down, up };

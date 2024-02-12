@@ -1,7 +1,7 @@
 enum DatabaseTableName {
     MIGRATIONS = 'migrations',
     USERS = 'users',
-    IMAGES = 'images',
+    PROFILE = 'user_profile',
     PERSONAL_INFORMATION = 'personal_information',
     EXPERIENCE = 'experience',
     TECHNICAL_SKILLS = 'technical_skills',
@@ -9,6 +9,7 @@ enum DatabaseTableName {
     CONTACT_DETAILS = 'contact_details',
     RESUMES = 'resumes',
     TEMPLATES = 'templates',
+    USER_TEMPLATES = 'user_templates',
     REVIEWS = 'reviews',
     RECENTLY_VIEWED = 'recently_viewed',
 }
