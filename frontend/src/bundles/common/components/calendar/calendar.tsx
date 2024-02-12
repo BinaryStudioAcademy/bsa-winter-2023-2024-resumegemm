@@ -1,5 +1,6 @@
 import { type ChangeEvent,useCallback } from 'react';
 import { useEffect, useRef, useState } from 'react';
+import { type Control, type FieldPath, type FieldValues } from 'react-hook-form';
 
 import { useAppForm, useFormController } from '../../hooks/hooks';
 import { type DateDto } from '../../types/calendar/calendar-date.dto';
@@ -9,22 +10,28 @@ import { CalendarMonthComponent } from './components/calendar-month';
 import { CalendarMonths, DEFAULT_DATE_PAYLOAD, monthRegex,yearRegex } from './constants/calendar.constants';
 import styles from './styles.module.scss';
 
-type Properties = {
+type Properties<T extends FieldValues> = {
+    control: Control<T, null>;
+    name: FieldPath<T>;
     showPresent?: boolean;
     onDateChange?: ({ present, month, year }: CalendarDate) => void;
 };
 
-const Calendar = ({
+const Calendar = <T extends FieldValues>({
     showPresent = false,
     onDateChange,
-}: Properties): JSX.Element => {
-    const { control } = useAppForm<DateDto>({
+    name,
+    control
+}: Properties<T>): JSX.Element => {
+    const { control: innerControl } = useAppForm<DateDto>({
         defaultValues: DEFAULT_DATE_PAYLOAD,
     });
 
-    const { field: presentField } = useFormController({ name:'present', control });
-    const { field: yearField } = useFormController({ name:'year', control });
-    const { field: monthField } = useFormController({ name:'month', control });
+    const { field } = useFormController({ name, control });
+
+    const { field: presentField } = useFormController({ name:'present', control: innerControl });
+    const { field: yearField } = useFormController({ name:'year', control: innerControl });
+    const { field: monthField } = useFormController({ name:'month', control: innerControl });
 
     const reference = useRef<HTMLDivElement>(null);
 
@@ -107,6 +114,12 @@ const Calendar = ({
         monthField.onChange(month);
         yearField.onChange(year);
 
+        field.onChange({
+            year: yearField.value,
+            month: monthField.value,
+            present: presentField.value
+        });
+
         setMonthYearAsText();
         if(onDateChange) {
             onDateChange({
@@ -115,7 +128,7 @@ const Calendar = ({
                 present: presentField.value,
             });
         }
-    }, [month, year, onDateChange, presentField, setMonthYearAsText, monthField, yearField]);
+    }, [month, year, onDateChange, presentField, setMonthYearAsText, monthField, yearField, field]);
 
     return (
         <div className={styles.calendar__container} ref={reference}>
@@ -186,7 +199,7 @@ const Calendar = ({
 
                     {showPresent && (
                         <div className={styles['date-picker__present']}>
-                            <Toggle type='switch' label='Present' name='present' control={control} />
+                            <Toggle type='switch' label='Present' name='present' control={innerControl} />
                         </div>
                     )}
                 </div>
