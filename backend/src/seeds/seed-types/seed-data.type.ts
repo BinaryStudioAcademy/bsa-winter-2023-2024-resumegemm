@@ -1,3 +1,5 @@
+import { type SkillLevel } from '~/common/enums/enums.js';
+
 type User = {
     id: string;
     username: string;
@@ -58,7 +60,7 @@ type Experience = {
 type TechnicalSkill = {
     id: string;
     skill_name: string;
-    skill_level: string;
+    skill_level: SkillLevel;
 };
 
 type PersonalInformation = {

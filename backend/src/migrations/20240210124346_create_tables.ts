@@ -1,6 +1,7 @@
 import { type Knex } from 'knex';
 
 import { DatabaseColumnName, DatabaseTableName } from '~/common/database/enums/enums.js';
+import { SkillLevel } from '~/common/enums/enums.js';
 
 async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(DatabaseTableName.USERS, (table) => {
@@ -71,7 +72,7 @@ async function up(knex: Knex): Promise<void> {
         (table) => {
             table.uuid(DatabaseColumnName.ID).primary();
             table.string(DatabaseColumnName.SKILL_NAME).notNullable();
-            table.string(DatabaseColumnName.SKILL_LEVEL).notNullable();
+            table.enu(DatabaseColumnName.SKILL_LEVEL, Object.values(SkillLevel)).notNullable();
             table
                 .dateTime(DatabaseColumnName.CREATED_AT)
                 .notNullable()
