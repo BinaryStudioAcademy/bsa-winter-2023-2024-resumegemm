@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.createResumeButton {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    height: 100%;
+    padding: 20px;
+    font-family: Poppins, sans-serif;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.createResumeButton__icon {
+    position: relative;
+}
+
+.createResumeButton__icon__plusCircle {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+}
+
+.createResumeButton__text {
+    margin: 0;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.5;
+}
