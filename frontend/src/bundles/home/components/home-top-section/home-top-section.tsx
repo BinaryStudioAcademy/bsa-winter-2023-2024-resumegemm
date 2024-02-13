@@ -5,7 +5,7 @@ type Properties = {
 };
 
 const HomeTopSection: React.FC<Properties> = ({ children }: Properties) => {
-    return <div className={styles.homeTopSection}>{children}</div>;
+    return <div className={styles.home_top_section}>{children}</div>;
 };
 
 export { HomeTopSection };

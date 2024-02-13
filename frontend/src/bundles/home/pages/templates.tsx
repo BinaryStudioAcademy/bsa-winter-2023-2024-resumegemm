@@ -13,7 +13,7 @@ const Templates: React.FC = () => {
             <HomeTopSection />
             <TemplateSection
                 name="Templates"
-                cardLayout={styles.templatesLayout}
+                cardLayout={styles.template_page__card_layout}
             >
                 <ResumeCard title="My Resume" image={mockResume} />
             </TemplateSection>

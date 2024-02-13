@@ -11,8 +11,8 @@ const ResumeSection: React.FC<Properties> = ({
     name,
 }: Properties) => {
     return (
-        <PanelContainer name={name} classname={styles.resumeSection}>
-            <div className={styles.resumeSection__cards}>{children}</div>
+        <PanelContainer name={name}>
+            <div className={styles.resume_section__cards}>{children}</div>
         </PanelContainer>
     );
 };

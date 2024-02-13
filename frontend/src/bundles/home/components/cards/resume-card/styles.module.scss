@@ -1,4 +1,4 @@
-.resumeCard {
+.resume_card {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -7,13 +7,13 @@
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
 }
 
-.resumeCard__img {
+.resume_card__img {
     width: 100%;
     object-fit: contain;
     border-radius: 8px;
 }
 
-.resumeCard__content {
+.resume_card__content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,14 +22,14 @@
     border-top: 1px solid #e0e0e0;
 }
 
-.resumeCard__content__title {
+.resume_card__content_title {
     margin: 0;
     font-weight: 700;
     font-size: 14px;
     line-height: 1.5;
 }
 
-.resumeCard__content__text {
+.resume_card__content_text {
     margin: 0;
     color: #86899e;
     font-size: 12px;

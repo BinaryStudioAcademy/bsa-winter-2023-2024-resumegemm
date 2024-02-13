@@ -12,14 +12,14 @@ const ResumeCard: React.FC<Properties> = ({
     subtitle,
 }: Properties) => {
     return (
-        <div className={styles.resumeCard}>
-            <img src={image} alt="Resume" className={styles.resumeCard__img} />
-            <div className={styles.resumeCard__content}>
-                <span className={styles.resumeCard__content__title}>
+        <div className={styles.resume_card}>
+            <img src={image} alt="Resume" className={styles.resume_card__img} />
+            <div className={styles.resume_card__content}>
+                <span className={styles.resume_card__content_title}>
                     {title}
                 </span>
                 {subtitle && (
-                    <span className={styles.resumeCard__content__text}>
+                    <span className={styles.resume_card__content_text}>
                         {subtitle}
                     </span>
                 )}

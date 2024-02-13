@@ -15,8 +15,8 @@ const TemplateSection: React.FC<Properties> = ({
     cardLayout,
 }: Properties) => {
     return (
-        <PanelContainer name={name} classname={styles.templateSection}>
-            <div className={clsx(styles.templateSection__cards, cardLayout)}>
+        <PanelContainer name={name} classname={styles.template_section}>
+            <div className={clsx(styles.template_section__cards, cardLayout)}>
                 {children}
             </div>
         </PanelContainer>

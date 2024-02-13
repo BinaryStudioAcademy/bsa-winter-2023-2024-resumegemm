@@ -14,9 +14,9 @@ const PanelContainer: React.FC<Properties> = ({
     classname,
 }: Properties) => {
     return (
-        <div className={clsx(styles.panelContainer, classname)}>
-            <div className={styles.panelContainer__topBar}>{name}</div>
-            <div className={styles.panelContainer__content}>{children}</div>
+        <div className={clsx(styles.panel_container, classname)}>
+            <div className={styles.panel_container__top_bar}>{name}</div>
+            <div className={styles.panel_container__content}>{children}</div>
         </div>
     );
 };

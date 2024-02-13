@@ -5,7 +5,7 @@
     padding: 10px;
 }
 
-.createResumeButton {
+.create_resume_button {
     display: flex;
     flex-grow: 1;
     justify-content: center;
@@ -18,17 +18,17 @@
     border-radius: 20px;
 }
 
-.createResumeButton__icon {
+.create_resume_button__icon {
     position: relative;
 }
 
-.createResumeButton__icon__plusCircle {
+.create_resume_button__icon__plus_circle {
     position: absolute;
     top: -5px;
     left: -5px;
 }
 
-.createResumeButton__text {
+.create_resume_button__text {
     margin: 0;
     font-weight: 600;
     font-size: 24px;

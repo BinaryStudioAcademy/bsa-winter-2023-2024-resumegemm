@@ -1,9 +1,9 @@
-.templateSection {
+.template_section {
     grid-column: 1 / -1;
     background-color: #fdf3d3;
 }
 
-.templateSection__cards {
+.template_section__cards {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
