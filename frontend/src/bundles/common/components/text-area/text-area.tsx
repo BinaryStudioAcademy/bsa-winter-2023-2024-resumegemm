@@ -13,8 +13,8 @@ const TextArea = forwardRef<HTMLTextAreaElement,Properties>(
     ({ hasError = false, width = 'auto', disabled, ...otherProperties }, reference) =>(
     <textarea 
         className={clsx(styles.textArea,{
-            [styles.error]: hasError,
-            [styles.disabled]: disabled
+            [styles.textArea__error]: hasError,
+            [styles.textArea__disabled]: disabled
         })}
         style={{ width }}
         ref={reference}

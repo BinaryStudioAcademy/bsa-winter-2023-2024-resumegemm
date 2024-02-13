@@ -1,10 +1,3 @@
-.label {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 280px;
-}
-
 .textArea {
     padding: 12px 0 12px 12px;
     color: #434c66;
@@ -16,8 +9,13 @@
     outline: none;
 }
 
+.textArea:focus {
+    color: #302e36;
+    border: 1px solid #687a9c;
+}
+
 .textArea::placeholder {
-    color: #434c66;
+    color: #302e36;
 }
 
 .textArea:focus::placeholder {
@@ -42,38 +40,23 @@
     background: #ccd7dc;
 }
 
-.textArea:focus {
-    color: #302e36;
-}
-
-.disabled {
+.textArea__disabled {
     color: #ccd7dc;
 }
 
-.disabled::placeholder{
+.textArea__disabled::placeholder{
     color: #ccd7dc;
 }
 
-.filled {
-    color: #302e36;
-    border: 1px solid #687a9c;
-}
-
-.error {
+.textArea__error {
     color: #ccd7dc;
     border: 1px solid #ff5757;
 }
 
-.error::placeholder {
-    color: #ccd7dc;
+.textArea__error:focus {
+    border: 1px solid #ff5757;
 }
 
-.errorText {
-    position: absolute;
-    bottom: -18px;
-    left: 0;
-    width: 100%;
-    color: #ff5757;
-    font-size: 12px;
-    text-align: right;
+.textArea__error::placeholder {
+    color: #ccd7dc;
 }
