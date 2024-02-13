@@ -1,0 +1,29 @@
+.progress {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    min-width: 200px;
+    height: 100%;
+    padding: 5px;
+}
+
+.progress__outerBar {
+    width: 85%;
+    height: 16px;
+    overflow: hidden;
+    background: #768fbe;
+    border-radius: 16px;
+}
+
+.progress__innerBar {
+    height: 16px;
+    background: #dbae2d;
+    border-radius: 16px 0 0 16px;
+}
+
+.progress__percentage {
+    color: #ccd7dc;
+    font-size: 16px;
+    text-align: center;
+}
