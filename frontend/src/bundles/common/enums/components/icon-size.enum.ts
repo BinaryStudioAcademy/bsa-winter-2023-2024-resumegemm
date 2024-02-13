@@ -1,8 +1,6 @@
-import { type SizeProp } from '@fortawesome/fontawesome-svg-core';
-
-const IconSize = {
-    LARGE: 'lg' as SizeProp,
-    MEDIUM: 'sm' as SizeProp,
-} as const;
+enum IconSize {
+    LARGE = 'lg',
+    MEDIUM = 'sm',
+}
 
 export { IconSize };

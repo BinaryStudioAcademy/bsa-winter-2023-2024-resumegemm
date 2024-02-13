@@ -1,6 +1,6 @@
-const ButtonSize = {
-    MEDIUM: 'medium',
-    SMALL: 'small',
-} as const;
+enum ButtonSize {
+    MEDIUM = 'medium',
+    SMALL = 'small',
+}
 
 export { ButtonSize };

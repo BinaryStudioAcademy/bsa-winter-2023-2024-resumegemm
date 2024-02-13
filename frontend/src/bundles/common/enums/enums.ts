@@ -2,7 +2,8 @@ export { AppRoute } from './app-route.enum.js';
 export {
     ButtonColor,
     ButtonSize,
-    ButtonTheme,
+    ButtonType,
+    ButtonVariant,
     IconName,
     IconSize,
 } from './components/components.js';
