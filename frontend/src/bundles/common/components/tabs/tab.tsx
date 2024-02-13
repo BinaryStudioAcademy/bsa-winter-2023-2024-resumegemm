@@ -1,6 +1,6 @@
 import React, { type KeyboardEvent, type ReactNode,useCallback, useState } from 'react';
 
-import styles from './style.module.css';
+import styles from './style.module.scss';
 
 type TabProperties = {
     children: ReactNode;
