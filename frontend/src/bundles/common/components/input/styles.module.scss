@@ -1,10 +1,3 @@
-.label {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 280px;
-}
-
 .input {
     height: 37px;
     padding: 12px;
@@ -18,6 +11,7 @@
 
 .input:focus {
     color: #302e36;
+    border: 1px solid #768fbe;
     outline: none;
 }
 
@@ -25,40 +19,23 @@
     color: #302e36;
 }
 
-.error {
+.input__error {
     color: #302e36;
     border: 1px solid #ff5757;
 }
 
-.error::placeholder {
+.input__error::placeholder {
     color: #302e36;
 }
 
-.disabled {
+.input__error:focus {
+    border: 1px solid #ff5757;
+}
+
+.input__disabled {
     color: #ccd7dc;
 }
 
-.disabled::placeholder {
+.input__disabled::placeholder {
     color: #ccd7dc;
-}
-
-.filled {
-    color: #302e36;
-    border: 1px solid #768fbe;
-}
-
-.errorText {
-    position: absolute;
-    right: 0;
-    bottom: -18px;
-    color: #ff5757;
-    font-size: 12px;
-    text-align: right;
-}
-
-.labelName {
-    margin-bottom: 13px;
-    color: #313134;
-    font-weight: 500;
-    line-height: 16px;
 }
