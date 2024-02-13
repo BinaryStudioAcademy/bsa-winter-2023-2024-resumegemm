@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { type ChangeEvent,useCallback } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { Calendar as ReactCalendar } from 'react-calendar';
@@ -64,6 +65,10 @@ const Calendar = <T extends FieldValues>({
 
     const [focused, setFocused] = useState(false);
 
+    const handleInputFocus = useCallback((focused: boolean) => 
+        clsx(styles.calendar__date_input, styles.focused, focused && styles.calendar__date_input)
+    , []);
+
     const setCurrentlyFocused = useCallback((): void => setFocused(true), []);
     const setUnfocused = useCallback((): void => setFocused(false), []);
 
@@ -84,9 +89,13 @@ const Calendar = <T extends FieldValues>({
     }, []);
 
     const handleMonthSelect = useCallback(({ date }: { date: Date }) => 
-        date.getMonth() === month?.num ? [styles.date__picker__option, styles['date-picker__selected']] : styles.date__picker__option
+        clsx(styles.date_picker__option, date.getMonth() === month?.num && styles.date_picker__selected)
     , [month]);
 
+    const handleYearSelected = useCallback((selected: number | null) => 
+        clsx(styles.date_picker__option, styles.date_picker__option_year, selected === null && styles.date_picker__selected)
+    , []);
+    
     const selectYear = useCallback((): void => {
         setMonth(null);
         setSelected(null);
@@ -130,19 +139,15 @@ const Calendar = <T extends FieldValues>({
                 value={text}
                 onChange={handleTextChange}
                 type="text"
-                className={
-                    focused
-                        ? `${styles['calendar__date-input']} ${styles.focused}`
-                        : styles['calendar__date-input']
-                }
+                className={handleInputFocus(focused)}
                 onFocus={setCurrentlyFocused}
             />
             {focused && (
-                <div className={styles['calendar__date-picker']}>
-                    <div className={styles['date-picker__header']}>
+                <div className={styles.calendar__date_picker}>
+                    <div className={styles.date_picker__header}>
                         <svg
                             onClick={decreaseYear}
-                            className={styles['date-picker__header-arrow-reversed']}
+                            className={styles.date_picker__header_arrow_reversed}
                             viewBox="0 0 24 24"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
@@ -151,11 +156,7 @@ const Calendar = <T extends FieldValues>({
                         </svg>
 
                         <button
-                                className={
-                                    selected === null
-                                        ? `${styles.date__picker__option} ${styles['date-picker__selected']} ${styles['date-picker__option-year']}`
-                                        : `${styles.date__picker__option} ${styles['date-picker__option-year']}`
-                                }
+                                className={handleYearSelected(selected)}
                                 onClick={selectYear}
                                 onKeyDown={selectYear}
                             >
@@ -165,7 +166,7 @@ const Calendar = <T extends FieldValues>({
                         <svg
                             type="button"
                             onClick={increaseYear} 
-                            className={styles['date-picker__header-arrow']}
+                            className={styles.date_picker__header_arrow}
                             viewBox="0 0 24 24"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +182,7 @@ const Calendar = <T extends FieldValues>({
                     />
 
                     {showPresent && (
-                        <div className={styles['date-picker__present']}>
+                        <div className={styles.date_picker__present}>
                             <Toggle type='switch' label='Present' name='present' control={innerControl} />
                         </div>
                     )}
