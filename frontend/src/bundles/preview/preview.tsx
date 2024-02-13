@@ -3,7 +3,11 @@ import styles from './styles.module.scss';
 const PreviewPage: React.FC = () => {
     return (
         <div className={styles.preview}>
-            <div className={styles.example}>Component preview</div>
+            <ul className={styles.list}>
+                <li className={styles.item}>
+                    <div className={styles.example}>Component preview</div>
+                </li>
+            </ul>
         </div>
     );
 };
