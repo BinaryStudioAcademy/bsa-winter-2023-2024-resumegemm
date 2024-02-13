@@ -37,10 +37,10 @@
     box-shadow: rgb(99 99 99 / 20%) 0 2px 8px 0;
 }
 
-.date-picker__option {
+.date__picker__option {
     width: 50px;
-    margin: 0 auto;
-    padding: 5px;
+    margin: 0;
+    padding: 6px 10px;
     font-family: Montserrat, sans-serif;
     text-align: center;
     background-color: transparent;
@@ -52,7 +52,7 @@
     padding: 8px 5px;
 }
 
-.date-picker__option:not(.date-picker__selected):hover {
+.date__picker__option:not(.date-picker__selected):hover {
     color: var(--orange);
     background-color: var(--light-orange);
 }
@@ -66,14 +66,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 20px;
+    max-height: 10%;
+    margin: 5px 20px;
 }
 
-.date-picker__header-arrow {
-    height: 50px;
+.date-picker__header-arrow-reversed {
+    transform: scale(-1,1);
 }
 
-.date-picker__header-arrow:hover path {
+:is(.date-picker__header-arrow, .date-picker__header-arrow-reversed) {
+    width: 10%;
+    height: 10%;
+}
+
+:is(.date-picker__header-arrow, .date-picker__header-arrow-reversed):hover path {
     fill: var(--orange);
 }
 

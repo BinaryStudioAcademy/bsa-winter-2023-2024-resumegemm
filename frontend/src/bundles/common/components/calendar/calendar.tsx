@@ -1,11 +1,11 @@
 import { type ChangeEvent,useCallback } from 'react';
 import { useEffect, useRef, useState } from 'react';
+import { Calendar as ReactCalendar } from 'react-calendar';
 import { type Control, type FieldPath, type FieldValues } from 'react-hook-form';
 
 import { useAppForm, useFormController } from '../../hooks/hooks';
 import { type CalendarDate, type CalendarMonth } from '../../types/types';
 import { Toggle } from '../components';
-import { CalendarMonthComponent } from './components/calendar-month';
 import { CalendarMonths, DEFAULT_DATE_PAYLOAD, monthRegex,yearRegex } from './constants/calendar.constants';
 import styles from './styles.module.scss';
 
@@ -67,7 +67,7 @@ const Calendar = <T extends FieldValues>({
     const setCurrentlyFocused = useCallback((): void => setFocused(true), []);
     const setUnfocused = useCallback((): void => setFocused(false), []);
 
-    const [selected, setSelected] = useState(0);
+    const [selected, setSelected] = useState<number | null>(null);
 
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState<CalendarMonth | null>(null);
@@ -75,14 +75,21 @@ const Calendar = <T extends FieldValues>({
     const increaseYear = useCallback((): void => setYear(year + 1), [year]);
     const decreaseYear = useCallback((): void => setYear(year - 1), [year]);
 
-    const selectMonth = useCallback((month: CalendarMonth): void => {
-        setMonth(month);
-        setSelected(month.num);
+    const selectMonth = useCallback((value: Date): void => {
+        const inputMonth = CalendarMonths.find((month) => month.num === value.getMonth());
+        if(inputMonth) {
+            setMonth(inputMonth);
+            setSelected(inputMonth.num);
+        }
     }, []);
+
+    const handleMonthSelect = useCallback(({ date }: { date: Date }) => 
+        date.getMonth() === month?.num ? [styles.date__picker__option, styles['date-picker__selected']] : styles.date__picker__option
+    , [month]);
 
     const selectYear = useCallback((): void => {
         setMonth(null);
-        setSelected(0);
+        setSelected(null);
     }, []);
 
     useEffect(() => {
@@ -134,12 +141,8 @@ const Calendar = <T extends FieldValues>({
                 <div className={styles['calendar__date-picker']}>
                     <div className={styles['date-picker__header']}>
                         <svg
-                            type="button"
                             onClick={decreaseYear}
-                            className={styles['date-picker__header-arrow']}
-                            width="24"
-                            height="24"
-                            style={{ transform: 'scale(-1,1)' }}
+                            className={styles['date-picker__header-arrow-reversed']}
                             viewBox="0 0 24 24"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
@@ -148,22 +151,21 @@ const Calendar = <T extends FieldValues>({
                         </svg>
 
                         <button
-                            className={
-                                selected === 0
-                                    ? `${styles['date-picker__option']} ${styles['date-picker__selected']} ${styles['date-picker__option-year']}`
-                                    : `${styles['date-picker__option']} ${styles['date-picker__option-year']}`
-                            }
-                            onClick={selectYear}
-                            onKeyDown={selectYear}
-                        >
+                                className={
+                                    selected === null
+                                        ? `${styles.date__picker__option} ${styles['date-picker__selected']} ${styles['date-picker__option-year']}`
+                                        : `${styles.date__picker__option} ${styles['date-picker__option-year']}`
+                                }
+                                onClick={selectYear}
+                                onKeyDown={selectYear}
+                            >
                             {year}
                         </button>
 
                         <svg
-                            onClick={increaseYear}
+                            type="button"
+                            onClick={increaseYear} 
                             className={styles['date-picker__header-arrow']}
-                            width="24"
-                            height="24"
                             viewBox="0 0 24 24"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
@@ -172,16 +174,11 @@ const Calendar = <T extends FieldValues>({
                         </svg>
                     </div>
 
-                    <div className={styles['date-picker__body']}>
-                        {CalendarMonths.map((month) => (
-                            <CalendarMonthComponent
-                                selected={selected === month.num}
-                                key={month.num}
-                                month={month}
-                                onClick={selectMonth}
-                            />
-                        ))}
-                    </div>
+                    <ReactCalendar defaultView="year" minDetail='year' maxDetail='year' 
+                        tileClassName={handleMonthSelect} 
+                        onClickMonth={selectMonth} 
+                        showNavigation={false}
+                    />
 
                     {showPresent && (
                         <div className={styles['date-picker__present']}>
