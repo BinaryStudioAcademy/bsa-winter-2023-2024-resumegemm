@@ -14,6 +14,7 @@ import { store } from '~/framework/store/store';
 
 import { Home } from './bundles/home/pages/home';
 import { Templates } from './bundles/home/pages/templates';
+import { PreviewPage } from './bundles/preview/preview';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
@@ -36,6 +37,12 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 path: AppRoute.SIGN_UP,
                                 element: <Auth />,
                             },
+                        ],
+                    },
+                    {
+                        path: '/preview',
+                        element: <PreviewPage />,
+                        children: [
                             {
                                 path: '/home',
                                 element: <Home />,
