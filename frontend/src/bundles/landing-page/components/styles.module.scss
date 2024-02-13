@@ -1,0 +1,33 @@
+.feature_image__container {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to top, white 98%, transparent 0);
+    border-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.feature_image__image_container {
+    flex: 4;
+    height: 80%;
+}
+
+.feature_image {
+    height: 100%;
+    border: white 2px solid;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.feature_image__text_container {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.feature_image__text {
+    font-weight: 500;
+    font-size: 13.4px;
+    font-family: Poppins, sans-serif;
+}
