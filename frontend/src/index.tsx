@@ -12,6 +12,8 @@ import {
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { store } from '~/framework/store/store';
 
+import { LandingPage } from './components/landing-page/landing-page';
+
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
         <StoreProvider store={store.instance}>
@@ -23,7 +25,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                         children: [
                             {
                                 path: AppRoute.ROOT,
-                                element: 'Root',
+                                element: <LandingPage />,
                             },
                             {
                                 path: AppRoute.SIGN_IN,
