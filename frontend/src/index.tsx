@@ -12,8 +12,6 @@ import {
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { store } from '~/framework/store/store';
 
-import { Home } from './bundles/home/pages/home';
-import { Templates } from './bundles/home/pages/templates';
 import { PreviewPage } from './bundles/preview/preview';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
@@ -40,18 +38,8 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                         ],
                     },
                     {
-                        path: '/preview',
+                        path: AppRoute.PREVIEW,
                         element: <PreviewPage />,
-                        children: [
-                            {
-                                path: '/preview/home',
-                                element: <Home />,
-                            },
-                            {
-                                path: '/preview/templates',
-                                element: <Templates />,
-                            },
-                        ],
                     },
                 ]}
             />

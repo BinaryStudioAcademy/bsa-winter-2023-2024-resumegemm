@@ -1,30 +1,13 @@
-import { useCallback, useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-
 import styles from './styles.module.scss';
 
 const PreviewPage: React.FC = () => {
-    const [showLinks, setShowLinks] = useState(false);
-
-    const handleShowLinks = useCallback(() => {
-        setShowLinks(!showLinks);
-    }, [showLinks]);
-
     return (
         <div className={styles.preview}>
-            {showLinks && (
-                <ul className={styles.preview__link_list}>
-                    <NavLink to="/preview/home">Home</NavLink>
-                    <NavLink to="/preview/templates">Templates</NavLink>
-                </ul>
-            )}
-            <button
-                className={styles.preview__button}
-                onClick={handleShowLinks}
-            >
-                Links
-            </button>
-            <Outlet />
+            <ul className={styles.list}>
+                <li className={styles.item}>
+                    <div className={styles.example}>Component preview</div>
+                </li>
+            </ul>
         </div>
     );
 };
