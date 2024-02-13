@@ -7,6 +7,8 @@ import {
     useEffect,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
+import { OnlineEditorTabsHandler } from '~/bundles/cv-editor/components/components';
+import { OnlineEditorTabs } from '~/bundles/cv-editor/components/online-editor/tabs-constants';
 import { actions as userActions } from '~/bundles/users/store';
 
 const App: React.FC = () => {
@@ -56,6 +58,7 @@ const App: React.FC = () => {
                     </ul>
                 </>
             )}
+            <OnlineEditorTabsHandler tabs={OnlineEditorTabs}/> 
         </>
     );
 };

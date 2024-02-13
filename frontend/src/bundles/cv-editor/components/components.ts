@@ -1,1 +1,1 @@
-export { UserFlow } from './user-flow-bar/user-flow-bar';
+export { OnlineEditorTabsHandler } from './online-editor/online-editor-handler';
