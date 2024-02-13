@@ -1,15 +1,12 @@
 .preview {
-    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.preview__link_list {
-    position: fixed;
-    top: 0;
-    margin-top: 20px;
-    background-color: white;
-}
-
-.preview__button {
-    position: fixed;
-    top: 0;
+.example {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: rgb(157 168 255);
 }

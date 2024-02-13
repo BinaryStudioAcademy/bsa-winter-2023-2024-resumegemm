@@ -38,11 +38,8 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                         ],
                     },
                     {
-                        path: '/preview',
+                        path: AppRoute.PREVIEW,
                         element: <PreviewPage />,
-                        children: [
-                            // routes
-                        ],
                     },
                 ]}
             />
