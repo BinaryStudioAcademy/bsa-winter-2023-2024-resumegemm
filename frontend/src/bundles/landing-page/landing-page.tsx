@@ -4,6 +4,7 @@ import introImage from '~/assets/img/5192055.png';
 import templateThirdImage from '~/assets/img/5297769.png';
 import templateSecondImage from '~/assets/img/6450724.png';
 import Arrow2 from '~/assets/img/Arrow 2.png';
+import GettingStarted from '~/assets/img/get_started.png';
 import templateFirstImage from '~/assets/img/Resume Template.png';
 import OnlineEditorFeatureImage from '~/assets/img/UX-UI Designer _ Product Designer Hakim gul bangash 1.png';
 import { Button } from '~/bundles/common/components/components';
@@ -80,6 +81,28 @@ const LandingPage = (): JSX.Element => {
                 
             <div className={styles.features__image_container_right}>
                 <img className={styles.features__online_editor_feature_image} src={OnlineEditorFeatureImage} alt='online editor feature' />
+            </div>
+        </section>
+
+        <section className={styles.landing_page__get_started_section}>
+            <div className={styles.landing_page__get_started_item}>
+                <div className={styles.get_started_section__content_container}>
+                    <h2 className={styles.get_started_section__title}>
+                        Start the
+                        <br />
+                        ResumeGemm 
+                    </h2>
+
+                    <p className={styles.get_started_section__text}>
+                        We`re thrilled to welcome you to the ResumeGemm family, where your journey to crafting exceptional resumes begins!
+                    </p>
+
+                    <Button label='Create Resume for free' className={styles.get_started_section__button} />
+                </div>
+            </div>
+
+            <div className={clsx(styles.get_started_section__image_container, styles.landing_page__get_started_item)}>
+                <img className={styles.get_started_section__image} src={GettingStarted} alt='get started' />
             </div>
         </section>
     </div>;
