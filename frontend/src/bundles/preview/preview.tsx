@@ -14,7 +14,8 @@ const PreviewPage: React.FC = () => {
         <div className={styles.preview}>
             {showLinks && (
                 <ul className={styles.preview__link_list}>
-                    <NavLink to="#">Link example</NavLink>
+                    <NavLink to="/preview/home">Home</NavLink>
+                    <NavLink to="/preview/templates">Templates</NavLink>
                 </ul>
             )}
             <button

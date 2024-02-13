@@ -44,11 +44,11 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                         element: <PreviewPage />,
                         children: [
                             {
-                                path: '/home',
+                                path: '/preview/home',
                                 element: <Home />,
                             },
                             {
-                                path: '/templates',
+                                path: '/preview/templates',
                                 element: <Templates />,
                             },
                         ],
