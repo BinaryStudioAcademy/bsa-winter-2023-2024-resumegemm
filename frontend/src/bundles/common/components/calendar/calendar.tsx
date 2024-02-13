@@ -14,10 +14,12 @@ type Properties<T extends FieldValues> = {
     control: Control<T, null>;
     name: FieldPath<T>;
     showPresent?: boolean;
+    className?: string
 };
 
 const Calendar = <T extends FieldValues>({
     showPresent = false,
+    className = '',
     name,
     control
 }: Properties<T>): JSX.Element => {
@@ -133,7 +135,7 @@ const Calendar = <T extends FieldValues>({
     }, [month, year, presentField, setMonthYearAsText, field]);
 
     return (
-        <div className={styles.calendar__container} ref={reference}>
+        <div className={clsx(styles.calendar__container, className)} ref={reference}>
             <input
                 placeholder="MM/YYYY"
                 value={text}
