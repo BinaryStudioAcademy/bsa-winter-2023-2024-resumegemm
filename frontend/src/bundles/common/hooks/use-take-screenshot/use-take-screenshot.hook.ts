@@ -1,16 +1,27 @@
 import html2canvas from 'html2canvas';
+import { type Options } from 'html2canvas';
 import { type MutableRefObject, useState } from 'react';
 
-type Parameters = {
+type Convert = {
     type: 'image/png' | 'image/jpeg';
+    quality: number;
+};
+
+type Parameters = {
     ref: MutableRefObject<HTMLElement | null>;
+    convertOptions: Convert;
+    options: Partial<Options>;
 };
 
 type ReturnValue = {
     screenshot: string | null;
     error: string | null;
     loading: boolean;
-    takeScreenshot: ({ ref, type }: Parameters) => void;
+    takeScreenshot: ({
+        ref,
+        convertOptions,
+        options,
+    }: Parameters) => Promise<string | null>;
 };
 
 const useTakeScreenShot = (): ReturnValue => {
@@ -18,25 +29,26 @@ const useTakeScreenShot = (): ReturnValue => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const takeScreenshot = ({ ref, type }: Parameters): void => {
-        if (ref.current) {
+    const takeScreenshot = async ({
+        ref,
+        convertOptions: { type, quality },
+        options,
+    }: Parameters): Promise<string | null> => {
+        try {
+            if (!ref.current) {
+                throw new Error('Reference have to be provided');
+            }
             setLoading(true);
-            const canvasPromise = html2canvas(ref.current, {
-                useCORS: true,
-            });
-            canvasPromise
-                .then((canvas) => {
-                    const data = canvas.toDataURL(type);
-                    setScreenshot(data);
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    setError(error.message);
-                    setLoading(false);
-                });
-        } else {
-            setError('ref shouldn\'t be null');
+            const canvas = await html2canvas(ref.current, options);
+            const data = canvas.toDataURL(type, quality);
+            setScreenshot(data);
+        } catch (error) {
+            setError((error as Error).message);
+        } finally {
+            setLoading(false);
         }
+
+        return screenshot;
     };
 
     return {
