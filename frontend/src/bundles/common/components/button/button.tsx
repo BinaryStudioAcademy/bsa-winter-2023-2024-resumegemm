@@ -6,7 +6,7 @@ import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
-    IconSize
+    IconSize,
 } from '~/bundles/common/enums/enums';
 import { type ValueOf } from '~/bundles/common/types/types';
 
@@ -18,11 +18,12 @@ const sizes: Record<ButtonSize, string> = {
     medium: styles.size__medium,
 };
 
-const variants: Record<ButtonVariant, string> =  {
+const variants: Record<ButtonVariant, string> = {
     default: styles.button__base,
     primary: styles.button__primary,
     outlined: styles.button__outlined,
-    ghost: styles.button__ghost
+    ghost: styles.button__ghost,
+    square_orange: styles.button__orange,
 };
 
 type BaseButtonProperties = {
@@ -52,7 +53,7 @@ const Button: React.FC<BaseButtonProperties> = ({
     ...restProperties
 }) => {
     const fluid = isFluid ? styles.fluid : '';
- 
+
     return (
         <button
             disabled={isDisabled}
