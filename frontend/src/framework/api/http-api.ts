@@ -41,7 +41,7 @@ class HttpApi implements IHttpApi {
         path: string,
         options: HttpApiOptions,
     ): Promise<HttpApiResponse> {
-        const { method, contentType, payload = null, hasAuth } = options;
+        const { method, contentType, payload = null, hasAuth, withCredentials = false } = options;
 
         const headers = await this.getHeaders(contentType, hasAuth);
 
@@ -49,6 +49,7 @@ class HttpApi implements IHttpApi {
             method,
             headers,
             payload,
+            withCredentials,
         });
 
         return (await this.checkResponse(response)) as HttpApiResponse;
