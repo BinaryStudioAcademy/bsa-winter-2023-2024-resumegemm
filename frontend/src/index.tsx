@@ -12,6 +12,8 @@ import {
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { store } from '~/framework/store/store';
 
+import { PreviewPage } from './bundles/preview/preview';
+
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
         <StoreProvider store={store.instance}>
@@ -34,6 +36,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 element: <Auth />,
                             },
                         ],
+                    },
+                    {
+                        path: AppRoute.PREVIEW,
+                        element: <PreviewPage />,
                     },
                 ]}
             />

@@ -48,7 +48,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                         errors={errors}
                     />
                 </p>
-                <Button type="submit" label="Sign up" />
+                <Button type="submit">Sign up</Button>
             </form>
         </>
     );
