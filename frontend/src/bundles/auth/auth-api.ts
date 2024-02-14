@@ -68,21 +68,6 @@ class AuthApi extends HttpApi {
 
         return await response.json<UserAuthResponse>();
     }
-
-    public async getToken(): Promise<AuthTokenResponse> {
-        const response = await this.load(
-            this.getFullEndpoint(AuthApiPath.TOKEN, {}),
-            {
-                method: 'GET',
-                contentType: ContentType.JSON,
-                hasAuth: false,
-                withCredentials: true,
-            },
-        );
-
-        return await response.json<AuthTokenResponse>();
-    }
-
 }
 
 export { AuthApi };
