@@ -1,33 +1,13 @@
-import { useCallback } from 'react';
-
-import { ButtonTheme } from '~/bundles/common/enums/enums';
-
-import { Button } from '../../components';
 import styles from './styles.module.scss';
 
-const Footer: React.FC = () => {
-    const editTemplateHandler = useCallback(() => {
-        //TODO: Edit template functionality
-    }, []);
+type Properties = {
+    children?: React.ReactNode;
+};
 
-    const saveAndPublishTemplateHandler = useCallback(() => {
-        //TODO: Save and publish template functionality
-    }, []);
-
+const Footer: React.FC<Properties> = ({ children }) => {
     return (
         <footer className={styles.footer}>
-            <div className={styles.footer_controls}>
-                <Button
-                    label="Edit template"
-                    theme={ButtonTheme.TRANSPARENT_WITH_BORDERS}
-                    onClick={editTemplateHandler}
-                />
-                <Button
-                    label="Save & Publish"
-                    theme={ButtonTheme.BLUE}
-                    onClick={saveAndPublishTemplateHandler}
-                />
-            </div>
+            <div className={styles.footer__controls}>{children}</div>
         </footer>
     );
 };
