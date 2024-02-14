@@ -66,8 +66,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10%;
     max-height: 10%;
-    margin: 5px 20px;
+    margin: 5px 0;
 }
 
 .date_picker__header_arrow_reversed {
@@ -75,12 +76,18 @@
 }
 
 :is(.date_picker__header_arrow, .date_picker__header_arrow_reversed) {
-    width: 10%;
-    height: 10%;
+    width: 50%;
+    height: 50%;
 }
 
-:is(.date_picker__header_arrow, .date_picker__header_arrow_reversed):hover path {
-    fill: var(--orange);
+.date_picker__header_arrow_container {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+}
+
+:is(.date_picker__header_arrow, .date_picker__header_arrow_reversed):hover {
+    filter: invert(87%) sepia(33%) saturate(1273%) hue-rotate(336deg) brightness(92%) contrast(86%);
 }
 
 .date_picker__body {

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Calendar as ReactCalendar } from 'react-calendar';
 import { type Control, type FieldPath, type FieldValues } from 'react-hook-form';
 
+import ArrowImage from '~/assets/img/arrow.svg';
+
 import { useAppForm, useFormController } from '../../hooks/hooks';
 import { type CalendarDate, type CalendarMonth } from '../../types/types';
 import { Toggle } from '../components';
@@ -147,16 +149,10 @@ const Calendar = <T extends FieldValues>({
             {focused && (
                 <div className={styles.calendar__date_picker}>
                     <div className={styles.date_picker__header}>
-                        <svg
-                            onClick={decreaseYear}
-                            className={styles.date_picker__header_arrow_reversed}
-                            viewBox="0 0 24 24"
-                            version="1.1"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M9.431 7.257l1.352-1.474 5.893 5.48a1 1 0 0 1 0 1.474l-5.893 5.45-1.352-1.475L14.521 12 9.43 7.257z"></path>
-                        </svg>
-
+                        <button className={styles.date_picker__header_arrow_container} onClick={decreaseYear}>
+                            <img alt='arrow' src={ArrowImage} className={styles.date_picker__header_arrow_reversed} />
+                        </button>
+                        
                         <button
                                 className={handleYearSelected(selected)}
                                 onClick={selectYear}
@@ -165,16 +161,9 @@ const Calendar = <T extends FieldValues>({
                             {year}
                         </button>
 
-                        <svg
-                            type="button"
-                            onClick={increaseYear} 
-                            className={styles.date_picker__header_arrow}
-                            viewBox="0 0 24 24"
-                            version="1.1"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M9.431 7.257l1.352-1.474 5.893 5.48a1 1 0 0 1 0 1.474l-5.893 5.45-1.352-1.475L14.521 12 9.43 7.257z"></path>
-                        </svg>
+                        <button className={styles.date_picker__header_arrow_container} onClick={increaseYear}>
+                            <img alt='arrow' src={ArrowImage} className={styles.date_picker__header_arrow} />
+                        </button>
                     </div>
 
                     <ReactCalendar defaultView="year" minDetail='year' maxDetail='year' 
