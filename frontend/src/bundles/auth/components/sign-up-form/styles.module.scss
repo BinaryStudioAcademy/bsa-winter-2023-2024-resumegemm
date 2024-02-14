@@ -1,0 +1,32 @@
+.registration__header {
+    align-self: flex-start;
+    margin: 0;
+}
+
+.registration__title {
+    margin: 0;
+    color: #434c66;
+    font-weight: 600;
+    font-size: 30px;
+    font-family: Poppins, Arial, sans-serif;
+    line-height: 48px;
+}
+
+.registration__message {
+    margin: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19.5px;
+}
+
+.registration__link {
+    color: #dbaf2d;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+.registration__form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
