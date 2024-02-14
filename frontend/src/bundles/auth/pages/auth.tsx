@@ -7,14 +7,17 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import { type UserSignUpRequestDto } from '~/bundles/users/users.js';
 
-import { SignInForm, SignUpForm } from '../components/components.js';
+import { Logo, SignInForm, SignUpForm } from '../components/components.js';
 import { actions as authActions } from '../store/';
+import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
+
     const { dataStatus } = useAppSelector(({ auth }) => ({
         dataStatus: auth.dataStatus,
     }));
+
     const { pathname } = useLocation();
 
     const handleSignInSubmit = useCallback((): void => {
@@ -42,10 +45,21 @@ const Auth: React.FC = () => {
     };
 
     return (
-        <>
-            state: {dataStatus}
-            {getScreen(pathname)}
-        </>
+        <div className={styles.auth}>
+            <div className={styles.auth__container}>
+                <section className={styles['auth__logo-container']}>
+                    <div className={styles.auth__logo}>
+                        <Logo />
+                    </div>
+                </section>
+                <section className={styles['auth__form-container']}>
+                    <div className={styles['auth__form-content']}>
+                        state: {dataStatus}
+                        {getScreen(pathname)}
+                    </div>
+                </section>
+            </div>
+        </div>
     );
 };
 
