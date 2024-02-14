@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React, { type KeyboardEvent, type ReactNode,useCallback, useState } from 'react';
 
 import styles from './style.module.scss';
@@ -35,7 +36,7 @@ const Tab: React.FC<TabProperties> = ({ children }) => {
                         key={index}
                         tabIndex={0}
                         role="button"
-                        className={`${styles.tab__item} ${index === activeTab ? styles.active : ''}`}
+                        className={clsx(styles.tab__item, { [styles.active]: index === activeTab })}
                         onClick={onTabClick(index)}
                         onKeyDown={onKeyDown(index)}
                     >
