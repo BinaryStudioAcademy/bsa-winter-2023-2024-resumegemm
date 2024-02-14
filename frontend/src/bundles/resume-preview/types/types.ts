@@ -1,0 +1,9 @@
+export { type DescriptionItemStyles } from './description-item.type';
+export { type ExperienceData } from './experience-data.type';
+export { type ExperienceStyles } from './experience-styles.type';
+export { type SkillsData } from './skills-data.type';
+export { type SkillsStyles } from './skills-styles.type';
+export { type SummaryData } from './summary-data.type';
+export { type SummaryStyles } from './summary-styles.type';
+export { type TechStackData } from './tech-stack-data.type';
+export { type TechStackStyles } from './tech-stack-styles.type';
