@@ -1,4 +1,4 @@
-export { AuthApiPath } from './bundles/auth/auth.js';
+export { type AuthTokenResponse,AuthApiPath } from './bundles/auth/auth.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
     type UserAuthResponse,
