@@ -1,6 +1,5 @@
 import { Button, Input } from '~/bundles/common/components/components';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
-import { ScreenshotWrapper } from '~/bundles/screenshot/screenshot-wrapper';
 import {
     type UserSignUpRequestDto,
     userSignUpValidationSchema,
@@ -51,7 +50,6 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 </p>
                 <Button type="submit" label="Sign up" />
             </form>
-            <ScreenshotWrapper><h1>Text to be screenshoted!!! ha ha ha</h1></ScreenshotWrapper>
         </>
     );
 };
