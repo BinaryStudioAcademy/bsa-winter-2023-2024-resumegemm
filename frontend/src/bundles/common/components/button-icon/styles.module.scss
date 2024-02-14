@@ -1,10 +1,8 @@
 .icon__button {
-    width: 48px;
-    height: 48px;
-    color: var(--white);
-    background: var(--yellow-4);
+    margin: 0;
+    padding: 0;
+    background: none;
     border: none;
-    border-radius: 9px;
     outline: none;
     cursor: pointer;
 }

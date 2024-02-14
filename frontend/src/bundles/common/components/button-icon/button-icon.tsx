@@ -1,16 +1,24 @@
-import { type IconName } from '../../enums/enums';
-import { type ValueOf } from '../../types/types';
-import { Icon } from '../icon/icon';
+import clsx from 'clsx';
+
 import styles from './styles.module.scss';
 
 type IconButtonProperties = {
-    iconName?: ValueOf<typeof IconName>;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    children?: React.ReactNode;
+    className?: string;
 };
 
-const IconButton: React.FC<IconButtonProperties> = ({ iconName, onClick }) => (
-    <button className={styles.icon__button} type="button" onClick={onClick}>
-        {iconName && <Icon name={iconName} />}
+const IconButton: React.FC<IconButtonProperties> = ({
+    onClick,
+    children,
+    className,
+}) => (
+    <button
+        className={clsx(styles.icon__button, className)}
+        type="button"
+        onClick={onClick}
+    >
+        {children}
     </button>
 );
 
