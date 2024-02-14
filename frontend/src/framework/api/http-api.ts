@@ -79,7 +79,7 @@ class HttpApi implements IHttpApi {
         headers.append(HttpHeader.CONTENT_TYPE, contentType);
 
         if (hasAuth) {
-            const token = await this.storage.get<string>(StorageKey.TOKEN);
+            const token = await this.storage.get<string>(StorageKey.ACCESS_TOKEN);
 
             headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token ?? ''}`);
         }
