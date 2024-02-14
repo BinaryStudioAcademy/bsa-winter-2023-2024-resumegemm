@@ -1,10 +1,21 @@
+import { type FC, type ReactNode } from 'react';
+
 type Properties = {
-    label: string;
     type?: 'button' | 'submit';
+    onClick?: () => void;
+    className?: string;
+    children: ReactNode;
 };
 
-const Button: React.FC<Properties> = ({ type = 'button', label }) => (
-    <button type={type}>{label}</button>
+const Button: FC<Properties> = ({
+    type = 'button',
+    onClick,
+    className,
+    children,
+}) => (
+    <button className={className} onClick={onClick} type={type}>
+        {children}
+    </button>
 );
 
 export { Button };
