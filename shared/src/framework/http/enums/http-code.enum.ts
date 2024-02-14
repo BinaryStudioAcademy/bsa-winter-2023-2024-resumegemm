@@ -1,6 +1,7 @@
 const HttpCode = {
     OK: 200,
     CREATED: 201,
+    PERMISSION_DENIED: 403,
     UNPROCESSED_ENTITY: 422,
     INTERNAL_SERVER_ERROR: 500,
 } as const;

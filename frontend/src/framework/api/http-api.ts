@@ -1,12 +1,14 @@
 import {
-    type ContentType,
+    ApiPath,
+    AuthApiPath,
+    ContentType,
     ServerErrorType,
 } from '~/bundles/common/enums/enums.js';
 import {
     type ServerErrorResponse,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
-import { type HttpCode, type IHttp } from '~/framework/http/http.js';
+import { type IHttp, HttpCode } from '~/framework/http/http.js';
 import { HttpError, HttpHeader } from '~/framework/http/http.js';
 import { type IStorage, StorageKey } from '~/framework/storage/storage.js';
 import { configureString } from '~/helpers/helpers.js';
@@ -41,7 +43,13 @@ class HttpApi implements IHttpApi {
         path: string,
         options: HttpApiOptions,
     ): Promise<HttpApiResponse> {
-        const { method, contentType, payload = null, hasAuth, withCredentials = false } = options;
+        const {
+            method,
+            contentType,
+            payload = null,
+            hasAuth,
+            withCredentials = false,
+        } = options;
 
         const headers = await this.getHeaders(contentType, hasAuth);
 
@@ -79,7 +87,9 @@ class HttpApi implements IHttpApi {
         headers.append(HttpHeader.CONTENT_TYPE, contentType);
 
         if (hasAuth) {
-            const token = await this.storage.get<string>(StorageKey.ACCESS_TOKEN);
+            const token = await this.storage.get<string>(
+                StorageKey.ACCESS_TOKEN,
+            );
 
             headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token ?? ''}`);
         }
@@ -87,9 +97,30 @@ class HttpApi implements IHttpApi {
         return headers;
     }
 
-    private async checkResponse(response: Response): Promise<Response | never> {
+    private async refreshTokenAndReload(): Promise<void | never> {
+        const headers = await this.getHeaders(ContentType.JSON, false);
+
+        const response = await this.http.load(
+            `${ApiPath.AUTH}${AuthApiPath.TOKEN}`,
+            {
+                method: 'GET',
+                headers,
+                payload: null,
+                withCredentials: true,
+            },
+        );
         if (!response.ok) {
             await this.handleError(response);
+        }
+        const { accessToken } = (await response.json()) as {
+            accessToken: string;
+        };
+        await this.storage.set(StorageKey.ACCESS_TOKEN, accessToken);
+    }
+
+    private async checkResponse(response: Response): Promise<Response | never> {
+        if (!response.ok && response.status === HttpCode.PERMISSION_DENIED) {
+            await this.refreshTokenAndReload();
         }
 
         return response;
