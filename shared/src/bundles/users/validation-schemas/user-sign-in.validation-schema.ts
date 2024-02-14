@@ -1,12 +1,9 @@
 import joi from 'joi';
 
 import { UserValidationMessage } from '../enums/enums.js';
-import { type UserSignUpRequestDto } from '../types/types.js';
+import { type UserSignInRequestDto } from '../types/types.js';
 
-const userSignUp = joi.object<UserSignUpRequestDto, true>({
-    username: joi.string().trim().required().messages({
-        'string.empty': UserValidationMessage.USERNAME_REQUIRE,
-    }),
+const userSignIn = joi.object<UserSignInRequestDto, true>({
     email: joi
         .string()
         .trim()
@@ -23,4 +20,4 @@ const userSignUp = joi.object<UserSignUpRequestDto, true>({
     password: joi.string().trim().required(),
 });
 
-export { userSignUp };
+export { userSignIn };
