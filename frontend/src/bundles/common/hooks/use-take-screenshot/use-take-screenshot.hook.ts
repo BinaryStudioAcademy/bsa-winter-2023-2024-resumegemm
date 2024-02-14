@@ -36,7 +36,7 @@ const useTakeScreenShot = (): ReturnValue => {
     }: Parameters): Promise<string | null> => {
         try {
             if (!ref.current) {
-                throw new Error('Reference have to be provided');
+                throw new Error('Reference is required');
             }
             setLoading(true);
             const canvas = await html2canvas(ref.current, options);
