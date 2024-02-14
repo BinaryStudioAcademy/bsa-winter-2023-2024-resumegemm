@@ -1,6 +1,7 @@
 export { AuthApiPath } from './bundles/auth/auth.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
+    type UserAuthResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserSignInRequestDto,
