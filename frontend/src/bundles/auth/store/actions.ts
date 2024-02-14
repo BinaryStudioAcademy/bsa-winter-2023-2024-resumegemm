@@ -1,36 +1,49 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type AuthTokenResponse } from 'shared/build/index.js';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
     type UserAuthResponse,
     type UserSignInRequestDto,
-    type UserSignInResponseDto,
     type UserSignUpRequestDto,
-    type UserSignUpResponseDto,
 } from '~/bundles/users/users.js';
+import { StorageKey } from '~/framework/storage/storage.js';
 
 import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
-    UserSignUpResponseDto,
+    UserAuthResponse,
     UserSignUpRequestDto,
     AsyncThunkConfig
->(`${sliceName}/sign-up`, (registerPayload, { extra }) => {
-    const { authApi } = extra;
+>(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
+    const { authApi, storageApi } = extra;
+    const { user, accessToken } = await authApi.signUp(registerPayload);
 
-    return authApi.signUp(registerPayload);
+    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+    return user;
 });
 
 const signIn = createAsyncThunk<
-    UserSignInResponseDto,
+    UserAuthResponse,
     UserSignInRequestDto,
     AsyncThunkConfig
->(`${sliceName}/sign-in`, (signInPayload, { extra }) => {
-    const { authApi } = extra;
+>(`${sliceName}/sign-in`, async (signInPayload, { extra }) => {
+    const { authApi, storageApi } = extra;
+    const { user, accessToken } = await authApi.signIn(signInPayload);
 
-    return authApi.signIn(signInPayload);
+    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+    return user;
 });
+
+const logOut = createAsyncThunk<void, void, AsyncThunkConfig>(
+    `${sliceName}/log-out`,
+    async (_, { extra }) => {
+        const { storageApi } = extra;
+
+        await storageApi.drop(StorageKey.ACCESS_TOKEN);
+    },
+);
 
 const getUser = createAsyncThunk<UserAuthResponse, void, AsyncThunkConfig>(
     `${sliceName}/get-user`,
@@ -41,13 +54,4 @@ const getUser = createAsyncThunk<UserAuthResponse, void, AsyncThunkConfig>(
     },
 );
 
-const getToken = createAsyncThunk<AuthTokenResponse, void, AsyncThunkConfig>(
-    `${sliceName}/get-token`,
-    async (_, { extra }) => {
-        const { authApi } = extra;
-
-        return authApi.getToken();
-    },
-);
-
-export { getToken,getUser, signIn, signUp };
+export { getUser, logOut,signIn, signUp };
