@@ -15,6 +15,7 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { store } from '~/framework/store/store';
 
 import { PreviewPage } from './bundles/preview/preview';
+import { Profile } from './bundles/users/pages/profile';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
@@ -40,6 +41,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             {
                                 path: AppRoute.SIGN_UP,
                                 element: <Auth />,
+                            },
+                            {
+                                path: AppRoute.PROFILE,
+                                element: <Profile />,
                             },
                         ],
                     },
