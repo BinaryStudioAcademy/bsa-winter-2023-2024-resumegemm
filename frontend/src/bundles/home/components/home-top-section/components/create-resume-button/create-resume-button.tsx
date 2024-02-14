@@ -1,6 +1,5 @@
-import plusCircleIcon from '~/assets/img/plusCircleIcon.svg';
-import resumeIcon from '~/assets/img/resumeIcon.svg';
-
+import { PlusCircleIcon } from '../icons/plus-circle-icon';
+import { ResumeIcon } from '../icons/resume-icon';
 import styles from './styles.module.scss';
 
 const CreateResumeButton: React.FC = () => {
@@ -8,14 +7,14 @@ const CreateResumeButton: React.FC = () => {
         <div className={styles.container}>
             <div className={styles.create_resume_button}>
                 <div className={styles.create_resume_button__icon}>
-                    <img
-                        src={plusCircleIcon}
-                        alt="Create resume"
+                    <PlusCircleIcon
                         className={
                             styles.create_resume_button__icon__plus_circle
                         }
                     />
-                    <img src={resumeIcon} alt="Resume" />
+                    <ResumeIcon
+                        className={styles.create_resume_button__icon__resume}
+                    />
                 </div>
                 <span className={styles.create_resume_button__text}>
                     Create a resume
