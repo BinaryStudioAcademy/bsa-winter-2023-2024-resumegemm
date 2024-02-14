@@ -73,7 +73,7 @@ const Password: React.FC<PasswordProperties> = (
                     <Icon
                         size={IconSize.SMALL}
                         name={
-                            isPasswordVisible
+                            isPasswordConfirmVisible
                             ? IconName.EYE_OPEN
                             : IconName.EYE_SLASH
                         }
