@@ -5,11 +5,11 @@ import { Menu } from './menu/menu';
 import styles from './styles.module.scss';
 
 type Properties = {
-    src: string;
+    image: string;
     onLogout?: () => void;
 };
 
-const UserProfile: React.FC<Properties> = ({ src }) => {
+const UserProfile: React.FC<Properties> = ({ image }) => {
     const menuReference = useRef<HTMLMenuElement>(null);
 
     const [active, setActive] = useState(false);
@@ -52,7 +52,7 @@ const UserProfile: React.FC<Properties> = ({ src }) => {
             >
                 <img
                     className={styles.profile__image}
-                    src={src}
+                    src={image}
                     alt="User profile"
                 />
             </button>
