@@ -3,6 +3,8 @@ export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserSignInRequestDto,
+    type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
     UsersApiPath,

@@ -1,9 +1,9 @@
 import { type User } from './user.type';
 
-type UserSignUpResponseDto = {
+type UserSignInResponseDto = {
     user: User;
     accessToken: string;
     refreshToken: string;
 };
 
-export { type UserSignUpResponseDto };
+export { type UserSignInResponseDto };
