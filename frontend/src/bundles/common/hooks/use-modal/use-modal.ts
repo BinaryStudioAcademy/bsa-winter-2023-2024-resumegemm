@@ -1,4 +1,4 @@
-import { type KeyboardEvent, type SyntheticEvent } from 'react';
+import { type KeyboardEvent, type SyntheticEvent, useEffect } from 'react';
 
 import { useCallback } from '~/bundles/common/hooks/hooks';
 import {
@@ -10,7 +10,8 @@ const ESCAPE_KEY = 'Escape';
 
 const useModal = ({
     onClose,
-}: Pick<ModalProperties, 'onClose'>): ModalHandlers => {
+    isOpen,
+}: Omit<ModalProperties, 'children' | 'variant'>): ModalHandlers => {
     const handleOutsideClick = useCallback(() => onClose(), [onClose]);
 
     const preventModalCloseOnClick = useCallback(
@@ -25,6 +26,14 @@ const useModal = ({
         },
         [handleOutsideClick],
     );
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+            return;
+        }
+        document.body.style.overflow = 'auto';
+    }, [isOpen]);
 
     return {
         handleOutsideClick,
