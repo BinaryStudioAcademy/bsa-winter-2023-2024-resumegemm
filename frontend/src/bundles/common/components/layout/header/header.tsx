@@ -12,7 +12,6 @@ const Header: React.FC = () => {
         <header className={styles.header}>
             <Link className={styles.logo} to="/">
                 <img className={styles.logo__icon} src={logo} alt="Logo icon" />
-                <span className={styles.logo__text}>Logo</span>
             </Link>
             <Tab>
                 <TabItem title="Home">{''}</TabItem>
