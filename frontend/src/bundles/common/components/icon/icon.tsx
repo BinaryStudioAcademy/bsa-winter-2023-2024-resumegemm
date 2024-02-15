@@ -1,9 +1,24 @@
 import { type SizeProp } from '@fortawesome/fontawesome-svg-core';
+import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import {
+    faChevronDown,
+    faEye,
+    faEyeSlash,
+    faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { type IconName, IconSize } from '../../enums/components/components';
+import { IconName, IconSize } from '../../enums/components/components';
 import { type ValueOf } from '../../types/types';
-import { iconNameToSvgIcon } from './common';
+
+const iconNameToSvgIcon = {
+    [IconName.PLUS]: faPlus,
+    [IconName.CHEVRON_DOWN]: faChevronDown,
+    [IconName.FACEBOOK]: faFacebookF,
+    [IconName.GOOGLE]: faGoogle,
+    [IconName.EYE_OPEN]: faEye,
+    [IconName.EYE_SLASH]: faEyeSlash,
+};
 
 type IconProperties = {
     className?: string;
