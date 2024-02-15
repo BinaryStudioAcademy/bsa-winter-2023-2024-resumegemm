@@ -2,6 +2,11 @@ import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { type IRepository } from '~/common/interfaces/interfaces.js';
 
+import {
+    type UserEntityFields,
+    type UserSignUpResponseDto,
+} from './types/types.js';
+
 class UserRepository implements IRepository {
     private userModel: typeof UserModel;
 
@@ -13,6 +18,24 @@ class UserRepository implements IRepository {
         return Promise.resolve(null);
     }
 
+    public async findOneByEmail(
+        email: string,
+    ): Promise<UserEntityFields | null> {
+        const user = await this.userModel.query().findOne({ email });
+        return user ?? null;
+    }
+
+    public async getUserWithProfile(
+        id: string,
+    ): Promise<UserSignUpResponseDto['user']> {
+        return this.userModel
+            .query()
+            .modify('withoutHashPasswords')
+            .findById(id)
+            .withGraphFetched('[user_profile]')
+            .castTo<UserSignUpResponseDto['user']>();
+    }
+
     public async findAll(): Promise<UserEntity[]> {
         const users = await this.userModel.query().execute();
 
@@ -20,14 +43,17 @@ class UserRepository implements IRepository {
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
-        const { email, passwordSalt, passwordHash } = entity.toNewObject();
+        const { email, passwordSalt, passwordHash, id, profileId } =
+            entity.toNewObject();
 
         const item = await this.userModel
             .query()
             .insert({
+                id,
                 email,
                 passwordSalt,
                 passwordHash,
+                profileId,
             })
             .returning('*')
             .execute();
