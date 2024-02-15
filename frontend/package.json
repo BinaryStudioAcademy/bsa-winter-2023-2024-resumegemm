@@ -16,6 +16,9 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@fortawesome/free-brands-svg-icons": "6.5.1",
+        "@fortawesome/free-solid-svg-icons": "6.5.1",
+        "@fortawesome/react-fontawesome": "0.2.0",
         "@hookform/resolvers": "2.9.11",
         "@reduxjs/toolkit": "1.9.3",
         "clsx": "2.1.0",
