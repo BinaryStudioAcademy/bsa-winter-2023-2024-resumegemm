@@ -4,8 +4,7 @@
     justify-content: center;
     gap: 5px;
     padding: 20px 40px;
-    color: white;
-    font-family: Poppins, sans-serif;
+    color: var(--color-white);
 }
 
 .greeting__title {
@@ -17,6 +16,6 @@
 
 .greeting__text {
     margin: 0;
-    font-size: 16px;
+    font-size: var(--font-size-subtitle);
     line-height: 1.5;
 }

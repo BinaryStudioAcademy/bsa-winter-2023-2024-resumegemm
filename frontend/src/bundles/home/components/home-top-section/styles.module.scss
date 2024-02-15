@@ -2,6 +2,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column: 1 / -1;
-    background-color: #687a9c;
+    background-color: var(--color-background-dark-blue);
     border-radius: 30px;
 }

@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     font-family: Poppins, sans-serif;
-    background-color: rgba($color: #ccd7dc, $alpha: 40%);
+    background-color: rgba($color: var(--color-disabled-gray), $alpha: 40%);
     border: 1px solid #f6f6fb;
     border-radius: 30px;
 }
@@ -12,10 +12,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 40px;
-    color: #434c66;
+    color: var(--color-text-blue);
     font-size: 16px;
     line-height: 1.5;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid var(--color-white);
     border-radius: 30px 30px 0 0;
 }
 
