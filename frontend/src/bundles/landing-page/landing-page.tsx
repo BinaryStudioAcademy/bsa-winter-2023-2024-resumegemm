@@ -7,9 +7,9 @@ import Arrow2 from '~/assets/img/Arrow 2.png';
 import GettingStarted from '~/assets/img/get_started.png';
 import templateFirstImage from '~/assets/img/Resume Template.png';
 import OnlineEditorFeatureImage from '~/assets/img/UX-UI Designer _ Product Designer Hakim gul bangash 1.png';
-import { Button } from '~/bundles/common/components/components';
-import { ButtonTheme } from '~/bundles/common/enums/enums';
+import { ButtonSize, ButtonVariant } from '~/bundles/common/enums/enums';
 
+import { BaseButton } from '../common/components/base-button/base-button';
 import { FeatureImage } from './components/feature-image';
 import styles from './styles.module.scss';
 
@@ -32,7 +32,9 @@ const LandingPage = (): JSX.Element => {
                         and more. You can easily customize these sections to fit your unique background.
                     </p>
 
-                    <Button label='Create Resume for free' theme={ButtonTheme.BLUE} className={styles.intro__button} />
+                    <BaseButton variant={ButtonVariant.PRIMARY} size={ButtonSize.MEDIUM} className={styles.intro__button}>
+                        <p>Create Resume for free</p>
+                    </BaseButton>
                     <img className={styles.intro__arrow} src={Arrow2} alt='arrow' />
                 </div>
             </div>
@@ -97,7 +99,9 @@ const LandingPage = (): JSX.Element => {
                         We`re thrilled to welcome you to the ResumeGemm family, where your journey to crafting exceptional resumes begins!
                     </p>
 
-                    <Button label='Create Resume for free' className={styles.get_started_section__button} />
+                    <BaseButton variant={ButtonVariant.PRIMARY} size={ButtonSize.MEDIUM} className={styles.get_started_section__button}>
+                        <p>Create Resume for free</p>
+                    </BaseButton>
                 </div>
             </div>
 
