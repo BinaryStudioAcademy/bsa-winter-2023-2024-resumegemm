@@ -1,6 +1,7 @@
 export { App } from '../../../app/app.js';
 export { Button } from './button/button.js';
 export { Checkbox } from './checkbox/checkbox.js';
+export { ErrorFallback } from './error-fallback/error-fallback.js';
 export { Input } from './input/input.js';
 export { Link } from './link/link.js';
 export { Modal } from './modal/modal';
