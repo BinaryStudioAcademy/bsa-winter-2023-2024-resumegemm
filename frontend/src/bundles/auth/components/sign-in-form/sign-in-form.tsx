@@ -8,7 +8,7 @@ const SignInForm: React.FC<Properties> = () => (
     <>
         <h1>Sign In</h1>
         <form>
-        <Button type='submit'>Sign in</Button>
+            <Button>Sign in</Button>
         </form>
     </>
 );
