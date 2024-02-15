@@ -66,6 +66,7 @@ class AuthService {
         return {
             user,
             accessToken: generateToken({ id }),
+            refreshToken: generateToken({ id }),
         };
     }
 }
