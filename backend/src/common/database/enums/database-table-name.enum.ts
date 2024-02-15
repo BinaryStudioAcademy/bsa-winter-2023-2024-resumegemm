@@ -11,6 +11,7 @@ enum DatabaseTableName {
     TEMPLATES = 'templates',
     USER_TEMPLATES = 'user_templates',
     REVIEWS = 'reviews',
+    FILES = 'files',
     RECENTLY_VIEWED = 'recently_viewed',
 }
 
