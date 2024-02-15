@@ -1,5 +1,7 @@
-import { Checkbox, RadioButton, Switch, Tooltip } from '../common/components/components';
+import { Checkbox, RadioButton, Switch,Tooltip  } from '../common/components/components';
 import { TooltipDimensions } from '../common/enums/enums';
+import { Home } from '../home/pages/home';
+import { Templates } from '../home/pages/templates';
 import styles from './styles.module.scss';
 
 const PreviewPage: React.FC = () => {
@@ -26,6 +28,10 @@ const PreviewPage: React.FC = () => {
                             Tooltip
                         </p>
                     </Tooltip>
+                    <Home />
+                </li>
+                <li className={styles.item}>
+                    <Templates />
                 </li>
             </ul>
         </div>
