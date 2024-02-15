@@ -8,6 +8,7 @@ import ArrowImage from '~/assets/img/arrow.svg';
 
 import { CalendarTypes } from '../../enums/calendar/calendar-types.enum';
 import { useAppForm, useFormController } from '../../hooks/hooks';
+import { useClickOutside } from '../../hooks/use-click-outside/use-click-outside.hook';
 import { type CalendarDate, type CalendarMonth,type ValueOf } from '../../types/types';
 import { Toggle } from '../components';
 import { CalendarMonths, DEFAULT_DATE_PAYLOAD, monthRegex,yearRegex } from './constants/calendar.constants';
@@ -45,15 +46,15 @@ const Calendar = <T extends FieldValues>({
 
     const reference = useRef<HTMLDivElement>(null);
 
-    const handleTextChange = useCallback((error: ChangeEvent<HTMLInputElement>): void => {
-        setText(error.target.value);
+    const handleTextChange = useCallback((event: ChangeEvent<HTMLInputElement>): void => {
+        setText(event.target.value);
 
-        const year = error.target.value.match(yearRegex);
+        const year = event.target.value.match(yearRegex);
         if (year) {
             setYear(Number(year[0]));
         }
 
-        const monthMatch = error.target.value.match(monthRegex);
+        const monthMatch = event.target.value.match(monthRegex);
 
         if (monthMatch) {
             for(const month of CalendarMonths) {
@@ -106,18 +107,6 @@ const Calendar = <T extends FieldValues>({
         setSelected(null);
     }, []);
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent): void => {
-            if (reference.current && !reference.current.contains(event.target as Node)) {
-                setUnfocused();
-            }
-        };
-        document.addEventListener('click', handleClickOutside, true);
-        return () => {
-            document.removeEventListener('click', handleClickOutside, true);
-        };
-    }, [setUnfocused]);
-
     const setMonthYearAsText = useCallback((): void => {
         if (presentField.value) {
             setText('Present');
@@ -125,6 +114,8 @@ const Calendar = <T extends FieldValues>({
             setText(month ? `${month.name}, ${year}` : String(year));
         }
     }, [month, year, presentField]);
+
+    useClickOutside(reference, setUnfocused);
 
     useEffect(() => {
 
