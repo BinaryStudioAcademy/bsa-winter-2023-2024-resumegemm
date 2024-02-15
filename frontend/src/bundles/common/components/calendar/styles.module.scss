@@ -1,7 +1,4 @@
 .calendar__container {
-    --orange: #dbae2d;
-    --light-orange: #fdf3d3;
-
     position: relative;
     display: flex;
     flex-direction: column;
@@ -12,8 +9,8 @@
     height: 50px;
     padding: 12px 16px;
     font-family: Poppins, sans-serif;
-    background: linear-gradient(var(--orange) 0 0) bottom / 0% 2px no-repeat
-        #eff2f9;
+    background: linear-gradient(var(--color-accent-dark-yellow) 0 0) bottom / 0% 2px no-repeat
+        var(--color-input-field-gray);
     border: none;
     outline: none;
     cursor: pointer;
@@ -55,13 +52,13 @@
 }
 
 .date_picker__option:not(.date_picker__selected):hover {
-    color: var(--orange);
-    background-color: var(--light-orange);
+    color: var(--color-accent-dark-yellow);
+    background-color: var(--color-accent-light-yellow);
 }
 
 .date_picker__selected {
     color: white;
-    background-color: var(--orange);
+    background-color: var(--color-accent-dark-yellow);
 }
 
 .date_picker__header {
