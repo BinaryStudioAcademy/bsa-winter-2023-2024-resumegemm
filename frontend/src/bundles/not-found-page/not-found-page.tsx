@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button } from '../common/components/components';
+import { BaseButton } from '../common/components/components';
 import { AppRoute } from '../common/enums/app-route.enum';
+import { ButtonVariant } from '../common/enums/enums';
 import styles from './styles.module.scss';
 
 const NotFoundPage = (): JSX.Element => {
@@ -29,9 +30,9 @@ const NotFoundPage = (): JSX.Element => {
             <p className={styles.not_found_page__text}>
                 Oops, no resume for you here. Sorry about that! Try searching elsewhere or reaching out for help.
             </p>
-            <Button onClick={navigateHome}>
+            <BaseButton variant={ButtonVariant.PRIMARY} onClick={navigateHome}>
                 <p>Go home</p>
-            </Button>
+            </BaseButton>
         </div>
     </div>;
 };
