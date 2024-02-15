@@ -1,15 +1,8 @@
 
-import { type CalendarDate } from '~/bundles/common/types/calendar/calendar-date';
 import { type CalendarMonth } from '~/bundles/common/types/types';
 
 const yearRegex = /\d{4}/g;
 const monthRegex = /[A-Za-z]+/;
-
-const DEFAULT_DATE_PAYLOAD: CalendarDate = {
-    present: false,
-    month: null,
-    year: new Date().getFullYear()
-};
 
 const CalendarMonths: CalendarMonth[] = [
     { num: 0, name: 'Jan' },
@@ -28,6 +21,6 @@ const CalendarMonths: CalendarMonth[] = [
 
 export { 
     CalendarMonths,
-    DEFAULT_DATE_PAYLOAD,
     monthRegex,
-    yearRegex };
+    yearRegex 
+};
