@@ -68,7 +68,7 @@ const Calendar = ({
     }, []);
 
     const handleInputFocus = useCallback((focused: boolean) => 
-        clsx(styles.calendar__date_input, styles.focused, focused && styles.calendar__date_input)
+        clsx(styles.calendar__date_input, styles.calendar__date_input, focused && styles.focused)
     , []);
 
     const setCurrentlyFocused = useCallback((): void => setFocused(true), []);
