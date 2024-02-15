@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 
 type Properties = {
     width?: string;
-    error: FieldError | undefined;
+    error?: FieldError;
     label: string;
     children: ReactNode;
 };
@@ -17,6 +17,7 @@ const FormGroup = ({
     width = 'auto',
 }: Properties): JSX.Element => {
     const errorMessage = error?.message;
+
     return (
         <label className={styles.label} style={{ width }}>
             <span className={styles.label__name}>{label}</span>

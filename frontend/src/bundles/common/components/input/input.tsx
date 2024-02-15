@@ -14,10 +14,11 @@ const Input = forwardRef<HTMLInputElement, Properties>(
                 [styles.input__error]: hasError,
                 [styles.input__disabled]: disabled,
             })}
+            {...otherProperties}
             style={{ width }}
             ref={reference}
             type="text"
-            {...otherProperties}
+            
         />
     ),
 );

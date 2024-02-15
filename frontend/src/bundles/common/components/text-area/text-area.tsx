@@ -16,9 +16,9 @@ const TextArea = forwardRef<HTMLTextAreaElement,Properties>(
             [styles.textArea__error]: hasError,
             [styles.textArea__disabled]: disabled
         })}
+        {...otherProperties}
         style={{ width }}
         ref={reference}
-        {...otherProperties}
     ></textarea>
 ));
 
