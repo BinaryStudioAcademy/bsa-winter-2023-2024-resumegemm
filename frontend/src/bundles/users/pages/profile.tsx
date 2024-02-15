@@ -1,5 +1,7 @@
 import { Button } from '~/bundles/common/components/components';
+import { PageTitle } from '~/bundles/common/components/page-title/page-title';
 
+import { ProfileForm } from '../components/profile-form/profile-form';
 import styles from './style.module.scss';
 
 type User = {
@@ -16,9 +18,7 @@ const Profile: React.FC = () => {
     return (
         <div className={styles.profile}>
             <div className={styles.profile__container}>
-                <div className={styles.profile__title}>
-                    <h2>Account settings</h2>
-                </div>
+                <PageTitle title='Account settings' />
                 <div className={styles.profile__content}>
                     <div className={styles.profile__card__title}>
                         <span>Your plan</span>
@@ -45,8 +45,8 @@ const Profile: React.FC = () => {
                     <div className={styles.profile__card__title}>
                         <span>Account</span>
                     </div>
-                    <div className={styles.profile__card}>{/* TODO Update form */}
-                        {/* <ProfileForm onSubmit={handleFormSubmit} /> */}
+                    <div className={styles.profile__card}>
+                        <ProfileForm onSubmit={handleFormSubmit} />
                     </div>
                 </div>
             </div>
