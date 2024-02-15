@@ -3,8 +3,6 @@ import { type ChangeEvent,useCallback } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { Calendar as ReactCalendar } from 'react-calendar';
 
-import ArrowImage from '~/assets/img/arrow.svg';
-
 import { CalendarTypes } from '../../enums/calendar/calendar-types.enum';
 import { useClickOutside } from '../../hooks/use-click-outside/use-click-outside.hook';
 import { type CalendarDate, type CalendarMonth,type ValueOf } from '../../types/types';
@@ -135,8 +133,7 @@ const Calendar = ({
             {focused && (
                 <div className={styles.calendar__date_picker}>
                     <div className={styles.date_picker__header}>
-                        <button className={styles.date_picker__header_arrow_container} onClick={decreaseYear}>
-                            <img alt='arrow' src={ArrowImage} className={styles.date_picker__header_arrow_reversed} />
+                        <button className={styles.date_picker__header_arrow_container_reversed} onClick={decreaseYear}>
                         </button>
                         
                         <button
@@ -148,7 +145,6 @@ const Calendar = ({
                         </button>
 
                         <button className={styles.date_picker__header_arrow_container} onClick={increaseYear}>
-                            <img alt='arrow' src={ArrowImage} className={styles.date_picker__header_arrow} />
                         </button>
                     </div>
 

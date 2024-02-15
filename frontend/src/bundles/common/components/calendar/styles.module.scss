@@ -79,13 +79,29 @@
     height: 30%;
 }
 
-.date_picker__header_arrow_container {
+:is(.date_picker__header_arrow_container, .date_picker__header_arrow_container_reversed) {
     display: flex;
     flex: 1;
     justify-content: center;
     align-items: center;
-    background-color: transparent;
+    width: 100%;
+    min-width: 30px;
+    height: 100%;
+    min-height: 30px;
+    background-color: var(--color-black);
     border: none;
+    mask-image: url('../../../../assets/img/arrow.svg');
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    mask-position: center;
+}
+
+:is(.date_picker__header_arrow_container, .date_picker__header_arrow_container_reversed):hover {
+    background-color: var(--color-accent-dark-yellow);
+}
+
+.date_picker__header_arrow_container_reversed {
+    transform: scaleX(-1);
 }
 
 :is(.date_picker__header_arrow, .date_picker__header_arrow_reversed):hover {
