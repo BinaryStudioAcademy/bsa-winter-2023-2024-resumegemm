@@ -9,6 +9,7 @@
     "scripts": {
         "lint:css": "npx stylelint \"src/**/*.scss\"",
         "lint:js": "npx eslint \"src/**/*.{ts,tsx}\"",
+        "lint:js:fix": "npx eslint \"src/**/*.{ts,tsx}\" --fix",
         "lint:type": "npx tsc --noEmit",
         "lint": "npm run lint:type && npm run lint:js",
         "start:dev": "vite",
@@ -28,7 +29,8 @@
         "react-hook-form": "7.43.5",
         "react-quill": "2.0.0",
         "react-redux": "8.0.5",
-        "react-router-dom": "6.8.2"
+        "react-router-dom": "6.8.2",
+        "react-select": "5.8.0"
     },
     "devDependencies": {
         "@types/react": "18.0.26",

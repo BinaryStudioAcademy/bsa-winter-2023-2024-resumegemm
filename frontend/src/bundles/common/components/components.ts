@@ -3,6 +3,7 @@ export { BaseButton } from './base-button/base-button.js';
 export { Checkbox } from './checkbox/checkbox.js';
 export { Icon } from './icon/icon.js';
 export { IconButton } from './icon-button/icon-button.js';
+export { Dropdown } from './dropdown/dropdown.js';
 export { Input } from './input/input.js';
 export { Link } from './link/link.js';
 export { Modal } from './modal/modal';
