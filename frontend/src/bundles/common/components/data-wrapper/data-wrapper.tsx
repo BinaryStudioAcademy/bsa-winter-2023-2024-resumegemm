@@ -1,5 +1,6 @@
-import { type FC } from 'react';
+import { type FC, type ReactNode } from 'react';
 
+import { Spinner } from '~/bundles/common/components/components';
 import { type DataWrapperProperties } from '~/bundles/common/types/data-wrapper/data-wrapper-properties.type';
 
 import styles from './styles.module.scss';
@@ -8,13 +9,10 @@ const DataWrapper: FC<DataWrapperProperties> = ({
     isLoading,
     hasData,
     children,
-    customSpinnerElement,
-    customMessageElement
+    CustomSpinnerComponent,
+    CustomMessageComponent
 }) => {
-    const defaultSpinnerElement =
-        <div className={styles.data_wrapper__spinner}></div>;
-
-    const defaultMessageElement =
+    const defaultMessageElement: ReactNode =
         <h2 className={styles.data_wrapper__message}>
             There is no data available. Please, try again later.
         </h2>;
@@ -22,14 +20,14 @@ const DataWrapper: FC<DataWrapperProperties> = ({
     if (isLoading) {
         return (
             <div className={styles.data_wrapper__container}>
-            {customSpinnerElement ?? defaultSpinnerElement}
+            {CustomSpinnerComponent ?? <Spinner/>}
             </div>
         );
     }
-    if (!hasData) {
+    if (!hasData && hasData !== undefined) {
         return (
             <div className={styles.data_wrapper__container}>
-                {customMessageElement ?? defaultMessageElement}
+                {CustomMessageComponent ?? defaultMessageElement}
             </div>
         );
     }

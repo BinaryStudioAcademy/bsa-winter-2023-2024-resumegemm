@@ -1,11 +1,11 @@
 import { type ReactElement, type ReactNode } from 'react';
 
 type DataWrapperProperties = {
-    isLoading: boolean,
-    hasData: boolean,
+    isLoading?: boolean,
+    hasData?: boolean,
     children: ReactNode,
-    customSpinnerElement?: ReactElement,
-    customMessageElement?: ReactElement
+    CustomSpinnerComponent?: ReactElement,
+    CustomMessageComponent?: ReactElement
 };
 
 export { type DataWrapperProperties };

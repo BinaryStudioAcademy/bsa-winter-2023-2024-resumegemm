@@ -1,8 +1,10 @@
 export { App } from '../../../app/app.js';
 export { Button } from './button/button.js';
+export { DataWrapper } from './data-wrapper/data-wrapper';
 export { Input } from './input/input.js';
 export { Link } from './link/link.js';
 export { Modal } from './modal/modal';
 export { RouterProvider } from './router-provider/router-provider.js';
+export { Spinner } from './spinner/spinner';
 export { Provider as StoreProvider } from 'react-redux';
 export { Outlet as RouterOutlet } from 'react-router-dom';
