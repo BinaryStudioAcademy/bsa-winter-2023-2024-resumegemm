@@ -2,6 +2,7 @@
     display: flex;
     flex: 1;
     flex-direction: column;
+    height: fit-content;
     background: linear-gradient(to top, white 98%, transparent 0);
     border-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -9,8 +10,7 @@
 }
 
 .feature_image__image_container {
-    height: min-content;
-    max-height: 80%;
+    height: fit-content;
 }
 
 .feature_image {
@@ -24,6 +24,7 @@
 .feature_image__text_container {
     display: flex;
     align-items: center;
+    padding: 10% 5px;
     padding-left: 10px;
 }
 

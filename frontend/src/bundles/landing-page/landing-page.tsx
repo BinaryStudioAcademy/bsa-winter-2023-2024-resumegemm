@@ -58,11 +58,11 @@ const LandingPage = (): JSX.Element => {
                     Features
                 </h2>
 
-                <h3>
+                <h3 className={styles.features__subtitle}>
                     Templates
                 </h3>
 
-                <p>
+                <p className={styles.features__text}>
                     A variety of pre-designed and customizable resume templates catering to different industries, roles, and design preferences.
                 </p>
             </div>
@@ -72,12 +72,12 @@ const LandingPage = (): JSX.Element => {
                     Features
                 </h2>
 
-                <h3>
-                Online Editor
+                <h3 className={styles.features__subtitle}>
+                    Online Editor
                 </h3>
 
-                <p>
-                Ability to customize templates by changing colors, layouts, and adding personal branding elements, drag-and-drop functionality to rearrange sections and content blocks.
+                <p className={styles.features__text}>
+                    Ability to customize templates by changing colors, layouts, and adding personal branding elements, drag-and-drop functionality to rearrange sections and content blocks.
                 </p>
             </div>
                 
