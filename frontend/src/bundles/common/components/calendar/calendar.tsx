@@ -160,7 +160,7 @@ const Calendar = ({
 
                     {type === CalendarTypes.withPresent &&
                         <div className={styles.date_picker__present}>
-                            <Switch onChange={setPresent} label='Present' />
+                            <Switch onChange={setPresent} label='Present' checked={present} />
                         </div>
                     }
                 </div>
