@@ -1,4 +1,5 @@
-import { Checkbox, RadioButton, Switch } from '../common/components/components';
+import { Checkbox, RadioButton, Switch, Tooltip } from '../common/components/components';
+import { TooltipDimensions } from '../common/enums/enums';
 import styles from './styles.module.scss';
 
 const PreviewPage: React.FC = () => {
@@ -12,6 +13,19 @@ const PreviewPage: React.FC = () => {
                     <Checkbox label="Checkbox" />
                     <RadioButton label="Radio button" />
                     <Switch label="Switch" />
+                </li>
+                <li className={styles.item}>
+                    <div className={styles.tooltip_small_example_container}>
+                        <Tooltip dimensionType={TooltipDimensions.expand100Percent} text='tooltip text' />
+                    </div>
+                    <div className={styles.tooltip_big_example_container}>
+                        <Tooltip dimensionType={TooltipDimensions.expand100Percent} text='tooltip text' />
+                    </div>
+                    <Tooltip text='tooltip text'>
+                        <p>
+                            Tooltip
+                        </p>
+                    </Tooltip>
                 </li>
             </ul>
         </div>
