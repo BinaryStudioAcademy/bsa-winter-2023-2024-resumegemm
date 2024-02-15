@@ -6,8 +6,9 @@ import { type Control, type FieldPath, type FieldValues } from 'react-hook-form'
 
 import ArrowImage from '~/assets/img/arrow.svg';
 
+import { CalendarTypes } from '../../enums/calendar/calendar-types.enum';
 import { useAppForm, useFormController } from '../../hooks/hooks';
-import { type CalendarDate, type CalendarMonth } from '../../types/types';
+import { type CalendarDate, type CalendarMonth,type ValueOf } from '../../types/types';
 import { Toggle } from '../components';
 import { CalendarMonths, DEFAULT_DATE_PAYLOAD, monthRegex,yearRegex } from './constants/calendar.constants';
 import styles from './styles.module.scss';
@@ -15,12 +16,12 @@ import styles from './styles.module.scss';
 type Properties<T extends FieldValues> = {
     control: Control<T, null>;
     name: FieldPath<T>;
-    showPresent?: boolean;
+    type?: ValueOf<typeof CalendarTypes>;
     className?: string
 };
 
 const Calendar = <T extends FieldValues>({
-    showPresent = false,
+    type = CalendarTypes.regular,
     className = '',
     name,
     control
@@ -172,11 +173,11 @@ const Calendar = <T extends FieldValues>({
                         showNavigation={false}
                     />
 
-                    {showPresent && (
+                    {type === CalendarTypes.withPresent &&
                         <div className={styles.date_picker__present}>
                             <Toggle type='switch' label='Present' name='present' control={innerControl} />
                         </div>
-                    )}
+                    }
                 </div>
             )}
         </div>
