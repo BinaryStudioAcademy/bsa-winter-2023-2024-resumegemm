@@ -1,0 +1,28 @@
+.tooltip__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tooltip__container_100_percent {
+    width: 100%;
+    height: 100%;
+}
+
+.tooltip__container_fit_content {
+    width: fit-content;
+    height: fit-content;
+}
+
+.tooltip__popup {
+    max-width: 30vw;
+    padding: 10px;
+}
+
+.tooltip__anchor_container {
+    width: fit-content;
+    width: 100%;
+    height: 100%;
+}
