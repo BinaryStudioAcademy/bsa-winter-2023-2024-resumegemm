@@ -1,75 +1,21 @@
-import clsx from 'clsx';
+import { type FC, type ReactNode } from 'react';
 
-import {
-    type ButtonTheme,
-    ButtonSize,
-    IconName,
-    IconSize,
-} from '~/bundles/common/enums/enums';
-import { type ButtonType, type ValueOf } from '~/bundles/common/types/types';
-
-import { Icon } from '../icon/icon';
-import styles from './styles.module.scss';
-
-type ButtonProperties = {
-    label?: string;
-    type?: ButtonType;
-    theme?: ValueOf<typeof ButtonTheme>;
-    size?: ValueOf<typeof ButtonSize>;
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
-    isDisabled?: boolean;
+type Properties = {
+    type?: 'button' | 'submit';
+    onClick?: () => void;
     className?: string;
-    isRightIcon?: boolean;
-    isLeftIcon?: boolean;
+    children: ReactNode;
 };
 
-const Button: React.FC<ButtonProperties> = ({
-    label,
-    onClick,
+const Button: FC<Properties> = ({
     type = 'button',
-    theme,
-    size = ButtonSize.MEDIUM,
-    isDisabled = false,
+    onClick,
     className,
-    isRightIcon,
-    isLeftIcon,
-}) => {
-    return (
-        <button
-            disabled={isDisabled}
-            onClick={onClick}
-            className={clsx(
-                styles.btn,
-                styles[`btn__${size}`],
-                theme && styles[`theme-${theme}`],
-                // styles.disabled,
-                className,
-            )}
-            type={type}
-        >
-            {isLeftIcon && (
-                <Icon
-                    name={IconName.PLUS}
-                    size={
-                        size === ButtonSize.MEDIUM
-                            ? IconSize.LARGE
-                            : IconSize.MEDIUM
-                    }
-                />
-            )}
-            {label}
-            {isRightIcon && (
-                <Icon
-                    name={IconName.CHEVRON_DOWN}
-                    size={
-                        size === ButtonSize.MEDIUM
-                            ? IconSize.LARGE
-                            : IconSize.MEDIUM
-                    }
-                />
-            )}
-        </button>
-    );
-};
+    children,
+}) => (
+    <button className={className} onClick={onClick} type={type}>
+        {children}
+    </button>
+);
 
 export { Button };
