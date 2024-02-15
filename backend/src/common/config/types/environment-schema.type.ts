@@ -12,6 +12,12 @@ type EnvironmentSchema = {
         POOL_MIN: number;
         POOL_MAX: number;
     };
+    AWS: {
+        REGION: string;
+        SECRET_ACCESS_KEY: string;
+        ACCESS_KEY: string;
+        BUCKET_NAME: string;
+    }
 };
 
 export { type EnvironmentSchema };
