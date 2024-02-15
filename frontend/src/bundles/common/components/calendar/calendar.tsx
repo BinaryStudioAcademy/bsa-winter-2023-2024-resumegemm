@@ -2,31 +2,27 @@ import clsx from 'clsx';
 import { type ChangeEvent,useCallback } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { Calendar as ReactCalendar } from 'react-calendar';
-import { type Control, type FieldPath, type FieldValues } from 'react-hook-form';
 
 import ArrowImage from '~/assets/img/arrow.svg';
 
 import { CalendarTypes } from '../../enums/calendar/calendar-types.enum';
-import { useAppForm, useFormController } from '../../hooks/hooks';
 import { useClickOutside } from '../../hooks/use-click-outside/use-click-outside.hook';
 import { type CalendarDate, type CalendarMonth,type ValueOf } from '../../types/types';
-import { Toggle } from '../components';
-import { CalendarMonths, DEFAULT_DATE_PAYLOAD, monthRegex,yearRegex } from './constants/calendar.constants';
+import { Switch } from '../components';
+import { CalendarMonths, monthRegex,yearRegex } from './constants/calendar.constants';
 import styles from './styles.module.scss';
 
-type Properties<T extends FieldValues> = {
-    control: Control<T, null>;
-    name: FieldPath<T>;
+type Properties = {
+    onChange?: (date: CalendarDate) => void;
     type?: ValueOf<typeof CalendarTypes>;
     className?: string
 };
 
-const Calendar = <T extends FieldValues>({
+const Calendar = ({
     type = CalendarTypes.regular,
     className = '',
-    name,
-    control
-}: Properties<T>): JSX.Element => {
+    onChange
+}: Properties): JSX.Element => {
     const [selected, setSelected] = useState<number | null>(null);
 
     const [year, setYear] = useState(new Date().getFullYear());
@@ -36,13 +32,7 @@ const Calendar = <T extends FieldValues>({
 
     const [focused, setFocused] = useState(false);
 
-    const { control: innerControl } = useAppForm<CalendarDate>({
-        defaultValues: DEFAULT_DATE_PAYLOAD,
-    });
-
-    const { field } = useFormController({ name, control });
-
-    const { field: presentField } = useFormController({ name: 'present', control: innerControl });
+    const [present, setPresent] = useState(false);
 
     const reference = useRef<HTMLDivElement>(null);
 
@@ -109,26 +99,28 @@ const Calendar = <T extends FieldValues>({
     }, []);
 
     const setMonthYearAsText = useCallback((): void => {
-        if (presentField.value) {
+        if (present) {
             setText('Present');
             return;
         }
 
         setText(month ? `${month.name}, ${year}` : String(year));
-    }, [month, year, presentField]);
+    }, [month, year, present]);
 
     useClickOutside(reference, setUnfocused);
 
     useEffect(() => {
 
-        field.onChange({
-            year: year,
-            month: month,
-            present: presentField.value
-        });
-
+        if(onChange) {
+            onChange({
+                year: year,
+                month: month,
+                present: present
+            });
+        }
+        
         setMonthYearAsText();
-    }, [month, year, presentField, setMonthYearAsText, field]);
+    }, [month, year, present, setMonthYearAsText, onChange]);
 
     return (
         <div className={clsx(styles.calendar__container, className)} ref={reference}>
@@ -168,7 +160,7 @@ const Calendar = <T extends FieldValues>({
 
                     {type === CalendarTypes.withPresent &&
                         <div className={styles.date_picker__present}>
-                            <Toggle type='switch' label='Present' name='present' control={innerControl} />
+                            <Switch onChange={setPresent} label='Present' />
                         </div>
                     }
                 </div>
