@@ -1,10 +1,11 @@
 import clsx from 'clsx';
+import { type ReactNode } from 'react';
 
 import styles from './styles.module.scss';
 
 type IconButtonProperties = {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
-    children?: React.ReactNode;
+    children?: ReactNode;
     className?: string;
 };
 
