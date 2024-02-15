@@ -43,6 +43,15 @@ class Config implements IConfig {
                     default: null,
                 },
             },
+            JWT: {
+                SECRET: {
+                    doc: 'Secret key for token generation',
+                    format: String,
+                    env: 'JWT_SECRET',
+                    default: null,
+                },
+                EXPIRES_IN: '48h',
+            },
             DB: {
                 CONNECTION_STRING: {
                     doc: 'Database connection string',
