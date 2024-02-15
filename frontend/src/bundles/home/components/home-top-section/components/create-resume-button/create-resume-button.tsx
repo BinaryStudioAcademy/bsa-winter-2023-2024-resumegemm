@@ -1,5 +1,5 @@
-import { PlusCircleIcon } from '../icons/plus-circle-icon';
-import { ResumeIcon } from '../icons/resume-icon';
+import { PlusCircleIcon } from '../../../icons/plus-circle-icon';
+import { ResumeIcon } from '../../../icons/resume-icon';
 import styles from './styles.module.scss';
 
 const CreateResumeButton: React.FC = () => {
