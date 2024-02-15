@@ -19,7 +19,7 @@ const DimensionTypes: Record<TooltipDimensions, string> = {
 
 const Tooltip: React.FC<Properties> = ({
     className = '',
-    children = <div className={styles.tooltip__image_container}></div>,
+    children,
     text,
     dimensionType = TooltipDimensions.fitContent
 }) => {
