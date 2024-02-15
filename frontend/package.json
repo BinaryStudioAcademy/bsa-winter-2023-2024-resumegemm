@@ -4,7 +4,7 @@
     "type": "module",
     "engines": {
         "node": "18.x.x",
-        "npm": "9.x.x"
+        "npm": "10.x.x"
     },
     "scripts": {
         "lint:css": "npx stylelint \"src/**/*.scss\"",
@@ -18,10 +18,12 @@
     "dependencies": {
         "@hookform/resolvers": "2.9.11",
         "@reduxjs/toolkit": "1.9.3",
+        "clsx": "2.1.0",
         "html2canvas": "1.4.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-hook-form": "7.43.5",
+        "react-quill": "2.0.0",
         "react-redux": "8.0.5",
         "react-router-dom": "6.8.2",
         "react-tooltip": "5.26.2"
