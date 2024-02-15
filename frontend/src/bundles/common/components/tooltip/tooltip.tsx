@@ -1,8 +1,6 @@
 import clsx from 'clsx';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 
-import QuestionIcon from '~/assets/img/question-circle.svg';
-
 import styles from './styles.module.scss';
 
 type Properties = {
@@ -15,8 +13,8 @@ const Tooltip: React.FC<Properties> = ({
     text
 }) => {
     return <div className={clsx(className, styles.tooltip__container)}>
-        <img src={QuestionIcon} alt='tooltip' className={styles.tooltip__image} />
-        <ReactTooltip anchorSelect={`.${styles.tooltip__image}`} className={styles.tooltip__popup} >
+        <div className={styles.tooltip__image_container}></div>
+        <ReactTooltip anchorSelect={`.${styles.tooltip__image_container}`} className={styles.tooltip__popup} >
             <p className={styles.tooltip__text}>{text}</p>
         </ReactTooltip>
     </div>;

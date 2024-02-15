@@ -1,12 +1,14 @@
 .tooltip__container {
+    --golden: #dbae2d;
+
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: fit-content;
+    width: 100%;
     height: 100%;
-    margin-left: 300px;
 }
 
 .tooltip__popup {
@@ -14,11 +16,14 @@
     padding: 10px;
 }
 
-.tooltip__image {
+.tooltip__image_container {
+    width: 100%;
+    min-width: 20px;
     height: 100%;
-    max-height: 30px;
-}
+    min-height: 20px;
+    background-color: var(--golden);
+    mask-image: url('../../../../assets/img/question-circle.svg');
+    mask-repeat: no-repeat;
+    mask-position: center;
 
-.tooltip__text {
-    padding-right: 10px;
 }
