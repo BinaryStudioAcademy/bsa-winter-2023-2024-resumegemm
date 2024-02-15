@@ -31,7 +31,6 @@ const App: React.FC = () => {
     return (
         <>
             <img src={reactLogo} className="App-logo" width="30" alt="logo" />
-
             <ul className="App-navigation-list">
                 <li>
                     <Link to={AppRoute.ROOT}>Root</Link>
