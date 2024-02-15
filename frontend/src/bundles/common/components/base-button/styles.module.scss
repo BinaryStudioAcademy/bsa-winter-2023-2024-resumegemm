@@ -19,7 +19,7 @@
     text-align: center;
     text-decoration: none;
     vertical-align: baseline;
-    border: 1px solid var(--black);
+    border: 1px solid #000000;
     border-radius: 12px;
     cursor: pointer;
 }
@@ -48,54 +48,54 @@
 }
 
 .button__primary {
-    color: var(--white);
+    color: #ffffff;
     font-weight: 600;
-    background-color: var(--gray-1);
+    background-color: #687a9c;
     border: none;
     border-radius: 52px;
 }
 
 .button__primary:hover {
-    color: var(--white);
-    background-color: var(--gray-6);
+    color:  #ffffff;
+    background-color:  #3f557e;
 }
 
 .button__primary:disabled {
-    background-color: var(--gray-2);
+    background-color: #ccd7dc;
 }
 
 .button__outlined {
-    color: var(--gray-1);
+    color: #687a9c;
     font-weight: 600;
     background-color: transparent;
-    border: 1px solid var(--gray-1);
+    border: 1px solid #687a9c;
     border-radius: 52px;
 }
 
 .button__outlined:hover {
-    color: var(--gray-6);
-    border: 1px solid var(--gray-6);
+    color: #3f557e;
+    border: 1px solid  #3f557e;
 }
 
 .button__outlined:disabled {
-    color: var(--white);
-    background-color: var(--gray-2);
+    color:  #ffffff;
+    background-color: #ccd7dc;
     border: none;
 }
 
 .button__ghost {
-    color: var(--gray-1);
+    color: #687a9c;
     font-weight: 600;
     background-color: transparent;
     border: none;
 }
 
 .button__ghost:hover {
-    color: var(--gray-6);
+    color:  #3f557e;
 }
 
 .button__ghost:disabled {
-    color: var(--gray-2);
+    color: #ccd7dc;
 }
 
 .button__orange,
@@ -104,9 +104,9 @@
     width: 48px;
     height: 48px;
     padding: 0;
-    color: var(--white);
+    color:  #ffffff;
     line-height: 50px;
-    background: var(--yellow-4);
+    background: #dbae2d;
     border: none;
     border-radius: 9px;
     outline: none;
