@@ -26,6 +26,15 @@ const Calendar = <T extends FieldValues>({
     name,
     control
 }: Properties<T>): JSX.Element => {
+    const [selected, setSelected] = useState<number | null>(null);
+
+    const [year, setYear] = useState(new Date().getFullYear());
+    const [month, setMonth] = useState<CalendarMonth | null>(null);
+
+    const [text, setText] = useState('');
+
+    const [focused, setFocused] = useState(false);
+
     const { control: innerControl } = useAppForm<CalendarDate>({
         defaultValues: DEFAULT_DATE_PAYLOAD,
     });
@@ -35,8 +44,6 @@ const Calendar = <T extends FieldValues>({
     const { field: presentField } = useFormController({ name: 'present', control: innerControl });
 
     const reference = useRef<HTMLDivElement>(null);
-
-    const [text, setText] = useState('');
 
     const handleTextChange = useCallback((error: ChangeEvent<HTMLInputElement>): void => {
         setText(error.target.value);
@@ -68,19 +75,12 @@ const Calendar = <T extends FieldValues>({
         }
     }, []);
 
-    const [focused, setFocused] = useState(false);
-
     const handleInputFocus = useCallback((focused: boolean) => 
         clsx(styles.calendar__date_input, styles.focused, focused && styles.calendar__date_input)
     , []);
 
     const setCurrentlyFocused = useCallback((): void => setFocused(true), []);
     const setUnfocused = useCallback((): void => setFocused(false), []);
-
-    const [selected, setSelected] = useState<number | null>(null);
-
-    const [year, setYear] = useState(new Date().getFullYear());
-    const [month, setMonth] = useState<CalendarMonth | null>(null);
 
     const increaseYear = useCallback((): void => setYear(year + 1), [year]);
     const decreaseYear = useCallback((): void => setYear(year - 1), [year]);
