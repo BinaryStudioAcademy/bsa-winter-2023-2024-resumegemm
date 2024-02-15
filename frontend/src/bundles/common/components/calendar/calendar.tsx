@@ -55,24 +55,25 @@ const Calendar = <T extends FieldValues>({
         }
 
         const monthMatch = event.target.value.match(monthRegex);
-
-        if (monthMatch) {
-            for(const month of CalendarMonths) {
-                if (
-                    monthMatch[0]
-                        .toLowerCase()
-                        .includes(month.name.toLowerCase()) ||
-                    month.name
-                        .toLowerCase()
-                        .startsWith(monthMatch[0].toLowerCase())
-                ) {
-                    setMonth(month);
-                    setSelected(month.num);
-                }
-            }
-        } else {
+        
+        if (!monthMatch) {
             setMonth(null);
             setSelected(0);
+            return;
+        }
+
+        for(const month of CalendarMonths) {
+            if (
+                monthMatch[0]
+                    .toLowerCase()
+                    .includes(month.name.toLowerCase()) ||
+                month.name
+                    .toLowerCase()
+                    .startsWith(monthMatch[0].toLowerCase())
+            ) {
+                setMonth(month);
+                setSelected(month.num);
+            }
         }
     }, []);
 
@@ -110,9 +111,10 @@ const Calendar = <T extends FieldValues>({
     const setMonthYearAsText = useCallback((): void => {
         if (presentField.value) {
             setText('Present');
-        } else {
-            setText(month ? `${month.name}, ${year}` : String(year));
+            return;
         }
+
+        setText(month ? `${month.name}, ${year}` : String(year));
     }, [month, year, presentField]);
 
     useClickOutside(reference, setUnfocused);
