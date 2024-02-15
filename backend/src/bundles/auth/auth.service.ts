@@ -1,4 +1,12 @@
+import { ExceptionMessage, HttpCode, HttpError } from 'shared/build/index.js';
+
 import {
+    comparePasswords,
+    generateToken,
+} from '~/bundles/auth/helpers/helpers.js';
+import {
+    type UserSignInRequestDto,
+    type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
 } from '~/bundles/users/types/types.js';
@@ -11,10 +19,54 @@ class AuthService {
         this.userService = userService;
     }
 
-    public signUp(
+    public async signUp(
         userRequestDto: UserSignUpRequestDto,
     ): Promise<UserSignUpResponseDto> {
-        return this.userService.create(userRequestDto);
+        const foundUserByEmail = await this.userService.findByEmail(
+            userRequestDto.email,
+        );
+        if (foundUserByEmail) {
+            throw new HttpError({
+                message: ExceptionMessage.EMAIL_TAKEN,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+        const { id } = await this.userService.create(userRequestDto);
+
+        const user = await this.userService.getUserWithProfile(id);
+
+        return {
+            accessToken: generateToken({ id }),
+            user,
+        };
+    }
+
+    public async login({
+        email,
+        password,
+    }: UserSignInRequestDto): Promise<UserSignInResponseDto> {
+        const foundUserByEmail = await this.userService.findByEmail(email);
+
+        if (!foundUserByEmail) {
+            throw new HttpError({
+                message: ExceptionMessage.USER_NOT_FOUND,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+        const { passwordHash, id } = foundUserByEmail;
+        const isEqualPassword = await comparePasswords(password, passwordHash);
+
+        if (!isEqualPassword) {
+            throw new HttpError({
+                message: ExceptionMessage.INVALID_PASSWORD,
+                status: HttpCode.UNAUTHORIZED,
+            });
+        }
+        const user = await this.userService.getUserWithProfile(id);
+        return {
+            user,
+            accessToken: generateToken({ id }),
+        };
     }
 }
 
