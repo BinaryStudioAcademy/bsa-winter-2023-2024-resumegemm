@@ -12,6 +12,7 @@ import {
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { store } from '~/framework/store/store';
 
+import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { PreviewPage } from './bundles/preview/preview';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
@@ -36,6 +37,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 element: <Auth />,
                             },
                         ],
+                    },
+                    {
+                        path: '*',
+                        element: <NotFoundPage />,
                     },
                     {
                         path: AppRoute.PREVIEW,
