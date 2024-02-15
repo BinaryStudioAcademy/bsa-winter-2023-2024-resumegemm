@@ -1,5 +1,3 @@
-import { ErrorBoundary } from 'react-error-boundary';
-
 import reactLogo from '~/assets/img/react.svg';
 import { Link, RouterOutlet } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
@@ -28,7 +26,7 @@ const App: React.FC = () => {
     }, [isRoot, dispatch]);
 
     return (
-        <ErrorBoundary fallback={<div>Something went wrong</div>}>
+        <>
             <img src={reactLogo} className="App-logo" width="30" alt="logo" />
             <ul className="App-navigation-list">
                 <li>
@@ -57,7 +55,7 @@ const App: React.FC = () => {
                     </ul>
                 </>
             )}
-        </ErrorBoundary>
+        </>
     );
 };
 
