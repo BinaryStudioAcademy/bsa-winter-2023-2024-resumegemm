@@ -1,0 +1,17 @@
+export { Badge } from './common/badge/badge';
+export { DescriptionItem } from './common/description-item/description-item';
+export { ContactItem } from './contacts/components/contact-item/contact-item';
+export { Contacts } from './contacts/contacts';
+export { Design } from './design/design';
+export { Education } from './education/education';
+export { ExperienceItem } from './experience/components/experience-item/experience-item';
+export { Experience } from './experience/experience';
+export { Languages } from './languges/languages';
+export { Portfolio } from './portfolio/portfolio';
+export { Profile } from './profile/profile';
+export { RecommendationItem } from './recommendations/components/recommendation-item/recommendation-item';
+export { Recommendations } from './recommendations/recommendations';
+export { ResumePreview } from './resume-preview/resume-review';
+export { Socials } from './socials/socials';
+export { Summary } from './summary/summary';
+export { TechStack } from './tech-stack/tech-stack';
