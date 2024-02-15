@@ -1,3 +1,11 @@
+.width__full {
+    width: 100%;
+}
+
+.width__default {
+    width: auto;
+}
+
 .button__base {
     display: flex;
     justify-content: center;
@@ -103,8 +111,4 @@
     border-radius: 9px;
     outline: none;
     cursor: pointer;
-}
-
-.fluid {
-    width: 100%;
 }
