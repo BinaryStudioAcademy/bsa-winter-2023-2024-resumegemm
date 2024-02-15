@@ -42,7 +42,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                         name="password"
                     />
                 </p>
-                <Button type="submit">Sign up</Button>
+                <Button type="submit" label="Sign up" />
             </form>
         </>
     );
