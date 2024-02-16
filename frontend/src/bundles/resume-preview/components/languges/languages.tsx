@@ -5,12 +5,12 @@ import {
 
 import styles from './styles.module.scss';
 
-interface LanguagesProperties {
+type Properties = {
     data: LanguagesData;
     json_styles: LanguagesStyles;
-}
+};
 
-const Languages: React.FC<LanguagesProperties> = ({ data, json_styles }) => {
+const Languages: React.FC<Properties> = ({ data, json_styles }) => {
     return (
         <div className={styles.resume_preview__section_wrapper}>
             <div className={styles.resume_preview__aside_section_header}>

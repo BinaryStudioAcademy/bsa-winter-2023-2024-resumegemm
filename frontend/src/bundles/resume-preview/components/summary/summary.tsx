@@ -7,12 +7,12 @@ import {
 import { Badge } from '../components';
 import styles from './styles.module.scss';
 
-interface SummaryDataProperties {
+type Properties = {
     data: SummaryData;
     json_styles: SummaryStyles;
-}
+};
 
-const Summary: React.FC<SummaryDataProperties> = ({ data, json_styles }) => (
+const Summary: React.FC<Properties> = ({ data, json_styles }) => (
     <div className={styles.resume_preview__section_wrapper}>
         <div className={styles.resume_preview__main_section_header}>
             <h3 className={styles.section_header__title}>Summary</h3>

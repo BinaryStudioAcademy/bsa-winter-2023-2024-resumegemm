@@ -6,15 +6,12 @@ import {
 import { Badge, DescriptionItem } from '../components';
 import styles from './styles.module.scss';
 
-interface TechStackDataProperties {
+type Properties = {
     data: TechStackData;
     json_styles: TechStackStyles;
-}
+};
 
-const TechStack: React.FC<TechStackDataProperties> = ({
-    data,
-    json_styles,
-}) => {
+const TechStack: React.FC<Properties> = ({ data, json_styles }) => {
     return (
         <div className={styles.resume_preview__section_wrapper}>
             <div className={styles.resume_preview__aside_section_header}>

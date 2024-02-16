@@ -5,12 +5,12 @@ import {
 
 import styles from './styles.module.scss';
 
-interface EducationProperties {
+type Properties = {
     data: EducationData;
     json_styles: EducationStyles;
-}
+};
 
-const Education: React.FC<EducationProperties> = ({ data, json_styles }) => {
+const Education: React.FC<Properties> = ({ data, json_styles }) => {
     return (
         <div className={styles.resume_preview__section_wrapper}>
             <div className={styles.resume_preview__aside_section_header}>

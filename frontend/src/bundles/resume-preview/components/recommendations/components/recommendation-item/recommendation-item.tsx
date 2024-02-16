@@ -2,7 +2,7 @@ import { svg } from '~/assets/img/resume_preview/resume-svg';
 
 import styles from './styles.module.scss';
 
-interface RecommendationItemProperties {
+type Properties = {
     item: {
         photo: string;
         name: string;
@@ -10,11 +10,9 @@ interface RecommendationItemProperties {
         company: string;
         description: string;
     };
-}
+};
 
-const RecommendationItem: React.FC<RecommendationItemProperties> = ({
-    item,
-}) => (
+const RecommendationItem: React.FC<Properties> = ({ item }) => (
     <li className={styles.section_body__item_recommendation}>
         <div className={styles.recommendation__header}>
             <div className={styles.section_body__image}>

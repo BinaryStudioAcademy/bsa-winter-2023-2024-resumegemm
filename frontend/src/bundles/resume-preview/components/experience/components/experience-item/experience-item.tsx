@@ -8,15 +8,12 @@ import {
 
 import styles from './styles.module.scss';
 
-interface ExperienceItemProperties {
+type Properties = {
     item: ExperienceData;
     json_styles: ExperienceStyles;
-}
+};
 
-const ExperienceItem: React.FC<ExperienceItemProperties> = ({
-    item,
-    json_styles,
-}) => {
+const ExperienceItem: React.FC<Properties> = ({ item, json_styles }) => {
     const {
         company_logo,
         job_position,

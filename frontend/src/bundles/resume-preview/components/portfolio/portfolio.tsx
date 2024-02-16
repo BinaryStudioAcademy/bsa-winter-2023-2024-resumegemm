@@ -7,15 +7,12 @@ import {
 import { Badge } from '../components';
 import styles from './styles.module.scss';
 
-interface PortfolioProperties {
+type Properties = {
     data: PortfolioData;
     json_styles: PortfolioStyles;
-}
+};
 
-const Portfolio: React.FC<PortfolioProperties> = ({
-    data,
-    json_styles,
-}) => {
+const Portfolio: React.FC<Properties> = ({ data, json_styles }) => {
     return (
         <div className={styles.resume_preview__section_wrapper}>
             <div className={styles.resume_preview__aside_section_header}>

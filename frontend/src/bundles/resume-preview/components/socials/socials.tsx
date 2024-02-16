@@ -8,12 +8,12 @@ import {
 import { Badge } from '../components';
 import styles from './styles.module.scss';
 
-interface SocialsPropperties {
+type Propperties = {
     data: SocialsData;
     json_styles: SocialsStyles;
-}
+};
 
-const Socials: React.FC<SocialsPropperties> = ({ data, json_styles }) => {
+const Socials: React.FC<Propperties> = ({ data, json_styles }) => {
     return (
         <div
             className={clsx(
