@@ -1,8 +1,11 @@
-import { type RelationMappings,Model } from 'objection';
+import { type RelationMappings, Model } from 'objection';
 
 import { ProfileModel } from '~/bundles/profile/profile.js';
 import { TemplateModel } from '~/bundles/templates/templates.js';
-import { AbstractModel, DatabaseTableName } from '~/common/database/database.js';
+import {
+    AbstractModel,
+    DatabaseTableName,
+} from '~/common/database/database.js';
 
 class UserModel extends AbstractModel {
     public 'email': string;

@@ -1,8 +1,11 @@
-import { type RelationMappings,Model } from 'objection';
+import { type RelationMappings, Model } from 'objection';
 
 import { ResumeModel } from '~/bundles/resumes/resumes.js';
 import { UserModel } from '~/bundles/users/users.js';
-import { AbstractModel, DatabaseTableName } from '~/common/database/database.js';
+import {
+    AbstractModel,
+    DatabaseTableName,
+} from '~/common/database/database.js';
 
 class TemplateModel extends AbstractModel {
     public 'isOwner': boolean;
@@ -32,9 +35,9 @@ class TemplateModel extends AbstractModel {
                     from: `${DatabaseTableName.TEMPLATES}.id`,
                     through: {
                         from: `${DatabaseTableName.USER_TEMPLATES}.templateId`,
-                        to: `${DatabaseTableName.USER_TEMPLATES}.userId`
+                        to: `${DatabaseTableName.USER_TEMPLATES}.userId`,
                     },
-                    to: `${DatabaseTableName.USERS}.id`
+                    to: `${DatabaseTableName.USERS}.id`,
                 },
             },
         };
