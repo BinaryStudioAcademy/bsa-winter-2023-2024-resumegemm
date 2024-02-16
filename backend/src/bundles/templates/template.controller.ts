@@ -1,4 +1,5 @@
 import  { type PartialModelObject } from 'objection';
+import { TemplatesApiPath } from 'shared/build/index.js';
 
 import  { type ApiHandlerOptions,type ApiHandlerResponse  } from '~/common/controller/controller.js';
 import { Controller } from '~/common/controller/controller.js';
@@ -8,7 +9,6 @@ import  { type ILogger } from '~/common/logger/logger.js';
 
 import  { type TemplateModel } from './template.model.js';
 import  { type Template } from './types/template.type.js';
-import { TemplatesApiPath } from './types/template-api-path.enum.js';
 import  { type ITemplateService } from './types/template-service.type.js';
 
 class TemplateController extends Controller {
