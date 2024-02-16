@@ -3,6 +3,7 @@ import { PageTitle } from '~/bundles/common/components/page-title/page-title';
 import { ProfileCard } from '../components/profile-card/profile-card';
 import { ProfileForm } from '../components/profile-form/profile-form';
 import { ProfileInfo } from '../components/profile-info/profile-info';
+import { Socials } from '../components/socials/socials';
 import styles from './style.module.scss';
 
 type User = {
@@ -26,9 +27,11 @@ const Profile: React.FC = () => {
                 <ProfileCard title="Account">
                     <ProfileForm onSubmit={handleFormSubmit} />
                 </ProfileCard>
-                <ProfileCard title="Socials">bla</ProfileCard>
+                <ProfileCard title="Social profile">
+                    <Socials />
+                </ProfileCard>
                 <ProfileCard title="Subscription">
-                    <ProfileForm onSubmit={handleFormSubmit} />
+                    bla
                 </ProfileCard>
                 <ProfileCard title="Delete account">
                     <ProfileForm onSubmit={handleFormSubmit} />
