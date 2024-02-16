@@ -1,12 +1,12 @@
 import crypto from 'node:crypto';
 
-import  { type PartialModelObject } from 'objection';
+import  { type TemplateGetAllResponseDto,type TemplateUpdateItemRequestDto  } from 'shared/build';
 
 import  { type TemplateModel } from './template.model';
 import  { type Template } from './types/template.type';
 import  { type ITemplateRepository } from './types/template-repository.type';
 
-class TemplateRepository implements ITemplateRepository<Template> {
+class TemplateRepository implements ITemplateRepository {
     private templateModel: typeof TemplateModel;
 
     public constructor(templateModel: typeof TemplateModel) {
@@ -17,8 +17,11 @@ class TemplateRepository implements ITemplateRepository<Template> {
         return await this.templateModel.query().findById(id);
     }
 
-    public async findAll(): Promise<Template[]> {
-        return await this.templateModel.query();
+    public async findAll(): Promise<TemplateGetAllResponseDto> {
+        const response= await this.templateModel.query();
+        return {
+            items:response
+        };
     }
 
     public async create(payload: Template): Promise<Template> {
@@ -26,7 +29,7 @@ class TemplateRepository implements ITemplateRepository<Template> {
         return await this.templateModel.query().insert(payload).returning('*');
     }
 
-    public async update(id:number, data:PartialModelObject<TemplateModel>): Promise<Template> {
+    public async update(id:number, data:TemplateUpdateItemRequestDto): Promise<Template> {
         return await this.templateModel.query().updateAndFetchById(id,data);
     }
 

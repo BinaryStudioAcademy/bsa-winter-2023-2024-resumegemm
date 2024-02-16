@@ -1,10 +1,20 @@
-import { type Model, type PartialModelObject } from 'objection';
+import {
+    type TemplateCreateItemRequestDto,
+    type TemplateGetAllItemResponseDto,
+    type TemplateGetAllResponseDto,
+    type TemplateUpdateItemRequestDto,
+} from 'shared/build';
 
-interface ITemplateRepository<T> {
-    find(id: number): Promise<T| undefined>;
-    findAll(): Promise<T[]>;
-    create(payload: unknown): Promise<T>;
-    update(id: number, data: PartialModelObject<Model>): Promise<T>;
+interface ITemplateRepository {
+    find(id: number): Promise<TemplateGetAllItemResponseDto | undefined>;
+    findAll(): Promise<TemplateGetAllResponseDto>;
+    create(
+        payload: TemplateCreateItemRequestDto,
+    ): Promise<TemplateGetAllItemResponseDto>;
+    update(
+        id: number,
+        data: TemplateUpdateItemRequestDto,
+    ): Promise<TemplateGetAllItemResponseDto>;
     delete(id: number): Promise<boolean>;
 }
 
