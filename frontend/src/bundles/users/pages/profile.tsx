@@ -4,6 +4,7 @@ import { ProfileCard } from '../components/profile-card/profile-card';
 import { ProfileForm } from '../components/profile-form/profile-form';
 import { ProfileInfo } from '../components/profile-info/profile-info';
 import { Socials } from '../components/socials/socials';
+import { Subscriptions } from '../components/subscription/subscriptions';
 import styles from './style.module.scss';
 
 type User = {
@@ -30,8 +31,8 @@ const Profile: React.FC = () => {
                 <ProfileCard title="Social profile">
                     <Socials />
                 </ProfileCard>
-                <ProfileCard title="Subscription">
-                    bla
+                <ProfileCard title="Email notifications">
+                    <Subscriptions />
                 </ProfileCard>
                 <ProfileCard title="Delete account">
                     <ProfileForm onSubmit={handleFormSubmit} />
