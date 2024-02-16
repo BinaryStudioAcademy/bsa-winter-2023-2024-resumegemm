@@ -1,8 +1,11 @@
 import clsx from 'clsx';
 import React, { useCallback, useState } from 'react';
 
+import { BaseButton } from '~/bundles/common/components/components';
+import { ButtonSize, ButtonType, ButtonVariant } from '~/bundles/common/enums/enums';
+
 import { type TabsProps as TabsProperties } from '../../types/interface';
-import css from './online-editor-handler.module.scss';
+import styles from './online-editor-handler.module.scss';
 
 const OnlineEditorTabsHandler: React.FC<TabsProperties> = ({ tabs }) => {
     const [activeTabIndex , setActiveTabIndex ] = useState(0);
@@ -17,12 +20,12 @@ const OnlineEditorTabsHandler: React.FC<TabsProperties> = ({ tabs }) => {
     }, [setActiveTabIndex , tabs]);
 
     return (
-        <section className={css.editor__section}>
-            <nav className={css.editor_sidebar__nav} >
-                <ul className={css.editor_sidebar__list}>
+        <section className={styles.editor__section}>
+            <nav className={styles.editor_sidebar__nav} >
+                <ul className={styles.editor_sidebar__list}>
                     {tabs.map((tab, index) => (
                         <li key={tab.label}>
-                            <button className={clsx(css.editor_sidebar__item, { [css.editor_sidebar__item__active]: activeTabIndex  === index })}
+                            <button className={clsx(styles.editor_sidebar__item, { [styles.editor_sidebar__item__active]: activeTabIndex  === index })}
                                 onClick={handleTabClick(index)}
                             >
                                 {tab.label}
@@ -31,10 +34,12 @@ const OnlineEditorTabsHandler: React.FC<TabsProperties> = ({ tabs }) => {
                     ))}
                 </ul>
             </nav>
-            <div className={css.editor_output__block}>
+            <div className={styles.editor_output__block}>
                 <div>{tabs[activeTabIndex ].content}</div>
-                <button type='button' onClick={onNextClick} className={css.editor_output__button}>Next</button>
-            </div>
+                    <BaseButton type={ButtonType.SUBMIT} size={ButtonSize.MEDIUM} variant={ButtonVariant.DEFAULT} onClick={onNextClick} className={styles.editor_output__button}>
+                        Next
+                    </BaseButton>
+                </div>
         </section>
     );
   };

@@ -38,7 +38,7 @@
     padding: 36px 32px;
 }
 
-.editor_output__button {
+.editor_output__block .editor_output__button {
     padding: 15px 24px;
     color: white;
     font-size: 16px;
@@ -48,6 +48,7 @@
     border-radius: 50px;
 }
 
-.editor_output__button:hover {
+.editor_output__block .editor_output__button:hover {
+    color: white;
     background-color: #3F557E;
 }
