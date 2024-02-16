@@ -1,5 +1,6 @@
 import { PageTitle } from '~/bundles/common/components/page-title/page-title';
 
+import { DeleteAccount } from '../components/delete-account/delete-account';
 import { ProfileCard } from '../components/profile-card/profile-card';
 import { ProfileForm } from '../components/profile-form/profile-form';
 import { ProfileInfo } from '../components/profile-info/profile-info';
@@ -35,7 +36,7 @@ const Profile: React.FC = () => {
                     <Subscriptions />
                 </ProfileCard>
                 <ProfileCard title="Delete account">
-                    <ProfileForm onSubmit={handleFormSubmit} />
+                    <DeleteAccount />
                 </ProfileCard>
             </div>
         </div>
