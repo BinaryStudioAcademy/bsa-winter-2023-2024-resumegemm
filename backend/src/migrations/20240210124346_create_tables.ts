@@ -1,6 +1,9 @@
 import { type Knex } from 'knex';
 
-import { DatabaseColumnName, DatabaseTableName } from '~/common/database/enums/enums.js';
+import {
+    DatabaseColumnName,
+    DatabaseTableName,
+} from '~/common/database/enums/enums.js';
 import { SkillLevel } from '~/common/enums/enums.js';
 
 async function up(knex: Knex): Promise<void> {
@@ -19,7 +22,7 @@ async function up(knex: Knex): Promise<void> {
             .notNullable()
             .defaultTo(knex.fn.now());
     });
-    await knex.schema.createTable(DatabaseTableName.PROFILE, table => {
+    await knex.schema.createTable(DatabaseTableName.PROFILE, (table) => {
         table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.FIRST_NAME).notNullable();
         table.string(DatabaseColumnName.LAST_NAME).notNullable();
@@ -72,7 +75,9 @@ async function up(knex: Knex): Promise<void> {
         (table) => {
             table.uuid(DatabaseColumnName.ID).primary();
             table.string(DatabaseColumnName.SKILL_NAME).notNullable();
-            table.enu(DatabaseColumnName.SKILL_LEVEL, Object.values(SkillLevel)).notNullable();
+            table
+                .enu(DatabaseColumnName.SKILL_LEVEL, Object.values(SkillLevel))
+                .notNullable();
             table
                 .dateTime(DatabaseColumnName.CREATED_AT)
                 .notNullable()
@@ -180,11 +185,14 @@ async function up(knex: Knex): Promise<void> {
                 .defaultTo(knex.fn.now());
         },
     );
-    await knex.schema.createTable(DatabaseTableName.USER_TEMPLATES, table => {
+    await knex.schema.createTable(DatabaseTableName.USER_TEMPLATES, (table) => {
         table.uuid(DatabaseColumnName.ID);
         table.uuid(DatabaseColumnName.USER_ID).notNullable();
         table.uuid(DatabaseColumnName.TEMPLATE_ID).notNullable();
-        table.unique([DatabaseColumnName.USER_ID, DatabaseColumnName.TEMPLATE_ID]);
+        table.unique([
+            DatabaseColumnName.USER_ID,
+            DatabaseColumnName.TEMPLATE_ID,
+        ]);
     });
 }
 
