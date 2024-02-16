@@ -4,7 +4,6 @@ type SummaryStyles = {
         fontSize: string;
         color: string;
         listStyleType: string;
-        listStylePosition: 'inside' | 'outside';
     };
 };
 

@@ -53,8 +53,7 @@
                 "fontWeight": "400",
                 "fontSize": "6.6px",
                 "color": "#36394a",
-                "listStyleType": "disc",
-                "listStylePosition": "inside"
+                "listStyleType": "disc"
             }
         }
     },
@@ -167,8 +166,7 @@
                 "fontWeight": "400",
                 "fontSize": "6.6px",
                 "color": "#36394a",
-                "listStyleType": "disc",
-                "listStylePosition": "inside"
+                "listStyleType": "disc"
             }
         }
     },
@@ -202,8 +200,7 @@
                 "fontWeight": "400",
                 "fontSize": "6.6px",
                 "color": "#36394a",
-                "listStyleType": "disc",
-                "listStylePosition": "inside"
+                "listStyleType": "disc"
             }
         }
     },

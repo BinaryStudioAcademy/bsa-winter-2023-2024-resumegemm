@@ -1,18 +1,18 @@
 import { type DescriptionItemStyles } from '~/bundles/resume-preview/types/types';
 
+import style from './styles.module.scss';
+
 type Properties = {
     description: string;
-    className?: string;
     styles: DescriptionItemStyles;
 };
 
 const DescriptionItem: React.FC<Properties> = ({
     description,
-    className = '',
     styles,
 }) => {
     return (
-        <li className={className} style={styles}>
+        <li className={style.section_description__item} style={styles}>
             {description}
         </li>
     );

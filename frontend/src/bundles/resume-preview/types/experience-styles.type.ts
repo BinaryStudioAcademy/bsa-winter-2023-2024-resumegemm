@@ -34,7 +34,6 @@ type ExperienceStyles = {
         fontSize: string;
         color: string;
         listStyleType: string;
-        listStylePosition: 'inside' | 'outside';
     };
 };
 

@@ -17,16 +17,7 @@ const Experience: React.FC = () => {
                     <ExperienceItem
                         key={index}
                         item={item}
-                        json_styles={{
-                            ...data.experience.styles,
-                            experience__info_description_item: {
-                                ...data.experience.styles
-                                    .experience__info_description_item,
-                                listStylePosition: data.experience.styles
-                                    .experience__info_description_item
-                                    .listStylePosition as 'inside' | 'outside',
-                            },
-                        }}
+                        json_styles={data.experience.styles}
                     />
                 ))}
             </ul>

@@ -4,7 +4,6 @@ type SkillsStyles = {
         fontSize: string;
         color: string;
         listStyleType: string;
-        listStylePosition: 'inside' | 'outside';
     };
 };
 

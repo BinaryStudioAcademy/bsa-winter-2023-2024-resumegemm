@@ -23,16 +23,7 @@ const ResumePreview: React.FC = () => {
                 <div className={styles.resume_preview__content_main_section}>
                     <Summary
                         data={data.summary}
-                        json_styles={{
-                            ...data.summary.styles,
-                            summary__description_item: {
-                                ...data.summary.styles
-                                    .summary__description_item,
-                                listStylePosition: data.summary.styles
-                                    .summary__description_item
-                                    .listStylePosition as 'inside' | 'outside',
-                            },
-                        }}
+                        json_styles={data.summary.styles}
                     />
                     <Experience />
                     <Recommendations />
@@ -40,15 +31,7 @@ const ResumePreview: React.FC = () => {
                 <div className={styles.resume_preview__content_aside_section}>
                     <Design
                         data={data.skills}
-                        json_styles={{
-                            ...data.skills.styles,
-                            skills__description_item: {
-                                ...data.skills.styles.skills__description_item,
-                                listStylePosition: data.skills.styles
-                                    .skills__description_item
-                                    .listStylePosition as 'inside' | 'outside',
-                            },
-                        }}
+                        json_styles={data.skills.styles}
                     />
                     <TechStack
                         data={data.tech_stack}
