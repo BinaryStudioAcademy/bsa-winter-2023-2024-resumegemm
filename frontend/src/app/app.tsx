@@ -36,7 +36,7 @@ const App: React.FC = () => {
                     <Link to={AppRoute.SIGN_IN}>Sign in</Link>
                 </li>
                 <li>
-                    <Link to={AppRoute.SIGN_UP}>Sign up</Link>11
+                    <Link to={AppRoute.SIGN_UP}>Sign up</Link>
                 </li>
             </ul>
             <p>Current path: {pathname}</p>
