@@ -26,8 +26,8 @@ const ExperienceItem: React.FC<Properties> = ({ item, json_styles }) => {
         work_location: { city, country, state },
     } = item;
 
-    const formatedStartDate = formatDate({ date: start_date });
-    const formatedEndDate = formatDate({ date: end_date });
+    const formatedStartDate = formatDate(start_date);
+    const formatedEndDate = formatDate(end_date);
 
     return (
         <li className={styles.section__body_item}>

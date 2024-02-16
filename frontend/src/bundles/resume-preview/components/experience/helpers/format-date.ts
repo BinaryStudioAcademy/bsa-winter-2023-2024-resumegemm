@@ -1,12 +1,8 @@
-interface Data {
-    date: string;
-}
-
-const formatDate = (date: Data): string => {
-    const formattedDate = new Date(date.date);
+const formatDate = (date: string): string => {
+    const formattedDate = new Date(date);
 
     if (Number.isNaN(formattedDate.getTime())) {
-        return date.date;
+        return date;
     }
 
     return formattedDate.toLocaleString('en-US', {
