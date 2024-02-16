@@ -13,7 +13,7 @@ class TemplateRepository implements ITemplateRepository {
         this.templateModel = templateModel;
 
 }
-    public async find(id:number): Promise<Template | undefined> {
+    public async find(id:string): Promise<Template | undefined> {
         return await this.templateModel.query().findById(id);
     }
 
@@ -29,11 +29,11 @@ class TemplateRepository implements ITemplateRepository {
         return await this.templateModel.query().insert(payload).returning('*');
     }
 
-    public async update(id:number, data:TemplateUpdateItemRequestDto): Promise<Template> {
+    public async update(id:string, data:TemplateUpdateItemRequestDto): Promise<Template> {
         return await this.templateModel.query().updateAndFetchById(id,data);
     }
 
-    public async delete(id:number): Promise<boolean> {
+    public async delete(id:string): Promise<boolean> {
         const response = await this.templateModel.query().deleteById(id);
         return response === 1 ? true : false;
     }

@@ -1,6 +1,7 @@
 import {
     type TemplateCreateItemRequestDto,
     type TemplateUpdateItemRequestDto,
+    HttpError,
 } from 'shared/build/index.js';
 import { TemplatesApiPath } from 'shared/build/index.js';
 
@@ -30,14 +31,14 @@ class TemplateController extends Controller {
             path: TemplatesApiPath.ROOT,
             method: 'POST',
             handler: (options) =>
-                this.create(options as ApiHandlerOptions<{ body: Template }>),
+                this.create(options as ApiHandlerOptions<{ body: TemplateCreateItemRequestDto }>),
         });
         this.addRoute({
             path: TemplatesApiPath.ID,
             method: 'GET',
             handler: (options) =>
                 this.findById(
-                    options as ApiHandlerOptions<{ params: { id: number } }>,
+                    options as ApiHandlerOptions<{ params: { id: string } }>,
                 ),
         });
         this.addRoute({
@@ -50,7 +51,7 @@ class TemplateController extends Controller {
             method: 'DELETE',
             handler: (options) =>
                 this.delete(
-                    options as ApiHandlerOptions<{ params: { id: number } }>,
+                    options as ApiHandlerOptions<{ params: { id: string } }>,
                 ),
         });
         this.addRoute({
@@ -60,14 +61,14 @@ class TemplateController extends Controller {
                 this.update(
                     options as ApiHandlerOptions<{
                         body: TemplateCreateItemRequestDto;
-                        params: { id: number };
+                        params: { id: string };
                     }>,
                 ),
         });
     }
 
     private async create(
-        options: ApiHandlerOptions<{ body: Template }>,
+        options: ApiHandlerOptions<{ body: TemplateCreateItemRequestDto }>,
     ): Promise<ApiHandlerResponse> {
         const template = await this.templateService.create(options.body);
         return {
@@ -77,7 +78,7 @@ class TemplateController extends Controller {
     }
 
     private async findById(
-        options: ApiHandlerOptions<{ params: { id: number } }>,
+        options: ApiHandlerOptions<{ params: { id: string } }>,
     ): Promise<ApiHandlerResponse> {
         const template = await this.templateService.find(options.params.id);
         return {
@@ -95,7 +96,7 @@ class TemplateController extends Controller {
     }
 
     private async delete(
-        options: ApiHandlerOptions<{ params: { id: number } }>,
+        options: ApiHandlerOptions<{ params: { id: string } }>,
     ): Promise<ApiHandlerResponse> {
         const isDeleted = await this.templateService.delete(options.params.id);
         return {
@@ -107,9 +108,16 @@ class TemplateController extends Controller {
     private async update(
         options: ApiHandlerOptions<{
             body: TemplateUpdateItemRequestDto;
-            params: { id: number };
+            params: { id: string };
         }>,
     ): Promise<ApiHandlerResponse> {
+        const template = await this.templateService.find(options.params.id);
+        if (!template) {
+            throw new HttpError({
+                status: HttpCode.BAD_REQUEST,
+                message: 'User with this id not found',
+            });
+        }
         const newTemplate = await this.templateService.update(
             options.params.id,
             options.body,

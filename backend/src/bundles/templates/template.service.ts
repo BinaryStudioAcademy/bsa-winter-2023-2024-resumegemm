@@ -14,7 +14,7 @@ class TemplateService implements ITemplateService<Template> {
     public constructor(templateRepository: ITemplateRepository) {
         this.templateRepository = templateRepository;
     }
-    public async find(id: number): Promise<Template | undefined> {
+    public async find(id: string): Promise<Template | undefined> {
         return await this.templateRepository.find(id);
     }
     public async findAll(): Promise<TemplateGetAllResponseDto> {
@@ -26,12 +26,12 @@ class TemplateService implements ITemplateService<Template> {
         return await this.templateRepository.create(payload);
     }
     public async update(
-        id: number,
+        id: string,
         data: PartialModelObject<Model>,
     ): Promise<Template> {
         return await this.templateRepository.update(id, data);
     }
-    public async delete(id: number): Promise<boolean> {
+    public async delete(id: string): Promise<boolean> {
         return await this.templateRepository.delete(id);
     }
 }

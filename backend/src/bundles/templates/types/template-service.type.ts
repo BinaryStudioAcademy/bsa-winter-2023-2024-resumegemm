@@ -4,13 +4,13 @@ import {
 } from 'shared/build';
 
 interface ITemplateService<T> {
-    find(id: number): Promise<T | undefined>;
+    find(id: string): Promise<T | undefined>;
     findAll(): Promise<{
         items: T[];
     }>;
     create(payload: TemplateCreateItemRequestDto): Promise<T>;
-    update(id: number, data: TemplateUpdateItemRequestDto): Promise<T>;
-    delete(id: number): Promise<boolean>;
+    update(id: string, data: TemplateUpdateItemRequestDto): Promise<T>;
+    delete(id: string): Promise<boolean>;
 }
 
 export { type ITemplateService };

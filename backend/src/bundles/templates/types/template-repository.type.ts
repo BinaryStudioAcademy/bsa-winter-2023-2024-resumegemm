@@ -6,16 +6,16 @@ import {
 } from 'shared/build';
 
 interface ITemplateRepository {
-    find(id: number): Promise<TemplateGetAllItemResponseDto | undefined>;
+    find(id: string): Promise<TemplateGetAllItemResponseDto | undefined>;
     findAll(): Promise<TemplateGetAllResponseDto>;
     create(
         payload: TemplateCreateItemRequestDto,
     ): Promise<TemplateGetAllItemResponseDto>;
     update(
-        id: number,
+        id: string,
         data: TemplateUpdateItemRequestDto,
     ): Promise<TemplateGetAllItemResponseDto>;
-    delete(id: number): Promise<boolean>;
+    delete(id: string): Promise<boolean>;
 }
 
 export { type ITemplateRepository };
