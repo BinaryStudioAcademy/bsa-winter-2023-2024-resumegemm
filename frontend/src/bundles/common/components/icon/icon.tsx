@@ -1,5 +1,5 @@
 import { type SizeProp } from '@fortawesome/fontawesome-svg-core';
-import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faGoogle, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import {
     faChevronDown,
     faEye,
@@ -16,6 +16,7 @@ const iconNameToSvgIcon = {
     [IconName.CHEVRON_DOWN]: faChevronDown,
     [IconName.FACEBOOK]: faFacebookF,
     [IconName.GOOGLE]: faGoogle,
+    [IconName.LINKEDIN]: faLinkedin,
     [IconName.EYE_OPEN]: faEye,
     [IconName.EYE_SLASH]: faEyeSlash,
 };
