@@ -1,3 +1,5 @@
+import { ToastContainer } from 'react-toastify';
+
 import reactLogo from '~/assets/img/react.svg';
 import { Link, RouterOutlet } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
@@ -27,6 +29,19 @@ const App: React.FC = () => {
 
     return (
         <>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                limit={5}
+                hideProgressBar
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
             <img src={reactLogo} className="App-logo" width="30" alt="logo" />
             <ul className="App-navigation-list">
                 <li>
