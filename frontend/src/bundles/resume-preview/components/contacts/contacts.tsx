@@ -13,6 +13,11 @@ const Contacts: React.FC = () => {
         linkedIn,
         styles: json_styles,
     } = data.contacts;
+
+    const emailLink = `mailto:${email}`;
+    const portfolioLink = `https://${portfolio_url}`;
+    const linkedInLink = `https://${linkedIn}`;
+
     return (
         <div
             className={styles.resume_preview__contacts}
@@ -25,17 +30,14 @@ const Contacts: React.FC = () => {
                     </p>
                 </ContactItem>
                 <ContactItem imageSrc={svg.envelope} imageAlt="Phone Icon">
-                    <a
-                        style={json_styles.contacts__item_text}
-                        href={`tel:${email}`}
-                    >
+                    <a style={json_styles.contacts__item_text} href={emailLink}>
                         {email}
                     </a>
                 </ContactItem>
                 <ContactItem imageSrc={svg.portfolio} imageAlt="Portfolio Icon">
                     <a
                         style={json_styles.contacts__item_text}
-                        href={`https://:${portfolio_url}`}
+                        href={portfolioLink}
                         target="_blank"
                         rel="noreferrer"
                     >
@@ -45,7 +47,7 @@ const Contacts: React.FC = () => {
                 <ContactItem imageSrc={svg.linkedIn} imageAlt="LinkedIn Icon">
                     <a
                         style={json_styles.contacts__item_text}
-                        href={`https://:${linkedIn}`}
+                        href={linkedInLink}
                         target="_blank"
                         rel="noreferrer"
                     >
