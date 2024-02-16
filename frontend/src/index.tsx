@@ -2,10 +2,12 @@ import '~/assets/css/styles.scss';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import { Auth } from '~/bundles/auth/pages/auth';
 import {
     App,
+    ErrorFallback,
     RouterProvider,
     StoreProvider,
 } from '~/bundles/common/components/components';
@@ -22,7 +24,11 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                 routes={[
                     {
                         path: AppRoute.ROOT,
-                        element: <App />,
+                        element: (
+                            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                                <App />
+                            </ErrorBoundary>
+                        ),
                         children: [
                             {
                                 path: AppRoute.ROOT,
