@@ -45,7 +45,7 @@
     margin: 0 auto;
 }
 
-@media (min-width: 1024px) {
+@media only screen and (width >= 1024px) {
     .auth__container {
         padding: 25px;
     }

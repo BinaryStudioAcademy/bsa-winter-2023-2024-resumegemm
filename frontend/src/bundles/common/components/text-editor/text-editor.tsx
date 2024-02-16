@@ -1,6 +1,6 @@
 import 'react-quill/dist/quill.snow.css';
 
-import { type FC, useCallback,useState } from 'react';
+import { type FC, useCallback, useState } from 'react';
 import ReactQuill from 'react-quill';
 
 import styles from './styles.module.scss';
@@ -13,18 +13,21 @@ type Properties = {
 const TextEditor: FC<Properties> = ({ initialText, onChange }) => {
     const [text, setText] = useState<string>(initialText ?? '');
 
-    const handleEditorTextChange = useCallback((text: string): void => {
-        setText(text);
-        if (onChange) {
-            onChange(text);
-        }
-    }, [onChange]);
+    const handleEditorTextChange = useCallback(
+        (text: string): void => {
+            setText(text);
+            if (onChange) {
+                onChange(text);
+            }
+        },
+        [onChange],
+    );
 
     const modules = {
         toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['link']
+            ['link'],
         ],
     };
 

@@ -1,8 +1,9 @@
-import { Button, Input } from '~/bundles/common/components/components';
+import { BaseButton, FormGroup, Input } from '~/bundles/common/components/components';
 import {
     ButtonSize,
     ButtonType,
-    ButtonVariant
+    ButtonVariant,
+    ButtonWidth
 } from '~/bundles/common/enums/enums';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 import {
@@ -20,7 +21,7 @@ type Properties = {
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
 
-    const { control, errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
+    const { errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
         defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
         validationSchema: userSignUpValidationSchema,
     });
@@ -47,34 +48,31 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
             <form
                 className={styles.registration__form}
                 onSubmit={handleFormSubmit}
-            >
-                {/* TODO: replace input with merged one */}
-                <Input
-                    type="text"
-                    label="Name"
-                    placeholder="Enter your name"
-                    name="name"
-                    control={control}
-                    errors={errors}
-                />
-                <Input
-                    type="text"
-                    label="Email"
-                    placeholder="Enter your email"
-                    name="email"
-                    control={control}
-                    errors={errors}
-                />
-                <Password control={control} errors={errors} isConfirmPasswordShown={true} />
-                <Button
+            >   
+                <FormGroup label='Name'>
+                    <Input
+                        type="text"
+                        placeholder="Enter your name"
+                        name="name"
+                    />
+                </FormGroup>
+                <FormGroup label='Email'>
+                    <Input
+                        type="text"
+                        placeholder="Enter your email"
+                        name="email"
+                    />
+                </FormGroup>
+                <Password error={errors.password} isConfirmPasswordShown={true} />
+                <BaseButton
                     size={ButtonSize.MEDIUM}
-                    isFluid={true}
+                    width={ButtonWidth.FULL}
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
                     Sign up
-                </Button>
-            </form>
+                </BaseButton>
+            </form> 
         </>
     );
 };

@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { type FC } from 'react';
 
 import crossIcon from '~/assets/img/cross.svg';
-import { Button } from '~/bundles/common/components/components';
+import { BaseButton } from '~/bundles/common/components/components';
 import { useModal } from '~/bundles/common/hooks/hooks';
 import { type ModalProperties } from '~/bundles/common/types/types';
 
@@ -46,10 +46,9 @@ const Modal: FC<ModalProperties> = ({
                 tabIndex={0}
                 onKeyDown={handleModalCloseOnEscapeKey}
             >
-                <Button className={styles.content_button} onClick={onClose}>
-                    {/* TODO: replace the default button with basic button once PR merged */}
+                <BaseButton className={styles.content_button} onClick={onClose}>
                     <img src={crossIcon} alt="cross" />
-                </Button>
+                </BaseButton>
                 <div className={styles.content_title}>{title}</div>
                 <div className={styles.content_body}>{children}</div>
                 <div className={styles.content_actions}></div>

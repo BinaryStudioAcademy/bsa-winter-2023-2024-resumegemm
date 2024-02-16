@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
 
-import { Button, Input } from '~/bundles/common/components/components.js';
+import { BaseButton, FormGroup, Input } from '~/bundles/common/components/components.js';
 import {
     ButtonSize,
     ButtonType,
-    ButtonVariant
+    ButtonVariant,
+    ButtonWidth
 } from '~/bundles/common/enums/enums';
 import { useAppForm } from '~/bundles/common/hooks/hooks';
 import {
@@ -22,7 +23,7 @@ type Properties = {
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
     // TODO: replace type, payload and validation for sign-in
-    const { control, errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
+    const { errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
         defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
         validationSchema: userSignUpValidationSchema,
     });
@@ -49,33 +50,30 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
             <form  
                 onSubmit={handleFormSubmit}
                 className={styles.login__form}>
-                    {/* TODO: replace input with merged one and width 100% */}
-                <Input
-                    type="text"
-                    label="Email"
-                    placeholder="Enter your email"
-                    name="email"
-                    control={control}
-                    errors={errors}
-                />
+                <FormGroup label='Email'>
+                    <Input
+                        type="email"
+                        placeholder="Enter your email"
+                        name="email"
+                    />
+                </FormGroup>
                 <div className={styles.login__form_password}>
                     <span className={styles.forgot__link}>
                         Forgot Password?
                     </span>
                     <Password 
-                        control={control} 
-                        errors={errors} 
+                        error={errors.password} 
                         isConfirmPasswordShown={false}
                     />
                 </div>
-                <Button
+                <BaseButton
                     size={ButtonSize.MEDIUM}
-                    isFluid={true}
+                    width={ButtonWidth.FULL}
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
                     Sign up
-                </Button>
+                </BaseButton>
             </form>
         </>
     );

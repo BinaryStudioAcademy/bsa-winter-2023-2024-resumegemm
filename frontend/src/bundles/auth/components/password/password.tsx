@@ -1,21 +1,19 @@
-import { type Control, type FieldErrors } from 'react-hook-form';
+import { type FieldError } from 'react-hook-form';
 
-import { Icon, IconButton, Input } from '~/bundles/common/components/components';
+import { FormGroup, Icon, IconButton, Input } from '~/bundles/common/components/components';
 import { IconName, IconSize } from '~/bundles/common/enums/enums';
 import { useCallback, useState } from '~/bundles/common/hooks/hooks';
-import { type UserSignUpRequestDto } from '~/bundles/users/users';
 
 import styles from './styles.module.scss';
 
 // TODO: replace types with right
 type PasswordProperties = {
-    control: Control<UserSignUpRequestDto, null>, 
-    errors: FieldErrors<UserSignUpRequestDto>,
+    error: FieldError | undefined,
     isConfirmPasswordShown?: boolean
 };
 
 const Password: React.FC<PasswordProperties> = (
-    { control, errors, isConfirmPasswordShown = false }) => {
+    { error, isConfirmPasswordShown = false }) => {
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isPasswordConfirmVisible, setIsPasswordConfirmVisible] =
@@ -32,53 +30,51 @@ const Password: React.FC<PasswordProperties> = (
     return (
         <>
             <div className={styles.password}>
-                <Input
-                    type={isPasswordVisible ? 'text' : 'password'}
-                    label="Password"
-                    placeholder="Enter your password"
-                    name="password"
-                    control={control}
-                    errors={errors}
-                    className={styles.password__input}
-                />
-                <IconButton
-                    className={styles.password__icon}
-                    onClick={togglePasswordVisibility}
-                >
-                    <Icon
-                        size={IconSize.SMALL}
-                        name={
-                        isPasswordVisible
-                            ? IconName.EYE_OPEN
-                            : IconName.EYE_SLASH
-                        }
+                <FormGroup label='Password' error={error} width='100%'>
+                    <Input
+                        type={isPasswordVisible ? 'text' : 'password'}
+                        placeholder="Enter your password"
+                        name="password"
+                        className={styles.password__input}
                     />
-                </IconButton>
+                    <IconButton
+                        className={styles.password__icon}
+                        onClick={togglePasswordVisibility}
+                    >
+                        <Icon
+                            size={IconSize.SMALL}
+                            name={
+                            isPasswordVisible
+                                ? IconName.EYE_OPEN
+                                : IconName.EYE_SLASH
+                            }
+                        />
+                    </IconButton>
+            </FormGroup>
             </div>
             { isConfirmPasswordShown &&
             <div className={styles.password}>
-                <Input
-                    type={isPasswordConfirmVisible ? 'text' : 'password'}
-                    label="Confirm Password"
-                    placeholder="Confirm your password"
-                    name="password"
-                    control={control}
-                    errors={errors}
-                    className={styles.password__input}
-                />
-                <IconButton
-                    className={styles.password__icon}
-                    onClick={togglePasswordConfirmVisibility}
-                >
-                    <Icon
-                        size={IconSize.SMALL}
-                        name={
-                            isPasswordConfirmVisible
-                            ? IconName.EYE_OPEN
-                            : IconName.EYE_SLASH
-                        }
+                <FormGroup label="Confirm Password" error={error} width='100%'>
+                    <Input
+                        type={isPasswordConfirmVisible ? 'text' : 'password'}
+                        placeholder="Confirm your password"
+                        name="password"
+                        className={styles.password__input}
                     />
-                </IconButton>
+                    <IconButton
+                        className={styles.password__icon}
+                        onClick={togglePasswordConfirmVisibility}
+                    >
+                        <Icon
+                            size={IconSize.SMALL}
+                            name={
+                                isPasswordConfirmVisible
+                                ? IconName.EYE_OPEN
+                                : IconName.EYE_SLASH
+                            }
+                        />
+                    </IconButton>
+                </FormGroup>
             </div>}    
         </>
     );

@@ -1,52 +1,27 @@
-import {
-    type Control,
-    type FieldErrors,
-    type FieldPath,
-    type FieldValues,
-} from 'react-hook-form';
+import clsx from 'clsx';
+import  { type TextareaHTMLAttributes } from 'react';
+import { forwardRef } from 'react';
 
-import { useFormController } from '../../hooks/hooks';
 import styles from './styles.module.scss';
 
-type Properties<T extends FieldValues> = {
-    control: Control<T, null>;
-    errors: FieldErrors<T>;
-    label?: string;
-    name: FieldPath<T>;
-    placeholder?: string;
-    disabled?: boolean;
-};
+interface Properties extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+    hasError?: boolean;
+    width?:string;
+}
 
-const TextArea = <T extends FieldValues>({
-    control,
-    errors,
-    label = '',
-    name,
-    placeholder = '',
-    disabled = false,
-}: Properties<T>): JSX.Element => {
-    const { field } = useFormController({ name, control });
-    const error = errors[name]?.message;
-    const hasError = Boolean(error);
-    return (
-        <label className={styles.label}>
-            <span>{label}</span>
-            <textarea
-                className={`
-            ${styles.textArea}
-            ${disabled && styles.disabled}
-            ${hasError && !disabled && styles.error}
-            ${!hasError && field.value.length > 0 && styles.filled}
-            `}
-                {...field}
-                placeholder={placeholder}
-                disabled={disabled}
-            ></textarea>
-            {hasError && !disabled && (
-                <span className={styles.errorText}>{error as string}</span>
-            )}
-        </label>
-    );
-};
+const TextArea = forwardRef<HTMLTextAreaElement,Properties>(
+    ({ hasError = false, width = 'auto', disabled, ...otherProperties }, reference) =>(
+    <textarea 
+        className={clsx(styles.textArea,{
+            [styles.textArea__error]: hasError,
+            [styles.textArea__disabled]: disabled
+        })}
+        {...otherProperties}
+        style={{ width }}
+        ref={reference}
+    ></textarea>
+));
+
+TextArea.displayName = 'TextArea';
 
 export { TextArea };
