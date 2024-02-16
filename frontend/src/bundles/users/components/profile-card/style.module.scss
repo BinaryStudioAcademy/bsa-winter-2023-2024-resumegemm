@@ -55,6 +55,7 @@ $layout-breakpoint-small: 768px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 @media only screen and (max-device-width: $layout-breakpoint-small) {
