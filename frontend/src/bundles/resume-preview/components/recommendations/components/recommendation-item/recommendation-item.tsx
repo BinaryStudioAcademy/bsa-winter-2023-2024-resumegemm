@@ -1,15 +1,10 @@
 import { svg } from '~/assets/img/resume_preview/resume-svg';
+import { type RecommendationItemData } from '~/bundles/resume-preview/types/types';
 
 import styles from './styles.module.scss';
 
 type Properties = {
-    item: {
-        photo: string;
-        name: string;
-        job_position: string;
-        company: string;
-        description: string;
-    };
+    item: RecommendationItemData;
 };
 
 const RecommendationItem: React.FC<Properties> = ({ item }) => (

@@ -7,6 +7,7 @@ export { type LanguagesData } from './languages-data.type';
 export { type LanguagesStyles } from './languages-styles.type';
 export { type PortfolioData } from './portfolio-data.type';
 export { type PortfolioStyles } from './portfolio-styles.type';
+export { type RecommendationItemData } from './recommendation-item-data.type';
 export { type SkillsData } from './skills-data.type';
 export { type SkillsStyles } from './skills-styles.type';
 export { type SocialsData } from './socials-data.type';
