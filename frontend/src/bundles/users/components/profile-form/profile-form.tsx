@@ -1,4 +1,4 @@
-import { Button, Input } from '~/bundles/common/components/components';
+import { BaseButton, Input } from '~/bundles/common/components/components';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 
 type UserDto = { // TODO: dummy user payload, remove
@@ -29,26 +29,17 @@ const ProfileForm: React.FC<Properties> = ({ onSubmit }) => {
             <form onSubmit={handleFormSubmit}>
                 <div>
                     <Input
-                        control={control}
-                        errors={errors}
-                        label="First Name"
                         name="firstName"
                     />
                     <Input
-                        control={control}
-                        errors={errors}
-                        label="Last Name"
                         name="lastName"
                     />
                     <Input
-                        control={control}
-                        errors={errors}
-                        label="Email"
                         name="email"
                     />
                 </div>
                 <div>
-                    <Button>Save</Button>
+                    <BaseButton>Save</BaseButton>
                 </div>
             </form>
     );

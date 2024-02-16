@@ -1,4 +1,4 @@
-import { Button } from '~/bundles/common/components/components';
+import { BaseButton } from '~/bundles/common/components/components';
 
 import styles from './style.module.scss';
 
@@ -23,7 +23,7 @@ const ProfileInfo: React.FC = () => {
                 </div>
             </div>
             <div className={styles.profile__info__actions}>
-                <Button>Upgrade</Button>
+                <BaseButton>Upgrade</BaseButton>
             </div>
         </div>
     );
