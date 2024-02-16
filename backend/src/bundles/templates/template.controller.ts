@@ -81,6 +81,12 @@ class TemplateController extends Controller {
         options: ApiHandlerOptions<{ params: { id: string } }>,
     ): Promise<ApiHandlerResponse> {
         const template = await this.templateService.find(options.params.id);
+        if(!template){
+            throw new HttpError({
+                status: HttpCode.BAD_REQUEST,
+                message: 'User with this id not found',
+            });
+        }
         return {
             status: HttpCode.OK,
             payload: template,
