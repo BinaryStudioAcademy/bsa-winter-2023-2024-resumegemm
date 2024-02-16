@@ -4,6 +4,7 @@ import {
     comparePasswords,
     generateToken,
 } from '~/bundles/auth/helpers/helpers.js';
+import { verifyToken } from '~/bundles/auth/helpers/token/token.js';
 import {
     type UserSignInRequestDto,
     type UserSignInResponseDto,
@@ -68,6 +69,10 @@ class AuthService {
             accessToken: generateToken({ id }),
             refreshToken: generateToken({ id }),
         };
+    }
+
+    public verifyToken<T>(token: string): T {
+        return verifyToken(token) as T;
     }
 }
 
