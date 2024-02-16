@@ -19,8 +19,10 @@
         "@hookform/resolvers": "2.9.11",
         "@reduxjs/toolkit": "1.9.3",
         "react": "18.2.0",
+        "react-cropper": "2.3.3",
         "react-dom": "18.2.0",
         "react-hook-form": "7.43.5",
+        "react-icons": "5.0.1",
         "react-redux": "8.0.5",
         "react-router-dom": "6.8.2"
     },
