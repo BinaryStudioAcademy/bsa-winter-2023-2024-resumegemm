@@ -52,7 +52,7 @@ const ExperienceItem: React.FC<Properties> = ({ item, json_styles }) => {
                     <p style={json_styles.experience__info_company}>
                         {company}
                     </p>
-                    <span className={styles.experience__dot_devider}></span>
+                    <span className={styles.experience__dot_devider} />
                     {employment_type && (
                         <>
                             <p
@@ -62,15 +62,13 @@ const ExperienceItem: React.FC<Properties> = ({ item, json_styles }) => {
                             >
                                 {employment_type}
                             </p>
-                            <span
-                                className={styles.experience__dot_devider}
-                            ></span>
+                            <span className={styles.experience__dot_devider} />
                         </>
                     )}
                     <p style={json_styles.experience__info_location_type}>
                         {location_type}
                     </p>
-                    <span className={styles.experience__dot_devider}></span>
+                    <span className={styles.experience__dot_devider} />
                     <p style={json_styles.experience__info_work_period}>
                         {formatedStartDate}
                     </p>
