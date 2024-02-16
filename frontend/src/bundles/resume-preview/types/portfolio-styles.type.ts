@@ -1,19 +1,10 @@
+import { type TextStyle } from './types';
+
 type PortfolioStyles = {
-    portfolio__title: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
-    portfolio__description: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
-    portfolio__link: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
+    [K in
+        | 'portfolio__title'
+        | 'portfolio__description'
+        | 'portfolio__link']: TextStyle;
 };
 
 export { type PortfolioStyles };

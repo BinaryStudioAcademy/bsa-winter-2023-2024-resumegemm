@@ -1,14 +1,7 @@
+import { type TextStyle } from './types';
+
 type SocialsStyles = {
-    social__item: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
-    social__link: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
+    [K in 'social__item' | 'social__link']: TextStyle;
 };
 
 export { type SocialsStyles };

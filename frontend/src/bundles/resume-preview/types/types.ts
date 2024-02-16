@@ -16,3 +16,4 @@ export { type SummaryData } from './summary-data.type';
 export { type SummaryStyles } from './summary-styles.type';
 export { type TechStackData } from './tech-stack-data.type';
 export { type TechStackStyles } from './tech-stack-styles.type';
+export { type TextStyle } from './text-style.type';

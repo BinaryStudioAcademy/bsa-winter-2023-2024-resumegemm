@@ -1,10 +1,11 @@
+import { type TextStyle } from './types';
+
+type TextStyleWithList = TextStyle & {
+    listStyleType: string;
+};
+
 type SummaryStyles = {
-    summary__description_item: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-        listStyleType: string;
-    };
+    summary__description_item: TextStyleWithList;
 };
 
 export { type SummaryStyles };

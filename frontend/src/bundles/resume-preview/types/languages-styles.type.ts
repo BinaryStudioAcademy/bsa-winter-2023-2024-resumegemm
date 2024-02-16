@@ -1,14 +1,7 @@
+import { type TextStyle } from './types';
+
 type LanguagesStyles = {
-    languages__title: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
-    languages__level: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
+    [K in 'languages__title' | 'languages__level']: TextStyle;
 };
 
 export { type LanguagesStyles };

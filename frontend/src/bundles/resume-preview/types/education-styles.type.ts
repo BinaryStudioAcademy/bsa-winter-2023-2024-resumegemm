@@ -1,24 +1,11 @@
+import { type TextStyle } from './types';
+
 type EducationStyles = {
-    education__school: {
-        fontSize: string;
-        fontWeight: string;
-        color: string;
-    };
-    education__location: {
-        fontSize: string;
-        fontWeight: string;
-        color: string;
-    };
-    education__years: {
-        fontSize: string;
-        fontWeight: string;
-        color: string;
-    };
-    education__degree: {
-        fontSize: string;
-        fontWeight: string;
-        color: string;
-    };
+    [K in
+        | 'education__school'
+        | 'education__location'
+        | 'education__years'
+        | 'education__degree']: TextStyle;
 };
 
 export { type EducationStyles };

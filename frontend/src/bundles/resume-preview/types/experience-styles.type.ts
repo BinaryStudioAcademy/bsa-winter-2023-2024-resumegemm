@@ -1,40 +1,25 @@
-type ExperienceStyles = {
-    experience__info_job_position: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
-    experience__info_company: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
-    experience__info_employment_type: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
-    experience__info_location_type: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
-    experience__info_work_period: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
-    experience__info_work_location: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
-    };
-    experience__info_description_item: {
-        fontWeight: string;
-        fontSize: string;
-        color: string;
+import { type TextStyle } from './types';
+
+type ExperienceStylesBase = {
+    [K in
+        | 'experience__info_job_position'
+        | 'experience__info_company'
+        | 'experience__info_employment_type'
+        | 'experience__info_location_type'
+        | 'experience__info_work_period'
+        | 'experience__info_work_location']: TextStyle;
+};
+
+type ExperienceDescriptionItemStyles = {
+    experience__info_description_item: TextStyle & {
         listStyleType: string;
     };
 };
 
-export { type ExperienceStyles };
+type ExperienceStyles = ExperienceStylesBase & ExperienceDescriptionItemStyles;
+
+export {
+    type ExperienceDescriptionItemStyles,
+    type ExperienceStyles,
+    type ExperienceStylesBase,
+};
