@@ -1,4 +1,4 @@
-import { type RelationMappings,Model } from 'objection';
+import { type RelationMappings, Model } from 'objection';
 
 import { ResumeModel } from '~/bundles/resumes/resumes';
 import { AbstractModel, DatabaseTableName } from '~/common/database/database';
