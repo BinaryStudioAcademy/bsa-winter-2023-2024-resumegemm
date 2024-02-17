@@ -35,7 +35,6 @@ const Password: React.FC<PasswordProperties> = (
                         type={isPasswordVisible ? 'text' : 'password'}
                         placeholder="Enter your password"
                         name="password"
-                        className={styles.password__input}
                     />
                     <IconButton
                         className={styles.password__icon}
@@ -54,12 +53,11 @@ const Password: React.FC<PasswordProperties> = (
             </div>
             { isConfirmPasswordShown &&
             <div className={styles.password}>
-                <FormGroup label="Confirm Password" error={error} width='100%'>
+                <FormGroup  label="Confirm Password" error={error} width='100%'>
                     <Input
                         type={isPasswordConfirmVisible ? 'text' : 'password'}
                         placeholder="Confirm your password"
                         name="password"
-                        className={styles.password__input}
                     />
                     <IconButton
                         className={styles.password__icon}
