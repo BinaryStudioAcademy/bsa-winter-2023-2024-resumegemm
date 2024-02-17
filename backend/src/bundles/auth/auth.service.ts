@@ -37,7 +37,6 @@ class AuthService {
         const user = await this.userService.getUserWithProfile(id);
 
         return {
-            accessToken: generateToken({ id }),
             user,
         };
     }
