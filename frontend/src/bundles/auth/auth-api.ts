@@ -53,7 +53,7 @@ class AuthApi extends HttpApi {
             },
         );
 
-        return await response.json<UserSignUpResponseDto>();
+        return await response.json<UserSignInResponseDto>();
     }
 
     public async getUser(): Promise<UserAuthResponse> {
