@@ -65,6 +65,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 </FormGroup>
                 <Password error={errors.password} isConfirmPasswordShown={true} />
                 <BaseButton
+                    className={styles.registration__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
                     variant={ButtonVariant.PRIMARY}
