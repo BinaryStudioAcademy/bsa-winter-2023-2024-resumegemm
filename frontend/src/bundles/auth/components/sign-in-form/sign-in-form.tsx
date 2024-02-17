@@ -50,7 +50,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
             <form  
                 onSubmit={handleFormSubmit}
                 className={styles.login__form}>
-                <FormGroup label='Email'>
+                <FormGroup label='Email' error={errors.email}>
                     <Input
                         type="email"
                         placeholder="Enter your email"
@@ -67,6 +67,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </div>
                 <BaseButton
+                    className={styles.login__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
                     variant={ButtonVariant.PRIMARY}
