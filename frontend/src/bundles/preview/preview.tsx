@@ -34,7 +34,7 @@ const PreviewPage: React.FC = () => {
                 <li className={styles.item}>
                     <Templates />
                 </li>
-                <li>
+                <li className={styles.auth}>
                     <Auth />
                 </li>
             </ul>
