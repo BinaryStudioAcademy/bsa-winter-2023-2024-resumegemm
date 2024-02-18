@@ -1,6 +1,6 @@
-export { comparePasswords, encryptPassword } from './crypt/crypt.js';
 export {
     generateRefreshToken,
     generateToken,
+    getToken,
     verifyToken,
 } from './token/token.js';

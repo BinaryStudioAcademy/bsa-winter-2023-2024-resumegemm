@@ -1,13 +1,13 @@
+import { genSalt, hash } from 'bcrypt';
 import {
     type AuthService as TAuthService,
+    type EncryptionDataPayload,
     ExceptionMessage,
     HttpCode,
     HttpError,
 } from 'shared/build/index.js';
 
 import {
-    comparePasswords,
-    encryptPassword,
     generateRefreshToken,
     generateToken,
     verifyToken,
@@ -41,8 +41,11 @@ class AuthService implements TAuthService {
             });
         }
 
-        const { hash: passwordHash, salt: passwordSalt } = encryptPassword(
+        const passwordSalt = await this.generateSalt();
+
+        const passwordHash = await this.encrypt(
             userRequestDto.password,
+            passwordSalt,
         );
 
         const { id } = await this.userService.create(
@@ -71,11 +74,11 @@ class AuthService implements TAuthService {
             });
         }
         const { passwordHash, passwordSalt, id } = foundUserByEmail;
-        const isEqualPassword = await comparePasswords(
-            password,
+        const isEqualPassword = await this.compare({
+            plaintTextPassword: password,
             passwordSalt,
             passwordHash,
-        );
+        });
 
         if (!isEqualPassword) {
             throw new HttpError({
@@ -93,6 +96,23 @@ class AuthService implements TAuthService {
 
     public async getUser(id: string): Promise<UserWithProfileRelation> {
         return await this.userService.getUserWithProfile(id);
+    }
+    public encrypt(data: string, salt: string): Promise<string> {
+        return hash(data, salt);
+    }
+
+    public async compare({
+        plaintTextPassword,
+        passwordSalt,
+        passwordHash,
+    }: EncryptionDataPayload): Promise<boolean> {
+        const dataHash = await this.encrypt(plaintTextPassword, passwordSalt);
+        return dataHash === passwordHash;
+    }
+
+    public async generateSalt(): Promise<string> {
+        const USER_PASSWORD_SALT_ROUNDS = 10;
+        return await genSalt(USER_PASSWORD_SALT_ROUNDS);
     }
 
     public verifyToken<T>(token: string, isRefreshToken?: boolean): T {
