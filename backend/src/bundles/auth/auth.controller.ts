@@ -1,11 +1,17 @@
+import { type FastifyRequest } from 'fastify';
 import {
-    type HttpError,
+    type UserAuthResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpResponseDto,
+    type UserWithProfileRelation,
     AuthApiPath,
+    ExceptionMessage,
+    HttpError,
+    HttpHeader,
 } from 'shared/build/index.js';
 
+import { generateToken } from '~/bundles/auth/helpers/helpers.js';
 import {
     type UserSignUpRequestDto,
     userSignInValidationSchema,
@@ -53,6 +59,26 @@ class AuthController extends Controller {
                 this.login(
                     options as ApiHandlerOptions<{
                         body: UserSignInRequestDto;
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.USER,
+            method: 'GET',
+            handler: (options) =>
+                this.getUser(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponse['user'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.TOKEN,
+            method: 'GET',
+            handler: (options) =>
+                this.regenerateToken(
+                    options as ApiHandlerOptions<{
+                        headers: FastifyRequest['headers'];
                     }>,
                 ),
         });
@@ -158,6 +184,68 @@ class AuthController extends Controller {
             return {
                 status: HttpCode.OK,
                 payload,
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async getUser(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponse['user'];
+        }>,
+    ): Promise<ApiHandlerResponse<UserWithProfileRelation>> {
+        try {
+            const { id } = options.user;
+            const payload = await this.authService.getUser(id);
+            return {
+                status: HttpCode.OK,
+                payload,
+            };
+        } catch (error: unknown) {
+            const message = (error as Error).message;
+            const status = HttpCode.INTERNAL_SERVER_ERROR;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private regenerateToken({
+        headers,
+    }: ApiHandlerOptions<{
+        headers: FastifyRequest['headers'];
+    }>): ApiHandlerResponse<string> {
+        try {
+            const refreshToken = (
+                headers[HttpHeader.AUTHORIZATION] as string
+            ).split(' ')[1];
+
+            const { id } = this.authService.verifyToken<Record<'id', string>>(
+                refreshToken,
+                Boolean(refreshToken),
+            );
+            if (!id) {
+                throw new HttpError({
+                    message: ExceptionMessage.INVALID_TOKEN,
+                    status: HttpCode.UNAUTHORIZED,
+                });
+            }
+            const accessToken = generateToken({ id });
+            return {
+                status: HttpCode.OK,
+                payload: accessToken,
             };
         } catch (error: unknown) {
             const { message, status } = error as HttpError;
