@@ -11,6 +11,7 @@ export {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserWithProfileRelation,
     UsersApiPath,
     userSignInValidationSchema,
     userSignUpValidationSchema,
