@@ -7,6 +7,7 @@ import {
 
 import {
     comparePasswords,
+    encryptPassword,
     generateRefreshToken,
     generateToken,
     verifyToken,
@@ -39,7 +40,16 @@ class AuthService implements TAuthService {
                 status: HttpCode.BAD_REQUEST,
             });
         }
-        const { id } = await this.userService.create(userRequestDto);
+
+        const { hash: passwordHash, salt: passwordSalt } = encryptPassword(
+            userRequestDto.password,
+        );
+
+        const { id } = await this.userService.create(
+            userRequestDto,
+            passwordHash,
+            passwordSalt,
+        );
 
         const user = await this.userService.getUserWithProfile(id);
 
@@ -60,8 +70,12 @@ class AuthService implements TAuthService {
                 status: HttpCode.BAD_REQUEST,
             });
         }
-        const { passwordHash, id } = foundUserByEmail;
-        const isEqualPassword = await comparePasswords(password, passwordHash);
+        const { passwordHash, passwordSalt, id } = foundUserByEmail;
+        const isEqualPassword = await comparePasswords(
+            password,
+            passwordSalt,
+            passwordHash,
+        );
 
         if (!isEqualPassword) {
             throw new HttpError({

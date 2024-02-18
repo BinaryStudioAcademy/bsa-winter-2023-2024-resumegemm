@@ -1,4 +1,5 @@
 import { Guid as guid } from 'guid-typescript';
+import { type Transaction } from 'objection';
 import { type Profile } from 'shared/build/index.js';
 
 import { type ProfileModel } from '~/bundles/profile/profile.model';
@@ -14,9 +15,11 @@ class ProfileRepository implements Partial<IRepository> {
     public async create({
         firstName,
         lastName,
+        transaction,
     }: {
         firstName: string;
         lastName: string;
+        transaction: Transaction;
     }): Promise<Profile> {
         return this.profileModel
             .query()
@@ -25,6 +28,7 @@ class ProfileRepository implements Partial<IRepository> {
                 firstName,
                 lastName,
             })
+            .transacting(transaction)
             .returning('*');
     }
 }
