@@ -1,4 +1,9 @@
-import { ExceptionMessage, HttpCode, HttpError } from 'shared/build/index.js';
+import {
+    type AuthService as TAuthService,
+    ExceptionMessage,
+    HttpCode,
+    HttpError,
+} from 'shared/build/index.js';
 
 import {
     comparePasswords,
@@ -15,7 +20,7 @@ import {
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 
-class AuthService {
+class AuthService implements TAuthService {
     private userService: UserService;
 
     public constructor(userService: UserService) {
