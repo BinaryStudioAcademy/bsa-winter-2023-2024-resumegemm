@@ -1,4 +1,10 @@
 export { AuthApiPath } from './bundles/auth/auth.js';
+export {
+    type RecentlyViewed,
+    type RecentlyViewedRequestDto,
+    type RecentlyViewedResponseDto,
+    RecentlyViewedApiPath,
+} from './bundles/recently-viewed/recently-viewed.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
     type UserGetAllItemResponseDto,
