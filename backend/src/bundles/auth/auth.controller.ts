@@ -8,10 +8,9 @@ import {
     type UserWithProfileRelation,
     AuthApiPath,
     ExceptionMessage,
-    HttpHeader,
 } from 'shared/build/index.js';
 
-import { generateToken } from '~/bundles/auth/helpers/helpers.js';
+import { generateToken, getToken } from '~/bundles/auth/helpers/helpers.js';
 import {
     type UserSignUpRequestDto,
     userSignInValidationSchema,
@@ -228,9 +227,7 @@ class AuthController extends Controller {
         headers: FastifyRequest['headers'];
     }>): ApiHandlerResponse<{ accessToken: string }> {
         try {
-            const refreshToken = (
-                headers[HttpHeader.AUTHORIZATION] as string
-            ).split(' ')[1];
+            const refreshToken = getToken(headers);
 
             const { id } = this.authService.verifyToken<Record<'id', string>>(
                 refreshToken,
