@@ -9,9 +9,10 @@ import { UserPhotoUploader } from './user-photo-uploader';
 interface UploadModalProperties {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setCurrentPhoto: React.Dispatch<React.SetStateAction<string>>;
+    handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const PhotoUploaderModal: React.FC<UploadModalProperties> = ({ setIsModalOpen, setCurrentPhoto }) => {
+const PhotoUploaderModal: React.FC<UploadModalProperties> = ({ setIsModalOpen, setCurrentPhoto, handleImageChange }) => {
     const [image, setImage] = useState<string | ArrayBuffer | null>('');
 
     const onClose = useCallback(() => {
@@ -27,7 +28,13 @@ const PhotoUploaderModal: React.FC<UploadModalProperties> = ({ setIsModalOpen, s
                     </IconContext.Provider>
                 </button>
                 {!image && <UserPhotoUploader setImage={setImage}/>}
-                {image && <UserPhotoCropper image={image} setImage={setImage} setIsModalOpen={setIsModalOpen} setCurrentPhoto={setCurrentPhoto}/>}
+                {image && <UserPhotoCropper 
+                    image={image} 
+                    setImage={setImage} 
+                    setIsModalOpen={setIsModalOpen} 
+                    setCurrentPhoto={setCurrentPhoto}
+                    handleImageChange={handleImageChange}
+                />}
             </div>
         </div>
     );

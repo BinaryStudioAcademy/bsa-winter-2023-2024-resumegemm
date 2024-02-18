@@ -16,9 +16,10 @@ interface UploadCropperProperties {
     setImage: React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setCurrentPhoto: React.Dispatch<React.SetStateAction<string>>;
+    handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, setImage, setIsModalOpen, setCurrentPhoto }) => {
+const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, setImage, setIsModalOpen, setCurrentPhoto, handleImageChange }) => {
     const [croppedImage, setCroppedImage] = useState<string | undefined | null>(null);
     const cropperReference = useRef<ReactCropperElement>(null);
 
@@ -27,13 +28,14 @@ const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, setImage, 
         const croppedImageUrl = croppedCanvas?.toDataURL('image/jpeg');
         setCroppedImage(croppedImageUrl);
     },[setCroppedImage]);
-  
+
+    // When backend is ready - change handleSave to handleImageChange
+
     const handleSave = useCallback(() => {
         if (croppedImage) {
             setCurrentPhoto(croppedImage);
-            setIsModalOpen(false);
-            //send PATCH request to api with image url
         }
+        setIsModalOpen(false);
     },[croppedImage, setIsModalOpen, setCurrentPhoto]);
 
     const onNewPhotoClick = useCallback(() => {
