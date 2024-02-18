@@ -4,9 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ResumeModel } from '~/bundles/resumes/resumes.js';
 import { TemplateModel } from '~/bundles/templates/template.model.js';
 import { UserModel } from '~/bundles/users/users.js';
-import {
-    DatabaseTableName,
-} from '~/common/database/database.js';
+import { DatabaseTableName } from '~/common/database/database.js';
 
 class RecentlyViewedModel extends Model {
     public 'id': string;

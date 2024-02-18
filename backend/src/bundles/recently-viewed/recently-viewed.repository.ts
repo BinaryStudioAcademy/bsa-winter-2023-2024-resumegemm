@@ -56,7 +56,6 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .withGraphFetched('[resumes, templates]')
             .orderBy('viewedAt', 'desc')
             .limit(limit);
-
     }
     public async findAllRecentlyViewedResumes(data: {
         limit: number;
@@ -87,7 +86,6 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
     public async create(
         data: RecentlyViewedRequestDto,
     ): Promise<RecentlyViewedResponseDto> {
-
         return await this.recentlyViewedModel
             .query()
             .insert(data)

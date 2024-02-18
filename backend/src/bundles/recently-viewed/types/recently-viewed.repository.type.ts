@@ -1,6 +1,6 @@
 import {
     type RecentlyViewedRequestDto,
-    type RecentlyViewedResponseDto
+    type RecentlyViewedResponseDto,
 } from './types';
 
 type IRecentlyViewedRepository = {
