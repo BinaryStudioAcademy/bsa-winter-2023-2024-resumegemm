@@ -1,13 +1,13 @@
 import data from '../../data/resume-preview.json';
 import {
     Contacts,
-    Design,
     Education,
     Experience,
     Languages,
     Portfolio,
     Profile,
     Recommendations,
+    Skills,
     Socials,
     Summary,
     TechStack,
@@ -29,7 +29,7 @@ const ResumePreview: React.FC = () => {
                     <Recommendations />
                 </div>
                 <div className={styles.resume_preview__content_aside_section}>
-                    <Design
+                    <Skills
                         data={data.skills}
                         json_styles={data.skills.styles}
                     />

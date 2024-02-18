@@ -13,10 +13,10 @@ type Properties = {
     json_styles: SkillsStyles;
 };
 
-const Design: React.FC<Properties> = ({ data, json_styles }) => (
+const Skills: React.FC<Properties> = ({ data, json_styles }) => (
     <div className={styles.resume_preview__section_wrapper}>
         <div className={styles.resume_preview__aside_section_header}>
-            <h3 className={styles.section_header__title}>Design</h3>
+            <h3 className={styles.section_header__title}>Skills</h3>
             <Badge title="skills" />
         </div>
         <ul
@@ -36,4 +36,4 @@ const Design: React.FC<Properties> = ({ data, json_styles }) => (
     </div>
 );
 
-export { Design };
+export { Skills };
