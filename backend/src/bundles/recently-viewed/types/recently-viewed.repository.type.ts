@@ -6,11 +6,7 @@ import {
 type IRecentlyViewedRepository = {
     find(id: string): Promise<RecentlyViewedResponseDto | null>;
 
-    findRecentlyViewedByUser(data: {
-        userId: string;
-        resumeId?: string;
-        templateId?: string;
-    }): Promise<RecentlyViewedResponseDto | null>;
+    findAll(data: { limit: number }): Promise<RecentlyViewedResponseDto[]>;
 
     findAllRecentlyViewedResumes(data: {
         limit: number;

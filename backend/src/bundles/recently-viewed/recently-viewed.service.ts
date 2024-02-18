@@ -37,17 +37,6 @@ class RecentlyViewedService implements IRecentlyViewedService {
     public async create(
         payload: RecentlyViewedRequestDto,
     ): Promise<RecentlyViewedResponseDto> {
-        const recentlyViewedByUser =
-            await this.recentlyViewedRepository.findRecentlyViewedByUser(
-                payload,
-            );
-
-        if (recentlyViewedByUser) {
-            return await this.recentlyViewedRepository.update(
-                recentlyViewedByUser.id,
-            );
-        }
-
         return await this.recentlyViewedRepository.create(payload);
     }
 

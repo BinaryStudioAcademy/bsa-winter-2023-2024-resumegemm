@@ -20,30 +20,6 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
         return recentlyViewed ?? null;
     }
 
-    public async findRecentlyViewedByUser(data: {
-        userId: string;
-        templateId?: string;
-        resumeId?: string;
-    }): Promise<RecentlyViewedResponseDto | null> {
-        const { userId, templateId, resumeId } = data;
-
-        let recentlyViewedByUser;
-
-        if (templateId) {
-            recentlyViewedByUser = await this.recentlyViewedModel
-                .query()
-                .where({ user_id: userId, template_id: templateId })
-                .first();
-        } else if (resumeId) {
-            recentlyViewedByUser = await this.recentlyViewedModel
-                .query()
-                .where({ user_id: userId, resume_id: resumeId })
-                .first();
-        }
-
-        return recentlyViewedByUser ?? null;
-    }
-
     public async findAll(data: {
         limit: number;
     }): Promise<RecentlyViewedResponseDto[]> {
@@ -57,6 +33,7 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .orderBy('viewedAt', 'desc')
             .limit(limit);
     }
+
     public async findAllRecentlyViewedResumes(data: {
         limit: number;
     }): Promise<RecentlyViewedResponseDto[]> {
