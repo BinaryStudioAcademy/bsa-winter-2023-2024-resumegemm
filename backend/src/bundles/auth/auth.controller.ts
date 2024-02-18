@@ -1,5 +1,6 @@
 import { type FastifyRequest } from 'fastify';
 import {
+    type HttpError,
     type UserAuthResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
@@ -7,7 +8,6 @@ import {
     type UserWithProfileRelation,
     AuthApiPath,
     ExceptionMessage,
-    HttpError,
     HttpHeader,
 } from 'shared/build/index.js';
 
@@ -226,7 +226,7 @@ class AuthController extends Controller {
         headers,
     }: ApiHandlerOptions<{
         headers: FastifyRequest['headers'];
-    }>): ApiHandlerResponse<string> {
+    }>): ApiHandlerResponse<{ accessToken: string }> {
         try {
             const refreshToken = (
                 headers[HttpHeader.AUTHORIZATION] as string
@@ -236,23 +236,19 @@ class AuthController extends Controller {
                 refreshToken,
                 Boolean(refreshToken),
             );
-            if (!id) {
-                throw new HttpError({
-                    message: ExceptionMessage.INVALID_TOKEN,
-                    status: HttpCode.UNAUTHORIZED,
-                });
-            }
+
             const accessToken = generateToken({ id });
+
             return {
                 status: HttpCode.OK,
-                payload: accessToken,
+                payload: { accessToken },
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { status } = error as HttpError;
             return {
                 status,
                 payload: {
-                    message,
+                    message: ExceptionMessage.INVALID_REFRESH_TOKEN,
                     status,
                 },
             };
