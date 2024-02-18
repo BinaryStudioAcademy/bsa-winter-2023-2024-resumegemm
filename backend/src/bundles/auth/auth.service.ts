@@ -2,9 +2,11 @@ import { ExceptionMessage, HttpCode, HttpError } from 'shared/build/index.js';
 
 import {
     comparePasswords,
+    encryptPassword,
+    generateRefreshToken,
     generateToken,
+    verifyToken,
 } from '~/bundles/auth/helpers/helpers.js';
-import { verifyToken } from '~/bundles/auth/helpers/token/token.js';
 import {
     type UserSignInRequestDto,
     type UserSignInResponseDto,
@@ -32,12 +34,20 @@ class AuthService {
                 status: HttpCode.BAD_REQUEST,
             });
         }
-        const { id } = await this.userService.create(userRequestDto);
+
+        const { hash: passwordHash, salt: passwordSalt } = encryptPassword(
+            userRequestDto.password,
+        );
+
+        const { id } = await this.userService.create(
+            userRequestDto,
+            passwordHash,
+            passwordSalt,
+        );
 
         const user = await this.userService.getUserWithProfile(id);
 
         return {
-            accessToken: generateToken({ id }),
             user,
         };
     }
@@ -54,8 +64,12 @@ class AuthService {
                 status: HttpCode.BAD_REQUEST,
             });
         }
-        const { passwordHash, id } = foundUserByEmail;
-        const isEqualPassword = await comparePasswords(password, passwordHash);
+        const { passwordHash, passwordSalt, id } = foundUserByEmail;
+        const isEqualPassword = await comparePasswords(
+            password,
+            passwordSalt,
+            passwordHash,
+        );
 
         if (!isEqualPassword) {
             throw new HttpError({
@@ -67,7 +81,7 @@ class AuthService {
         return {
             user,
             accessToken: generateToken({ id }),
-            refreshToken: generateToken({ id }, true),
+            refreshToken: generateRefreshToken({ id }),
         };
     }
 
