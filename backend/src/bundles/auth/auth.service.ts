@@ -77,7 +77,14 @@ class AuthService {
     }
 
     public verifyToken<T>(token: string, isRefreshToken?: boolean): T {
-        return verifyToken(token, isRefreshToken) as T;
+        try {
+            return verifyToken(token, isRefreshToken) as T;
+        } catch {
+            throw new HttpError({
+                message: ExceptionMessage.AUTH_FAILED,
+                status: HttpCode.UNAUTHORIZED,
+            });
+        }
     }
 }
 
