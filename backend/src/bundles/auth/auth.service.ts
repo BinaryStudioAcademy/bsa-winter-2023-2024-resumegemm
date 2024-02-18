@@ -2,14 +2,16 @@ import { ExceptionMessage, HttpCode, HttpError } from 'shared/build/index.js';
 
 import {
     comparePasswords,
+    generateRefreshToken,
     generateToken,
+    verifyToken,
 } from '~/bundles/auth/helpers/helpers.js';
-import { verifyToken } from '~/bundles/auth/helpers/token/token.js';
 import {
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserWithProfileRelation,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 
@@ -66,12 +68,16 @@ class AuthService {
         return {
             user,
             accessToken: generateToken({ id }),
-            refreshToken: generateToken({ id }, true),
+            refreshToken: generateRefreshToken({ id }),
         };
     }
 
-    public verifyToken<T>(token: string): T {
-        return verifyToken(token) as T;
+    public async getUser(id: string): Promise<UserWithProfileRelation> {
+        return await this.userService.getUserWithProfile(id);
+    }
+
+    public verifyToken<T>(token: string, isRefreshToken?: boolean): T {
+        return verifyToken(token, isRefreshToken) as T;
     }
 }
 
