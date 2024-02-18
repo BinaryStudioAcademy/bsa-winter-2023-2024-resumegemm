@@ -41,8 +41,8 @@ class AuthService {
 
         const { id } = await this.userService.create(
             userRequestDto,
-            passwordHash,
             passwordSalt,
+            passwordHash,
         );
 
         const user = await this.userService.getUserWithProfile(id);
