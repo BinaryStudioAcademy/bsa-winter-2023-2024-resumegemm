@@ -1,6 +1,3 @@
-import { encryptPassword } from '~/bundles/auth/helpers/helpers.js';
-import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
-import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { type IService } from '~/common/interfaces/interfaces.js';
 
@@ -13,14 +10,9 @@ import {
 
 class UserService implements IService {
     private userRepository: UserRepository;
-    private profileRepository: ProfileRepository;
 
-    public constructor(
-        userRepository: UserRepository,
-        profileRepository: ProfileRepository,
-    ) {
+    public constructor(userRepository: UserRepository) {
         this.userRepository = userRepository;
-        this.profileRepository = profileRepository;
     }
 
     public find(): ReturnType<IService['find']> {
@@ -39,28 +31,20 @@ class UserService implements IService {
         };
     }
 
-    public async create({
-        email,
-        password,
-        firstName,
-        lastName,
-    }: UserSignUpRequestDto): Promise<Pick<UserEntityFields, 'id'>> {
-        const { hash: passwordHash, salt: passwordSalt } =
-            encryptPassword(password);
-        const { id: profileId } = await this.profileRepository.create({
-            firstName,
-            lastName,
-        });
-
-        const user = await this.userRepository.create(
-            UserEntity.initializeNew({
+    public async create(
+        { email, firstName, lastName }: UserSignUpRequestDto,
+        passwordSalt: string,
+        passwordHash: string,
+    ): Promise<Pick<UserEntityFields, 'id'>> {
+        const user = await this.userRepository.createUserWithProfile(
+            {
                 email,
-                profileId,
                 passwordSalt,
                 passwordHash,
-            }),
+            } as UserEntityFields,
+            firstName,
+            lastName,
         );
-
         return user.toObject();
     }
 

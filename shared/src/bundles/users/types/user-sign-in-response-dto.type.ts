@@ -1,8 +1,7 @@
-import { type Profile } from '../../profile/profile';
-import { type UserAuthResponse } from './user-auth-response.type';
+import { type UserWithProfileRelation } from './user-with-profile-nested-relation.type';
 
 type UserSignInResponseDto = {
-    user: UserAuthResponse & { user_profile: Profile };
+    user: UserWithProfileRelation;
     accessToken: string;
     refreshToken: string;
 };

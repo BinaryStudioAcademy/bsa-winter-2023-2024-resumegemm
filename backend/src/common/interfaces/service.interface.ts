@@ -1,4 +1,7 @@
-import { type UserSignUpResponseDto } from 'shared/build/index.js';
+import {
+    type UserSignUpRequestDto,
+    type UserSignUpResponseDto,
+} from 'shared/build/index.js';
 
 interface IService<T = unknown> {
     find(): Promise<T>;
@@ -11,7 +14,11 @@ interface IService<T = unknown> {
 
     getUserWithProfile(id: string): Promise<UserSignUpResponseDto['user']>;
 
-    create(payload?: T): Promise<T>;
+    create(
+        user: UserSignUpRequestDto,
+        passwordSalt: string,
+        passwordHash: string,
+    ): Promise<T>;
 
     update(): Promise<T>;
 

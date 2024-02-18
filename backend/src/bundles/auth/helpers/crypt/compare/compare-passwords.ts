@@ -1,10 +1,12 @@
-import { compare } from 'bcrypt';
+import { hash } from 'bcrypt';
 
-const comparePasswords = (
-    data: string,
-    encryptedPassword: string,
+const comparePasswords = async (
+    plaintTextPassword: string,
+    passwordSalt: string,
+    passwordHash: string,
 ): Promise<boolean> => {
-    return compare(data, encryptedPassword);
+    const dataHash = await hash(plaintTextPassword, passwordSalt);
+    return dataHash === passwordHash;
 };
 
 export { comparePasswords };
