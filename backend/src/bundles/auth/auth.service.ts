@@ -1,8 +1,13 @@
-import { ExceptionMessage, HttpCode, HttpError } from 'shared/build/index.js';
+import { genSalt, hash } from 'bcrypt';
+import {
+    type AuthService as TAuthService,
+    type EncryptionDataPayload,
+    ExceptionMessage,
+    HttpCode,
+    HttpError,
+} from 'shared/build/index.js';
 
 import {
-    comparePasswords,
-    encryptPassword,
     generateRefreshToken,
     generateToken,
     verifyToken,
@@ -15,7 +20,7 @@ import {
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 
-class AuthService {
+class AuthService implements TAuthService {
     private userService: UserService;
 
     public constructor(userService: UserService) {
@@ -35,8 +40,11 @@ class AuthService {
             });
         }
 
-        const { hash: passwordHash, salt: passwordSalt } = encryptPassword(
+        const passwordSalt = await this.generateSalt();
+
+        const passwordHash = await this.encrypt(
             userRequestDto.password,
+            passwordSalt,
         );
 
         const { id } = await this.userService.create(
@@ -65,11 +73,11 @@ class AuthService {
             });
         }
         const { passwordHash, passwordSalt, id } = foundUserByEmail;
-        const isEqualPassword = await comparePasswords(
-            password,
+        const isEqualPassword = await this.compare({
+            plaintTextPassword: password,
             passwordSalt,
             passwordHash,
-        );
+        });
 
         if (!isEqualPassword) {
             throw new HttpError({
@@ -83,6 +91,24 @@ class AuthService {
             accessToken: generateToken({ id }),
             refreshToken: generateRefreshToken({ id }),
         };
+    }
+
+    public encrypt(data: string, salt: string): Promise<string> {
+        return hash(data, salt);
+    }
+
+    public async compare({
+        plaintTextPassword,
+        passwordSalt,
+        passwordHash,
+    }: EncryptionDataPayload): Promise<boolean> {
+        const dataHash = await this.encrypt(plaintTextPassword, passwordSalt);
+        return dataHash === passwordHash;
+    }
+
+    public async generateSalt(): Promise<string> {
+        const USER_PASSWORD_SALT_ROUNDS = 10;
+        return await genSalt(USER_PASSWORD_SALT_ROUNDS);
     }
 
     public verifyToken<T>(token: string): T {
