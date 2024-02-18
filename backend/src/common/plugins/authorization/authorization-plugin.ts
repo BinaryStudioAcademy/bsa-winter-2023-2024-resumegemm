@@ -1,17 +1,21 @@
 import fp from 'fastify-plugin';
-import { type HttpError, HttpHeader } from 'shared/build/index.js';
+import {
+    type AuthApiPath,
+    type HttpError,
+    HttpHeader,
+} from 'shared/build/index.js';
 
 import { type AuthService } from '~/bundles/auth/auth.service';
 import { ControllerHook } from '~/common/controller/enums/enums.js';
 import { type IService } from '~/common/interfaces/service.interface';
 
-type AuthorizationPayload = {
-    publicRoutes: object;
+type AuthorizationPluginPayload = {
+    publicRoutes: Partial<Record<AuthApiPath, string>>;
     userService: IService;
     authService: AuthService;
 };
 
-const authorization = fp<AuthorizationPayload>(
+const authorization = fp<AuthorizationPluginPayload>(
     async (
         fastify,
         { publicRoutes, authService, userService },
