@@ -1,6 +1,5 @@
 import reactLogo from '~/assets/img/react.svg';
 import { Link, RouterOutlet } from '~/bundles/common/components/components.js';
-import { UserPhotoWrapper } from '~/bundles/common/components/user-photo-uploader/user-photo-wrapper';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
@@ -56,7 +55,6 @@ const App: React.FC = () => {
                     </ul>
                 </>
             )}
-            <UserPhotoWrapper/>
         </>
     );
 };
