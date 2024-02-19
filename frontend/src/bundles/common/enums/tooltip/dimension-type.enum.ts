@@ -1,6 +1,6 @@
 enum TooltipDimensions {
     expand100Percent = 'expand100Percent',
-    fitContent = 'fitContent'
+    fitContent = 'fitContent',
 }
 
 export { TooltipDimensions };
