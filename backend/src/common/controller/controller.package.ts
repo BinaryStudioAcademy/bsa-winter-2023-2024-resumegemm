@@ -41,9 +41,12 @@ class Controller implements IController {
         this.logger.info(`${request.method.toUpperCase()} on ${request.url}`);
 
         const handlerOptions = this.mapRequest(request);
-        const { status, payload } = await handler(handlerOptions);
+        const { status, payload, contentType } = await handler(handlerOptions);
 
-        return await reply.status(status).send(payload);
+        return await reply
+            .status(status)
+            .header('Content-Type', contentType ?? 'application/json')
+            .send(payload);
     }
 
     private mapRequest(
