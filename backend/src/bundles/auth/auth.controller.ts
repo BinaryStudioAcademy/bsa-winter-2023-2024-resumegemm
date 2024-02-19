@@ -10,17 +10,22 @@ import {
     ExceptionMessage,
 } from 'shared/build/index.js';
 
-import { generateToken, getToken } from '~/bundles/auth/helpers/helpers.js';
+import {
+    generateRefreshToken,
+    generateToken,
+} from '~/bundles/auth/helpers/helpers.js';
 import {
     type UserSignUpRequestDto,
     userSignInValidationSchema,
     userSignUpValidationSchema,
 } from '~/bundles/users/users.js';
+import { config } from '~/common/config/config.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
     Controller,
 } from '~/common/controller/controller.js';
+import { CookieName } from '~/common/controller/enums/enums.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
@@ -68,6 +73,7 @@ class AuthController extends Controller {
                 this.getUser(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponse['user'];
+                        cookies: FastifyRequest['cookies'];
                     }>,
                 ),
         });
@@ -77,7 +83,7 @@ class AuthController extends Controller {
             handler: (options) =>
                 this.regenerateToken(
                     options as ApiHandlerOptions<{
-                        headers: FastifyRequest['headers'];
+                        cookies: FastifyRequest['cookies'];
                     }>,
                 ),
         });
@@ -157,6 +163,7 @@ class AuthController extends Controller {
     ): Promise<ApiHandlerResponse<UserSignUpResponseDto>> {
         try {
             const payload = await this.authService.signUp(options.body);
+
             return {
                 status: HttpCode.CREATED,
                 payload,
@@ -181,6 +188,7 @@ class AuthController extends Controller {
         try {
             const payload = await this.authService.login(options.body);
             return {
+                refreshToken: payload.refreshToken,
                 status: HttpCode.OK,
                 payload,
             };
@@ -222,21 +230,22 @@ class AuthController extends Controller {
     }
 
     private regenerateToken({
-        headers,
+        cookies,
     }: ApiHandlerOptions<{
-        headers: FastifyRequest['headers'];
+        cookies: FastifyRequest['cookies'];
     }>): ApiHandlerResponse<{ accessToken: string }> {
         try {
-            const refreshToken = getToken(headers);
+            const oldRefreshToken = cookies[CookieName.REFRESH_TOKEN] as NonNullable<string>;
 
             const { id } = this.authService.verifyToken<Record<'id', string>>(
-                refreshToken,
-                Boolean(refreshToken),
+                oldRefreshToken,
+                config.ENV.JWT.REFRESH_TOKEN_SECRET,
             );
 
             const accessToken = generateToken({ id });
-
+            const refreshToken = generateRefreshToken({ id });
             return {
+                refreshToken,
                 status: HttpCode.OK,
                 payload: { accessToken },
             };
