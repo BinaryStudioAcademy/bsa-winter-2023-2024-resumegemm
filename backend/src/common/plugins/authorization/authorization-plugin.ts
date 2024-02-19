@@ -32,8 +32,8 @@ const authorization = fp<AuthorizationPluginPayload>(
 
                 const { id } =
                     authService.verifyToken<Record<'id', string>>(token);
-
-                request.user = await userService.getUserWithProfile(id);
+                const currentUser = await userService.getUserWithProfile(id);
+                request.user = currentUser;
             } catch (error) {
                 const { status, message } = error as HttpError;
                 void reply.code(status).send({ status, message });
