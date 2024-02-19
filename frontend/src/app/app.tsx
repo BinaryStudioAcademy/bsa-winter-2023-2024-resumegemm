@@ -1,4 +1,6 @@
-import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+
+import { Bounce, ToastContainer } from 'react-toastify';
 
 import reactLogo from '~/assets/img/react.svg';
 import { Link, RouterOutlet } from '~/bundles/common/components/components.js';
@@ -32,15 +34,15 @@ const App: React.FC = () => {
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}
-                limit={5}
-                hideProgressBar
-                newestOnTop
+                hideProgressBar={false}
+                newestOnTop={false}
                 closeOnClick
                 rtl={false}
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
                 theme="colored"
+                transition={Bounce}
             />
             <img src={reactLogo} className="App-logo" width="30" alt="logo" />
             <ul className="App-navigation-list">
