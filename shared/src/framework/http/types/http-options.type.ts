@@ -4,6 +4,7 @@ type HttpOptions = {
     method: HttpMethod;
     payload: BodyInit | null;
     headers: Headers;
+    withCredentials?: boolean;
 };
 
 export { type HttpOptions };

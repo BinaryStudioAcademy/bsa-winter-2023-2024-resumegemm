@@ -1,8 +1,8 @@
-import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { type IService } from '~/common/interfaces/interfaces.js';
 
 import {
+    type UserEntityFields,
     type UserGetAllResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
@@ -19,6 +19,10 @@ class UserService implements IService {
         return Promise.resolve(null);
     }
 
+    public async findByEmail(email: string): Promise<UserEntityFields | null> {
+        return await this.userRepository.findOneByEmail(email);
+    }
+
     public async findAll(): Promise<UserGetAllResponseDto> {
         const items = await this.userRepository.findAll();
 
@@ -28,17 +32,26 @@ class UserService implements IService {
     }
 
     public async create(
-        payload: UserSignUpRequestDto,
-    ): Promise<UserSignUpResponseDto> {
-        const user = await this.userRepository.create(
-            UserEntity.initializeNew({
-                email: payload.email,
-                passwordSalt: 'SALT', // TODO
-                passwordHash: 'HASH', // TODO
-            }),
+        { email, firstName, lastName }: UserSignUpRequestDto,
+        passwordSalt: string,
+        passwordHash: string,
+    ): Promise<Pick<UserEntityFields, 'id'>> {
+        const user = await this.userRepository.createUserWithProfile(
+            {
+                email,
+                passwordSalt,
+                passwordHash,
+            } as UserEntityFields,
+            firstName,
+            lastName,
         );
-
         return user.toObject();
+    }
+
+    public async getUserWithProfile(
+        id: string,
+    ): Promise<UserSignUpResponseDto['user']> {
+        return this.userRepository.getUserWithProfile(id);
     }
 
     public update(): ReturnType<IService['update']> {
