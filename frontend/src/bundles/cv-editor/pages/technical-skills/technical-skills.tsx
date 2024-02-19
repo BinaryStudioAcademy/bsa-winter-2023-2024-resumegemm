@@ -1,10 +1,5 @@
-
 const TechnicalSkillsForm: React.FC = () => {
-    return (
-       <form >
-           Technical Skills
-       </form>
-    );
-   };
-   
-   export { TechnicalSkillsForm };
+    return <form>Technical Skills</form>;
+};
+
+export { TechnicalSkillsForm };
