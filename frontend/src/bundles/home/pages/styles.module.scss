@@ -1,0 +1,14 @@
+.layout {
+    display: grid;
+    grid-template-rows: 136px auto auto;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.template_page__card_layout {
+    grid-template-rows: 1fr 1fr;
+}

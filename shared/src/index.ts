@@ -1,16 +1,31 @@
-export { AuthApiPath } from './bundles/auth/auth.js';
 export {
+    type AuthService,
+    type AuthTokenResponse,
+    type EncryptionDataPayload,
+    AuthApiPath,
+} from './bundles/auth/auth.js';
+export { type Profile } from './bundles/profile/profile.js';
+export { SkillLevel } from './bundles/resumes/resumes.js';
+export {
+    type User,
+    type UserAuthResponse,
+    type UserEntityFields,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserSignInRequestDto,
+    type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserWithProfileRelation,
     UsersApiPath,
+    userSignInValidationSchema,
     userSignUpValidationSchema,
 } from './bundles/users/users.js';
 export {
     ApiPath,
     AppEnvironment,
     ContentType,
+    ExceptionMessage,
     ServerErrorType,
 } from './enums/enums.js';
 export { type IConfig } from './framework/config/config.js';

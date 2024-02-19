@@ -1,6 +1,6 @@
 import data from '~/bundles/resume-preview/data/resume-preview.json';
 
-import { svg } from '../../../../assets/img/resume_preview/resume-svg';
+import { svg } from '../../../../assets/img/resume-preview/resume-svg';
 import { ContactItem } from './components/contact-item/contact-item';
 import styles from './styles.module.scss';
 

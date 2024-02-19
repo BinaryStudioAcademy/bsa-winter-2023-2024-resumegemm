@@ -1,4 +1,4 @@
-import { svg } from '~/assets/img/resume_preview/resume-svg';
+import { svg } from '~/assets/img/resume-preview/resume-svg';
 import { DescriptionItem } from '~/bundles/resume-preview/components/common/description-item/description-item';
 import { formatDate } from '~/bundles/resume-preview/components/experience/helpers/format-date';
 import {

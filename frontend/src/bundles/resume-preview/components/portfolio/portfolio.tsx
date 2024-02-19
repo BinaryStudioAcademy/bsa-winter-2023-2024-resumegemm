@@ -1,4 +1,4 @@
-import { svg } from '~/assets/img/resume_preview/resume-svg';
+import { svg } from '~/assets/img/resume-preview/resume-svg';
 import {
     type PortfolioData,
     type PortfolioStyles,

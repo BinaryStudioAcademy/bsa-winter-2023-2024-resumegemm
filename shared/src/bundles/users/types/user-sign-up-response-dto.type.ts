@@ -1,6 +1,7 @@
+import { type UserWithProfileRelation } from './user-with-profile-nested-relation.type';
+
 type UserSignUpResponseDto = {
-    id: number;
-    email: string;
+    user: UserWithProfileRelation;
 };
 
 export { type UserSignUpResponseDto };

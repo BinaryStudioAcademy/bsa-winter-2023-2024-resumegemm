@@ -7,10 +7,7 @@ type Properties = {
     styles: DescriptionItemStyles;
 };
 
-const DescriptionItem: React.FC<Properties> = ({
-    description,
-    styles,
-}) => {
+const DescriptionItem: React.FC<Properties> = ({ description, styles }) => {
     return (
         <li className={style.section_description__item} style={styles}>
             {description}

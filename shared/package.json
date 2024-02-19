@@ -4,11 +4,12 @@
     "private": true,
     "engines": {
         "node": "18.x.x",
-        "npm": "9.x.x"
+        "npm": "10.x.x"
     },
     "scripts": {
         "lint:type": "npx tsc --noEmit",
         "lint:js": "npx eslint \"src/**/*.ts\"",
+        "lint:js:fix": "npx eslint --fix \"src/**/*.ts\"",
         "lint": "npm run lint:type && npm run lint:js",
         "build": "tsc && tsc-alias"
     },
