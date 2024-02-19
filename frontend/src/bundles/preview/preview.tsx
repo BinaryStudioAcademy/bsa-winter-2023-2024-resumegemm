@@ -2,7 +2,8 @@ import 'react-toastify/dist/ReactToastify.min.css';
 
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 
-import { BaseButton, Checkbox, RadioButton, Switch, Tooltip } from '../common/components/components';
+import { BaseButton, Calendar, Checkbox, RadioButton, Switch, Tooltip } from '../common/components/components';
+import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
