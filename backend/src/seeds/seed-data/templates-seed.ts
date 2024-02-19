@@ -1,4 +1,4 @@
-import { TemplateBlockTitles } from '~/common/enums/enums';
+import { TemplateBlockTitles } from '~/common/enums/enums.js';
 
 const templatesSeed = [
     {
