@@ -3,6 +3,7 @@ import { type AuthApiPath, type HttpError } from 'shared/build/index.js';
 
 import { type AuthService } from '~/bundles/auth/auth.service';
 import { getToken } from '~/bundles/auth/helpers/helpers.js';
+import { config } from '~/common/config/config.js';
 import { ControllerHook } from '~/common/controller/enums/enums.js';
 import { type IService } from '~/common/interfaces/service.interface';
 
@@ -30,8 +31,10 @@ const authorization = fp<AuthorizationPluginPayload>(
                 }
                 const token = getToken(request.headers);
 
-                const { id } =
-                    authService.verifyToken<Record<'id', string>>(token);
+                const { id } = authService.verifyToken<Record<'id', string>>(
+                    token,
+                    config.ENV.JWT.ACCESS_TOKEN_SECRET,
+                );
                 const currentUser = await userService.getUserWithProfile(id);
                 request.user = currentUser;
             } catch (error) {
