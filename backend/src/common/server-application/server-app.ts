@@ -1,3 +1,4 @@
+import fastifyMultipart from '@fastify/multipart';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
@@ -14,6 +15,8 @@ import {
     type ValidationSchema,
 } from '~/common/types/types.js';
 
+import { FileUploadValidationRule } from '../files/enums/file-upload-validation-rule.js';
+import { fileUpload as fileUploadPlugin } from '../files/file-upload.plugin.js';
 import {
     type IServerApp,
     type IServerAppApi,
@@ -96,6 +99,21 @@ class ServerApp implements IServerApp {
         );
     }
 
+    private async initPlugins(): Promise<void> {
+        await this.app.register(fastifyMultipart, {
+          limits: {
+            fileSize: FileUploadValidationRule.MAXIMUM_FILE_SIZE,
+          },
+          attachFieldsToBody: true,
+          throwFileSizeLimit: false,
+        });
+    
+        await this.app.register(fileUploadPlugin, {
+          extensions:
+            FileUploadValidationRule.UPLOAD_FILE_CONTENT_TYPES as unknown as string[],
+        });
+      }
+
     private initValidationCompiler(): void {
         this.app.setValidatorCompiler<ValidationSchema>(({ schema }) => {
             return <T>(data: T): ReturnType<ValidationSchema['validate']> => {
@@ -166,6 +184,8 @@ class ServerApp implements IServerApp {
 
         await this.initMiddlewares();
 
+        await this.initPlugins();
+        
         this.initValidationCompiler();
 
         this.initErrorHandler();
