@@ -17,6 +17,7 @@ import {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserWithProfileRelation,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 
@@ -93,6 +94,9 @@ class AuthService implements TAuthService {
         };
     }
 
+    public async getUser(id: string): Promise<UserWithProfileRelation> {
+        return await this.userService.getUserWithProfile(id);
+    }
     public encrypt(data: string, salt: string): Promise<string> {
         return hash(data, salt);
     }
@@ -111,8 +115,15 @@ class AuthService implements TAuthService {
         return await genSalt(USER_PASSWORD_SALT_ROUNDS);
     }
 
-    public verifyToken<T>(token: string): T {
-        return verifyToken(token) as T;
+    public verifyToken<T>(token: string, isRefreshToken?: boolean): T {
+        try {
+            return verifyToken(token, isRefreshToken) as T;
+        } catch {
+            throw new HttpError({
+                message: ExceptionMessage.AUTH_FAILED,
+                status: HttpCode.UNAUTHORIZED,
+            });
+        }
     }
 }
 
