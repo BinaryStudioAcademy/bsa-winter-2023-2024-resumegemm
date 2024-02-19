@@ -30,6 +30,7 @@
     },
     "dependencies": {
         "@aws-sdk/client-s3": "3.514.0",
+        "@fastify/multipart": "8.1.0",
         "@fastify/swagger": "8.3.1",
         "@fastify/swagger-ui": "1.4.0",
         "bcrypt": "5.1.1",
@@ -38,6 +39,7 @@
         "fastify": "4.11.0",
         "knex": "2.4.2",
         "objection": "3.0.1",
+        "path": "0.12.7",
         "pg": "8.9.0",
         "pino": "8.8.0",
         "pino-pretty": "9.1.1",
