@@ -3,6 +3,7 @@
     "include": ["src"],
     "exclude": ["node_modules"],
     "compilerOptions": {
+        "types": ["node"],
         "target": "ESNext",
         "module": "ESNext",
         "esModuleInterop": true,

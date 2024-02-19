@@ -1,0 +1,53 @@
+.create_resume__button {
+  padding: 15px 42px;
+  font-weight: var(--font-weight-title);
+  font-size: var(--font-size-subtitle);
+  font-family: var(--font-family-main);
+  line-height: 24px;
+  border: none;
+  border-radius: 25px;
+}
+
+.width__default {
+  width: 300px;
+}
+
+.width__full {
+  width: 100%;
+}
+
+.color__dark_blue {
+  color: var(--color-white);
+  background-color: var(--color-background-dark-blue);
+}
+
+.color__white {
+  color: #36394A;
+  background-color: var(--color-white);
+}
+
+.color__transparent {
+  color: var(--color-background-dark-blue);
+  background-color: transparent;
+  border: 1px solid var(--color-background-dark-blue);
+}
+
+.color__light_gray {
+  color: var(--color-text-black);
+  background-color: var(--color-input-field-gray);
+}
+
+.color__gray {
+  color: var(--color-white);
+  background-color: var(--color-text-gray);
+}
+
+.color__dark_gray {
+  color: var(--color-white);
+  background-color: var(--color-text-black);
+}
+
+.color__red {
+  color: var(--color-white);
+  background-color: var(--color-error-red);
+}/*# sourceMappingURL=styles.module.css.map */
