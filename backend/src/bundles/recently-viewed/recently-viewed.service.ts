@@ -28,7 +28,7 @@ class RecentlyViewedService implements IRecentlyViewedService {
 
     public async findRecentlyViewedResumes(data: {
         limit: number;
-    }): Promise<RecentlyViewedResponseDto[] | null> {
+    }): Promise<RecentlyViewedResponseDto[]> {
         return await this.recentlyViewedRepository.findAllRecentlyViewedResumes(
             data,
         );

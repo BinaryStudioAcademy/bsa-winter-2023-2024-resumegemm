@@ -12,6 +12,7 @@ import { type RecentlyViewedService } from './recently-viewed.service';
 import {
     type IRecentlyViewedController,
     type RecentlyViewedRequestDto,
+    type RecentlyViewedResponseDto,
 } from './types/types';
 
 class RecentlyViewedController
@@ -80,7 +81,7 @@ class RecentlyViewedController
 
     public async findAll(
         options: ApiHandlerOptions<{ query: { limit: number } }>,
-    ): Promise<ApiHandlerResponse> {
+    ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>> {
         try {
             const limit = options.query.limit;
             const items = await this.recentlyViewedService.findAll({
@@ -89,19 +90,21 @@ class RecentlyViewedController
 
             return {
                 status: HttpCode.OK,
-                payload: { items: items },
+                payload:  items,
             };
         } catch (error) {
             return {
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: { error: (error as Error).message },
+                payload: { 
+                    message: (error as Error).message,
+                 },
             };
         }
     }
 
     public async findRecentlyViewedResumes(
         options: ApiHandlerOptions<{ query: { limit: number } }>,
-    ): Promise<ApiHandlerResponse> {
+    ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>> {
         try {
             const limit = options.query.limit;
             const recentlyViewedResumes =
@@ -111,19 +114,21 @@ class RecentlyViewedController
 
             return {
                 status: HttpCode.OK,
-                payload: { items: recentlyViewedResumes },
+                payload: recentlyViewedResumes,
             };
         } catch (error) {
             return {
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: { error: (error as Error).message },
+                payload: { 
+                    message: (error as Error).message,
+                },
             };
         }
     }
 
     public async findRecentlyViewedTemplates(
         options: ApiHandlerOptions<{ query: { limit: number } }>,
-    ): Promise<ApiHandlerResponse> {
+    ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>> {
         try {
             const limit = options.query.limit;
             const recentlyViewedTemplates =
@@ -133,19 +138,21 @@ class RecentlyViewedController
 
             return {
                 status: HttpCode.OK,
-                payload: { items: recentlyViewedTemplates },
+                payload: recentlyViewedTemplates,
             };
         } catch (error) {
             return {
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: { error: (error as Error).message },
+                payload: { 
+                    message: (error as Error).message
+                },
             };
         }
     }
 
     public async create(
         options: ApiHandlerOptions<{ body: RecentlyViewedRequestDto }>,
-    ): Promise<ApiHandlerResponse> {
+    ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>> {
         try {
             const data = options.body;
             const createdItem = await this.recentlyViewedService.create(data);
@@ -157,14 +164,16 @@ class RecentlyViewedController
         } catch (error) {
             return {
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: { error: (error as Error).message },
+                payload: { 
+                    message: (error as Error).message
+                },
             };
         }
     }
 
     public async update(
         options: ApiHandlerOptions<{ params: { id: string } }>,
-    ): Promise<ApiHandlerResponse> {
+    ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>> {
         try {
             const id = options.params.id;
             const updatedRecentlyViewed =
@@ -173,7 +182,7 @@ class RecentlyViewedController
             if (!updatedRecentlyViewed) {
                 return {
                     status: HttpCode.NOT_FOUND,
-                    payload: { error: 'Not found' },
+                    payload: { message: 'Not found' },
                 };
             }
             return {
@@ -183,14 +192,14 @@ class RecentlyViewedController
         } catch (error) {
             return {
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: { error: (error as Error).message },
+                payload: { message: (error as Error).message },
             };
         }
     }
 
     public async delete(
         options: ApiHandlerOptions<{ params: { id: string } }>,
-    ): Promise<ApiHandlerResponse> {
+    ): Promise<ApiHandlerResponse<boolean>> {
         try {
             const id = options.params.id;
             const deletedItem = await this.recentlyViewedService.delete(id);
@@ -198,17 +207,17 @@ class RecentlyViewedController
             if (!deletedItem) {
                 return {
                     status: HttpCode.NOT_FOUND,
-                    payload: { error: 'Not found' },
+                    payload: { message: 'Not found' },
                 };
             }
             return {
                 status: HttpCode.OK,
-                payload: { deleted: true },
+                payload: true ,
             };
         } catch (error) {
             return {
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: { error: (error as Error).message },
+                payload: { message: (error as Error).message },
             };
         }
     }
