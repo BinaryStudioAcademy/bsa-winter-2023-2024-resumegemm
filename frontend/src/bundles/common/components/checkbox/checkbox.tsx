@@ -18,7 +18,7 @@ const Checkbox: React.FC<Properties> = ({
     name,
 }: Properties): JSX.Element => {
     return (
-        <label htmlFor={name} className={clsx(styles.container, className)}>
+        <label className={clsx(styles.container, className)}>
             <div className={styles.checkmark_container}>
                 <input
                     type="checkbox"
