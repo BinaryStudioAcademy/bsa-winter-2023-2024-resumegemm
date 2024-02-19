@@ -8,7 +8,10 @@ interface Properties extends InputHTMLAttributes<HTMLInputElement> {
     width?: string;
 }
 const Input = forwardRef<HTMLInputElement, Properties>(
-    ({ hasError = false, width = 'auto', disabled, ...otherProperties }, reference) => (
+    (
+        { hasError = false, width = 'auto', disabled, ...otherProperties },
+        reference,
+    ) => (
         <input
             className={clsx(styles.input, {
                 [styles.input__error]: hasError,
@@ -18,7 +21,6 @@ const Input = forwardRef<HTMLInputElement, Properties>(
             style={{ width }}
             ref={reference}
             type="text"
-            
         />
     ),
 );

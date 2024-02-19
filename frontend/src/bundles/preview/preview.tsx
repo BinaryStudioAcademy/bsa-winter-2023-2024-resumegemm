@@ -1,5 +1,10 @@
 import { Auth } from '../auth/pages/auth';
-import { Checkbox, RadioButton, Switch,Tooltip  } from '../common/components/components';
+import {
+    Checkbox,
+    RadioButton,
+    Switch,
+    Tooltip,
+} from '../common/components/components';
 import { TooltipDimensions } from '../common/enums/enums';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
@@ -19,15 +24,19 @@ const PreviewPage: React.FC = () => {
                 </li>
                 <li className={styles.item}>
                     <div className={styles.tooltip_small_example_container}>
-                        <Tooltip dimensionType={TooltipDimensions.expand100Percent} text='tooltip text' />
+                        <Tooltip
+                            dimensionType={TooltipDimensions.expand100Percent}
+                            text="tooltip text"
+                        />
                     </div>
                     <div className={styles.tooltip_big_example_container}>
-                        <Tooltip dimensionType={TooltipDimensions.expand100Percent} text='tooltip text' />
+                        <Tooltip
+                            dimensionType={TooltipDimensions.expand100Percent}
+                            text="tooltip text"
+                        />
                     </div>
-                    <Tooltip text='tooltip text'>
-                        <p>
-                            Tooltip
-                        </p>
+                    <Tooltip text="tooltip text">
+                        <p>Tooltip</p>
                     </Tooltip>
                     <Home />
                 </li>
