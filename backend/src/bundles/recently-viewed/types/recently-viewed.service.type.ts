@@ -4,13 +4,9 @@ import {
 } from './types';
 
 type IRecentlyViewedService = {
-    findRecentlyViewedTemplates(data: {
+    findAll(data: {
         limit: number;
-    }): Promise<RecentlyViewedResponseDto[] | null>;
-
-    findRecentlyViewedResumes(data: {
-        limit: number;
-    }): Promise<RecentlyViewedResponseDto[] | null>;
+    }): Promise<RecentlyViewedResponseDto[]>;
 
     create(
         payload: RecentlyViewedRequestDto,
