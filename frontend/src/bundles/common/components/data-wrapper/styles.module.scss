@@ -1,0 +1,14 @@
+@import url('../../../../assets/css/variables.scss');
+
+.data_wrapper__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.data_wrapper__message {
+    font-size: var(--font-size-title-h2);
+    font-family: var(--font-family-main);
+}
