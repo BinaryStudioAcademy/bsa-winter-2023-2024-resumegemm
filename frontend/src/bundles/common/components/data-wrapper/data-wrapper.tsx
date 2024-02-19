@@ -20,7 +20,7 @@ const DataWrapper: FC<DataWrapperProperties> = ({
     if (isLoading) {
         return (
             <div className={styles.data_wrapper__container}>
-            {CustomSpinnerComponent ?? <Spinner/>}
+                {CustomSpinnerComponent ?? <Spinner/>}
             </div>
         );
     }
