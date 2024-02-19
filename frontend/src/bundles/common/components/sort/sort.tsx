@@ -5,16 +5,16 @@ import {
     type ReactNode,
 } from 'react';
 
+import { IconName } from '../../enums/enums';
+import { Icon } from '../components';
 import styles from './styles.module.scss';
 
 type SortType = 'asc' | 'desc' | null;
 
 interface Properties extends ButtonHTMLAttributes<HTMLButtonElement> {
     sortType?: SortType;
-    ascendingArrowIcon?: ReactNode | JSX.Element;
-    descendingArrowIcon?: ReactNode | JSX.Element;
-    iconFontSize?:string;
-    defaultIconColor?:string
+    iconFontSize?: string;
+    defaultIconColor?: string;
     children: ReactNode;
     className?: string;
     onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -23,13 +23,12 @@ interface Properties extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Sort = ({
     sortType,
     children,
-    className,
-    ascendingArrowIcon,
-    descendingArrowIcon,
+    className = '',
     iconFontSize = '14px',
     defaultIconColor = 'gray',
     onClick,
 }: Properties): JSX.Element => {
+    
     return (
         <button
             className={clsx(
@@ -40,13 +39,14 @@ const Sort = ({
             onClick={onClick}
         >
             {children}
-            <div className={clsx(styles.icon_wrapper,{
-                [styles[`icon_wrapper__${sortType}`]]: sortType
-            })}
-            style={{ fontSize:iconFontSize, color:defaultIconColor }}
+            <div
+                className={clsx(styles.icon_wrapper, {
+                    [styles[`icon_wrapper__${sortType}`]]: sortType,
+                })}
+                style={{ fontSize: iconFontSize, color: defaultIconColor }}
             >
-                {descendingArrowIcon}
-                {ascendingArrowIcon}
+                <Icon name={IconName.ARROW_DOWN} />
+                <Icon name={IconName.ARROW_UP} />
             </div>
         </button>
     );
