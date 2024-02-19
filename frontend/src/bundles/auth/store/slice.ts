@@ -4,7 +4,7 @@ import { type UserAuthResponse } from 'shared/build/index.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { getUser, logOut,signIn, signUp } from './actions.js';
+import { getUser, signIn, signUp } from './actions.js';
 
 type State = {
     user: UserAuthResponse | null;
@@ -21,11 +21,6 @@ const { reducer, actions, name } = createSlice({
     name: 'auth',
     reducers: {},
     extraReducers(builder) {
-        builder.addCase(logOut.fulfilled, (state) => {
-            state.dataStatus = DataStatus.IDLE;
-            state.user = null;
-        });
-
         builder.addMatcher(
             isAnyOf(signUp.pending, signIn.pending, getUser.pending),
             (state) => {

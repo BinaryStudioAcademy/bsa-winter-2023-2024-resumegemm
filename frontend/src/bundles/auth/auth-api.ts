@@ -10,7 +10,6 @@ import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
-import { type AuthTokenResponse } from '../users/types/types.js';
 import { AuthApiPath } from './enums/enums.js';
 
 type Constructor = {

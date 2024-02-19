@@ -15,10 +15,8 @@ const signUp = createAsyncThunk<
     UserSignUpRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
-    const { authApi, storageApi } = extra;
-    const { user, accessToken } = await authApi.signUp(registerPayload);
-
-    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+    const { authApi } = extra;
+    const { user } = await authApi.signUp(registerPayload);
 
     return user;
 });
@@ -36,15 +34,6 @@ const signIn = createAsyncThunk<
     return user;
 });
 
-const logOut = createAsyncThunk<void, void, AsyncThunkConfig>(
-    `${sliceName}/log-out`,
-    async (_, { extra }) => {
-        const { storageApi } = extra;
-
-        await storageApi.drop(StorageKey.ACCESS_TOKEN);
-    },
-);
-
 const getUser = createAsyncThunk<UserAuthResponse, void, AsyncThunkConfig>(
     `${sliceName}/get-user`,
     async (_, { extra }) => {
@@ -54,4 +43,4 @@ const getUser = createAsyncThunk<UserAuthResponse, void, AsyncThunkConfig>(
     },
 );
 
-export { getUser, logOut,signIn, signUp };
+export { getUser, signIn, signUp };
