@@ -106,8 +106,17 @@ class UserRepository implements IRepository {
         return Promise.resolve(null);
     }
 
-    public delete(): ReturnType<IRepository['delete']> {
-        return Promise.resolve(true);
+    public async delete(
+        id: string
+    ): Promise<UserEntity> {
+            const user = await this.userModel
+                .query()
+                .findOne({ id })
+                .patch({ deletedAt: new Date().toISOString() })
+                .returning('*')
+                .castTo<UserEntity>();
+        
+            return user ?? null;
     }
 }
 

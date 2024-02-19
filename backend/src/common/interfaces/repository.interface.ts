@@ -13,7 +13,7 @@ interface IRepository<T = unknown> {
 
     getUserWithProfile(id: string): Promise<UserSignUpResponseDto['user']>;
 
-    delete(): Promise<boolean>;
+    delete(id: string): Promise<T>;
 }
 
 export { type IRepository };
