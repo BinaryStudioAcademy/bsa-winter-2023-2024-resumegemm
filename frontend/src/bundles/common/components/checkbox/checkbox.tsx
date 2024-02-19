@@ -18,7 +18,7 @@ const Checkbox: React.FC<Properties> = ({
     name,
 }: Properties): JSX.Element => {
     return (
-        <label className={clsx(styles.container, className)}>
+        <label htmlFor={name} className={clsx(styles.container, className)}>
             <div className={styles.checkmark_container}>
                 <input
                     type="checkbox"
@@ -26,6 +26,7 @@ const Checkbox: React.FC<Properties> = ({
                     defaultChecked={checked}
                     onChange={onChange}
                     name={name}
+                    id={name}
                 />
                 <svg
                     className={styles.checkmark}
