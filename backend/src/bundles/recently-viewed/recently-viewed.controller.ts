@@ -90,14 +90,14 @@ class RecentlyViewedController
 
             return {
                 status: HttpCode.OK,
-                payload:  items,
+                payload: items,
             };
         } catch (error) {
             return {
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: { 
+                payload: {
                     message: (error as Error).message,
-                 },
+                },
             };
         }
     }
@@ -119,7 +119,7 @@ class RecentlyViewedController
         } catch (error) {
             return {
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: { 
+                payload: {
                     message: (error as Error).message,
                 },
             };
@@ -143,8 +143,8 @@ class RecentlyViewedController
         } catch (error) {
             return {
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: { 
-                    message: (error as Error).message
+                payload: {
+                    message: (error as Error).message,
                 },
             };
         }
@@ -164,8 +164,8 @@ class RecentlyViewedController
         } catch (error) {
             return {
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: { 
-                    message: (error as Error).message
+                payload: {
+                    message: (error as Error).message,
                 },
             };
         }
@@ -212,7 +212,7 @@ class RecentlyViewedController
             }
             return {
                 status: HttpCode.OK,
-                payload: true ,
+                payload: true,
             };
         } catch (error) {
             return {

@@ -3,14 +3,15 @@ import {
     type ApiHandlerResponse,
 } from '~/common/controller/controller';
 
-import { 
+import {
     type RecentlyViewedRequestDto,
-    type RecentlyViewedResponseDto, 
+    type RecentlyViewedResponseDto,
 } from './types';
 
 type IRecentlyViewedController = {
-    findAll(options: { query: { limit: number } }
-        ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>>;
+    findAll(options: {
+        query: { limit: number };
+    }): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>>;
 
     findRecentlyViewedResumes(options: {
         query: { limit: number };
