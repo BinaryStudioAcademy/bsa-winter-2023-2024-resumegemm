@@ -1,9 +1,5 @@
-import {
-    Checkbox,
-    RadioButton,
-    Switch,
-    Tooltip,
-} from '../common/components/components';
+import { Calendar, Checkbox, RadioButton, Switch, Tooltip } from '../common/components/components';
+import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
@@ -22,6 +18,8 @@ const PreviewPage: React.FC = () => {
                     <Switch label="Switch" />
                 </li>
                 <li className={styles.item}>
+                    <Calendar />
+                    <Calendar type={CalendarTypes.withPresent} />
                     <div className={styles.tooltip_small_example_container}>
                         <Tooltip
                             dimensionType={TooltipDimensions.expand100Percent}
