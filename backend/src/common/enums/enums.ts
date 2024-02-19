@@ -1,3 +1,4 @@
+export { TemplateBlockTitles } from 'shared/build/enums/enums.js';
 export {
     ApiPath,
     AppEnvironment,
