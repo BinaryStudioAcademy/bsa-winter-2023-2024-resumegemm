@@ -13,14 +13,6 @@ type IRecentlyViewedController = {
         query: { limit: number };
     }): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>>;
 
-    findRecentlyViewedResumes(options: {
-        query: { limit: number };
-    }): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>>;
-
-    findRecentlyViewedTemplates(options: {
-        query: { limit: number };
-    }): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>>;
-
     create(
         options: ApiHandlerOptions<{ body: RecentlyViewedRequestDto }>,
     ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>>;

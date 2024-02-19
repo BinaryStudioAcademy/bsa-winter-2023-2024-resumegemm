@@ -36,22 +36,6 @@ class RecentlyViewedController
                 ),
         });
         this.addRoute({
-            path: RecentlyViewedApiPath.RECENTLY_VIEWED_RESUMES,
-            method: 'GET',
-            handler: (options) =>
-                this.findRecentlyViewedResumes(
-                    options as ApiHandlerOptions<{ query: { limit: number } }>,
-                ),
-        });
-        this.addRoute({
-            path: RecentlyViewedApiPath.RECENTLY_VIEWED_TEMPLATES,
-            method: 'GET',
-            handler: (options) =>
-                this.findRecentlyViewedTemplates(
-                    options as ApiHandlerOptions<{ query: { limit: number } }>,
-                ),
-        });
-        this.addRoute({
             path: RecentlyViewedApiPath.ROOT,
             method: 'POST',
             handler: (options) =>
@@ -91,54 +75,6 @@ class RecentlyViewedController
             return {
                 status: HttpCode.OK,
                 payload: items,
-            };
-        } catch (error) {
-            return {
-                status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: {
-                    message: (error as Error).message,
-                },
-            };
-        }
-    }
-
-    public async findRecentlyViewedResumes(
-        options: ApiHandlerOptions<{ query: { limit: number } }>,
-    ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>> {
-        try {
-            const limit = options.query.limit;
-            const recentlyViewedResumes =
-                await this.recentlyViewedService.findRecentlyViewedResumes({
-                    limit,
-                });
-
-            return {
-                status: HttpCode.OK,
-                payload: recentlyViewedResumes,
-            };
-        } catch (error) {
-            return {
-                status: HttpCode.INTERNAL_SERVER_ERROR,
-                payload: {
-                    message: (error as Error).message,
-                },
-            };
-        }
-    }
-
-    public async findRecentlyViewedTemplates(
-        options: ApiHandlerOptions<{ query: { limit: number } }>,
-    ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>> {
-        try {
-            const limit = options.query.limit;
-            const recentlyViewedTemplates =
-                await this.recentlyViewedService.findRecentlyViewedTemplates({
-                    limit,
-                });
-
-            return {
-                status: HttpCode.OK,
-                payload: recentlyViewedTemplates,
             };
         } catch (error) {
             return {
