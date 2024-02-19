@@ -11,6 +11,7 @@ type ApiHandlerResponse<T> = {
               message?: string;
               status?: ApiHandlerResponseStatus;
           };
+    contentType?: string;
 };
 
 export { type ApiHandlerResponse };
