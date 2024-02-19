@@ -3,7 +3,7 @@
     "private": "true",
     "engines": {
         "node": "18.x.x",
-        "npm": "9.x.x"
+        "npm": "10.x.x"
     },
     "workspaces": [
         "shared",
@@ -40,7 +40,7 @@
         "lint-staged": "13.1.2",
         "prettier": "2.8.4",
         "simple-git-hooks": "2.8.1",
-        "stylelint": "15.2.0",
+        "stylelint": "15.11.0",
         "stylelint-config-standard": "30.0.1",
         "stylelint-order": "6.0.3",
         "tsc-alias": "1.8.2",
