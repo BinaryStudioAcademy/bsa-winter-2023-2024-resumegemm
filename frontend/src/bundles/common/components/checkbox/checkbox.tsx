@@ -26,7 +26,6 @@ const Checkbox: React.FC<Properties> = ({
                     defaultChecked={checked}
                     onChange={onChange}
                     name={name}
-                    id={name}
                 />
                 <svg
                     className={styles.checkmark}
