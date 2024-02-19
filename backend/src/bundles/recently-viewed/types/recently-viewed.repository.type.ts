@@ -8,14 +8,6 @@ type IRecentlyViewedRepository = {
 
     findAll(data: { limit: number }): Promise<RecentlyViewedResponseDto[]>;
 
-    findAllRecentlyViewedResumes(data: {
-        limit: number;
-    }): Promise<RecentlyViewedResponseDto[]>;
-
-    findAllRecentlyViewedTemplates(data: {
-        limit: number;
-    }): Promise<RecentlyViewedResponseDto[]>;
-
     create(data: RecentlyViewedRequestDto): Promise<RecentlyViewedResponseDto>;
 
     update(id: string): Promise<RecentlyViewedResponseDto | null>;

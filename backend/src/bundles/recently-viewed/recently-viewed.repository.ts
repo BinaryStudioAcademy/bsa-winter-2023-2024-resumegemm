@@ -29,33 +29,6 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .query()
             .whereNotNull('resumeId')
             .withGraphFetched('[resumes]')
-            .withGraphFetched('[resumes, templates]')
-            .orderBy('viewedAt', 'desc')
-            .limit(limit);
-    }
-
-    public async findAllRecentlyViewedResumes(data: {
-        limit: number;
-    }): Promise<RecentlyViewedResponseDto[]> {
-        const { limit } = data;
-
-        return await this.recentlyViewedModel
-            .query()
-            .whereNotNull('resumeId')
-            .withGraphFetched('[resumes]')
-            .orderBy('viewedAt', 'desc')
-            .limit(limit);
-    }
-
-    public async findAllRecentlyViewedTemplates(data: {
-        limit: number;
-    }): Promise<RecentlyViewedResponseDto[]> {
-        const { limit } = data;
-
-        return await this.recentlyViewedModel
-            .query()
-            .whereNotNull('templateId')
-            .withGraphFetched('[templates]')
             .orderBy('viewedAt', 'desc')
             .limit(limit);
     }
