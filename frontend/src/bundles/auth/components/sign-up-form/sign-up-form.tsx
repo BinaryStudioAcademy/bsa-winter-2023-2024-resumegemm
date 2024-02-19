@@ -49,11 +49,18 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 className={styles.registration__form}
                 onSubmit={handleFormSubmit}
             >   
-                <FormGroup label='Name'>
+                <FormGroup label='First Name'>
                     <Input
                         type="text"
-                        placeholder="Enter your name"
-                        name="name"
+                        placeholder="Your first name"
+                        name="first name"
+                    />
+                </FormGroup>
+                <FormGroup label='Last Name'>
+                    <Input
+                        type="text"
+                        placeholder="Your last name"
+                        name="last name"
                     />
                 </FormGroup>
                 <FormGroup label='Email'>
