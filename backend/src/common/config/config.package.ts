@@ -69,6 +69,14 @@ class Config implements IConfig {
                     default: null,
                 },
             },
+            STRIPE: {
+                STRIPE_API_KEY: {
+                    doc: 'Stripe API key',
+                    format: String,
+                    env: 'STRIPE_API_KEY',
+                    default: null,
+                }
+            }
         });
     }
 }

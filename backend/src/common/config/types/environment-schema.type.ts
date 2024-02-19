@@ -12,6 +12,9 @@ type EnvironmentSchema = {
         POOL_MIN: number;
         POOL_MAX: number;
     };
+    STRIPE: {
+        STRIPE_API_KEY: string;
+    };
 };
 
 export { type EnvironmentSchema };
