@@ -11,6 +11,8 @@ export { Modal } from './modal/modal';
 export { RadioButton } from './radio-button/radio-button.js';
 export { RouterProvider } from './router-provider/router-provider.js';
 export { Switch } from './switch/switch.js';
+export { NavTabs } from './tabs/nav-tab.js';
 export { Tooltip } from './tooltip/tooltip.js';
 export { Provider as StoreProvider } from 'react-redux';
 export { Outlet as RouterOutlet } from 'react-router-dom';
+
