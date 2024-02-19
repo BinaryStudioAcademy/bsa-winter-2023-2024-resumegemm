@@ -23,7 +23,7 @@ const Switch: React.FC<Properties> = ({
     }, [state]);
 
     useEffect(() => {
-        if(onChange) {
+        if (onChange) {
             onChange(state);
         }
     }, [onChange, state]);
