@@ -1,9 +1,10 @@
-import  { type FileUploadRequestDto } from 'shared/src/types/types.js';
+import  { type FileUploadResponseDto } from 'shared/build/types/file-upload-response.dto.type.js';
 
 import  { type IService } from '../interfaces/service.interface.js';
 import { FileEntity } from './file.entity.js';
 import  { type FileRepository } from './file.repository.js';
 import { type IFileUploadClient } from './interfaces/file-upload-client.interface.js';
+import  { type FileUploadRequestDto } from './types/file-upload-request-dto.js';
 
 class FileService implements IService {
     private fileRepository:FileRepository;
@@ -17,13 +18,12 @@ class FileService implements IService {
       this.fileUploadClient = fileUploadClient;
     }
   
-    public async upload(
-      fileBuffer: Buffer,
-      extension: string,
-    ): Promise<FileUploadRequestDto> {
+    public async create(
+      fileBuffer: FileUploadRequestDto,
+    ): Promise<FileUploadResponseDto> {
       const uploadedFileUrl = await this.fileUploadClient.upload(
-        fileBuffer,
-        extension,
+        fileBuffer.buffer,
+        fileBuffer.contentType,
       );
   
       const fileEntity = await this.fileRepository.create(
@@ -41,11 +41,7 @@ class FileService implements IService {
       return Promise.resolve({ items: [] });
     }
   
-    public create(payload: unknown): ReturnType<IService['create']> {
-      return Promise.resolve(payload);
-    }
-  
-    public update(): ReturnType<IService['create']> {
+    public update(): ReturnType<IService['update']> {
       return Promise.resolve(null);
     }
   
