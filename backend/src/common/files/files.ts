@@ -1,12 +1,11 @@
-import { config } from '../config/config';
-import { logger } from '../logger/logger';
-import { FileModel } from './file.model';
-import { FileRepository } from './file.repository';
-import { FileService } from './file.service';
-import { FileUploadClient } from './file-upload-client';
+import { config } from '../config/config.js';
+import { FileModel } from './file.model.js';
+import { FileRepository } from './file.repository.js';
+import { FileService } from './file.service.js';
+import { FileUploadClient } from './file-upload-client.js';
 
 const fileUploadClient = new FileUploadClient(config);
-const imageRepository = new FileRepository(FileModel);
-const imageService = new FileService(imageRepository, fileUploadClient);
+const fileRepository = new FileRepository(FileModel);
+const fileService = new FileService(fileRepository, fileUploadClient);
 
-export { imageService };
+export { fileService };
