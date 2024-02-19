@@ -14,7 +14,7 @@ const Switch: React.FC<Properties> = ({
     label,
     checked = false,
     className,
-    onChange
+    onChange,
 }: Properties): JSX.Element => {
     const [state, setState] = useState(checked);
 
