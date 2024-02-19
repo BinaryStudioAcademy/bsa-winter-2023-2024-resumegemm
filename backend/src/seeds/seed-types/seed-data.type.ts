@@ -3,7 +3,7 @@ import { type TemplateBlockSettings } from '~/common/types/types.js';
 
 type User = {
     id: string;
-    username: string;
+    first_name: string;
     email: string;
     password_hash: string;
     password_salt: string;

@@ -10,7 +10,6 @@ async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(DatabaseTableName.USERS, (table) => {
         table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.EMAIL).unique().notNullable();
-        table.string(DatabaseColumnName.USERNAME).notNullable();
         table.text(DatabaseColumnName.PASSWORD_HASH).notNullable();
         table.text(DatabaseColumnName.PASSWORD_SALT).notNullable();
         table
@@ -26,7 +25,7 @@ async function up(knex: Knex): Promise<void> {
         table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.FIRST_NAME).notNullable();
         table.string(DatabaseColumnName.LAST_NAME).notNullable();
-        table.string(DatabaseColumnName.AVATAR).notNullable();
+        table.string(DatabaseColumnName.AVATAR);
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()

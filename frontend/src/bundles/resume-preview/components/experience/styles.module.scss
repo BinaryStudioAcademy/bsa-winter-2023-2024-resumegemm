@@ -1,0 +1,83 @@
+.section__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4.95px;
+    padding: 9.9px;
+    border: 1px solid #eceef3;
+    border-radius: 8.25px;
+}
+
+.section__header,
+.aside__section_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8.25px;
+    padding-bottom: 7.3px;
+    border-bottom: 0.83px dashed #eceef3;
+}
+
+.section__header_title {
+    color: #36394a;
+    font-weight: 500;
+    font-size: 8.25px;
+    line-height: 13.2px;
+}
+
+ul.section_description__list li {
+    list-style-position: inside;
+    list-style-type: disc;
+}
+
+.section__body {
+    display: flex;
+    flex-direction: column;
+    gap: 8.25px;
+}
+
+.section__body_item {
+    display: flex;
+}
+
+.section__body_image {
+    margin-right: 8.25px;
+}
+
+.experience__info_position {
+    margin-bottom: 1.65px;
+    color: #36394a;
+    font-weight: 400;
+    font-size: 9.9px;
+    line-height: 13.2px;
+}
+
+.experience__info_work_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4.95px;
+    height: 10px;
+    margin-bottom: 1.65px;
+    color: #36394a;
+    font-weight: 400;
+    font-size: 6.6px;
+    line-height: 9.9px;
+}
+
+.experience__info_work_period {
+    color: #818898;
+}
+
+.experience__info_work_location {
+    margin-bottom: 1.65px;
+    color: #666d80;
+}
+
+.section_body__item_recommendation {
+    display: flex;
+    flex-direction: column;
+    height: 64.56px;
+    padding: 4.95px;
+    overflow: hidden;
+    border: 0.83px solid #eceff3;
+    border-radius: 6.6px;
+}
