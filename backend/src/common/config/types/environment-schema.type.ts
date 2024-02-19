@@ -12,6 +12,10 @@ type EnvironmentSchema = {
         ACCESS_TOKEN_EXPIRES_IN: string;
         REFRESH_TOKEN_EXPIRES_IN: string;
     };
+    COOKIE: {
+        COOKIE_SECRET: string;
+        EXPIRES_IN: number
+    }
     DB: {
         CONNECTION_STRING: string;
         DIALECT: string;
