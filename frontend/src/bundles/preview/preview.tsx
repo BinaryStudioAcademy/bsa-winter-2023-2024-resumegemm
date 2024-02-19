@@ -21,15 +21,19 @@ const PreviewPage: React.FC = () => {
                     <Calendar />
                     <Calendar type={CalendarTypes.withPresent} />
                     <div className={styles.tooltip_small_example_container}>
-                        <Tooltip dimensionType={TooltipDimensions.expand100Percent} text='tooltip text' />
+                        <Tooltip
+                            dimensionType={TooltipDimensions.expand100Percent}
+                            text="tooltip text"
+                        />
                     </div>
                     <div className={styles.tooltip_big_example_container}>
-                        <Tooltip dimensionType={TooltipDimensions.expand100Percent} text='tooltip text' />
+                        <Tooltip
+                            dimensionType={TooltipDimensions.expand100Percent}
+                            text="tooltip text"
+                        />
                     </div>
-                    <Tooltip text='tooltip text'>
-                        <p>
-                            Tooltip
-                        </p>
+                    <Tooltip text="tooltip text">
+                        <p>Tooltip</p>
                     </Tooltip>
                     <Home />
                 </li>
