@@ -29,17 +29,13 @@ const ExperienceItem: React.FC<Properties> = ({ item, json_styles }) => {
     const formatedStartDate = formatDate(start_date);
     const formatedEndDate = formatDate(end_date);
 
+    const logoSource =
+        company_logo.length > 0 ? svg.notchLogo : svg.emptyCompanyLogo;
+
     return (
         <li className={styles.section__body_item}>
             <div className={styles.section__body_image}>
-                <img
-                    src={
-                        company_logo.length > 0
-                            ? svg.notchLogo
-                            : svg.emptyCompanyLogo
-                    }
-                    alt="Company Logo"
-                />
+                <img src={logoSource} alt="Company Logo" />
             </div>
             <div className={styles.experience__info}>
                 <h4
