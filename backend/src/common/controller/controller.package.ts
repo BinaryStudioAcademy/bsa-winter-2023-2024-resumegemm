@@ -1,12 +1,10 @@
+import { config } from '~/common/config/config.js';
+import { CookieName } from '~/common/controller/enums/enums.js';
 import { type ILogger } from '~/common/logger/logger.js';
 import { type ServerAppRouteParameters } from '~/common/server-application/server-application.js';
 
 import { type IController } from './interfaces/interface.js';
-import {
-    type ApiHandler,
-    type ApiHandlerOptions,
-    type ControllerRouteParameters,
-} from './types/types.js';
+import { type ApiHandler, type ApiHandlerOptions, type ControllerRouteParameters } from './types/types.js';
 
 class Controller implements IController {
     private logger: ILogger;
@@ -41,22 +39,28 @@ class Controller implements IController {
         this.logger.info(`${request.method.toUpperCase()} on ${request.url}`);
 
         const handlerOptions = this.mapRequest(request);
-        const { status, payload } = await handler(handlerOptions);
-
+        const { status, payload, refreshToken } = await handler(handlerOptions);
+        if (refreshToken) {
+            void reply.setCookie(CookieName.REFRESH_TOKEN, refreshToken, {
+                path: '/',
+                httpOnly: true,
+                maxAge: config.ENV.COOKIE.EXPIRES_IN
+            });
+        }
         return await reply.status(status).send(payload);
     }
 
     private mapRequest(
         request: Parameters<ServerAppRouteParameters['handler']>[0],
     ): ApiHandlerOptions {
-        const { body, query, params, user, headers } = request;
-
+        const { body, query, params, user, headers, cookies } = request;
         return {
             body,
             query,
             params,
             user,
             headers,
+            cookies,
         };
     }
 }
