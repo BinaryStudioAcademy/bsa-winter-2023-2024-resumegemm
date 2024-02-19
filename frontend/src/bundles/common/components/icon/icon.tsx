@@ -1,6 +1,8 @@
 import { type SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import {
+    faArrowDownLong,
+    faArrowUpLong,
     faChevronDown,
     faEye,
     faEyeSlash,
@@ -18,6 +20,8 @@ const iconNameToSvgIcon = {
     [IconName.GOOGLE]: faGoogle,
     [IconName.EYE_OPEN]: faEye,
     [IconName.EYE_SLASH]: faEyeSlash,
+    [IconName.ARROW_DOWN]: faArrowDownLong,
+    [IconName.ARROW_UP]: faArrowUpLong
 };
 
 type IconProperties = {
