@@ -1,4 +1,5 @@
 export { AuthApiPath } from './bundles/auth/auth.js';
+export { type CreatePaymentIntentRequestDto, type CreatePaymentIntentResponseDto, PaymentApiPath } from './bundles/payment/payment.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
     type UserGetAllItemResponseDto,
