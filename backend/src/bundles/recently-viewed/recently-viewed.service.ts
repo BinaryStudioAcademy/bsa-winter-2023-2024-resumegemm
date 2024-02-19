@@ -15,14 +15,12 @@ class RecentlyViewedService implements IRecentlyViewedService {
     public async findAll(data: {
         limit: number;
     }): Promise<RecentlyViewedResponseDto[]> {
-
         return await this.recentlyViewedRepository.findAll(data);
     }
 
     public async create(
         payload: RecentlyViewedRequestDto,
     ): Promise<RecentlyViewedResponseDto> {
-        
         return await this.recentlyViewedRepository.create(payload);
     }
 

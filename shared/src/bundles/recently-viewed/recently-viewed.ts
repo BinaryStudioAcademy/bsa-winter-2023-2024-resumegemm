@@ -1,6 +1,6 @@
 enum RecentlyViewedApiPath {
     ROOT = '/',
-    ID = '/:id'
+    ID = '/:id',
 }
 export { RecentlyViewedApiPath };
 export {

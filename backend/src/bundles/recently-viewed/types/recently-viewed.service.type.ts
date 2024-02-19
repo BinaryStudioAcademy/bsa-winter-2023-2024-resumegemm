@@ -4,9 +4,7 @@ import {
 } from './types';
 
 type IRecentlyViewedService = {
-    findAll(data: {
-        limit: number;
-    }): Promise<RecentlyViewedResponseDto[]>;
+    findAll(data: { limit: number }): Promise<RecentlyViewedResponseDto[]>;
 
     create(
         payload: RecentlyViewedRequestDto,
