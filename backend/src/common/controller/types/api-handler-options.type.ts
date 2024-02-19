@@ -4,6 +4,7 @@ type DefaultApiHandlerOptions = {
     params?: unknown;
     user?: unknown;
     headers?: unknown;
+    cookies?: unknown;
 };
 
 type ApiHandlerOptions<
@@ -14,6 +15,7 @@ type ApiHandlerOptions<
     params: T['params'];
     user: T['user'];
     headers: T['headers'];
+    cookies: T['cookies'];
 };
 
 export { type ApiHandlerOptions };
