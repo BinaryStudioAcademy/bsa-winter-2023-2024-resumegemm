@@ -50,7 +50,7 @@ const Calendar = ({
             return;
         }
 
-        for(const month of CalendarMonths) {
+        for (const month of CalendarMonths) {
             if (
                 monthMatch[0]
                     .toLowerCase()
@@ -77,7 +77,7 @@ const Calendar = ({
 
     const selectMonth = useCallback((value: Date): void => {
         const inputMonth = CalendarMonths.find((month) => month.num === value.getMonth());
-        if(inputMonth) {
+        if (inputMonth) {
             setMonth(inputMonth);
             setSelected(inputMonth.num);
         }
@@ -109,7 +109,7 @@ const Calendar = ({
 
     useEffect(() => {
 
-        if(onChange) {
+        if (onChange) {
             onChange({
                 year: year,
                 month: month,
