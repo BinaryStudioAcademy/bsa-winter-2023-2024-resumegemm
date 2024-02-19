@@ -115,9 +115,9 @@ class AuthService implements TAuthService {
         return await genSalt(USER_PASSWORD_SALT_ROUNDS);
     }
 
-    public verifyToken<T>(token: string, isRefreshToken?: boolean): T {
+    public verifyToken<T>(token: string, tokenSecret: string): T {
         try {
-            return verifyToken(token, isRefreshToken) as T;
+            return verifyToken(token, tokenSecret) as T;
         } catch {
             throw new HttpError({
                 message: ExceptionMessage.AUTH_FAILED,
