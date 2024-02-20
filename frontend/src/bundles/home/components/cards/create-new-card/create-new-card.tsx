@@ -1,4 +1,3 @@
-
 import { PlusCircleIcon } from '../../icons/plus-circle-icon';
 import styles from './styles.module.scss';
 
