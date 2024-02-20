@@ -17,6 +17,7 @@ import { store } from '~/framework/store/store';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { PreviewPage } from './bundles/preview/preview';
+import { Profile } from './bundles/users/pages/profile';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
@@ -42,6 +43,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             {
                                 path: AppRoute.SIGN_UP,
                                 element: <Auth />,
+                            },
+                            {
+                                path: AppRoute.PROFILE,
+                                element: <Profile />,
                             },
                         ],
                     },
