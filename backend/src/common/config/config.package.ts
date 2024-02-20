@@ -70,10 +70,16 @@ class Config implements IConfig {
                 },
             },
             STRIPE: {
-                STRIPE_API_KEY: {
-                    doc: 'Stripe API key',
+                STRIPE_SECRET_KEY: {
+                    doc: 'Stripe secret key',
                     format: String,
-                    env: 'STRIPE_API_KEY',
+                    env: 'STRIPE_SECRET_KEY',
+                    default: null,
+                },
+                STRIPE_PUBLISHABLE_KEY: {
+                    doc: 'Stripe publishable key',
+                    format: String,
+                    env: 'STRIPE_PUBLISHABLE_KEY',
                     default: null,
                 }
             }

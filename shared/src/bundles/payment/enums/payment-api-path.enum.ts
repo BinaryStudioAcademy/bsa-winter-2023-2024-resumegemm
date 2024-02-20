@@ -1,4 +1,5 @@
-declare enum PaymentApiPath {
-    PAYMENT_INTENT = '/create-payment-intent'
+enum PaymentApiPath {
+    PAYMENT_INTENT = '/create-payment-intent',
+    CONFIG = '/config'
 }
 export { PaymentApiPath };

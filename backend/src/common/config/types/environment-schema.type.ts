@@ -13,7 +13,8 @@ type EnvironmentSchema = {
         POOL_MAX: number;
     };
     STRIPE: {
-        STRIPE_API_KEY: string;
+        STRIPE_SECRET_KEY: string;
+        STRIPE_PUBLISHABLE_KEY: string;
     };
 };
 

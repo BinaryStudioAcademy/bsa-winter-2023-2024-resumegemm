@@ -27,6 +27,13 @@ class PaymentController extends Controller {
                     body: CreatePaymentIntentRequestDto;
                 }>),
         });
+
+        this.addRoute({
+            path: PaymentApiPath.CONFIG,
+            method: 'GET',
+            handler: () =>
+                this.getPublishableKey(),
+        });
     }
 
     /**
@@ -64,6 +71,29 @@ class PaymentController extends Controller {
         return {
             status: HttpCode.CREATED,
             payload: await this.paymentService.createPaymentIntent(options.body),
+        };
+    }
+
+    /**
+     * @swagger
+     * /payment/config:
+     *    get:
+     *      description: Returns publishable key 
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  publishableKey:
+     *                    type: string
+     */
+    private getPublishableKey(): ApiHandlerResponse {
+        return {
+            status: HttpCode.OK,
+            payload: this.paymentService.getPublishableKey(),
         };
     }
 }

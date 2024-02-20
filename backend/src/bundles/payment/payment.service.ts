@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
 
-import { type CreatePaymentIntentRequestDto, type CreatePaymentIntentResponseDto } from './types/types';
+import { type CreatePaymentIntentRequestDto, type CreatePaymentIntentResponseDto, type GetPublishableKeyResponseDto } from './types/types';
 
 class PaymentService {
     private appConfig: IConfig;
@@ -10,7 +10,7 @@ class PaymentService {
 
     public constructor(config: IConfig) {
         this.appConfig = config;
-        this.stripe = new Stripe(this.appConfig.ENV.STRIPE.STRIPE_API_KEY);
+        this.stripe = new Stripe(this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY);
     }
     public async createPaymentIntent(createPaymentIntentRequestDto: CreatePaymentIntentRequestDto): Promise<CreatePaymentIntentResponseDto> {
         const { currency, amount } = createPaymentIntentRequestDto;
@@ -21,6 +21,10 @@ class PaymentService {
         });
 
         return { clientSecret: paymentIntent.client_secret };
+    }
+
+    public getPublishableKey(): GetPublishableKeyResponseDto {
+        return { publishableKey: this.appConfig.ENV.STRIPE.STRIPE_PUBLISHABLE_KEY };
     }
 }
 
