@@ -1,0 +1,50 @@
+.step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: gray;
+    font-size: 16px;
+}
+
+.step__active {
+    color: black;
+}
+
+.step__index {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    color: rgb(99 99 99);
+    background-color: rgb(217 218 221);
+    border-radius: 100%;
+    
+}
+
+.step__index_active {
+    color: white;
+    background-color: rgb(67 142 255);
+}
+
+.step__index_done {
+    position: relative;
+    background-color: rgb(67 142 255);
+}
+
+.step__index_done::after {
+    content: "✔";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    color: white;
+
+
+}
