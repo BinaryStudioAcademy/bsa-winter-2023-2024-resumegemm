@@ -1,4 +1,5 @@
 import fastifyCookie from '@fastify/cookie';
+import cors from '@fastify/cors';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
@@ -91,6 +92,11 @@ class ServerApp implements IServerApp {
                     publicRoutes,
                     userService,
                     authService,
+                });
+                await this.app.register(cors, {
+                    origin: config.ENV.APP.ORIGIN_URL,
+                    methods: '*',
+                    credentials: true,
                 });
                 await this.app.register(fastifyCookie, {
                     secret: config.ENV.COOKIE.COOKIE_SECRET,
