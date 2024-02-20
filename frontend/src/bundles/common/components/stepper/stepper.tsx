@@ -6,24 +6,17 @@ import styles from './styles.module.scss';
 type Properties = {
     steps: { label: string }[];
     activeStep: number;
-    indexFontSize?: string;
-    labelFontSize?: string;
     className?: string;
 };
 
 const Stepper = ({
     steps,
     activeStep,
-    indexFontSize = '16px',
-    labelFontSize = '16px',
     className = '',
 }: Properties): JSX.Element => {
     return (
         <div className={clsx(styles.step, className)}>
-            <div
-                className={styles.stepper__header}
-                style={{ fontSize: indexFontSize }}
-            >
+            <div className={styles.stepper__header}>
                 {steps.map(({ label }, index) => {
                     return (
                         <>
@@ -33,7 +26,6 @@ const Stepper = ({
                                 index={index}
                                 isActive={index === activeStep}
                                 isCompleted={index < activeStep}
-                                labelFontSize={labelFontSize}
                             />
                             {index !== steps.length - 1 && (
                                 <div className={styles.stepper__line}></div>

@@ -7,7 +7,6 @@ type Properties = {
     index: number;
     isActive: boolean;
     isCompleted: boolean;
-    labelFontSize?: string;
 };
 
 const Step = ({
@@ -15,7 +14,6 @@ const Step = ({
     index,
     isActive,
     isCompleted,
-    labelFontSize = '16px',
 }: Properties): JSX.Element => {
     return (
         <div
@@ -31,14 +29,7 @@ const Step = ({
             >
                 {!isCompleted && ++index}
             </div>
-            <div
-                className={styles.step__label}
-                style={{
-                    fontSize: labelFontSize,
-                }}
-            >
-                {label}
-            </div>
+            <div className={styles.step__label}>{label}</div>
         </div>
     );
 };
