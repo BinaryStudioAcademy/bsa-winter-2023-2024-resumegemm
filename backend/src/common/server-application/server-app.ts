@@ -88,6 +88,19 @@ class ServerApp implements IServerApp {
                     `Generate swagger documentation for API ${it.version}`,
                 );
 
+                await this.app.register(fastifyMultipart, {
+                    limits: {
+                        fileSize: FileUploadValidationRule.MAXIMUM_FILE_SIZE,
+                    },
+                    attachFieldsToBody: true,
+                    throwFileSizeLimit: false,
+                });
+        
+                await this.app.register(fileUploadPlugin, {
+                    extensions:
+                        FileUploadValidationRule.UPLOAD_FILE_CONTENT_TYPES as unknown as string[],
+                });
+                
                 await this.app.register(authorizationPlugin, {
                     publicRoutes,
                     userService,
@@ -107,21 +120,6 @@ class ServerApp implements IServerApp {
                 });
             }),
         );
-    }
-
-    private async initPlugins(): Promise<void> {
-        await this.app.register(fastifyMultipart, {
-            limits: {
-                fileSize: FileUploadValidationRule.MAXIMUM_FILE_SIZE,
-            },
-            attachFieldsToBody: true,
-            throwFileSizeLimit: false,
-        });
-
-        await this.app.register(fileUploadPlugin, {
-            extensions:
-                FileUploadValidationRule.UPLOAD_FILE_CONTENT_TYPES as unknown as string[],
-        });
     }
 
     private initValidationCompiler(): void {
@@ -193,8 +191,6 @@ class ServerApp implements IServerApp {
         this.logger.info('Application initialization…');
 
         await this.initMiddlewares();
-
-        await this.initPlugins();
 
         this.initValidationCompiler();
 
