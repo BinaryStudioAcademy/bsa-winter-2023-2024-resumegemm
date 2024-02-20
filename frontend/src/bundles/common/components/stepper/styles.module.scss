@@ -4,5 +4,12 @@
 
 .stepper__header {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.stepper__line {
+    flex: 1 1 auto;
+    height: 1px;
+    background-color: rgb(61 61 61);
 }
