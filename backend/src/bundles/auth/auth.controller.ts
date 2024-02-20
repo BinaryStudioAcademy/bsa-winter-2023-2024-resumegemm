@@ -84,6 +84,7 @@ class AuthController extends Controller {
                 this.regenerateToken(
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
+                        unsignCookie: FastifyRequest['unsignCookie'];
                     }>,
                 ),
         });
@@ -232,11 +233,14 @@ class AuthController extends Controller {
 
     private regenerateToken({
         cookies,
+        unsignCookie
     }: ApiHandlerOptions<{
         cookies: FastifyRequest['cookies'];
+        unsignCookie: FastifyRequest['unsignCookie'];
     }>): ApiHandlerResponse<{ accessToken: string }> {
         try {
-            const oldRefreshToken = cookies[CookieName.REFRESH_TOKEN] as NonNullable<string>;
+            const unsignedCookie = unsignCookie(cookies[CookieName.REFRESH_TOKEN] as NonNullable<string>);
+            const oldRefreshToken = unsignedCookie.value as string;
 
             const { id } = this.authService.verifyToken<Record<'id', string>>(
                 oldRefreshToken,
