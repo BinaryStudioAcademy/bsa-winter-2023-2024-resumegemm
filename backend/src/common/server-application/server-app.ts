@@ -11,7 +11,7 @@ import { ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
-import { authorization as authorizationPlugin } from '~/common/plugins/plugins.js';
+import { authorization as authorizationPlugin, fileUpload as fileUploadPlugin } from '~/common/plugins/plugins.js';
 import { publicRoutes } from '~/common/server-application/constants/constants.js';
 import {
     type ServerCommonErrorResponse,
@@ -20,7 +20,6 @@ import {
 } from '~/common/types/types.js';
 
 import { FileUploadValidationRule } from '../files/enums/file-upload-validation-rule.js';
-import { fileUpload as fileUploadPlugin } from '../files/file-upload.plugin.js';
 import {
     type IServerApp,
     type IServerAppApi,

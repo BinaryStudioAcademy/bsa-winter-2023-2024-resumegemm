@@ -4,10 +4,10 @@ import fp from 'fastify-plugin';
 import { type ContentType } from 'shared/src/enums/content-type.enum';
 import { type ValueOf } from 'shared/src/types/value-of.type';
 
-import { ControllerHook } from '../controller/controller.js';
-import { HttpCode } from '../http/http.js';
-import { FileUploadValidationMessage } from './enums/file-upload-validation-message.js';
-import { FileError } from './exceptions/file-error.exception.js';
+import { ControllerHook } from '../../controller/controller.js';
+import { FileUploadValidationMessage } from '../../files/enums/file-upload-validation-message.js';
+import { FileError } from '../../files/exceptions/file-error.exception.js';
+import { HttpCode } from '../../http/http.js';
 
 type Options = {
     extensions: string[];
