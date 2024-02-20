@@ -1,0 +1,351 @@
+{
+    "profile": {
+        "full_name": "Ragip Diler",
+        "job_position": "Product Designer",
+        "styles": {
+            "profile__title": {
+                "fontSize": "11.55px",
+                "fontWeight": "500",
+                "color": "#0d0d12"
+            },
+            "profile__job_position": {
+                "fontSize": "9.9px",
+                "fontWeight": "400",
+                "color": "#36394a"
+            }
+        }
+    },
+    "contacts": {
+        "city": "Ankara",
+        "country": "Turkey",
+        "email": "dilerragip@gmail.com",
+        "portfolio_url": "https://myportfolio.com",
+        "linkedIn": "https://linkedIn.com/ragipdiler",
+        "styles": {
+            "resume_preview__contacts": {
+                "borderRadius": "33px",
+                "backgroundColor": "#f6f8fa"
+            },
+            "contacts__item": {
+                "fontSize": "8.25px",
+                "fontWeight": "400",
+                "color": "#36394a"
+            },
+            "contacts__item_icon": {
+                "width": "9.9px",
+                "heigth": "9.9px",
+                "color": "#36394a"
+            },
+            "contacts__item_text": {
+                "fontSize": "8.25px",
+                "fontWeight": "400",
+                "color": "#36394a"
+            }
+        }
+    },
+    "summary": {
+        "data": [
+            "Since 2021, I have been working as a freelance digital product designer.",
+            "I design all components with style guide, ui kits, prototyping, animation and design system."
+        ],
+        "styles": {
+            "summary__description_item": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#36394a",
+                "listStyleType": "disc"
+            }
+        }
+    },
+    "experience": {
+        "data": [
+            {
+                "company_logo": "",
+                "job_position": "Product Designer",
+                "company": "Company Name",
+                "employment_type": "Full-time",
+                "location_type": "Remote",
+                "start_date": "2022-10-01",
+                "end_date": "2023-08-01",
+                "work_location": {
+                    "city": "Lausanne",
+                    "state": "Vaud",
+                    "country": "Switzerland"
+                },
+                "description": []
+            },
+            {
+                "company_logo": "",
+                "job_position": "Product Designer",
+                "company": "Company Name",
+                "employment_type": "Full-time",
+                "location_type": "Remote",
+                "start_date": "2022-07-01",
+                "end_date": "2023-08-01",
+                "work_location": {
+                    "city": "Lausanne",
+                    "state": "Vaud",
+                    "country": "Switzerland"
+                },
+                "description": [
+                    "Designed user interfaces for web and mobile applications",
+                    "Used user-centered design principles and methodologies",
+                    "Created a comprehensive design system",
+                    "Conducted user research and benchmarking",
+                    "Worked with cross-functional teams during the product design process"
+                ]
+            },
+            {
+                "company_logo": "../../../assets/img/resume_preview/notch_logo.svg",
+                "job_position": "Product Designer",
+                "company": "Notch",
+                "employment_type": "Part-time",
+                "location_type": "Remote",
+                "start_date": "2022-07-01",
+                "end_date": "Present",
+                "work_location": {
+                    "city": "San Francisco",
+                    "state": "California",
+                    "country": "United States"
+                },
+                "description": [
+                    "Designed user interfaces for website design and dashboards."
+                ]
+            },
+            {
+                "company_logo": "",
+                "job_position": "Product Designer",
+                "company": "Freelance",
+                "employment_type": "",
+                "location_type": "Remote",
+                "start_date": "2021-07-01",
+                "end_date": "Present",
+                "work_location": {
+                    "city": "Ankara",
+                    "state": "",
+                    "country": "Turkey"
+                },
+                "description": [
+                    "Experimenting with prototyping and user interfaces.",
+                    "Focused on simplicity, accessibility and interactions to my work."
+                ]
+            }
+        ],
+        "styles": {
+            "experience__info_job_position": {
+                "fontWeight": "400",
+                "fontSize": "9.9px",
+                "color": "#36394a"
+            },
+            "experience__info_company": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#36394a"
+            },
+            "experience__info_employment_type": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#36394a"
+            },
+            "experience__info_location_type": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#36394a"
+            },
+            "experience__info_work_period": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#818898"
+            },
+            "experience__info_work_location": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#666d80"
+            },
+            "experience__info_description_item": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#36394a",
+                "listStyleType": "disc"
+            }
+        }
+    },
+    "recommendations": [
+        {
+            "photo": "",
+            "name": "John Doe",
+            "job_position": "CEO",
+            "company": "@ Acme Inc.",
+            "description": "Lorem ipsum dolor sit amet consectetur. Non nibh cras eget cursus amet porta nibh in. In pharetra imperdiet in duis at massa. Diam viverra adipiscing amet pellentesque. Non nibh cras eget cursus amet porta nibh in. In pharetra imperdiet in duis at massa. Diam viverra adipiscing amet pellentesque. Non nibh cras eget cursus amet porta nibh in. In pharetra imperdiet in duis at massa. Diam viverra adipiscing amet pellentesque."
+        },
+        {
+            "photo": "",
+            "name": "Jane Doe",
+            "job_position": "Product Manager",
+            "company": "@ Acme Inc.",
+            "description": "Lorem ipsum dolor sit amet consectetur. Non nibh cras eget cursus amet porta nibh in. In pharetra imperdiet in duis at massa. Diam viverra adipiscing amet pellentesque. Non nibh cras eget cursus amet porta nibh in. In pharetra imperdiet in duis at massa. Diam viverra adipiscing amet pellentesque. Non nibh cras eget cursus amet porta nibh in. In pharetra imperdiet in duis at massa. Diam viverra adipiscing amet pellentesque."
+        }
+    ],
+    "skills": {
+        "data": [
+            "User Experience",
+            "Design System",
+            "Web Design (Responsive)",
+            "WebApp Design (Responsive)",
+            "Mobile App Design",
+            "Prototyping"
+        ],
+        "styles": {
+            "skills__description_item": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#36394a",
+                "listStyleType": "disc"
+            }
+        }
+    },
+    "tech_stack": {
+        "data": [
+            "Figma",
+            "Framer",
+            "Notion",
+            "Linear",
+            "Figma Prototyping",
+            "Screen Stuido",
+            "Slack",
+            "Discord"
+        ],
+        "styles": {
+            "tech_stack__description_item": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "border": "0.83px solid #eceff3",
+                "borderRadius": "4.95px",
+                "padding": "1.65px 3.3px",
+                "color": "#666d80"
+            }
+        }
+    },
+    "portfolio": {
+        "data": {
+            "project_image": null,
+            "title": "Project Name",
+            "description": "Short description for your latest projects.",
+            "project_url": "https://projecturl.com"
+        },
+        "styles": {
+            "portfolio__title": {
+                "fontWeight": "500",
+                "fontSize": "6.6px",
+                "color": "#36394a"
+            },
+            "portfolio__description": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#818898"
+            },
+            "portfolio__link": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#5479ff"
+            }
+        }
+    },
+    "languages": {
+        "data": [
+            {
+                "language": "Turkish",
+                "level": "Native"
+            },
+            {
+                "language": "English",
+                "level": "Fluent"
+            }
+        ],
+        "styles": {
+            "languages__title": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#36394a"
+            },
+            "languages__level": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#36394a"
+            }
+        }
+    },
+    "education": {
+        "data": {
+            "school": "University Name",
+            "location": "Location",
+            "field_of_study": "Computer Science",
+            "degree": "Bachelor's Degree",
+            "start_year": "2002",
+            "end_year": "2006"
+        },
+        "styles": {
+            "education__school": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#666d80"
+            },
+            "education__location": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#666d80"
+            },
+            "education__years": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#818898"
+            },
+            "education__degree": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#818898"
+            }
+        }
+    },
+    "social_links": {
+        "data": [
+            {
+                "platform": "Twitter",
+                "username": "rgdiler",
+                "url": "https://twitter.com/"
+            },
+            {
+                "platform": "Dribbble",
+                "username": "ragip",
+                "url": "https://dribbble.com/"
+            },
+            {
+                "platform": "Bento",
+                "username": "ragip",
+                "url": "https://bento.io/"
+            },
+            {
+                "platform": "LinkedIn",
+                "username": "ragip",
+                "url": "https://linkedin.com/"
+            },
+            {
+                "platform": "Framer",
+                "username": "ragip_diler",
+                "url": "https://behance.com/"
+            }
+        ],
+        "styles": {
+            "social__item": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#666d80"
+            },
+            "social__link": {
+                "fontWeight": "400",
+                "fontSize": "6.6px",
+                "color": "#36394a"
+            }
+        }
+    }
+}

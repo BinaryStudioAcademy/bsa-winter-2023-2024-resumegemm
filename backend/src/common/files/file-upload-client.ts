@@ -1,52 +1,55 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import  { type IConfig } from 'shared/build';
+import { type IConfig } from 'shared/build';
 
 import { type EnvironmentSchema } from '../config/types/environment-schema.type.js';
-import  { type IFileUploadClient } from './interfaces/file-upload-client.interface.js';
+import { type IFileUploadClient } from './interfaces/file-upload-client.interface.js';
 
 class FileUploadClient implements IFileUploadClient {
-  private config: IConfig<EnvironmentSchema>;
-  private s3Client: S3Client;
+    private config: IConfig<EnvironmentSchema>;
+    private s3Client: S3Client;
 
-  public constructor(config: IConfig<EnvironmentSchema>) {
-    this.config = config;
+    public constructor(config: IConfig<EnvironmentSchema>) {
+        this.config = config;
 
-    const { AWS } = this.config.ENV;
+        const { AWS } = this.config.ENV;
 
-    this.s3Client = new S3Client({
-      region: AWS.REGION,
-      credentials: {
-        secretAccessKey: AWS.SECRET_ACCESS_KEY,
-        accessKeyId: AWS.ACCESS_KEY,
-      },
-    });
-  }
+        this.s3Client = new S3Client({
+            region: AWS.REGION,
+            credentials: {
+                secretAccessKey: AWS.SECRET_ACCESS_KEY,
+                accessKeyId: AWS.ACCESS_KEY,
+            },
+        });
+    }
 
-  private getFileUrl(key: string): string {
-    const { AWS } = this.config.ENV;
+    private getFileUrl(key: string): string {
+        const { AWS } = this.config.ENV;
 
-    return `https://${AWS.BUCKET_NAME}.s3.${AWS.REGION}.amazonaws.com/${key}`;
-  }
+        return `https://${AWS.BUCKET_NAME}.s3.${AWS.REGION}.amazonaws.com/${key}`;
+    }
 
-  private generateFileKey(extension: string): string {
-    return `file_${Date.now().toString()}${extension}`;
-  }
+    private generateFileKey(extension: string): string {
+        return `file_${Date.now().toString()}${extension}`;
+    }
 
-  public async upload(fileBuffer: Buffer, extension: string): Promise<string> {
-    const { AWS } = this.config.ENV;
+    public async upload(
+        fileBuffer: Buffer,
+        extension: string,
+    ): Promise<string> {
+        const { AWS } = this.config.ENV;
 
-    const fileKey = this.generateFileKey(extension);
+        const fileKey = this.generateFileKey(extension);
 
-    const putObjectCommand = new PutObjectCommand({
-      Bucket: AWS.BUCKET_NAME,
-      Key: fileKey,
-      Body: fileBuffer,
-    });
+        const putObjectCommand = new PutObjectCommand({
+            Bucket: AWS.BUCKET_NAME,
+            Key: fileKey,
+            Body: fileBuffer,
+        });
 
-    await this.s3Client.send(putObjectCommand);
+        await this.s3Client.send(putObjectCommand);
 
-    return this.getFileUrl(fileKey);
-  }
+        return this.getFileUrl(fileKey);
+    }
 }
 
 export { FileUploadClient };

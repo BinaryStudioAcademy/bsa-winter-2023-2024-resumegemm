@@ -6,6 +6,12 @@ type EnvironmentSchema = {
         PORT: number;
         ENVIRONMENT: ValueOf<typeof AppEnvironment>;
     };
+    JWT: {
+        ACCESS_TOKEN_SECRET: string;
+        REFRESH_TOKEN_SECRET: string;
+        ACCESS_TOKEN_EXPIRES_IN: string;
+        REFRESH_TOKEN_EXPIRES_IN: string;
+    };
     DB: {
         CONNECTION_STRING: string;
         DIALECT: string;
@@ -17,7 +23,7 @@ type EnvironmentSchema = {
         SECRET_ACCESS_KEY: string;
         ACCESS_KEY: string;
         BUCKET_NAME: string;
-    }
+    };
 };
 
 export { type EnvironmentSchema };

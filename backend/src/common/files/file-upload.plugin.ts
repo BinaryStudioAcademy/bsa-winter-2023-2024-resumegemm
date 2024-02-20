@@ -1,8 +1,8 @@
 import { type MultipartFile } from '@fastify/multipart';
 import { type FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
-import  { type ContentType } from 'shared/src/enums/content-type.enum';
-import  { type ValueOf } from 'shared/src/types/value-of.type';
+import { type ContentType } from 'shared/src/enums/content-type.enum';
+import { type ValueOf } from 'shared/src/types/value-of.type';
 
 import { ControllerHook } from '../controller/controller.js';
 import { HttpCode } from '../http/http.js';
@@ -10,43 +10,46 @@ import { FileUploadValidationMessage } from './enums/file-upload-validation-mess
 import { FileError } from './exceptions/file-error.exception.js';
 
 type Options = {
-  extensions: string[];
+    extensions: string[];
 };
 
 const fileUpload = fp<Options>((fastify, { extensions }, done) => {
-  fastify.decorateRequest('fileBuffer', null);
+    fastify.decorateRequest('fileBuffer', null);
 
-  fastify.addHook(ControllerHook.PRE_VALIDATION, async (request: FastifyRequest<{ Body: { file: MultipartFile } }>) => {
-    if (!request.isMultipart()) {
-      return;
-    }
+    fastify.addHook(
+        ControllerHook.PRE_VALIDATION,
+        async (request: FastifyRequest<{ Body: { file: MultipartFile } }>) => {
+            if (!request.isMultipart()) {
+                return;
+            }
 
-    const { file } = request.body;
+            const { file } = request.body;
 
-    if (file.file.truncated) {
-      throw new FileError({
-        status: HttpCode.BAD_REQUEST,
-        message: FileUploadValidationMessage.FILE_TOO_LARGE,
-      });
-    }
+            if (file.file.truncated) {
+                throw new FileError({
+                    status: HttpCode.BAD_REQUEST,
+                    message: FileUploadValidationMessage.FILE_TOO_LARGE,
+                });
+            }
 
-    if (!extensions.includes(file.mimetype)) {
-      throw new FileError({
-        status: HttpCode.BAD_REQUEST,
-        message: FileUploadValidationMessage.INCORRECT_FILE_TYPE,
-      });
-    }
+            if (!extensions.includes(file.mimetype)) {
+                throw new FileError({
+                    status: HttpCode.BAD_REQUEST,
+                    message: FileUploadValidationMessage.INCORRECT_FILE_TYPE,
+                });
+            }
 
-    const buffer = await file.toBuffer();
+            const buffer = await file.toBuffer();
 
-    request.fileBuffer = {
-      buffer,
-      contentType: file.mimetype as ValueOf<typeof ContentType>,
-      fileName: file.filename,
-    };
-  });
+            request.fileBuffer = {
+                buffer,
+                contentType: file.mimetype as ValueOf<typeof ContentType>,
+                fileName: file.filename,
+            };
+        },
+    );
 
-  done();
+    done();
 });
 
 export { fileUpload };

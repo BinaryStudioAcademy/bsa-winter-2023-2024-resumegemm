@@ -1,13 +1,19 @@
-import { type RelationMappings,Model } from 'objection';
+import {
+    type Modifiers,
+    type QueryBuilder,
+    type RelationMappings,
+    Model,
+} from 'objection';
 
-import { ProfileModel } from '~/bundles/profile/profile.js';
+import { ProfileModel } from '~/bundles/profile/profile.model.js';
 import { TemplateModel } from '~/bundles/templates/templates.js';
-import { AbstractModel, DatabaseTableName } from '~/common/database/database.js';
+import {
+    AbstractModel,
+    DatabaseTableName,
+} from '~/common/database/database.js';
 
 class UserModel extends AbstractModel {
     public 'email': string;
-
-    public 'username': string;
 
     public 'profileId': string;
 
@@ -17,6 +23,20 @@ class UserModel extends AbstractModel {
 
     public static override get tableName(): typeof DatabaseTableName.USERS {
         return DatabaseTableName.USERS;
+    }
+
+    public static override get modifiers(): Modifiers<QueryBuilder<UserModel>> {
+        return {
+            withoutHashPasswords(builder): QueryBuilder<UserModel> {
+                return builder.select(
+                    'id',
+                    'email',
+                    'profileId',
+                    'createdAt',
+                    'updatedAt',
+                );
+            },
+        };
     }
 
     public static getRelationMappings(): RelationMappings {
