@@ -5,6 +5,7 @@ type EnvironmentSchema = {
     APP: {
         PORT: number;
         ENVIRONMENT: ValueOf<typeof AppEnvironment>;
+        ORIGIN_URL: string;
     };
     JWT: {
         ACCESS_TOKEN_SECRET: string;
