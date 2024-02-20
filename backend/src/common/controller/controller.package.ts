@@ -4,7 +4,11 @@ import { type ILogger } from '~/common/logger/logger.js';
 import { type ServerAppRouteParameters } from '~/common/server-application/server-application.js';
 
 import { type IController } from './interfaces/interface.js';
-import { type ApiHandler, type ApiHandlerOptions, type ControllerRouteParameters } from './types/types.js';
+import {
+    type ApiHandler,
+    type ApiHandlerOptions,
+    type ControllerRouteParameters,
+} from './types/types.js';
 
 class Controller implements IController {
     private logger: ILogger;
@@ -27,33 +31,42 @@ class Controller implements IController {
             ...options,
             path: fullPath,
             handler: (request, reply) =>
-                this.mapHandler(handler, request, reply),
+                this.prepareAndHandleApiRequest(handler, request, reply),
         });
     }
 
-    private async mapHandler(
-        handler: ApiHandler,
+    private async prepareAndHandleApiRequest(
+        apiHandler: ApiHandler,
         request: Parameters<ServerAppRouteParameters['handler']>[0],
         reply: Parameters<ServerAppRouteParameters['handler']>[1],
     ): Promise<void> {
         this.logger.info(`${request.method.toUpperCase()} on ${request.url}`);
 
-        const handlerOptions = this.mapRequest(request);
-        const { status, payload, refreshToken } = await handler(handlerOptions);
+        const requestHandlerOptions = this.handleRequestOptions(request);
+
+        const { status, payload, refreshToken } = await apiHandler(
+            requestHandlerOptions,
+        );
         if (refreshToken) {
-            void reply.setCookie(CookieName.REFRESH_TOKEN, refreshToken, {
-                path: '/',
-                httpOnly: true,
-                maxAge: config.ENV.COOKIE.EXPIRES_IN
-            });
+            void reply.setCookie(
+                CookieName.REFRESH_TOKEN,
+                refreshToken,
+                {
+                    path: '/',
+                    httpOnly: true,
+                    maxAge: config.ENV.COOKIE.EXPIRES_IN,
+                    signed: true,
+                },
+            );
         }
-        return await reply.status(status).send(payload);
+        return reply.status(status).send(payload);
     }
 
-    private mapRequest(
+    private handleRequestOptions(
         request: Parameters<ServerAppRouteParameters['handler']>[0],
     ): ApiHandlerOptions {
         const { body, query, params, user, headers, cookies } = request;
+        const unsignCookie = request.unsignCookie.bind(request);
         return {
             body,
             query,
@@ -61,6 +74,7 @@ class Controller implements IController {
             user,
             headers,
             cookies,
+            unsignCookie,
         };
     }
 }
