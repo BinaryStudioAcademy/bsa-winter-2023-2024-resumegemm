@@ -1,0 +1,14 @@
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #CCD7DC;
+    border-top-color: #DBAE2D;
+    border-radius: 50%;
+    animation: spin 0.5s infinite linear;
+}
