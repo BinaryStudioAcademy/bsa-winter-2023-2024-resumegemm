@@ -26,12 +26,12 @@ class TemplateApi extends HttpApi {
         updatedData: UpdateTemplatePayload,
     ): Promise<TemplateEditResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(`${ApiPath.TEMPLATES}/${templateId}`, {}),
+            this.getFullEndpoint(`/${templateId}`, {}),
             {
                 method: 'PUT',
                 contentType: ContentType.JSON,
                 payload: JSON.stringify(updatedData),
-                hasAuth: true, // Assuming authentication is required
+                hasAuth: false,
             },
         );
 

@@ -1,4 +1,7 @@
-import { type TemplateBlockSettings, type TemplateEntityFields } from 'shared/build/bundles/templates/templates.js';
+import {
+    type TemplateBlockSettings,
+    type TemplateEntityFields,
+} from 'shared/build/bundles/templates/templates.js';
 
 class TemplateEntity {
     private 'id': string | null;

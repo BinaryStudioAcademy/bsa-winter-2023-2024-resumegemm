@@ -1,6 +1,6 @@
 import { type TemplateBlockSettings } from 'shared/build/bundles/templates/templates.js';
 
-import { type TemplateRepository } from './templates.js'; 
+import { type TemplateRepository } from './templates.js';
 
 class TemplateService {
     private templateRepository: TemplateRepository;
@@ -9,8 +9,14 @@ class TemplateService {
         this.templateRepository = templateRepository;
     }
 
-    public async updateTemplateSettings(templateId: string, updatedSettings: TemplateBlockSettings): Promise<void> {
-        await this.templateRepository.updateTemplateSettings(templateId, updatedSettings);
+    public async updateTemplateSettings(
+        templateId: string,
+        updatedSettings: TemplateBlockSettings,
+    ): Promise<void> {
+        await this.templateRepository.updateTemplateSettings(
+            templateId,
+            updatedSettings,
+        );
     }
 }
 

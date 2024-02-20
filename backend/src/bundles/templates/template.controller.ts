@@ -1,6 +1,4 @@
-import {
-    type TemplateEditRequestDto,
-} from 'shared/build/bundles/templates/templates.js';
+import { type TemplateEditRequestDto } from 'shared/build/bundles/templates/templates.js';
 import { type HttpError } from 'shared/build/index.js';
 
 import {
@@ -53,7 +51,7 @@ class TemplateController extends Controller {
             );
             return {
                 status: HttpCode.OK,
-                payload: undefined,
+                payload: {},
             };
         } catch (error: unknown) {
             const { message, status } = error as HttpError;

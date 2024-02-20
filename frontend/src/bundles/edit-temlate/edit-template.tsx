@@ -21,6 +21,7 @@ import {
 } from '../resume-preview/components/components';
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
 import templateStyles from './styles.module.scss';
+import { templateApi } from './templates';
 
 type SelectedBlocks = Record<string, boolean>;
 
@@ -55,7 +56,11 @@ const EditTemplatePage: React.FC = () => {
     );
 
     const handleSaveTemplate = useCallback(() => {
-        // Save selectedBlocks as template
+        // try {
+        //     await templateApi.updateTemplate('12345', selectedBlocks);
+        // } catch (error) {
+        //     throw typeof error === 'string' ? new Error(error) : new TypeError('Expected a string');
+        // }
     }, []);
 
     return (
