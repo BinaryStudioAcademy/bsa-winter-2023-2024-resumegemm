@@ -70,8 +70,8 @@ const UserPhotoUploader: React.FC<UploadProperties> = ({ onImageUpload }) => {
                 id="fileInput"
             />
             <label htmlFor="fileInput">
-                <div className={styles.uploader_insert_area}>
-                    <IconContext.Provider value={{ className: `${styles.uploader_insert_area__icon}` }}>
+                <div className={styles.uploader_insert__area}>
+                    <IconContext.Provider value={{ className: `${styles.uploader_insert__area_icon}` }}>
                         <GrGallery/>
                     </IconContext.Provider>
                     Click or drag & drop to upload from your computer

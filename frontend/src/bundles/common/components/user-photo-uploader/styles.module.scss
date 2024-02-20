@@ -1,7 +1,7 @@
 .uploader_mockup {
     display: flex;
     align-items: center;
-    padding: 20px;
+    padding: 30px;
     cursor: pointer;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .uploader_mockup:hover .uploader_mockup_icon {
-    color: var(--color-text-blue);
+    color: var(--color-hover-blue);
 }
 
 .uploader_mockup:hover .uploader_mockup_text {
@@ -56,8 +56,8 @@
     left: calc(50% - 400px);
     width: 800px;
     height: 800px;
-    padding: 50px;
-    background-color: var(--color-hover-blue);
+    padding: 40px;
+    background-color: var(--color-text-blue);
 }
 
 .uploader_modal__button__close {
@@ -82,7 +82,7 @@
     display: none;
 }
 
-.uploader_insert_area {
+.uploader_insert__area {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -95,7 +95,7 @@
     cursor: pointer;
 }
 
-.uploader_insert_area__icon {
+.uploader_insert__area_icon {
     width: 100px;
     height: 100px;
     margin-bottom: 40px;
@@ -112,8 +112,8 @@
 
 .uploader_cropper{
     align-self: center;
-    width: 90%;
-    height: 90%;
+    width: 80%;
+    height: 80%;
 }
 
 .uploader_cropper__button_thumb {
@@ -123,10 +123,12 @@
     padding: 10px 0;
 }
 
-.uploader_cropper__button__save, .uploader_cropper__button__anotherPhoto {
+.uploader_cropper__button_thumb .uploader_cropper__button__save, 
+.uploader_cropper__button_thumb .uploader_cropper__button__anotherPhoto {
     display: flex;
     align-items: center;
-    padding: 8px 12px;
+    width: 220px;
+    padding: 12px;
     color: var(--color-text-blue);
     font-size: var(--font-size-title-h5);
     background-color: var(--color-white);
@@ -138,18 +140,6 @@
 .uploader_cropper__button__zoomOut {
     padding: 10px 20px;
     color: var(--color-white);
-}
-
-.uploader_cropper__button__rotate {
-    top: 250px;
-}
-
-.uploader_cropper__button__zoomIn {
-    top: 350px;
-}
-
-.uploader_cropper__button__zoomOut {
-    top: 450px;
 }
 
 .uploader_cropper__button_icon__rotate, 
@@ -187,15 +177,21 @@
     margin-left: 30px;
 }
 
-.uploader_preview__button{
+.uploader_preview__buttonThumb .uploader_preview__button {
+    display: flex;
+    justify-content: start;
+    width: 100px;
     color: var(--color-text-gray);
     font-size: var(--font-size-title-h4);
+    border: none;
 }
 
-.uploader_preview__button:hover {
+.uploader_preview__buttonThumb .uploader_preview__button:hover {
     color: var(--color-hover-blue);
+    border: none;
 }
 
 .uploader_preview__button:last-child:hover {
     color: var(--color-error-red);
+    border: none;
 }

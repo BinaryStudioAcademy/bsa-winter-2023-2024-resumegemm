@@ -2,16 +2,19 @@ import '~/assets/css/styles.scss';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import { Auth } from '~/bundles/auth/pages/auth';
 import {
     App,
+    ErrorFallback,
     RouterProvider,
     StoreProvider,
 } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { store } from '~/framework/store/store';
 
+import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { PreviewPage } from './bundles/preview/preview';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
@@ -21,7 +24,11 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                 routes={[
                     {
                         path: AppRoute.ROOT,
-                        element: <App />,
+                        element: (
+                            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                                <App />
+                            </ErrorBoundary>
+                        ),
                         children: [
                             {
                                 path: AppRoute.ROOT,
@@ -36,6 +43,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 element: <Auth />,
                             },
                         ],
+                    },
+                    {
+                        path: '*',
+                        element: <NotFoundPage />,
                     },
                     {
                         path: AppRoute.PREVIEW,

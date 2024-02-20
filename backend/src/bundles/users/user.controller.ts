@@ -8,6 +8,7 @@ import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { UsersApiPath } from './enums/enums.js';
+import { type UserGetAllResponseDto } from './types/types.js';
 
 /**
  * @swagger
@@ -54,7 +55,9 @@ class UserController extends Controller {
      *                items:
      *                  $ref: '#/components/schemas/User'
      */
-    private async findAll(): Promise<ApiHandlerResponse> {
+    private async findAll(): Promise<
+        ApiHandlerResponse<UserGetAllResponseDto>
+    > {
         return {
             status: HttpCode.OK,
             payload: await this.userService.findAll(),

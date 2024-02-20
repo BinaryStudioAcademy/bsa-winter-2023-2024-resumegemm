@@ -1,6 +1,8 @@
+import { ButtonSize, ButtonVariant } from '../../enums/enums';
 import { 
     useCallback 
 } from '../../hooks/hooks';
+import { BaseButton } from '../components';
 import styles from './styles.module.scss';
 
 interface UserPhotoProperties {
@@ -26,8 +28,8 @@ const UserPhotoPreview: React.FC<UserPhotoProperties> = ({ onToggleModal, curren
                 <img src={currentPhoto} alt="avatar" className={styles.uploader_preview_photo}/>
             </div>
             <div className={styles.uploader_preview__buttonThumb}>
-                <button type="button" onClick={handleEditClick } className={styles.uploader_preview__button}>Edit</button>
-                <button type="button" onClick={handleDeleteClick } className={styles.uploader_preview__button}>Delete</button>
+                <BaseButton size={ButtonSize.SMALL} variant={ButtonVariant.GHOST} onClick={handleEditClick } className={styles.uploader_preview__button}>Edit</BaseButton>
+                <BaseButton size={ButtonSize.SMALL} variant={ButtonVariant.GHOST} onClick={handleDeleteClick } className={styles.uploader_preview__button}>Delete</BaseButton>
             </div>
         </section>
     );

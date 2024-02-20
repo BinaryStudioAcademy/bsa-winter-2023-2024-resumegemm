@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type UserProfileResponce } from 'shared/build/bundles/users/types/user-auth-response.type.js';
+import { type UserProfileResponce } from 'shared/build/bundles/profile/types/user-profile-response.type.js';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 

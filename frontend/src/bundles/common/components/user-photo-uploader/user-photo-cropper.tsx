@@ -9,6 +9,8 @@ import { FaFileUpload } from 'react-icons/fa';
 import { FaArrowRotateRight } from 'react-icons/fa6';
 import { GrZoomIn , GrZoomOut } from 'react-icons/gr';
 
+import { ButtonSize, ButtonVariant } from '../../enums/enums';
+import { BaseButton, IconButton } from '../components';
 import styles from './styles.module.scss';
 
 interface UploadCropperProperties {
@@ -73,44 +75,31 @@ const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, onImageUpl
                     rotateTo={0} 
                 />
                 <div className={styles.uploader_cropper__button_thumb}>
-                    <button
+                    <IconButton
                         onClick={handleRotate}
                         className={styles.uploader_cropper__button__rotate}
                     >
                         <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__rotate}` }}>
                             <FaArrowRotateRight/>
                         </IconContext.Provider>
-                    </button>
-                    <button
+                    </IconButton>
+                    <IconButton
                         onClick={handleZoomIn}
                         className={styles.uploader_cropper__button__zoomIn}
                     >
                         <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__zoomIn}` }}>
                             <GrZoomIn/>
                         </IconContext.Provider>
-                    </button>
-                    <button
-                        onClick={handleZoomOut}
-                        className={styles.uploader_cropper__button__zoomOut}
-                    >
+                    </IconButton>
+                    <IconButton onClick={handleZoomOut} className={styles.uploader_cropper__button__zoomOut}>
                         <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__zoomOut}` }}>
                             <GrZoomOut/>
                         </IconContext.Provider>
-                    </button>
+                    </IconButton>
                 </div>
                 <div className={styles.uploader_cropper__button_thumb}>
-                    <button onClick={handleNewPhotoClick} className={styles.uploader_cropper__button__anotherPhoto}>
-                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__anotherPhoto}` }}>
-                            <FaFileUpload/>
-                        </IconContext.Provider>
-                        Upload another photo
-                    </button>
-                    <button onClick={handleSave} className={styles.uploader_cropper__button__save}>
-                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__save}` }}>
-                            <BsSave/>
-                        </IconContext.Provider>
-                        Save image
-                    </button>
+                    <BaseButton prependedIcon={<FaFileUpload/>} size={ButtonSize.SMALL} variant={ButtonVariant.PRIMARY} onClick={handleNewPhotoClick} className={styles.uploader_cropper__button__anotherPhoto} >Upload another photo</BaseButton>
+                    <BaseButton prependedIcon={<BsSave/>} size={ButtonSize.SMALL} variant={ButtonVariant.PRIMARY} onClick={handleSave} className={styles.uploader_cropper__button__save}>Save image</BaseButton>
                 </div>
         </div>
     );
