@@ -6,8 +6,7 @@ import { type ValueOf } from 'shared/src/types/value-of.type';
 
 import { ControllerHook } from '../../controller/controller.js';
 import { FileUploadValidationMessage } from '../../files/enums/file-upload-validation-message.js';
-import { FileError } from '../../files/exceptions/file-error.exception.js';
-import { HttpCode } from '../../http/http.js';
+import { HttpCode, HttpError } from '../../http/http.js';
 
 type Options = {
     extensions: string[];
@@ -26,14 +25,14 @@ const fileUpload = fp<Options>((fastify, { extensions }, done) => {
             const { file } = request.body;
 
             if (file.file.truncated) {
-                throw new FileError({
+                throw new HttpError({
                     status: HttpCode.BAD_REQUEST,
                     message: FileUploadValidationMessage.FILE_TOO_LARGE,
                 });
             }
 
             if (!extensions.includes(file.mimetype)) {
-                throw new FileError({
+                throw new HttpError({
                     status: HttpCode.BAD_REQUEST,
                     message: FileUploadValidationMessage.INCORRECT_FILE_TYPE,
                 });
