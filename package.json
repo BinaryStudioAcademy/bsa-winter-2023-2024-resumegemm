@@ -49,5 +49,9 @@
     "simple-git-hooks": {
         "pre-commit": "npx lint-staged",
         "commit-msg": "npx commitlint --edit $1"
+    },
+    "dependencies": {
+        "@stripe/react-stripe-js": "2.5.0",
+        "@stripe/stripe-js": "3.0.3"
     }
 }
