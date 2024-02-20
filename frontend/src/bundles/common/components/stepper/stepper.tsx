@@ -18,9 +18,9 @@ const Stepper = ({
         <div className={clsx(styles.stepper, className)}>
             {steps.map(({ label }, index) => {
                 return (
-                    <>
+                    <div className={styles.wrapper} key={index}>
                         <Step
-                            key={index}
+                            
                             label={label}
                             index={index}
                             isActive={index === activeStep}
@@ -29,7 +29,7 @@ const Stepper = ({
                         {index !== steps.length - 1 && (
                             <div className={styles.stepper__line}></div>
                         )}
-                    </>
+                    </div>
                 );
             })}
         </div>
