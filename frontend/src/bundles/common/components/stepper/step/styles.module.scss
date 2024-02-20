@@ -7,7 +7,7 @@
 }
 
 .step__active {
-    color: black;
+    color: var(--color-text-black);
 }
 
 .step__index {
@@ -16,14 +16,14 @@
     align-items: center;
     width: 35px;
     height: 35px;
-    color: rgb(99 99 99);
-    background-color: rgb(217 218 221);
+    color: var(--color-text-blue);
+    font-weight: 500;
+    background-color: var(--color-disabled-gray);
     border-radius: 100%;
-    
 }
 
 .step__index_active {
-    color: white;
+    color: var(--color-white);
     background-color: rgb(67 142 255);
 }
 
@@ -44,7 +44,5 @@
     height: 20px;
     margin-top: -10px;
     margin-left: -10px;
-    color: white;
-
-
+    color: var(--color-white);
 }
