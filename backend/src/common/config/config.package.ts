@@ -7,7 +7,7 @@ import { type ILogger } from '~/common/logger/logger.js';
 import { type IConfig } from './interfaces/interfaces.js';
 import { type EnvironmentSchema } from './types/types.js';
 
-const EXPIRES_IN_ONE_WEEK = 60 * 60 * 24 * 7;
+const EXPIRES_IN_THIRTY_DAYS = 60 * 60 * 24 * 30;
 
 class Config implements IConfig {
     private logger: ILogger;
@@ -68,7 +68,7 @@ class Config implements IConfig {
                     env: 'COOKIE_SECRET',
                     default: null,
                 },
-                EXPIRES_IN: EXPIRES_IN_ONE_WEEK
+                EXPIRES_IN: EXPIRES_IN_THIRTY_DAYS
             },
             DB: {
                 CONNECTION_STRING: {
