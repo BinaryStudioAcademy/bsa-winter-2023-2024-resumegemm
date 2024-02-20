@@ -4,7 +4,7 @@ import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
 import { PaymentApiPath } from './enums/enums.js';
-import { type GetPublishableKeyResponseDto } from './types/types';
+import { type CreatePaymentIntentRequestDto, type CreatePaymentIntentResponseDto, type GetPublishableKeyResponseDto } from './types/types';
 
 type Constructor = {
     baseUrl: string;
@@ -28,6 +28,20 @@ class PaymentApi extends HttpApi {
         );
 
         return await response.json<GetPublishableKeyResponseDto>();
+    }
+
+    public async createPaymentIntent(payload: CreatePaymentIntentRequestDto): Promise<CreatePaymentIntentResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(PaymentApiPath.PAYMENT_INTENT, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify(payload),
+                hasAuth: false,
+            },
+        );
+
+        return await response.json<CreatePaymentIntentResponseDto>();
     }
 }
 

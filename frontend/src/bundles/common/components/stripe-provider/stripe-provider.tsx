@@ -2,7 +2,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { type Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-import { getPublishableKey } from '~/bundles/payment/store/actions';
+import { actions as PaymentActions } from '~/bundles/payment/store/';
 
 import { useAppDispatch, useAppSelector, useEffect, useState } from '../../hooks/hooks';
 
@@ -19,11 +19,11 @@ const StripeProvider: React.FC<Properties> = ({
     const publishableKey = useAppSelector(({ payment }) => payment.publishableKey);
 
     useEffect(() => {
-        void dispatch(getPublishableKey({}));
+        void dispatch(PaymentActions.getPublishableKey({}));
     }, [dispatch]);
 
     useEffect(() => {
-        if(publishableKey) {
+        if (publishableKey) {
             loadStripe(publishableKey)
             .then((stripeValue) => {
                 setStripePromise(stripeValue);
