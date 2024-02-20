@@ -5,7 +5,11 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export { type Profile } from './bundles/profile/profile.js';
-export { SkillLevel } from './bundles/resumes/resumes.js';
+export {
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
+    SkillLevel,
+} from './bundles/resumes/resumes.js';
 export {
     type User,
     type UserAuthResponse,
