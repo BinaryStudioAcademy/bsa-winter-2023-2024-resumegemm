@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import React, { useCallback } from 'react';
 import { IconContext } from 'react-icons';
 import { GrGallery } from 'react-icons/gr';
@@ -5,25 +6,42 @@ import { GrGallery } from 'react-icons/gr';
 import styles from './styles.module.scss';
 
 interface UploadProperties {
-    setImage: React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>
+    onImageUpload: React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>
 }
 
-const UserPhotoUploader: React.FC<UploadProperties> = ({ setImage }) => {
+const readyStateProperty = {
+    EMPTY: 0 as number,
+    LOADING: 1 as number,
+    DONE: 2 as number
+};
+
+const UserPhotoUploader: React.FC<UploadProperties> = ({ onImageUpload }) => {
 
     const handleFile = useCallback((file: File) => {
         const reader = new FileReader();
         reader.addEventListener('load', () => {
-            if (reader.readyState === 2) {
-                setImage(reader.result);
+            if (reader.readyState === readyStateProperty.DONE) {
+                onImageUpload(reader.result);
             }
         });
         reader.readAsDataURL(file);
-    }, [setImage]);
+    }, [onImageUpload]);
   
     const handleFileChange  = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
+            const allowedFormats = ['image/jpeg', 'image/png', 'application/pdf']; 
+            if (!allowedFormats.includes(file.type)) {
+                Notify.failure('Invalid file format. Please upload a JPEG, PNG, or PDF file.');
+                return;
+            }
+            const maxSizeInBytes = 10 * 1024 * 1024; 
+            if (file.size > maxSizeInBytes) {
+                Notify.failure('File size exceeds the limit of 10MB. Please upload a smaller file.');
+                return;
+            }
             handleFile(file);
+            Notify.success('File is successfully added.');
         }
     }, [handleFile]);
 
@@ -41,19 +59,19 @@ const UserPhotoUploader: React.FC<UploadProperties> = ({ setImage }) => {
     }, [handleFile]);
   
     return (
-        <div className={styles.photo_uploader__insert_block}
+        <div className={styles.uploader_insert_block}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
         >
-            <input className={styles.photo_uploader__insert_input}
+            <input className={styles.uploader_insert_input}
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
                 id="fileInput"
             />
             <label htmlFor="fileInput">
-                <div className={styles.photo_uploader__insert_area}>
-                    <IconContext.Provider value={{ className: `${styles.photo_uploader__insert_area__icon}` }}>
+                <div className={styles.uploader_insert_area}>
+                    <IconContext.Provider value={{ className: `${styles.uploader_insert_area__icon}` }}>
                         <GrGallery/>
                     </IconContext.Provider>
                     Click or drag & drop to upload from your computer

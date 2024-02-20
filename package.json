@@ -49,5 +49,8 @@
     "simple-git-hooks": {
         "pre-commit": "npx lint-staged",
         "commit-msg": "npx commitlint --edit $1"
+    },
+    "dependencies": {
+        "notiflix": "3.2.7"
     }
 }

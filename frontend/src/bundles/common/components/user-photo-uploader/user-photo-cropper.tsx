@@ -12,108 +12,106 @@ import { GrZoomIn , GrZoomOut } from 'react-icons/gr';
 import styles from './styles.module.scss';
 
 interface UploadCropperProperties {
-    image: string | ArrayBuffer | null;
-    setImage: React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>
-    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    setCurrentPhoto: React.Dispatch<React.SetStateAction<string>>;
-    handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    image: string | ArrayBuffer;
+    onImageUpload : React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>
+    onComplete: React.Dispatch<React.SetStateAction<boolean>>;
+    onHandleCurrentPhoto: React.Dispatch<React.SetStateAction<string>>;
+    onHandleImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, setImage, setIsModalOpen, setCurrentPhoto, handleImageChange }) => {
-    const [croppedImage, setCroppedImage] = useState<string | undefined | null>(null);
+const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, onImageUpload , onComplete, onHandleCurrentPhoto, onHandleImage }) => {
+    const [croppedImage, setCroppedImage] = useState<string | null>(null);
     const cropperReference = useRef<ReactCropperElement>(null);
 
     const handleCrop = useCallback(() => {
         const croppedCanvas = cropperReference.current?.cropper.getCroppedCanvas();
         const croppedImageUrl = croppedCanvas?.toDataURL('image/jpeg');
-        setCroppedImage(croppedImageUrl);
+        if (croppedImageUrl) {
+            setCroppedImage(croppedImageUrl);
+        }
     },[setCroppedImage]);
-
-    // When backend is ready - change handleSave to handleImageChange
 
     const handleSave = useCallback(() => {
         if (croppedImage) {
-            setCurrentPhoto(croppedImage);
+            onHandleCurrentPhoto(croppedImage);
         }
-        setIsModalOpen(false);
-    },[croppedImage, setIsModalOpen, setCurrentPhoto]);
+        onComplete(false);
+    },[croppedImage, onComplete, onHandleCurrentPhoto]);
 
-    const onNewPhotoClick = useCallback(() => {
-        setImage('');
-    }, [setImage]);
+    const handleNewPhotoClick = useCallback(() => {
+        onImageUpload ('');
+    }, [onImageUpload ]);
 
-    const onRotate = useCallback(() => {
+    const handleRotate = useCallback(() => {
         if (cropperReference.current) {
             cropperReference.current.cropper.rotate(90);
         }
     }, []);
 
-    const onZoomIn = useCallback(() => {
+    const handleZoomIn = useCallback(() => {
         if (cropperReference.current) {
             cropperReference.current.cropper.zoom(0.1);
         }
     }, []);
 
-    const onZoomOut = useCallback(() => {
+    const handleZoomOut = useCallback(() => {
         if (cropperReference.current) {
             cropperReference.current.cropper.zoom(-0.1);
         }
     }, []);
 
     return (
-        <div className={styles.photo_uploader__cropper_wrapper}>
-            <React.Fragment>
+        <div className={styles.uploader_cropper__wrapper}>
                 <Cropper
                     ref={cropperReference}
                     src={image as string}
-                    className={styles.photo_uploader__cropper}
+                    className={styles.uploader_cropper}
                     aspectRatio={1}
-                    guides={true}
+                    guides
                     crop={handleCrop}
                     zoomTo={0} 
                     rotateTo={0} 
                 />
-                <div className={styles.photo_uploader__cropper_button_thumb}>
+                <div className={styles.uploader_cropper__button_thumb}>
                     <button
-                        onClick={onRotate}
-                        className={styles.photo_uploader__cropper_button__rotate}
+                        onClick={handleRotate}
+                        className={styles.uploader_cropper__button__rotate}
                     >
-                        <IconContext.Provider value={{ className: `${styles.photo_uploader__cropper_button_icon__rotate}` }}>
+                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__rotate}` }}>
                             <FaArrowRotateRight/>
                         </IconContext.Provider>
                     </button>
                     <button
-                        onClick={onZoomIn}
-                        className={styles.photo_uploader__cropper_button__zoomIn}
+                        onClick={handleZoomIn}
+                        className={styles.uploader_cropper__button__zoomIn}
                     >
-                        <IconContext.Provider value={{ className: `${styles.photo_uploader__cropper_button_icon__zoomIn}` }}>
+                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__zoomIn}` }}>
                             <GrZoomIn/>
                         </IconContext.Provider>
                     </button>
                     <button
-                        onClick={onZoomOut}
-                        className={styles.photo_uploader__cropper_button__zoomOut}
+                        onClick={handleZoomOut}
+                        className={styles.uploader_cropper__button__zoomOut}
                     >
-                        <IconContext.Provider value={{ className: `${styles.photo_uploader__cropper_button_icon__zoomOut}` }}>
+                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__zoomOut}` }}>
                             <GrZoomOut/>
                         </IconContext.Provider>
                     </button>
                 </div>
-                <div className={styles.photo_uploader__cropper_button_thumb}>
-                    <button onClick={onNewPhotoClick} className={styles.photo_uploader__cropper_button__anotherPhoto}>
-                        <IconContext.Provider value={{ className: `${styles.photo_uploader__cropper_button_icon__anotherPhoto}` }}>
+                <div className={styles.uploader_cropper__button_thumb}>
+                    <button onClick={handleNewPhotoClick} className={styles.uploader_cropper__button__anotherPhoto}>
+                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__anotherPhoto}` }}>
                             <FaFileUpload/>
                         </IconContext.Provider>
                         Upload another photo
                     </button>
-                    <button onClick={handleSave} className={styles.photo_uploader__cropper_button__save}>
-                        <IconContext.Provider value={{ className: `${styles.photo_uploader__cropper_button_icon__save}` }}>
+                    <button onClick={handleSave} className={styles.uploader_cropper__button__save}>
+                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__save}` }}>
                             <BsSave/>
                         </IconContext.Provider>
                         Save image
                     </button>
                 </div>
-            </React.Fragment>
         </div>
     );
 };

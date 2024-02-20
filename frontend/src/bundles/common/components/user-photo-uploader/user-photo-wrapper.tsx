@@ -19,7 +19,7 @@ const UserPhotoWrapper: React.FC = () => {
 
     const dispatch = useAppDispatch();
     
-    const handleImageChange = useCallback(
+    const onHandleImage = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const reader = new FileReader();
             const [newImage] = event.target.files ?? [];
@@ -38,23 +38,22 @@ const UserPhotoWrapper: React.FC = () => {
         [setCurrentImage, dispatch],
     );
 
-    // When backend is ready - change currentPhoto to currentImage
     return (
         <section>
-            {!currentPhoto && <UserPhotoMockup setIsModalOpen={setIsModalOpen}/>}
+            {!currentPhoto && <UserPhotoMockup onClickUpload={setIsModalOpen}/>}
             {isModalOpen && 
                 <PhotoUploaderModal 
-                    setIsModalOpen={setIsModalOpen}
-                    setCurrentPhoto={setCurrentPhoto}
-                    handleImageChange={handleImageChange}
+                    onToggleModal={setIsModalOpen}
+                    onHandleCurrentPhoto={setCurrentPhoto}
+                    onHandleImage={onHandleImage}
                 />
             }
             {currentPhoto &&
                 <UserPhotoPreview 
                     currentPhoto={currentPhoto}
-                    setIsModalOpen={setIsModalOpen} 
-                    setCurrentPhoto={setCurrentPhoto}
-                    handleImageChange={handleImageChange}
+                    onToggleModal={setIsModalOpen} 
+                    onHandleCurrentPhoto={setCurrentPhoto}
+                    onImageChange={onHandleImage}
                 />
             }
         </section>

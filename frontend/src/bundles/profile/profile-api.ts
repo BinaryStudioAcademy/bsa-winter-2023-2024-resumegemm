@@ -20,7 +20,6 @@ class ProfileApi extends HttpApi {
 
     public async updateUserAvatar(payload: FormData): Promise<UserProfileResponce> {
         const response = await this.load(
-            // change the example of route AVATAR
           this.getFullEndpoint(ProfileApiPath.AVATAR, {}),
           {
             method: 'PUT',

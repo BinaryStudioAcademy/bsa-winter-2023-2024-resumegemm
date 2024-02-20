@@ -1,13 +1,11 @@
-// mockup component styles
-
-.photo_uploader__mockup {
+.uploader_mockup {
     display: flex;
     align-items: center;
     padding: 20px;
     cursor: pointer;
 }
 
-.photo_uploader__mockup_thumb {
+.uploader_mockup__thumb {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,13 +15,13 @@
     border-radius: 4px;
 }
 
-.photo_uploader__mockup_icon {
+.uploader_mockup_icon {
     width: 40px;
     height: 40px;
     color: var(--color-text-gray);
 }
 
-.photo_uploader__mockup_text {
+.uploader_mockup_text {
     display: flex;
     align-items: center;
     padding: 0 20px;
@@ -31,21 +29,19 @@
     font-size: var(--font-size-title-h4);
 }
 
-.photo_uploader__mockup:hover .photo_uploader__mockup_thumb {
+.uploader_mockup:hover .uploader_mockup__thumb {
     background-color: var(--color-background-light-blue);
 }
 
-.photo_uploader__mockup:hover .photo_uploader__mockup_icon {
+.uploader_mockup:hover .uploader_mockup_icon {
     color: var(--color-text-blue);
 }
 
-.photo_uploader__mockup:hover .photo_uploader__mockup_text {
+.uploader_mockup:hover .uploader_mockup_text {
     color: var(--color-text-blue);
 }
 
-// modal component styles
-
-.photo_uploader__modal_backdrop {
+.uploader_modal_backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -54,7 +50,7 @@
     background-color: rgba(63 85 126 / 80%);
 }
 
-.photo_uploader__modal_overlay {
+.uploader_modal__overlay {
     position: fixed;
     top: calc(50% - 400px);
     left: calc(50% - 400px);
@@ -64,31 +60,29 @@
     background-color: var(--color-hover-blue);
 }
 
-.photo_uploader__modal_button__close {
+.uploader_modal__button__close {
     position: absolute;
     top: 0;
     right: 0;
     padding: 10px;
 }
 
-.photo_uploader__modal_button__icon {
+.uploader_modal__button__icon {
     width: 25px;
     height: 25px;
     color: var(--color-white);
 }
 
-// uploader component styles
-
-.photo_uploader__insert_block {
+.uploader_insert_block {
     height: 100%;
     text-align: center;
 }
 
-.photo_uploader__insert_input {
+.uploader_insert_input {
     display: none;
 }
 
-.photo_uploader__insert_area {
+.uploader_insert_area {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -101,16 +95,14 @@
     cursor: pointer;
 }
 
-.photo_uploader__insert_area__icon {
+.uploader_insert_area__icon {
     width: 100px;
     height: 100px;
     margin-bottom: 40px;
     color: var(--color-white);
 }
 
-// cropper component styles
-
-.photo_uploader__cropper_wrapper {
+.uploader_cropper__wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -118,20 +110,20 @@
     height: 100%;
 }
 
-.photo_uploader__cropper{
+.uploader_cropper{
     align-self: center;
     width: 90%;
     height: 90%;
 }
 
-.photo_uploader__cropper_button_thumb {
+.uploader_cropper__button_thumb {
     display: flex;
     justify-content: space-around;
     margin-top: 10px;
     padding: 10px 0;
 }
 
-.photo_uploader__cropper_button__save, .photo_uploader__cropper_button__anotherPhoto {
+.uploader_cropper__button__save, .uploader_cropper__button__anotherPhoto {
     display: flex;
     align-items: center;
     padding: 8px 12px;
@@ -141,56 +133,53 @@
     border-radius: 25px;
 }
 
-
-.photo_uploader__cropper_button__rotate, 
-.photo_uploader__cropper_button__zoomIn, 
-.photo_uploader__cropper_button__zoomOut {
+.uploader_cropper__button__rotate, 
+.uploader_cropper__button__zoomIn, 
+.uploader_cropper__button__zoomOut {
     padding: 10px 20px;
     color: var(--color-white);
 }
 
-.photo_uploader__cropper_button__rotate {
+.uploader_cropper__button__rotate {
     top: 250px;
 }
 
-.photo_uploader__cropper_button__zoomIn {
+.uploader_cropper__button__zoomIn {
     top: 350px;
 }
 
-.photo_uploader__cropper_button__zoomOut {
+.uploader_cropper__button__zoomOut {
     top: 450px;
 }
 
-.photo_uploader__cropper_button_icon__rotate, 
-.photo_uploader__cropper_button_icon__zoomIn, 
-.photo_uploader__cropper_button_icon__zoomOut
+.uploader_cropper__button_icon__rotate, 
+.uploader_cropper__button_icon__zoomIn, 
+.uploader_cropper__button_icon__zoomOut
  {
     width: 25px;
     height: 25px;
 }
 
-.photo_uploader__cropper_button_icon__save, 
-.photo_uploader__cropper_button_icon__anotherPhoto {
+.uploader_cropper__button_icon__save, 
+.uploader_cropper__button_icon__anotherPhoto {
     margin-right: 10px;
 }
 
-// preview component styles
-
-.photo_uploader__preview_wrapper {
+.uploader_preview__wrapper {
     display: flex;
 }
 
-.photo_uploader__preview_photoThumb {
+.uploader_preview__photoThumb {
     width: 80px;
     height: 80px;
     object-fit: scale-down;
 }
 
-.photo_uploader__preview_photo {
+.uploader_preview_photo {
     border-radius: 50%;
 }
 
-.photo_uploader__preview_buttonThumb {
+.uploader_preview__buttonThumb {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -198,15 +187,15 @@
     margin-left: 30px;
 }
 
-.photo_uploader__preview_button{
+.uploader_preview__button{
     color: var(--color-text-gray);
     font-size: var(--font-size-title-h4);
 }
 
-.photo_uploader__preview_button:hover {
+.uploader_preview__button:hover {
     color: var(--color-hover-blue);
 }
 
-.photo_uploader__preview_button:last-child:hover {
+.uploader_preview__button:last-child:hover {
     color: var(--color-error-red);
 }
