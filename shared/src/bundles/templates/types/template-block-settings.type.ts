@@ -1,4 +1,4 @@
-import { type TemplateBlockTitles } from '~/enums/enums';
+import { type TemplateBlockTitles } from '../enums/enums.js';
 
 type TemplateBlockSettings = {
     [key in TemplateBlockTitles]?: {
