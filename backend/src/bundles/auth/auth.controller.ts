@@ -178,19 +178,20 @@ class AuthController extends Controller {
                 },
             };
         }
+
     }
 
     private async login(
         options: ApiHandlerOptions<{
             body: UserSignInRequestDto;
         }>,
-    ): Promise<ApiHandlerResponse<UserSignInResponseDto>> {
+    ): Promise<ApiHandlerResponse<Omit<UserSignInResponseDto, 'refreshToken'>>> {
         try {
-            const payload = await this.authService.login(options.body);
+            const { refreshToken, ...userData } = await this.authService.login(options.body);
             return {
-                refreshToken: payload.refreshToken,
+                refreshToken,
                 status: HttpCode.OK,
-                payload,
+                payload: userData,
             };
         } catch (error: unknown) {
             const { message, status } = error as HttpError;
