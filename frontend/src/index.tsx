@@ -21,42 +21,42 @@ import { PreviewPage } from './bundles/preview/preview';
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
         <StoreProvider store={store.instance}>
-            <StripeProvider>
-                <RouterProvider
-                    routes={[
-                        {
-                            path: AppRoute.ROOT,
-                            element: (
-                                <ErrorBoundary FallbackComponent={ErrorFallback}>
-                                    <App />
-                                </ErrorBoundary>
-                            ),
-                            children: [
-                                {
-                                    path: AppRoute.ROOT,
-                                    element: 'Root',
-                                },
-                                {
-                                    path: AppRoute.SIGN_IN,
-                                    element: <Auth />,
-                                },
-                                {
-                                    path: AppRoute.SIGN_UP,
-                                    element: <Auth />,
-                                },
-                                {
-                                    path: AppRoute.PAYMENT,
-                                    element: <PaymentPage />,
-                                }
-                            ],
-                        },
-                        {
-                            path: AppRoute.PREVIEW,
-                            element: <PreviewPage />,
-                        },
-                    ]}
-                />
-            </StripeProvider>
+            <RouterProvider
+                routes={[
+                    {
+                        path: AppRoute.ROOT,
+                        element: (
+                            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                                <App />
+                            </ErrorBoundary>
+                        ),
+                        children: [
+                            {
+                                path: AppRoute.ROOT,
+                                element: 'Root',
+                            },
+                            {
+                                path: AppRoute.SIGN_IN,
+                                element: <Auth />,
+                            },
+                            {
+                                path: AppRoute.SIGN_UP,
+                                element: <Auth />,
+                            },
+                            {
+                                path: AppRoute.PAYMENT,
+                                element: <StripeProvider>
+                                    <PaymentPage />
+                                </StripeProvider>,
+                            }
+                        ],
+                    },
+                    {
+                        path: AppRoute.PREVIEW,
+                        element: <PreviewPage />,
+                    },
+                ]}
+            />
         </StoreProvider>
     </StrictMode>,
 );

@@ -1,13 +1,9 @@
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { type FormEvent, useCallback } from 'react';
 
-import { useAppDispatch } from '~/bundles/common/hooks/hooks';
-
-import { actions as PaymentActions } from '../store/';
-import { type CreatePaymentIntentResponseDto } from '../types/types';
+import styles from './styles.module.scss';
 
 const PaymentPage: React.FC = () => {
-    const dispatch = useAppDispatch();
     const elements = useElements();
     const stripe = useStripe();
 
@@ -18,32 +14,22 @@ const PaymentPage: React.FC = () => {
             if (!stripe || !elements) {
                 return;
             }
-    
-            const cardElement = elements.getElement(CardElement);
-    
-            const { payload } = (await dispatch(PaymentActions.createPaymentIntent({ amount: 100, currency: 'usd' }))) as { payload: CreatePaymentIntentResponseDto };
 
-            if (!payload.clientSecret || !cardElement) {
-                return;
-            }
-
-            const { error, paymentIntent } = await stripe.confirmCardPayment(payload.clientSecret, {
-                payment_method: {
-                    card: cardElement
-                }
+            await stripe.confirmPayment({
+                elements, 
+                confirmParams: {
+                    return_url: `${window.location.origin}/213`
+                },
+                redirect: 'if_required'
             });
-
-            if (error) {
-                return;
-            }
         }
 
         void HandleSubmitAsync();
-    }, [dispatch, elements, stripe]);
+    }, [elements, stripe]);
 
-    return <div>
-        <form onSubmit={HandleSubmit}>
-            <CardElement />
+    return <div className={styles.payment__container}>
+        <form className={styles.payment__form} onSubmit={HandleSubmit}>
+            <PaymentElement/>
             <input type='submit' />
         </form>
     </div>;

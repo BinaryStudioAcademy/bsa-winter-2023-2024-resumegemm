@@ -1,0 +1,13 @@
+.payment__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.payment__form {
+    display: flex;
+    flex-direction: column;
+    min-width: 30%;
+}
+

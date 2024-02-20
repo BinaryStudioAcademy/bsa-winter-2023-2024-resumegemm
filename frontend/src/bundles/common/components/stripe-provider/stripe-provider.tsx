@@ -1,5 +1,5 @@
 import { Elements } from '@stripe/react-stripe-js';
-import { type Stripe } from '@stripe/stripe-js';
+import { type Stripe, type StripeElementsOptions } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
 import { actions as PaymentActions } from '~/bundles/payment/store/';
@@ -16,10 +16,15 @@ const StripeProvider: React.FC<Properties> = ({
     const dispatch = useAppDispatch();
     const [stripePromise, setStripePromise] = useState<Stripe | null>(null);
 
+    const [options, setOptions] = useState<StripeElementsOptions | undefined>();
+    const [loading, setLoading] = useState<boolean>(true);
+
     const publishableKey = useAppSelector(({ payment }) => payment.publishableKey);
+    const clientSecret = useAppSelector(({ payment }) => payment.clientSecret);
 
     useEffect(() => {
         void dispatch(PaymentActions.getPublishableKey({}));
+        void dispatch(PaymentActions.createPaymentIntent({ amount: 100, currency: 'usd' }));
     }, [dispatch]);
 
     useEffect(() => {
@@ -32,11 +37,25 @@ const StripeProvider: React.FC<Properties> = ({
                 throw error;
             });
         }
-    }, [publishableKey]); 
+    }, [publishableKey]);
 
-    return <Elements stripe={stripePromise}>
-        { children }
-    </Elements>;
+    useEffect(() => {
+        if (!clientSecret || options) {
+            return;
+        }
+
+        setOptions({
+            clientSecret: clientSecret
+        });
+        setLoading(false);
+    }, [clientSecret, options]);
+
+    return <>
+    {!loading && <Elements stripe={stripePromise} options={options}>
+            { children }
+        </Elements>
+    }
+    </>;
 };
 
 export { StripeProvider };

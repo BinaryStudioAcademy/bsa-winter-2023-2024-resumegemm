@@ -4,12 +4,12 @@ import { createPaymentIntent, getPublishableKey } from './actions.js';
 
 type State = {
     publishableKey: string | null;
-    secretKey: string | null;
+    clientSecret: string | null;
 };
 
 const initialState: State = {
     publishableKey: null,
-    secretKey: null,
+    clientSecret: null,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -25,10 +25,10 @@ const { reducer, actions, name } = createSlice({
         });
 
         builder.addCase(createPaymentIntent.fulfilled, (state, action) => {
-            state.secretKey = action.payload.clientSecret;
+            state.clientSecret = action.payload.clientSecret;  
         });
         builder.addCase(createPaymentIntent.rejected, (state) => {
-            state.publishableKey = null;
+            state.clientSecret = null;
         });
     },
 });
