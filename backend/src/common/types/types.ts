@@ -1,3 +1,4 @@
+export { type TemplateBlockSettings } from 'shared/build/bundles/templates/templates';
 export {
     type ServerCommonErrorResponse,
     type ServerErrorResponse,
@@ -5,4 +6,3 @@ export {
     type ValidationSchema,
     type ValueOf,
 } from 'shared/build/index.js';
-export { type TemplateBlockSettings } from 'shared/build/types/templates/template-block-settings.type.js';
