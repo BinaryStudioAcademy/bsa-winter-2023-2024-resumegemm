@@ -2,6 +2,7 @@ import { genSalt, hash } from 'bcrypt';
 import {
     type AuthService as TAuthService,
     type EncryptionDataPayload,
+    AuthException,
     ExceptionMessage,
     HttpCode,
     HttpError,
@@ -97,6 +98,7 @@ class AuthService implements TAuthService {
     public async getUser(id: string): Promise<UserWithProfileRelation> {
         return await this.userService.getUserWithProfile(id);
     }
+
     public encrypt(data: string, salt: string): Promise<string> {
         return hash(data, salt);
     }
@@ -119,10 +121,7 @@ class AuthService implements TAuthService {
         try {
             return verifyToken(token, tokenSecret) as T;
         } catch {
-            throw new HttpError({
-                message: ExceptionMessage.AUTH_FAILED,
-                status: HttpCode.UNAUTHORIZED,
-            });
+            throw new AuthException();
         }
     }
 }

@@ -1,5 +1,9 @@
 import fp from 'fastify-plugin';
-import { type AuthApiPath, ExceptionMessage, HttpCode, HttpError } from 'shared/build/index.js';
+import {
+    type AuthApiPath,
+    type HttpError,
+    AuthException,
+} from 'shared/build/index.js';
 
 import { type AuthService } from '~/bundles/auth/auth.service';
 import { getToken } from '~/bundles/auth/helpers/helpers.js';
@@ -33,10 +37,7 @@ const authorization = fp<AuthorizationPluginPayload>(
                 const token = getToken(request.headers);
 
                 if (!token) {
-                    throw new HttpError({
-                        message: ExceptionMessage.AUTH_FAILED,
-                        status: HttpCode.UNAUTHORIZED,
-                    });
+                    throw new AuthException();
                 }
 
                 const { id } = authService.verifyToken<Record<'id', string>>(
