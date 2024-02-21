@@ -6,11 +6,11 @@ type ApiHandlerResponseStatus = ValueOf<typeof HttpCode>;
 type ApiHandlerResponse<T> = {
     status: ApiHandlerResponseStatus;
     payload:
-        | T
         | {
-            message?: string;
-            status?: ApiHandlerResponseStatus;
-        };
+              message?: string;
+              status?: ApiHandlerResponseStatus;
+          }
+        | T;
 };
 
 export { type ApiHandlerResponse };

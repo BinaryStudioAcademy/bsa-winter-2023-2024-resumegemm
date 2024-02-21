@@ -9,8 +9,8 @@
     height: 50px;
     padding: 12px 16px;
     font-family: Poppins, sans-serif;
-    background: linear-gradient(var(--color-accent-dark-yellow) 0 0) bottom / 0% 2px no-repeat
-        var(--color-input-field-gray);
+    background: linear-gradient(var(--color-accent-dark-yellow) 0 0) bottom / 0%
+        2px no-repeat var(--color-input-field-gray);
     border: none;
     outline: none;
     cursor: pointer;
@@ -71,7 +71,7 @@
 }
 
 .date_picker__header_arrow_reversed {
-    transform: scale(-1,1);
+    transform: scale(-1, 1);
 }
 
 :is(.date_picker__header_arrow, .date_picker__header_arrow_reversed) {
@@ -79,7 +79,10 @@
     height: 30%;
 }
 
-:is(.date_picker__header_arrow_container, .date_picker__header_arrow_container_reversed) {
+:is(
+        .date_picker__header_arrow_container,
+        .date_picker__header_arrow_container_reversed
+    ) {
     display: flex;
     flex: 1;
     justify-content: center;
@@ -90,13 +93,16 @@
     min-height: 30px;
     background-color: var(--color-black);
     border: none;
-    mask-image: url('../../../../assets/img/arrow.svg');
+    mask-image: url("../../../../assets/img/arrow.svg");
     mask-repeat: no-repeat;
     mask-size: 100% 100%;
     mask-position: center;
 }
 
-:is(.date_picker__header_arrow_container, .date_picker__header_arrow_container_reversed):hover {
+:is(
+        .date_picker__header_arrow_container,
+        .date_picker__header_arrow_container_reversed
+    ):hover {
     background-color: var(--color-accent-dark-yellow);
 }
 
@@ -105,7 +111,8 @@
 }
 
 :is(.date_picker__header_arrow, .date_picker__header_arrow_reversed):hover {
-    filter: invert(87%) sepia(33%) saturate(1273%) hue-rotate(336deg) brightness(92%) contrast(86%);
+    filter: invert(87%) sepia(33%) saturate(1273%) hue-rotate(336deg)
+        brightness(92%) contrast(86%);
 }
 
 .date_picker__body {

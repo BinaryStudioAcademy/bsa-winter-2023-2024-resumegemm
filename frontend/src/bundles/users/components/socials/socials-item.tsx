@@ -7,9 +7,9 @@ import { type IconName } from '~/bundles/common/enums/enums';
 import styles from './style.module.scss';
 
 type Properties = {
-    icon: ValueOf<typeof IconName>,
-    network: string,
-    buttonText: string
+    icon: ValueOf<typeof IconName>;
+    network: string;
+    buttonText: string;
 };
 
 const SocialItem: React.FC<Properties> = ({ icon, network, buttonText }) => {
