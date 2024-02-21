@@ -14,7 +14,7 @@ type Constructor = {
     storage: IStorage;
 };
 
-type UpdateTemplatePayload = Partial<TemplateEditRequestDto>;
+type EditTemplatePayload = Partial<TemplateEditRequestDto>;
 
 class TemplateApi extends HttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
@@ -23,14 +23,14 @@ class TemplateApi extends HttpApi {
 
     public async editTemplate(
         templateId: string,
-        updatedData: UpdateTemplatePayload,
+        editedData: EditTemplatePayload,
     ): Promise<TemplateEditResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(`/${templateId}`, {}),
             {
                 method: 'PUT',
                 contentType: ContentType.JSON,
-                payload: JSON.stringify(updatedData),
+                payload: JSON.stringify(editedData),
                 hasAuth: false,
             },
         );
