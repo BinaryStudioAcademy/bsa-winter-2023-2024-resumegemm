@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { createPaymentIntent, getPublishableKey } from './actions.js';
+import { createPaymentIntent, createSubscription, getPublishableKey } from './actions.js';
 
 type State = {
     publishableKey: string | null;
     clientSecret: string | null;
+    subscriptionId: string | null;
 };
 
 const initialState: State = {
     publishableKey: null,
     clientSecret: null,
+    subscriptionId: null,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -29,6 +31,15 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(createPaymentIntent.rejected, (state) => {
             state.clientSecret = null;
+        });
+
+        builder.addCase(createSubscription.fulfilled, (state, action) => {
+            state.clientSecret = action.payload.clientSecret;  
+            state.subscriptionId = action.payload.subscriptionId;
+        });
+        builder.addCase(createSubscription.rejected, (state) => {
+            state.clientSecret = null;
+            state.subscriptionId = null;
         });
     },
 });

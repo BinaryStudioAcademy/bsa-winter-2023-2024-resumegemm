@@ -9,7 +9,7 @@ import { type ILogger } from '~/common/logger/logger.js';
 
 import { PaymentApiPath } from './enums/enums.js';
 import { type PaymentService } from './payment.service.js';
-import { type CreatePaymentIntentRequestDto } from './types/types.js';
+import { type CreatePaymentIntentRequestDto, type CreateSubscriptionRequestDto } from './types/types.js';
 
 class PaymentController extends Controller {
     private paymentService: PaymentService;
@@ -33,6 +33,15 @@ class PaymentController extends Controller {
             method: 'GET',
             handler: () =>
                 this.getPublishableKey(),
+        });
+
+        this.addRoute({
+            path: PaymentApiPath.CREATE_SUBSCRIPTION,
+            method: 'POST',
+            handler: (options) =>
+                this.createSubscription(options as ApiHandlerOptions<{
+                    body: CreateSubscriptionRequestDto;
+                }>),
         });
     }
 
@@ -73,6 +82,51 @@ class PaymentController extends Controller {
             payload: await this.paymentService.createPaymentIntent(options.body),
         };
     }
+
+        /**
+     * @swagger
+     * /payment/create-subscription:
+     *    post:
+     *      description: Create subscription
+     *      requestBody:
+     *        description: Subscription data
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                name:
+     *                  type: number
+     *                email:
+     *                  type: string
+     *                  format: email
+     *                paymentMethod:
+     *                  type: string
+     *                priceId:
+     *                  type: string
+     *      responses:
+     *        201:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  clientSecret:
+     *                    type: string
+     *                  subscriptionId:
+     *                    type: string
+     */
+        private async createSubscription(
+            options: ApiHandlerOptions<{
+                body: CreateSubscriptionRequestDto;
+        }>): Promise<ApiHandlerResponse> {
+            return {
+                status: HttpCode.CREATED,
+                payload: await this.paymentService.createSubscription(options.body),
+            };
+        }
 
     /**
      * @swagger

@@ -1,10 +1,11 @@
-import { createPaymentIntent, getPublishableKey } from './actions.js';
+import { createPaymentIntent, createSubscription, getPublishableKey } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     getPublishableKey,
-    createPaymentIntent
+    createPaymentIntent,
+    createSubscription
 };
 
 export { allActions as actions };

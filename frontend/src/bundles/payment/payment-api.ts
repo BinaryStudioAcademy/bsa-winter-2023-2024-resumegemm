@@ -4,7 +4,7 @@ import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
 import { PaymentApiPath } from './enums/enums.js';
-import { type CreatePaymentIntentRequestDto, type CreatePaymentIntentResponseDto, type GetPublishableKeyResponseDto } from './types/types';
+import { type CreatePaymentIntentRequestDto, type CreatePaymentIntentResponseDto, type CreateSubscriptionRequestDto, type CreateSubscriptionResponseDto,type GetPublishableKeyResponseDto } from './types/types';
 
 type Constructor = {
     baseUrl: string;
@@ -42,6 +42,20 @@ class PaymentApi extends HttpApi {
         );
 
         return await response.json<CreatePaymentIntentResponseDto>();
+    }
+
+    public async createSubscription(payload: CreateSubscriptionRequestDto): Promise<CreateSubscriptionResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(PaymentApiPath.CREATE_SUBSCRIPTION, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify(payload),
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<CreateSubscriptionResponseDto>();
     }
 }
 
