@@ -1,0 +1,32 @@
+$layout-breakpoint-small: 768px;
+$border-color: #ccd7dc;
+
+.socials {
+    width: 100%;
+}
+
+.socials__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid $border-color;
+}
+
+.socials__item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.socials__item__name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.socials__item__name p {
+    margin-left: 5px;
+}

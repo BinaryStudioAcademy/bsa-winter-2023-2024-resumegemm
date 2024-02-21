@@ -1,0 +1,33 @@
+.resume_preview__section_wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4.95px;
+    padding: 9.9px;
+    border: 1px solid #eceef3;
+    border-radius: 8.25px;
+}
+
+.resume_preview__aside_section_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6.6px;
+    padding-bottom: 6.6px;
+    border-bottom: 0.83px dashed #eceef3;
+}
+
+.section_header__title {
+    color: #36394a;
+    font-weight: 500;
+    font-size: 8.25px;
+    line-height: 13.2px;
+}
+
+ul.section_description__list li {
+    list-style-position: inside;
+    list-style-type: disc;
+}
+
+.skills__list {
+    gap: 1.65px;
+}
