@@ -5,6 +5,7 @@ type EnvironmentSchema = {
     APP: {
         PORT: number;
         ENVIRONMENT: ValueOf<typeof AppEnvironment>;
+        ORIGIN_URL: string;
     };
     JWT: {
         ACCESS_TOKEN_SECRET: string;
@@ -14,8 +15,8 @@ type EnvironmentSchema = {
     };
     COOKIE: {
         COOKIE_SECRET: string;
-        EXPIRES_IN: number
-    }
+        EXPIRES_IN: number;
+    };
     DB: {
         CONNECTION_STRING: string;
         DIALECT: string;

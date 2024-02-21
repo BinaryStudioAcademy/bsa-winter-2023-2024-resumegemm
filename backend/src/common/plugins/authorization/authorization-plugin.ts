@@ -1,5 +1,9 @@
 import fp from 'fastify-plugin';
-import { type AuthApiPath, type HttpError } from 'shared/build/index.js';
+import {
+    type AuthApiPath,
+    type HttpError,
+    AuthException,
+} from 'shared/build/index.js';
 
 import { type AuthService } from '~/bundles/auth/auth.service';
 import { getToken } from '~/bundles/auth/helpers/helpers.js';
@@ -29,13 +33,19 @@ const authorization = fp<AuthorizationPluginPayload>(
                 if (isPublicRoute) {
                     return;
                 }
+
                 const token = getToken(request.headers);
+
+                if (!token) {
+                    throw new AuthException();
+                }
 
                 const { id } = authService.verifyToken<Record<'id', string>>(
                     token,
                     config.ENV.JWT.ACCESS_TOKEN_SECRET,
                 );
                 const currentUser = await userService.getUserWithProfile(id);
+
                 request.user = currentUser;
             } catch (error) {
                 const { status, message } = error as HttpError;

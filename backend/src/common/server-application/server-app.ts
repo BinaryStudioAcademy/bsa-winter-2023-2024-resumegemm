@@ -1,11 +1,12 @@
 import fastifyCookie from '@fastify/cookie';
+import cors from '@fastify/cors';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
 
 import { authService } from '~/bundles/auth/auth.js';
 import { userService } from '~/bundles/users/users.js';
-import { type IConfig,config } from '~/common/config/config.js';
+import { type IConfig, config } from '~/common/config/config.js';
 import { ControllerHook } from '~/common/controller/enums/enums.js';
 import { type IDatabase } from '~/common/database/database.js';
 import { ServerErrorType } from '~/common/enums/enums.js';
@@ -91,6 +92,11 @@ class ServerApp implements IServerApp {
                     publicRoutes,
                     userService,
                     authService,
+                });
+                await this.app.register(cors, {
+                    origin: config.ENV.APP.ORIGIN_URL,
+                    methods: '*',
+                    credentials: true,
                 });
                 await this.app.register(fastifyCookie, {
                     secret: config.ENV.COOKIE.COOKIE_SECRET,

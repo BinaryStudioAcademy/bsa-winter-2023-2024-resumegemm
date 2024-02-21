@@ -42,6 +42,12 @@ class Config implements IConfig {
                     env: 'PORT',
                     default: null,
                 },
+                ORIGIN_URL: {
+                    doc: 'Http origin for development',
+                    format: String,
+                    env: 'CLIENT_DEVELOPMENT_SERVER_URL',
+                    default: null,
+                },
             },
             JWT: {
                 ACCESS_TOKEN_SECRET: {
@@ -66,7 +72,7 @@ class Config implements IConfig {
                     env: 'COOKIE_SECRET',
                     default: null,
                 },
-                EXPIRES_IN: 60 * 60 * 24 * 30
+                EXPIRES_IN: 60 * 60 * 24 * 30,
             },
             DB: {
                 CONNECTION_STRING: {
