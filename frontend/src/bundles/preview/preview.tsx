@@ -1,4 +1,6 @@
 import { AppRoute } from '~/bundles/common/enums/enums.js';
+
+import { Auth } from '../auth/pages/auth';
 import { Calendar, Checkbox, NavTabs, RadioButton, Switch, Tooltip } from '../common/components/components';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
@@ -50,6 +52,9 @@ const PreviewPage: React.FC = () => {
                 </li>
                 <li className={styles.item}>
                     <Templates />
+                </li>
+                <li className={styles.auth}>
+                    <Auth />
                 </li>
             </ul>
         </div>

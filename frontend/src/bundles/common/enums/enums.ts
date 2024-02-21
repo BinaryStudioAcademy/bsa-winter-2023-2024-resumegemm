@@ -4,6 +4,7 @@ export {
     ButtonSize,
     ButtonType,
     ButtonVariant,
+    ButtonWidth,
     IconName,
     IconSize,
 } from './components/components.js';
