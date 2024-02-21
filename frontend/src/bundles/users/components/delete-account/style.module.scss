@@ -1,0 +1,16 @@
+$layout-breakpoint-small: 768px;
+
+.profile__delete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+@media only screen and (max-device-width: $layout-breakpoint-small) {
+    .profile__delete {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

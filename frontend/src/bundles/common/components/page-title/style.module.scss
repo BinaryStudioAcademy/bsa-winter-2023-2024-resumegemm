@@ -1,0 +1,27 @@
+$layout-breakpoint-small: 768px;
+
+h2 {
+    font-weight: 600;
+    font-size: 28px;
+    font-family: Poppins, sans-serif;
+    line-height: 36px;
+    text-align: left;
+}
+
+@media only screen and (max-width: $layout-breakpoint-small) {
+    h2 {
+        font-size: 24px;
+        line-height: 30px;
+    }
+}
+
+.profile__title {
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+
+@media only screen and (max-device-width: $layout-breakpoint-small) {
+    .profile__title {
+        margin-left: 20px;
+    }
+}

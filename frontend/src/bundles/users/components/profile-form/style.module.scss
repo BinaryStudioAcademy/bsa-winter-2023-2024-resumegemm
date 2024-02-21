@@ -1,0 +1,37 @@
+$layout-breakpoint-small: 768px;
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.profile__form {
+    display: flex;
+    flex-direction: column;
+}
+
+@media only screen and (max-device-width: $layout-breakpoint-small) {
+    .profile__form {
+        justify-content: flex-start;
+    }
+}
+
+.profile__form__section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 10px;
+}
+
+@media only screen and (max-device-width: $layout-breakpoint-small) {
+    .profile__form__section {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+.profile__form__section > * {
+    width: 100%;
+}
