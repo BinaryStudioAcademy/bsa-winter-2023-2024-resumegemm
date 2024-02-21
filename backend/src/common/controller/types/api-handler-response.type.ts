@@ -8,9 +8,9 @@ type ApiHandlerResponse<T> = {
     payload:
         | T
         | {
-            message?: string;
-            status?: ApiHandlerResponseStatus;
-        };
+              message?: string;
+              status?: ApiHandlerResponseStatus;
+          };
 };
 
 export { type ApiHandlerResponse };
