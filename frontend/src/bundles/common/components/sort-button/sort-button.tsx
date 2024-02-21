@@ -20,7 +20,7 @@ interface Properties extends ButtonHTMLAttributes<HTMLButtonElement> {
     onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-const Sort = ({
+const SortButton = ({
     sortType,
     children,
     className = '',
@@ -52,4 +52,4 @@ const Sort = ({
     );
 };
 
-export { Sort };
+export { SortButton };
