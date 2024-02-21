@@ -9,7 +9,7 @@ interface Properties extends InputHTMLAttributes<HTMLInputElement> {
     type?: string;
 }
 const Input = forwardRef<HTMLInputElement, Properties>(
-    ({ hasError = false, width = 'auto', disabled, type, ...otherProperties }, reference) => (
+        ({ hasError = false, width = 'auto', disabled, type, ...otherProperties }, reference) => (
         <input
             className={clsx(styles.input, {
                 [styles.input__error]: hasError,

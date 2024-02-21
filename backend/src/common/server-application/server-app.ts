@@ -2,12 +2,16 @@ import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
 
+import { authService } from '~/bundles/auth/auth.js';
+import { userService } from '~/bundles/users/users.js';
 import { type IConfig } from '~/common/config/config.js';
 import { type IDatabase } from '~/common/database/database.js';
 import { ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
+import { authorization as authorizationPlugin } from '~/common/plugins/plugins.js';
+import { publicRoutes } from '~/common/server-application/constants/constants.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
@@ -80,6 +84,12 @@ class ServerApp implements IServerApp {
                 this.logger.info(
                     `Generate swagger documentation for API ${it.version}`,
                 );
+
+                await this.app.register(authorizationPlugin, {
+                    publicRoutes,
+                    userService,
+                    authService,
+                });
 
                 await this.app.register(swagger, {
                     mode: 'static',
