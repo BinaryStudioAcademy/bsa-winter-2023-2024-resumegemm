@@ -1,8 +1,5 @@
-import { type TemplateResponseDto } from './template-response-dto.type.js';
+import { type TemplateDto } from './template-dto.type.js';
 
-type TemplateEditRequestDto = Omit<
-    TemplateResponseDto, 'id' |
-    'isOwner' | 'createdAt' | 'updatedAt' | 'deletedAt'
->;
+type TemplateEditRequestDto = Pick<TemplateDto, 'templateSettings'>;
 
 export { type TemplateEditRequestDto };
