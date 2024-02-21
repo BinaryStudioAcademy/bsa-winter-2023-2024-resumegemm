@@ -8,14 +8,19 @@ import {
 } from '../types/types.js';
 import { name as sliceName } from './slice.js';
 
+type EditTemplayePayload = Partial<TemplateEditRequestDto> & { id: string };
+
 const editTemplate = createAsyncThunk<
-    TemplateEditRequestDto,
     TemplateEditResponseDto,
+    EditTemplayePayload,
     AsyncThunkConfig
 >(`${sliceName}/edit`, (request, { extra }) => {
     const { templateApi } = extra;
 
-    return templateApi.editTemplate(request.id, request);
+    return templateApi.editTemplate(
+        request.id,
+        request.templateSettings as TemplateEditRequestDto,
+    );
 });
 
 export { editTemplate };
