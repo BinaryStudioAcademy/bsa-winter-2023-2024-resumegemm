@@ -15,13 +15,14 @@ import {
 } from '../../resume-preview/components/components';
 import styles from '../../resume-preview/components/resume-preview/styles.module.scss';
 import { TemplateBlockTitles } from '../types/types';
+import templateStyles from './styles.module.scss';
 
 type SelectedBlocks = {
     selectedBlocks: Record<string, boolean>;
 };
 
 const EditableTemplate: React.FC<SelectedBlocks> = ({ selectedBlocks }) => (
-    <div>
+    <div className={templateStyles.template__container}>
         <div className={styles.resume_preview__wrapper}>
             {selectedBlocks[TemplateBlockTitles.Profile] && <Profile />}
             {selectedBlocks[TemplateBlockTitles.Contacts] && <Contacts />}
