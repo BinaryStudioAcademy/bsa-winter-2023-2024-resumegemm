@@ -1,9 +1,9 @@
 import {
     type TemplateCreateItemRequestDto,
+    type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
-    HttpError,
 } from 'shared/build/index.js';
-import { TemplatesApiPath } from 'shared/build/index.js';
+import { HttpError, TemplatesApiPath } from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
@@ -31,7 +31,11 @@ class TemplateController extends Controller {
             path: TemplatesApiPath.ROOT,
             method: 'POST',
             handler: (options) =>
-                this.create(options as ApiHandlerOptions<{ body: TemplateCreateItemRequestDto }>),
+                this.create(
+                    options as ApiHandlerOptions<{
+                        body: TemplateCreateItemRequestDto;
+                    }>,
+                ),
         });
         this.addRoute({
             path: TemplatesApiPath.ID,
@@ -69,7 +73,7 @@ class TemplateController extends Controller {
 
     private async create(
         options: ApiHandlerOptions<{ body: TemplateCreateItemRequestDto }>,
-    ): Promise<ApiHandlerResponse> {
+    ): Promise<ApiHandlerResponse<Template>> {
         const template = await this.templateService.create(options.body);
         return {
             status: HttpCode.CREATED,
@@ -79,9 +83,9 @@ class TemplateController extends Controller {
 
     private async findById(
         options: ApiHandlerOptions<{ params: { id: string } }>,
-    ): Promise<ApiHandlerResponse> {
+    ): Promise<ApiHandlerResponse<Template>> {
         const template = await this.templateService.find(options.params.id);
-        if(!template){
+        if (!template) {
             throw new HttpError({
                 status: HttpCode.BAD_REQUEST,
                 message: 'User with this id not found',
@@ -93,7 +97,9 @@ class TemplateController extends Controller {
         };
     }
 
-    private async findAll(): Promise<ApiHandlerResponse> {
+    private async findAll(): Promise<
+        ApiHandlerResponse<TemplateGetAllResponseDto>
+    > {
         const templateList = await this.templateService.findAll();
         return {
             status: HttpCode.OK,
@@ -103,7 +109,7 @@ class TemplateController extends Controller {
 
     private async delete(
         options: ApiHandlerOptions<{ params: { id: string } }>,
-    ): Promise<ApiHandlerResponse> {
+    ): Promise<ApiHandlerResponse<boolean>> {
         const isDeleted = await this.templateService.delete(options.params.id);
         return {
             status: HttpCode.OK,
@@ -116,7 +122,7 @@ class TemplateController extends Controller {
             body: TemplateUpdateItemRequestDto;
             params: { id: string };
         }>,
-    ): Promise<ApiHandlerResponse> {
+    ): Promise<ApiHandlerResponse<Template>> {
         const template = await this.templateService.find(options.params.id);
         if (!template) {
             throw new HttpError({

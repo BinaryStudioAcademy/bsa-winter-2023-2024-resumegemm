@@ -1,4 +1,5 @@
-import { Checkbox, RadioButton, Switch,Tooltip  } from '../common/components/components';
+import { Calendar, Checkbox, RadioButton, Switch, Tooltip } from '../common/components/components';
+import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
@@ -12,21 +13,27 @@ const PreviewPage: React.FC = () => {
                     <div className={styles.example}>Component preview</div>
                 </li>
                 <li className={styles.item}>
-                    <Checkbox label="Checkbox" />
+                    <Checkbox name="preview-page-checkbox" label="Checkbox" />
                     <RadioButton label="Radio button" />
                     <Switch label="Switch" />
                 </li>
                 <li className={styles.item}>
+                    <Calendar />
+                    <Calendar type={CalendarTypes.withPresent} />
                     <div className={styles.tooltip_small_example_container}>
-                        <Tooltip dimensionType={TooltipDimensions.expand100Percent} text='tooltip text' />
+                        <Tooltip
+                            dimensionType={TooltipDimensions.expand100Percent}
+                            text="tooltip text"
+                        />
                     </div>
                     <div className={styles.tooltip_big_example_container}>
-                        <Tooltip dimensionType={TooltipDimensions.expand100Percent} text='tooltip text' />
+                        <Tooltip
+                            dimensionType={TooltipDimensions.expand100Percent}
+                            text="tooltip text"
+                        />
                     </div>
-                    <Tooltip text='tooltip text'>
-                        <p>
-                            Tooltip
-                        </p>
+                    <Tooltip text="tooltip text">
+                        <p>Tooltip</p>
                     </Tooltip>
                     <Home />
                 </li>
