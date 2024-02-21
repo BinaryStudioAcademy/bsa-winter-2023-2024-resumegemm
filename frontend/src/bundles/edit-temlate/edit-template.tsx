@@ -10,7 +10,7 @@ import { EditableTemplate } from './components/editable-templte';
 import { transformTemplateSettings } from './helpers/get-initial-template-state.helper';
 import { actions as templateActions } from './store';
 import templateStyles from './styles.module.scss';
-import { type TemplateDto } from './types/types';
+import { TemplateBlockTitles } from './types/types';
 
 type SelectedBlocks = Record<string, boolean>;
 
@@ -26,7 +26,7 @@ const EditTemplatePage: React.FC = () => {
     const [selectedBlocks, setSelectedBlocks] =
         useState<SelectedBlocks>(initialBlockSettings);
 
-    const blocks = Object.keys(initialBlockSettings);
+    const templateBlockTitles = Object.keys(TemplateBlockTitles);
 
     const handleCheckboxChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>): void => {
@@ -39,23 +39,15 @@ const EditTemplatePage: React.FC = () => {
     );
 
     const handleSaveTemplate = useCallback(() => {
-        async (): Promise<void> => {
-            try {
-                const editedTemplate: TemplateDto = {
+        const save = async (): Promise<void> => {
+                const editedTemplate = {
                     id: '1',
                     isOwner: true,
-                    createdAt: '2021-08-25T14:00:00.000Z',
-                    updatedAt: '2021-08-25T14:00:00.000Z',
-                    deletedAt: null,
                     templateSettings: selectedBlocks,
                 };
                 await dispatch(templateActions.editTemplate(editedTemplate));
-            } catch (error) {
-                throw typeof error === 'string'
-                    ? new Error(error)
-                    : new TypeError('Expected a string');
-            }
-        };
+         };
+        void save();
     }, [dispatch, selectedBlocks]);
 
     return (
@@ -72,7 +64,7 @@ const EditTemplatePage: React.FC = () => {
                 )}
             >
                 <ul className={editorStyles.editor_sidebar__list}>
-                    {blocks.map((block) => (
+                    {templateBlockTitles.map((block) => (
                         <li
                             key={block}
                             style={{ 'display': 'flex' }}
