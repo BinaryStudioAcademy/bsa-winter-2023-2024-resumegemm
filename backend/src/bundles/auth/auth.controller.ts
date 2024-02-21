@@ -1,11 +1,16 @@
+import { type FastifyRequest } from 'fastify';
 import {
     type HttpError,
+    type UserAuthResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpResponseDto,
+    type UserWithProfileRelation,
     AuthApiPath,
+    ExceptionMessage,
 } from 'shared/build/index.js';
 
+import { generateToken, getToken } from '~/bundles/auth/helpers/helpers.js';
 import {
     type UserSignUpRequestDto,
     userSignInValidationSchema,
@@ -53,6 +58,26 @@ class AuthController extends Controller {
                 this.login(
                     options as ApiHandlerOptions<{
                         body: UserSignInRequestDto;
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.USER,
+            method: 'GET',
+            handler: (options) =>
+                this.getUser(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponse['user'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.TOKEN,
+            method: 'GET',
+            handler: (options) =>
+                this.regenerateToken(
+                    options as ApiHandlerOptions<{
+                        headers: FastifyRequest['headers'];
                     }>,
                 ),
         });
@@ -165,6 +190,62 @@ class AuthController extends Controller {
                 status,
                 payload: {
                     message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async getUser(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponse['user'];
+        }>,
+    ): Promise<ApiHandlerResponse<UserWithProfileRelation>> {
+        try {
+            const { id } = options.user;
+            const payload = await this.authService.getUser(id);
+            return {
+                status: HttpCode.OK,
+                payload,
+            };
+        } catch (error: unknown) {
+            const message = (error as Error).message;
+            const status = HttpCode.INTERNAL_SERVER_ERROR;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private regenerateToken({
+        headers,
+    }: ApiHandlerOptions<{
+        headers: FastifyRequest['headers'];
+    }>): ApiHandlerResponse<{ accessToken: string }> {
+        try {
+            const refreshToken = getToken(headers);
+
+            const { id } = this.authService.verifyToken<Record<'id', string>>(
+                refreshToken,
+                Boolean(refreshToken),
+            );
+
+            const accessToken = generateToken({ id });
+
+            return {
+                status: HttpCode.OK,
+                payload: { accessToken },
+            };
+        } catch (error: unknown) {
+            const { status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message: ExceptionMessage.INVALID_REFRESH_TOKEN,
                     status,
                 },
             };
