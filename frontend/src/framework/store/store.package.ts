@@ -8,6 +8,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
+import { reducer as templatesReducer } from '~/bundles/edit-temlate/store/';
 import { templateApi } from '~/bundles/edit-temlate/templates.js';
 import { reducer as usersReducer } from '~/bundles/users/store/';
 import { userApi } from '~/bundles/users/users.js';
@@ -18,6 +19,7 @@ import { storage } from '../storage/storage';
 type RootReducer = {
     auth: ReturnType<typeof authReducer>;
     users: ReturnType<typeof usersReducer>;
+    templates: ReturnType<typeof templatesReducer>;
 };
 
 type ExtraArguments = {
@@ -44,6 +46,7 @@ class Store {
             reducer: {
                 auth: authReducer,
                 users: usersReducer,
+                templates: templatesReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
