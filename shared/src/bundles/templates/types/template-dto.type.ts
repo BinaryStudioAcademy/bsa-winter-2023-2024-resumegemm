@@ -1,6 +1,6 @@
 import { type TemplateBlockSettings } from './template-block-settings.type.js';
 
-type TemplateResponse = {
+type TemplateDto = {
     id: string;
     isOwner: boolean;
     createdAt: string;
@@ -9,4 +9,4 @@ type TemplateResponse = {
     templateSettings: TemplateBlockSettings;
 };
 
-export { type TemplateResponse };
+export { type TemplateDto };

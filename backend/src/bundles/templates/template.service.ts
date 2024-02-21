@@ -1,22 +1,25 @@
-import { type TemplateBlockSettings } from 'shared/build/bundles/templates/templates.js';
+import {
+    type TemplateEditRequestDto,
+    type TemplateEditResponseDto,
+} from 'shared/build/bundles/templates/templates.js';
 
-import { type TemplateRepository } from './templates.js';
+import {
+    type ITemplateRepository,
+    type ITemplateService,
+} from './types/types.js';
 
-class TemplateService {
-    private templateRepository: TemplateRepository;
+class TemplateService implements ITemplateService {
+    private templateRepository: ITemplateRepository;
 
-    public constructor(templateRepository: TemplateRepository) {
+    public constructor(templateRepository: ITemplateRepository) {
         this.templateRepository = templateRepository;
     }
 
-    public async updateTemplateSettings(
+    public async editTemplateSettings(
         templateId: string,
-        updatedSettings: TemplateBlockSettings,
-    ): Promise<void> {
-        await this.templateRepository.updateTemplateSettings(
-            templateId,
-            updatedSettings,
-        );
+        editedSettings: TemplateEditRequestDto,
+    ): Promise<TemplateEditResponseDto> {
+        return await this.templateRepository.edit(templateId, editedSettings);
     }
 }
 

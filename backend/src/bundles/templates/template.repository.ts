@@ -1,31 +1,24 @@
-import { type Transaction } from 'objection';
-
-import { TemplateEntity } from './template.entity.js';
 import { type TemplateModel } from './template.model.js';
+import {
+    type ITemplateRepository,
+    type TemplateEditRequestDto,
+    type TemplateEditResponseDto,
+} from './types/types.js';
 
-class TemplateRepository {
+class TemplateRepository implements ITemplateRepository {
     private templateModel: typeof TemplateModel;
 
     public constructor(templateModel: typeof TemplateModel) {
         this.templateModel = templateModel;
     }
 
-    public async updateTemplateSettings(
+    public async edit(
         templateId: string,
-        updatedSettings: TemplateEntity['templateSettings'],
-        transaction?: Transaction,
-    ): Promise<TemplateEntity> {
-        let query = this.templateModel.query().patchAndFetchById(templateId, {
-            templateSettings: updatedSettings,
+        editedSettings: TemplateEditRequestDto,
+    ): Promise<TemplateEditResponseDto> {
+        return await this.templateModel.query().updateAndFetchById(templateId, {
+            templateSettings: editedSettings.templateSettings,
         });
-
-        if (transaction) {
-            query = query.transacting(transaction);
-        }
-
-        const updatedTemplate = await query;
-
-        return TemplateEntity.initialize(updatedTemplate);
     }
 }
 

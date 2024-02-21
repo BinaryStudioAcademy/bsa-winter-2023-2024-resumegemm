@@ -1,7 +1,7 @@
-import { type TemplateResponse } from './types';
+import { type TemplateResponseDto } from './types';
 
 type TemplateEntityFields = Omit<
-    TemplateResponse,
+    TemplateResponseDto,
     'createdAt' | 'updatedAt' | 'deletedAt'
 >;
 

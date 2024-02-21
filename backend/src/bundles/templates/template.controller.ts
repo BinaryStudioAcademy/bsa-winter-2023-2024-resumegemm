@@ -1,4 +1,7 @@
-import { type TemplateEditRequestDto } from 'shared/build/bundles/templates/templates.js';
+import {
+    type TemplateEditRequestDto,
+    type TemplateEditResponseDto,
+} from 'shared/build/bundles/templates/templates.js';
 import { type HttpError } from 'shared/build/index.js';
 
 import {
@@ -11,12 +14,15 @@ import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { TemplateApiPath } from './enums/enums.js';
-import { type TemplateService } from './template.service.js';
+import { type ITemplateService } from './types/types.js';
 
 class TemplateController extends Controller {
-    private templateService: TemplateService;
+    private templateService: ITemplateService;
 
-    public constructor(logger: ILogger, templateService: TemplateService) {
+    public constructor(
+        logger: ILogger,
+        templateService: ITemplateService,
+    ) {
         super(logger, ApiPath.TEMPLATES);
 
         this.templateService = templateService;
@@ -25,7 +31,7 @@ class TemplateController extends Controller {
             path: TemplateApiPath.TEMPLATE_ID,
             method: 'PUT',
             handler: (options) =>
-                this.updateTemplate(
+                this.editTemplate(
                     options as ApiHandlerOptions<{
                         body: TemplateEditRequestDto;
                         params: {
@@ -36,16 +42,16 @@ class TemplateController extends Controller {
         });
     }
 
-    private async updateTemplate(
+    private async editTemplate(
         options: ApiHandlerOptions<{
             body: TemplateEditRequestDto;
             params: {
                 id: string;
             };
         }>,
-    ): Promise<ApiHandlerResponse<void>> {
+    ): Promise<ApiHandlerResponse<TemplateEditResponseDto>> {
         try {
-            await this.templateService.updateTemplateSettings(
+            await this.templateService.editTemplateSettings(
                 options.params.id,
                 options.body,
             );

@@ -1,8 +1,9 @@
 export { TemplateApiPath, TemplateBlockTitles } from './enums/enums.js';
 export {
     type TemplateBlockSettings,
+    type TemplateDto,
     type TemplateEditRequestDto,
     type TemplateEditResponseDto,
     type TemplateEntityFields,
-    type TemplateResponse,
+    type TemplateResponseDto,
 } from './types/types.js';

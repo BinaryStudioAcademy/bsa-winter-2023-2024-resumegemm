@@ -1,5 +1,8 @@
-import { type TemplateBlockSettings } from './template-block-settings.type.js';
+import { type TemplateResponseDto } from './template-response-dto.type.js';
 
-type TemplateEditRequestDto = TemplateBlockSettings;
+type TemplateEditRequestDto = Omit<
+    TemplateResponseDto, 'id' |
+    'isOwner' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>;
 
 export { type TemplateEditRequestDto };
