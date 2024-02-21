@@ -8,7 +8,7 @@ import { TemplateBlockTitles } from '../types/types.js';
 import { editTemplate } from './actions.js';
 
 type State = {
-    templates: TemplateDto[];
+    templates: Pick<TemplateDto, 'id' | 'isOwner' | 'templateSettings'>[];
     dataStatus: ValueOf<typeof DataStatus>;
 };
 
@@ -17,9 +17,6 @@ const initialState: State = {
         {
             id: '1',
             isOwner: true,
-            createdAt: '2021-08-09T11:51:00.000Z',
-            updatedAt: '2021-08-09T11:51:00.000Z',
-            deletedAt: null,
             templateSettings: {
                 [TemplateBlockTitles.Contacts]: {
                     enabled: true,
@@ -71,7 +68,7 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(isAnyOf(editTemplate.fulfilled), (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.templates.push(action.payload as TemplateDto);
+            state.templates.push(action.payload);
         });
 
         builder.addMatcher(isAnyOf(editTemplate.rejected), (state) => {
