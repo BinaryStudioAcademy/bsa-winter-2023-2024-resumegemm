@@ -1,9 +1,10 @@
 enum TemplateBlockTitles {
+    Profile = 'Profile',
     Contacts = 'Contacts',
     Summary = 'Summary',
     Experience = 'Experience',
     Recommendations = 'Recommendations',
-    Tools = 'Tools',
+    Skills = 'Skills',
     TechStack = 'TechStack',
     Portfolio = 'Portfolio',
     Languages = 'Languages',
