@@ -4,7 +4,7 @@
     justify-content: center;
 }
 
-.tab__item {
+a.tab__item {
     padding: 5px 20px;
     color: #848D96;
     font-weight: 500;
@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-.active{
+a.active{
     color: #434C66;
     background-color: #FDF3D3;
 }
