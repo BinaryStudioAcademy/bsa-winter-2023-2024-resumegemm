@@ -8,6 +8,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
+import { templateApi } from '~/bundles/edit-temlate/templates.js';
 import { reducer as usersReducer } from '~/bundles/users/store/';
 import { userApi } from '~/bundles/users/users.js';
 import { type IConfig } from '~/framework/config/config.js';
@@ -23,6 +24,7 @@ type ExtraArguments = {
     authApi: typeof authApi;
     userApi: typeof userApi;
     storageApi: typeof storage;
+    templateApi: typeof templateApi;
 };
 
 class Store {
@@ -58,6 +60,7 @@ class Store {
             authApi,
             userApi,
             storageApi: storage,
+            templateApi,
         };
     }
 }
