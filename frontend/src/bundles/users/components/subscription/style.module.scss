@@ -1,0 +1,26 @@
+$layout-breakpoint-small: 768px;
+$border-color: #ccd7dc;
+
+.subscription {
+    width: 100%;
+}
+
+.subscription__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid $border-color;
+}
+
+.subscription__item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.subscription__item__content {
+    display: flex;
+    flex-direction: column;
+}
