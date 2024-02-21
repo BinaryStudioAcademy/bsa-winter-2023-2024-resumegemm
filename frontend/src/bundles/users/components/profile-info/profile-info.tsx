@@ -17,8 +17,8 @@ const ProfileInfo: React.FC = () => {
                 <div className={styles.profile__info__text}>
                     <p className={styles.main__bold}>Free account</p>
                     <p className={styles.main__regular}>
-                        You are on free plan. You can save your data and search for
-                        jobs. Upgrade for PDF downloads & premium features.
+                        You are on free plan. You can save your data and search
+                        for jobs. Upgrade for PDF downloads & premium features.
                     </p>
                 </div>
             </div>

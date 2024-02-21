@@ -1,1 +1,1 @@
-'src/**/*.ts': npm run lint
+'src/**/*.ts': ['prettier --write', 'npm run lint']
