@@ -1,0 +1,23 @@
+.profile__container {
+    position: relative;
+}
+
+.profile__button {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profile__button:where(:hover, .active) {
+    outline: 2px solid var(--color-text-blue);
+}
+
+.profile__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
