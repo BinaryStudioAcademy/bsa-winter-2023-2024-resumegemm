@@ -9,6 +9,7 @@ export {
     type RecentlyViewed,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedResumesWithCount,
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
