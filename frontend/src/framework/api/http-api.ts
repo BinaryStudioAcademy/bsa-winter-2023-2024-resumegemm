@@ -41,13 +41,7 @@ class HttpApi implements IHttpApi {
         path: string,
         options: HttpApiOptions,
     ): Promise<HttpApiResponse> {
-        const {
-            method,
-            contentType,
-            payload = null,
-            hasAuth,
-            withCredentials = false,
-        } = options;
+        const { method, contentType, payload = null, hasAuth } = options;
 
         const headers = await this.getHeaders(contentType, hasAuth);
 
@@ -55,7 +49,6 @@ class HttpApi implements IHttpApi {
             method,
             headers,
             payload,
-            withCredentials,
         });
 
         return (await this.checkResponse(response)) as HttpApiResponse;
@@ -85,9 +78,7 @@ class HttpApi implements IHttpApi {
         headers.append(HttpHeader.CONTENT_TYPE, contentType);
 
         if (hasAuth) {
-            const token = await this.storage.get<string>(
-                StorageKey.ACCESS_TOKEN,
-            );
+            const token = await this.storage.get<string>(StorageKey.TOKEN);
 
             headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token ?? ''}`);
         }

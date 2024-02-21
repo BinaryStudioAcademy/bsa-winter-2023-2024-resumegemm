@@ -1,14 +1,9 @@
-import { Guid as guid } from 'guid-typescript';
-import { type UserEntityFields } from 'shared/build/index.js';
-
 import { type IEntity } from '~/common/interfaces/interfaces.js';
 
 class UserEntity implements IEntity {
     private 'id': string | null;
 
     private 'email': string;
-
-    private 'profileId': string;
 
     private 'passwordHash': string;
 
@@ -17,13 +12,16 @@ class UserEntity implements IEntity {
     private constructor({
         id,
         email,
-        profileId,
         passwordHash,
         passwordSalt,
-    }: UserEntityFields) {
+    }: {
+        id: string | null;
+        email: string;
+        passwordHash: string;
+        passwordSalt: string;
+    }) {
         this.id = id;
         this.email = email;
-        this.profileId = profileId;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
     }
@@ -31,14 +29,17 @@ class UserEntity implements IEntity {
     public static initialize({
         id,
         email,
-        profileId,
         passwordHash,
         passwordSalt,
-    }: UserEntityFields): UserEntity {
+    }: {
+        id: string;
+        email: string;
+        passwordHash: string;
+        passwordSalt: string;
+    }): UserEntity {
         return new UserEntity({
             id,
             email,
-            profileId,
             passwordHash,
             passwordSalt,
         });
@@ -46,30 +47,37 @@ class UserEntity implements IEntity {
 
     public static initializeNew({
         email,
-        profileId,
         passwordHash,
         passwordSalt,
-    }: Omit<UserEntityFields, 'id'>): UserEntity {
+    }: {
+        email: string;
+        passwordHash: string;
+        passwordSalt: string;
+    }): UserEntity {
         return new UserEntity({
-            id: guid.raw(),
+            id: null,
             email,
-            profileId,
             passwordHash,
             passwordSalt,
         });
     }
 
-    public toObject(): Pick<UserEntityFields, 'id' | 'email'> {
+    public toObject(): {
+        id: string;
+        email: string;
+    } {
         return {
             id: this.id as string,
             email: this.email,
         };
     }
 
-    public toNewObject(): UserEntityFields {
+    public toNewObject(): {
+        email: string;
+        passwordHash: string;
+        passwordSalt: string;
+    } {
         return {
-            id: this.id as NonNullable<string>,
-            profileId: this.profileId,
             email: this.email,
             passwordHash: this.passwordHash,
             passwordSalt: this.passwordSalt,

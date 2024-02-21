@@ -3,16 +3,12 @@ import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
 
-import { authService } from '~/bundles/auth/auth.js';
-import { userService } from '~/bundles/users/users.js';
 import { type IConfig } from '~/common/config/config.js';
 import { type IDatabase } from '~/common/database/database.js';
 import { ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
-import { authorization as authorizationPlugin, fileUpload as fileUploadPlugin } from '~/common/plugins/plugins.js';
-import { publicRoutes } from '~/common/server-application/constants/constants.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
@@ -20,6 +16,7 @@ import {
 } from '~/common/types/types.js';
 
 import { FileUploadValidationRule } from '../files/enums/file-upload-validation-rule.js';
+import { fileUpload as fileUploadPlugin } from '../plugins/file-upload/file-upload-plugin.js';
 import {
     type IServerApp,
     type IServerAppApi,
@@ -87,25 +84,6 @@ class ServerApp implements IServerApp {
                     `Generate swagger documentation for API ${it.version}`,
                 );
 
-                await this.app.register(fastifyMultipart, {
-                    limits: {
-                        fileSize: FileUploadValidationRule.MAXIMUM_FILE_SIZE,
-                    },
-                    attachFieldsToBody: true,
-                    throwFileSizeLimit: false,
-                });
-        
-                await this.app.register(fileUploadPlugin, {
-                    extensions:
-                        FileUploadValidationRule.UPLOAD_FILE_CONTENT_TYPES as unknown as string[],
-                });
-                
-                await this.app.register(authorizationPlugin, {
-                    publicRoutes,
-                    userService,
-                    authService,
-                });
-
                 await this.app.register(swagger, {
                     mode: 'static',
                     specification: {
@@ -120,6 +98,21 @@ class ServerApp implements IServerApp {
             }),
         );
     }
+
+    private async initPlugins(): Promise<void> {
+        await this.app.register(fastifyMultipart, {
+          limits: {
+            fileSize: FileUploadValidationRule.MAXIMUM_FILE_SIZE,
+          },
+          attachFieldsToBody: true,
+          throwFileSizeLimit: false,
+        });
+    
+        await this.app.register(fileUploadPlugin, {
+          extensions:
+            FileUploadValidationRule.UPLOAD_FILE_CONTENT_TYPES as unknown as string[],
+        });
+      }
 
     private initValidationCompiler(): void {
         this.app.setValidatorCompiler<ValidationSchema>(({ schema }) => {
@@ -191,6 +184,8 @@ class ServerApp implements IServerApp {
 
         await this.initMiddlewares();
 
+        await this.initPlugins();
+        
         this.initValidationCompiler();
 
         this.initErrorHandler();

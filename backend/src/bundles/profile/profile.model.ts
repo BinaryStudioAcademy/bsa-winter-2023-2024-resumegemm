@@ -1,7 +1,4 @@
-import {
-    AbstractModel,
-    DatabaseTableName,
-} from '~/common/database/database.js';
+import { AbstractModel, DatabaseTableName } from '~/common/database/database.js';
 
 class ProfileModel extends AbstractModel {
     public 'firstName': string;

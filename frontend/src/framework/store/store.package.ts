@@ -12,8 +12,6 @@ import { reducer as usersReducer } from '~/bundles/users/store/';
 import { userApi } from '~/bundles/users/users.js';
 import { type IConfig } from '~/framework/config/config.js';
 
-import { storage } from '../storage/storage';
-
 type RootReducer = {
     auth: ReturnType<typeof authReducer>;
     users: ReturnType<typeof usersReducer>;
@@ -22,7 +20,6 @@ type RootReducer = {
 type ExtraArguments = {
     authApi: typeof authApi;
     userApi: typeof userApi;
-    storageApi: typeof storage;
 };
 
 class Store {
@@ -57,7 +54,6 @@ class Store {
         return {
             authApi,
             userApi,
-            storageApi: storage,
         };
     }
 }

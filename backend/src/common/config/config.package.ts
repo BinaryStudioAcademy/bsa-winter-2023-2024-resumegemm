@@ -43,22 +43,6 @@ class Config implements IConfig {
                     default: null,
                 },
             },
-            JWT: {
-                ACCESS_TOKEN_SECRET: {
-                    doc: 'Secret key for access token generation',
-                    format: String,
-                    env: 'ACCESS_TOKEN_SECRET',
-                    default: null,
-                },
-                REFRESH_TOKEN_SECRET: {
-                    doc: 'Secret key for refresh token generation',
-                    format: String,
-                    env: 'REFRESH_TOKEN_SECRET',
-                    default: null,
-                },
-                ACCESS_TOKEN_EXPIRES_IN: '24h',
-                REFRESH_TOKEN_EXPIRES_IN: '30d',
-            },
             DB: {
                 CONNECTION_STRING: {
                     doc: 'Database connection string',
@@ -86,19 +70,19 @@ class Config implements IConfig {
                 },
             },
             AWS: {
-                REGION: {
+                REGION:{
                     doc: 'AWS region string',
                     format: String,
                     env: 'AWS_REGION',
                     default: null,
                 },
-                SECRET_ACCESS_KEY: {
+                SECRET_ACCESS_KEY:{
                     doc: 'AWS secret key string',
                     format: String,
                     env: 'AWS_SECRET_ACCESS_KEY',
                     default: null,
                 },
-                ACCESS_KEY: {
+                ACCESS_KEY: { 
                     doc: 'AWS access key string',
                     format: String,
                     env: 'AWS_ACCESS_KEY',

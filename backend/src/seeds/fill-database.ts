@@ -1,10 +1,7 @@
 import { Guid as guid } from 'guid-typescript';
 import { type Knex } from 'knex';
 
-import {
-    DatabaseColumnName,
-    DatabaseTableName,
-} from '~/common/database/enums/enums.js';
+import { DatabaseColumnName, DatabaseTableName } from '~/common/database/enums/enums.js';
 import {
     type ContactDetails,
     type Education,
@@ -112,12 +109,11 @@ async function seed(knex: Knex): Promise<void> {
 
         // Resume content
 
-        const mapResumeContent = <T>(it: T[]): T[] =>
-            it.map((entity, index) => ({
-                ...entity,
-                [DatabaseColumnName.ID]: guid.raw(),
-                [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
-            }));
+        const mapResumeContent = <T>(it: T[]): T[] => it.map((entity, index) => ({
+            ...entity,
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
+        }));
 
         await trx<Review>(DatabaseTableName.REVIEWS)
             .insert(mapResumeContent(reviewsSeed))
@@ -155,13 +151,11 @@ async function seed(knex: Knex): Promise<void> {
 
         // USER_TEMPLATES junction table
 
-        const userTemplatesSeed = Array.from({ length: NUMBER_OF_ROWS }).map(
-            (_, index) => ({
-                [DatabaseColumnName.ID]: guid.raw(),
-                [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
-                [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
-            }),
-        );
+        const userTemplatesSeed = Array.from({ length: NUMBER_OF_ROWS }).map((_, index) => ({
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
+            [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
+        }));
 
         await trx(DatabaseTableName.USER_TEMPLATES)
             .insert(userTemplatesSeed)

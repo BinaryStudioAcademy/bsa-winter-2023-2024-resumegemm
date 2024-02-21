@@ -1,10 +1,7 @@
-import { type RelationMappings, Model } from 'objection';
+import { type RelationMappings,Model } from 'objection';
 
 import { UserModel } from '~/bundles/users/users.js';
-import {
-    AbstractModel,
-    DatabaseTableName,
-} from '~/common/database/database.js';
+import { AbstractModel, DatabaseTableName } from '~/common/database/database.js';
 
 class ResumeModel extends AbstractModel {
     public 'userId': number;
@@ -22,7 +19,7 @@ class ResumeModel extends AbstractModel {
                     from: `${DatabaseTableName.RESUMES}.userId`,
                     to: `${DatabaseTableName.USERS}.id`,
                 },
-            },
+            }
         };
     }
 }

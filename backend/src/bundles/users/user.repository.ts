@@ -1,47 +1,16 @@
-import { type Transaction } from 'objection';
-
-import { type ProfileRepository } from '~/bundles/profile/profile.repository';
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { type IRepository } from '~/common/interfaces/interfaces.js';
 
-import {
-    type UserEntityFields,
-    type UserSignUpResponseDto,
-} from './types/types.js';
-
 class UserRepository implements IRepository {
     private userModel: typeof UserModel;
-    private profileRepository: ProfileRepository;
 
-    public constructor(
-        userModel: typeof UserModel,
-        profileRepository: ProfileRepository,
-    ) {
+    public constructor(userModel: typeof UserModel) {
         this.userModel = userModel;
-        this.profileRepository = profileRepository;
     }
 
     public find(): ReturnType<IRepository['find']> {
         return Promise.resolve(null);
-    }
-
-    public async findOneByEmail(
-        email: string,
-    ): Promise<UserEntityFields | null> {
-        const user = await this.userModel.query().findOne({ email });
-        return user ?? null;
-    }
-
-    public async getUserWithProfile(
-        id: string,
-    ): Promise<UserSignUpResponseDto['user']> {
-        return await this.userModel
-            .query()
-            .modify('withoutHashPasswords')
-            .findById(id)
-            .withGraphFetched('[user_profile]')
-            .castTo<UserSignUpResponseDto['user']>();
     }
 
     public async findAll(): Promise<UserEntity[]> {
@@ -50,55 +19,19 @@ class UserRepository implements IRepository {
         return users.map((it) => UserEntity.initialize(it));
     }
 
-    public async createUserWithProfile(
-        entity: UserEntityFields,
-        firstName: string,
-        lastName: string,
-    ): Promise<UserEntity> {
-        const transaction = await this.userModel.startTransaction();
-        try {
-            const { id } = await this.profileRepository.create({
-                firstName,
-                lastName,
-                transaction,
-            });
+    public async create(entity: UserEntity): Promise<UserEntity> {
+        const { email, passwordSalt, passwordHash } = entity.toNewObject();
 
-            const user = await this.create({
-                entity: UserEntity.initializeNew({
-                    ...entity,
-                    profileId: id,
-                }),
-                transaction,
-            });
-            await transaction.commit();
-            return user;
-        } catch (error: unknown) {
-            await transaction.rollback();
-            throw new Error((error as Error).message);
-        }
-    }
-
-    public async create({
-        entity,
-        transaction,
-    }: {
-        entity: UserEntity;
-        transaction: Transaction;
-    }): Promise<UserEntity> {
-        const { email, passwordSalt, passwordHash, id, profileId } =
-            entity.toNewObject();
         const item = await this.userModel
             .query()
             .insert({
-                id,
                 email,
-                profileId,
                 passwordSalt,
                 passwordHash,
             })
             .returning('*')
-            .transacting(transaction)
             .execute();
+
         return UserEntity.initialize(item);
     }
 

@@ -1,28 +1,26 @@
 import { type MultipartFile } from '@fastify/multipart';
 import { type FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
-import { type ContentType } from 'shared/src/enums/content-type.enum';
-import { type ValueOf } from 'shared/src/types/value-of.type';
+import  { type ContentType } from 'shared/src/enums/content-type.enum';
+import  { type ValueOf } from 'shared/src/types/value-of.type';
 
 import { ControllerHook } from '../../controller/controller.js';
 import { FileUploadValidationMessage } from '../../files/enums/file-upload-validation-message.js';
 import { HttpCode, HttpError } from '../../http/http.js';
 
 type Options = {
-    extensions: string[];
+  extensions: string[];
 };
 
 const fileUpload = fp<Options>((fastify, { extensions }, done) => {
-    fastify.decorateRequest('fileBuffer', null);
+  fastify.decorateRequest('fileBuffer', null);
 
-    fastify.addHook(
-        ControllerHook.PRE_VALIDATION,
-        async (request: FastifyRequest<{ Body: { file: MultipartFile } }>) => {
-            if (!request.isMultipart()) {
-                return;
-            }
+  fastify.addHook(ControllerHook.PRE_VALIDATION, async (request: FastifyRequest<{ Body: { file: MultipartFile } }>) => {
+    if (!request.isMultipart()) {
+      return;
+    }
 
-            const { file } = request.body;
+    const { file } = request.body;
 
             if (file.file.truncated) {
                 throw new HttpError({
@@ -38,17 +36,16 @@ const fileUpload = fp<Options>((fastify, { extensions }, done) => {
                 });
             }
 
-            const buffer = await file.toBuffer();
+    const buffer = await file.toBuffer();
 
-            request.fileBuffer = {
-                buffer,
-                contentType: file.mimetype as ValueOf<typeof ContentType>,
-                fileName: file.filename,
-            };
-        },
-    );
+    request.fileBuffer = {
+      buffer,
+      contentType: file.mimetype as ValueOf<typeof ContentType>,
+      fileName: file.filename,
+    };
+  });
 
-    done();
+  done();
 });
 
 export { fileUpload };

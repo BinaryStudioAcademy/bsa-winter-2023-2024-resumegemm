@@ -1,43 +1,43 @@
-import { type IRepository } from '../interfaces/repository.interface.js';
+import  { type IRepository } from '../interfaces/repository.interface.js';
 import { FileEntity } from './file.entity.js';
-import { type FileModel } from './file.model.js';
+import  { type FileModel } from './file.model.js';
 
-class FileRepository {
-    private fileModel: typeof FileModel;
+class FileRepository implements IRepository {
+  private fileModel: typeof FileModel;
 
-    public constructor(fileModel: typeof FileModel) {
-        this.fileModel = fileModel;
-    }
+  public constructor(fileModel: typeof FileModel) {
+    this.fileModel = fileModel;
+  }
 
-    public async create(entity: FileEntity): Promise<FileEntity> {
-        const { url } = entity.toNewObject();
+  public async create(entity: FileEntity): Promise<FileEntity> {
+    const { url } = entity.toNewObject();
 
-        const item = await this.fileModel
-            .query()
-            .insert({
-                url,
-            })
-            .returning('*')
-            .execute();
+    const item = await this.fileModel
+      .query()
+      .insert({
+        url,
+      })
+      .returning('*')
+      .execute();
 
-        return FileEntity.initialize(item);
-    }
+    return FileEntity.initialize(item);
+  }
 
-    public find(): ReturnType<IRepository['find']> {
-        return Promise.resolve(null);
-    }
+  public find(): ReturnType<IRepository['find']> {
+    return Promise.resolve(null);
+  }
 
-    public findAll(): ReturnType<IRepository['findAll']> {
-        return Promise.resolve([]);
-    }
+  public findAll(): ReturnType<IRepository['findAll']> {
+    return Promise.resolve([]);
+  }
 
-    public update(): ReturnType<IRepository['update']> {
-        return Promise.resolve(null);
-    }
+  public update(): ReturnType<IRepository['update']> {
+    return Promise.resolve(null);
+  }
 
-    public delete(): ReturnType<IRepository['delete']> {
-        return Promise.resolve(true);
-    }
+  public delete(): ReturnType<IRepository['delete']> {
+    return Promise.resolve(true);
+  }
 }
 
 export { FileRepository };

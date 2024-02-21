@@ -1,6 +1,7 @@
 enum DatabaseColumnName {
     ID = 'id',
     PROFILE_ID = 'profile_id',
+    USERNAME = 'username',
     FIRST_NAME = 'first_name',
     IMAGE = 'image',
     LAST_NAME = 'last_name',

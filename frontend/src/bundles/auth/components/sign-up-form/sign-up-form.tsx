@@ -1,4 +1,4 @@
-import { BaseButton, Input } from '~/bundles/common/components/components';
+import { Button, Input } from '~/bundles/common/components/components';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 import {
     type UserSignUpRequestDto,
@@ -19,9 +19,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
-            if (!errors) {
-                void handleSubmit(onSubmit)(event_);
-            }
+            void handleSubmit(onSubmit)(event_);
         },
         [handleSubmit, onSubmit],
     );
@@ -33,18 +31,24 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 <p>
                     <Input
                         type="text"
+                        label="Email"
                         placeholder="Enter your email"
                         name="email"
+                        control={control}
+                        errors={errors}
                     />
                 </p>
                 <p>
                     <Input
                         type="text"
+                        label="Password"
                         placeholder="Enter your password"
                         name="password"
+                        control={control}
+                        errors={errors}
                     />
                 </p>
-                <BaseButton>Sign up</BaseButton>
+                <Button type="submit">Sign up</Button>
             </form>
         </>
     );

@@ -2,7 +2,7 @@ import { type SkillLevel } from '~/common/enums/enums.js';
 
 type User = {
     id: string;
-    first_name: string;
+    username: string;
     email: string;
     password_hash: string;
     password_salt: string;

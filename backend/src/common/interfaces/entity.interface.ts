@@ -1,9 +1,6 @@
-import { type UserEntityFields } from 'shared/build/index.js';
-
 interface IEntity {
-    toObject(): Pick<UserEntityFields, 'id' | 'email'>;
-
-    toNewObject(): UserEntityFields;
+    toObject(): unknown;
+    toNewObject(): unknown;
 }
 
 export { type IEntity };

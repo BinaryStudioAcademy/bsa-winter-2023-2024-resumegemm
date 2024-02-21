@@ -47,6 +47,7 @@ TBA
     users {
         uuid id PK
         varchar email
+        varchar username
         varchar password_hash
         varchar password_salt
         uuid profile_id FK

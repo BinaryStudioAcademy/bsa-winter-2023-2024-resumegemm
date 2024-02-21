@@ -6,7 +6,6 @@ type HttpApiOptions = Omit<HttpOptions, 'headers' | 'payload'> & {
     hasAuth: boolean;
     contentType: ValueOf<typeof ContentType>;
     payload?: HttpOptions['payload'];
-    withCredentials?: boolean;
 };
 
 export { type HttpApiOptions };

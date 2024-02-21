@@ -1,9 +1,6 @@
 import { type Knex } from 'knex';
 
-import {
-    DatabaseColumnName,
-    DatabaseTableName,
-} from '~/common/database/enums/enums.js';
+import { DatabaseColumnName, DatabaseTableName } from '~/common/database/enums/enums.js';
 
 const RelationRule = {
     CASCADE: 'CASCADE',
