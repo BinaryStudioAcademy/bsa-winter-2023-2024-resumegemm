@@ -1,5 +1,1 @@
-'src/**/*.ts': [
-  'npm run lint',
-  'prettier --write',
-]
-
+'src/**/*.ts': ['npm run lint', 'prettier --write']
