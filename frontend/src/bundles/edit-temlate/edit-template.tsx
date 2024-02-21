@@ -1,67 +1,62 @@
 import clsx from 'clsx';
 import React, { type ChangeEvent, useCallback, useState } from 'react';
 
-import data from '~/bundles/resume-preview/data/resume-preview.json';
-
 import { BaseButton, Checkbox } from '../common/components/components';
 import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
+import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
-import {
-    Contacts,
-    Education,
-    Experience,
-    Languages,
-    Portfolio,
-    Profile,
-    Recommendations,
-    Skills,
-    Socials,
-    Summary,
-    TechStack,
-} from '../resume-preview/components/components';
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
+import { EditableTemplate } from './components/editable-templte';
+import { transformTemplateSettings } from './helpers/get-initial-template-state.helper';
+import { actions as templateActions } from './store';
 import templateStyles from './styles.module.scss';
-import { templateApi } from './templates';
+import { type TemplateDto } from './types/types';
 
 type SelectedBlocks = Record<string, boolean>;
 
 const EditTemplatePage: React.FC = () => {
-    const initialBlocksState: SelectedBlocks = {
-        'Profile': true,
-        'Contacts': true,
-        'Summary': true,
-        'Experience': true,
-        'Recommendations': true,
-        'Skills': true,
-        'TechStack': true,
-        'Portfolio': true,
-        'Languages': true,
-        'Education': true,
-        'Socials': true,
-    };
+    const dispatch = useAppDispatch();
+    const templates = useAppSelector((state) => state.templates.templates);
+    const currentTemplate = templates.find((template) => template.id === '1');
 
-    const blocks = Object.keys(initialBlocksState);
+    const initialBlockSettings = transformTemplateSettings(
+        currentTemplate?.templateSettings ?? {},
+    );
 
     const [selectedBlocks, setSelectedBlocks] =
-        useState<SelectedBlocks>(initialBlocksState);
+        useState<SelectedBlocks>(initialBlockSettings);
+
+    const blocks = Object.keys(initialBlockSettings);
 
     const handleCheckboxChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>): void => {
-            setSelectedBlocks({
-                ...selectedBlocks,
+            setSelectedBlocks((previousBlocks) => ({
+                ...previousBlocks,
                 [event.target.name]: event.target.checked,
-            });
+            }));
         },
-        [selectedBlocks],
+        [],
     );
 
     const handleSaveTemplate = useCallback(() => {
-        // try {
-        //     await templateApi.updateTemplate('12345', selectedBlocks);
-        // } catch (error) {
-        //     throw typeof error === 'string' ? new Error(error) : new TypeError('Expected a string');
-        // }
-    }, []);
+        async (): Promise<void> => {
+            try {
+                const editedTemplate: TemplateDto = {
+                    id: '1',
+                    isOwner: true,
+                    createdAt: '2021-08-25T14:00:00.000Z',
+                    updatedAt: '2021-08-25T14:00:00.000Z',
+                    deletedAt: null,
+                    templateSettings: selectedBlocks,
+                };
+                await dispatch(templateActions.editTemplate(editedTemplate));
+            } catch (error) {
+                throw typeof error === 'string'
+                    ? new Error(error)
+                    : new TypeError('Expected a string');
+            }
+        };
+    }, [dispatch, selectedBlocks]);
 
     return (
         <section
@@ -93,85 +88,19 @@ const EditTemplatePage: React.FC = () => {
                         </li>
                     ))}
                 </ul>
-            </nav>
-            <div className={styles.editor_output__block}>
-                <BaseButton
-                    type={ButtonType.SUBMIT}
-                    size={ButtonSize.MEDIUM}
-                    variant={ButtonVariant.DEFAULT}
-                    onClick={handleSaveTemplate}
-                    className={editorStyles.editor_output__button}
-                >
-                    Save Tempalte
-                </BaseButton>
-            </div>
-
-            <div>
-                <div className={styles.resume_preview__wrapper}>
-                    {selectedBlocks['Profile'] && <Profile />}
-                    {selectedBlocks['Contacts'] && <Contacts />}
-                    <div className={styles.resume_preview__content}>
-                        <div
-                            className={
-                                styles.resume_preview__content_main_section
-                            }
-                        >
-                            {selectedBlocks['Summary'] && (
-                                <Summary
-                                    data={data.summary}
-                                    json_styles={data.summary.styles}
-                                />
-                            )}
-                            {selectedBlocks['Experience'] && <Experience />}
-                            {selectedBlocks['Recommendations'] && (
-                                <Recommendations />
-                            )}
-                        </div>
-                        <div
-                            className={
-                                styles.resume_preview__content_aside_section
-                            }
-                        >
-                            {selectedBlocks['Design'] && (
-                                <Skills
-                                    data={data.skills}
-                                    json_styles={data.skills.styles}
-                                />
-                            )}
-                            {selectedBlocks['TechStack'] && (
-                                <TechStack
-                                    data={data.tech_stack}
-                                    json_styles={data.tech_stack.styles}
-                                />
-                            )}
-                            {selectedBlocks['Portfolio'] && (
-                                <Portfolio
-                                    data={data.portfolio.data}
-                                    json_styles={data.portfolio.styles}
-                                />
-                            )}
-                            {selectedBlocks['Languages'] && (
-                                <Languages
-                                    data={data.languages}
-                                    json_styles={data.languages.styles}
-                                />
-                            )}
-                            {selectedBlocks['Education'] && (
-                                <Education
-                                    data={data.education.data}
-                                    json_styles={data.education.styles}
-                                />
-                            )}
-                            {selectedBlocks['Socials'] && (
-                                <Socials
-                                    data={data.social_links}
-                                    json_styles={data.social_links.styles}
-                                />
-                            )}
-                        </div>
-                    </div>
+                <div className={styles.editor_output__block}>
+                    <BaseButton
+                        type={ButtonType.SUBMIT}
+                        size={ButtonSize.MEDIUM}
+                        variant={ButtonVariant.DEFAULT}
+                        onClick={handleSaveTemplate}
+                        className={clsx(templateStyles.output__button)}
+                    >
+                        Save Tempalte
+                    </BaseButton>
                 </div>
-            </div>
+            </nav>
+            <EditableTemplate selectedBlocks={selectedBlocks} />
         </section>
     );
 };
