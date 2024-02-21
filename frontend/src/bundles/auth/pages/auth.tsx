@@ -1,3 +1,5 @@
+import { Navigate } from 'react-router-dom';
+
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
@@ -13,9 +15,10 @@ import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
-
-    const { dataStatus } = useAppSelector(({ auth }) => ({
+        
+    const { dataStatus, user } = useAppSelector(({ auth }) => ({
         dataStatus: auth.dataStatus,
+        user: auth.user
     }));
 
     const { pathname } = useLocation();
@@ -45,7 +48,9 @@ const Auth: React.FC = () => {
     };
 
     return (
-        <div className={styles.auth}>
+        user
+        ? <Navigate to={AppRoute.ROOT}/>
+        :<div className={styles.auth}>
             <div className={styles.auth__container}>
                 <section className={styles['auth__logo-container']}>
                     <div className={styles.auth__logo}>
