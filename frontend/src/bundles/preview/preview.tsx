@@ -13,7 +13,7 @@ const PreviewPage: React.FC = () => {
                     <div className={styles.example}>Component preview</div>
                 </li>
                 <li className={styles.item}>
-                    <Checkbox label="Checkbox" />
+                    <Checkbox name="preview-page-checkbox" label="Checkbox" />
                     <RadioButton label="Radio button" />
                     <Switch label="Switch" />
                 </li>
