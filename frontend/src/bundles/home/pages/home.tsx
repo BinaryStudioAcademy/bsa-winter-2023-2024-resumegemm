@@ -1,4 +1,4 @@
-import mockResume from '~/assets/img/mockResume.png';
+import mockResume from '~/assets/img/mock-resume.png';
 import {
     CreateNewCard,
     CreateResumeButton,

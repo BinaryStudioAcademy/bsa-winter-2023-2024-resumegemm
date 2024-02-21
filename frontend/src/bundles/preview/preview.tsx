@@ -24,7 +24,7 @@ const PreviewPage: React.FC = () => {
                     <NavTabs items={navbarItems}></NavTabs>
                 </li>
                 <li className={styles.item}>
-                    <Checkbox label="Checkbox" />
+                    <Checkbox name="preview-page-checkbox" label="Checkbox" />
                     <RadioButton label="Radio button" />
                     <Switch label="Switch" />
                 </li>
