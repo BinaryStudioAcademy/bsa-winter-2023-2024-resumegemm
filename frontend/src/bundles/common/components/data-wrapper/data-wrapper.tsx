@@ -10,17 +10,18 @@ const DataWrapper: FC<DataWrapperProperties> = ({
     hasData,
     children,
     CustomSpinnerComponent,
-    CustomMessageComponent
+    CustomMessageComponent,
 }) => {
-    const defaultMessageElement: ReactNode =
+    const defaultMessageElement: ReactNode = (
         <h2 className={styles.data_wrapper__message}>
             There is no data available. Please, try again later.
-        </h2>;
+        </h2>
+    );
 
     if (isLoading) {
         return (
             <div className={styles.data_wrapper__container}>
-                {CustomSpinnerComponent ?? <Spinner/>}
+                {CustomSpinnerComponent ?? <Spinner />}
             </div>
         );
     }
