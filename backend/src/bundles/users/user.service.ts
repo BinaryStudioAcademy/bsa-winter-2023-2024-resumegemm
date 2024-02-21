@@ -58,8 +58,10 @@ class UserService implements IService {
         return Promise.resolve(null);
     }
 
-    public delete(): ReturnType<IService['delete']> {
-        return Promise.resolve(true);
+    public async delete(
+        id: string,
+    ): Promise<UserEntityFields | null> {
+        return this.userRepository.delete(id);
     }
 }
 

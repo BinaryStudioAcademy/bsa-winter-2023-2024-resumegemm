@@ -1,6 +1,7 @@
 import {
+    type UserEntityFields,
     type UserSignUpRequestDto,
-    type UserSignUpResponseDto,
+    type UserSignUpResponseDto
 } from 'shared/build/index.js';
 
 interface IService<T = unknown> {
@@ -22,7 +23,7 @@ interface IService<T = unknown> {
 
     update(): Promise<T>;
 
-    delete(): Promise<boolean>;
+    delete(id: string): Promise<UserEntityFields | null>;
 }
 
 export { type IService };
