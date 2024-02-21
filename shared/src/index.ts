@@ -38,6 +38,7 @@ export {
 export { type IConfig } from './framework/config/config.js';
 export {
     ApplicationError,
+    AuthException,
     HttpError,
     ValidationError,
 } from './framework/exceptions/exceptions.js';

@@ -19,22 +19,20 @@
         "build": "tsc && tsc-alias"
     },
     "devDependencies": {
+        "@fastify/cors": "9.0.1",
         "@types/bcrypt": "5.0.2",
         "@types/convict": "6.1.1",
         "@types/jsonwebtoken": "9.0.5",
         "@types/node-cron": "3.0.11",
         "@types/nodemailer": "6.4.14",
         "@types/swagger-jsdoc": "6.0.1",
-        "@types/uuid": "9.0.8",
-        "guid-typescript": "1.0.9",
-        "jsonwebtoken": "9.0.2",
-        "node-cron": "3.0.3",
         "nodemon": "2.0.21",
         "ts-node": "10.9.1",
         "ts-paths-esm-loader": "1.4.1",
         "tsconfig-paths": "3.12.0"
     },
     "dependencies": {
+        "@fastify/cookie": "9.3.1",
         "@fastify/swagger": "8.3.1",
         "@fastify/swagger-ui": "1.4.0",
         "bcrypt": "5.1.1",
@@ -49,6 +47,7 @@
         "pino": "8.8.0",
         "pino-pretty": "9.1.1",
         "swagger-jsdoc": "6.2.8",
-        "uuid": "9.0.1"
+        "guid-typescript": "1.0.9",
+        "jsonwebtoken": "9.0.2"
     }
 }
