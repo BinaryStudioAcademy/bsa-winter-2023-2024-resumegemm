@@ -1,6 +1,7 @@
 import { Calendar, Checkbox, RadioButton, Switch, Tooltip } from '../common/components/components';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
+import { EditTemplatePage } from '../edit-temlate/edit-template';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import styles from './styles.module.scss';
@@ -39,6 +40,9 @@ const PreviewPage: React.FC = () => {
                 </li>
                 <li className={styles.item}>
                     <Templates />
+                </li>
+                <li className={styles.item}>
+                    <EditTemplatePage />
                 </li>
             </ul>
         </div>
