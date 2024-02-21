@@ -1,5 +1,4 @@
 import { type RelationMappings, Model } from 'objection';
-import { v4 as uuidv4 } from 'uuid';
 
 import { ResumeModel } from '~/bundles/resumes/resumes.js';
 import { TemplateModel } from '~/bundles/templates/template.model.js';
@@ -18,7 +17,6 @@ class RecentlyViewedModel extends Model {
     public 'templateId': string;
 
     public $beforeInsert(): void {
-        this.id = uuidv4();
         this.viewedAt = new Date().toISOString();
     }
 
