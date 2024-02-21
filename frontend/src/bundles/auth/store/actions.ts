@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';

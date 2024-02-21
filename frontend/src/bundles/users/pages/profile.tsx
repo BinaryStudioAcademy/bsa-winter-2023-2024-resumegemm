@@ -14,7 +14,6 @@ type User = {
     email?: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const handleFormSubmit = (payload: User): void => {
     // Handle form submission logic here
 };
