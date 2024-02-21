@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 import {
     type ButtonHTMLAttributes,
-    type MouseEventHandler,
     type ReactNode,
+    useCallback,
+    useState,
 } from 'react';
 
 import { IconName } from '../../enums/enums';
@@ -12,31 +13,40 @@ import styles from './styles.module.scss';
 type SortType = 'asc' | 'desc' | null;
 
 interface Properties extends ButtonHTMLAttributes<HTMLButtonElement> {
-    sortType?: SortType;
+    initialSortType?: SortType;
     children: ReactNode;
     className?: string;
-    onClick?: MouseEventHandler<HTMLButtonElement>;
+    onClick: () => void;
 }
 
 const SortButton = ({
-    sortType,
     children,
+    initialSortType = null,
     className = '',
     onClick,
 }: Properties): JSX.Element => {
+    const [sortMethod, setSortMethod] = useState<SortType>(initialSortType);
+
+    const handleSortClick = useCallback(() => {
+        setSortMethod(
+            sortMethod ? (sortMethod === 'asc' ? 'desc' : null) : 'asc',
+        );
+        onClick();
+    }, [sortMethod, setSortMethod, onClick]);
+
     return (
         <button
             className={clsx(
                 styles.button__base,
-                styles[`sort__${sortType}`],
+                styles[`sort__${sortMethod}`],
                 className,
             )}
-            onClick={onClick}
+            onClick={handleSortClick}
         >
             {children}
             <div
                 className={clsx(styles.icon_wrapper, {
-                    [styles[`icon_wrapper__${sortType}`]]: sortType,
+                    [styles[`icon_wrapper__${sortMethod}`]]: sortMethod,
                 })}
             >
                 <Icon name={IconName.ARROW_DOWN} />
