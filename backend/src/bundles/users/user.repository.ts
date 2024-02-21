@@ -29,7 +29,11 @@ class UserRepository implements IRepository {
     public async findOneByEmail(
         email: string,
     ): Promise<UserEntityFields | null> {
-        const user = await this.userModel.query().findOne({ email });
+        const user = await this.userModel
+            .query()
+            .findOne({ email })
+            .whereNull('deletedAt');
+            
         return user ?? null;
     }
 
@@ -40,12 +44,16 @@ class UserRepository implements IRepository {
             .query()
             .modify('withoutHashPasswords')
             .findById(id)
+            .whereNull('deletedAt')
             .withGraphFetched('[user_profile]')
             .castTo<UserSignUpResponseDto['user']>();
     }
 
     public async findAll(): Promise<UserEntity[]> {
-        const users = await this.userModel.query().execute();
+        const users = await this.userModel
+            .query()
+            .whereNull('deletedAt')
+            .execute();
 
         return users.map((it) => UserEntity.initialize(it));
     }
@@ -108,13 +116,14 @@ class UserRepository implements IRepository {
 
     public async delete(
         id: string
-    ): Promise<UserEntity> {
+    ): Promise<UserEntityFields> {
             const user = await this.userModel
                 .query()
                 .findOne({ id })
+                .whereNull('deletedAt')
                 .patch({ deletedAt: new Date().toISOString() })
-                .returning('*')
-                .castTo<UserEntity>();
+                .returning(['id', 'email', 'deleted_at', 'profile_id'])
+                .castTo<UserEntityFields>();
         
             return user ?? null;
     }
