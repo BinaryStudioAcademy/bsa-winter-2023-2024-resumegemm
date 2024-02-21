@@ -1,6 +1,7 @@
 export { App } from '../../../app/app.js';
 export { BaseButton } from './base-button/base-button.js';
 export { Checkbox } from './checkbox/checkbox.js';
+export { CreateResumeButton } from './create-resume-button/create-resume-button.js';
 export { Dropdown } from './dropdown/dropdown.js';
 export { ErrorFallback } from './error-fallback/error-fallback.js';
 export { Icon } from './icon/icon.js';
