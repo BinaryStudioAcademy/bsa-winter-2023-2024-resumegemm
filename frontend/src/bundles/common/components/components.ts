@@ -9,6 +9,7 @@ export { FormGroup } from './form-group/form-group.js';
 export { Icon } from './icon/icon.js';
 export { IconButton } from './icon-button/icon-button.js';
 export { Input } from './input/input.js';
+export { Footer, Header } from './layout/layout.js';
 export { Link } from './link/link.js';
 export { Modal } from './modal/modal';
 export { PasswordInput } from './password-input/password-input.js';
