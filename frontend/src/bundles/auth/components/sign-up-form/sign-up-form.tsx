@@ -31,7 +31,9 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
-            void handleSubmit(onSubmit)(event_);
+            if (!errors) {
+                void handleSubmit(onSubmit)(event_);
+            }
         },
         [handleSubmit, onSubmit],
     );
