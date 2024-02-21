@@ -21,7 +21,7 @@ class TemplateApi extends HttpApi {
         super({ path: ApiPath.TEMPLATES, baseUrl, http, storage });
     }
 
-    public async updateTemplate(
+    public async editTemplate(
         templateId: string,
         updatedData: UpdateTemplatePayload,
     ): Promise<TemplateEditResponseDto> {
