@@ -9,6 +9,7 @@ export { IconButton } from './icon-button/icon-button.js';
 export { Input } from './input/input.js';
 export { Link } from './link/link.js';
 export { Modal } from './modal/modal';
+export { PasswordInput } from './password-input/password-input.js';
 export { RadioButton } from './radio-button/radio-button.js';
 export { RouterProvider } from './router-provider/router-provider.js';
 export { Switch } from './switch/switch.js';
