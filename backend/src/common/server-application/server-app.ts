@@ -1,6 +1,8 @@
+import fastifyMultipart from '@fastify/multipart';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
+import { FileUploadValidationRule } from 'shared/src/bundles/files/enums/file-upload-validation-rule.js';
 
 import { authService } from '~/bundles/auth/auth.js';
 import { userService } from '~/bundles/users/users.js';
@@ -18,6 +20,7 @@ import {
     type ValidationSchema,
 } from '~/common/types/types.js';
 
+import { fileUpload as fileUploadPlugin } from '../plugins/file-upload/file-upload-plugin.js';
 import {
     type IServerApp,
     type IServerAppApi,
@@ -91,6 +94,19 @@ class ServerApp implements IServerApp {
                     authService,
                 });
 
+                await this.app.register(fastifyMultipart, {
+                    limits: {
+                        fileSize: FileUploadValidationRule.MAXIMUM_FILE_SIZE,
+                    },
+                    attachFieldsToBody: true,
+                    throwFileSizeLimit: false,
+                });
+    
+                await this.app.register(fileUploadPlugin, {
+                    extensions:
+                        FileUploadValidationRule.UPLOAD_FILE_CONTENT_TYPES as unknown as string[],
+                });
+                
                 await this.app.register(swagger, {
                     mode: 'static',
                     specification: {
