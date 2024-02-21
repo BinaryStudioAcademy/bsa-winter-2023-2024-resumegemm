@@ -2,6 +2,7 @@ import {
     BaseButton,
     FormGroup,
     Input,
+    PasswordInput,
 } from '~/bundles/common/components/components';
 import {
     ButtonSize,
@@ -15,7 +16,6 @@ import {
     userSignUpValidationSchema,
 } from '~/bundles/users/users';
 
-import { Password } from '../password/password';
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
 
@@ -64,15 +64,17 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <FormGroup label="Email">
-                    <Input
-                        type="text"
-                        placeholder="Enter your email"
-                        name="email"
-                    />
+                    <Input type="text" placeholder="Your email" name="email" />
                 </FormGroup>
-                <Password
+                <PasswordInput
+                    label="Your Password"
+                    placeholder="Your password"
                     error={errors.password}
-                    isConfirmPasswordShown={true}
+                />
+                <PasswordInput
+                    label="Confirm Password"
+                    placeholder="Confirm your password"
+                    error={errors.password}
                 />
                 <BaseButton
                     className={styles.registration__form__button}

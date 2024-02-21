@@ -4,6 +4,7 @@ import {
     BaseButton,
     FormGroup,
     Input,
+    PasswordInput,
 } from '~/bundles/common/components/components.js';
 import {
     ButtonSize,
@@ -17,7 +18,6 @@ import {
     userSignUpValidationSchema,
 } from '~/bundles/users/users';
 
-import { Password } from '../password/password';
 import { DEFAULT_SIGN_UP_PAYLOAD } from '../sign-up-form/constants/constants';
 import styles from './styles.module.scss';
 
@@ -50,19 +50,16 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
             </div>
             <form onSubmit={handleFormSubmit} className={styles.login__form}>
                 <FormGroup label="Email" error={errors.email}>
-                    <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        name="email"
-                    />
+                    <Input type="email" placeholder="Your email" name="email" />
                 </FormGroup>
                 <div className={styles.login__form_password}>
                     <span className={styles.forgot__link}>
                         Forgot Password?
                     </span>
-                    <Password
+                    <PasswordInput
+                        label="Your password"
                         error={errors.password}
-                        isConfirmPasswordShown={false}
+                        placeholder="Your password"
                     />
                 </div>
                 <BaseButton
