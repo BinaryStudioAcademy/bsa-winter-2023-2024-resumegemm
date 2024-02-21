@@ -3,10 +3,10 @@ import clsx from 'clsx';
 import introImage from '~/assets/img/5192055.png';
 import templateThirdImage from '~/assets/img/5297769.png';
 import templateSecondImage from '~/assets/img/6450724.png';
-import Arrow2 from '~/assets/img/Arrow 2.png';
-import GettingStarted from '~/assets/img/get_started.png';
-import templateFirstImage from '~/assets/img/Resume Template.png';
-import OnlineEditorFeatureImage from '~/assets/img/UX-UI Designer _ Product Designer Hakim gul bangash 1.png';
+import Arrow2 from '~/assets/img/arrow.png';
+import GettingStarted from '~/assets/img/get-started.png';
+import OnlineEditorFeatureImage from '~/assets/img/mock-resume-designer.png';
+import templateFirstImage from '~/assets/img/resume-template.png';
 import { ButtonSize, ButtonVariant } from '~/bundles/common/enums/enums';
 
 import { BaseButton } from '../common/components/base-button/base-button';
