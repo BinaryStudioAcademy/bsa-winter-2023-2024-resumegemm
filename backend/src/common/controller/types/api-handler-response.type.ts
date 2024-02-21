@@ -5,13 +5,14 @@ type ApiHandlerResponseStatus = ValueOf<typeof HttpCode>;
 
 type ApiHandlerResponse<T> = {
     status: ApiHandlerResponseStatus;
+    refreshToken?: string;
+    contentType?: string;
     payload:
-        | T
         | {
               message?: string;
               status?: ApiHandlerResponseStatus;
-          };
-    contentType?: string;
+          }
+        | T;
 };
 
 export { type ApiHandlerResponse };

@@ -6,12 +6,16 @@ type Properties = {
     label: string;
     checked?: boolean;
     className?: string;
+    name: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Checkbox: React.FC<Properties> = ({
     label,
     checked = false,
     className,
+    onChange,
+    name,
 }: Properties): JSX.Element => {
     return (
         <label className={clsx(styles.container, className)}>
@@ -20,6 +24,8 @@ const Checkbox: React.FC<Properties> = ({
                     type="checkbox"
                     className={styles.checkbox}
                     defaultChecked={checked}
+                    onChange={onChange}
+                    name={name}
                 />
                 <svg
                     className={styles.checkmark}
