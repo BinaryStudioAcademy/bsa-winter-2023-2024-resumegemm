@@ -13,7 +13,6 @@ type SortType = 'asc' | 'desc' | null;
 
 interface Properties extends ButtonHTMLAttributes<HTMLButtonElement> {
     sortType?: SortType;
-    iconFontSize?: string;
     children: ReactNode;
     className?: string;
     onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -23,10 +22,8 @@ const SortButton = ({
     sortType,
     children,
     className = '',
-    iconFontSize = '14px',
     onClick,
 }: Properties): JSX.Element => {
-    
     return (
         <button
             className={clsx(
@@ -41,7 +38,6 @@ const SortButton = ({
                 className={clsx(styles.icon_wrapper, {
                     [styles[`icon_wrapper__${sortType}`]]: sortType,
                 })}
-                style={{ fontSize: iconFontSize }}
             >
                 <Icon name={IconName.ARROW_DOWN} />
                 <Icon name={IconName.ARROW_UP} />
