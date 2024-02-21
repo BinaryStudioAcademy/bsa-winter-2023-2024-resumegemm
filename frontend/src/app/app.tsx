@@ -19,6 +19,9 @@ const App: React.FC = () => {
         users: users.users,
         dataStatus: users.dataStatus,
     }));
+    const { user } = useAppSelector(({ auth }) => ({
+        user: auth.user
+    }));
 
     const isRoot = pathname === AppRoute.ROOT;
 
@@ -35,12 +38,16 @@ const App: React.FC = () => {
                 <li>
                     <Link to={AppRoute.ROOT}>Root</Link>
                 </li>
-                <li>
-                    <Link to={AppRoute.SIGN_IN}>Sign in</Link>
-                </li>
-                <li>
-                    <Link to={AppRoute.SIGN_UP}>Sign up</Link>
-                </li>
+                {!user && (
+                    <>
+                        <li>
+                            <Link to={AppRoute.SIGN_IN}>Sign in</Link>
+                        </li>
+                        <li>
+                            <Link to={AppRoute.SIGN_UP}>Sign up</Link>
+                        </li>
+                    </>
+                )}
             </ul>
             <p>Current path: {pathname}</p>
 
