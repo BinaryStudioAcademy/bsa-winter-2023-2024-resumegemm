@@ -3,6 +3,8 @@ import {
     type IRecentlyViewedRepository,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedResumesQueryResult,
+    type RecentlyViewedResumesWithCount,
 } from './types/types';
 
 class RecentlyViewedRepository implements IRecentlyViewedRepository {
@@ -59,6 +61,47 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .deleteById(id);
 
         return deletedItem ? true : false;
+    }
+
+    public async findRecentlyViewedResumesWithCount(): Promise<
+        RecentlyViewedResumesWithCount[]
+    > {
+        const currentDate = new Date();
+        const startDate = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate(),
+            0,
+            0,
+            0,
+        );
+        const endDate = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate(),
+            23,
+            59,
+            59,
+        );
+
+        const result = (await this.recentlyViewedModel
+            .query()
+            .select('user_id', 'resume_id')
+            .count('resume_id as count')
+            .groupBy('user_id', 'resume_id')
+            .whereNotNull('resume_id')
+            .whereBetween('viewed_at', [
+                startDate,
+                endDate,
+            ])) as RecentlyViewedResumesQueryResult[];
+
+        return result.map((item) => {
+            return {
+                resumeId: item.resumeId,
+                userId: item.userId,
+                count: +item.count,
+            };
+        });
     }
 }
 
