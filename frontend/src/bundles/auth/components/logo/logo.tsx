@@ -3,7 +3,7 @@ import logo from '~/assets/img/logo.svg';
 import styles from './styles.module.scss';
 
 const Logo: React.FC = () => {
-  
+
     return (
         <div className={styles.logo}>
             <img src={logo} alt="logo" />

@@ -1,11 +1,17 @@
 import { useCallback } from 'react';
 
-import { BaseButton, FormGroup, Input } from '~/bundles/common/components/components.js';
+import {
+    BaseButton,
+    FormGroup,
+    Input,
+    PasswordInput,
+} from '~/bundles/common/components/components.js';
+
 import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
-    ButtonWidth
+    ButtonWidth,
 } from '~/bundles/common/enums/enums';
 import { useAppForm } from '~/bundles/common/hooks/hooks';
 import {
@@ -13,7 +19,6 @@ import {
     userSignUpValidationSchema,
 } from '~/bundles/users/users';
 
-import { Password } from '../password/password';
 import { DEFAULT_SIGN_UP_PAYLOAD } from '../sign-up-form/constants/constants';
 import styles from './styles.module.scss';
 
@@ -40,30 +45,22 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
             <div className={styles.login__header}>
                 <h1 className={styles.login__title}>Log In</h1>
                 <p className={styles.login__message}>
-                    No account? Go to  
-                    <span className={styles.login__link}>
-                        {' '}
-                        Sign Up
-                    </span>
+                    No account? Go to
+                    <span className={styles.login__link}> Sign Up</span>
                 </p>
             </div>
-            <form  
-                onSubmit={handleFormSubmit}
-                className={styles.login__form}>
-                <FormGroup label='Email' error={errors.email}>
-                    <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        name="email"
-                    />
+            <form onSubmit={handleFormSubmit} className={styles.login__form}>
+                <FormGroup label="Email" error={errors.email}>
+                    <Input type="email" placeholder="Your email" name="email" />
                 </FormGroup>
                 <div className={styles.login__form_password}>
                     <span className={styles.forgot__link}>
                         Forgot Password?
                     </span>
-                    <Password 
-                        error={errors.password} 
-                        isConfirmPasswordShown={false}
+                    <PasswordInput
+                        label="Your password"
+                        error={errors.password}
+                        placeholder="Your password"
                     />
                 </div>
                 <BaseButton

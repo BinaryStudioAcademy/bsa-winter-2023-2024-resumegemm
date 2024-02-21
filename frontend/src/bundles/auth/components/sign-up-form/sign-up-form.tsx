@@ -1,9 +1,14 @@
-import { BaseButton, FormGroup, Input } from '~/bundles/common/components/components';
+import {
+    BaseButton,
+    FormGroup,
+    Input,
+    PasswordInput,
+} from '~/bundles/common/components/components';
 import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
-    ButtonWidth
+    ButtonWidth,
 } from '~/bundles/common/enums/enums';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 import {
@@ -20,7 +25,6 @@ type Properties = {
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
-
     const { errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
         defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
         validationSchema: userSignUpValidationSchema,
@@ -28,10 +32,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
-      
-            if (!errors) {
-                void handleSubmit(onSubmit)(event_);
-            }
+            void handleSubmit(onSubmit)(event_);
         },
         [handleSubmit, onSubmit],
     );
@@ -42,31 +43,40 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 <h1 className={styles.registration__title}>Sign Up</h1>
                 <p className={styles.registration__message}>
                     Already have an account? Go to
-                    <span className={styles.registration__link}>
-                        {' '}
-                        Log in
-                    </span>
+                    <span className={styles.registration__link}> Log in</span>
                 </p>
             </div>
             <form
                 className={styles.registration__form}
                 onSubmit={handleFormSubmit}
-            >   
-                <FormGroup label='Name'>
+            >
+                <FormGroup label="First Name">
                     <Input
                         type="text"
-                        placeholder="Enter your name"
-                        name="name"
+                        placeholder="Your first name"
+                        name="first name"
                     />
                 </FormGroup>
-                <FormGroup label='Email'>
+                <FormGroup label="Last Name">
                     <Input
                         type="text"
-                        placeholder="Enter your email"
-                        name="email"
+                        placeholder="Your last name"
+                        name="last name"
                     />
                 </FormGroup>
-                <Password error={errors.password} isConfirmPasswordShown={true} />
+                <FormGroup label="Email">
+                    <Input type="text" placeholder="Your email" name="email" />
+                </FormGroup>
+                <PasswordInput
+                    label="Your Password"
+                    placeholder="Your password"
+                    error={errors.password}
+                />
+                <PasswordInput
+                    label="Confirm Password"
+                    placeholder="Confirm your password"
+                    error={errors.password}
+                />
                 <BaseButton
                     className={styles.registration__form__button}
                     size={ButtonSize.MEDIUM}
@@ -76,7 +86,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 >
                     Sign up
                 </BaseButton>
-            </form> 
+            </form>
         </>
     );
 };

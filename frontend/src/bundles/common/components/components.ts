@@ -12,6 +12,7 @@ export { Input } from './input/input.js';
 export { Footer, Header } from './layout/layout.js';
 export { Link } from './link/link.js';
 export { Modal } from './modal/modal';
+export { PasswordInput } from './password-input/password-input.js';
 export { RadioButton } from './radio-button/radio-button.js';
 export { RouterProvider } from './router-provider/router-provider.js';
 export { Spinner } from './spinner/spinner';
