@@ -15,7 +15,11 @@
     cursor: pointer;
 }
 
-.icon_wrapper.icon_wrapper svg {
+.icon_wrapper{
+    color: var(--color-text-gray);
+}
+
+.icon_wrapper svg {
     font-size: inherit;
 }
 
