@@ -12,7 +12,10 @@ type Constructor = {
 class AuthError extends ApplicationError {
     public status: ValueOf<typeof HttpCode>;
 
-    public constructor({ message = ExceptionMessage.AUTH_FAILED, status = HttpCode.UNAUTHORIZED }: Constructor = {}) {
+    public constructor({
+        message = ExceptionMessage.AUTH_FAILED,
+        status = HttpCode.UNAUTHORIZED,
+    }: Constructor = {}) {
         super({
             message,
         });

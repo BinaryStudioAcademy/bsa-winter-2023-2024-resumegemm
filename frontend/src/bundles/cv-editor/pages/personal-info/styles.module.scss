@@ -1,0 +1,10 @@
+.personal_info > label {
+    margin-bottom: 20px;
+}
+
+.personal_info__last_block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}

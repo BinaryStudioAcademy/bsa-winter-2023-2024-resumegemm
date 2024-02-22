@@ -1,7 +1,10 @@
+import { AppRoute } from '~/bundles/common/enums/enums.js';
+
 import { Auth } from '../auth/pages/auth';
 import {
     Calendar,
     Checkbox,
+    NavTabs,
     RadioButton,
     Switch,
     Tooltip,
@@ -12,12 +15,22 @@ import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import styles from './styles.module.scss';
 
+const navbarItems = [
+    { label: 'Home', path: AppRoute.ROOT },
+    { label: 'Signin', path: AppRoute.SIGN_IN },
+    { label: 'Signup', path: AppRoute.SIGN_UP },
+    { label: 'Preview', path: AppRoute.PREVIEW },
+];
+
 const PreviewPage: React.FC = () => {
     return (
         <div className={styles.preview}>
             <ul className={styles.list}>
                 <li className={styles.item}>
                     <div className={styles.example}>Component preview</div>
+                </li>
+                <li className={styles.item}>
+                    <NavTabs items={navbarItems}></NavTabs>
                 </li>
                 <li className={styles.item}>
                     <Checkbox name="preview-page-checkbox" label="Checkbox" />

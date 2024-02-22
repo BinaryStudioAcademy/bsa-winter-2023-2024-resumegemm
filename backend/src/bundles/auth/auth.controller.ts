@@ -179,16 +179,19 @@ class AuthController extends Controller {
                 },
             };
         }
-
     }
 
     private async login(
         options: ApiHandlerOptions<{
             body: UserSignInRequestDto;
         }>,
-    ): Promise<ApiHandlerResponse<Omit<UserSignInResponseDto, 'refreshToken'>>> {
+    ): Promise<
+        ApiHandlerResponse<Omit<UserSignInResponseDto, 'refreshToken'>>
+    > {
         try {
-            const { refreshToken, ...userData } = await this.authService.login(options.body);
+            const { refreshToken, ...userData } = await this.authService.login(
+                options.body,
+            );
             return {
                 refreshToken,
                 status: HttpCode.OK,
@@ -233,13 +236,15 @@ class AuthController extends Controller {
 
     private regenerateToken({
         cookies,
-        unsignCookie
+        unsignCookie,
     }: ApiHandlerOptions<{
         cookies: FastifyRequest['cookies'];
         unsignCookie: FastifyRequest['unsignCookie'];
     }>): ApiHandlerResponse<{ accessToken: string }> {
         try {
-            const unsignedCookie = unsignCookie(cookies[CookieName.REFRESH_TOKEN] as NonNullable<string>);
+            const unsignedCookie = unsignCookie(
+                cookies[CookieName.REFRESH_TOKEN] as NonNullable<string>,
+            );
             const oldRefreshToken = unsignedCookie.value as string;
 
             const { id } = this.authService.verifyToken<Record<'id', string>>(

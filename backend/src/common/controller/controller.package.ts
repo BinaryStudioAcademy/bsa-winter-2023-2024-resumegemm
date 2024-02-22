@@ -48,16 +48,12 @@ class Controller implements IController {
             requestHandlerOptions,
         );
         if (refreshToken) {
-            void reply.setCookie(
-                CookieName.REFRESH_TOKEN,
-                refreshToken,
-                {
-                    path: '/',
-                    httpOnly: true,
-                    maxAge: config.ENV.COOKIE.EXPIRES_IN,
-                    signed: true,
-                },
-            );
+            void reply.setCookie(CookieName.REFRESH_TOKEN, refreshToken, {
+                path: '/',
+                httpOnly: true,
+                maxAge: config.ENV.COOKIE.EXPIRES_IN,
+                signed: true,
+            });
         }
         return reply.status(status).send(payload);
     }
