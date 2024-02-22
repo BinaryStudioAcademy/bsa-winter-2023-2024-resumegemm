@@ -1,7 +1,5 @@
 export { AuthApiPath } from './bundles/auth/auth.js';
-export { 
-    type CreatePaymentIntentRequestDto, 
-    type CreatePaymentIntentResponseDto,
+export {
     type CreateSubscriptionRequestDto,
     type CreateSubscriptionResponseDto,
     type GetPriceResponseDto,

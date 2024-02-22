@@ -1,6 +1,5 @@
 export { PaymentApiPath } from './enums/enums.js';
-export { type CreatePaymentIntentRequestDto, 
-    type CreatePaymentIntentResponseDto,
+export {
     type CreateSubscriptionRequestDto,
     type CreateSubscriptionResponseDto,
     type GetPriceResponseDto,

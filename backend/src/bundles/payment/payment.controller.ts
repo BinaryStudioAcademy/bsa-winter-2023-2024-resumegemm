@@ -9,7 +9,7 @@ import { type ILogger } from '~/common/logger/logger.js';
 
 import { PaymentApiPath } from './enums/enums.js';
 import { type PaymentService } from './payment.service.js';
-import { type CreatePaymentIntentRequestDto, type CreateSubscriptionRequestDto } from './types/types.js';
+import { type CreateSubscriptionRequestDto } from './types/types.js';
 
 class PaymentController extends Controller {
     private paymentService: PaymentService;
@@ -18,15 +18,6 @@ class PaymentController extends Controller {
         super(logger, ApiPath.PAYMENT);
 
         this.paymentService = paymentService;
-
-        this.addRoute({
-            path: PaymentApiPath.PAYMENT_INTENT,
-            method: 'POST',
-            handler: (options) =>
-                this.createPaymentIntent(options as ApiHandlerOptions<{
-                    body: CreatePaymentIntentRequestDto;
-                }>),
-        });
 
         this.addRoute({
             path: PaymentApiPath.CONFIG,
@@ -50,44 +41,6 @@ class PaymentController extends Controller {
             handler: () =>
                 this.getPrices(),
         });
-    }
-
-    /**
-     * @swagger
-     * /payment/create-payment-intent:
-     *    post:
-     *      description: Create payment intent
-     *      requestBody:
-     *        description: Create payment intent data
-     *        required: true
-     *        content:
-     *          application/json:
-     *            schema:
-     *              type: object
-     *              properties:
-     *                amount:
-     *                  type: number
-     *                currency:
-     *                  type: string
-     *      responses:
-     *        201:
-     *          description: Successful operation
-     *          content:
-     *            application/json:
-     *              schema:
-     *                type: object
-     *                properties:
-     *                  clientSecret:
-     *                    type: string
-     */
-    private async createPaymentIntent(
-        options: ApiHandlerOptions<{
-            body: CreatePaymentIntentRequestDto;
-    }>): Promise<ApiHandlerResponse> {
-        return {
-            status: HttpCode.CREATED,
-            payload: await this.paymentService.createPaymentIntent(options.body),
-        };
     }
 
         /**

@@ -3,8 +3,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
 import { 
-    type CreatePaymentIntentRequestDto, 
-    type CreatePaymentIntentResponseDto, 
     type CreateSubscriptionRequestDto, 
     type CreateSubscriptionResponseDto,
     type GetPricesRequestDto, 
@@ -21,16 +19,6 @@ const getPublishableKey = createAsyncThunk<
     const { paymentApi } = extra;
 
     return paymentApi.getPublishableKey();
-});
-
-const createPaymentIntent = createAsyncThunk<
-    CreatePaymentIntentResponseDto,
-    CreatePaymentIntentRequestDto,
-    AsyncThunkConfig
->(`${sliceName}/create-payment-intent`, (registerPayload, { extra }) => {
-    const { paymentApi } = extra;
-
-    return paymentApi.createPaymentIntent(registerPayload);
 });
 
 const createSubscription = createAsyncThunk<
@@ -53,8 +41,7 @@ const getPrices = createAsyncThunk<
     return paymentApi.getPrices();
 });
 
-export { 
-    createPaymentIntent, 
+export {
     createSubscription, 
     getPrices, 
     getPublishableKey 
