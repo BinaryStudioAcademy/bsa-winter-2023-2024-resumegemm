@@ -20,7 +20,7 @@ type AuthService = {
     encrypt(data: string, salt: string): Promise<string>;
     compare(encryptionData: EncryptionDataPayload): Promise<boolean>;
 
-    verifyToken<T>(token: string, isRefreshToken?: boolean): T;
+    verifyToken<T>(token: string, tokenSecret: string): T;
 };
 
 export { type AuthService };
