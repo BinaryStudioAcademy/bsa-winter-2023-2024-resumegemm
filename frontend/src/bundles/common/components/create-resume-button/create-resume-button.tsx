@@ -29,20 +29,20 @@ type CreateResumeButtonProperties = {
     color?: ValueOf<typeof ButtonColor>;
 };
 
-const CreateResumeButton: React.FC<CreateResumeButtonProperties> = ({
+const CreateResumeFreeButton: React.FC<CreateResumeButtonProperties> = ({
     onClick,
     children,
-    className,
+    className = '',
     color = ButtonColor.DARK_BLUE,
-    width = ButtonWidth.DEFAULT
+    width = ButtonWidth.DEFAULT,
 }) => (
     <button
         className={clsx(
-            styles.create_resume__button, 
+            styles.create_resume__button,
             className,
             widths[width],
-            colors[color]
-            )}
+            colors[color],
+        )}
         type="button"
         onClick={onClick}
     >
@@ -50,4 +50,4 @@ const CreateResumeButton: React.FC<CreateResumeButtonProperties> = ({
     </button>
 );
 
-export { CreateResumeButton };
+export { CreateResumeFreeButton };

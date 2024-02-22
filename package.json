@@ -37,12 +37,12 @@
         "eslint-plugin-simple-import-sort": "8.0.0",
         "eslint-plugin-sonarjs": "0.18.0",
         "eslint-plugin-unicorn": "46.0.0",
-        "lint-staged": "13.1.2",
+        "lint-staged": "15.2.0",
         "prettier": "2.8.4",
         "simple-git-hooks": "2.8.1",
-        "stylelint": "15.11.0",
-        "stylelint-config-standard": "30.0.1",
-        "stylelint-order": "6.0.3",
+        "stylelint": "16.2.1",
+        "stylelint-config-standard": "36.0.0",
+        "stylelint-order": "6.0.4",
         "tsc-alias": "1.8.2",
         "typescript": "5.3.3"
     },
@@ -51,6 +51,6 @@
         "commit-msg": "npx commitlint --edit $1"
     },
     "dependencies": {
-        "@floating-ui/core": "1.6.0"
+        "clsx": "2.1.0"
     }
 }
