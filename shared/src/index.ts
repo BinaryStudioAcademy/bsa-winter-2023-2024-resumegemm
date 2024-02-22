@@ -6,8 +6,9 @@ export {
     type GetPricesRequestDto,
     type GetPricesResponseDto,
     type GetPublishableKeyRequestDto, 
-    type GetPublishableKeyResponseDto, 
-    PaymentApiPath 
+    type GetPublishableKeyResponseDto,
+    PaymentApiPath,
+    paymentCreateSubscriptionValidationSchema
 } from './bundles/payment/payment.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {

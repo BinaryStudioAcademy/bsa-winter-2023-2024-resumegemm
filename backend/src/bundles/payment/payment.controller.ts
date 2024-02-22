@@ -10,6 +10,7 @@ import { type ILogger } from '~/common/logger/logger.js';
 import { PaymentApiPath } from './enums/enums.js';
 import { type PaymentService } from './payment.service.js';
 import { type CreateSubscriptionRequestDto } from './types/types.js';
+import { paymentCreateSubscriptionValidationSchema } from './validation-schemas/validation-schemas.js';
 
 /** 
  *  @swagger 
@@ -59,6 +60,9 @@ class PaymentController extends Controller {
         this.addRoute({
             path: PaymentApiPath.CREATE_SUBSCRIPTION,
             method: 'POST',
+            validation: {
+                body: paymentCreateSubscriptionValidationSchema,
+            },
             handler: (options) =>
                 this.createSubscription(options as ApiHandlerOptions<{
                     body: CreateSubscriptionRequestDto;

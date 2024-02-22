@@ -11,6 +11,7 @@ import { SubscriptionCard } from '../components/subscription-card';
 import { coinsInBanknote } from '../constants/payment.constant';
 import { createSubscription, getPrices } from '../store/actions';
 import { type CreateSubscriptionResponseDto } from '../types/types';
+import { paymentCreateSubscriptionValidationSchema } from '../validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
 
 const SubscriptionPaymentPage: React.FC = () => {
@@ -74,15 +75,23 @@ const SubscriptionPaymentPage: React.FC = () => {
                 if (!paymentMethod.paymentMethod) {
                     return;
                 }
-            
-                const { payload } = await dispatch(createSubscription({
+
+                const request = {
                     name, 
                     email,
                     priceId,
                     paymentMethod: paymentMethod.paymentMethod.id
-                })) as { payload: CreateSubscriptionResponseDto };
+                };
 
-                if (!payload.clientSecret) {
+                const { error } = paymentCreateSubscriptionValidationSchema.validate(request);
+                
+                if(error) {
+                    return;
+                }
+                
+                const { payload } = await dispatch(createSubscription(request)) as { payload: CreateSubscriptionResponseDto | null };
+
+                if (!payload?.clientSecret) {
                     return;
                 }
 
