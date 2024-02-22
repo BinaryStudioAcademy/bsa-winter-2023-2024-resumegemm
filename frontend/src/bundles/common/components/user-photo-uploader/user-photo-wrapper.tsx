@@ -3,7 +3,7 @@ import React from 'react';
 import { useAppDispatch } from '~/bundles/common/hooks/hooks.js';
 import { updateUserAvatar } from '~/bundles/profile/store/actions';
 
-import { useCallback,useState } from '../../hooks/hooks';
+import { useCallback, useState } from '../../hooks/hooks';
 import { UserPhotoMockup } from './user-photo-mockup';
 import { PhotoUploaderModal } from './user-photo-modal';
 import { UserPhotoPreview } from './user-photo-preview';
@@ -12,13 +12,17 @@ const UserPhotoWrapper: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPhoto, setCurrentPhoto] = useState('');
 
+    // need future redux integration
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_currentImage, setCurrentImage] = useState<{
         src: string;
         blob: Blob;
     } | null>(null);
 
     const dispatch = useAppDispatch();
-    
+
+    // need future redux integration
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const _onHandleImage = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const reader = new FileReader();
@@ -27,7 +31,7 @@ const UserPhotoWrapper: React.FC = () => {
             reader.addEventListener('load', () => {
                 setCurrentImage({
                     src: reader.result as string,
-                    blob: newImage
+                    blob: newImage,
                 });
             });
             reader.readAsDataURL(newImage);
@@ -40,23 +44,24 @@ const UserPhotoWrapper: React.FC = () => {
 
     return (
         <section>
-            {!currentPhoto && <UserPhotoMockup onClickUpload={setIsModalOpen}/>}
-            {isModalOpen && 
-                <PhotoUploaderModal 
+            {!currentPhoto && (
+                <UserPhotoMockup onClickUpload={setIsModalOpen} />
+            )}
+            {isModalOpen && (
+                <PhotoUploaderModal
                     onToggleModal={setIsModalOpen}
                     onHandleCurrentPhoto={setCurrentPhoto}
                 />
-            }
-            {currentPhoto &&
-                <UserPhotoPreview 
+            )}
+            {currentPhoto && (
+                <UserPhotoPreview
                     currentPhoto={currentPhoto}
-                    onToggleModal={setIsModalOpen} 
+                    onToggleModal={setIsModalOpen}
                     onHandleCurrentPhoto={setCurrentPhoto}
                 />
-            }
+            )}
         </section>
     );
 };
 
 export { UserPhotoWrapper };
-

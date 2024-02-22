@@ -1,0 +1,25 @@
+$layout-breakpoint-small: 768px;
+
+.profile {
+    width: 100%;
+    min-height: 100vh;
+    padding: 60px 32px 80px;
+    background-color: #ebeff1;
+}
+
+@media only screen and (max-device-width: $layout-breakpoint-small) {
+    .profile {
+        padding: 40px 0 48px;
+    }
+}
+
+.profile__container {
+    max-width: 736px;
+    margin: 0 auto;
+}
+
+@media only screen and (max-device-width: $layout-breakpoint-small) {
+    .profile__container {
+        width: 100%;
+    }
+}
