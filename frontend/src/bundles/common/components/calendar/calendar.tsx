@@ -1,33 +1,25 @@
 import clsx from 'clsx';
-import { type ChangeEvent, useCallback } from 'react';
+import { type ChangeEvent,useCallback } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { Calendar as ReactCalendar } from 'react-calendar';
 
 import { CalendarTypes } from '../../enums/calendar/calendar-types.enum';
 import { useClickOutside } from '../../hooks/use-click-outside/use-click-outside.hook';
-import {
-    type CalendarDate,
-    type CalendarMonth,
-    type ValueOf,
-} from '../../types/types';
+import { type CalendarDate, type CalendarMonth, type ValueOf, } from '../../types/types';
 import { Switch } from '../components';
-import {
-    CalendarMonths,
-    monthRegex,
-    yearRegex,
-} from './constants/calendar.constants';
+import { CalendarMonths, monthRegex,yearRegex, } from './constants/calendar.constants';
 import styles from './styles.module.scss';
 
 type Properties = {
     onChange?: (date: CalendarDate) => void;
     type?: ValueOf<typeof CalendarTypes>;
-    className?: string;
+    className?: string
 };
 
 const Calendar = ({
     type = CalendarTypes.regular,
     className = '',
-    onChange,
+    onChange
 }: Properties): JSX.Element => {
     const [selected, setSelected] = useState<number | null>(null);
 
@@ -42,49 +34,40 @@ const Calendar = ({
 
     const reference = useRef<HTMLDivElement>(null);
 
-    const handleTextChange = useCallback(
-        (event: ChangeEvent<HTMLInputElement>): void => {
-            setText(event.target.value);
+    const handleTextChange = useCallback((event: ChangeEvent<HTMLInputElement>): void => {
+        setText(event.target.value);
 
-            const year = event.target.value.match(yearRegex);
-            if (year) {
-                setYear(Number(year[0]));
+        const year = event.target.value.match(yearRegex);
+        if (year) {
+            setYear(Number(year[0]));
+        }
+
+        const monthMatch = event.target.value.match(monthRegex);
+
+        if (!monthMatch) {
+            setMonth(null);
+            setSelected(0);
+            return;
+        }
+
+        for (const month of CalendarMonths) {
+            if (
+                monthMatch[0]
+                    .toLowerCase()
+                    .includes(month.name.toLowerCase()) ||
+                month.name
+                    .toLowerCase()
+                    .startsWith(monthMatch[0].toLowerCase())
+            ) {
+                setMonth(month);
+                setSelected(month.num);
             }
+        }
+    }, []);
 
-            const monthMatch = event.target.value.match(monthRegex);
-
-            if (!monthMatch) {
-                setMonth(null);
-                setSelected(0);
-                return;
-            }
-
-            for (const month of CalendarMonths) {
-                if (
-                    monthMatch[0]
-                        .toLowerCase()
-                        .includes(month.name.toLowerCase()) ||
-                    month.name
-                        .toLowerCase()
-                        .startsWith(monthMatch[0].toLowerCase())
-                ) {
-                    setMonth(month);
-                    setSelected(month.num);
-                }
-            }
-        },
-        [],
-    );
-
-    const handleInputFocus = useCallback(
-        (focused: boolean) =>
-            clsx(
-                styles.calendar__date_input,
-                styles.calendar__date_input,
-                focused && styles.focused,
-            ),
-        [],
-    );
+    const handleInputFocus = useCallback((focused: boolean) =>
+        clsx(styles.calendar__date_input, styles.calendar__date_input, focused && styles.focused)
+    , []);
 
     const setCurrentlyFocused = useCallback((): void => setFocused(true), []);
     const setUnfocused = useCallback((): void => setFocused(false), []);
@@ -93,33 +76,20 @@ const Calendar = ({
     const decreaseYear = useCallback((): void => setYear(year - 1), [year]);
 
     const selectMonth = useCallback((value: Date): void => {
-        const inputMonth = CalendarMonths.find(
-            (month) => month.num === value.getMonth(),
-        );
+        const inputMonth = CalendarMonths.find((month) => month.num === value.getMonth());
         if (inputMonth) {
             setMonth(inputMonth);
             setSelected(inputMonth.num);
         }
     }, []);
 
-    const handleMonthSelect = useCallback(
-        ({ date }: { date: Date }) =>
-            clsx(
-                styles.date_picker__option,
-                date.getMonth() === month?.num && styles.date_picker__selected,
-            ),
-        [month],
-    );
+    const handleMonthSelect = useCallback(({ date }: { date: Date }) =>
+        clsx(styles.date_picker__option, date.getMonth() === month?.num && styles.date_picker__selected)
+    , [month]);
 
-    const handleYearSelected = useCallback(
-        (selected: number | null) =>
-            clsx(
-                styles.date_picker__option,
-                styles.date_picker__option_year,
-                selected === null && styles.date_picker__selected,
-            ),
-        [],
-    );
+    const handleYearSelected = useCallback((selected: number | null) =>
+        clsx(styles.date_picker__option, styles.date_picker__option_year, selected === null && styles.date_picker__selected)
+    , []);
 
     const selectYear = useCallback((): void => {
         setMonth(null);
@@ -138,11 +108,12 @@ const Calendar = ({
     useClickOutside(reference, setUnfocused);
 
     useEffect(() => {
+
         if (onChange) {
             onChange({
                 year: year,
                 month: month,
-                present: present,
+                present: present
             });
         }
 
@@ -150,10 +121,7 @@ const Calendar = ({
     }, [month, year, present, setMonthYearAsText, onChange]);
 
     return (
-        <div
-            className={clsx(styles.calendar__container, className)}
-            ref={reference}
-        >
+        <div className={clsx(styles.calendar__container, className)} ref={reference}>
             <input
                 placeholder="MM/YYYY"
                 value={text}
@@ -165,12 +133,8 @@ const Calendar = ({
             {focused && (
                 <div className={styles.calendar__date_picker}>
                     <div className={styles.date_picker__header}>
-                        <button
-                            className={
-                                styles.date_picker__header_arrow_container_reversed
-                            }
-                            onClick={decreaseYear}
-                        ></button>
+                        <button className={styles.date_picker__header_arrow_container_reversed} onClick={decreaseYear}>
+                        </button>
 
                         <button
                             className={handleYearSelected(selected)}
@@ -180,32 +144,21 @@ const Calendar = ({
                             {year}
                         </button>
 
-                        <button
-                            className={
-                                styles.date_picker__header_arrow_container
-                            }
-                            onClick={increaseYear}
-                        ></button>
+                        <button className={styles.date_picker__header_arrow_container} onClick={increaseYear}>
+                        </button>
                     </div>
 
-                    <ReactCalendar
-                        defaultView="year"
-                        minDetail="year"
-                        maxDetail="year"
+                    <ReactCalendar defaultView="year" minDetail="year" maxDetail="year"
                         tileClassName={handleMonthSelect}
                         onClickMonth={selectMonth}
                         showNavigation={false}
                     />
 
-                    {type === CalendarTypes.withPresent && (
+                    {type === CalendarTypes.withPresent &&
                         <div className={styles.date_picker__present}>
-                            <Switch
-                                onChange={setPresent}
-                                label="Present"
-                                checked={present}
-                            />
+                            <Switch onChange={setPresent} label="Present" checked={present}/>
                         </div>
-                    )}
+                    }
                 </div>
             )}
         </div>
