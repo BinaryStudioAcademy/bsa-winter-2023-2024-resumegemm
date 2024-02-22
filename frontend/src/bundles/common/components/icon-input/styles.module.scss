@@ -1,0 +1,27 @@
+.icon_input {
+    width: 198px;
+    padding: 12px 8px 12px 30px;
+    color: #606468;
+    background-color: rgb(255 255 255);
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.icon_input:focus {
+    border: 1px solid rgb(160 160 160);
+}
+
+.input__wrapper {
+    position: relative;
+}
+
+.input__wrapper svg {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    display: block;
+    color: #858585;
+    transform: translate(-50%, -50%);
+}
