@@ -42,6 +42,37 @@ class Config implements IConfig {
                     env: 'PORT',
                     default: null,
                 },
+                ORIGIN_URL: {
+                    doc: 'Http origin for development',
+                    format: String,
+                    env: 'CLIENT_DEVELOPMENT_SERVER_URL',
+                    default: null,
+                },
+            },
+            JWT: {
+                ACCESS_TOKEN_SECRET: {
+                    doc: 'Secret key for access token generation',
+                    format: String,
+                    env: 'ACCESS_TOKEN_SECRET',
+                    default: null,
+                },
+                REFRESH_TOKEN_SECRET: {
+                    doc: 'Secret key for refresh token generation',
+                    format: String,
+                    env: 'REFRESH_TOKEN_SECRET',
+                    default: null,
+                },
+                ACCESS_TOKEN_EXPIRES_IN: '24h',
+                REFRESH_TOKEN_EXPIRES_IN: '30d',
+            },
+            COOKIE: {
+                COOKIE_SECRET: {
+                    doc: 'Secret key for cookie',
+                    format: String,
+                    env: 'COOKIE_SECRET',
+                    default: null,
+                },
+                EXPIRES_IN: 60 * 60 * 24 * 30,
             },
             DB: {
                 CONNECTION_STRING: {
@@ -81,8 +112,8 @@ class Config implements IConfig {
                     format: String,
                     env: 'STRIPE_PUBLISHABLE_KEY',
                     default: null,
-                }
-            }
+                },
+            },
         });
     }
 }

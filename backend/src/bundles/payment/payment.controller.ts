@@ -9,11 +9,16 @@ import { type ILogger } from '~/common/logger/logger.js';
 
 import { PaymentApiPath } from './enums/enums.js';
 import { type PaymentService } from './payment.service.js';
-import { type CreateSubscriptionRequestDto } from './types/types.js';
+import {
+    type CreateSubscriptionRequestDto,
+    type CreateSubscriptionResponseDto,
+    type GetPricesResponseDto,
+    type GetPublishableKeyResponseDto,
+} from './types/types.js';
 import { paymentCreateSubscriptionValidationSchema } from './validation-schemas/validation-schemas.js';
 
-/** 
- *  @swagger 
+/**
+ *  @swagger
  *  components:
  *    schemas:
  *      GetPriceResponseDto:
@@ -53,8 +58,7 @@ class PaymentController extends Controller {
         this.addRoute({
             path: PaymentApiPath.CONFIG,
             method: 'GET',
-            handler: () =>
-                this.getPublishableKey(),
+            handler: () => this.getPublishableKey(),
         });
 
         this.addRoute({
@@ -64,16 +68,17 @@ class PaymentController extends Controller {
                 body: paymentCreateSubscriptionValidationSchema,
             },
             handler: (options) =>
-                this.createSubscription(options as ApiHandlerOptions<{
-                    body: CreateSubscriptionRequestDto;
-                }>),
+                this.createSubscription(
+                    options as ApiHandlerOptions<{
+                        body: CreateSubscriptionRequestDto;
+                    }>,
+                ),
         });
 
         this.addRoute({
             path: PaymentApiPath.PRICES,
             method: 'GET',
-            handler: () =>
-                this.getPrices(),
+            handler: () => this.getPrices(),
         });
     }
 
@@ -115,7 +120,8 @@ class PaymentController extends Controller {
     private async createSubscription(
         options: ApiHandlerOptions<{
             body: CreateSubscriptionRequestDto;
-    }>): Promise<ApiHandlerResponse> {
+        }>,
+    ): Promise<ApiHandlerResponse<CreateSubscriptionResponseDto>> {
         return {
             status: HttpCode.CREATED,
             payload: await this.paymentService.createSubscription(options.body),
@@ -126,7 +132,7 @@ class PaymentController extends Controller {
      * @swagger
      * /payment/config:
      *    get:
-     *      description: Returns publishable key 
+     *      description: Returns publishable key
      *      responses:
      *        200:
      *          description: Successful operation
@@ -138,7 +144,7 @@ class PaymentController extends Controller {
      *                  publishableKey:
      *                    type: string
      */
-    private getPublishableKey(): ApiHandlerResponse {
+    private getPublishableKey(): ApiHandlerResponse<GetPublishableKeyResponseDto> {
         return {
             status: HttpCode.OK,
             payload: this.paymentService.getPublishableKey(),
@@ -149,7 +155,7 @@ class PaymentController extends Controller {
      * @swagger
      * /payment:
      *    get:
-     *      description: Returns prices 
+     *      description: Returns prices
      *      responses:
      *        200:
      *          description: Successful operation
@@ -163,7 +169,9 @@ class PaymentController extends Controller {
      *                    items:
      *                      $ref: '#/components/schemas/GetPriceResponseDto'
      */
-    private async getPrices(): Promise<ApiHandlerResponse> {
+    private async getPrices(): Promise<
+        ApiHandlerResponse<GetPricesResponseDto>
+    > {
         return {
             status: HttpCode.OK,
             payload: await this.paymentService.getPrices(),

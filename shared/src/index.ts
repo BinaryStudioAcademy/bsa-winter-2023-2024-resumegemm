@@ -1,33 +1,55 @@
-export { AuthApiPath } from './bundles/auth/auth.js';
+export {
+    type AuthService,
+    type AuthTokenResponse,
+    type EncryptionDataPayload,
+    AuthApiPath,
+} from './bundles/auth/auth.js';
 export {
     type CreateSubscriptionRequestDto,
     type CreateSubscriptionResponseDto,
     type GetPriceResponseDto,
     type GetPricesRequestDto,
     type GetPricesResponseDto,
-    type GetPublishableKeyRequestDto, 
+    type GetPublishableKeyRequestDto,
     type GetPublishableKeyResponseDto,
     PaymentApiPath,
-    paymentCreateSubscriptionValidationSchema
+    paymentCreateSubscriptionValidationSchema,
 } from './bundles/payment/payment.js';
+export { type Profile } from './bundles/profile/profile.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
+    type TemplateCreateItemRequestDto,
+    type TemplateGetAllItemResponseDto,
+    type TemplateGetAllResponseDto,
+    type TemplateUpdateItemRequestDto,
+} from './bundles/templates/templates.js';
+export { TemplatesApiPath } from './bundles/templates/templates.js';
+export {
+    type User,
+    type UserAuthResponse,
+    type UserEntityFields,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserSignInRequestDto,
+    type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserWithProfileRelation,
     UsersApiPath,
+    userSignInValidationSchema,
     userSignUpValidationSchema,
 } from './bundles/users/users.js';
 export {
     ApiPath,
     AppEnvironment,
     ContentType,
+    ExceptionMessage,
     ServerErrorType,
 } from './enums/enums.js';
 export { type IConfig } from './framework/config/config.js';
 export {
     ApplicationError,
+    AuthException,
     HttpError,
     ValidationError,
 } from './framework/exceptions/exceptions.js';

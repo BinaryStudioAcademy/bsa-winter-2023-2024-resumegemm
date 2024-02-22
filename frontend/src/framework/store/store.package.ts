@@ -14,6 +14,8 @@ import { reducer as usersReducer } from '~/bundles/users/store/';
 import { userApi } from '~/bundles/users/users.js';
 import { type IConfig } from '~/framework/config/config.js';
 
+import { storage } from '../storage/storage';
+
 type RootReducer = {
     auth: ReturnType<typeof authReducer>;
     users: ReturnType<typeof usersReducer>;
@@ -24,6 +26,7 @@ type ExtraArguments = {
     authApi: typeof authApi;
     userApi: typeof userApi;
     paymentApi: typeof paymentApi;
+    storageApi: typeof storage;
 };
 
 class Store {
@@ -43,7 +46,7 @@ class Store {
             reducer: {
                 auth: authReducer,
                 users: usersReducer,
-                payment: paymentReducer
+                payment: paymentReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
@@ -59,7 +62,8 @@ class Store {
         return {
             authApi,
             userApi,
-            paymentApi
+            paymentApi,
+            storageApi: storage,
         };
     }
 }

@@ -1,16 +1,36 @@
-import { type UserSignUpRequestDto } from '~/bundles/users/users.js';
-import { userSignUpValidationSchema } from '~/bundles/users/users.js';
+import { type FastifyRequest } from 'fastify';
+import {
+    type HttpError,
+    type UserAuthResponse,
+    type UserSignInRequestDto,
+    type UserSignInResponseDto,
+    type UserSignUpResponseDto,
+    type UserWithProfileRelation,
+    AuthApiPath,
+    ExceptionMessage,
+} from 'shared/build/index.js';
+
+import {
+    generateRefreshToken,
+    generateToken,
+} from '~/bundles/auth/helpers/helpers.js';
+import {
+    type UserSignUpRequestDto,
+    userSignInValidationSchema,
+    userSignUpValidationSchema,
+} from '~/bundles/users/users.js';
+import { config } from '~/common/config/config.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
     Controller,
 } from '~/common/controller/controller.js';
+import { CookieName } from '~/common/controller/enums/enums.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
-import { AuthApiPath } from './enums/enums.js';
 
 class AuthController extends Controller {
     private authService: AuthService;
@@ -33,6 +53,41 @@ class AuthController extends Controller {
                     }>,
                 ),
         });
+        this.addRoute({
+            path: AuthApiPath.SIGN_IN,
+            method: 'POST',
+            validation: {
+                body: userSignInValidationSchema,
+            },
+            handler: (options) =>
+                this.login(
+                    options as ApiHandlerOptions<{
+                        body: UserSignInRequestDto;
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.USER,
+            method: 'GET',
+            handler: (options) =>
+                this.getUser(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponse['user'];
+                        cookies: FastifyRequest['cookies'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.TOKEN,
+            method: 'GET',
+            handler: (options) =>
+                this.regenerateToken(
+                    options as ApiHandlerOptions<{
+                        cookies: FastifyRequest['cookies'];
+                        unsignCookie: FastifyRequest['unsignCookie'];
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -51,6 +106,10 @@ class AuthController extends Controller {
      *                email:
      *                  type: string
      *                  format: email
+     *                firstName:
+     *                  type string
+     *                lastName:
+     *                  type string
      *                password:
      *                  type: string
      *      responses:
@@ -64,16 +123,152 @@ class AuthController extends Controller {
      *                  message:
      *                    type: object
      *                    $ref: '#/components/schemas/User'
+     *        400:
+     *           description: Email taken
+     *  /auth/sign-in:
+     *      post:
+     *       description: Login user
+     *       requestBody:
+     *          description: User auth data
+     *          required: true
+     *       content:
+     *        application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                email:
+     *                  type: string
+     *                  format: email
+     *                password:
+     *                  type: string
+     *       responses:
+     *          200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  message:
+     *                    type: object
+     *                    $ref: '#/components/schemas/User'
+     *        400:
+     *           description: User not found
+     *        401:
+     *          description: Invalid email
      */
     private async signUp(
         options: ApiHandlerOptions<{
             body: UserSignUpRequestDto;
         }>,
-    ): Promise<ApiHandlerResponse> {
-        return {
-            status: HttpCode.CREATED,
-            payload: await this.authService.signUp(options.body),
-        };
+    ): Promise<ApiHandlerResponse<UserSignUpResponseDto>> {
+        try {
+            const payload = await this.authService.signUp(options.body);
+
+            return {
+                status: HttpCode.CREATED,
+                payload,
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async login(
+        options: ApiHandlerOptions<{
+            body: UserSignInRequestDto;
+        }>,
+    ): Promise<
+        ApiHandlerResponse<Omit<UserSignInResponseDto, 'refreshToken'>>
+    > {
+        try {
+            const { refreshToken, ...userData } = await this.authService.login(
+                options.body,
+            );
+            return {
+                refreshToken,
+                status: HttpCode.OK,
+                payload: userData,
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async getUser(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponse['user'];
+        }>,
+    ): Promise<ApiHandlerResponse<UserWithProfileRelation>> {
+        try {
+            const { id } = options.user;
+            const payload = await this.authService.getUser(id);
+            return {
+                status: HttpCode.OK,
+                payload,
+            };
+        } catch (error: unknown) {
+            const message = (error as Error).message;
+            const status = HttpCode.INTERNAL_SERVER_ERROR;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private regenerateToken({
+        cookies,
+        unsignCookie,
+    }: ApiHandlerOptions<{
+        cookies: FastifyRequest['cookies'];
+        unsignCookie: FastifyRequest['unsignCookie'];
+    }>): ApiHandlerResponse<{ accessToken: string }> {
+        try {
+            const unsignedCookie = unsignCookie(
+                cookies[CookieName.REFRESH_TOKEN] as NonNullable<string>,
+            );
+            const oldRefreshToken = unsignedCookie.value as string;
+
+            const { id } = this.authService.verifyToken<Record<'id', string>>(
+                oldRefreshToken,
+                config.ENV.JWT.REFRESH_TOKEN_SECRET,
+            );
+
+            const accessToken = generateToken({ id });
+            const refreshToken = generateRefreshToken({ id });
+            return {
+                refreshToken,
+                status: HttpCode.OK,
+                payload: { accessToken },
+            };
+        } catch (error: unknown) {
+            const { status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message: ExceptionMessage.INVALID_REFRESH_TOKEN,
+                    status,
+                },
+            };
+        }
     }
 }
 
