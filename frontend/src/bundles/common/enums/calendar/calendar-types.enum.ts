@@ -1,6 +1,6 @@
 enum CalendarTypes {
     regular,
-    withPresent,
+    withPresent
 }
 
 export { CalendarTypes };
