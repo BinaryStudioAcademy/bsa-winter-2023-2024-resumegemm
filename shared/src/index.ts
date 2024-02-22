@@ -9,6 +9,7 @@ export {
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
     type ResumeService,
+    ResumeApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';
 export {

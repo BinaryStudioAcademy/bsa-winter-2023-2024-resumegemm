@@ -1,4 +1,4 @@
-import { HttpCode } from 'shared/build/index.js';
+import { ApiPath, HttpCode } from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
@@ -7,6 +7,7 @@ import {
 import { Controller } from '~/common/controller/controller.package.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
+import { ResumeApiPath } from './enums/enums.js';
 import {
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
@@ -17,11 +18,11 @@ class ResumeController extends Controller {
     private resumeService: TResumeService;
 
     public constructor(logger: ILogger, resumeService: TResumeService) {
-        super(logger, '/resume-score');
+        super(logger, ApiPath.RESUMES);
         this.resumeService = resumeService;
 
         this.addRoute({
-            path: '/score',
+            path: ResumeApiPath.SCORE,
             method: 'POST',
             handler: (options) =>
                 this.giveResumeScore(
