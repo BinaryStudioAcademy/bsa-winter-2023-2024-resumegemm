@@ -19,4 +19,4 @@ const useClickOutside = <T extends HTMLElement>(
   }, [reference, callback]);
 };
 
- export { useClickOutside };
+export { useClickOutside };

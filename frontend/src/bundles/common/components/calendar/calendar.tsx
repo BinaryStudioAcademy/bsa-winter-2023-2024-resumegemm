@@ -43,7 +43,7 @@ const Calendar = ({
         }
 
         const monthMatch = event.target.value.match(monthRegex);
-
+        
         if (!monthMatch) {
             setMonth(null);
             setSelected(0);
@@ -135,7 +135,7 @@ const Calendar = ({
                     <div className={styles.date_picker__header}>
                         <button className={styles.date_picker__header_arrow_container_reversed} onClick={decreaseYear}>
                         </button>
-                        
+
                         <button
                                 className={handleYearSelected(selected)}
                                 onClick={selectYear}
