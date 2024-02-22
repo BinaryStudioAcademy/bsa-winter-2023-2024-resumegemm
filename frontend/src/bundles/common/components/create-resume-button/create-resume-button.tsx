@@ -32,7 +32,7 @@ type CreateResumeButtonProperties = {
 const CreateResumeFreeButton: React.FC<CreateResumeButtonProperties> = ({
     onClick,
     children,
-    className = '',
+    className = "",
     color = ButtonColor.DARK_BLUE,
     width = ButtonWidth.DEFAULT,
 }) => (
