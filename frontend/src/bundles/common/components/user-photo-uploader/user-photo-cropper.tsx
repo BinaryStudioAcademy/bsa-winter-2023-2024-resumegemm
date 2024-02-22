@@ -14,14 +14,13 @@ import { BaseButton, IconButton } from '../components';
 import styles from './styles.module.scss';
 
 interface UploadCropperProperties {
-    image: string | ArrayBuffer;
+    image: string;
     onImageUpload : React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>
     onComplete: React.Dispatch<React.SetStateAction<boolean>>;
     onHandleCurrentPhoto: React.Dispatch<React.SetStateAction<string>>;
-    onHandleImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, onImageUpload , onComplete, onHandleCurrentPhoto, onHandleImage }) => {
+const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, onImageUpload , onComplete, onHandleCurrentPhoto }) => {
     const [croppedImage, setCroppedImage] = useState<string | null>(null);
     const cropperReference = useRef<ReactCropperElement>(null);
 
@@ -66,7 +65,7 @@ const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, onImageUpl
         <div className={styles.uploader_cropper__wrapper}>
                 <Cropper
                     ref={cropperReference}
-                    src={image as string}
+                    src={image }
                     className={styles.uploader_cropper}
                     aspectRatio={1}
                     guides
@@ -74,12 +73,12 @@ const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, onImageUpl
                     zoomTo={0} 
                     rotateTo={0} 
                 />
-                <div className={styles.uploader_cropper__button_thumb}>
+                <div className={styles.uploader_cropper__buttonThumb}>
                     <IconButton
                         onClick={handleRotate}
                         className={styles.uploader_cropper__button__rotate}
                     >
-                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__rotate}` }}>
+                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__icon__rotate}` }}>
                             <FaArrowRotateRight/>
                         </IconContext.Provider>
                     </IconButton>
@@ -87,17 +86,17 @@ const UserPhotoCropper: React.FC<UploadCropperProperties> = ({ image, onImageUpl
                         onClick={handleZoomIn}
                         className={styles.uploader_cropper__button__zoomIn}
                     >
-                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__zoomIn}` }}>
+                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__icon__zoomIn}` }}>
                             <GrZoomIn/>
                         </IconContext.Provider>
                     </IconButton>
                     <IconButton onClick={handleZoomOut} className={styles.uploader_cropper__button__zoomOut}>
-                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__button_icon__zoomOut}` }}>
+                        <IconContext.Provider value={{ className: `${styles.uploader_cropper__icon__zoomOut}` }}>
                             <GrZoomOut/>
                         </IconContext.Provider>
                     </IconButton>
                 </div>
-                <div className={styles.uploader_cropper__button_thumb}>
+                <div className={styles.uploader_cropper__buttonThumb}>
                     <BaseButton prependedIcon={<FaFileUpload/>} size={ButtonSize.SMALL} variant={ButtonVariant.PRIMARY} onClick={handleNewPhotoClick} className={styles.uploader_cropper__button__anotherPhoto} >Upload another photo</BaseButton>
                     <BaseButton prependedIcon={<BsSave/>} size={ButtonSize.SMALL} variant={ButtonVariant.PRIMARY} onClick={handleSave} className={styles.uploader_cropper__button__save}>Save image</BaseButton>
                 </div>

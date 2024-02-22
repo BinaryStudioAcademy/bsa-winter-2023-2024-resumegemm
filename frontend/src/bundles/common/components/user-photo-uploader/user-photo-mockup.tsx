@@ -15,7 +15,7 @@ const UserPhotoMockup: React.FC<UserPhotoProperties> = ({ onClickUpload }) => {
     return (
         <button onClick={ handleClickUpload } className={styles.uploader_mockup}>
             <UserPhotoPlaceholder/>
-            <p className={styles.uploader_mockup_text}>Upload photo</p>
+            <p className={styles.uploader_mockup__text}>Upload photo</p>
         </button>
             );
 };

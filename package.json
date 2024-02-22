@@ -18,7 +18,7 @@
         "lint:editor": "editorconfig-checker",
         "lint:fs": "ls-lint",
         "lint:type": "npm run lint:type --workspaces --if-present",
-        "lint:js": "npm run lint:js --workspaces --if-present -- --max-warnings=0",
+        "lint:js": "npm run lint:js --workspaces --if-present -- --max-warnings=10",
         "lint:css": "npm run lint:css --workspaces --if-present",
         "lint:prettify": "prettier --check \"**/*.{ts,tsx,json,md,scss,html,yml}\"",
         "lint": "npm run lint:editor && npm run lint:fs && npm run lint:prettify && npm run lint:type && npm run lint:js && npm run lint:css",

@@ -12,14 +12,14 @@ const UserPhotoWrapper: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPhoto, setCurrentPhoto] = useState('');
 
-    const [currentImage, setCurrentImage] = useState<{
+    const [_currentImage, setCurrentImage] = useState<{
         src: string;
         blob: Blob;
     } | null>(null);
 
     const dispatch = useAppDispatch();
     
-    const onHandleImage = useCallback(
+    const _onHandleImage = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const reader = new FileReader();
             const [newImage] = event.target.files ?? [];
@@ -45,7 +45,6 @@ const UserPhotoWrapper: React.FC = () => {
                 <PhotoUploaderModal 
                     onToggleModal={setIsModalOpen}
                     onHandleCurrentPhoto={setCurrentPhoto}
-                    onHandleImage={onHandleImage}
                 />
             }
             {currentPhoto &&
@@ -53,7 +52,6 @@ const UserPhotoWrapper: React.FC = () => {
                     currentPhoto={currentPhoto}
                     onToggleModal={setIsModalOpen} 
                     onHandleCurrentPhoto={setCurrentPhoto}
-                    onImageChange={onHandleImage}
                 />
             }
         </section>

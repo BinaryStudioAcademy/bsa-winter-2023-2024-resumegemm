@@ -30,9 +30,9 @@ const UserPhotoUploader: React.FC<UploadProperties> = ({ onImageUpload }) => {
     const handleFileChange  = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            const allowedFormats = ['image/jpeg', 'image/png', 'application/pdf']; 
+            const allowedFormats = ['image/jpeg', 'image/png', 'image/svg+xml']; 
             if (!allowedFormats.includes(file.type)) {
-                Notify.failure('Invalid file format. Please upload a JPEG, PNG, or PDF file.');
+                Notify.failure('Invalid file format. Please upload a JPEG, PNG, or SVG file.');
                 return;
             }
             const maxSizeInBytes = 10 * 1024 * 1024; 
@@ -59,11 +59,11 @@ const UserPhotoUploader: React.FC<UploadProperties> = ({ onImageUpload }) => {
     }, [handleFile]);
   
     return (
-        <div className={styles.uploader_insert_block}
+        <div className={styles.uploader_insert__block}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
         >
-            <input className={styles.uploader_insert_input}
+            <input className={styles.uploader_insert__input}
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
@@ -71,7 +71,7 @@ const UserPhotoUploader: React.FC<UploadProperties> = ({ onImageUpload }) => {
             />
             <label htmlFor="fileInput">
                 <div className={styles.uploader_insert__area}>
-                    <IconContext.Provider value={{ className: `${styles.uploader_insert__area_icon}` }}>
+                    <IconContext.Provider value={{ className: `${styles.uploader_insert__icon}` }}>
                         <GrGallery/>
                     </IconContext.Provider>
                     Click or drag & drop to upload from your computer

@@ -15,13 +15,13 @@
     border-radius: 4px;
 }
 
-.uploader_mockup_icon {
+.uploader_mockup__icon {
     width: 40px;
     height: 40px;
     color: var(--color-text-gray);
 }
 
-.uploader_mockup_text {
+.uploader_mockup__text {
     display: flex;
     align-items: center;
     padding: 0 20px;
@@ -33,15 +33,15 @@
     background-color: var(--color-background-light-blue);
 }
 
-.uploader_mockup:hover .uploader_mockup_icon {
+.uploader_mockup:hover .uploader_mockup__icon {
     color: var(--color-hover-blue);
 }
 
-.uploader_mockup:hover .uploader_mockup_text {
+.uploader_mockup:hover .uploader_mockup__text {
     color: var(--color-text-blue);
 }
 
-.uploader_modal_backdrop {
+.uploader_modal__backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -73,12 +73,12 @@
     color: var(--color-white);
 }
 
-.uploader_insert_block {
+.uploader_insert__block {
     height: 100%;
     text-align: center;
 }
 
-.uploader_insert_input {
+.uploader_insert__input {
     display: none;
 }
 
@@ -95,7 +95,7 @@
     cursor: pointer;
 }
 
-.uploader_insert__area_icon {
+.uploader_insert__icon {
     width: 100px;
     height: 100px;
     margin-bottom: 40px;
@@ -116,15 +116,15 @@
     height: 80%;
 }
 
-.uploader_cropper__button_thumb {
+.uploader_cropper__buttonThumb {
     display: flex;
     justify-content: space-around;
     margin-top: 10px;
     padding: 10px 0;
 }
 
-.uploader_cropper__button_thumb .uploader_cropper__button__save, 
-.uploader_cropper__button_thumb .uploader_cropper__button__anotherPhoto {
+.uploader_cropper__buttonThumb .uploader_cropper__button__save, 
+.uploader_cropper__buttonThumb .uploader_cropper__button__anotherPhoto {
     display: flex;
     align-items: center;
     width: 220px;
@@ -142,16 +142,16 @@
     color: var(--color-white);
 }
 
-.uploader_cropper__button_icon__rotate, 
-.uploader_cropper__button_icon__zoomIn, 
-.uploader_cropper__button_icon__zoomOut
+.uploader_cropper__icon__rotate, 
+.uploader_cropper__icon__zoomIn, 
+.uploader_cropper__icon__zoomOut
  {
     width: 25px;
     height: 25px;
 }
 
-.uploader_cropper__button_icon__save, 
-.uploader_cropper__button_icon__anotherPhoto {
+.uploader_cropper__icon__save, 
+.uploader_cropper__icon__anotherPhoto {
     margin-right: 10px;
 }
 
@@ -165,7 +165,7 @@
     object-fit: scale-down;
 }
 
-.uploader_preview_photo {
+.uploader_preview__photo {
     border-radius: 50%;
 }
 
