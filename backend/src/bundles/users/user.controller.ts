@@ -1,8 +1,12 @@
 import { type FastifyRequest } from 'fastify';
-import { type UserEntityFields,HttpError } from 'shared/build/index.js';
+import { type UserEntityFields, HttpError } from 'shared/build/index.js';
 
 import { type UserService } from '~/bundles/users/user.service.js';
-import { type ApiHandlerOptions, type ApiHandlerResponse,Controller } from '~/common/controller/controller.js';
+import {
+    type ApiHandlerOptions,
+    type ApiHandlerResponse,
+    Controller,
+} from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
@@ -43,11 +47,11 @@ class UserController extends Controller {
             path: '/:id',
             method: 'DELETE',
             handler: (options) =>
-                        this.delete(
-                            options as ApiHandlerOptions<{
-                                params: FastifyRequest['params'];
-                            }>,
-                        ),
+                this.delete(
+                    options as ApiHandlerOptions<{
+                        params: FastifyRequest['params'];
+                    }>,
+                ),
         });
     }
 
@@ -117,31 +121,33 @@ class UserController extends Controller {
      *               example:
      *                 message: User not found.
      */
-    private async delete ({
+    private async delete({
         params,
     }: ApiHandlerOptions<{
         params: FastifyRequest['params'];
     }>): Promise<ApiHandlerResponse<UserEntityFields>> {
-        try{
+        try {
             const payload = await this.userService.delete(
-                (params as Record<'id', string>).id
+                (params as Record<'id', string>).id,
             );
             return {
                 status: HttpCode.OK,
-                payload
+                payload,
             };
-        } catch(error: unknown) {
-            return error instanceof HttpError ? {
-                    status: error.status,
-                    payload: {
-                        message: error.message
-                    }
-                } : {
-                    status: HttpCode.INTERNAL_SERVER_ERROR,
-                    payload: {
-                        message: 'Internal server error.'
-                    }
-                };
+        } catch (error: unknown) {
+            return error instanceof HttpError
+                ? {
+                      status: error.status,
+                      payload: {
+                          message: error.message,
+                      },
+                  }
+                : {
+                      status: HttpCode.INTERNAL_SERVER_ERROR,
+                      payload: {
+                          message: 'Internal server error.',
+                      },
+                  };
         }
     }
 }

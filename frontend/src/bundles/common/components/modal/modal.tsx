@@ -47,7 +47,6 @@ const Modal: FC<ModalProperties> = ({
                 onKeyDown={handleModalCloseOnEscapeKey}
             >
                 <BaseButton className={styles.content_button} onClick={onClose}>
-                    {/* TODO: replace the default button with basic button once PR merged */}
                     <img src={crossIcon} alt="cross" />
                 </BaseButton>
                 <div className={styles.content_title}>{title}</div>
