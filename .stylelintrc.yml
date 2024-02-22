@@ -10,6 +10,7 @@ rules:
     declaration-no-important: true
     max-nesting-depth: 0
     no-descending-specificity: true
+    media-query-no-invalid: null
     unit-disallowed-list:
         - em
         - rem

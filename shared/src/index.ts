@@ -11,6 +11,13 @@ export {
     SkillLevel,
 } from './bundles/resumes/resumes.js';
 export {
+    type TemplateCreateItemRequestDto,
+    type TemplateGetAllItemResponseDto,
+    type TemplateGetAllResponseDto,
+    type TemplateUpdateItemRequestDto,
+} from './bundles/templates/templates.js';
+export { TemplatesApiPath } from './bundles/templates/templates.js';
+export {
     type User,
     type UserAuthResponse,
     type UserEntityFields,
@@ -35,6 +42,7 @@ export {
 export { type IConfig } from './framework/config/config.js';
 export {
     ApplicationError,
+    AuthException,
     HttpError,
     ValidationError,
 } from './framework/exceptions/exceptions.js';
