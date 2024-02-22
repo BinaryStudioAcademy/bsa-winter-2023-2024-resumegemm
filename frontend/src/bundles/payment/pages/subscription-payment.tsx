@@ -8,6 +8,7 @@ import { ButtonType, ButtonVariant } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 
 import { SubscriptionCard } from '../components/subscription-card';
+import { coinsInBanknote } from '../constants/payment.constant';
 import { createSubscription, getPrices } from '../store/actions';
 import { type CreateSubscriptionResponseDto } from '../types/types';
 import styles from './styles.module.scss';
@@ -116,7 +117,7 @@ const SubscriptionPaymentPage: React.FC = () => {
                     image={price.product.images}
                     onClick={handlePriceChange(price.id)}
                     key={price.id} 
-                    price={price.unit_amount} 
+                    price={price.unit_amount && price.unit_amount/coinsInBanknote} 
                     currency={price.currency}
                     duration={price.recurring?.interval}
                     title={price.product.name}

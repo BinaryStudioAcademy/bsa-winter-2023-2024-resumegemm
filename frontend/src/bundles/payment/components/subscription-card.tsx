@@ -27,12 +27,15 @@ const SubscriptionCard: React.FC<Properties> = ({
     image
 }) => {
     return <div className={clsx(styles.subscription_card__container, selected && styles.subscription_card__container_selected)}>
-        {image[0] && <img src={image[0]} alt='price' />}
-        
-        <h2 className={styles.subscription_card__title}>{title}</h2>
+        <div className={styles.subscription_card__title_container}>
+            {image[0] && <img className={styles.subscription_card__title_image} src={image[0]} alt='price' />}
+            <h2 className={styles.subscription_card__title}>{title}</h2>
+        </div>
 
-        <h3 className={styles.subscription_card__info}>{price} {currency}</h3>
-        {duration && <h3 className={styles.subscription_card__info}>{duration}</h3>}
+        <div className={styles.subscription_card__info_container}>
+            {price && <h3 className={styles.subscription_card__info}>{price.toFixed(2)} {currency}</h3>}
+            {duration && <h3 className={styles.subscription_card__info}>{duration}</h3>}
+        </div>
 
         {description && <p className={styles.subscription_card__description}>{description}</p>}
 
