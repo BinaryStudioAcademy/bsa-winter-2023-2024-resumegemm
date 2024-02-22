@@ -90,7 +90,7 @@ const Calendar = ({
     const handleYearSelected = useCallback((selected: number | null) => 
         clsx(styles.date_picker__option, styles.date_picker__option_year, selected === null && styles.date_picker__selected)
     , []);
-    
+
     const selectYear = useCallback((): void => {
         setMonth(null);
         setSelected(null);
@@ -135,7 +135,7 @@ const Calendar = ({
                     <div className={styles.date_picker__header}>
                         <button className={styles.date_picker__header_arrow_container_reversed} onClick={decreaseYear}>
                         </button>
-
+                        
                         <button
                                 className={handleYearSelected(selected)}
                                 onClick={selectYear}
