@@ -1,5 +1,6 @@
 import { authController } from '~/bundles/auth/auth.js';
 import { pdfController } from '~/bundles/pdf/pdf.js';
+import { templateController } from '~/bundles/templates/templates.js';
 import { userController } from '~/bundles/users/users.js';
 import { config } from '~/common/config/config.js';
 import { database } from '~/common/database/database.js';
@@ -14,6 +15,7 @@ const apiV1 = new ServerAppApi(
     ...pdfController.routes,
     ...authController.routes,
     ...userController.routes,
+    ...templateController.routes,
 );
 const serverApp = new ServerApp({
     config,
