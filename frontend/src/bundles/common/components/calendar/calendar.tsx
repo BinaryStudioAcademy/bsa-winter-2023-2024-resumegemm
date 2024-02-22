@@ -135,7 +135,7 @@ const Calendar = ({
                     <div className={styles.date_picker__header}>
                         <button className={styles.date_picker__header_arrow_container_reversed} onClick={decreaseYear}>
                         </button>
-
+                        
                         <button
                                 className={handleYearSelected(selected)}
                                 onClick={selectYear}
