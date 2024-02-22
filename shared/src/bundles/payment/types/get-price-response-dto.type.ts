@@ -1,7 +1,10 @@
 type GetPriceResponseDto = {
     id: string,
     currency: string,
-    interval?: string,
+    recurring: {
+        interval?: string,
+        interval_count?: number
+    }
     unit_amount: number | null,
     product: {
         images: string[],

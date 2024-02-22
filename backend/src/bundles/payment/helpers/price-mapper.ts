@@ -6,7 +6,10 @@ const priceMapper = (price: Stripe.Price & { product: Stripe.Product }): GetPric
     return {
         id: price.id,
         unit_amount: price.unit_amount,
-        interval: price.recurring?.interval,
+        recurring: {
+            interval: price.recurring?.interval,
+            interval_count: price.recurring?.interval_count
+        },
         currency: price.currency,
         product: {
             images: price.product.images,

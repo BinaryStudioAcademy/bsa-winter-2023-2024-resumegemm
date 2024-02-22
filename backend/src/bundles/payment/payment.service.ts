@@ -27,7 +27,7 @@ class PaymentService {
         const { data } = (await this.stripe.prices.list({
             expand: ['data.product']
         }));
-
+        
         return {
             prices: data.map((price) => priceMapper(price as Stripe.Price & { product: Stripe.Product }))
         };
@@ -60,7 +60,7 @@ class PaymentService {
         });
 
         const { latest_invoice, id } = subscription;
-
+        
         if (!latest_invoice || typeof latest_invoice === 'string') {
             return {
                 clientSecret: null,

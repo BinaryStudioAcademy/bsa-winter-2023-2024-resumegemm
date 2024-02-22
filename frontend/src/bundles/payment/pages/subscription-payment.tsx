@@ -128,7 +128,7 @@ const SubscriptionPaymentPage: React.FC = () => {
                     key={price.id} 
                     price={price.unit_amount && price.unit_amount/coinsInBanknote} 
                     currency={price.currency}
-                    duration={price.interval}
+                    duration={`${price.recurring.interval_count} ${price.recurring.interval}`}
                     title={price.product.name}
                     description={price.product.description}
                     selected={priceId === price.id}
