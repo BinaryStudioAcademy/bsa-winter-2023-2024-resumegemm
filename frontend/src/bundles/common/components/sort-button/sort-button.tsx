@@ -3,6 +3,7 @@ import {
     type ButtonHTMLAttributes,
     type ReactNode,
     useCallback,
+    useEffect,
     useState,
 } from 'react';
 
@@ -12,11 +13,12 @@ import styles from './styles.module.scss';
 
 type SortType = 'asc' | 'desc' | null;
 
-interface Properties extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Properties
+    extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
     initialSortType?: SortType;
     children: ReactNode;
     className?: string;
-    onClick: () => void;
+    onClick: (sortMethod: SortType) => void;
 }
 
 const SortButton = ({
@@ -28,11 +30,16 @@ const SortButton = ({
     const [sortMethod, setSortMethod] = useState<SortType>(initialSortType);
 
     const handleSortClick = useCallback(() => {
-        setSortMethod(
-            sortMethod ? (sortMethod === 'asc' ? 'desc' : null) : 'asc',
-        );
-        onClick();
-    }, [sortMethod, setSortMethod, onClick]);
+        if (sortMethod === 'desc') {
+            setSortMethod(null);
+        } else {
+            setSortMethod((sortMethod === 'asc' ? 'desc' : null) ?? 'asc');
+        }
+    }, [sortMethod, setSortMethod]);
+
+    useEffect(() => {
+        onClick(sortMethod);
+    }, [sortMethod, onClick]);
 
     return (
         <button
