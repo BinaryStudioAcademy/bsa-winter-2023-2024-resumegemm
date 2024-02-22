@@ -2,10 +2,10 @@ import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
 
+import { priceMapper } from './helpers/price-mapper.js';
 import { 
   type CreateSubscriptionRequestDto,
   type CreateSubscriptionResponseDto,
-  type GetPriceResponseDto,
   type GetPricesResponseDto, 
   type GetPublishableKeyResponseDto 
 } from './types/types';
@@ -29,7 +29,7 @@ class PaymentService {
         }));
 
         return {
-            prices: data as GetPriceResponseDto[]
+            prices: data.map((price) => priceMapper(price as Stripe.Price & { product: Stripe.Product }))
         };
     }
 

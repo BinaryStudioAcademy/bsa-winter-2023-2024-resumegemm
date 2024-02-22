@@ -11,6 +11,36 @@ import { PaymentApiPath } from './enums/enums.js';
 import { type PaymentService } from './payment.service.js';
 import { type CreateSubscriptionRequestDto } from './types/types.js';
 
+/** 
+ *  @swagger 
+ *  components:
+ *    schemas:
+ *      GetPriceResponseDto:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: string
+ *          currency:
+ *            type: string
+ *          interval:
+ *            type: string
+ *            nullable: true
+ *          unit_amount:
+ *            type: number
+ *            nullable: true
+ *          product:
+ *            type: object
+ *            properties:
+ *              images:
+ *                type: array
+ *                items:
+ *                  type: string
+ *              name:
+ *                type: string
+ *              description:
+ *                type: string
+ *                nullable: true
+ */
 class PaymentController extends Controller {
     private paymentService: PaymentService;
 
@@ -43,7 +73,7 @@ class PaymentController extends Controller {
         });
     }
 
-        /**
+    /**
      * @swagger
      * /payment/create-subscription:
      *    post:
@@ -57,7 +87,7 @@ class PaymentController extends Controller {
      *              type: object
      *              properties:
      *                name:
-     *                  type: number
+     *                  type: string
      *                email:
      *                  type: string
      *                  format: email
@@ -111,9 +141,9 @@ class PaymentController extends Controller {
         };
     }
 
-        /**
+    /**
      * @swagger
-     * /payment/config:
+     * /payment:
      *    get:
      *      description: Returns prices 
      *      responses:
@@ -124,8 +154,10 @@ class PaymentController extends Controller {
      *              schema:
      *                type: object
      *                properties:
-     *                  publishableKey:
-     *                    type: string
+     *                  prices:
+     *                    type: array
+     *                    items:
+     *                      $ref: '#/components/schemas/GetPriceResponseDto'
      */
     private async getPrices(): Promise<ApiHandlerResponse> {
         return {
