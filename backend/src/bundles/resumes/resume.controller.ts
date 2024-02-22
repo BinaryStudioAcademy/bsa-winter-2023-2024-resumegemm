@@ -5,21 +5,18 @@ import {
 import { Controller } from '~/common/controller/controller.package.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
-import { type ResumeScoreService } from './resume-score.service.js';
+import { type ResumeService } from './resume.service.js';
 import {
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
-} from './types/types';
+} from './types/types.js';
 
-class ResumeScoreController extends Controller {
-    private resumeScoreService: ResumeScoreService;
+class ResumeController extends Controller {
+    private resumeService: ResumeService;
 
-    public constructor(
-        logger: ILogger,
-        resumeScoreService: ResumeScoreService,
-    ) {
+    public constructor(logger: ILogger, resumeService: ResumeService) {
         super(logger, '/resume-score');
-        this.resumeScoreService = resumeScoreService;
+        this.resumeService = resumeService;
 
         this.addRoute({
             path: '/score',
@@ -39,7 +36,7 @@ class ResumeScoreController extends Controller {
         }>,
     ): Promise<ApiHandlerResponse<ResumeAiScoreResponseDto>> {
         const { file } = options.body;
-        const score = await this.resumeScoreService.giveResumeScore({ file });
+        const score = await this.resumeService.giveResumeScore({ file });
         return {
             status: 200,
             payload: score,
@@ -47,4 +44,4 @@ class ResumeScoreController extends Controller {
     }
 }
 
-export { ResumeScoreController };
+export { ResumeController };

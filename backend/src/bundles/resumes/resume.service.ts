@@ -5,7 +5,7 @@ import {
     type ResumeAiScoreResponseDto,
 } from './types/types';
 
-class ResumeScoreService {
+class ResumeService {
     private openai: OpenAI;
 
     public constructor(openai: OpenAI) {
@@ -19,8 +19,8 @@ class ResumeScoreService {
             messages: [
                 {
                     'role': 'system',
-                    'content': `You are a resume reviewer. Give this resume a score from 1 to 100, 
-                    providing a brief overview of your thoughts. Decrease a score by a lot if resume doenst contain essential 
+                    'content': `You are a resume reviewer. Give this resume a score from 1 to 100,
+                    providing a brief overview of your thoughts. Decrease a score by a lot if resume doenst contain essential
                     information, such as Experience, Education, Technical Skills, and Personal Information.
                     Return a json containing the score and overview. The resume is attached.`,
                 },
@@ -40,4 +40,4 @@ class ResumeScoreService {
     }
 }
 
-export { ResumeScoreService };
+export { ResumeService };
