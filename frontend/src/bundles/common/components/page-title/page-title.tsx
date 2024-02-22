@@ -13,4 +13,3 @@ const PageTitle: React.FC<Properties> = ({ title }) => {
 };
 
 export { PageTitle };
-
