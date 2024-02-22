@@ -2,7 +2,8 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { type ChangeEvent,type FormEvent,useEffect  } from 'react';
 import { useCallback,useState } from 'react';
 
-import { Input } from '~/bundles/common/components/components';
+import { BaseButton, Input } from '~/bundles/common/components/components';
+import { ButtonType } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 
 import { createSubscription, getPrices } from '../store/actions';
@@ -104,7 +105,9 @@ const SubscriptionPaymentPage: React.FC = () => {
             <Input placeholder='Name' onChange={handleNameChange} />
             <Input placeholder='email' onChange={handleEmailChange} />
             <CardElement />
-            <input type='submit' disabled={processing} />
+            <BaseButton type={ButtonType.SUBMIT} isDisabled={processing} >
+                Confirm payment
+            </BaseButton>
         </form>
     </div>;
 };
