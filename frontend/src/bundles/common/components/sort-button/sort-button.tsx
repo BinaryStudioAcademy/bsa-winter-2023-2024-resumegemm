@@ -18,14 +18,14 @@ interface Properties
     initialSortType?: SortType;
     children: ReactNode;
     className?: string;
-    onClick: (sortMethod: SortType) => void;
+    onSort: (sortMethod: SortType) => void;
 }
 
 const SortButton = ({
     children,
     initialSortType = null,
     className = '',
-    onClick,
+    onSort,
 }: Properties): JSX.Element => {
     const [sortMethod, setSortMethod] = useState<SortType>(initialSortType);
 
@@ -38,8 +38,8 @@ const SortButton = ({
     }, [sortMethod, setSortMethod]);
 
     useEffect(() => {
-        onClick(sortMethod);
-    }, [sortMethod, onClick]);
+        onSort(sortMethod);
+    }, [sortMethod, onSort]);
 
     return (
         <button
