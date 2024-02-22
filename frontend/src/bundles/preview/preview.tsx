@@ -1,5 +1,11 @@
 import { Auth } from '../auth/pages/auth';
-import { Calendar, Checkbox, RadioButton, Switch, Tooltip } from '../common/components/components';
+import {
+    Calendar,
+    Checkbox,
+    RadioButton,
+    Switch,
+    Tooltip,
+} from '../common/components/components';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
 import { Home } from '../home/pages/home';

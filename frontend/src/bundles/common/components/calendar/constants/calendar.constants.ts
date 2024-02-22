@@ -1,4 +1,3 @@
-
 import { type CalendarMonth } from '~/bundles/common/types/types';
 
 const yearRegex = /\d{4}/g;
@@ -16,11 +15,7 @@ const CalendarMonths: CalendarMonth[] = [
     { num: 8, name: 'Sep' },
     { num: 9, name: 'Oct' },
     { num: 10, name: 'Nov' },
-    { num: 11, name: 'Dec' }
+    { num: 11, name: 'Dec' },
 ];
 
-export { 
-    CalendarMonths,
-    monthRegex,
-    yearRegex 
-};
+export { CalendarMonths, monthRegex, yearRegex };
