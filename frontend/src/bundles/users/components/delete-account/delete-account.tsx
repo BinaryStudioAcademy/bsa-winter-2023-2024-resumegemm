@@ -7,14 +7,10 @@ const DeleteAccount: React.FC = () => {
     return (
         <div className={styles.profile__delete}>
             <p>
-                Once you delete your account, it cannot be undone. This is permanent.
+                Once you delete your account, it cannot be undone. This is
+                permanent.
             </p>
-            <BaseButton
-                variant={ButtonVariant.PRIMARY}
-            >
-                Delete
-            </BaseButton>
-
+            <BaseButton variant={ButtonVariant.PRIMARY}>Delete</BaseButton>
         </div>
     );
 };

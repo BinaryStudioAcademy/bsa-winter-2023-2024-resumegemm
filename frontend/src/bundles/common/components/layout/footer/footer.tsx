@@ -5,11 +5,7 @@ type Properties = {
 };
 
 const Footer: React.FC<Properties> = ({ children }) => {
-    return (
-        <footer className={styles.footer}>
-           {children}
-        </footer>
-    );
+    return <footer className={styles.footer}>{children}</footer>;
 };
 
 export { Footer };

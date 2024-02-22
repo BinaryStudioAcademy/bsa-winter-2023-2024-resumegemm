@@ -16,6 +16,7 @@ type User = {
 
 const handleFormSubmit = (payload: User): void => {
     // Handle form submission logic here
+    payload;
 };
 
 const Profile: React.FC = () => {
