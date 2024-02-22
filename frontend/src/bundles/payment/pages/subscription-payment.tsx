@@ -3,9 +3,11 @@ import { type ChangeEvent,type FormEvent,useEffect  } from 'react';
 import { useCallback,useState } from 'react';
 
 import { BaseButton, Input } from '~/bundles/common/components/components';
-import { ButtonType } from '~/bundles/common/enums/enums';
+import { ButtonWidth } from '~/bundles/common/enums/components/button-width.enum';
+import { ButtonType, ButtonVariant } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 
+import { SubscriptionCard } from '../components/subscription-card';
 import { createSubscription, getPrices } from '../store/actions';
 import { type CreateSubscriptionResponseDto } from '../types/types';
 import styles from './styles.module.scss';
@@ -23,6 +25,8 @@ const SubscriptionPaymentPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [priceId, setPriceId] = useState('');
 
+    const [modalIsHidden, setModalIsHidden] = useState(true);
+
     const [processing, setProcessing] = useState(false);
 
     const handleNameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +40,12 @@ const SubscriptionPaymentPage: React.FC = () => {
     const handlePriceChange = useCallback((id: string) => {
         return function() {
             setPriceId(id);
+            setModalIsHidden(false);
         };
+    }, []);
+
+    const closeModal = useCallback(() => {
+        setModalIsHidden(true);
     }, []);
 
     const HandleSubmit = useCallback((event: FormEvent<HTMLFormElement>): void => {
@@ -101,13 +110,41 @@ const SubscriptionPaymentPage: React.FC = () => {
 
     return <div className={styles.payment__container}>
         <form className={styles.payment__form} onSubmit={HandleSubmit}>
-            { prices.map((price) => <button onClick={handlePriceChange(price.id)} key={price.id}>{price.unit_amount} {price.currency} {price.recurring?.interval} {price.product.name}</button>) }
-            <Input placeholder='Name' onChange={handleNameChange} />
-            <Input placeholder='email' onChange={handleEmailChange} />
-            <CardElement />
-            <BaseButton type={ButtonType.SUBMIT} isDisabled={processing} >
-                Confirm payment
-            </BaseButton>
+            <div className={styles.payment__prices_container}>
+                { prices.map((price) => 
+                <SubscriptionCard
+                    onClick={handlePriceChange(price.id)}
+                    key={price.id} 
+                    price={price.unit_amount} 
+                    currency={price.currency}
+                    duration={price.recurring?.interval}
+                    title={price.product.name}
+                    description={price.product.description}
+                    selected={priceId === price.id}
+                />
+                )}
+            </div>
+
+            {!modalIsHidden && <div className={styles.payment__modal_container}>
+                    <div className={styles.payment__modal_input_container}>
+                        <button onClick={closeModal} className={styles.payment__modal_close_button}></button>
+
+                        <Input width='100%' placeholder='Name' onChange={handleNameChange} />
+                        <Input width='100%' placeholder='email' onChange={handleEmailChange} />
+
+                        <CardElement className={styles.payment__modal_input_card} />
+
+                        <BaseButton 
+                            className={styles.payment__modal_input_button} 
+                            type={ButtonType.SUBMIT} width={ButtonWidth.FULL} 
+                            isDisabled={processing} 
+                            variant={ButtonVariant.PRIMARY}
+                        >
+                            Confirm payment
+                        </BaseButton>
+                    </div>
+                </div>
+            }
         </form>
     </div>;
 };

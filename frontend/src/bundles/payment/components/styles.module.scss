@@ -1,0 +1,33 @@
+.subscription_card__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    color: var(--color-white);
+    background-color: var(--color-background-dark-blue);
+    border-radius: 8px;
+}
+
+.subscription_card__container_selected {
+    background-color: var(--color-background-light-blue); 
+}
+
+.subscription_card__title {
+    color: var(--color-accent-dark-yellow);
+    font-weight: 500;
+    font-size: 48px;
+}
+
+.subscription_card__info {
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.subscription_card__button {
+    width: 50%;
+}
+
+.subscription_card__button:hover {
+    width: 50%;
+}
