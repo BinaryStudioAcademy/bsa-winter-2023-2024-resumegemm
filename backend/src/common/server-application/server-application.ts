@@ -13,7 +13,7 @@ const apiV1 = new ServerAppApi(
     config,
     ...authController.routes,
     ...userController.routes,
-     ...templateController.routes
+    ...templateController.routes,
 );
 const serverApp = new ServerApp({
     config,

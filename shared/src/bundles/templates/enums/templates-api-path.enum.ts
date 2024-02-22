@@ -1,6 +1,6 @@
 enum TemplatesApiPath {
     ROOT = '/',
-    ID = '/:id'
+    ID = '/:id',
 }
 
 export { TemplatesApiPath };

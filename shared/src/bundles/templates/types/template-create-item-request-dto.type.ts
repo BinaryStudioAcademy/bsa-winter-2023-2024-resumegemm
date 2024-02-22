@@ -1,8 +1,8 @@
 type TemplateCreateItemRequestDto = {
-    isOwner:boolean;
-    image:string;
-    userId:string;
-    resumeId:string;
+    isOwner: boolean;
+    image: string;
+    userId: string;
+    resumeId: string;
 };
 
 export { type TemplateCreateItemRequestDto };

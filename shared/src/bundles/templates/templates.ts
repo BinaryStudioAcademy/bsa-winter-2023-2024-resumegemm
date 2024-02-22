@@ -1,7 +1,7 @@
 export { TemplatesApiPath } from './enums/enums.js';
-export  {
+export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
-    type TemplateUpdateItemRequestDto
+    type TemplateUpdateItemRequestDto,
 } from './types/types.js';
