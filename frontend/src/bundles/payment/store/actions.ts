@@ -2,7 +2,15 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
-import { type CreatePaymentIntentRequestDto, type CreatePaymentIntentResponseDto, type CreateSubscriptionRequestDto, type CreateSubscriptionResponseDto,type GetPublishableKeyRequestDto, type GetPublishableKeyResponseDto } from '../types/types';
+import { 
+    type CreatePaymentIntentRequestDto, 
+    type CreatePaymentIntentResponseDto, 
+    type CreateSubscriptionRequestDto, 
+    type CreateSubscriptionResponseDto,
+    type GetPricesRequestDto, 
+    type GetPricesResponseDto, 
+    type GetPublishableKeyRequestDto, 
+    type GetPublishableKeyResponseDto } from '../types/types';
 import { name as sliceName } from './slice.js';
 
 const getPublishableKey = createAsyncThunk<
@@ -35,4 +43,19 @@ const createSubscription = createAsyncThunk<
     return paymentApi.createSubscription(registerPayload);
 });
 
-export { createPaymentIntent, createSubscription, getPublishableKey };
+const getPrices = createAsyncThunk<
+    GetPricesResponseDto,
+    GetPricesRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/get-prices`, (registerPayload, { extra }) => {
+    const { paymentApi } = extra;
+
+    return paymentApi.getPrices();
+});
+
+export { 
+    createPaymentIntent, 
+    createSubscription, 
+    getPrices, 
+    getPublishableKey 
+};

@@ -1,18 +1,22 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { type ChangeEvent,type FormEvent  } from 'react';
+import { type ChangeEvent,type FormEvent,useEffect  } from 'react';
 import { useCallback,useState } from 'react';
 
 import { Input } from '~/bundles/common/components/components';
-import { useAppDispatch } from '~/bundles/common/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 
-import { createSubscription } from '../store/actions';
+import { createSubscription, getPrices } from '../store/actions';
 import { type CreateSubscriptionResponseDto } from '../types/types';
 import styles from './styles.module.scss';
 
-const PaymentPage: React.FC = () => {
+const SubscriptionPaymentPage: React.FC = () => {
     const elements = useElements();
     const stripe = useStripe();
     const dispatch = useAppDispatch();
+
+    const { prices } = useAppSelector(({ payment }) => ({
+        prices: payment.prices
+    }));
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -79,8 +83,13 @@ const PaymentPage: React.FC = () => {
         void HandleSubmitAsync();
     }, [elements, stripe, dispatch, name, email, priceId]);
 
+    useEffect(() => {
+        void dispatch(getPrices({}));
+    }, [dispatch]);
+
     return <div className={styles.payment__container}>
         <form className={styles.payment__form} onSubmit={HandleSubmit}>
+            { prices.map((price) => <div key={price.id}>{price.unit_amount} {price.currency} {price.recurring?.interval} {price.product.name}</div>) }
             <Input placeholder='Name' onChange={handleNameChange} />
             <Input placeholder='email' onChange={handleEmailChange} />
             <CardElement />
@@ -89,4 +98,4 @@ const PaymentPage: React.FC = () => {
     </div>;
 };
 
-export { PaymentPage };
+export { SubscriptionPaymentPage };

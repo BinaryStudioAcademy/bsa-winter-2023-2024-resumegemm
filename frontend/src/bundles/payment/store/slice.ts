@@ -1,17 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { createPaymentIntent, createSubscription, getPublishableKey } from './actions.js';
+import { type GetPriceResponseDto } from '../types/types.js';
+import { createPaymentIntent, createSubscription, getPrices, getPublishableKey } from './actions.js';
 
 type State = {
     publishableKey: string | null;
     clientSecret: string | null;
     subscriptionId: string | null;
+    prices: GetPriceResponseDto[];
 };
 
 const initialState: State = {
     publishableKey: null,
     clientSecret: null,
     subscriptionId: null,
+    prices: []
 };
 
 const { reducer, actions, name } = createSlice({
@@ -40,6 +43,13 @@ const { reducer, actions, name } = createSlice({
         builder.addCase(createSubscription.rejected, (state) => {
             state.clientSecret = null;
             state.subscriptionId = null;
+        });
+
+        builder.addCase(getPrices.fulfilled, (state, action) => {
+            state.prices = action.payload.prices;  
+        });
+        builder.addCase(getPrices.rejected, (state) => {
+            state.prices = [];
         });
     },
 });

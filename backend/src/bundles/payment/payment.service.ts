@@ -2,7 +2,15 @@ import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
 
-import { type CreatePaymentIntentRequestDto, type CreatePaymentIntentResponseDto, type CreateSubscriptionRequestDto,type CreateSubscriptionResponseDto, type GetPublishableKeyResponseDto } from './types/types';
+import { 
+  type CreatePaymentIntentRequestDto, 
+  type CreatePaymentIntentResponseDto, 
+  type CreateSubscriptionRequestDto,
+  type CreateSubscriptionResponseDto,
+  type GetPriceResponseDto,
+  type GetPricesResponseDto, 
+  type GetPublishableKeyResponseDto 
+} from './types/types';
 
 class PaymentService {
     private appConfig: IConfig;
@@ -25,6 +33,16 @@ class PaymentService {
 
     public getPublishableKey(): GetPublishableKeyResponseDto {
         return { publishableKey: this.appConfig.ENV.STRIPE.STRIPE_PUBLISHABLE_KEY };
+    }
+
+    public async getPrices(): Promise<GetPricesResponseDto> {
+        const { data } = (await this.stripe.prices.list({
+            expand: ['data.product']
+        }));
+
+        return {
+            prices: data as GetPriceResponseDto[]
+        };
     }
 
     public async createSubscription({ name, email, paymentMethod, priceId }: CreateSubscriptionRequestDto): Promise<CreateSubscriptionResponseDto> {

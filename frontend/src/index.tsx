@@ -15,7 +15,7 @@ import {
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { store } from '~/framework/store/store';
 
-import { PaymentPage } from './bundles/payment/pages/payment';
+import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-payment';
 import { PreviewPage } from './bundles/preview/preview';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
@@ -46,7 +46,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             {
                                 path: AppRoute.PAYMENT,
                                 element: <StripeProvider>
-                                    <PaymentPage />
+                                    <SubscriptionPaymentPage />
                                 </StripeProvider>,
                             }
                         ],

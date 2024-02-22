@@ -43,6 +43,13 @@ class PaymentController extends Controller {
                     body: CreateSubscriptionRequestDto;
                 }>),
         });
+
+        this.addRoute({
+            path: PaymentApiPath.PRICES,
+            method: 'GET',
+            handler: () =>
+                this.getPrices(),
+        });
     }
 
     /**
@@ -118,15 +125,15 @@ class PaymentController extends Controller {
      *                  subscriptionId:
      *                    type: string
      */
-        private async createSubscription(
-            options: ApiHandlerOptions<{
-                body: CreateSubscriptionRequestDto;
-        }>): Promise<ApiHandlerResponse> {
-            return {
-                status: HttpCode.CREATED,
-                payload: await this.paymentService.createSubscription(options.body),
-            };
-        }
+    private async createSubscription(
+        options: ApiHandlerOptions<{
+            body: CreateSubscriptionRequestDto;
+    }>): Promise<ApiHandlerResponse> {
+        return {
+            status: HttpCode.CREATED,
+            payload: await this.paymentService.createSubscription(options.body),
+        };
+    }
 
     /**
      * @swagger
@@ -148,6 +155,29 @@ class PaymentController extends Controller {
         return {
             status: HttpCode.OK,
             payload: this.paymentService.getPublishableKey(),
+        };
+    }
+
+        /**
+     * @swagger
+     * /payment/config:
+     *    get:
+     *      description: Returns prices 
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  publishableKey:
+     *                    type: string
+     */
+    private async getPrices(): Promise<ApiHandlerResponse> {
+        return {
+            status: HttpCode.OK,
+            payload: await this.paymentService.getPrices(),
         };
     }
 }
