@@ -1,6 +1,6 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { type ChangeEvent,type FormEvent,useEffect  } from 'react';
-import { useCallback,useState } from 'react';
+import { type ChangeEvent, type FormEvent, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 
 import { BaseButton, Input } from '~/bundles/common/components/components';
 import { ButtonWidth } from '~/bundles/common/enums/components/button-width.enum';
@@ -20,7 +20,7 @@ const SubscriptionPaymentPage: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const { prices } = useAppSelector(({ payment }) => ({
-        prices: payment.prices
+        prices: payment.prices,
     }));
 
     const [name, setName] = useState('');
@@ -31,16 +31,22 @@ const SubscriptionPaymentPage: React.FC = () => {
 
     const [processing, setProcessing] = useState(false);
 
-    const handleNameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        setName(event.currentTarget.value);
-    }, []);
+    const handleNameChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            setName(event.currentTarget.value);
+        },
+        [],
+    );
 
-    const handleEmailChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.currentTarget.value);
-    }, []);
+    const handleEmailChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            setEmail(event.currentTarget.value);
+        },
+        [],
+    );
 
     const handlePriceChange = useCallback((id: string) => {
-        return function() {
+        return function () {
             setPriceId(id);
             setModalIsHidden(false);
         };
@@ -50,114 +56,146 @@ const SubscriptionPaymentPage: React.FC = () => {
         setModalIsHidden(true);
     }, []);
 
-    const HandleSubmit = useCallback((event: FormEvent<HTMLFormElement>): void => {
-        async function HandleSubmitAsync(): Promise<void> {
-            try {
-                setProcessing(true);
-            
-                event.preventDefault();
+    const HandleSubmit = useCallback(
+        (event: FormEvent<HTMLFormElement>): void => {
+            async function HandleSubmitAsync(): Promise<void> {
+                try {
+                    setProcessing(true);
 
-                if (!stripe || !elements) {
-                    return;
-                }
-                
-                const paymentMethod = await stripe.createPaymentMethod({
-                    elements,
-                    params: {
-                        type: 'card',
-                        billing_details: {
-                            name,
-                            email,
-                        }
+                    event.preventDefault();
+
+                    if (!stripe || !elements) {
+                        return;
                     }
-                });
 
-                if (!paymentMethod.paymentMethod) {
-                    return;
-                }
+                    const paymentMethod = await stripe.createPaymentMethod({
+                        elements,
+                        params: {
+                            type: 'card',
+                            billing_details: {
+                                name,
+                                email,
+                            },
+                        },
+                    });
 
-                const request = {
-                    name, 
-                    email,
-                    priceId,
-                    paymentMethod: paymentMethod.paymentMethod.id
-                };
+                    if (paymentMethod.error) {
+                        alert(paymentMethod.error.message);
+                        return;
+                    }
 
-                const { error } = paymentCreateSubscriptionValidationSchema.validate(request);
-                
-                if(error) {
-                    return;
-                }
-                
-                const { payload } = await dispatch(createSubscription(request)) as { payload: CreateSubscriptionResponseDto | null };
+                    const request = {
+                        name,
+                        email,
+                        priceId,
+                        paymentMethod: paymentMethod.paymentMethod.id,
+                    };
 
-                if (!payload?.clientSecret) {
-                    return;
-                }
+                    const { error } =
+                        paymentCreateSubscriptionValidationSchema.validate(
+                            request,
+                        );
 
-                const confirmPayment = await stripe.confirmCardPayment(
-                    payload.clientSecret
-                );
+                    if (error) {
+                        alert(error.message);
+                        return;
+                    }
 
-                if (confirmPayment.error) {
-                    alert(confirmPayment.error.message);
-                }
-                else {
+                    const { payload } = (await dispatch(
+                        createSubscription(request),
+                    )) as { payload: CreateSubscriptionResponseDto | null };
+
+                    if (!payload?.clientSecret) {
+                        alert('Blank clientSecret');
+                        return;
+                    }
+
+                    const confirmPayment = await stripe.confirmCardPayment(
+                        payload.clientSecret,
+                    );
+
+                    if (confirmPayment.error) {
+                        alert(confirmPayment.error.message);
+                        return;
+                    }
+
                     alert('Success! Check your email for the invoice.');
+                } catch {
+                    alert('Error occurred');
+                } finally {
+                    setProcessing(false);
                 }
             }
-            finally {
-                setProcessing(false);
-            }
-        }
 
-        void HandleSubmitAsync();
-    }, [elements, stripe, dispatch, name, email, priceId]);
+            void HandleSubmitAsync();
+        },
+        [elements, stripe, dispatch, name, email, priceId],
+    );
 
     useEffect(() => {
         void dispatch(getPrices({}));
     }, [dispatch]);
 
-    return <div className={styles.payment__container}>
-        <form className={styles.payment__form} onSubmit={HandleSubmit}>
-            <div className={styles.payment__prices_container}>
-                { prices.map((price) => 
-                <SubscriptionCard
-                    image={price.product.images}
-                    onClick={handlePriceChange(price.id)}
-                    key={price.id} 
-                    price={price.unit_amount && price.unit_amount/coinsInBanknote} 
-                    currency={price.currency}
-                    duration={`${price.recurring.interval_count} ${price.recurring.interval}`}
-                    title={price.product.name}
-                    description={price.product.description}
-                    selected={priceId === price.id}
-                />
-                )}
-            </div>
-
-            {!modalIsHidden && <div className={styles.payment__modal_container}>
-                    <div className={styles.payment__modal_input_container}>
-                        <button onClick={closeModal} className={styles.payment__modal_close_button}></button>
-
-                        <Input width='100%' placeholder='Name' onChange={handleNameChange} />
-                        <Input width='100%' placeholder='email' onChange={handleEmailChange} />
-
-                        <CardElement className={styles.payment__modal_input_card} />
-
-                        <BaseButton 
-                            className={styles.payment__modal_input_button} 
-                            type={ButtonType.SUBMIT} width={ButtonWidth.FULL} 
-                            isDisabled={processing} 
-                            variant={ButtonVariant.PRIMARY}
-                        >
-                            Confirm payment
-                        </BaseButton>
-                    </div>
+    return (
+        <div className={styles.payment__container}>
+            <form className={styles.payment__form} onSubmit={HandleSubmit}>
+                <div className={styles.payment__prices_container}>
+                    {prices.map((price) => (
+                        <SubscriptionCard
+                            image={price.product.images}
+                            onClick={handlePriceChange(price.id)}
+                            key={price.id}
+                            price={
+                                price.unit_amount &&
+                                price.unit_amount / coinsInBanknote
+                            }
+                            currency={price.currency}
+                            duration={`${price.recurring.interval_count} ${price.recurring.interval}`}
+                            title={price.product.name}
+                            description={price.product.description}
+                            selected={priceId === price.id}
+                        />
+                    ))}
                 </div>
-            }
-        </form>
-    </div>;
+
+                {!modalIsHidden && (
+                    <div className={styles.payment__modal_container}>
+                        <div className={styles.payment__modal_input_container}>
+                            <button
+                                onClick={closeModal}
+                                className={styles.payment__modal_close_button}
+                            ></button>
+
+                            <Input
+                                width="100%"
+                                placeholder="Name"
+                                onChange={handleNameChange}
+                            />
+                            <Input
+                                width="100%"
+                                placeholder="email"
+                                onChange={handleEmailChange}
+                            />
+
+                            <CardElement
+                                className={styles.payment__modal_input_card}
+                            />
+
+                            <BaseButton
+                                className={styles.payment__modal_input_button}
+                                type={ButtonType.SUBMIT}
+                                width={ButtonWidth.FULL}
+                                isDisabled={processing}
+                                variant={ButtonVariant.PRIMARY}
+                            >
+                                Confirm payment
+                            </BaseButton>
+                        </div>
+                    </div>
+                )}
+            </form>
+        </div>
+    );
 };
 
 export { SubscriptionPaymentPage };

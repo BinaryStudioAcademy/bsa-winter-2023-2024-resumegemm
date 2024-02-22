@@ -1,13 +1,15 @@
+import { HttpCode, HttpError } from 'shared/build/index.js';
 import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
 
+import { PaymentErrorMessage } from './enums/error-message.js';
 import { priceMapper } from './helpers/price-mapper.js';
-import { 
-  type CreateSubscriptionRequestDto,
-  type CreateSubscriptionResponseDto,
-  type GetPricesResponseDto, 
-  type GetPublishableKeyResponseDto 
+import {
+    type CreateSubscriptionRequestDto,
+    type CreateSubscriptionResponseDto,
+    type GetPricesResponseDto,
+    type GetPublishableKeyResponseDto,
 } from './types/types';
 
 class PaymentService {
@@ -20,61 +22,95 @@ class PaymentService {
     }
 
     public getPublishableKey(): GetPublishableKeyResponseDto {
-        return { publishableKey: this.appConfig.ENV.STRIPE.STRIPE_PUBLISHABLE_KEY };
-    }
-
-    public async getPrices(): Promise<GetPricesResponseDto> {
-        const { data } = (await this.stripe.prices.list({
-            expand: ['data.product']
-        }));
-        
         return {
-            prices: data.map((price) => priceMapper(price as Stripe.Price & { product: Stripe.Product }))
+            publishableKey: this.appConfig.ENV.STRIPE.STRIPE_PUBLISHABLE_KEY,
         };
     }
 
-    public async createSubscription({ name, email, paymentMethod, priceId }: CreateSubscriptionRequestDto): Promise<CreateSubscriptionResponseDto> {
+    public async getPrices(): Promise<GetPricesResponseDto> {
+        try {
+            const { data } = await this.stripe.prices.list({
+                expand: ['data.product'],
+            });
 
-        const customer = await this.stripe.customers.create({
-          name: name,
-          email: email,
-          payment_method: paymentMethod,
-          invoice_settings: {
-            default_payment_method: paymentMethod,
-          },
-        });
-    
-        const subscription = await this.stripe.subscriptions.create({
-          customer: customer.id,
-          items: [{ price: priceId }],
-          payment_settings: {
-            payment_method_options: {
-              card: {
-                request_three_d_secure: 'any',
-              },
-            },
-            payment_method_types: ['card'],
-            save_default_payment_method: 'on_subscription',
-          },
-          expand: ['latest_invoice.payment_intent'],
-        });
+            return {
+                prices: data.map((price) =>
+                    priceMapper(
+                        price as Stripe.Price & { product: Stripe.Product },
+                    ),
+                ),
+            };
+        } catch {
+            throw new HttpError({
+                message: PaymentErrorMessage.GET_PRICES_ERROR,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+    }
+
+    public async createSubscription({
+        name,
+        email,
+        paymentMethod,
+        priceId,
+    }: CreateSubscriptionRequestDto): Promise<CreateSubscriptionResponseDto> {
+        let customer;
+        try {
+            customer = await this.stripe.customers.create({
+                name: name,
+                email: email,
+                payment_method: paymentMethod,
+                invoice_settings: {
+                    default_payment_method: paymentMethod,
+                },
+            });
+        } catch {
+            throw new HttpError({
+                message: PaymentErrorMessage.STRIRE_USER_CREATE_ERROR,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        let subscription;
+        try {
+            subscription = await this.stripe.subscriptions.create({
+                customer: customer.id,
+                items: [{ price: priceId }],
+                payment_settings: {
+                    payment_method_options: {
+                        card: {
+                            request_three_d_secure: 'any',
+                        },
+                    },
+                    payment_method_types: ['card'],
+                    save_default_payment_method: 'on_subscription',
+                },
+                expand: ['latest_invoice.payment_intent'],
+            });
+        } catch {
+            throw new HttpError({
+                message: PaymentErrorMessage.STRIRE_SUBSCRIPTION_CREATE_ERROR,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
 
         const { latest_invoice, id } = subscription;
-        
+
         if (!latest_invoice || typeof latest_invoice === 'string') {
             return {
                 clientSecret: null,
                 subscriptionId: id,
-              };
+            };
         }
 
-        const { client_secret } = latest_invoice.payment_intent as Stripe.PaymentIntent;
+        const { client_secret } =
+            latest_invoice.payment_intent as Stripe.PaymentIntent;
 
         return {
-          clientSecret: client_secret,
-          subscriptionId: id,
+            clientSecret: client_secret,
+            subscriptionId: id,
         };
-      }
+    }
 }
 
 export { PaymentService };

@@ -11,7 +11,7 @@
 }
 
 .subscription_card__container_selected {
-    background-color: var(--color-background-light-blue); 
+    background-color: var(--color-background-light-blue);
 }
 
 .subscription_card__title_container {
@@ -19,6 +19,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 8px;
     width: 100%;
 }
 
