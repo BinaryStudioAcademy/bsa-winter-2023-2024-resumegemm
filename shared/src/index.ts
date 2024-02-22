@@ -6,7 +6,7 @@ export {
 } from './bundles/auth/auth.js';
 export { type Profile } from './bundles/profile/profile.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
-export  {
+export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
@@ -38,6 +38,7 @@ export {
 export { type IConfig } from './framework/config/config.js';
 export {
     ApplicationError,
+    AuthException,
     HttpError,
     ValidationError,
 } from './framework/exceptions/exceptions.js';
