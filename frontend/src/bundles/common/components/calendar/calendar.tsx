@@ -116,7 +116,7 @@ const Calendar = ({
                 present: present
             });
         }
-
+        
         setMonthYearAsText();
     }, [month, year, present, setMonthYearAsText, onChange]);
 
@@ -135,7 +135,7 @@ const Calendar = ({
                     <div className={styles.date_picker__header}>
                         <button className={styles.date_picker__header_arrow_container_reversed} onClick={decreaseYear}>
                         </button>
-
+                        
                         <button
                                 className={handleYearSelected(selected)}
                                 onClick={selectYear}
@@ -148,7 +148,7 @@ const Calendar = ({
                         </button>
                     </div>
 
-                    <ReactCalendar defaultView="year" minDetail='year' maxDetail='year'
+                    <ReactCalendar defaultView="year" minDetail='year' maxDetail='year' 
                         tileClassName={handleMonthSelect} 
                         onClickMonth={selectMonth} 
                         showNavigation={false}
