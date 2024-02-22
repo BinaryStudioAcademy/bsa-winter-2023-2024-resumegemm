@@ -1,4 +1,4 @@
-import { config } from '~/common/config/config';
+import { config } from '~/common/config/config.js';
 
 import { OpenAIService } from './open-ai.service.js';
 

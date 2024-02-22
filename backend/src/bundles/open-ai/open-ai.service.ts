@@ -1,9 +1,10 @@
 import OpenAI from 'openai';
-import { type ValueOf } from 'shared/build';
 
-import { ModelSettings } from './constants/model-settings';
-import { type Prompts } from './constants/prompts';
-import { Roles } from './enums/roles';
+import { type ValueOf } from '~/common/types/types.js';
+
+import { ModelSettings } from './constants/model-settings.js';
+import { type Prompts } from './constants/prompts.js';
+import { Roles } from './enums/roles.js';
 
 class OpenAIService {
     private openAI: OpenAI;
