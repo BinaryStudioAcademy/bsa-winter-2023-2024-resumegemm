@@ -10,6 +10,7 @@ import { type TemplateBlockSettings } from './types/types.js';
 
 class TemplateModel extends AbstractModel {
     public 'isOwner': boolean;
+    public 'userId': string;
     public 'deletedAt': string;
     public 'templateSettings': TemplateBlockSettings;
 

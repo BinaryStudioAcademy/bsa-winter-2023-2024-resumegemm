@@ -1,0 +1,35 @@
+.feature_image__container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: fit-content;
+    background: linear-gradient(to top, white 98%, transparent 0);
+    border-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.feature_image__image_container {
+    height: fit-content;
+}
+
+.feature_image {
+    width: 100%;
+    max-height: 100%;
+    border: white 2px solid;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.feature_image__text_container {
+    display: flex;
+    align-items: center;
+    padding: 10% 5px;
+    padding-left: 10px;
+}
+
+.feature_image__text {
+    font-weight: 500;
+    font-size: 13.4px;
+    font-family: Poppins, sans-serif;
+}

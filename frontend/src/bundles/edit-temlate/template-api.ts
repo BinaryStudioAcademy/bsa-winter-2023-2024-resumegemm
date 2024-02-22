@@ -4,8 +4,8 @@ import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
 import {
-    type TemplateEditRequestDto,
-    type TemplateEditResponseDto,
+    type TemplateUpdateItemRequestDto,
+    type TemplateUpdateItemResponseDto,
 } from './types/types';
 
 type Constructor = {
@@ -14,7 +14,7 @@ type Constructor = {
     storage: IStorage;
 };
 
-type EditTemplatePayload = Partial<TemplateEditRequestDto>;
+type EditTemplatePayload = Partial<TemplateUpdateItemRequestDto>;
 
 class TemplateApi extends HttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
@@ -24,7 +24,7 @@ class TemplateApi extends HttpApi {
     public async editTemplate(
         templateId: string,
         editedData: EditTemplatePayload,
-    ): Promise<TemplateEditResponseDto> {
+    ): Promise<TemplateUpdateItemResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(`/${templateId}`, {}),
             {

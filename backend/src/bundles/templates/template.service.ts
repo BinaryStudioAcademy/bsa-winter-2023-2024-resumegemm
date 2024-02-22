@@ -1,8 +1,13 @@
 import {
-    type TemplateEditRequestDto,
-    type TemplateEditResponseDto,
+    type TemplateCreateItemRequestDto,
+    type TemplateGetAllItemResponseDto,
+} from 'shared/build';
+import {
+    type TemplateUpdateItemRequestDto,
+    type TemplateUpdateItemResponseDto,
 } from 'shared/build/bundles/templates/templates.js';
 
+import { type Template } from './types/template.type';
 import {
     type ITemplateRepository,
     type ITemplateService,
@@ -14,12 +19,27 @@ class TemplateService implements ITemplateService {
     public constructor(templateRepository: ITemplateRepository) {
         this.templateRepository = templateRepository;
     }
-
-    public async editTemplateSettings(
+    public async find(id: string): Promise<Template | undefined> {
+        return await this.templateRepository.find(id);
+    }
+    public async findAll(): Promise<{
+        items: TemplateGetAllItemResponseDto[];
+    }> {
+        return await this.templateRepository.findAll();
+    }
+    public async create(
+        payload: TemplateCreateItemRequestDto,
+    ): Promise<Template> {
+        return await this.templateRepository.create(payload);
+    }
+    public async update(
         templateId: string,
-        editedSettings: TemplateEditRequestDto,
-    ): Promise<TemplateEditResponseDto> {
-        return await this.templateRepository.edit(templateId, editedSettings);
+        editedSettings: TemplateUpdateItemRequestDto,
+    ): Promise<TemplateUpdateItemResponseDto> {
+        return await this.templateRepository.update(templateId, editedSettings);
+    }
+    public async delete(id: string): Promise<boolean> {
+        return await this.templateRepository.delete(id);
     }
 }
 

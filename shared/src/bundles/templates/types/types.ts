@@ -1,6 +1,9 @@
 export { type TemplateBlockSettings } from './template-block-settings.type.js';
+export { type TemplateCreateItemRequestDto } from './template-create-item-request-dto.type.js';
 export { type TemplateDto } from './template-dto.type.js';
-export { type TemplateEditRequestDto } from './template-edit-request-dto.type.js';
-export { type TemplateEditResponseDto } from './template-edit-response.dto.type.js';
 export { type TemplateEntityFields } from './template-entity-fields.type.js';
+export { type TemplateGetAllItemResponseDto } from './template-get-all-item-response-dto.type.js';
+export { type TemplateGetAllResponseDto } from './template-get-all-response-dto.type.js';
 export { type TemplateResponseDto } from './template-response-dto.type.js';
+export { type TemplateUpdateItemRequestDto } from './template-update-item-request-dto.type.js';
+export { type TemplateUpdateItemResponseDto } from './template-update-item-response.dto.type.js';

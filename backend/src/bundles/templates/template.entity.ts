@@ -8,26 +8,32 @@ class TemplateEntity {
 
     private 'isOwner': boolean;
 
+    private 'userId': string;
+
     private 'templateSettings': TemplateBlockSettings;
 
     private constructor({
         id,
         isOwner,
+        userId,
         templateSettings,
     }: TemplateEntityFields) {
         this.id = id;
         this.isOwner = isOwner;
+        this.userId = userId;
         this.templateSettings = templateSettings;
     }
 
     public static initialize({
         id,
         isOwner,
+        userId,
         templateSettings,
     }: TemplateEntityFields): TemplateEntity {
         return new TemplateEntity({
             id,
             isOwner,
+            userId,
             templateSettings,
         });
     }

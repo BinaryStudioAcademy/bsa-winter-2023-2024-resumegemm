@@ -3,15 +3,17 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
 import {
-    type TemplateEditRequestDto,
-    type TemplateEditResponseDto,
+    type TemplateUpdateItemRequestDto,
+    type TemplateUpdateItemResponseDto,
 } from '../types/types.js';
 import { name as sliceName } from './slice.js';
 
-type EditTemplayePayload = Partial<TemplateEditRequestDto> & { id: string };
+type EditTemplayePayload = Partial<TemplateUpdateItemRequestDto> & {
+    id: string;
+};
 
 const editTemplate = createAsyncThunk<
-    TemplateEditResponseDto,
+    TemplateUpdateItemResponseDto,
     EditTemplayePayload,
     AsyncThunkConfig
 >(`${sliceName}/edit`, (request, { extra }) => {
@@ -19,7 +21,7 @@ const editTemplate = createAsyncThunk<
 
     return templateApi.editTemplate(
         request.id,
-        request.templateSettings as TemplateEditRequestDto,
+        request.templateSettings as TemplateUpdateItemRequestDto,
     );
 });
 
