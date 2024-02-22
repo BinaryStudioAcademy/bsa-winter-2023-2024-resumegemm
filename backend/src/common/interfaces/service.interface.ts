@@ -23,7 +23,7 @@ interface IService<T = unknown> {
 
     update(): Promise<T>;
 
-    delete(id: string): Promise<UserEntityFields | null>;
+    delete(id: string): Promise<UserEntityFields>;
 }
 
 export { type IService };

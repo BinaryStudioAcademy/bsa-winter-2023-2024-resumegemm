@@ -1,5 +1,5 @@
 import { type FastifyRequest } from 'fastify';
-import { type UserEntityFields } from 'shared/build/index.js';
+import { type UserEntityFields,HttpError } from 'shared/build/index.js';
 
 import { type UserService } from '~/bundles/users/user.service.js';
 import { type ApiHandlerOptions, type ApiHandlerResponse,Controller } from '~/common/controller/controller.js';
@@ -94,6 +94,17 @@ class UserController extends Controller {
      *           application/json:
      *             schema:
      *               $ref: '#/components/schemas/UserEntityFields'
+     *       400:
+     *         description: Bad request
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *               example:
+     *                 message: Input request parameters are invalid.
      *       404:
      *         description: User not found
      *         content:
@@ -111,19 +122,27 @@ class UserController extends Controller {
     }: ApiHandlerOptions<{
         params: FastifyRequest['params'];
     }>): Promise<ApiHandlerResponse<UserEntityFields>> {
-        const payload = await this.userService.delete(
-            (params as Record<'id', string>).id
-        );
-    
-        return payload ? {
-            status: HttpCode.OK,
-            payload
-        } : {
-            status: HttpCode.PAGE_NOT_FOUND,
-            payload: {
-                message: 'User not found.'
-            }
-        };
+        try{
+            const payload = await this.userService.delete(
+                (params as Record<'id', string>).id
+            );
+            return {
+                status: HttpCode.OK,
+                payload
+            };
+        } catch(error: unknown) {
+            return error instanceof HttpError ? {
+                    status: error.status,
+                    payload: {
+                        message: error.message
+                    }
+                } : {
+                    status: HttpCode.INTERNAL_SERVER_ERROR,
+                    payload: {
+                        message: 'Internal server error.'
+                    }
+                };
+        }
     }
 }
 

@@ -1,3 +1,5 @@
+import { HttpCode, HttpError } from 'shared/build/index.js';
+
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { type IService } from '~/common/interfaces/interfaces.js';
 
@@ -60,8 +62,24 @@ class UserService implements IService {
 
     public async delete(
         id: string,
-    ): Promise<UserEntityFields | null> {
-        return this.userRepository.delete(id);
+    ): Promise<UserEntityFields> {
+        try{
+            const deletedUser = await this.userRepository.delete(id);
+
+            if (!deletedUser) {
+                throw new HttpError({
+                    message: 'User not found',
+                    status: HttpCode.NOT_FOUND
+                });
+            }
+
+            return deletedUser;
+        } catch{
+            throw new HttpError({
+                message:'Bad request',
+                status: HttpCode.BAD_REQUEST
+            });
+        }
     }
 }
 
