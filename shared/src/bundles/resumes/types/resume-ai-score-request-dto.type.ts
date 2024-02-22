@@ -1,5 +1,5 @@
 type ResumeAiScoreRequestDto = {
-    file: string;
+    resume: string;
 };
 
 export { type ResumeAiScoreRequestDto };

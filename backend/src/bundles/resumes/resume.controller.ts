@@ -1,7 +1,9 @@
+import { HttpCode } from 'shared/build/index.js';
+
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
-} from '~/common/controller/controller';
+} from '~/common/controller/controller.js';
 import { Controller } from '~/common/controller/controller.package.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
@@ -35,10 +37,9 @@ class ResumeController extends Controller {
             body: ResumeAiScoreRequestDto;
         }>,
     ): Promise<ApiHandlerResponse<ResumeAiScoreResponseDto>> {
-        const { file } = options.body;
-        const score = await this.resumeService.giveResumeScore({ file });
+        const score = await this.resumeService.giveResumeScore(options.body);
         return {
-            status: 200,
+            status: HttpCode.OK,
             payload: score,
         };
     }
