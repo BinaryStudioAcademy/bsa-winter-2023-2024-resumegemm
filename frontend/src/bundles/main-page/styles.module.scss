@@ -3,27 +3,20 @@
     background-color: #e4e7eb;
 }
 
-.main {
-    max-width: 1250px;
-    margin: 0 auto;
-}
-
-.main__header {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1250px;
+    margin: 0 auto;
     padding: 16px 0;
 }
 
-.main__logo {
+.header__logo {
     width: 215px;
 }
 
-.main__avatar {
-    padding: 1px;
-}
-
-.main__avatar img {
+.header__avatar img {
     width: 51px;
     height: 51px;
     border-radius: 100%;
