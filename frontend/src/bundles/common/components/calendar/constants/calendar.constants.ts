@@ -19,8 +19,8 @@ const CalendarMonths: CalendarMonth[] = [
     { num: 11, name: 'Dec' }
 ];
 
-export {
+export { 
     CalendarMonths,
     monthRegex,
-    yearRegex
+    yearRegex 
 };

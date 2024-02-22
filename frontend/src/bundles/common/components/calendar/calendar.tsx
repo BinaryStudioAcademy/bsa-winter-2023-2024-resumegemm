@@ -5,9 +5,9 @@ import { Calendar as ReactCalendar } from 'react-calendar';
 
 import { CalendarTypes } from '../../enums/calendar/calendar-types.enum';
 import { useClickOutside } from '../../hooks/use-click-outside/use-click-outside.hook';
-import { type CalendarDate, type CalendarMonth, type ValueOf, } from '../../types/types';
+import { type CalendarDate, type CalendarMonth,type ValueOf } from '../../types/types';
 import { Switch } from '../components';
-import { CalendarMonths, monthRegex,yearRegex, } from './constants/calendar.constants';
+import { CalendarMonths, monthRegex,yearRegex } from './constants/calendar.constants';
 import styles from './styles.module.scss';
 
 type Properties = {
@@ -65,7 +65,7 @@ const Calendar = ({
         }
     }, []);
 
-    const handleInputFocus = useCallback((focused: boolean) =>
+    const handleInputFocus = useCallback((focused: boolean) => 
         clsx(styles.calendar__date_input, styles.calendar__date_input, focused && styles.focused)
     , []);
 
@@ -83,11 +83,11 @@ const Calendar = ({
         }
     }, []);
 
-    const handleMonthSelect = useCallback(({ date }: { date: Date }) =>
+    const handleMonthSelect = useCallback(({ date }: { date: Date }) => 
         clsx(styles.date_picker__option, date.getMonth() === month?.num && styles.date_picker__selected)
     , [month]);
 
-    const handleYearSelected = useCallback((selected: number | null) =>
+    const handleYearSelected = useCallback((selected: number | null) => 
         clsx(styles.date_picker__option, styles.date_picker__option_year, selected === null && styles.date_picker__selected)
     , []);
 
@@ -137,10 +137,10 @@ const Calendar = ({
                         </button>
 
                         <button
-                            className={handleYearSelected(selected)}
-                            onClick={selectYear}
-                            onKeyDown={selectYear}
-                        >
+                                className={handleYearSelected(selected)}
+                                onClick={selectYear}
+                                onKeyDown={selectYear}
+                            >
                             {year}
                         </button>
 
@@ -148,15 +148,15 @@ const Calendar = ({
                         </button>
                     </div>
 
-                    <ReactCalendar defaultView="year" minDetail="year" maxDetail="year"
-                        tileClassName={handleMonthSelect}
-                        onClickMonth={selectMonth}
+                    <ReactCalendar defaultView="year" minDetail='year' maxDetail='year'
+                        tileClassName={handleMonthSelect} 
+                        onClickMonth={selectMonth} 
                         showNavigation={false}
                     />
 
                     {type === CalendarTypes.withPresent &&
                         <div className={styles.date_picker__present}>
-                            <Switch onChange={setPresent} label="Present" checked={present}/>
+                            <Switch onChange={setPresent} label='Present' checked={present} />
                         </div>
                     }
                 </div>

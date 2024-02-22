@@ -16,13 +16,13 @@ const NotFoundPage = (): JSX.Element => {
     return <div className={styles.not_found_page__container}>
         <div className={styles.not_found_page__content_container}>
             <h1 className={styles.not_found_page__title}>
-                4
+                    4
 
-            <span className={styles.not_found_page__title_marked}>
-                0
-            </span>
-
-                4
+                <span className={styles.not_found_page__title_marked}>
+                    0
+                </span>
+                
+                    4
             </h1>
             <h3 className={styles.not_found_page__subtitle}>
                 Page Not Found
@@ -33,8 +33,8 @@ const NotFoundPage = (): JSX.Element => {
             <BaseButton variant={ButtonVariant.PRIMARY} onClick={navigateHome}>
                 <p>Go home</p>
             </BaseButton>
-            </div>
-        </div>;
+        </div>
+    </div>;
 };
 
 export {

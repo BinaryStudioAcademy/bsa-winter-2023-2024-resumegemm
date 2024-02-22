@@ -1,5 +1,5 @@
 import reactLogo from '~/assets/img/react.svg';
-import { 
+import {
     Link,
     RouterOutlet,
 } from '~/bundles/common/components/components.js';
