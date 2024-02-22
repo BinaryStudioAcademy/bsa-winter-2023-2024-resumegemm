@@ -1,5 +1,9 @@
 import { type SizeProp } from '@fortawesome/fontawesome-svg-core';
-import { faFacebookF, faGoogle, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import {
+    faFacebookF,
+    faGoogle,
+    faLinkedin,
+} from '@fortawesome/free-brands-svg-icons';
 import {
     faChevronDown,
     faEye,

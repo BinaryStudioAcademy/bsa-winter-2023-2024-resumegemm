@@ -20,7 +20,6 @@ const Stepper = ({
                 return (
                     <div className={styles.wrapper} key={index}>
                         <Step
-                            
                             label={label}
                             index={index}
                             isActive={index === activeStep}
