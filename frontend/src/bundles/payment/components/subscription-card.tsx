@@ -13,6 +13,7 @@ type Properties = {
     price: number | null;
     onClick: () => void;
     selected: boolean;
+    image: string[]
 };
 
 const SubscriptionCard: React.FC<Properties> = ({
@@ -22,9 +23,12 @@ const SubscriptionCard: React.FC<Properties> = ({
     description,
     price,
     onClick,
-    selected
+    selected,
+    image
 }) => {
     return <div className={clsx(styles.subscription_card__container, selected && styles.subscription_card__container_selected)}>
+        {image[0] && <img src={image[0]} alt='price' />}
+        
         <h2 className={styles.subscription_card__title}>{title}</h2>
 
         <h3 className={styles.subscription_card__info}>{price} {currency}</h3>

@@ -113,6 +113,7 @@ const SubscriptionPaymentPage: React.FC = () => {
             <div className={styles.payment__prices_container}>
                 { prices.map((price) => 
                 <SubscriptionCard
+                    image={price.product.images}
                     onClick={handlePriceChange(price.id)}
                     key={price.id} 
                     price={price.unit_amount} 
