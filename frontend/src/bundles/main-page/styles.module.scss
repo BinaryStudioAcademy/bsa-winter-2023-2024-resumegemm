@@ -1,17 +1,22 @@
+.wrapper .wrapper__line {
+    height: 1px;
+    background-color: #e4e7eb;
+}
+
 .main {
-    padding: 1px;
+    max-width: 1250px;
+    margin: 0 auto;
 }
 
 .main__header {
-    width: 215px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
 }
 
 .main__logo {
-    padding: 1px;
-}
-
-.main__tabs {
-    padding: 1px;
+    width: 215px;
 }
 
 .main__avatar {
