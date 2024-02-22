@@ -15,6 +15,7 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { store } from '~/framework/store/store';
 
 import { LandingPage } from './bundles/landing-page/landing-page';
+import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { PreviewPage } from './bundles/preview/preview';
 import { Profile } from './bundles/users/pages/profile';
@@ -47,6 +48,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             {
                                 path: AppRoute.PROFILE,
                                 element: <Profile />,
+                            },
+                            {
+                                path: AppRoute.HOME,
+                                element: <MainPage />,
                             },
                         ],
                     },
