@@ -3,9 +3,10 @@ import { type OpenAIService } from '../open-ai/open-ai.service.js';
 import {
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
+    type ResumeService as TResumeService,
 } from './types/types';
 
-class ResumeService {
+class ResumeService implements TResumeService {
     private openAIService: OpenAIService;
 
     public constructor(openAIService: OpenAIService) {

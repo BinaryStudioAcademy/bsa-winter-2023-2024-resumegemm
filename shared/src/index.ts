@@ -8,6 +8,7 @@ export { type Profile } from './bundles/profile/profile.js';
 export {
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
+    type ResumeService,
     SkillLevel,
 } from './bundles/resumes/resumes.js';
 export {

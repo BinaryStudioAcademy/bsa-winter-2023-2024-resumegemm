@@ -7,16 +7,16 @@ import {
 import { Controller } from '~/common/controller/controller.package.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
-import { type ResumeService } from './resume.service.js';
 import {
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
+    type ResumeService as TResumeService,
 } from './types/types.js';
 
 class ResumeController extends Controller {
-    private resumeService: ResumeService;
+    private resumeService: TResumeService;
 
-    public constructor(logger: ILogger, resumeService: ResumeService) {
+    public constructor(logger: ILogger, resumeService: TResumeService) {
         super(logger, '/resume-score');
         this.resumeService = resumeService;
 
