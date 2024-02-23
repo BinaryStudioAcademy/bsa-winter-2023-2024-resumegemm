@@ -7,6 +7,15 @@ export {
 export { type Profile } from './bundles/profile/profile.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
+    type ResumeCreateItemRequestDto,
+    type ResumeDto,
+    type ResumeGetAllResponseDto,
+    type ResumeGetItemRequestDto,
+    type ResumeGetItemResponseDto,
+    type ResumeUpdateItemRequestDto,
+    ResumesApiPath,
+} from './bundles/resumes/resumes.js';
+export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
