@@ -11,60 +11,64 @@ const languageOptions = [
     { value: LanguageLevels.BEGINNER, label: LanguageLevels.BEGINNER },
     { value: LanguageLevels.ELEMENTARY, label: LanguageLevels.ELEMENTARY },
     { value: LanguageLevels.INTERMEDIATE, label: LanguageLevels.INTERMEDIATE },
-    { value: LanguageLevels.UPPER_INTERMEDIATE, label: LanguageLevels.UPPER_INTERMEDIATE },
+    {
+        value: LanguageLevels.UPPER_INTERMEDIATE,
+        label: LanguageLevels.UPPER_INTERMEDIATE,
+    },
     { value: LanguageLevels.ADVANCED, label: LanguageLevels.ADVANCED },
-    { value: LanguageLevels.PROFICIENT, label: LanguageLevels.PROFICIENT }
+    { value: LanguageLevels.PROFICIENT, label: LanguageLevels.PROFICIENT },
 ];
 
 type Properties = {
-    onSubmit?: () => void
-    onChange?: (language: Language) => void
+    onSubmit?: () => void;
+    onChange?: (language: Language) => void;
 };
 
 const LanguagesForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
     const [languageData, setLanguageData] = useState<Language>({
         title: '',
-        level: LanguageLevels.BEGINNER
+        level: LanguageLevels.BEGINNER,
     });
 
-    const handleInputChange =
-        useCallback((event_: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event_.target;
+    const handleInputChange = useCallback(
+        (event_: React.ChangeEvent<HTMLInputElement>) => {
+            const { name, value } = event_.target;
 
-        setLanguageData((previousState) => ({
-            ...previousState,
-            [name]: value
-        }));
+            setLanguageData((previousState) => ({
+                ...previousState,
+                [name]: value,
+            }));
 
-        if (onChange) {
-            onChange({ ...languageData, [name]: value });
-        }
-    }, [languageData, onChange]);
+            if (onChange) {
+                onChange({ ...languageData, [name]: value });
+            }
+        },
+        [languageData, onChange],
+    );
 
-    const handleDropdownChange =
-        useCallback((value: string | undefined) => {
+    const handleDropdownChange = useCallback((value: string | undefined) => {
         if (value !== undefined) {
             setLanguageData((previousState) => ({
                 ...previousState,
-                level: value as LanguageLevels
+                level: value as LanguageLevels,
             }));
         }
     }, []);
 
     return (
         <form onSubmit={onSubmit} className={styles.languages}>
-            <FormGroup label='Language'>
+            <FormGroup label="Language">
                 <Input
-                    placeholder='Text'
-                    type='text'
-                    name='title'
+                    placeholder="Text"
+                    type="text"
+                    name="title"
                     value={languageData.title}
                     onChange={handleInputChange}
                 />
             </FormGroup>
-            <FormGroup label='Level'>
+            <FormGroup label="Level">
                 <Dropdown
-                    name='level'
+                    name="level"
                     options={languageOptions}
                     onChange={handleDropdownChange}
                 />

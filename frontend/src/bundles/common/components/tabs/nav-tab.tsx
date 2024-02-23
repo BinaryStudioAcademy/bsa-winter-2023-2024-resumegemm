@@ -16,7 +16,7 @@ type Properties = {
 };
 
 const getNavLinkClassName = ({ isActive }: { isActive: boolean }): string =>
-        clsx(styles.tab__item, isActive && styles.active);
+    clsx(styles.tab__item, isActive && styles.active);
 
 const NavTabs: React.FC<Properties> = ({ items }) => {
     return (
