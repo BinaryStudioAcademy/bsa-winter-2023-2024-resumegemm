@@ -1,7 +1,9 @@
+import { type IncomingHttpHeaders } from 'node:http';
+
 import {
     type UserEntityFields,
     type UserSignUpRequestDto,
-    type UserSignUpResponseDto
+    type UserSignUpResponseDto,
 } from 'shared/build/index.js';
 
 interface IService<T = unknown> {
@@ -23,7 +25,7 @@ interface IService<T = unknown> {
 
     update(): Promise<T>;
 
-    delete(id: string): Promise<UserEntityFields>;
+    delete(headers: IncomingHttpHeaders): Promise<UserEntityFields>;
 }
 
 export { type IService };

@@ -44,12 +44,12 @@ class UserController extends Controller {
         });
 
         this.addRoute({
-            path: '/:id',
+            path: UsersApiPath.ROOT,
             method: 'DELETE',
             handler: (options) =>
                 this.delete(
                     options as ApiHandlerOptions<{
-                        params: FastifyRequest['params'];
+                        headers: FastifyRequest['headers'];
                     }>,
                 ),
         });
@@ -83,14 +83,7 @@ class UserController extends Controller {
      * @swagger
      * /users/$id:
      *   delete:
-     *     description: Delete a user by ID
-     *     parameters:
-     *       - in: path
-     *         name: id
-     *         description: ID of the user to be deleted
-     *         required: true
-     *         schema:
-     *           type: string
+     *     description: Delete current user
      *     responses:
      *       200:
      *         description: Successful operation
@@ -108,7 +101,7 @@ class UserController extends Controller {
      *                 message:
      *                   type: string
      *               example:
-     *                 message: Input request parameters are invalid.
+     *                 message: User's id is invalid.
      *       404:
      *         description: User not found
      *         content:
@@ -122,14 +115,12 @@ class UserController extends Controller {
      *                 message: User not found.
      */
     private async delete({
-        params,
+        headers,
     }: ApiHandlerOptions<{
-        params: FastifyRequest['params'];
+        headers: FastifyRequest['headers'];
     }>): Promise<ApiHandlerResponse<UserEntityFields>> {
         try {
-            const payload = await this.userService.delete(
-                (params as Record<'id', string>).id,
-            );
+            const payload = await this.userService.delete(headers);
             return {
                 status: HttpCode.OK,
                 payload,

@@ -1,8 +1,12 @@
+import { type IncomingHttpHeaders } from 'node:http';
+
+import { type JwtPayload } from 'jsonwebtoken';
 import { HttpCode, HttpError } from 'shared/build/index.js';
 
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { type IService } from '~/common/interfaces/interfaces.js';
 
+import { decodeToken, getToken } from '../auth/helpers/helpers.js';
 import {
     type UserEntityFields,
     type UserGetAllResponseDto,
@@ -61,25 +65,28 @@ class UserService implements IService {
     }
 
     public async delete(
-        id: string,
+        headers: IncomingHttpHeaders,
     ): Promise<UserEntityFields> {
-        try{
-            const deletedUser = await this.userRepository.delete(id);
+        const token = getToken(headers);
 
-            if (!deletedUser) {
-                throw new HttpError({
-                    message: 'User not found',
-                    status: HttpCode.NOT_FOUND
-                });
-            }
-
-            return deletedUser;
-        } catch{
+        if (!token) {
             throw new HttpError({
-                message:'Bad request',
-                status: HttpCode.BAD_REQUEST
+                message: 'Token not found',
+                status: HttpCode.BAD_REQUEST,
             });
         }
+
+        const { id } = decodeToken(token) as JwtPayload;
+        const deletedUser = await this.userRepository.delete(id);
+
+        if (!deletedUser) {
+            throw new HttpError({
+                message: 'User not found',
+                status: HttpCode.NOT_FOUND,
+            });
+        }
+
+        return deletedUser;
     }
 }
 
