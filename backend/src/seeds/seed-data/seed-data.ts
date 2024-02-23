@@ -2,6 +2,8 @@ export { contactsSeed } from './contacts-seed.js';
 export { educationSeed } from './education-seed.js';
 export { experienceSeed } from './experience-seed.js';
 export { imagesSeed } from './images-seed.js';
+export { industriesSeed } from './industries-seed.js';
+export { professionsSeed } from './professions-seed.js';
 export { profileSeeds } from './profile-seed.js';
 export { personalInformationSeed } from './repsonal-information-seed.js';
 export { resumesSeed } from './resumes-seed.js';

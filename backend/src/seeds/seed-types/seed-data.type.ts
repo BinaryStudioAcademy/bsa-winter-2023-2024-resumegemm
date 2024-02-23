@@ -71,11 +71,24 @@ type PersonalInformation = {
     state: string;
 };
 
+type Industry = {
+    id: number;
+    industry: string;
+};
+
+type Profession = {
+    id: string;
+    profession: string;
+    industry_id: number;
+};
+
 export {
     type ContactDetails,
     type Education,
     type Experience,
+    type Industry,
     type PersonalInformation,
+    type Profession,
     type Profile,
     type Resume,
     type Review,

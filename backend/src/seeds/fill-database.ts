@@ -23,7 +23,9 @@ import {
     educationSeed,
     experienceSeed,
     imagesSeed,
+    industriesSeed,
     personalInformationSeed,
+    professionsSeed,
     profileSeeds,
     resumesSeed,
     reviewsSeed,
@@ -57,6 +59,8 @@ async function seed(knex: Knex): Promise<void> {
             DatabaseTableName.PERSONAL_INFORMATION,
             DatabaseTableName.TECHNICAL_SKILLS,
             DatabaseTableName.RECENTLY_VIEWED,
+            DatabaseTableName.INDUSTRIES,
+            DatabaseTableName.PROFESSIONS,
         ];
         await deleteFromTables(trx, tableNames);
 
@@ -180,6 +184,27 @@ async function seed(knex: Knex): Promise<void> {
 
         await trx(DatabaseTableName.RECENTLY_VIEWED)
             .insert(recentlyViewedSeed)
+            .returning('*');
+
+        // INDUSTRIES
+
+        const industriesMappedSeed = industriesSeed.map((industry) => ({
+            ...industry,
+        }));
+
+        await trx(DatabaseTableName.INDUSTRIES)
+            .insert(industriesMappedSeed)
+            .returning('*');
+
+        //PROFESSIONS
+
+        const professionsMappedSeed = professionsSeed.map((profession) => ({
+            ...profession,
+            [DatabaseColumnName.ID]: guid.raw(),
+        }));
+
+        await trx(DatabaseTableName.PROFESSIONS)
+            .insert(professionsMappedSeed)
             .returning('*');
     });
 }
