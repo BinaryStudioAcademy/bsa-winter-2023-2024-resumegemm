@@ -12,6 +12,8 @@ enum DatabaseTableName {
     USER_TEMPLATES = 'user_templates',
     REVIEWS = 'reviews',
     RECENTLY_VIEWED = 'recently_viewed',
+    INDUSTRIES = 'industries',
+    PROFESSIONS = 'professions',
 }
 
 export { DatabaseTableName };
