@@ -32,9 +32,9 @@ class UserApi extends HttpApi {
         return await response.json<UserGetAllResponseDto>();
     }
 
-    public async deleteProfile(id: string): Promise<UserEntityFields> {
+    public async deleteProfile(): Promise<UserEntityFields> {
         const response = await this.load(
-            this.getFullEndpoint(`${UsersApiPath.ROOT}${id}`, {}),
+            this.getFullEndpoint(`${UsersApiPath.ROOT}`, {}),
             {
                 method: 'DELETE',
                 contentType: ContentType.JSON,

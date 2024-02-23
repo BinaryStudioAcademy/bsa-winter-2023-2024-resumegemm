@@ -17,13 +17,12 @@ const loadAll = createAsyncThunk<
 });
 const deleteProfile = createAsyncThunk<
     UserGetAllResponseDto,
-    { id: string },
+    undefined,
     AsyncThunkConfig
->(`${sliceName}/delete`, async (payload, { extra }) => {
-    const { id } = payload;
+>(`${sliceName}/delete`, async (_, { extra }) => {
     const { userApi, storageApi } = extra;
 
-    const user = await userApi.deleteProfile(id);
+    const user = await userApi.deleteProfile();
 
     if (user) {
         await storageApi.drop(StorageKey.ACCESS_TOKEN);
