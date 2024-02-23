@@ -1,0 +1,63 @@
+.delete__button {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.delete__button__icon svg {
+    display: flex;
+    flex-shrink: 0;
+    margin-right: 8px;
+    color: rgb(26 145 240);
+}
+
+.delete__button__text {
+    color: rgb(30 37 50);
+    font-weight: 400;
+    font-size: 19px;
+    font-family: "TT Commons", system-ui, "Segoe UI";
+    transition: color 0.15s ease 0s;
+}
+
+.delete__button__text:hover {
+    color: rgb(26 145 240);
+    transition: color 0.15s ease 0s;
+}
+
+.modal_content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 20px;
+}
+
+.modal_buttons {
+    display: flex;
+    gap: 15px;
+    margin-left: auto;
+}
+
+.modal__cancel__button,
+.modal__delete__button {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    border-radius: 4px;
+}
+
+.modal__cancel__button {
+    padding: 13px 24px 13px 20px;
+    text-align: center;
+    background-color: rgb(26 145 240);
+    border: none;
+}
+
+.modal__cancel__button,
+.modal__cancel__button:hover {
+    color: #ffffff;
+}
+
+.modal__delete__button {
+    color: #000000;
+    text-shadow: none;
+    box-shadow: rgb(217 222 235) 0 0 0 1 inset;
+}
