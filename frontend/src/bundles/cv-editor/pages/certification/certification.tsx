@@ -1,23 +1,22 @@
-import React, { type ChangeEvent, useCallback, useState } from 'react';
+import React, { type ChangeEvent, useCallback } from 'react';
 
-import { Calendar } from '~/bundles/common/components/components';
+import { Calendar } from '~/bundles/common/components/calendar/calendar';
 import { FormGroup } from '~/bundles/common/components/form-group/form-group';
 import { Input } from '~/bundles/common/components/input/input';
-import { type Education } from '~/bundles/cv-editor/types/education/education.type';
+import { type Certification } from '~/bundles/cv-editor/types/certification/certification.type';
 
 import styles from './styles.module.scss';
 
 type Properties = {
     onSubmit?: () => void;
-    onChange?: (education: Education) => void;
+    onChange?: (certification: Certification) => void;
 };
 
-const EducationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
-    const [education, setEducation] = useState<Education>({
-        institutionName: '',
-        degree: '',
-        city: '',
-        country: '',
+const CertificationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
+    const [certification, setCertification] = React.useState<Certification>({
+        title: '',
+        authority: '',
+        url: '',
         description: '',
         startDate: null,
         endDate: null,
@@ -27,33 +26,26 @@ const EducationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
         (event_: ChangeEvent<HTMLInputElement>): void => {
             const { name, value } = event_.target;
 
-            setEducation((previousState) => ({
-                ...previousState,
+            const updatedCertification = {
+                ...certification,
                 [name]: value,
-            }));
+            };
+            setCertification(updatedCertification);
 
             if (onChange) {
-                onChange({ ...education, [name]: value });
+                onChange(updatedCertification);
             }
         },
-        [education, onChange],
+        [certification, onChange],
     );
 
     return (
-        <form onSubmit={onSubmit} className={styles.education}>
-            <FormGroup label={'Institution name'}>
+        <form className={styles.certification} onSubmit={onSubmit}>
+            <FormGroup label={'Certification name'}>
                 <Input
                     placeholder={'Text'}
-                    name={'institutionName'}
-                    value={education.institutionName}
-                    onChange={handleInputChange}
-                />
-            </FormGroup>
-            <FormGroup label={'Degree'}>
-                <Input
-                    placeholder={'Text'}
-                    name={'degree'}
-                    value={education.degree}
+                    name={'title'}
+                    value={certification.title}
                     onChange={handleInputChange}
                 />
             </FormGroup>
@@ -61,29 +53,29 @@ const EducationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
                 <Input
                     placeholder={'Text'}
                     name={'description'}
-                    value={education.description}
+                    value={certification.description}
                     onChange={handleInputChange}
                 />
             </FormGroup>
-            <div className={styles.education__last_block}>
-                <FormGroup label={'City'} width={'50%'}>
+            <div className={styles.certification__last_block}>
+                <FormGroup label={'Authority'} width={'50%'}>
                     <Input
                         placeholder={'Text'}
-                        name={'city'}
-                        value={education.city}
+                        name={'authority'}
+                        value={certification.authority}
                         onChange={handleInputChange}
                     />
                 </FormGroup>
-                <FormGroup label={'Country'} width={'50%'}>
+                <FormGroup label={'Url'} width={'50%'}>
                     <Input
                         placeholder={'Text'}
-                        name={'country'}
-                        value={education.country}
+                        name={'url'}
+                        value={certification.url}
                         onChange={handleInputChange}
                     />
                 </FormGroup>
             </div>
-            <div className={styles.education__last_block}>
+            <div className={styles.certification__last_block}>
                 <FormGroup label={'Start date'} width={'50%'}>
                     <Calendar
                     // TODO: calendar needs to accept parameters to pre-display the value
@@ -101,4 +93,4 @@ const EducationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
     );
 };
 
-export { EducationForm };
+export { CertificationForm };
