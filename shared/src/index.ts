@@ -4,6 +4,10 @@ export {
     type EncryptionDataPayload,
     AuthApiPath,
 } from './bundles/auth/auth.js';
+export {
+    type Industry,
+    IndustriesApiPath,
+} from './bundles/industries/industries.js';
 export { type Profile } from './bundles/profile/profile.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
