@@ -13,6 +13,7 @@ import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
+import { QuestionAndAnswer } from '../question-and-answer/question-and-answer';
 import styles from './styles.module.scss';
 
 const navbarItems = [
@@ -62,6 +63,9 @@ const PreviewPage: React.FC = () => {
                 </li>
                 <li className={styles.auth}>
                     <Auth />
+                </li>
+                <li>
+                    <QuestionAndAnswer />
                 </li>
             </ul>
         </div>
