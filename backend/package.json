@@ -23,6 +23,7 @@
         "@types/bcrypt": "5.0.2",
         "@types/convict": "6.1.1",
         "@types/jsonwebtoken": "9.0.5",
+        "@types/pug": "2.0.10",
         "@types/swagger-jsdoc": "6.0.1",
         "nodemon": "2.0.21",
         "ts-node": "10.9.1",
@@ -38,13 +39,14 @@
         "dotenv": "16.0.3",
         "fastify": "4.11.0",
         "fastify-plugin": "4.5.1",
+        "guid-typescript": "1.0.9",
+        "jsonwebtoken": "9.0.2",
         "knex": "2.4.2",
         "objection": "3.0.1",
         "pg": "8.9.0",
         "pino": "8.8.0",
         "pino-pretty": "9.1.1",
-        "swagger-jsdoc": "6.2.8",
-        "guid-typescript": "1.0.9",
-        "jsonwebtoken": "9.0.2"
+        "pug": "3.0.2",
+        "swagger-jsdoc": "6.2.8"
     }
 }

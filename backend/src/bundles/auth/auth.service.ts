@@ -21,12 +21,35 @@ import {
     type UserWithProfileRelation,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
+import { type IConfig } from '~/common/config/config.js';
+
+import { getTemplate } from './helpers/get-template';
+
+const emailService = {
+    sendEmail: (object: emailMockupType): void => {
+        `${object.html}Wait for task #37 Email Servise - will be changed after merging`;
+    },
+};
+
+type ConstructorType = {
+    userService: UserService;
+    config: IConfig;
+};
+
+type emailMockupType = {
+    to: string;
+    subject: string;
+    text: string;
+    html: string;
+};
 
 class AuthService implements TAuthService {
     private userService: UserService;
+    private config: IConfig;
 
-    public constructor(userService: UserService) {
+    public constructor({ userService, config }: ConstructorType) {
         this.userService = userService;
+        this.config = config;
     }
 
     public async signUp(
@@ -49,17 +72,38 @@ class AuthService implements TAuthService {
             passwordSalt,
         );
 
-        const { id } = await this.userService.create(
+        const newUser = await this.userService.create(
             userRequestDto,
             passwordSalt,
             passwordHash,
         );
+        const { id } = newUser;
+        const token = generateToken({ id });
+        this.sendAfterSignUpEmail(userRequestDto.email);
 
         const user = await this.userService.getUserWithProfile(id);
 
         return {
             user,
+            token,
         };
+    }
+
+    private sendAfterSignUpEmail(email: string): void {
+        const emailMockup = getTemplate({
+            name: 'sign-up-email-template',
+            context: {
+                title: 'ResumeGemm',
+                dashboardLink: this.config.ENV.EMAIL.DASHBOARD_LINK,
+                logoLink: this.config.ENV.EMAIL.APP_LOGO_LINK,
+            },
+        });
+        emailService.sendEmail({
+            to: email,
+            subject: 'You have successfully registred on ResumeGemm',
+            text: 'You have successfully registred on ResumeGemm',
+            html: emailMockup,
+        });
     }
 
     public async login({

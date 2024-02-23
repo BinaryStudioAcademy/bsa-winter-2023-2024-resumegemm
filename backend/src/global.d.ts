@@ -5,3 +5,7 @@ declare module 'fastify' {
         user?: User;
     }
 }
+
+declare module 'pug';
+declare module 'dotenv';
+declare module 'guid-typescript';

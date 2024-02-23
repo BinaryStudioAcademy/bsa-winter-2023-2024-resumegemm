@@ -35,7 +35,7 @@ class UserService implements IService {
         { email, firstName, lastName }: UserSignUpRequestDto,
         passwordSalt: string,
         passwordHash: string,
-    ): Promise<Pick<UserEntityFields, 'id'>> {
+    ): Promise<Pick<UserEntityFields, 'id' | 'email'>> {
         const user = await this.userRepository.createUserWithProfile(
             {
                 email,
