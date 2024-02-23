@@ -17,6 +17,7 @@ export { RadioButton } from './radio-button/radio-button.js';
 export { RouterProvider } from './router-provider/router-provider.js';
 export { Spinner } from './spinner/spinner';
 export { Switch } from './switch/switch.js';
+export { NavTabs } from './tabs/nav-tab.js';
 export { Tooltip } from './tooltip/tooltip.js';
 export { Provider as StoreProvider } from 'react-redux';
 export { Outlet as RouterOutlet } from 'react-router-dom';
