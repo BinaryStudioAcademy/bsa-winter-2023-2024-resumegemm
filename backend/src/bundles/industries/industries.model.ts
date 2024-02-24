@@ -3,7 +3,7 @@ import { Model } from 'objection';
 import { DatabaseTableName } from '~/common/database/database.js';
 
 class IndustriesModel extends Model {
-    public 'id': number;
+    public 'id': string;
 
     public 'industry': string;
 
