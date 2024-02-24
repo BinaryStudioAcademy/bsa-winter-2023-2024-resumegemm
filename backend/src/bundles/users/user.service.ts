@@ -31,11 +31,16 @@ class UserService implements IService {
         };
     }
 
-    public async create(
-        { email, firstName, lastName }: UserSignUpRequestDto,
-        passwordSalt: string,
-        passwordHash: string,
-    ): Promise<Pick<UserEntityFields, 'id'>> {
+    public async create({
+        email,
+        firstName,
+        lastName,
+        passwordSalt,
+        passwordHash,
+    }: UserSignUpRequestDto & {
+        passwordSalt: string;
+        passwordHash: string;
+    }): Promise<Pick<UserEntityFields, 'id'>> {
         const user = await this.userRepository.createUserWithProfile(
             {
                 email,
