@@ -1,0 +1,38 @@
+.modal_content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 20px;
+}
+
+.modal_buttons {
+    display: flex;
+    gap: 15px;
+    margin-left: auto;
+}
+
+.modal_buttons .modal__cancel__button,
+.modal_buttons .modal__delete__button {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    border: none;
+    border-radius: 4px;
+}
+
+.modal_buttons .modal__cancel__button {
+    padding: 13px 24px 13px 20px;
+    text-align: center;
+    background-color: rgb(26 145 240);
+    border: none;
+}
+
+.modal_buttons .modal__cancel__button,
+.modal__cancel__button:hover {
+    color: #ffffff;
+}
+
+.modal_buttons .modal__delete__button {
+    color: #000000;
+    text-shadow: none;
+    box-shadow: rgba(217 222 235 / 50%) 0 0 10px 1px inset;
+}
