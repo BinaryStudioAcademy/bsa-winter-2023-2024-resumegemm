@@ -4,6 +4,16 @@ export {
     type EncryptionDataPayload,
     AuthApiPath,
 } from './bundles/auth/auth.js';
+export {
+    type GithubUserWithProfileRelation,
+    type OauthUserEntityFields,
+    type UserGithubDataResponseDto,
+    type UserGithubLoginRequestDto,
+    type UserGithubLoginResponseDto,
+    OauthStrategy,
+    OpenAuthApiGetUserUrl,
+    OpenAuthApiPath,
+} from './bundles/open-auth/open-auth.js';
 export { type Profile } from './bundles/profile/profile.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
