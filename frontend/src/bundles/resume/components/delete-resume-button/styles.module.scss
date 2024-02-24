@@ -1,0 +1,25 @@
+.delete__button {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.delete__button__icon svg {
+    display: flex;
+    flex-shrink: 0;
+    margin-right: 8px;
+    color: rgb(26 145 240);
+}
+
+.delete__button__text {
+    color: rgb(30 37 50);
+    font-weight: 400;
+    font-size: 19px;
+    font-family: "TT Commons", system-ui, "Segoe UI";
+    transition: color 0.15s ease 0s;
+}
+
+.delete__button__text:hover {
+    color: rgb(26 145 240);
+    transition: color 0.15s ease 0s;
+}
