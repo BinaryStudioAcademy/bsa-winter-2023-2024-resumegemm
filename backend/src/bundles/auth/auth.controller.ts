@@ -156,7 +156,54 @@ class AuthController extends Controller {
      *           description: User not found
      *        401:
      *          description: Invalid email
+     * /auth/get-user:
+     *   get:
+     *     description: Fetch a user's information
+     *     parameters:
+     *       - name: user
+     *         description: The user data
+     *         in: query
+     *         required: true
+     *         schema:
+     *           $ref: '#/components/schemas/User'
+     *     responses:
+     *       200:
+     *         description: Successful operation. Returns user's info.
+     *         content:
+     *           application/json:
+     *             schema:
+     *                type: object
+     *                properties:
+     *                   message:
+     *                      type: object
+     *                      $ref: '#/components/schemas/User'
+     *       500:
+     *         description: Internal server error
+     * /auth/regenerate-token:
+     *   post:
+     *     description: Regenerate a user's access and refresh tokens
+     *     parameters:
+     *       - name: refreshToken
+     *         description: The refresh token cookie
+     *         in: cookie
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: Successful operation. Returns regenerated tokens.
+     *         content:
+     *           application/json:
+     *             schema:
+     *                type: object
+     *                properties:
+     *                  message:
+     *                    type: object
+     *                    $ref: '#/components/schemas/Tokens'
+     *       401:
+     *         description: Invalid refresh token
      */
+
     private async signUp(
         options: ApiHandlerOptions<{
             body: UserSignUpRequestDto;
