@@ -5,7 +5,7 @@ import { DatabaseColumnName } from '~/common/database/enums/database-column-name
 
 function up(knex: Knex): Promise<void> {
     return knex.schema.createTable(DatabaseTableName.INDUSTRIES, (table) => {
-        table.increments(DatabaseColumnName.ID).primary();
+        table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.INDUSTRY).notNullable();
     });
 }
