@@ -1,4 +1,5 @@
 import { authController } from '~/bundles/auth/auth.js';
+import { openAuthController } from '~/bundles/oauth/oauth.js';
 import { templateController } from '~/bundles/templates/templates.js';
 import { userController } from '~/bundles/users/users.js';
 import { config } from '~/common/config/config.js';
@@ -11,6 +12,7 @@ import { ServerAppApi } from './server-app-api.js';
 const apiV1 = new ServerAppApi(
     'v1',
     config,
+    ...openAuthController.routes,
     ...authController.routes,
     ...userController.routes,
     ...templateController.routes,
