@@ -7,16 +7,11 @@ import {
 
 import styles from './styles.module.scss';
 
-type TemplatesProperties = {
-    onFilterOptionSelect: (option: number) => void;
-};
-
-const Templates: React.FC<TemplatesProperties> = ({ onFilterOptionSelect }) => {
+const Templates: React.FC = () => {
     return (
         <div className={styles.layout}>
             <HomeTopSection />
             <TemplateSection
-                onFilterOptionSelect={onFilterOptionSelect}
                 name="Templates"
                 cardLayout={styles.template_page__card_layout}
             >

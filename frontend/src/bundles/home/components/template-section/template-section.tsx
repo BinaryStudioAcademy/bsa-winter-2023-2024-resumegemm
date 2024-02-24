@@ -7,21 +7,15 @@ type Properties = {
     children?: React.ReactNode;
     name: string;
     cardLayout?: string;
-    onFilterOptionSelect: (options: number) => void;
 };
 
 const TemplateSection: React.FC<Properties> = ({
     children,
     name,
     cardLayout,
-    onFilterOptionSelect,
 }: Properties) => {
     return (
-        <PanelContainer
-            name={name}
-            classname={styles.template_section}
-            onFilterOptionSelect={onFilterOptionSelect}
-        >
+        <PanelContainer name={name} classname={styles.template_section}>
             <div className={clsx(styles.template_section__cards, cardLayout)}>
                 {children}
             </div>

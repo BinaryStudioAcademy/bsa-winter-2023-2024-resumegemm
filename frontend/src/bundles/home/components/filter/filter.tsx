@@ -7,11 +7,7 @@ import { actions as industriesActionCreator } from '~/bundles/industries/store/i
 
 import styles from './styles.module.scss';
 
-type FilterProperties = {
-    onOptionSelect: (option: number) => void;
-};
-
-const Filter: React.FC<FilterProperties> = ({ onOptionSelect }) => {
+const Filter: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const [isOpen, setIsOpen] = useState(false);
@@ -32,24 +28,21 @@ const Filter: React.FC<FilterProperties> = ({ onOptionSelect }) => {
         setIsOpen(!isOpen);
     }, [isOpen]);
 
-    const handleOptionClick = useCallback(
-        (event: React.MouseEvent<HTMLButtonElement>): void => {
-            const industryId = +event.currentTarget.id;
-            onOptionSelect(industryId);
-            toggleDropdown();
-        },
-        [onOptionSelect, toggleDropdown],
-    );
+    const handleOptionClick = useCallback((): void => {
+        toggleDropdown();
+    }, [toggleDropdown]);
 
     return (
         <>
             <div className={styles.dropdown}>
-                <IconButton
-                    onClick={toggleDropdown}
-                    className={styles['dropdown__icon-button']}
-                >
-                    <img src={filterIcon} alt="filter icon" />
-                </IconButton>
+                <div className={styles.dropdown__button}>
+                    <IconButton
+                        onClick={toggleDropdown}
+                        className={styles.dropdown__icon__button}
+                    >
+                        <img src={filterIcon} alt="filter icon" />
+                    </IconButton>
+                </div>
                 {isOpen && (
                     <ul className={styles.dropdown_content}>
                         {industries.map((industry, index) => (
