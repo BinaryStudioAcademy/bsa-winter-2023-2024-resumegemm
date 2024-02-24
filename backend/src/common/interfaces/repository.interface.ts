@@ -1,5 +1,3 @@
-import { type UserSignUpResponseDto } from 'shared/build/index.js';
-
 interface IRepository<T = unknown> {
     find(): Promise<T>;
 
@@ -11,7 +9,7 @@ interface IRepository<T = unknown> {
 
     update(): Promise<T>;
 
-    getUserWithProfile(id: string): Promise<UserSignUpResponseDto['user']>;
+    getUserWithProfile(id: string): Promise<T>;
 
     delete(): Promise<boolean>;
 }
