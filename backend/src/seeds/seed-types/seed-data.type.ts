@@ -72,14 +72,8 @@ type PersonalInformation = {
 };
 
 type Industry = {
-    id: number;
-    industry: string;
-};
-
-type Profession = {
     id: string;
-    profession: string;
-    industry_id: number;
+    industry: string;
 };
 
 export {
@@ -88,7 +82,6 @@ export {
     type Experience,
     type Industry,
     type PersonalInformation,
-    type Profession,
     type Profile,
     type Resume,
     type Review,
