@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { CertificationForm } from '../../pages/certification/certificarion';
+import { CertificationForm } from '../../pages/certification/certification';
 import { ContactInfoForm } from '../../pages/contact-info/contact-info';
 import { EducationForm } from '../../pages/education/education';
 import { ExperienceForm } from '../../pages/experience/experience';
+import { LanguagesForm } from '../../pages/languages/languages';
 import { PersonalInfoForm } from '../../pages/personal-info/personal-info';
 import { TechnicalSkillsForm } from '../../pages/technical-skills/technical-skills';
 
@@ -37,6 +38,11 @@ const OnlineEditorTabs = [
         id: 5,
         label: 'Certification',
         content: <CertificationForm />,
+    },
+    {
+        id: 6,
+        label: 'Languages',
+        content: <LanguagesForm />,
     },
 ];
 

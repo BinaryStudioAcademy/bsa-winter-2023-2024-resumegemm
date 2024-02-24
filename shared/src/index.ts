@@ -11,6 +11,13 @@ export {
 export { type Profile } from './bundles/profile/profile.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
+    type TemplateCreateItemRequestDto,
+    type TemplateGetAllItemResponseDto,
+    type TemplateGetAllResponseDto,
+    type TemplateUpdateItemRequestDto,
+} from './bundles/templates/templates.js';
+export { TemplatesApiPath } from './bundles/templates/templates.js';
+export {
     type User,
     type UserAuthResponse,
     type UserEntityFields,
