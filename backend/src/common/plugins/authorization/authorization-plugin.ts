@@ -5,11 +5,11 @@ import {
     AuthException,
 } from 'shared/build/index.js';
 
-import { type AuthService } from '~/bundles/auth/auth.service';
+import { type AuthService } from '~/bundles/auth/auth.service.js';
 import { getToken } from '~/bundles/auth/helpers/helpers.js';
 import { config } from '~/common/config/config.js';
 import { ControllerHook } from '~/common/controller/enums/enums.js';
-import { type IService } from '~/common/interfaces/service.interface';
+import { type IService } from '~/common/interfaces/service.interface.js';
 
 type AuthorizationPluginPayload = {
     publicRoutes: Partial<Record<AuthApiPath, string>>;
