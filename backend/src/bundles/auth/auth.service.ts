@@ -49,11 +49,11 @@ class AuthService implements TAuthService {
             passwordSalt,
         );
 
-        const { id } = await this.userService.create(
-            userRequestDto,
+        const { id } = await this.userService.create({
+            ...userRequestDto,
             passwordSalt,
             passwordHash,
-        );
+        });
 
         const user = await this.userService.getUserWithProfile(id);
 
