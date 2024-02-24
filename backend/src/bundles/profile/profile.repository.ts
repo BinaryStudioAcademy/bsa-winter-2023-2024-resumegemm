@@ -16,10 +16,12 @@ class ProfileRepository implements Partial<IRepository> {
         firstName,
         lastName,
         transaction,
+        avatar,
     }: {
         firstName: string;
-        lastName: string;
+        lastName?: string;
         transaction: Transaction;
+        avatar?: string;
     }): Promise<Profile> {
         return this.profileModel
             .query()
@@ -27,6 +29,7 @@ class ProfileRepository implements Partial<IRepository> {
                 id: guid.raw(),
                 firstName,
                 lastName,
+                avatar,
             })
             .transacting(transaction)
             .returning('*');
