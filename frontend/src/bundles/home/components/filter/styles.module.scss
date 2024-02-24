@@ -2,15 +2,21 @@
     position: relative;
 }
 
-.dropdown__icon-button {
-    padding: 10px;
-    color: white;
+.dropdown__button {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    background-color: var(--color-white);
+    border-radius: 48%;
+}
+
+.dropdown__icon__button {
     font-size: 16px;
     border: none;
     cursor: pointer;
 }
 
-.dropdown__icon-button img {
+.dropdown__icon__button img {
     width: 25px;
     height: 25px;
 }
