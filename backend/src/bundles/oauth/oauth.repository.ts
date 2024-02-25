@@ -24,7 +24,7 @@ class OauthRepository
 
     public async findByOauthId(
         oauthId: number,
-    ): Promise<OauthUserEntityFields | null> {
+    ): ReturnType<TOauthRepository['findByOauthId']> {
         const foundUser = await this.model
             .query()
             .where('oauth_id', oauthId)

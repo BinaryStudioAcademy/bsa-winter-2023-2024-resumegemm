@@ -15,10 +15,7 @@ import {
 } from '~/bundles/auth/helpers/helpers.js';
 import {
     type UserSignInRequestDto,
-    type UserSignInResponseDto,
     type UserSignUpRequestDto,
-    type UserSignUpResponseDto,
-    type UserWithProfileRelation,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 
@@ -31,7 +28,7 @@ class AuthService implements TAuthService {
 
     public async signUp(
         userRequestDto: UserSignUpRequestDto,
-    ): Promise<UserSignUpResponseDto> {
+    ): ReturnType<TAuthService['signUp']> {
         const foundUserByEmail = await this.userService.findByEmail(
             userRequestDto.email,
         );
@@ -65,7 +62,7 @@ class AuthService implements TAuthService {
     public async login({
         email,
         password,
-    }: UserSignInRequestDto): Promise<UserSignInResponseDto> {
+    }: UserSignInRequestDto): ReturnType<TAuthService['login']> {
         const foundUserByEmail = await this.userService.findByEmail(email);
 
         if (!foundUserByEmail) {
@@ -97,7 +94,7 @@ class AuthService implements TAuthService {
 
     public async getUserWithProfile(
         id: string,
-    ): Promise<UserWithProfileRelation> {
+    ): ReturnType<TAuthService['getUserWithProfile']> {
         return await this.userService.getUserWithProfile(id);
     }
 

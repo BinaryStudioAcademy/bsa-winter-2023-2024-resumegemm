@@ -7,22 +7,30 @@ import {
     type UserWithProfileRelation,
 } from './types/types.js';
 
-class UserRepository extends AbstractRepository<
-    typeof UserModel,
-    UserWithProfileRelation | UserEntityFields
-> {
+type TUserRepo = {
+    findOneByEmail(email: string): Promise<UserEntityFields | null>;
+    findAll(): Promise<UserEntity[]>;
+};
+
+class UserRepository
+    extends AbstractRepository<
+        typeof UserModel,
+        UserWithProfileRelation | UserEntityFields
+    >
+    implements TUserRepo
+{
     public constructor({ userModel }: Record<'userModel', typeof UserModel>) {
         super(userModel);
     }
 
     public async findOneByEmail(
         email: string,
-    ): Promise<UserEntityFields | null> {
+    ): ReturnType<TUserRepo['findOneByEmail']> {
         const user = await this.model.query().findOne({ email });
         return user ?? null;
     }
 
-    public async findAll(): Promise<UserEntity[]> {
+    public async findAll(): ReturnType<TUserRepo['findAll']> {
         const users = await this.model.query().execute();
 
         return users.map((it) => UserEntity.initialize(it));
