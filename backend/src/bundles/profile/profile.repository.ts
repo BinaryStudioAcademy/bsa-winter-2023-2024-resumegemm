@@ -21,7 +21,7 @@ class ProfileRepository implements Partial<IRepository> {
         lastName: string;
         transaction: Transaction;
     }): Promise<Profile> {
-        return this.profileModel
+        return await this.profileModel
             .query()
             .insert({
                 id: guid.raw(),
