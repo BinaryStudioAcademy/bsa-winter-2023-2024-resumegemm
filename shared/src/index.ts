@@ -6,6 +6,12 @@ export {
 } from './bundles/auth/auth.js';
 export { type Profile } from './bundles/profile/profile.js';
 export {
+    type RecentlyViewed,
+    type RecentlyViewedRequestDto,
+    type RecentlyViewedResponseDto,
+    RecentlyViewedApiPath,
+} from './bundles/recently-viewed/recently-viewed.js';
+export {
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
     type ResumeService,
