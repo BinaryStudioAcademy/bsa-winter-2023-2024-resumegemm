@@ -1,4 +1,5 @@
 import { authController } from '~/bundles/auth/auth.js';
+import { emailSubscriptionController } from '~/bundles/email-subscriptions/email-subscriptions.js';
 import { templateController } from '~/bundles/templates/templates.js';
 import { userController } from '~/bundles/users/users.js';
 import { config } from '~/common/config/config.js';
@@ -14,6 +15,7 @@ const apiV1 = new ServerAppApi(
     ...authController.routes,
     ...userController.routes,
     ...templateController.routes,
+    ...emailSubscriptionController.routes,
 );
 const serverApp = new ServerApp({
     config,
