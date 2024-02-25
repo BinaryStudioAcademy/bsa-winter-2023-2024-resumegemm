@@ -1,6 +1,6 @@
 enum EmailSubscriptionsApiPath {
-    SUBSCRIBE = 'subscribe',
-    UNSUBSCRIBE = 'unsubscribe/:id',
+    SUBSCRIBE = '/subscribe',
+    UNSUBSCRIBE = '/unsubscribe/:id',
 }
 
 export { EmailSubscriptionsApiPath };
