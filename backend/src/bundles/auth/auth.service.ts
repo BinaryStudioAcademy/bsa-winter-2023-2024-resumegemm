@@ -64,10 +64,10 @@ class AuthService implements TAuthService {
             passwordSalt,
             passwordHash,
         );
-        const { id } = newUser;
+        const { id, email } = newUser;
         const token = generateToken({ id });
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        this.sendAfterSignUpEmail(userRequestDto.email, token);
+        this.sendAfterSignUpEmail(email, token);
 
         const user = await this.userService.getUserWithProfile(id);
 
@@ -86,11 +86,11 @@ class AuthService implements TAuthService {
             name: 'sign-up-email-template',
             context: {
                 title: 'ResumeGemm',
-                dashboardLink: this.config.ENV.EMAIL.SMTP_DASHBOARD,
+                dashboardLink: verificationLink,
                 logoLink: this.config.ENV.EMAIL.SMTP_LOGO,
-                verificationLink,
             },
         });
+
         await mailService.sendMail({
             to: email,
             subject: 'You have successfully registred on ResumeGemm',

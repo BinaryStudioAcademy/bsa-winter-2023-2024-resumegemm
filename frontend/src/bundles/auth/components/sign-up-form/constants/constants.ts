@@ -1,4 +1,7 @@
-import { type UserSignUpRequestDto } from '~/bundles/users/users';
+import {
+    type UserSignInRequestDto,
+    type UserSignUpRequestDto,
+} from '~/bundles/users/users';
 
 const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpRequestDto = {
     firstName: '',
@@ -8,4 +11,9 @@ const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpRequestDto = {
     repeatPassword: '',
 };
 
-export { DEFAULT_SIGN_UP_PAYLOAD };
+const DEFAULT_SIGN_IN_PAYLOAD: UserSignInRequestDto = {
+    email: '',
+    password: '',
+};
+
+export { DEFAULT_SIGN_IN_PAYLOAD, DEFAULT_SIGN_UP_PAYLOAD };

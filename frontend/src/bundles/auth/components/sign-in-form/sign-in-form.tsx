@@ -1,42 +1,56 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { userSignInValidationSchema } from 'shared/build';
 
 import {
     BaseButton,
     FormGroup,
-    Input,
-    PasswordInput,
+    Icon,
+    IconButton,
 } from '~/bundles/common/components/components.js';
 import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    IconName,
+    IconSize,
 } from '~/bundles/common/enums/enums';
 import { useAppForm } from '~/bundles/common/hooks/hooks';
-import {
-    type UserSignUpRequestDto,
-    userSignUpValidationSchema,
-} from '~/bundles/users/users';
+import { type UserSignInRequestDto } from '~/bundles/users/users';
 
-import { DEFAULT_SIGN_UP_PAYLOAD } from '../sign-up-form/constants/constants';
+import { Input } from '../sign-up-form/components/sign-up-form-input';
+import { DEFAULT_SIGN_IN_PAYLOAD } from '../sign-up-form/constants/constants';
 import styles from './styles.module.scss';
 
 type Properties = {
-    onSubmit: () => void;
+    onSubmit: (event: UserSignInRequestDto) => void;
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+    const togglePasswordVisibility = useCallback((): void => {
+        setIsPasswordVisible(!isPasswordVisible);
+    }, [isPasswordVisible]);
     // TODO: replace type, payload and validation for sign-in
-    const { errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
-        defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
-        validationSchema: userSignUpValidationSchema,
-    });
+    const { control, errors, handleSubmit, watch, trigger } =
+        useAppForm<UserSignInRequestDto>({
+            defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
+            validationSchema: userSignInValidationSchema,
+        });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
+            event_.preventDefault();
+            void trigger();
+            const email = watch('email');
+            const password = watch('password');
+            if (!email || !password) {
+                return;
+            }
             void handleSubmit(onSubmit)(event_);
         },
-        [handleSubmit, onSubmit],
+        [handleSubmit, onSubmit, trigger, watch],
     );
 
     return (
@@ -49,19 +63,37 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                 </p>
             </div>
             <form onSubmit={handleFormSubmit} className={styles.login__form}>
-                <FormGroup label="Email" error={errors.email}>
-                    <Input type="email" placeholder="Your email" name="email" />
-                </FormGroup>
-                <div className={styles.login__form_password}>
-                    <span className={styles.forgot__link}>
-                        Forgot Password?
-                    </span>
-                    <PasswordInput
-                        label="Your password"
-                        error={errors.password}
-                        placeholder="Your password"
+                <FormGroup label="Email">
+                    <Input
+                        control={control}
+                        errors={errors}
+                        type="email"
+                        placeholder="Your email"
+                        name="email"
                     />
-                </div>
+                </FormGroup>
+                <FormGroup label="Password">
+                    <Input
+                        control={control}
+                        errors={errors}
+                        type="text"
+                        placeholder="Your password"
+                        name="password"
+                    />
+                    <IconButton
+                        className={styles.password__icon}
+                        onClick={togglePasswordVisibility}
+                    >
+                        <Icon
+                            size={IconSize.SMALL}
+                            name={
+                                isPasswordVisible
+                                    ? IconName.EYE_OPEN
+                                    : IconName.EYE_SLASH
+                            }
+                        />
+                    </IconButton>
+                </FormGroup>
                 <BaseButton
                     className={styles.login__form__button}
                     size={ButtonSize.MEDIUM}
