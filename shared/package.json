@@ -9,6 +9,7 @@
     "scripts": {
         "lint:type": "npx tsc --noEmit",
         "lint:js": "npx eslint \"src/**/*.ts\"",
+        "lint:js:fix": "npx eslint --fix \"src/**/*.ts\"",
         "lint": "npm run lint:type && npm run lint:js",
         "build": "tsc && tsc-alias"
     },

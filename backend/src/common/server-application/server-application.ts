@@ -1,4 +1,6 @@
 import { authController } from '~/bundles/auth/auth.js';
+import { recentlyViewedController } from '~/bundles/recently-viewed/recently-viewed.js';
+import { templateController } from '~/bundles/templates/templates.js';
 import { userController } from '~/bundles/users/users.js';
 import { config } from '~/common/config/config.js';
 import { database } from '~/common/database/database.js';
@@ -12,6 +14,8 @@ const apiV1 = new ServerAppApi(
     config,
     ...authController.routes,
     ...userController.routes,
+    ...recentlyViewedController.routes,
+    ...templateController.routes,
 );
 const serverApp = new ServerApp({
     config,
