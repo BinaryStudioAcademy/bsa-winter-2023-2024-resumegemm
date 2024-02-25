@@ -1,22 +1,29 @@
 import {
     BaseButton,
     FormGroup,
-    Input,
-    PasswordInput,
+    Icon,
+    IconButton,
 } from '~/bundles/common/components/components';
 import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    IconName,
+    IconSize,
 } from '~/bundles/common/enums/enums';
-import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
+import {
+    useAppForm,
+    useCallback,
+    useState,
+} from '~/bundles/common/hooks/hooks';
 import {
     type UserSignUpRequestDto,
     userSignUpValidationSchema,
 } from '~/bundles/users/users';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
+import { Input } from './components/sign-up-form-input';
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
 
@@ -25,11 +32,17 @@ type Properties = {
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
-    const { errors, handleSubmit, reset, watch, trigger } =
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+    const togglePasswordVisibility = useCallback((): void => {
+        setIsPasswordVisible(!isPasswordVisible);
+    }, [isPasswordVisible]);
+
+    const { control, errors, handleSubmit, reset, watch, trigger } =
         useAppForm<UserSignUpRequestDto>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
             validationSchema: userSignUpValidationSchema,
-            mode: 'onSubmit',
+            mode: 'onBlur',
         });
 
     const inputReset = reset;
@@ -38,10 +51,18 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
         (event_: React.BaseSyntheticEvent): void => {
             event_.preventDefault();
             void trigger();
+            const firstName = watch('firstName');
+            const lastName = watch('lastName');
             const email = watch('email');
             const password = watch('password');
             const repeatPassword = watch('repeatPassword');
-            if (!email || !password || !repeatPassword) {
+            if (
+                !firstName ||
+                !lastName ||
+                !email ||
+                !password ||
+                !repeatPassword
+            ) {
                 return;
             }
             void handleSubmit(onSubmit)(event_);
@@ -66,31 +87,75 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
             >
                 <FormGroup label="First Name">
                     <Input
+                        control={control}
+                        errors={errors}
                         type="text"
                         placeholder="Your first name"
-                        name="first name"
+                        name="firstName"
                     />
                 </FormGroup>
                 <FormGroup label="Last Name">
                     <Input
+                        control={control}
+                        errors={errors}
                         type="text"
                         placeholder="Your last name"
-                        name="last name"
+                        name="lastName"
                     />
                 </FormGroup>
                 <FormGroup label="Email">
-                    <Input type="text" placeholder="Your email" name="email" />
+                    <Input
+                        control={control}
+                        errors={errors}
+                        type="email"
+                        placeholder="Your email"
+                        name="email"
+                    />
                 </FormGroup>
-                <PasswordInput
-                    label="Your Password"
-                    placeholder="Your password"
-                    error={errors.password}
-                />
-                <PasswordInput
-                    label="Confirm Password"
-                    placeholder="Confirm your password"
-                    error={errors.password}
-                />
+                <FormGroup label="Password">
+                    <Input
+                        control={control}
+                        errors={errors}
+                        type="text"
+                        placeholder="Your password"
+                        name="password"
+                    />
+                    <IconButton
+                        className={styles.password__icon}
+                        onClick={togglePasswordVisibility}
+                    >
+                        <Icon
+                            size={IconSize.SMALL}
+                            name={
+                                isPasswordVisible
+                                    ? IconName.EYE_OPEN
+                                    : IconName.EYE_SLASH
+                            }
+                        />
+                    </IconButton>
+                </FormGroup>
+                <FormGroup label="Repeat password">
+                    <Input
+                        control={control}
+                        errors={errors}
+                        type="text"
+                        placeholder="Confirm your password"
+                        name="repeatPassword"
+                    />
+                    <IconButton
+                        className={styles.password__icon}
+                        onClick={togglePasswordVisibility}
+                    >
+                        <Icon
+                            size={IconSize.SMALL}
+                            name={
+                                isPasswordVisible
+                                    ? IconName.EYE_OPEN
+                                    : IconName.EYE_SLASH
+                            }
+                        />
+                    </IconButton>
+                </FormGroup>
                 <BaseButton
                     className={styles.registration__form__button}
                     size={ButtonSize.MEDIUM}

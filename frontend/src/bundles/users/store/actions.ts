@@ -19,7 +19,7 @@ const loadAll = createAsyncThunk<
 });
 
 const loadUser = createAsyncThunk<
-    UserSignUpResponseDto | undefined,
+    UserSignUpResponseDto,
     undefined,
     AsyncThunkConfig
 >(`${sliceName}/authenticated-user`, async (_registerPayload, { extra }) => {

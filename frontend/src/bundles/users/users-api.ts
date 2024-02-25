@@ -33,7 +33,7 @@ class UserApi extends HttpApi {
         return await response.json<UserGetAllResponseDto>();
     }
 
-    public async loadUser(): Promise<UserSignUpResponseDto | undefined> {
+    public async loadUser(): Promise<UserSignUpResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(UsersApiPath.GET_USER, {}),
             {
