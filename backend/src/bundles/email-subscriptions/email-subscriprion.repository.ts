@@ -1,5 +1,4 @@
 import { Guid as guid } from 'guid-typescript';
-import { type Transaction } from 'objection';
 
 import { type EmailSubscriptionModel } from './email-subscription.model';
 import {
@@ -14,20 +13,12 @@ class EmailSubscriptionRepository implements IEmailSubscriptionRepository {
         this.emailSubscriptionModel = emailSubscriptionModel;
     }
 
-    public async create({
-        userId,
-        transaction,
-    }: {
-        userId: string;
-        transaction: Transaction;
-    }): Promise<EmailSubscription> {
+    public async create(): Promise<EmailSubscription> {
         return await this.emailSubscriptionModel
             .query()
             .insert({
                 id: guid.raw(),
-                userId,
             })
-            .transacting(transaction)
             .returning('*');
     }
 
