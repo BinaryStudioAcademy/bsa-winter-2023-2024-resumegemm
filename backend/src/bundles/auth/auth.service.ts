@@ -55,7 +55,7 @@ class AuthService implements TAuthService {
             passwordHash,
         });
 
-        const user = await this.userService.getUserWithProfile(id);
+        const user = await this.getUserWithProfile(id);
 
         return {
             user,
@@ -87,7 +87,7 @@ class AuthService implements TAuthService {
                 status: HttpCode.UNAUTHORIZED,
             });
         }
-        const user = await this.userService.getUserWithProfile(id);
+        const user = await this.getUserWithProfile(id);
         return {
             user,
             accessToken: generateToken({ id }),
@@ -95,7 +95,9 @@ class AuthService implements TAuthService {
         };
     }
 
-    public async getUser(id: string): Promise<UserWithProfileRelation> {
+    public async getUserWithProfile(
+        id: string,
+    ): Promise<UserWithProfileRelation> {
         return await this.userService.getUserWithProfile(id);
     }
 

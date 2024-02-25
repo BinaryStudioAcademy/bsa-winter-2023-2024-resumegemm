@@ -263,7 +263,7 @@ class AuthController extends Controller {
     ): Promise<ApiHandlerResponse<UserWithProfileRelation>> {
         try {
             const { id } = options.user;
-            const payload = await this.authService.getUser(id);
+            const payload = await this.authService.getUserWithProfile(id);
             return {
                 status: HttpCode.OK,
                 payload,
