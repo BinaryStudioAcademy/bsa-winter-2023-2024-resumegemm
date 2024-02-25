@@ -1,4 +1,5 @@
 import { authController } from '~/bundles/auth/auth.js';
+import { resumeController } from '~/bundles/resumes/resumes.js';
 import { templateController } from '~/bundles/templates/templates.js';
 import { userController } from '~/bundles/users/users.js';
 import { config } from '~/common/config/config.js';
@@ -12,6 +13,7 @@ const apiV1 = new ServerAppApi(
     'v1',
     config,
     ...authController.routes,
+    ...resumeController.routes,
     ...userController.routes,
     ...templateController.routes,
 );
