@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 
+import { type Transaction } from 'objection';
 import {
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
@@ -26,16 +27,25 @@ class TemplateRepository implements ITemplateRepository {
         };
     }
 
-    public async create(payload: Template): Promise<Template> {
+    public async create(
+        payload: Template,
+        transaction?: Transaction,
+    ): Promise<Template> {
         payload.id = crypto.randomUUID();
-        return await this.templateModel.query().insert(payload).returning('*');
+        return await this.templateModel
+            .query(transaction)
+            .insert(payload)
+            .returning('*');
     }
 
     public async update(
         id: string,
         data: TemplateUpdateItemRequestDto,
+        transaction?: Transaction,
     ): Promise<Template> {
-        return await this.templateModel.query().updateAndFetchById(id, data);
+        return await this.templateModel
+            .query(transaction)
+            .updateAndFetchById(id, data);
     }
 
     public async delete(id: string): Promise<boolean> {
