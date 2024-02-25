@@ -6,8 +6,8 @@ import { type PersonalInfoType } from '../../types/personal-info/personal-info.t
 import styles from './styles.module.scss';
 
 type Properties = {
-    onSubmit?: () => void
-    onChange?: (personalInfo: PersonalInfoType) => void
+    onSubmit?: () => void;
+    onChange?: (personalInfo: PersonalInfoType) => void;
 };
 
 const PersonalInfoForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
@@ -17,65 +17,74 @@ const PersonalInfoForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
         city: '',
         country: '',
         email: '',
-        profession: ''
+        profession: '',
     });
 
-    const handleInputChange =
-        useCallback((event_: ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = event_.target;
+    const handleInputChange = useCallback(
+        (event_: ChangeEvent<HTMLInputElement>): void => {
+            const { name, value } = event_.target;
 
-        setPersonalInfo((previousState) => ({
-            ...previousState, [name]: value
-        }));
+            setPersonalInfo((previousState) => ({
+                ...previousState,
+                [name]: value,
+            }));
 
-        if (onChange) {
-            onChange({ ...personalInfo, [name]: value });
-        }
-    }, [onChange, personalInfo]);
+            if (onChange) {
+                onChange({ ...personalInfo, [name]: value });
+            }
+        },
+        [onChange, personalInfo],
+    );
 
     return (
         <form className={styles.personal_info} onSubmit={onSubmit}>
             <FormGroup label={'Full Name'}>
-                <Input placeholder={'Text'}
-                       name={'fullName'}
-                       value={personalInfo.fullName}
-                       onChange={handleInputChange}
+                <Input
+                    placeholder={'Text'}
+                    name={'fullName'}
+                    value={personalInfo.fullName}
+                    onChange={handleInputChange}
                 />
             </FormGroup>
             <FormGroup label={'Email'}>
-                <Input placeholder={'Text'}
-                       name={'email'}
-                       value={personalInfo.email}
-                       onChange={handleInputChange}
+                <Input
+                    placeholder={'Text'}
+                    name={'email'}
+                    value={personalInfo.email}
+                    onChange={handleInputChange}
                 />
             </FormGroup>
             <FormGroup label={'Profession'}>
-                <Input placeholder={'Text'}
-                       name={'profession'}
-                       value={personalInfo.profession}
-                       onChange={handleInputChange}
+                <Input
+                    placeholder={'Text'}
+                    name={'profession'}
+                    value={personalInfo.profession}
+                    onChange={handleInputChange}
                 />
             </FormGroup>
             <FormGroup label={'Address'}>
-                <Input placeholder={'Text'}
-                       name={'address'}
-                       value={personalInfo.address}
-                       onChange={handleInputChange}
+                <Input
+                    placeholder={'Text'}
+                    name={'address'}
+                    value={personalInfo.address}
+                    onChange={handleInputChange}
                 />
             </FormGroup>
             <div className={styles.personal_info__last_block}>
                 <FormGroup label={'City'} width={'50%'}>
-                    <Input placeholder={'Text'}
-                           name={'city'}
-                           value={personalInfo.city}
-                           onChange={handleInputChange}
+                    <Input
+                        placeholder={'Text'}
+                        name={'city'}
+                        value={personalInfo.city}
+                        onChange={handleInputChange}
                     />
                 </FormGroup>
                 <FormGroup label={'Country'} width={'50%'}>
-                    <Input placeholder={'Text'}
-                           name={'country'}
-                           value={personalInfo.country}
-                           onChange={handleInputChange}
+                    <Input
+                        placeholder={'Text'}
+                        name={'country'}
+                        value={personalInfo.country}
+                        onChange={handleInputChange}
                     />
                 </FormGroup>
             </div>
