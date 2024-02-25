@@ -14,7 +14,7 @@ import { type IService } from '~/common/interfaces/service.interface.js';
 
 type AuthorizationPluginPayload = {
     publicRoutes: Partial<Record<AuthApiPath, string>>;
-    userService: IService;
+    userService: Omit<IService, 'getById'>;
     authService: AuthService;
 };
 
