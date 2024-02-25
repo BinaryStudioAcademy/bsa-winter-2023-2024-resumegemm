@@ -1,1 +1,1 @@
-export { EmailSubscriptionsApiPath } from './email-subscriptions-api-path.enum';
+export { EmailSubscriptionsApiPath } from './email-subscriptions-api-path.enum.js';
