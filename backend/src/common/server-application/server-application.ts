@@ -1,5 +1,6 @@
 import { authController } from '~/bundles/auth/auth.js';
 import { industriesController } from '~/bundles/industries/industries.js';
+import { recentlyViewedController } from '~/bundles/recently-viewed/recently-viewed.js';
 import { templateController } from '~/bundles/templates/templates.js';
 import { userController } from '~/bundles/users/users.js';
 import { config } from '~/common/config/config.js';
@@ -15,6 +16,7 @@ const apiV1 = new ServerAppApi(
     ...authController.routes,
     ...userController.routes,
     ...industriesController.routes,
+    ...recentlyViewedController.routes,
     ...templateController.routes,
 );
 const serverApp = new ServerApp({
