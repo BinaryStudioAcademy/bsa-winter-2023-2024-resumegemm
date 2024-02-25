@@ -49,9 +49,5 @@
     "simple-git-hooks": {
         "pre-commit": "npx lint-staged",
         "commit-msg": "npx commitlint --edit $1"
-    },
-    "dependencies": {
-        "clsx": "2.1.0",
-        "@floating-ui/core": "1.6.0"
     }
 }
