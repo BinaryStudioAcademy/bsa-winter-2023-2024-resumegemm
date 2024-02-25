@@ -1,13 +1,13 @@
-import crypto from 'node:crypto';
-
+import { type TemplateModel } from './template.model.js';
+import { type Template } from './types/template.type';
 import {
+    type ITemplateRepository,
+    type TemplateCreateItemRequestDto,
+    type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
-} from 'shared/build';
-
-import { type TemplateModel } from './template.model';
-import { type Template } from './types/template.type';
-import { type ITemplateRepository } from './types/template-repository.type';
+    type TemplateUpdateItemResponseDto,
+} from './types/types.js';
 
 class TemplateRepository implements ITemplateRepository {
     private templateModel: typeof TemplateModel;
@@ -15,6 +15,7 @@ class TemplateRepository implements ITemplateRepository {
     public constructor(templateModel: typeof TemplateModel) {
         this.templateModel = templateModel;
     }
+
     public async find(id: string): Promise<Template | undefined> {
         return await this.templateModel.query().findById(id);
     }
@@ -26,16 +27,19 @@ class TemplateRepository implements ITemplateRepository {
         };
     }
 
-    public async create(payload: Template): Promise<Template> {
-        payload.id = crypto.randomUUID();
+    public async create(
+        payload: TemplateCreateItemRequestDto,
+    ): Promise<TemplateGetAllItemResponseDto> {
         return await this.templateModel.query().insert(payload).returning('*');
     }
 
     public async update(
-        id: string,
-        data: TemplateUpdateItemRequestDto,
-    ): Promise<Template> {
-        return await this.templateModel.query().updateAndFetchById(id, data);
+        templateId: string,
+        editedSettings: TemplateUpdateItemRequestDto,
+    ): Promise<TemplateUpdateItemResponseDto> {
+        return await this.templateModel.query().updateAndFetchById(templateId, {
+            templateSettings: editedSettings.templateSettings,
+        });
     }
 
     public async delete(id: string): Promise<boolean> {
