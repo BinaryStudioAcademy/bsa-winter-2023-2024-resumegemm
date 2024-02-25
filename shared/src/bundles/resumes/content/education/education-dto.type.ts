@@ -1,7 +1,7 @@
 type Education = {
     id: string;
-    majorName: string;
     resumeId: string;
+    majorName: string;
     degree: string;
     startDate: string;
     endDate: string;

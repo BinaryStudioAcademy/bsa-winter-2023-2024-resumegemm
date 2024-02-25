@@ -1,5 +1,5 @@
-import { type ResumeDto } from './resume-dto.type.js';
+import { type Resume } from './resume.type';
 
-type ResumeGetItemResponseDto = ResumeDto;
+type ResumeGetItemResponseDto = Resume;
 
 export { type ResumeGetItemResponseDto };

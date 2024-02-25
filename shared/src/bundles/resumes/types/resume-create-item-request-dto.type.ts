@@ -1,7 +1,7 @@
-import { type ResumeDto } from './resume-dto.type';
+import { type Resume } from './types.js';
 
 type ResumeCreateItemRequestDto = Omit<
-    ResumeDto,
+    Resume,
     'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
 >;
 

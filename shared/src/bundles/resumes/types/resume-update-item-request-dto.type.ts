@@ -1,7 +1,7 @@
-import { type ResumeDto } from './types';
+import { type Resume } from './types';
 
 type ResumeUpdateItemRequestDto = Partial<
-    Omit<ResumeDto, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'userId'>
+    Omit<Resume, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'userId'>
 >;
 
 export { type ResumeUpdateItemRequestDto };

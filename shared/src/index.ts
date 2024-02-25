@@ -5,15 +5,22 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export { type Profile } from './bundles/profile/profile.js';
-export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
+    type Contacts,
+    type Education,
+    type Experience,
+    type PersonalInformation,
+    type Resume,
     type ResumeCreateItemRequestDto,
-    type ResumeDto,
+    type ResumeEntityFields,
+    type ResumeGetAllRequestDto,
     type ResumeGetAllResponseDto,
     type ResumeGetItemRequestDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
+    type TechnicalSkill,
     ResumesApiPath,
+    SkillLevel,
 } from './bundles/resumes/resumes.js';
 export {
     type TemplateCreateItemRequestDto,
