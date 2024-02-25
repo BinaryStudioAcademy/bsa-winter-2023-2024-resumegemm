@@ -136,10 +136,7 @@ async function up(knex: Knex): Promise<void> {
             .dateTime(DatabaseColumnName.UPDATED_AT)
             .notNullable()
             .defaultTo(knex.fn.now());
-        table
-            .dateTime(DatabaseColumnName.DELETED_AT)
-            .notNullable()
-            .defaultTo(knex.fn.now());
+        table.dateTime(DatabaseColumnName.DELETED_AT);
     });
     await knex.schema.createTable(DatabaseTableName.TEMPLATES, (table) => {
         table.uuid(DatabaseColumnName.ID).primary();
