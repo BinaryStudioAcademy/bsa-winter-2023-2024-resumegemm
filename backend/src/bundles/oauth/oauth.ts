@@ -6,8 +6,10 @@ import { profileRepository } from '~/bundles/profile/profile.js';
 import { httpApi } from '~/common/api/api.js';
 import { logger } from '~/common/logger/logger.js';
 
-const openAuthRepository = new OauthRepository(OauthModel, profileRepository);
-const openAuthService = new OauthService(openAuthRepository);
+const openAuthRepository = new OauthRepository({
+    oauthModel: OauthModel,
+});
+const openAuthService = new OauthService(openAuthRepository, profileRepository);
 const openAuthController = new OpenAuthController(
     logger,
     openAuthService,
