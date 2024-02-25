@@ -1,17 +1,13 @@
+import { type Transaction } from 'objection';
+
 interface IRepository<T = unknown> {
-    find(): Promise<T>;
+    getById(id: string): Promise<T | null>;
 
-    findAll(): Promise<T[]>;
-
-    findOneByEmail(email: string): Promise<T>;
-
-    create(payload?: T): Promise<T>;
-
-    update(): Promise<T>;
-
-    getUserWithProfile(id: string): Promise<T>;
-
-    delete(): Promise<boolean>;
+    createWithTransaction(
+        data: Omit<T, 'id' | 'createdAt' | 'updatedAt'>,
+        transaction: Transaction,
+    ): Promise<T>;
+    getUserWithProfile(id: string, modification?: string): Promise<T>;
 }
 
 export { type IRepository };
