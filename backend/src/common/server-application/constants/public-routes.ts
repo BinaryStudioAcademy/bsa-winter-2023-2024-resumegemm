@@ -1,4 +1,8 @@
-import { ApiPath, AuthApiPath, RecentlyViewedApiPath } from 'shared/build/index.js';
+import {
+    ApiPath,
+    AuthApiPath,
+    RecentlyViewedApiPath,
+} from 'shared/build/index.js';
 
 const API_PREFIX = '/api/v1';
 

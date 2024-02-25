@@ -1,4 +1,6 @@
-export { TemplateBlockTitles, TemplatesApiPath } from './enums/enums.js';
+export { type Template } from './template.type.js';
+export { type ITemplateRepository } from './template-repository.type.js';
+export { type ITemplateService } from './template-service.type.js';
 export {
     type TemplateBlockSettings,
     type TemplateCreateItemRequestDto,
@@ -9,4 +11,4 @@ export {
     type TemplateResponseDto,
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
-} from './types/types.js';
+} from 'shared/build/bundles/templates/templates.js';

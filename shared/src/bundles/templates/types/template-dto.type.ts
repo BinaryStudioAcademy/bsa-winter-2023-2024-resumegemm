@@ -1,6 +1,6 @@
-import { type TemplateBlockSettings } from './types';
+import { type TemplateBlockSettings } from './template-block-settings.type.js';
 
-type Template = {
+type TemplateDto = {
     id: string;
     isOwner: boolean;
     userId: string;
@@ -10,4 +10,4 @@ type Template = {
     templateSettings: TemplateBlockSettings;
 };
 
-export { type Template };
+export { type TemplateDto };

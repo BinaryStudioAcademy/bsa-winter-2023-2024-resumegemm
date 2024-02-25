@@ -11,5 +11,5 @@ const templateService = new TemplateService(templateRepository);
 
 const templateController = new TemplateController(logger, templateService);
 
-export { templateController, templateService };
+export { templateController, templateRepository, templateService };
 export { TemplateModel } from './template.model.js';

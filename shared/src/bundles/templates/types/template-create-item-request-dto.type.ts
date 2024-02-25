@@ -1,8 +1,8 @@
-type TemplateCreateItemRequestDto = {
-    isOwner: boolean;
-    image: string;
-    userId: string;
-    resumeId: string;
-};
+import { type TemplateDto } from './template-dto.type';
+
+type TemplateCreateItemRequestDto = Pick<
+    TemplateDto,
+    'isOwner' | 'userId' | 'templateSettings'
+>;
 
 export { type TemplateCreateItemRequestDto };

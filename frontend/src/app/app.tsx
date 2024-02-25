@@ -17,7 +17,7 @@ const App: React.FC = () => {
         dataStatus: users.dataStatus,
     }));
     const { user } = useAppSelector(({ auth }) => ({
-        user: auth.user
+        user: auth.user,
     }));
 
     const isRoot = pathname === AppRoute.ROOT;

@@ -6,7 +6,6 @@ import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { ToastContext } from '~/bundles/toast/context/toast-context';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 
-import { Auth } from '../auth/pages/auth';
 import {
     BaseButton,
     Calendar,
@@ -15,9 +14,11 @@ import {
     RadioButton,
     Switch,
     Tooltip,
-} from '../common/components/components';
+} from '../../bundles/common/components/components.js';
+import { Auth } from '../auth/pages/auth';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
+import { EditTemplatePage } from '../edit-temlate/edit-template';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import styles from './styles.module.scss';
@@ -108,6 +109,9 @@ const PreviewPage: React.FC = () => {
                     </li>
                     <li className={styles.auth}>
                         <Auth />
+                    </li>
+                    <li className={styles.item}>
+                        <EditTemplatePage />
                     </li>
                 </ul>
             </div>

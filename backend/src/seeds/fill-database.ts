@@ -100,7 +100,6 @@ async function seed(knex: Knex): Promise<void> {
             ...template,
             [DatabaseColumnName.ID]: guid.raw(),
             [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
-            [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
             [DatabaseColumnName.IMAGE]: imagesSeed[index].image,
         }));
 

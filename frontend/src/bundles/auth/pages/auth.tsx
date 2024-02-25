@@ -15,10 +15,10 @@ import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
-        
+
     const { dataStatus, user } = useAppSelector(({ auth }) => ({
         dataStatus: auth.dataStatus,
-        user: auth.user
+        user: auth.user,
     }));
 
     const { pathname } = useLocation();
@@ -47,10 +47,10 @@ const Auth: React.FC = () => {
         return null;
     };
 
-    return (
-        user
-        ? <Navigate to={AppRoute.ROOT}/>
-        :<div className={styles.auth}>
+    return user ? (
+        <Navigate to={AppRoute.ROOT} />
+    ) : (
+        <div className={styles.auth}>
             <div className={styles.auth__container}>
                 <section className={styles['auth__logo-container']}>
                     <div className={styles.auth__logo}>
