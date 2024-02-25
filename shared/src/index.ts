@@ -15,6 +15,12 @@ export {
     OpenAuthApiPath,
 } from './bundles/open-auth/open-auth.js';
 export { type Profile } from './bundles/profile/profile.js';
+export {
+    type RecentlyViewed,
+    type RecentlyViewedRequestDto,
+    type RecentlyViewedResponseDto,
+    RecentlyViewedApiPath,
+} from './bundles/recently-viewed/recently-viewed.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
     type TemplateCreateItemRequestDto,

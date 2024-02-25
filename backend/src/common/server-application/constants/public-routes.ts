@@ -1,4 +1,9 @@
-import { ApiPath, AuthApiPath, OpenAuthApiPath } from 'shared/build/index.js';
+import {
+    ApiPath,
+    AuthApiPath,
+    OpenAuthApiPath,
+    RecentlyViewedApiPath,
+} from 'shared/build/index.js';
 
 const API_PREFIX = '/api/v1';
 
@@ -9,6 +14,8 @@ const publicRoutes = {
     [`${OpenAuthApiPath.REDIRECT_CALLBACK}`]: `${OpenAuthApiPath.REDIRECT_CALLBACK}`,
     [`${OpenAuthApiPath.GITHUB}`]: `${OpenAuthApiPath.GITHUB}`,
     [`${ApiPath.OPEN_AUTH}`]: `${API_PREFIX}${ApiPath.OPEN_AUTH}${OpenAuthApiPath.GITHUB}`,
+    [`${RecentlyViewedApiPath.ID}`]: `${API_PREFIX}${ApiPath.RECENTLY_VIEWED}${RecentlyViewedApiPath.ID}`,
+    [`${RecentlyViewedApiPath.ROOT}`]: `${API_PREFIX}${ApiPath.RECENTLY_VIEWED}${RecentlyViewedApiPath.ROOT}`,
 };
 
 export { publicRoutes };
