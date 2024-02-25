@@ -9,3 +9,4 @@ declare module 'fastify' {
 declare module 'pug';
 declare module 'dotenv';
 declare module 'guid-typescript';
+declare module 'nodemailer';

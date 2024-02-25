@@ -15,6 +15,7 @@ import {
     type UserSignUpRequestDto,
     userSignUpValidationSchema,
 } from '~/bundles/users/users';
+import { storage, StorageKey } from '~/framework/storage/storage.js';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
@@ -24,16 +25,30 @@ type Properties = {
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
-    const { errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
-        defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
-        validationSchema: userSignUpValidationSchema,
-    });
+    const { errors, handleSubmit, reset, watch, trigger } =
+        useAppForm<UserSignUpRequestDto>({
+            defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
+            validationSchema: userSignUpValidationSchema,
+            mode: 'onSubmit',
+        });
+
+    const inputReset = reset;
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
+            event_.preventDefault();
+            void trigger();
+            const email = watch('email');
+            const password = watch('password');
+            const repeatPassword = watch('repeatPassword');
+            if (!email || !password || !repeatPassword) {
+                return;
+            }
             void handleSubmit(onSubmit)(event_);
+            void storage.drop(StorageKey.NAME_EXIST);
+            inputReset && reset();
         },
-        [handleSubmit, onSubmit],
+        [handleSubmit, inputReset, onSubmit, reset, trigger, watch],
     );
 
     return (

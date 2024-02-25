@@ -5,6 +5,7 @@ const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpRequestDto = {
     lastName: '',
     email: '',
     password: '',
+    repeatPassword: '',
 };
 
 export { DEFAULT_SIGN_UP_PAYLOAD };

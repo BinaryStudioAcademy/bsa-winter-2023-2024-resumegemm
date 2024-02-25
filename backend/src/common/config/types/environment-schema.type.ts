@@ -24,10 +24,12 @@ type EnvironmentSchema = {
         POOL_MAX: number;
     };
     EMAIL: {
-        GMAIL_DOMAIN: string;
-        GMAIL_PASSWORD: string;
-        DASHBOARD_LINK: string;
-        APP_LOGO_LINK: string;
+        SMTP_HOST: string;
+        SMTP_PORT: string;
+        SMTP_USER: string;
+        SMTP_PASSWORD: string;
+        SMTP_DASHBOARD: string;
+        SMTP_LOGO: string;
     };
 };
 

@@ -66,28 +66,40 @@ class Config implements IConfig {
                 REFRESH_TOKEN_EXPIRES_IN: '30d',
             },
             EMAIL: {
-                GMAIL_DOMAIN: {
-                    doc: 'gmail email address',
+                SMTP_HOST: {
+                    doc: 'mock.smtp.server',
                     format: String,
-                    env: 'GMAIL_DOMAIN',
+                    env: 'SMTP_HOST',
                     default: null,
                 },
-                GMAIL_PASSWORD: {
-                    doc: 'gmail email password',
+                SMTP_PORT: {
+                    doc: 'port',
                     format: String,
-                    env: 'GMAIL_PASSWORD',
+                    env: 'SMTP_PORT',
                     default: null,
                 },
-                DASHBOARD_LINK: {
+                SMTP_USER: {
+                    doc: 'your email',
+                    format: String,
+                    env: 'SMTP_USER',
+                    default: null,
+                },
+                SMTP_PASSWORD: {
+                    doc: 'your password',
+                    format: String,
+                    env: 'SMTP_PASSWORD',
+                    default: null,
+                },
+                SMTP_DASHBOARD: {
                     doc: 'dashboard link to redirect user in email',
                     format: String,
-                    env: 'DASHBOARD_LINK',
+                    env: 'SMTP_DASHBOARD',
                     default: null,
                 },
-                APP_LOGO_LINK: {
+                SMTP_LOGO: {
                     doc: 'logo link image',
                     format: String,
-                    env: 'APP_LOGO_LINK',
+                    env: 'SMTP_LOGO',
                     default: null,
                 },
             },

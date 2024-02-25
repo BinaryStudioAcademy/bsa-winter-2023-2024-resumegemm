@@ -8,6 +8,7 @@ import {
     HttpError,
 } from 'shared/build/index.js';
 
+import { getTemplate } from '~/bundles/auth/helpers/get-template.js';
 import {
     generateRefreshToken,
     generateToken,
@@ -22,25 +23,11 @@ import {
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 import { type IConfig } from '~/common/config/config.js';
-
-import { getTemplate } from './helpers/get-template';
-
-const emailService = {
-    sendEmail: (object: emailMockupType): void => {
-        `${object.html}Wait for task #37 Email Servise - will be changed after merging`;
-    },
-};
+import { mailService } from '~/common/mail-service/mail-service.js';
 
 type ConstructorType = {
     userService: UserService;
     config: IConfig;
-};
-
-type emailMockupType = {
-    to: string;
-    subject: string;
-    text: string;
-    html: string;
 };
 
 class AuthService implements TAuthService {
@@ -79,6 +66,7 @@ class AuthService implements TAuthService {
         );
         const { id } = newUser;
         const token = generateToken({ id });
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         this.sendAfterSignUpEmail(userRequestDto.email);
 
         const user = await this.userService.getUserWithProfile(id);
@@ -89,16 +77,16 @@ class AuthService implements TAuthService {
         };
     }
 
-    private sendAfterSignUpEmail(email: string): void {
+    private async sendAfterSignUpEmail(email: string): Promise<void> {
         const emailMockup = getTemplate({
             name: 'sign-up-email-template',
             context: {
                 title: 'ResumeGemm',
-                dashboardLink: this.config.ENV.EMAIL.DASHBOARD_LINK,
-                logoLink: this.config.ENV.EMAIL.APP_LOGO_LINK,
+                dashboardLink: this.config.ENV.EMAIL.SMTP_DASHBOARD,
+                logoLink: this.config.ENV.EMAIL.SMTP_LOGO,
             },
         });
-        emailService.sendEmail({
+        await mailService.sendMail({
             to: email,
             subject: 'You have successfully registred on ResumeGemm',
             text: 'You have successfully registred on ResumeGemm',
