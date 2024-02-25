@@ -85,7 +85,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 className={styles.registration__form}
                 onSubmit={handleFormSubmit}
             >
-                <FormGroup label="First Name">
+                <FormGroup label="First Name" width="100%">
                     <Input
                         control={control}
                         errors={errors}

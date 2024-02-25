@@ -157,28 +157,18 @@ class AuthController extends Controller {
      *        401:
      *          description: Invalid email
      */
+
     private async signUp(
         options: ApiHandlerOptions<{
             body: UserSignUpRequestDto;
         }>,
     ): Promise<ApiHandlerResponse<UserSignUpResponseDto>> {
-        try {
-            const payload = await this.authService.signUp(options.body);
+        const token = await this.authService.signUp(options.body);
 
-            return {
-                status: HttpCode.CREATED,
-                payload,
-            };
-        } catch (error: unknown) {
-            const { message, status } = error as HttpError;
-            return {
-                status,
-                payload: {
-                    message,
-                    status,
-                },
-            };
-        }
+        return {
+            status: HttpCode.CREATED,
+            payload: token,
+        };
     }
 
     private async login(
