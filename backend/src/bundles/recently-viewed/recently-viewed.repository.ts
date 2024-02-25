@@ -1,3 +1,5 @@
+import { Guid as guid } from 'guid-typescript';
+
 import { type RecentlyViewedModel } from './recently-viewed.model';
 import {
     type IRecentlyViewedRepository,
@@ -38,9 +40,11 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
     public async create(
         data: RecentlyViewedRequestDto,
     ): Promise<RecentlyViewedResponseDto> {
+        const newRecentlyViewed = { ...data, id: guid.raw() };
+
         return await this.recentlyViewedModel
             .query()
-            .insert(data)
+            .insert(newRecentlyViewed)
             .returning('*')
             .execute();
     }
@@ -72,8 +76,9 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .count('resume_id as count')
             .groupBy('user_id', 'resume_id')
             .whereNotNull('resume_id')
-            .whereRaw('viewed_at >= CURRENT_DATE AND viewed_at < CURRENT_DATE + interval "1 day"')
-            ) as RecentlyViewedResumesQueryResult[];
+            .whereRaw(
+                'viewed_at >= CURRENT_DATE AND viewed_at < CURRENT_DATE + interval "1 day"',
+            )) as RecentlyViewedResumesQueryResult[];
 
         return result.map((item) => {
             return {
