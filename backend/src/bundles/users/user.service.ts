@@ -61,6 +61,16 @@ class UserService implements IService {
     public delete(): ReturnType<IService['delete']> {
         return Promise.resolve(true);
     }
+
+    public async updateEmailSubscription(
+        userId: string,
+        emailSubscriptionId: string,
+    ): Promise<void> {
+        await this.userRepository.updateEmailSubscriptionId(
+            userId,
+            emailSubscriptionId,
+        );
+    }
 }
 
 export { UserService };

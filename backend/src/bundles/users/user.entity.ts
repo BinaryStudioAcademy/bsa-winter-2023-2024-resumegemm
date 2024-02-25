@@ -10,6 +10,8 @@ class UserEntity implements IEntity {
 
     private 'profileId': string;
 
+    private 'emailSubscriptionId': string | null;
+
     private 'passwordHash': string;
 
     private 'passwordSalt': string;
@@ -18,12 +20,14 @@ class UserEntity implements IEntity {
         id,
         email,
         profileId,
+        emailSubscriptionId,
         passwordHash,
         passwordSalt,
     }: UserEntityFields) {
         this.id = id;
         this.email = email;
         this.profileId = profileId;
+        this.emailSubscriptionId = emailSubscriptionId;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
     }
@@ -32,6 +36,7 @@ class UserEntity implements IEntity {
         id,
         email,
         profileId,
+        emailSubscriptionId,
         passwordHash,
         passwordSalt,
     }: UserEntityFields): UserEntity {
@@ -39,6 +44,7 @@ class UserEntity implements IEntity {
             id,
             email,
             profileId,
+            emailSubscriptionId,
             passwordHash,
             passwordSalt,
         });
@@ -54,6 +60,7 @@ class UserEntity implements IEntity {
             id: guid.raw(),
             email,
             profileId,
+            emailSubscriptionId: null,
             passwordHash,
             passwordSalt,
         });
@@ -70,6 +77,7 @@ class UserEntity implements IEntity {
         return {
             id: this.id as NonNullable<string>,
             profileId: this.profileId,
+            emailSubscriptionId: this.emailSubscriptionId,
             email: this.email,
             passwordHash: this.passwordHash,
             passwordSalt: this.passwordSalt,

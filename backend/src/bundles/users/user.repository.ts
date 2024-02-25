@@ -36,11 +36,11 @@ class UserRepository implements IRepository {
     public async getUserWithProfile(
         id: string,
     ): Promise<UserSignUpResponseDto['user']> {
-        return this.userModel
+        return await this.userModel
             .query()
             .modify('withoutHashPasswords')
             .findById(id)
-            .withGraphFetched('[user_profile]')
+            .withGraphFetched('[user_profile, emailSubscription]')
             .castTo<UserSignUpResponseDto['user']>();
     }
 
@@ -108,6 +108,19 @@ class UserRepository implements IRepository {
 
     public delete(): ReturnType<IRepository['delete']> {
         return Promise.resolve(true);
+    }
+
+    public async updateEmailSubscriptionId(
+        userId: string,
+        emailSubscriptionId: string,
+    ): Promise<UserEntity> {
+        const user = await this.userModel
+            .query()
+            .patch({ emailSubscriptionId })
+            .where({ id: userId })
+            .returning('*')
+            .execute();
+        return UserEntity.initialize(user[0]);
     }
 }
 

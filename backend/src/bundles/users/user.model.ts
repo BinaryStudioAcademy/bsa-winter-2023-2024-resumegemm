@@ -12,10 +12,14 @@ import {
     DatabaseTableName,
 } from '~/common/database/database.js';
 
+import { EmailSubscriptionModel } from '../email-subscriptions/email-subscription.model.js';
+
 class UserModel extends AbstractModel {
     public 'email': string;
 
     public 'profileId': string;
+
+    public 'emailSubscriptionId': string;
 
     public 'passwordHash': string;
 
@@ -59,6 +63,14 @@ class UserModel extends AbstractModel {
                         to: `${DatabaseTableName.USER_TEMPLATES}.templateId`,
                     },
                     to: `${DatabaseTableName.TEMPLATES}.id`,
+                },
+            },
+            emailSubscription: {
+                relation: Model.HasOneRelation,
+                modelClass: EmailSubscriptionModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.emailSubscriptionId`,
+                    to: `${DatabaseTableName.EMAIL_SUBSCRIPTIONS}.id`,
                 },
             },
         };
