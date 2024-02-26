@@ -2,31 +2,30 @@ import {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
-} from 'shared/build/index.js';
-import { HttpError, TemplatesApiPath } from 'shared/build/index.js';
+    type TemplateUpdateItemResponseDto,
+} from 'shared/build/bundles/templates/templates.js';
+import { HttpError } from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    Controller,
 } from '~/common/controller/controller.js';
-import { Controller } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
-import { type Template } from './types/template.type.js';
-import { type ITemplateService } from './types/template-service.type.js';
+import { TemplatesApiPath } from './enums/enums.js';
+import { type ITemplateService, type Template } from './types/types.js';
 
 class TemplateController extends Controller {
-    private templateService: ITemplateService<Template>;
+    private templateService: ITemplateService;
 
-    public constructor(
-        logger: ILogger,
-        templateService: ITemplateService<Template>,
-    ) {
+    public constructor(logger: ILogger, templateService: ITemplateService) {
         super(logger, ApiPath.TEMPLATES);
 
         this.templateService = templateService;
+
         this.addRoute({
             path: TemplatesApiPath.ROOT,
             method: 'POST',
@@ -38,7 +37,7 @@ class TemplateController extends Controller {
                 ),
         });
         this.addRoute({
-            path: TemplatesApiPath.ID,
+            path: TemplatesApiPath.TEMPLATE_ID,
             method: 'GET',
             handler: (options) =>
                 this.findById(
@@ -51,7 +50,7 @@ class TemplateController extends Controller {
             handler: () => this.findAll(),
         });
         this.addRoute({
-            path: TemplatesApiPath.ID,
+            path: TemplatesApiPath.TEMPLATE_ID,
             method: 'DELETE',
             handler: (options) =>
                 this.delete(
@@ -59,13 +58,15 @@ class TemplateController extends Controller {
                 ),
         });
         this.addRoute({
-            path: TemplatesApiPath.ID,
+            path: TemplatesApiPath.TEMPLATE_ID,
             method: 'PUT',
             handler: (options) =>
                 this.update(
                     options as ApiHandlerOptions<{
-                        body: TemplateCreateItemRequestDto;
-                        params: { id: string };
+                        body: TemplateUpdateItemRequestDto;
+                        params: {
+                            id: string;
+                        };
                     }>,
                 ),
         });
@@ -120,24 +121,27 @@ class TemplateController extends Controller {
     private async update(
         options: ApiHandlerOptions<{
             body: TemplateUpdateItemRequestDto;
-            params: { id: string };
+            params: {
+                id: string;
+            };
         }>,
-    ): Promise<ApiHandlerResponse<Template>> {
-        const template = await this.templateService.find(options.params.id);
-        if (!template) {
-            throw new HttpError({
-                status: HttpCode.BAD_REQUEST,
-                message: 'User with this id not found',
-            });
+    ): Promise<ApiHandlerResponse<TemplateUpdateItemResponseDto>> {
+        try {
+            await this.templateService.update(options.params.id, options.body);
+            return {
+                status: HttpCode.OK,
+                payload: {},
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
         }
-        const newTemplate = await this.templateService.update(
-            options.params.id,
-            options.body,
-        );
-        return {
-            status: HttpCode.OK,
-            payload: newTemplate,
-        };
     }
 }
 
