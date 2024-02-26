@@ -24,7 +24,7 @@ type Properties = {
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
-    const { control, errors, handleSubmit } =
+    const { control, isValid, errors, handleSubmit } =
         useAppForm<UserSignUpRequestDtoFrontend>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
             validationSchema: userSignUpValidationFrontend,
@@ -33,7 +33,6 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit(onSubmit)(event_);
-            //console.log('Click');
         },
         [handleSubmit, onSubmit],
     );
@@ -93,7 +92,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     width={ButtonWidth.FULL}
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
-                    //isDisabled={Boolean(errors)}
+                    isDisabled={!isValid}
                 >
                     Sign up
                 </BaseButton>
