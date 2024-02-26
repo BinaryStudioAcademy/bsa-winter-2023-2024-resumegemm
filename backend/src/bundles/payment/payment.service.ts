@@ -10,9 +10,10 @@ import {
     type CreateSubscriptionResponseDto,
     type GetPricesResponseDto,
     type GetPublishableKeyResponseDto,
+    type IPaymentService,
 } from './types/types';
 
-class PaymentService {
+class PaymentService implements IPaymentService {
     private appConfig: IConfig;
     private stripe: Stripe;
 
