@@ -56,12 +56,6 @@ async function up(knex: Knex): Promise<void> {
             .inTable(DatabaseTableName.USERS)
             .onUpdate(RelationRule.CASCADE)
             .onDelete(RelationRule.SET_NULL);
-        table
-            .uuid(DatabaseColumnName.RESUME_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.RESUMES)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
     });
     await knex.schema.alterTable(DatabaseTableName.RECENTLY_VIEWED, (table) => {
         table
@@ -112,7 +106,6 @@ async function down(knex: Knex): Promise<void> {
     });
     await knex.schema.alterTable(DatabaseTableName.TEMPLATES, (table) => {
         table.dropColumn(DatabaseColumnName.USER_ID);
-        table.dropColumn(DatabaseColumnName.RESUME_ID);
     });
     await knex.schema.alterTable(DatabaseTableName.RECENTLY_VIEWED, (table) => {
         table.dropColumn(DatabaseColumnName.USER_ID);
