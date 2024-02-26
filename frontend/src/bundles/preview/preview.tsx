@@ -15,6 +15,7 @@ import {
     Switch,
     Tooltip,
 } from '../../bundles/common/components/components.js';
+import { authApi } from '../auth/auth.js';
 import { Auth } from '../auth/pages/auth';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
@@ -35,11 +36,18 @@ const PreviewPage: React.FC = () => {
 
     const handleSuccessButtonClick = useCallback(() => {
         showToast('Hooray!', ToastType.SUCCESS);
-    }, []);
+    }, [showToast]);
 
     const handleErrorButtonClick = useCallback(() => {
         showToast('Error! Whyyyyyy!?!?!?', ToastType.ERROR, {
             theme: 'dark',
+        });
+    }, [showToast]);
+
+    const handleErrorLoad = useCallback(() => {
+        void authApi.signIn({
+            email: '',
+            password: '',
         });
     }, []);
 
@@ -49,7 +57,7 @@ const PreviewPage: React.FC = () => {
             hideProgressBar: false,
             closeButton: true,
         });
-    }, []);
+    }, [showToast]);
 
     return (
         <>
@@ -78,6 +86,9 @@ const PreviewPage: React.FC = () => {
                         </BaseButton>
                         <BaseButton onClick={handleInfoButtonClick}>
                             Info toast!
+                        </BaseButton>
+                        <BaseButton onClick={handleErrorLoad}>
+                            Error sign-in
                         </BaseButton>
                     </li>
                     <li className={styles.item}>
