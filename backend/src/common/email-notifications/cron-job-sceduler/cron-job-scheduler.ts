@@ -2,6 +2,7 @@ import cron from 'node-cron';
 
 import { type ILogger } from '~/common/logger/logger.js';
 
+import { SEND_EMAIL_TIME } from '../common/constants.js';
 import { type ResumeCountEmailService } from '../resume-count-email-service/resume-count-email-service.js';
 
 class CronJobScheduler {
@@ -14,7 +15,7 @@ class CronJobScheduler {
     }
 
     public start(): cron.ScheduledTask {
-        const task: cron.ScheduledTask = cron.schedule('*/1 * * * *', () => {
+        const task: cron.ScheduledTask = cron.schedule(SEND_EMAIL_TIME, () => {
             this.emailSender
                 .sendEmails()
                 .then(() => {
