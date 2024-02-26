@@ -44,7 +44,7 @@ class Controller implements IController {
 
         const requestHandlerOptions = this.handleRequestOptions(request);
 
-        const { status, payload, refreshToken } = await apiHandler(
+        const { status, payload, refreshToken, contentType } = await apiHandler(
             requestHandlerOptions,
         );
         if (refreshToken) {
@@ -55,6 +55,11 @@ class Controller implements IController {
                 signed: true,
             });
         }
+
+        if (contentType) {
+            void reply.header('Content-Type', contentType);
+        }
+
         return reply.status(status).send(payload);
     }
 

@@ -1,15 +1,22 @@
 import {
     type TemplateCreateItemRequestDto,
+    type TemplateGetAllItemResponseDto,
     type TemplateUpdateItemRequestDto,
-} from 'shared/build';
+    type TemplateUpdateItemResponseDto,
+} from 'shared/build/bundles/templates/templates.js';
 
-interface ITemplateService<T> {
-    find(id: string): Promise<T | undefined>;
+import { type Template } from './template.type';
+
+interface ITemplateService {
+    find(id: string): Promise<Template | undefined>;
     findAll(): Promise<{
-        items: T[];
+        items: TemplateGetAllItemResponseDto[];
     }>;
-    create(payload: TemplateCreateItemRequestDto): Promise<T>;
-    update(id: string, data: TemplateUpdateItemRequestDto): Promise<T>;
+    create(payload: TemplateCreateItemRequestDto): Promise<Template>;
+    update(
+        id: string,
+        data: TemplateUpdateItemRequestDto,
+    ): Promise<TemplateUpdateItemResponseDto>;
     delete(id: string): Promise<boolean>;
 }
 
