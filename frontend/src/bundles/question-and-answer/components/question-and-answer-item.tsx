@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import { useCallback, useState } from 'react';
 
+import { BaseButton } from '~/bundles/common/components/components';
+
 import styles from './styles.module.scss';
 
 type Properties = {
@@ -24,20 +26,20 @@ const QuestionAndAnswerItem: React.FC<Properties> = ({ title, children }) => {
             )}
         >
             <div className={styles.question_and_answer_item__title_container}>
-                <button
+                <BaseButton
                     onClick={handleClick}
                     className={styles.question_and_answer_item__title}
                 >
                     {title}
-                </button>
-                <button
+                </BaseButton>
+                <BaseButton
                     onClick={handleClick}
                     className={clsx(
                         styles.question_and_answer_item__title_image_container,
                         selected &&
                             styles.question_and_answer_item__title_image_container_selected,
                     )}
-                ></button>
+                ></BaseButton>
             </div>
 
             <hr

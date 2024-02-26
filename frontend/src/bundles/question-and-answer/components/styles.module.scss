@@ -16,8 +16,9 @@
 }
 
 .question_and_answer_item__title {
+    justify-content: start;
     width: 100%;
-    text-align: left;
+    border: none;
 }
 
 .question_and_answer_item__title_image_container {
