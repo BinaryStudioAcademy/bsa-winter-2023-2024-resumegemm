@@ -1,4 +1,4 @@
-import { type UserAuthResponse } from '~/bundles/users/types/types';
+import { type User } from '~/bundles/users/types/types';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -44,7 +44,7 @@ class RecentlyViewedController
             handler: (options) =>
                 this.findRecentlyViewedResumes(
                     options as ApiHandlerOptions<{
-                        user: UserAuthResponse;
+                        user: User;
                         query: { limit: number };
                     }>,
                 ),
@@ -55,7 +55,7 @@ class RecentlyViewedController
             handler: (options) =>
                 this.findRecentlyViewedTemplates(
                     options as ApiHandlerOptions<{
-                        user: UserAuthResponse;
+                        user: User;
                         query: { limit: number };
                     }>,
                 ),
@@ -66,7 +66,7 @@ class RecentlyViewedController
             handler: (options) =>
                 this.create(
                     options as ApiHandlerOptions<{
-                        user: UserAuthResponse;
+                        user: User;
                         body: RecentlyViewedRequestDto;
                     }>,
                 ),
@@ -114,13 +114,13 @@ class RecentlyViewedController
 
     public async findRecentlyViewedResumes(
         options: ApiHandlerOptions<{
-            user: UserAuthResponse;
+            user: User;
             query: { limit: number };
         }>,
     ): Promise<ApiHandlerResponse<RecentlyViewedResumesResponseDto[]>> {
         try {
             const limit = options.query.limit;
-            const userId = options.user.user.id;
+            const userId = options.user.id;
             const recentlyViewedResumes =
                 await this.recentlyViewedService.findRecentlyViewedResumesByUser(
                     {
@@ -145,13 +145,13 @@ class RecentlyViewedController
 
     public async findRecentlyViewedTemplates(
         options: ApiHandlerOptions<{
-            user: UserAuthResponse;
+            user: User;
             query: { limit: number };
         }>,
     ): Promise<ApiHandlerResponse<RecentlyViewedTemplatesResponseDto[]>> {
         try {
             const limit = options.query.limit;
-            const userId = options.user.user.id;
+            const userId = options.user.id;
             const recentlyViewedTemplates =
                 await this.recentlyViewedService.findRecentlyViewedTemplatesByUser(
                     {
@@ -176,13 +176,13 @@ class RecentlyViewedController
 
     public async create(
         options: ApiHandlerOptions<{
-            user: UserAuthResponse;
+            user: User;
             body: RecentlyViewedRequestDto;
         }>,
     ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>> {
         try {
             const data = options.body;
-            const userId = options.user.user.id;
+            const userId = options.user.id;
             const createdItem = await this.recentlyViewedService.create(
                 userId,
                 data,
