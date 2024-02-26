@@ -77,7 +77,7 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .groupBy('user_id', 'resume_id')
             .whereNotNull('resume_id')
             .whereRaw(
-                'viewed_at >= CURRENT_DATE AND viewed_at < CURRENT_DATE + interval "1 day"',
+                'viewed_at >= CURRENT_DATE - interval "1 day" AND viewed_at < CURRENT_DATE',
             )) as RecentlyViewedResumesQueryResult[];
 
         return result.map((item) => {
