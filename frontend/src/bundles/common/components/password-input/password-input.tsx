@@ -20,7 +20,7 @@ type PasswordInputProperties = {
 };
 
 const PasswordInput: React.FC<PasswordInputProperties> = ({
-    label = 'Password',
+    label = '',
     placeholder = 'Password',
     error,
     className,
