@@ -12,7 +12,6 @@ import {
 } from '~/bundles/common/enums/enums';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
-import { type UserSignUpRequestDto } from '~/bundles/users/users';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
@@ -20,7 +19,7 @@ import { type UserSignUpRequestDtoFrontend } from './validation/sign-up-validati
 import { userSignUpValidationFrontend } from './validation/sign-up-validation';
 
 type Properties = {
-    onSubmit: (payload: UserSignUpRequestDto) => void;
+    onSubmit: (payload: UserSignUpRequestDtoFrontend) => void;
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {

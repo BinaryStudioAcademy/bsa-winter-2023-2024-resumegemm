@@ -21,7 +21,7 @@ import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
 
 type Properties = {
-    onSubmit: () => void;
+    onSubmit: (paload: UserSignInRequestDto) => void;
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {

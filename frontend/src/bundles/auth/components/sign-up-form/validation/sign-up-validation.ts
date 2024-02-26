@@ -6,7 +6,7 @@ type UserSignUpRequestDtoFrontend = {
     lastName: string;
     email: string;
     password: string;
-    confirm_password: string;
+    confirm_password?: string;
 };
 
 const userSignUpValidationFrontend = joi.object<
