@@ -14,6 +14,7 @@ export { Link } from './link/link.js';
 export { Modal } from './modal/modal';
 export { PasswordInput } from './password-input/password-input.js';
 export { RadioButton } from './radio-button/radio-button.js';
+export { RegularButton } from './regular-button/regular-button.js';
 export { RouterProvider } from './router-provider/router-provider.js';
 export { Spinner } from './spinner/spinner';
 export { Switch } from './switch/switch.js';
