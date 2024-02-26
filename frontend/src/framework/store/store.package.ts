@@ -8,6 +8,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
+import { reducer as templatesReducer } from '~/bundles/edit-temlate/store/';
+import { templateApi } from '~/bundles/edit-temlate/templates.js';
 import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store';
 import { reducer as usersReducer } from '~/bundles/users/store/';
@@ -20,6 +22,7 @@ type RootReducer = {
     auth: ReturnType<typeof authReducer>;
     users: ReturnType<typeof usersReducer>;
     payment: ReturnType<typeof paymentReducer>;
+    templates: ReturnType<typeof templatesReducer>;
 };
 
 type ExtraArguments = {
@@ -27,6 +30,7 @@ type ExtraArguments = {
     userApi: typeof userApi;
     paymentApi: typeof paymentApi;
     storageApi: typeof storage;
+    templateApi: typeof templateApi;
 };
 
 class Store {
@@ -47,6 +51,7 @@ class Store {
                 auth: authReducer,
                 users: usersReducer,
                 payment: paymentReducer,
+                templates: templatesReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
@@ -64,6 +69,7 @@ class Store {
             userApi,
             paymentApi,
             storageApi: storage,
+            templateApi,
         };
     }
 }

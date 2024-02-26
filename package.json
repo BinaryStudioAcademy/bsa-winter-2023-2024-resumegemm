@@ -53,6 +53,7 @@
     "dependencies": {
         "@stripe/react-stripe-js": "2.5.0",
         "@stripe/stripe-js": "3.0.3",
-        "clsx": "2.1.0"
+        "clsx": "2.1.0",
+        "@floating-ui/core": "1.6.0"
     }
 }

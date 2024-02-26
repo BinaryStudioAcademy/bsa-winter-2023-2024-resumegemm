@@ -13,6 +13,7 @@ import {
     StripeProvider,
 } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/enums';
+import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
 import { LandingPage } from './bundles/landing-page/landing-page';
@@ -24,52 +25,56 @@ import { Profile } from './bundles/users/pages/profile';
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
         <StoreProvider store={store.instance}>
-            <RouterProvider
-                routes={[
-                    {
-                        path: AppRoute.ROOT,
-                        element: (
-                            <ErrorBoundary FallbackComponent={ErrorFallback}>
-                                <App />
-                            </ErrorBoundary>
-                        ),
-                        children: [
-                            {
-                                path: AppRoute.ROOT,
-                                element: <LandingPage />,
-                            },
-                            {
-                                path: AppRoute.SIGN_IN,
-                                element: <Auth />,
-                            },
-                            {
-                                path: AppRoute.SIGN_UP,
-                                element: <Auth />,
-                            },
-                            {
-                                path: AppRoute.PAYMENT,
-                                element: (
-                                    <StripeProvider>
-                                        <SubscriptionPaymentPage />
-                                    </StripeProvider>
-                                ),
-                            },
-                            {
-                                path: AppRoute.PROFILE,
-                                element: <Profile />,
-                            },
-                        ],
-                    },
-                    {
-                        path: '*',
-                        element: <NotFoundPage />,
-                    },
-                    {
-                        path: AppRoute.PREVIEW,
-                        element: <PreviewPage />,
-                    },
-                ]}
-            />
+            <ToastProvider>
+                <RouterProvider
+                    routes={[
+                        {
+                            path: AppRoute.ROOT,
+                            element: (
+                                <ErrorBoundary
+                                    FallbackComponent={ErrorFallback}
+                                >
+                                    <App />
+                                </ErrorBoundary>
+                            ),
+                            children: [
+                                {
+                                    path: AppRoute.ROOT,
+                                    element: <LandingPage />,
+                                },
+                                {
+                                    path: AppRoute.SIGN_IN,
+                                    element: <Auth />,
+                                },
+                                {
+                                    path: AppRoute.PAYMENT,
+                                    element: (
+                                        <StripeProvider>
+                                            <SubscriptionPaymentPage />
+                                        </StripeProvider>
+                                    ),
+                                },
+                                {
+                                    path: AppRoute.SIGN_UP,
+                                    element: <Auth />,
+                                },
+                                {
+                                    path: AppRoute.PROFILE,
+                                    element: <Profile />,
+                                },
+                            ],
+                        },
+                        {
+                            path: '*',
+                            element: <NotFoundPage />,
+                        },
+                        {
+                            path: AppRoute.PREVIEW,
+                            element: <PreviewPage />,
+                        },
+                    ]}
+                />
+            </ToastProvider>
         </StoreProvider>
     </StrictMode>,
 );

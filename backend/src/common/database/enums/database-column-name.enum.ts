@@ -36,6 +36,7 @@ enum DatabaseColumnName {
     SCORE = 'score',
     VIEWED_AT = 'viewed_at',
     TEMPLATE_ID = 'template_id',
+    TEMPLATE_SETTINGS = 'template_settings',
 }
 
 export { DatabaseColumnName };
