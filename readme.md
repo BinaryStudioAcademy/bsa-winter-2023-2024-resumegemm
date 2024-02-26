@@ -119,6 +119,7 @@ TBA
         timestamp updated_at
         timestamp deleted_at
         uuid user_id FK
+        uuid template_id FK
     }
     templates {
         uuid id PK
@@ -128,7 +129,6 @@ TBA
         timestamp updated_at
         timestamp deleted_at
         uuid user_id FK
-        uuid resume_id FK
     }
     reviews {
         uuid id PK
@@ -159,7 +159,7 @@ TBA
     technical_skills |o--|| resumes : resume_id
     personal_information |o--|| resumes : resume_id
     reviews ||--|| resumes : resume_id
-    resumes ||--|| templates : resume_id
+    resumes }o--|| templates : template_id
     recently_viewed ||--|| users: user_id
     recently_viewed ||--|| resumes: resume_id
     recently_viewed ||--|| templates: template_id
