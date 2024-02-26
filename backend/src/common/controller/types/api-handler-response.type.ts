@@ -7,6 +7,7 @@ type ApiHandlerResponse<T> = {
     status: ApiHandlerResponseStatus;
     refreshToken?: string;
     accessToken?: string;
+    contentType?: string;
     payload:
         | {
               message?: string;

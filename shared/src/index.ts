@@ -14,6 +14,7 @@ export {
     OpenAuthApiGetUserUrl,
     OpenAuthApiPath,
 } from './bundles/open-auth/open-auth.js';
+export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
 export { type Profile } from './bundles/profile/profile.js';
 export {
     type RecentlyViewed,

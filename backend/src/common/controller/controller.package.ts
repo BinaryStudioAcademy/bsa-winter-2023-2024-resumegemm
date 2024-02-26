@@ -75,11 +75,14 @@ class Controller implements IController {
 
         const requestHandlerOptions = this.handleRequestOptions(request);
 
-        const { status, payload, refreshToken, accessToken } = await apiHandler(
-            requestHandlerOptions,
-        );
+        const { status, payload, refreshToken, accessToken, contentType } =
+            await apiHandler(requestHandlerOptions);
 
         await this.setTokenInCookies({ reply, accessToken, refreshToken });
+
+        if (contentType) {
+            void reply.header('Content-Type', contentType);
+        }
         return reply.status(status).send(payload);
     }
 
