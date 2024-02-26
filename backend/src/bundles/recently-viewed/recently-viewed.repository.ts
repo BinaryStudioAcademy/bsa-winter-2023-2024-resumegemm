@@ -70,20 +70,22 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
     public async findRecentlyViewedResumesWithCount(): Promise<
         RecentlyViewedResumesWithCount[]
     > {
+        const interval = '1 day';
         const result = (await this.recentlyViewedModel
             .query()
-            .select('user_id', 'resume_id')
+            .select('user_id', 'resume_id', 'viewed_at')
             .count('resume_id as count')
-            .groupBy('user_id', 'resume_id')
+            .groupBy('user_id', 'resume_id', 'viewed_at')
             .whereNotNull('resume_id')
+            .withGraphFetched('resumes')
             .whereRaw(
-                'viewed_at >= CURRENT_DATE - interval "1 day" AND viewed_at < CURRENT_DATE',
+                `viewed_at >= CURRENT_TIMESTAMP - interval ${interval} AND viewed_at <= CURRENT_TIMESTAMP`,
             )) as RecentlyViewedResumesQueryResult[];
 
         return result.map((item) => {
             return {
-                resumeId: item.resumeId,
-                userId: item.userId,
+                resumeId: item.resumes.id,
+                userId: item.resumes.userId,
                 count: +item.count,
             };
         });
