@@ -4,6 +4,7 @@ import {
     useAppSelector,
     useEffect,
 } from '~/bundles/common/hooks/hooks';
+import { loadAllTemplates } from '~/bundles/edit-temlate/store/actions';
 import {
     CreateNewCard,
     CreateResumeButton,
@@ -14,7 +15,6 @@ import {
     TemplateSection,
 } from '~/bundles/home/components/components';
 
-import { loadAllTemplates } from '../store/actions';
 import styles from './styles.module.scss';
 
 const Home: React.FC = () => {
