@@ -1,10 +1,5 @@
-import { type TemplateGetAllItemResponseDto } from './template-get-all-item-response-dto.type.js';
+import { type TemplateDto } from './template-dto.type.js';
 
-type TemplateUpdateItemRequestDto = Partial<
-    Omit<
-        TemplateGetAllItemResponseDto,
-        'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'userId' | 'resumeId'
-    >
->;
+type TemplateUpdateItemRequestDto = Pick<TemplateDto, 'templateSettings'>;
 
 export { type TemplateUpdateItemRequestDto };

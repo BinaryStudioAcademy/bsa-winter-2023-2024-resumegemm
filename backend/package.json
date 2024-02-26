@@ -26,6 +26,8 @@
         "@types/node-cron": "3.0.11",
         "@types/nodemailer": "6.4.14",
         "@types/swagger-jsdoc": "6.0.1",
+        "guid-typescript": "1.0.9",
+        "jsonwebtoken": "9.0.2",
         "nodemon": "2.0.21",
         "ts-node": "10.9.1",
         "ts-paths-esm-loader": "1.4.1",
