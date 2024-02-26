@@ -12,6 +12,7 @@ enum DatabaseTableName {
     USER_TEMPLATES = 'user_templates',
     REVIEWS = 'reviews',
     RECENTLY_VIEWED = 'recently_viewed',
+    RESUME_SHARE_LINK = 'resume_share_link',
 }
 
 export { DatabaseTableName };

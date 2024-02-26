@@ -11,7 +11,12 @@ export {
     type RecentlyViewedResponseDto,
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
-export { SkillLevel } from './bundles/resumes/resumes.js';
+export {
+    type ResumeShareCreateRequestDto,
+    type ResumeShareCreateResponseDto,
+    ResumesApiPath,
+    SkillLevel,
+} from './bundles/resumes/resumes.js';
 export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
