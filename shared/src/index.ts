@@ -8,7 +8,14 @@ export {
     type EmailSubscription,
     EmailSubscriptionsApiPath,
 } from './bundles/email-subscriptions/email-subscriptions.js';
+export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
 export { type Profile } from './bundles/profile/profile.js';
+export {
+    type RecentlyViewed,
+    type RecentlyViewedRequestDto,
+    type RecentlyViewedResponseDto,
+    RecentlyViewedApiPath,
+} from './bundles/recently-viewed/recently-viewed.js';
 export { SkillLevel } from './bundles/resumes/resumes.js';
 export {
     type TemplateCreateItemRequestDto,
