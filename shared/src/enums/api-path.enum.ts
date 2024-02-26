@@ -4,6 +4,7 @@ enum ApiPath {
     PDF = '/pdf',
     RECENTLY_VIEWED = '/recently-viewed',
     TEMPLATES = '/templates',
+    RESUMES = '/resumes',
 }
 
 export { ApiPath };
