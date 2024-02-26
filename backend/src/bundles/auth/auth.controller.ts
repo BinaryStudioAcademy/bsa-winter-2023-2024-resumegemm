@@ -5,7 +5,6 @@ import {
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelation,
     AuthApiPath,
     ExceptionMessage,
 } from 'shared/build/index.js';
@@ -213,7 +212,7 @@ class AuthController extends Controller {
         options: ApiHandlerOptions<{
             user: UserAuthResponse['user'];
         }>,
-    ): Promise<ApiHandlerResponse<UserWithProfileRelation>> {
+    ): Promise<ApiHandlerResponse<UserAuthResponse>> {
         try {
             const { id } = options.user;
             const payload = await this.authService.getUser(id);

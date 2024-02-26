@@ -2,6 +2,9 @@ import { genSalt, hash } from 'bcrypt';
 import {
     type AuthService as TAuthService,
     type EncryptionDataPayload,
+    type UserAuthResponse,
+} from 'shared/build/index.js';
+import {
     AuthException,
     ExceptionMessage,
     HttpCode,
@@ -18,7 +21,6 @@ import {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelation,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 
@@ -95,7 +97,7 @@ class AuthService implements TAuthService {
         };
     }
 
-    public async getUser(id: string): Promise<UserWithProfileRelation> {
+    public async getUser(id: string): Promise<UserAuthResponse> {
         return await this.userService.getUserWithProfile(id);
     }
 
