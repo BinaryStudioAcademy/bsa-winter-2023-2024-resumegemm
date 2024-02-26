@@ -1,9 +1,9 @@
 import { logger } from '~/common/logger/logger.js';
 
 import { userService } from '../users/users.js';
-import { EmailSubscriptionRepository } from './email-subscriprion.repository.js';
 import { EmailSubscriptionController } from './email-subscription.controller.js';
 import { EmailSubscriptionModel } from './email-subscription.model.js';
+import { EmailSubscriptionRepository } from './email-subscription.repository.js';
 import { EmailSubscriptionService } from './email-subscription.service.js';
 
 const emailSubscriptionRepository = new EmailSubscriptionRepository(

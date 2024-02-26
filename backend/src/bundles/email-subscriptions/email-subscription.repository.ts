@@ -4,7 +4,7 @@ import { type EmailSubscriptionModel } from './email-subscription.model.js';
 import {
     type EmailSubscription,
     type IEmailSubscriptionRepository,
-} from './types/types';
+} from './types/types.js';
 
 class EmailSubscriptionRepository implements IEmailSubscriptionRepository {
     private emailSubscriptionModel: typeof EmailSubscriptionModel;
