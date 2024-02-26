@@ -1,6 +1,6 @@
 import { Guid as guid } from 'guid-typescript';
 
-import { type EmailSubscriptionModel } from './email-subscription.model';
+import { type EmailSubscriptionModel } from './email-subscription.model.js';
 import {
     type EmailSubscription,
     type IEmailSubscriptionRepository,

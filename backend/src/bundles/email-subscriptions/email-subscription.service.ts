@@ -1,7 +1,7 @@
-import { type UserService } from '../users/user.service';
-import { type IEmailSubscriptionRepository } from './types/email-subscription-repository.type';
-import { type IEmailSubscriptionService } from './types/email-subscription-service.type';
-import { type EmailSubscription } from './types/types';
+import { type UserService } from '../users/user.service.js';
+import { type IEmailSubscriptionRepository } from './types/email-subscription-repository.type.js';
+import { type IEmailSubscriptionService } from './types/email-subscription-service.type.js';
+import { type EmailSubscription } from './types/types.js';
 
 class EmailSubscriptionService implements IEmailSubscriptionService {
     public constructor(
