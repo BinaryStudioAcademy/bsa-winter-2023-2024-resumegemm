@@ -180,6 +180,7 @@ async function up(knex: Knex): Promise<void> {
             .dateTime(DatabaseColumnName.DELETED_AT)
             .notNullable()
             .defaultTo(knex.fn.now());
+        table.jsonb(DatabaseColumnName.TEMPLATE_SETTINGS).defaultTo('{}');
     });
     await knex.schema.createTable(DatabaseTableName.REVIEWS, (table) => {
         table.uuid(DatabaseColumnName.ID).primary();

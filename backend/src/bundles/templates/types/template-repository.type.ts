@@ -3,7 +3,8 @@ import {
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
-} from 'shared/build';
+    type TemplateUpdateItemResponseDto,
+} from 'shared/build/bundles/templates/templates.js';
 
 interface ITemplateRepository {
     find(id: string): Promise<TemplateGetAllItemResponseDto | undefined>;
@@ -14,7 +15,7 @@ interface ITemplateRepository {
     update(
         id: string,
         data: TemplateUpdateItemRequestDto,
-    ): Promise<TemplateGetAllItemResponseDto>;
+    ): Promise<TemplateUpdateItemResponseDto>;
     delete(id: string): Promise<boolean>;
 }
 

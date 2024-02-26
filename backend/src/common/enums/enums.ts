@@ -1,3 +1,4 @@
+export { TemplateBlockTitles } from 'shared/build/bundles/templates/templates.js';
 export {
     ApiPath,
     AppEnvironment,
