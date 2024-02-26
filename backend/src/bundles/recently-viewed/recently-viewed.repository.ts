@@ -79,7 +79,7 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .whereNotNull('resume_id')
             .withGraphFetched('resumes')
             .whereRaw(
-                `viewed_at >= CURRENT_TIMESTAMP - interval ${interval} AND viewed_at <= CURRENT_TIMESTAMP`,
+                `viewed_at >= CURRENT_TIMESTAMP - interval '${interval}' AND viewed_at <= CURRENT_TIMESTAMP`,
             )) as RecentlyViewedResumesQueryResult[];
 
         return result.map((item) => {
