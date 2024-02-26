@@ -1,7 +1,7 @@
 enum TechnicalSkillLevel {
     BEGINNER = 'Beginner',
     EXPERIENCED = 'Experienced',
-    EXPERT = 'Expert'
+    EXPERT = 'Expert',
 }
 
 export { TechnicalSkillLevel };

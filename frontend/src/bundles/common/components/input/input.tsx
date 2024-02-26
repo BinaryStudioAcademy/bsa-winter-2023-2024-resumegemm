@@ -6,6 +6,7 @@ import styles from './styles.module.scss';
 interface Properties extends InputHTMLAttributes<HTMLInputElement> {
     hasError?: boolean;
     width?: string;
+    type?: string;
     className?: string;
 }
 const Input = forwardRef<HTMLInputElement, Properties>(
@@ -15,6 +16,7 @@ const Input = forwardRef<HTMLInputElement, Properties>(
             width = 'auto',
             className = '',
             disabled,
+            type,
             ...otherProperties
         },
         reference,
@@ -31,7 +33,7 @@ const Input = forwardRef<HTMLInputElement, Properties>(
             {...otherProperties}
             style={{ width }}
             ref={reference}
-            type="text"
+            type={type}
         />
     ),
 );

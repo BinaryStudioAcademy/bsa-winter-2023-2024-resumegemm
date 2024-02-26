@@ -4,7 +4,7 @@ enum LanguageLevels {
     INTERMEDIATE = 'Intermediate',
     UPPER_INTERMEDIATE = 'Upper-intermediate',
     ADVANCED = 'Advanced',
-    PROFICIENT = 'Proficient'
+    PROFICIENT = 'Proficient',
 }
 
 export { LanguageLevels };
