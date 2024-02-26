@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url';
+
 import reactPlugin from '@vitejs/plugin-react';
 import { type ConfigEnv, defineConfig, loadEnv } from 'vite';
 import tsconfigPathsPlugin from 'vite-tsconfig-paths';
@@ -22,6 +24,14 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
                     changeOrigin: true,
                 },
             },
+        },
+        resolve: {
+            alias: [
+                {
+                    find: '~',
+                    replacement: fileURLToPath(new URL('src', import.meta.url)),
+                },
+            ],
         },
     });
 };

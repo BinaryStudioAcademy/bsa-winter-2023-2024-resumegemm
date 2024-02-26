@@ -1,4 +1,5 @@
 import { authController } from '~/bundles/auth/auth.js';
+import { pdfController } from '~/bundles/pdf/pdf.js';
 import { recentlyViewedController } from '~/bundles/recently-viewed/recently-viewed.js';
 import { resumeController } from '~/bundles/resumes/resumes.js';
 import { templateController } from '~/bundles/templates/templates.js';
@@ -13,6 +14,7 @@ import { ServerAppApi } from './server-app-api.js';
 const apiV1 = new ServerAppApi(
     'v1',
     config,
+    ...pdfController.routes,
     ...authController.routes,
     ...userController.routes,
     ...resumeController.routes,
