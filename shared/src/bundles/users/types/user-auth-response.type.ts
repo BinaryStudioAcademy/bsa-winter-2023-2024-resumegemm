@@ -1,7 +1,7 @@
-import { type User } from './user.type';
+import { type UserWithRelations } from './user-with-relations.type';
 
 type UserAuthResponse = {
-    user: User;
+    user: UserWithRelations;
 };
 
 export { type UserAuthResponse };

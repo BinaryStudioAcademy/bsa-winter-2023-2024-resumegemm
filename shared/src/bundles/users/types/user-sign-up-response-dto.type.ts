@@ -1,7 +1,7 @@
-import { type UserWithProfileRelation } from './user-with-profile-nested-relation.type';
+import { type UserAuthResponse } from './user-auth-response.type';
 
 type UserSignUpResponseDto = {
-    user: UserWithProfileRelation;
+    user: UserAuthResponse;
 };
 
 export { type UserSignUpResponseDto };

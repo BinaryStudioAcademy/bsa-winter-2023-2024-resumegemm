@@ -1,9 +1,6 @@
-import { type UserAuthResponse } from '~/bundles/users/types/user-auth-response.type';
+import { type User } from './user.type';
 
-type UserEntityFields = Omit<
-    UserAuthResponse['user'],
-    'createdAt' | 'updatedAt'
-> & {
+type UserEntityFields = Omit<User, 'createdAt' | 'updatedAt'> & {
     passwordHash: string;
     passwordSalt: string;
 };
