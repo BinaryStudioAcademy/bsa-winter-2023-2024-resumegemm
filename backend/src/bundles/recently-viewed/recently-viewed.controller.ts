@@ -1,3 +1,4 @@
+import { type UserAuthResponse } from '~/bundles/users/types/types';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -13,6 +14,8 @@ import {
     type IRecentlyViewedController,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedTemplatesResponseDto,
 } from './types/types';
 
 class RecentlyViewedController
@@ -36,11 +39,34 @@ class RecentlyViewedController
                 ),
         });
         this.addRoute({
+            path: RecentlyViewedApiPath.RECENTLY_VIEWED_RESUMES,
+            method: 'GET',
+            handler: (options) =>
+                this.findRecentlyViewedResumes(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponse;
+                        query: { limit: number };
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: RecentlyViewedApiPath.RECENTLY_VIEWED_TEMPLATES,
+            method: 'GET',
+            handler: (options) =>
+                this.findRecentlyViewedTemplates(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponse;
+                        query: { limit: number };
+                    }>,
+                ),
+        });
+        this.addRoute({
             path: RecentlyViewedApiPath.ROOT,
             method: 'POST',
             handler: (options) =>
                 this.create(
                     options as ApiHandlerOptions<{
+                        user: UserAuthResponse;
                         body: RecentlyViewedRequestDto;
                     }>,
                 ),
@@ -86,12 +112,81 @@ class RecentlyViewedController
         }
     }
 
+    public async findRecentlyViewedResumes(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponse;
+            query: { limit: number };
+        }>,
+    ): Promise<ApiHandlerResponse<RecentlyViewedResumesResponseDto[]>> {
+        try {
+            const limit = options.query.limit;
+            const userId = options.user.user.id;
+            const recentlyViewedResumes =
+                await this.recentlyViewedService.findRecentlyViewedResumesByUser(
+                    {
+                        userId,
+                        limit,
+                    },
+                );
+
+            return {
+                status: HttpCode.OK,
+                payload: recentlyViewedResumes,
+            };
+        } catch (error) {
+            return {
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+                payload: {
+                    message: (error as Error).message,
+                },
+            };
+        }
+    }
+
+    public async findRecentlyViewedTemplates(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponse;
+            query: { limit: number };
+        }>,
+    ): Promise<ApiHandlerResponse<RecentlyViewedTemplatesResponseDto[]>> {
+        try {
+            const limit = options.query.limit;
+            const userId = options.user.user.id;
+            const recentlyViewedTemplates =
+                await this.recentlyViewedService.findRecentlyViewedTemplatesByUser(
+                    {
+                        userId,
+                        limit,
+                    },
+                );
+
+            return {
+                status: HttpCode.OK,
+                payload: recentlyViewedTemplates,
+            };
+        } catch (error) {
+            return {
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+                payload: {
+                    message: (error as Error).message,
+                },
+            };
+        }
+    }
+
     public async create(
-        options: ApiHandlerOptions<{ body: RecentlyViewedRequestDto }>,
+        options: ApiHandlerOptions<{
+            user: UserAuthResponse;
+            body: RecentlyViewedRequestDto;
+        }>,
     ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>> {
         try {
             const data = options.body;
-            const createdItem = await this.recentlyViewedService.create(data);
+            const userId = options.user.user.id;
+            const createdItem = await this.recentlyViewedService.create(
+                userId,
+                data,
+            );
 
             return {
                 status: HttpCode.CREATED,
