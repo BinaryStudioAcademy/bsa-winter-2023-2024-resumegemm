@@ -52,7 +52,7 @@ const initialState: State = {
                     enabled: true,
                 },
             },
-        }
+        },
     ],
     dataStatus: DataStatus.IDLE,
 };
