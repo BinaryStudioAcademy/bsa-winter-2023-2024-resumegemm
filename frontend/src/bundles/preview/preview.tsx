@@ -112,6 +112,9 @@ const PreviewPage: React.FC = () => {
                         <Auth />
                     </li>
                     <li className={styles.item}>
+                        <QuestionAndAnswer />
+                    </li>
+                    <li className={styles.item}>
                         <EditTemplatePage />
                     </li>
                 </ul>

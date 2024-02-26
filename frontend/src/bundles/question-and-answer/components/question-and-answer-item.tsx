@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { useCallback, useState } from 'react';
 
 import { BaseButton } from '~/bundles/common/components/components';
+import { ButtonVariant } from '~/bundles/common/enums/enums';
 
 import styles from './styles.module.scss';
 
@@ -29,6 +30,7 @@ const QuestionAndAnswerItem: React.FC<Properties> = ({ title, children }) => {
                 <BaseButton
                     onClick={handleClick}
                     className={styles.question_and_answer_item__title}
+                    variant={ButtonVariant.GHOST}
                 >
                     {title}
                 </BaseButton>
