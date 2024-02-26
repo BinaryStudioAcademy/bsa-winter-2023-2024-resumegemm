@@ -17,7 +17,7 @@ const initialState: State = {
 
 const { reducer, actions, name } = createSlice({
     initialState,
-    name: 'templates',
+    name: 'templates2',
     reducers: {},
     extraReducers(builder) {
         builder.addCase(loadAllTemplates.fulfilled, (state, action) => {

@@ -20,7 +20,7 @@ import styles from './styles.module.scss';
 const Home: React.FC = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.auth.user);
-    const templates = useAppSelector((state) => state.templates.templates);
+    const templates = useAppSelector((state) => state.templates2.templates);
 
     useEffect(() => {
         if (user) {

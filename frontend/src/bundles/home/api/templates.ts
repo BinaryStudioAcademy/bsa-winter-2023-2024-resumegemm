@@ -4,10 +4,10 @@ import { storage } from '~/framework/storage/storage';
 
 import { TemplatesApi } from './templates-api.js';
 
-const templatesApi = new TemplatesApi({
+const templatesApi2 = new TemplatesApi({
     baseUrl: config.ENV.API.ORIGIN_URL,
     storage,
     http,
 });
 
-export { templatesApi };
+export { templatesApi2 };

@@ -1,18 +1,19 @@
 import { type RelationMappings, Model } from 'objection';
 
-import { ResumeModel } from '~/bundles/resumes/resumes.js';
 import { UserModel } from '~/bundles/users/users.js';
 import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
 
+import { type TemplateBlockSettings } from './types/types.js';
+
 class TemplateModel extends AbstractModel {
     public 'isOwner': boolean;
+    public 'userId': string;
     public 'deletedAt': string;
     public 'image': string;
-    public 'userId': string;
-    public 'resumeId': string;
+    public 'templateSettings': TemplateBlockSettings;
 
     public static override get tableName(): typeof DatabaseTableName.TEMPLATES {
         return DatabaseTableName.TEMPLATES;
@@ -20,14 +21,6 @@ class TemplateModel extends AbstractModel {
 
     public static getRelationMappings(): RelationMappings {
         return {
-            resumes: {
-                relation: Model.HasOneRelation,
-                modelClass: ResumeModel,
-                join: {
-                    from: `${DatabaseTableName.TEMPLATES}.resumeId`,
-                    to: `${DatabaseTableName.RESUMES}.id`,
-                },
-            },
             users: {
                 relation: Model.ManyToManyRelation,
                 modelClass: UserModel,

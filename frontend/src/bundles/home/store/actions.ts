@@ -7,9 +7,9 @@ const loadAllTemplates = createAsyncThunk<
     TemplateGetAllItemResponseDto[],
     undefined,
     AsyncThunkConfig
->('templates/load-all', async (_, { extra }) => {
-    const { templatesApi } = extra;
-    const { items } = await templatesApi.getAll();
+>('templates2/load-all', async (_, { extra }) => {
+    const { templatesApi2 } = extra;
+    const { items } = await templatesApi2.getAll();
     return items;
 });
 
