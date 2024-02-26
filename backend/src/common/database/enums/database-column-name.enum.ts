@@ -38,6 +38,7 @@ enum DatabaseColumnName {
     TEMPLATE_ID = 'template_id',
     INDUSTRY = 'industry',
     INDUSTRY_ID = 'industry_id',
+    TEMPLATE_SETTINGS = 'template_settings',
 }
 
 export { DatabaseColumnName };

@@ -7,9 +7,11 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/';
-import { AppEnvironment } from '~/bundles/common/enums/enums';
 import { industriesApi } from '~/bundles/industries/industries';
 import { reducer as industriesReducer } from '~/bundles/industries/store/';
+import { AppEnvironment } from '~/bundles/common/enums/enums.js';
+import { reducer as templatesReducer } from '~/bundles/edit-temlate/store/';
+import { templateApi } from '~/bundles/edit-temlate/templates.js';
 import { reducer as usersReducer } from '~/bundles/users/store/';
 import { userApi } from '~/bundles/users/users.js';
 import { type IConfig } from '~/framework/config/config.js';
@@ -20,6 +22,7 @@ type RootReducer = {
     auth: ReturnType<typeof authReducer>;
     users: ReturnType<typeof usersReducer>;
     industries: ReturnType<typeof industriesReducer>;
+    templates: ReturnType<typeof templatesReducer>;
 };
 
 type ExtraArguments = {
@@ -27,6 +30,7 @@ type ExtraArguments = {
     userApi: typeof userApi;
     storageApi: typeof storage;
     industriesApi: typeof industriesApi;
+    templateApi: typeof templateApi;
 };
 
 class Store {
@@ -47,6 +51,7 @@ class Store {
                 auth: authReducer,
                 users: usersReducer,
                 industries: industriesReducer,
+                templates: templatesReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
@@ -64,6 +69,7 @@ class Store {
             userApi,
             industriesApi,
             storageApi: storage,
+            templateApi,
         };
     }
 }
