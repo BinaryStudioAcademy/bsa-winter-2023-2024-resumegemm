@@ -1,8 +1,8 @@
 import {
-    BaseButton,
     FormGroup,
     Input,
     PasswordInput,
+    RegularButton,
 } from '~/bundles/common/components/components';
 import {
     ButtonSize,
@@ -76,7 +76,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     placeholder="Confirm your password"
                     error={errors.password}
                 />
-                <BaseButton
+                <RegularButton
                     className={styles.registration__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
@@ -84,7 +84,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     type={ButtonType.SUBMIT}
                 >
                     Sign up
-                </BaseButton>
+                </RegularButton>
             </form>
         </>
     );
