@@ -1,12 +1,13 @@
+import { type TemplateBlockSettings } from './types.js';
+
 type Template = {
     id: string;
     isOwner: boolean;
-    image: string;
+    userId: string;
     createdAt: string;
     updatedAt: string;
-    deletedAt: string;
-    userId: string;
-    resumeId: string;
+    deletedAt: string | null;
+    templateSettings: TemplateBlockSettings;
 };
 
 export { type Template };

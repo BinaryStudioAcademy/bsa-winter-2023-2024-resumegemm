@@ -1,4 +1,5 @@
 import { type SkillLevel } from '~/common/enums/enums.js';
+import { type TemplateBlockSettings } from '~/common/types/types.js';
 
 type User = {
     id: string;
@@ -23,6 +24,7 @@ type Resume = {
 type Template = {
     id: string;
     is_owner: boolean;
+    templapte_settings: TemplateBlockSettings;
 };
 
 type Review = {
