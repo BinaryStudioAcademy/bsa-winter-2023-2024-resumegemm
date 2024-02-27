@@ -13,7 +13,13 @@ export {
     type RecentlyViewedResumesWithCount,
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
-export { SkillLevel } from './bundles/resumes/resumes.js';
+export {
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
+    type ResumeService,
+    ResumeApiPath,
+    SkillLevel,
+} from './bundles/resumes/resumes.js';
 export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
