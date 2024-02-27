@@ -1,5 +1,3 @@
-import crypto from 'node:crypto';
-
 import { type Transaction } from 'objection';
 
 import { type ResumeModel } from './resume.model';
@@ -42,7 +40,6 @@ class ResumeRepository implements IResumeRepository {
         payload: Resume,
         transaction?: Transaction,
     ): Promise<Resume> {
-        payload.id = crypto.randomUUID();
         return await this.resumeModel
             .query(transaction)
             .insert(payload)
