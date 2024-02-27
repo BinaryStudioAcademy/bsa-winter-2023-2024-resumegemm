@@ -1,3 +1,4 @@
+import { type Transaction } from 'objection';
 import { type UserWithRelations } from 'shared/build/index.js';
 
 import { UserEntity } from '~/bundles/users/user.entity.js';
@@ -38,11 +39,13 @@ class UserRepository
     public async updateEmailSubscriptionId(
         userId: string,
         emailSubscriptionId: string,
+        transaction: Transaction,
     ): Promise<UserEntity> {
         const user = await this.model
             .query()
             .patch({ emailSubscriptionId })
             .where({ id: userId })
+            .transacting(transaction)
             .returning('*')
             .execute();
         return UserEntity.initialize(user[0]);
