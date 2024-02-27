@@ -1,3 +1,5 @@
+import { type RelationMappings, Model } from 'objection';
+
 import {
     AbstractModel,
     DatabaseTableName,
@@ -10,6 +12,19 @@ class TechnicalSkillModel extends AbstractModel {
 
     public static override get tableName(): typeof DatabaseTableName.TECHNICAL_SKILLS {
         return DatabaseTableName.TECHNICAL_SKILLS;
+    }
+
+    public static getRelationMappings(): RelationMappings {
+        return {
+            resume: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: TechnicalSkillModel,
+                join: {
+                    from: `${DatabaseTableName.TECHNICAL_SKILLS}.resumeId`,
+                    to: `${DatabaseTableName.RESUMES}.id`,
+                },
+            },
+        };
     }
 }
 
