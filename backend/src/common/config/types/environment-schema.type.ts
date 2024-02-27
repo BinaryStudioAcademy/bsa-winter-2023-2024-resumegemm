@@ -28,6 +28,8 @@ type EnvironmentSchema = {
         SECRET_ACCESS_KEY: string;
         ACCESS_KEY: string;
         BUCKET_NAME: string;
+    OPEN_AI: {
+        API_KEY: string;
     };
 };
 

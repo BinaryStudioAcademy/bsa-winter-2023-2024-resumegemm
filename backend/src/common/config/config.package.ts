@@ -123,6 +123,11 @@ class Config implements IConfig {
                     doc: 'AWS bucket name string',
                     format: String,
                     env: 'AWS_BUCKET_NAME',
+            OPEN_AI: {
+                API_KEY: {
+                    doc: 'OpenAI API key',
+                    format: String,
+                    env: 'OPEN_AI_API_KEY',
                     default: null,
                 },
             },
