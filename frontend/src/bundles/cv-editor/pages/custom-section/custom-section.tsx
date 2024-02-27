@@ -74,29 +74,22 @@ const CustomSection: React.FC<CustomSectionProperties> = ({
 
     return (
         <form onSubmit={onSubmit} className={styles.custom__section}>
-            <div className={styles.custom__section__activity}>
-                <FormGroup
-                    label={'Activity name, book title, etc.'}
-                    width={'45%'}
-                >
-                    <Input
-                        placeholder={''}
-                        name={'activityName'}
-                        value={customData.activityName}
-                        onChange={handleInputChange}
-                        className={styles.custom__section__input}
-                    />
-                </FormGroup>
-                <FormGroup label={'City'} width={'45%'}>
-                    <Input
-                        placeholder={''}
-                        name={'city'}
-                        value={customData.city}
-                        onChange={handleInputChange}
-                        className={styles.custom__section__input}
-                    />
-                </FormGroup>
-            </div>
+            <FormGroup label={'Activity name, book title, etc.'}>
+                <Input
+                    placeholder={''}
+                    name={'activityName'}
+                    value={customData.activityName}
+                    onChange={handleInputChange}
+                />
+            </FormGroup>
+            <FormGroup label={'City'}>
+                <Input
+                    placeholder={''}
+                    name={'city'}
+                    value={customData.city}
+                    onChange={handleInputChange}
+                />
+            </FormGroup>
             <div className={styles.custom__section__date}>
                 <FormGroup label={'Start date'}>
                     <Calendar
