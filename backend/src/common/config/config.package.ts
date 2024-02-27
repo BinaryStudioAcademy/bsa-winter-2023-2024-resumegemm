@@ -136,6 +136,28 @@ class Config implements IConfig {
                     default: null,
                 },
             },
+            STRIPE: {
+                STRIPE_SECRET_KEY: {
+                    doc: 'Stripe secret key',
+                    format: String,
+                    env: 'STRIPE_SECRET_KEY',
+                    default: null,
+                },
+                STRIPE_PUBLISHABLE_KEY: {
+                    doc: 'Stripe publishable key',
+                    format: String,
+                    env: 'STRIPE_PUBLISHABLE_KEY',
+                    default: null,
+                },
+            },
+            OPEN_AI: {
+                API_KEY: {
+                    doc: 'OpenAI API key',
+                    format: String,
+                    env: 'OPEN_AI_API_KEY',
+                    default: null,
+                },
+            },
         });
     }
 }

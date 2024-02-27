@@ -34,6 +34,13 @@ type EnvironmentSchema = {
         POOL_MIN: number;
         POOL_MAX: number;
     };
+    STRIPE: {
+        STRIPE_SECRET_KEY: string;
+        STRIPE_PUBLISHABLE_KEY: string;
+    };
+    OPEN_AI: {
+        API_KEY: string;
+    };
 };
 
 export { type EnvironmentSchema };
