@@ -12,7 +12,6 @@ import { StorageKey } from '~/framework/storage/storage.js';
 import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
-    // Promise<void>,
     UserAuthResponse,
     UserSignUpRequestDto,
     AsyncThunkConfig
@@ -22,22 +21,14 @@ const signUp = createAsyncThunk<
     const { token } = await authApi.signUp(registerPayload);
 
     void storageApi.set(StorageKey.ACCESS_TOKEN, token);
-    const { user } = await authApi.signUp(registerPayload);
 
-    await dispatch(userActions.loadUser());
-    return user;
+    const response = await authApi.signUp(registerPayload);
+
+    if (response.user) {
+        await dispatch(userActions.loadUser());
+    }
+    return response?.user;
 });
-
-// const signUp = createAsyncThunk<
-//     UserAuthResponse,
-//     UserSignUpRequestDto,
-//     AsyncThunkConfig
-// >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
-//     const { authApi } = extra;
-//     const { user } = await authApi.signUp(registerPayload);
-
-//     return user;
-// });
 
 const signIn = createAsyncThunk<
     UserAuthResponse,
