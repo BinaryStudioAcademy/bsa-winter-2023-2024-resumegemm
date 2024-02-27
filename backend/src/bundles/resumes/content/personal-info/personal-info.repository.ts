@@ -1,3 +1,4 @@
+import { Guid as guid } from 'guid-typescript';
 import { type Transaction } from 'objection';
 
 import { type PersonalInformationModel } from './personal-info.model.js';
@@ -15,6 +16,7 @@ class PersonalInformationRepository {
         transaction?: Transaction,
     ): Promise<PersonalInformationModel> {
         payload.resumeId = resumeId;
+        payload.id = guid.raw();
         return await this.personalInfoModel
             .query(transaction)
             .insert(payload)

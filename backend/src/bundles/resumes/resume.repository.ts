@@ -1,3 +1,5 @@
+import { Guid as guid } from 'guid-typescript';
+
 import {
     type ContactsRepository,
     type EducationRepository,
@@ -150,7 +152,10 @@ class ResumeRepository implements IResumeRepository {
         try {
             const resume = await this.resumeModel
                 .query(transaction)
-                .insert(payload.resume)
+                .insert({
+                    ...payload.resume,
+                    id: guid.raw(),
+                })
                 .returning('*');
 
             const contacts = await this.contactsRepository.create(

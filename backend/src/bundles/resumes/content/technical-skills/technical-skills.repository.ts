@@ -1,3 +1,4 @@
+import { Guid as guid } from 'guid-typescript';
 import { type Transaction } from 'objection';
 
 import { type TechnicalSkillModel } from './technical-skills.model.js';
@@ -15,6 +16,7 @@ class TechnicalSkillsRepository {
         transaction?: Transaction,
     ): Promise<TechnicalSkillModel> {
         payload.resumeId = resumeId;
+        payload.id = guid.raw();
         return await this.technicalSkillModel
             .query(transaction)
             .insert(payload)

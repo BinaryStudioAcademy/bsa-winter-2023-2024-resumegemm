@@ -1,3 +1,4 @@
+import { Guid as guid } from 'guid-typescript';
 import { type Transaction } from 'objection';
 
 import { type ExperienceModel } from './experience.model.js';
@@ -15,6 +16,7 @@ class ExperienceRepository {
         transaction?: Transaction,
     ): Promise<ExperienceModel> {
         payload.resumeId = resumeId;
+        payload.id = guid.raw();
         return await this.experienceModel
             .query(transaction)
             .insert(payload)

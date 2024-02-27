@@ -1,3 +1,4 @@
+import { Guid as guid } from 'guid-typescript';
 import { type Transaction } from 'objection';
 
 import { type ContactsModel } from './contacts.model.js';
@@ -19,6 +20,7 @@ class ContactsRepository {
         transaction?: Transaction,
     ): Promise<ContactsModel> {
         payload.resumeId = resmeId;
+        payload.id = guid.raw();
         return await this.contactsModel
             .query(transaction)
             .insert(payload)
