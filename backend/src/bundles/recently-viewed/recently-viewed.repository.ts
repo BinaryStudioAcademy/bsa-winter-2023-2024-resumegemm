@@ -73,9 +73,9 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
         const interval = '1 day';
         const result = (await this.recentlyViewedModel
             .query()
-            .select('user_id', 'resume_id', 'viewed_at')
+            .select('resume_id', 'viewed_at')
             .count('resume_id as count')
-            .groupBy('user_id', 'resume_id', 'viewed_at')
+            .groupBy('resume_id', 'viewed_at')
             .whereNotNull('resume_id')
             .withGraphFetched('resumes')
             .whereRaw(
