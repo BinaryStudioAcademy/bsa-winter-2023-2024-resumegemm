@@ -15,6 +15,7 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
+import { PrivateRoute } from './bundles/common/components/private-route/private-route';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { PreviewPage } from './bundles/preview/preview';
@@ -50,7 +51,13 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 },
                                 {
                                     path: AppRoute.PROFILE,
-                                    element: <Profile />,
+                                    element: (
+                                        <PrivateRoute
+                                            redirectPath={AppRoute.ROOT}
+                                        >
+                                            <Profile />
+                                        </PrivateRoute>
+                                    ),
                                 },
                             ],
                         },
