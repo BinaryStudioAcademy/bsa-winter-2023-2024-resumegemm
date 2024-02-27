@@ -1,4 +1,3 @@
-export { type IResumeRepository } from './resume-repository.type.js';
 export {
     type Contacts,
     type Education,
@@ -14,4 +13,4 @@ export {
     type TechnicalSkill,
     ResumesApiPath,
     SkillLevel,
-} from 'shared/build/index.js';
+} from 'shared/build/';
