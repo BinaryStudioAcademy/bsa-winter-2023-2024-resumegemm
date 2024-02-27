@@ -80,6 +80,20 @@ class Config implements IConfig {
                         default: null,
                     },
                 },
+                GOOGLE: {
+                    CLIENT_GOOGLE_ID: {
+                        doc: 'Google secret for client id',
+                        format: String,
+                        env: 'CLIENT_GOOGLE_ID',
+                        default: null,
+                    },
+                    CLIENT_GOOGLE_SECRET: {
+                        doc: 'Google secret client token',
+                        format: String,
+                        env: 'CLIENT_GOOGLE_SECRET',
+                        default: null,
+                    },
+                },
                 BASE_CALLBACK_URI: {
                     doc: 'Secret key for callback url',
                     format: String,
