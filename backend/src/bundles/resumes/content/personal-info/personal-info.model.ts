@@ -1,3 +1,5 @@
+import { type RelationMappings, Model } from 'objection';
+
 import {
     AbstractModel,
     DatabaseTableName,
@@ -12,6 +14,19 @@ class PersonalInformationModel extends AbstractModel {
 
     public static override get tableName(): typeof DatabaseTableName.PERSONAL_INFORMATION {
         return DatabaseTableName.PERSONAL_INFORMATION;
+    }
+
+    public static getRelationMappings(): RelationMappings {
+        return {
+            resume: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: PersonalInformationModel,
+                join: {
+                    from: `${DatabaseTableName.PERSONAL_INFORMATION}.resumeId`,
+                    to: `${DatabaseTableName.RESUMES}.id`,
+                },
+            },
+        };
     }
 }
 
