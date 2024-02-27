@@ -1,11 +1,40 @@
 import { logger } from '~/common/logger/logger.js';
 
+import {
+    ContactsModel,
+    ContactsRepository,
+    EducationModel,
+    EducationRepository,
+    ExperienceModel,
+    ExperienceRepository,
+    PersonalInformationModel,
+    PersonalInformationRepository,
+    TechnicalSkillModel,
+    TechnicalSkillsRepository,
+} from './content/content.js';
 import { ResumeController } from './resume.controller.js';
 import { ResumeModel } from './resume.model.js';
 import { ResumeRepository } from './resume.repository.js';
 import { ResumeService } from './resume.service.js';
 
-const resumeRepository = new ResumeRepository(ResumeModel);
+const contactsRepository = new ContactsRepository(ContactsModel);
+const educationRepository = new EducationRepository(EducationModel);
+const experienceRepository = new ExperienceRepository(ExperienceModel);
+const personalInformationRepository = new PersonalInformationRepository(
+    PersonalInformationModel,
+);
+const technicalSkillsRepository = new TechnicalSkillsRepository(
+    TechnicalSkillModel,
+);
+
+const resumeRepository = new ResumeRepository({
+    resumeModel: ResumeModel,
+    contactsRepository,
+    educationRepository,
+    experienceRepository,
+    personalInformationRepository,
+    technicalSkillsRepository,
+});
 
 const resumeService = new ResumeService(resumeRepository);
 
