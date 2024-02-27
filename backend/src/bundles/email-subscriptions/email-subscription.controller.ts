@@ -1,4 +1,5 @@
-import { type EmailSubscription, ApiPath } from 'shared/build/index.js';
+import { type EmailSubscription, type HttpError } from 'shared/build/index.js';
+import { ApiPath } from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
@@ -47,13 +48,24 @@ class EmailSubscriptionController extends Controller {
             user: UserAuthResponse['user'];
         }>,
     ): Promise<ApiHandlerResponse<EmailSubscription>> {
-        const subscriprion = await this.emailSubscriptionService.subscribe(
-            options.user.id,
-        );
-        return {
-            status: HttpCode.OK,
-            payload: subscriprion,
-        };
+        try {
+            const subscriprion = await this.emailSubscriptionService.subscribe(
+                options.user.id,
+            );
+            return {
+                status: HttpCode.OK,
+                payload: subscriprion,
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HttpError;
+            return {
+                status: status,
+                payload: {
+                    status: status,
+                    message: message,
+                },
+            };
+        }
     }
 
     private async unsubscribe(
@@ -63,13 +75,24 @@ class EmailSubscriptionController extends Controller {
             };
         }>,
     ): Promise<ApiHandlerResponse<void>> {
-        await this.emailSubscriptionService.unsubscribe(options.params.id);
-        return {
-            status: HttpCode.OK,
-            payload: {
-                message: 'Successfully unsubscribed',
-            },
-        };
+        try {
+            await this.emailSubscriptionService.unsubscribe(options.params.id);
+            return {
+                status: HttpCode.OK,
+                payload: {
+                    message: 'Successfully unsubscribed',
+                },
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HttpError;
+            return {
+                status: status,
+                payload: {
+                    status: status,
+                    message: message,
+                },
+            };
+        }
     }
 }
 
