@@ -1,4 +1,4 @@
-import { type Resume } from './types';
+import { type Resume } from './types.js';
 
 type ResumeEntityFields = Omit<Resume, 'createdAt' | 'updatedAt' | 'deletedAt'>;
 

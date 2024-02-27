@@ -1,6 +1,6 @@
 import { type Transaction } from 'objection';
 
-import { type EducationModel } from './education';
+import { type EducationModel } from './education.js';
 
 class EducationRepository {
     private educationModel: typeof EducationModel;

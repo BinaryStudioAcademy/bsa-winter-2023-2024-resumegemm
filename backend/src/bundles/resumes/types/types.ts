@@ -13,4 +13,4 @@ export {
     type TechnicalSkill,
     ResumesApiPath,
     SkillLevel,
-} from 'shared/build/';
+} from 'shared/build/index.js';

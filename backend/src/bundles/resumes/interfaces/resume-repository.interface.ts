@@ -4,7 +4,7 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
-} from 'shared/build';
+} from 'shared/build/index.js';
 
 interface IResumeRepository {
     find(id: string): Promise<Resume | undefined>;

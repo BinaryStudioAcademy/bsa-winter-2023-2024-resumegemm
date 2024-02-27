@@ -6,7 +6,7 @@ import {
     type TechnicalSkillsRepository,
 } from './content/content.js';
 import { type IResumeRepository } from './interfaces/interfaces.js';
-import { type ResumeModel } from './resume.model';
+import { type ResumeModel } from './resume.model.js';
 import {
     type Resume,
     type ResumeCreateItemRequestDto,

@@ -13,7 +13,7 @@ import {
     ExperienceModel,
     PersonalInformationModel,
     TechnicalSkillModel,
-} from './content/content';
+} from './content/content.js';
 
 class ResumeModel extends AbstractModel {
     public 'resumeTitle': string;

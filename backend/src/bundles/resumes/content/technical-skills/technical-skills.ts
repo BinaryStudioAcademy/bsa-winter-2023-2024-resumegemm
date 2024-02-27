@@ -1,2 +1,2 @@
-export { TechnicalSkillModel } from './technical-skills.model';
-export { TechnicalSkillsRepository } from './technical-skills.repository';
+export { TechnicalSkillModel } from './technical-skills.model.js';
+export { TechnicalSkillsRepository } from './technical-skills.repository.js';

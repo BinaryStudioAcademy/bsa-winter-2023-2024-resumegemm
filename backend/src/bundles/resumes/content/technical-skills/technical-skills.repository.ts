@@ -1,6 +1,6 @@
 import { type Transaction } from 'objection';
 
-import { type TechnicalSkillModel } from './technical-skills.model';
+import { type TechnicalSkillModel } from './technical-skills.model.js';
 
 class TechnicalSkillsRepository {
     private technicalSkillModel: typeof TechnicalSkillModel;

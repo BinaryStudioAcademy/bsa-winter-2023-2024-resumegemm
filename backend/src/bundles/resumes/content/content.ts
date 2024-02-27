@@ -1,11 +1,14 @@
-export { ContactsModel, ContactsRepository } from './contacts/contacts';
-export { EducationModel, EducationRepository } from './education/education';
-export { ExperienceModel, ExperienceRepository } from './experience/experience';
+export { ContactsModel, ContactsRepository } from './contacts/contacts.js';
+export { EducationModel, EducationRepository } from './education/education.js';
+export {
+    ExperienceModel,
+    ExperienceRepository,
+} from './experience/experience.js';
 export {
     PersonalInformationModel,
     PersonalInformationRepository,
-} from './personal-info/personal-info';
+} from './personal-info/personal-info.js';
 export {
     TechnicalSkillModel,
     TechnicalSkillsRepository,
-} from './technical-skills/technical-skills';
+} from './technical-skills/technical-skills.js';

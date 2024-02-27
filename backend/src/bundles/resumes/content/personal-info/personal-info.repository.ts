@@ -1,6 +1,6 @@
 import { type Transaction } from 'objection';
 
-import { type PersonalInformationModel } from './personal-info.model';
+import { type PersonalInformationModel } from './personal-info.model.js';
 
 class PersonalInformationRepository {
     private personalInfoModel: typeof PersonalInformationModel;

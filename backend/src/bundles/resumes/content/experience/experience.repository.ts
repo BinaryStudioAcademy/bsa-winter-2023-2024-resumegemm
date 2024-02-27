@@ -1,6 +1,6 @@
 import { type Transaction } from 'objection';
 
-import { type ExperienceModel } from './experience.model';
+import { type ExperienceModel } from './experience.model.js';
 
 class ExperienceRepository {
     private experienceModel: typeof ExperienceModel;

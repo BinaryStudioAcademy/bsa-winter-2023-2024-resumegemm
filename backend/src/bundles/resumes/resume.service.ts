@@ -3,13 +3,13 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
-} from 'shared/build';
+} from 'shared/build/index.js';
 
 import {
     type IResumeRepository,
     type IResumeService,
-} from './interfaces/interfaces';
-import { type Resume } from './types/types';
+} from './interfaces/interfaces.js';
+import { type Resume } from './types/types.js';
 
 class ResumeService implements IResumeService {
     private resumeRepository: IResumeRepository;

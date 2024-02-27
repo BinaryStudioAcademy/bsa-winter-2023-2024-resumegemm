@@ -4,8 +4,8 @@ import {
     type Experience,
     type PersonalInformation,
     type TechnicalSkill,
-} from '../content/content';
-import { type Resume } from './types';
+} from '../content/content.js';
+import { type Resume } from './types.js';
 
 type ResumeUpdateItemRequestDto = {
     resume: Partial<

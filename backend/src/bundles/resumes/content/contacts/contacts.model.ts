@@ -1,11 +1,10 @@
 import { type RelationMappings, Model } from 'objection';
 
+import { ResumeModel } from '~/bundles/resumes/resumes.js';
 import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
-
-import { ResumeModel } from '../../resume.model';
 
 class ContactsModel extends AbstractModel {
     public 'resumeId': string;

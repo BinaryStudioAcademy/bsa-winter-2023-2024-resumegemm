@@ -1,21 +1,21 @@
-import { HttpError, ResumesApiPath } from 'shared/build';
+import { HttpError, ResumesApiPath } from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
-} from '~/common/controller/controller';
-import { Controller } from '~/common/controller/controller';
-import { ApiPath } from '~/common/enums/enums';
-import { HttpCode } from '~/common/http/http';
-import { type ILogger } from '~/common/logger/logger';
+} from '~/common/controller/controller.js';
+import { Controller } from '~/common/controller/controller.js';
+import { ApiPath } from '~/common/enums/enums.js';
+import { HttpCode } from '~/common/http/http.js';
+import { type ILogger } from '~/common/logger/logger.js';
 
-import { type IResumeService } from './interfaces/interfaces';
+import { type IResumeService } from './interfaces/interfaces.js';
 import {
     type ResumeCreateItemRequestDto,
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
-} from './types/types';
+} from './types/types.js';
 
 class ResumeController extends Controller {
     private resumeService: IResumeService;

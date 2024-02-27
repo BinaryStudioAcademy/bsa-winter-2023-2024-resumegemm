@@ -3,7 +3,7 @@ import {
     type ResumeCreateItemRequestDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
-} from 'shared/build';
+} from 'shared/build/index.js';
 
 interface IResumeService {
     find(id: string): Promise<Resume | undefined>;

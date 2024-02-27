@@ -5,7 +5,7 @@ import {
     type PersonalInformation,
     type TechnicalSkill,
 } from '../content/content.js';
-import { type Resume } from './resume.type';
+import { type Resume } from './resume.type.js';
 
 type ResumeGetItemResponseDto = {
     resume: Resume;

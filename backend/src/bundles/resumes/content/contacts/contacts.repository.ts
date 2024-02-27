@@ -1,6 +1,6 @@
 import { type Transaction } from 'objection';
 
-import { type ContactsModel } from './contacts.model';
+import { type ContactsModel } from './contacts.model.js';
 
 class ContactsRepository {
     private contactsModel: typeof ContactsModel;
