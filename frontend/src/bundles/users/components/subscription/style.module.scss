@@ -24,3 +24,16 @@ $border-color: #ccd7dc;
     display: flex;
     flex-direction: column;
 }
+
+.modal {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.modal__buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 24px;
+}
