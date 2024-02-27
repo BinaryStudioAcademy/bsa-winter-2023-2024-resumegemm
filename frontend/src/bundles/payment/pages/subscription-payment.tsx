@@ -6,9 +6,12 @@ import { BaseButton, Input } from '~/bundles/common/components/components';
 import { ButtonWidth } from '~/bundles/common/enums/components/button-width.enum';
 import { ButtonType, ButtonVariant } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
+import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
+import { showToast } from '~/bundles/toast/helpers/show-toast';
 
 import { SubscriptionCard } from '../components/subscription-card';
 import { coinsInBanknote } from '../constants/payment.constant';
+import { PaymentMessage } from '../enums/messages';
 import { createSubscription, getPrices } from '../store/actions';
 import { type CreateSubscriptionResponseDto } from '../types/types';
 import { paymentCreateSubscriptionValidationSchema } from '../validation-schemas/validation-schemas';
@@ -79,8 +82,16 @@ const SubscriptionPaymentPage: React.FC = () => {
                         },
                     });
 
-                    if (paymentMethod.error) {
-                        alert(paymentMethod.error.message);
+                    if (paymentMethod.error?.message) {
+                        showToast(paymentMethod.error.message, ToastType.ERROR);
+                        return;
+                    }
+
+                    if (!paymentMethod.paymentMethod) {
+                        showToast(
+                            PaymentMessage.PAYMENT_METHOD_ERROR,
+                            ToastType.ERROR,
+                        );
                         return;
                     }
 
@@ -97,7 +108,7 @@ const SubscriptionPaymentPage: React.FC = () => {
                         );
 
                     if (error) {
-                        alert(error.message);
+                        showToast(error.message, ToastType.ERROR);
                         return;
                     }
 
@@ -106,7 +117,10 @@ const SubscriptionPaymentPage: React.FC = () => {
                     )) as { payload: CreateSubscriptionResponseDto | null };
 
                     if (!payload?.clientSecret) {
-                        alert('Blank clientSecret');
+                        showToast(
+                            PaymentMessage.BLANK_SECRET_KEY,
+                            ToastType.ERROR,
+                        );
                         return;
                     }
 
@@ -114,14 +128,17 @@ const SubscriptionPaymentPage: React.FC = () => {
                         payload.clientSecret,
                     );
 
-                    if (confirmPayment.error) {
-                        alert(confirmPayment.error.message);
+                    if (confirmPayment.error?.message) {
+                        showToast(
+                            confirmPayment.error.message,
+                            ToastType.ERROR,
+                        );
                         return;
                     }
 
-                    alert('Success! Check your email for the invoice.');
+                    showToast(PaymentMessage.SUCCESS, ToastType.SUCCESS);
                 } catch {
-                    alert('Error occurred');
+                    showToast(PaymentMessage.DEFAULT_MESSAGE, ToastType.ERROR);
                 } finally {
                     setProcessing(false);
                 }
