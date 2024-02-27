@@ -3,9 +3,9 @@ import { type Profile } from '~/bundles/profile/profile';
 
 import { type User } from './user.type';
 
-type UserWithRelations = User & {
+type UserWithRelations = Omit<User, 'emailSubscriptionId'> & {
     user_profile: Profile;
-    emailSubscription: EmailSubscription;
+    emailSubscription: EmailSubscription | null;
 };
 
 export { type UserWithRelations };
