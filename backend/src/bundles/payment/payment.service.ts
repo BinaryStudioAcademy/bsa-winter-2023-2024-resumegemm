@@ -49,15 +49,13 @@ class PaymentService implements IPaymentService {
         }
     }
 
-    public async createSubscription({
-        name,
-        email,
-        paymentMethod,
-        priceId,
-    }: CreateSubscriptionRequestDto): Promise<CreateSubscriptionResponseDto> {
-        let customer;
+    private async createStripeCustomer(
+        name: string,
+        email: string,
+        paymentMethod: string,
+    ): Promise<Stripe.Customer> {
         try {
-            customer = await this.stripe.customers.create({
+            return await this.stripe.customers.create({
                 name: name,
                 email: email,
                 payment_method: paymentMethod,
@@ -71,11 +69,15 @@ class PaymentService implements IPaymentService {
                 status: HttpCode.BAD_REQUEST,
             });
         }
+    }
 
-        let subscription;
+    private async createStripeSubscription(
+        customerId: string,
+        priceId: string,
+    ): Promise<Stripe.Subscription> {
         try {
-            subscription = await this.stripe.subscriptions.create({
-                customer: customer.id,
+            return await this.stripe.subscriptions.create({
+                customer: customerId,
                 items: [{ price: priceId }],
                 payment_settings: {
                     payment_method_options: {
@@ -94,6 +96,22 @@ class PaymentService implements IPaymentService {
                 status: HttpCode.BAD_REQUEST,
             });
         }
+    }
+
+    public async createSubscription({
+        name,
+        email,
+        paymentMethod,
+        priceId,
+    }: CreateSubscriptionRequestDto): Promise<CreateSubscriptionResponseDto> {
+        const customer = await this.createStripeCustomer(
+            name,
+            email,
+            paymentMethod,
+        );
+
+        const subscription: Stripe.Subscription =
+            await this.createStripeSubscription(customer.id, priceId);
 
         const { latest_invoice, id } = subscription;
 
