@@ -1,7 +1,11 @@
+import { type RelationMappings, Model } from 'objection';
+
 import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
+
+import { ResumeModel } from '../../resume.model';
 
 class EducationModel extends AbstractModel {
     public 'resumeId': string;
@@ -12,6 +16,19 @@ class EducationModel extends AbstractModel {
 
     public static override get tableName(): typeof DatabaseTableName.EDUCATION {
         return DatabaseTableName.EDUCATION;
+    }
+
+    public static getRelationMappings(): RelationMappings {
+        return {
+            resume: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: ResumeModel,
+                join: {
+                    from: `${DatabaseTableName.EDUCATION}.resumeId`,
+                    to: `${DatabaseTableName.RESUMES}.id`,
+                },
+            },
+        };
     }
 }
 
