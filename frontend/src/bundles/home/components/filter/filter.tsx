@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import filterIcon from '~/assets/img/filter-icon.svg';
-import { IconButton } from '~/bundles/common/components/components';
+import { BaseButton } from '~/bundles/common/components/components';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 import { actions as industriesActionCreator } from '~/bundles/industries/store/index.js';
 
+import { DropdownItem, FilterIcon } from './components/components';
 import styles from './styles.module.scss';
 
 const Filter: React.FC = () => {
@@ -36,27 +36,22 @@ const Filter: React.FC = () => {
         <>
             <div className={styles.dropdown}>
                 <div className={styles.dropdown__button}>
-                    <IconButton
+                    <BaseButton
                         onClick={toggleDropdown}
                         className={styles.dropdown__icon__button}
                     >
-                        <img src={filterIcon} alt="filter icon" />
-                    </IconButton>
+                        <FilterIcon />
+                    </BaseButton>
                 </div>
                 {isOpen && (
                     <ul className={styles.dropdown_content}>
-                        {industries.map((industry, index) => (
-                            <li
-                                className={styles.dropdown_content__item}
-                                key={index}
-                            >
-                                <button
-                                    id={`${industry.id}`}
-                                    onClick={handleOptionClick}
-                                >
-                                    {industry.industry}
-                                </button>
-                            </li>
+                        {industries.map((industry) => (
+                            <DropdownItem
+                                key={industry.id}
+                                label={industry.industry}
+                                optionId={industry.id}
+                                onOptionSelect={handleOptionClick}
+                            />
                         ))}
                     </ul>
                 )}

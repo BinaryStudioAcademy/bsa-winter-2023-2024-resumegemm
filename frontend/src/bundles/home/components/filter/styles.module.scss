@@ -11,14 +11,11 @@
 }
 
 .dropdown__icon__button {
+    width: 25px;
+    height: 25px;
     font-size: 16px;
     border: none;
     cursor: pointer;
-}
-
-.button__icon {
-    width: 25px;
-    height: 25px;
 }
 
 .dropdown_content {
@@ -30,15 +27,6 @@
     min-width: 160px;
     background-color: #f9f9f9;
     box-shadow: 0 8px 16px 0 rgba(0 0 0 / 20%);
-}
-
-.dropdown_content__item button {
-    display: block;
-    width: 100%;
-    padding: 8px 16px;
-    color: black;
-    text-align: left;
-    text-decoration: none;
 }
 
 .dropdown_content li:hover {
