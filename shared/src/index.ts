@@ -8,6 +8,16 @@ export {
     type Industry,
     IndustriesApiPath,
 } from './bundles/industries/industries.js';
+    type CreateSubscriptionRequestDto,
+    type CreateSubscriptionResponseDto,
+    type GetPriceResponseDto,
+    type GetPricesRequestDto,
+    type GetPricesResponseDto,
+    type GetPublishableKeyRequestDto,
+    type GetPublishableKeyResponseDto,
+    PaymentApiPath,
+    paymentCreateSubscriptionValidationSchema,
+} from './bundles/payment/payment.js';
 export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
 export { type Profile } from './bundles/profile/profile.js';
 export {
@@ -16,7 +26,13 @@ export {
     type RecentlyViewedResponseDto,
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
-export { SkillLevel } from './bundles/resumes/resumes.js';
+export {
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
+    type ResumeService,
+    ResumeApiPath,
+    SkillLevel,
+} from './bundles/resumes/resumes.js';
 export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
