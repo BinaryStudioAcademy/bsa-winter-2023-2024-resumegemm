@@ -1,4 +1,6 @@
 import {
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
     type ResumeCreateItemRequestDto,
     type ResumeUpdateItemRequestDto,
 } from 'shared/build';
@@ -19,6 +21,10 @@ interface IResumeService<T> {
     update(id: string, data: ResumeUpdateItemRequestDto): Promise<T>;
 
     delete(id: string): Promise<boolean>;
+
+    giveResumeScore: (
+        resumeAiScoreRequestDto: ResumeAiScoreRequestDto,
+    ) => Promise<ResumeAiScoreResponseDto>;
 }
 
 export { type IResumeService };

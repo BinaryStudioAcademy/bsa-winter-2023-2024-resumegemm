@@ -4,6 +4,17 @@ export {
     type EncryptionDataPayload,
     AuthApiPath,
 } from './bundles/auth/auth.js';
+export {
+    type CreateSubscriptionRequestDto,
+    type CreateSubscriptionResponseDto,
+    type GetPriceResponseDto,
+    type GetPricesRequestDto,
+    type GetPricesResponseDto,
+    type GetPublishableKeyRequestDto,
+    type GetPublishableKeyResponseDto,
+    PaymentApiPath,
+    paymentCreateSubscriptionValidationSchema,
+} from './bundles/payment/payment.js';
 export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
 export { type Profile } from './bundles/profile/profile.js';
 export {
@@ -18,12 +29,15 @@ export {
     type Experience,
     type PersonalInformation,
     type Resume,
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
     type ResumeCreateItemRequestDto,
     type ResumeEntityFields,
     type ResumeGetAllRequestDto,
     type ResumeGetAllResponseDto,
     type ResumeGetItemRequestDto,
     type ResumeGetItemResponseDto,
+    type ResumeService,
     type ResumeUpdateItemRequestDto,
     type TechnicalSkill,
     ResumesApiPath,

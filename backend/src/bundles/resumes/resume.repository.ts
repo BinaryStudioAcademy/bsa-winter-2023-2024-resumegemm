@@ -1,12 +1,12 @@
 import { type Transaction } from 'objection';
 
+import { type IResumeRepository } from './interfaces/interfaces.js';
 import { type ResumeModel } from './resume.model';
 import {
     type Resume,
     type ResumeGetAllResponseDto,
     type ResumeUpdateItemRequestDto,
-} from './types/resume.type';
-import { type IResumeRepository } from './types/resume-repository.type';
+} from './types/types.js';
 
 class ResumeRepository implements IResumeRepository {
     private resumeModel: typeof ResumeModel;

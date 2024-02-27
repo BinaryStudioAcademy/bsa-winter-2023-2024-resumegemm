@@ -9,13 +9,15 @@ import { ApiPath } from '~/common/enums/enums';
 import { HttpCode } from '~/common/http/http';
 import { type ILogger } from '~/common/logger/logger';
 
+import { type IResumeService } from './interfaces/interfaces.js';
 import {
     type Resume,
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
     type ResumeCreateItemRequestDto,
     type ResumeGetAllResponseDto,
     type ResumeUpdateItemRequestDto,
-} from './types/resume.type';
-import { type IResumeService } from './types/resume-service.type';
+} from './types/types.js';
 
 class ResumeController extends Controller {
     private resumeService: IResumeService<Resume>;
@@ -74,6 +76,16 @@ class ResumeController extends Controller {
                     options as ApiHandlerOptions<{
                         params: { id: string };
                         body: ResumeUpdateItemRequestDto;
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: ResumesApiPath.SCORE,
+            method: 'POST',
+            handler: (options) =>
+                this.giveResumeScore(
+                    options as ApiHandlerOptions<{
+                        body: ResumeAiScoreRequestDto;
                     }>,
                 ),
         });
@@ -168,6 +180,18 @@ class ResumeController extends Controller {
         return {
             status: HttpCode.OK,
             payload: newResume,
+        };
+    }
+
+    private async giveResumeScore(
+        options: ApiHandlerOptions<{
+            body: ResumeAiScoreRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse<ResumeAiScoreResponseDto>> {
+        const score = await this.resumeService.giveResumeScore(options.body);
+        return {
+            status: HttpCode.OK,
+            payload: score,
         };
     }
 }

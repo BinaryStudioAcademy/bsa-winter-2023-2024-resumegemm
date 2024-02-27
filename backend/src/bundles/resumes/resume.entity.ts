@@ -1,7 +1,7 @@
 import { Guid as guid } from 'guid-typescript';
 import { type ResumeEntityFields } from 'shared/build/index.js';
 
-import { type IResumeEntity } from './types/resume-entity.type';
+import { type IResumeEntity } from './interfaces/resume-entity.interface';
 
 class ResumeEntity implements IResumeEntity {
     public 'id': string | null;

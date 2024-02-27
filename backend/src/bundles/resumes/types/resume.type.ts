@@ -1,4 +1,3 @@
-export { type IResumeRepository } from './resume-repository.type.js';
 export {
     type Contacts,
     type Education,
