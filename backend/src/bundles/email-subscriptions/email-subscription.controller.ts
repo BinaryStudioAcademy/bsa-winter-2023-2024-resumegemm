@@ -43,6 +43,40 @@ class EmailSubscriptionController extends Controller {
         });
     }
 
+    /**
+     * @swagger
+     *
+     * /api/email-subscriptions/subscribe:
+     *  post:
+     *     description: Subscribe to email notifications
+     *  responses:
+     *     200:
+     *      description: Successfully subscribed
+     *      content:
+     *          application/json:
+     *           schema:
+     *            type: object
+     *            properties:
+     *             id:
+     *              type: string
+     *               example: 5f4e3d3e-4e3d-4e3d-4e3d-4e3d3e4e3d4e
+     *     400:
+     *      description: Bad request
+     *      content:
+     *          application/json:
+     *            schema:
+     *               type: object
+     *                 properties:
+     *                    status:
+     *                      type: number
+     *                      example: 400
+     *                    message:
+     *                      type: string
+     *                      example: User is already subscribed
+     *       500:
+     *        description: Internal server error
+     */
+
     private async subscribe(
         options: ApiHandlerOptions<{
             user: UserAuthResponse['user'];
@@ -67,6 +101,34 @@ class EmailSubscriptionController extends Controller {
             };
         }
     }
+
+    /**
+     * @swagger
+     *
+     * /api/email-subscriptions/unsubscribe/{id}:
+     *  delete:
+     *     description: Unsubscribe from email notifications
+     *  parameters:
+     *     - in: path
+     *       name: id
+     *       required: true
+     *       schema:
+     *         type: string
+     *       example: 5f4e3d3e-4e3d-4e3d-4e3d-4e3d3e4e3d4e
+     *  responses:
+     *     200:
+     *      description: Successfully unsubscribed
+     *      content:
+     *          application/json:
+     *           schema:
+     *            type: object
+     *            properties:
+     *             message:
+     *              type: string
+     *               example: Successfully unsubscribed
+     *       500:
+     *        description: Internal server error
+     */
 
     private async unsubscribe(
         options: ApiHandlerOptions<{
