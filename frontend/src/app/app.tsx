@@ -1,5 +1,4 @@
 import reactLogo from '~/assets/img/react.svg';
-import { getUser } from '~/bundles/auth/store/actions';
 import { Link, RouterOutlet } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
@@ -28,10 +27,6 @@ const App: React.FC = () => {
             void dispatch(userActions.loadAll());
         }
     }, [isRoot, dispatch]);
-
-    useEffect(() => {
-        void dispatch(getUser());
-    }, [dispatch]);
 
     return (
         <>
