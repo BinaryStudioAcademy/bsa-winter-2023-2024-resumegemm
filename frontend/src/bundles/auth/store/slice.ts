@@ -3,6 +3,10 @@ import { type UserAuthResponse } from 'shared/build/index.js';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
+import {
+    storage as localStorageApi,
+    StorageKey,
+} from '~/framework/storage/storage.js';
 
 import { getUser, signIn, signUp } from './actions.js';
 
@@ -41,6 +45,7 @@ const { reducer, actions, name } = createSlice({
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
                 state.user = null;
+                void localStorageApi.drop(StorageKey.ACCESS_TOKEN);
             },
         );
     },
