@@ -12,7 +12,7 @@ const userRepository = new UserRepository({
 const userService = new UserService(userRepository, profileRepository);
 const userController = new UserController(logger, userService);
 
-export { userController, userService };
+export { userController, userRepository, userService };
 export {
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
