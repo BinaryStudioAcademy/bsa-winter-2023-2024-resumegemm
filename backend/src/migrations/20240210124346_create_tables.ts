@@ -31,7 +31,7 @@ async function up(knex: Knex): Promise<void> {
                 Object.values(OauthStrategy),
             )
             .notNullable();
-        table.integer(DatabaseColumnName.OAUTH_ID).notNullable();
+        table.string(DatabaseColumnName.OAUTH_ID).notNullable();
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
