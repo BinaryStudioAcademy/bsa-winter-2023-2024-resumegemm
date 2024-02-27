@@ -32,8 +32,10 @@
     },
     "dependencies": {
         "@fastify/cookie": "9.3.1",
+        "@fastify/oauth2": "7.8.0",
         "@fastify/swagger": "8.3.1",
         "@fastify/swagger-ui": "1.4.0",
+        "axios": "1.6.7",
         "bcrypt": "5.1.1",
         "convict": "6.2.4",
         "dotenv": "16.0.3",
@@ -42,6 +44,7 @@
         "knex": "2.4.2",
         "nodemailer": "6.9.9",
         "objection": "3.0.1",
+        "openai": "4.28.0",
         "pg": "8.9.0",
         "pino": "8.8.0",
         "pino-pretty": "9.1.1",

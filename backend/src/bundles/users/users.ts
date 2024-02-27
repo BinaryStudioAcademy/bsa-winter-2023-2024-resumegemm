@@ -6,8 +6,10 @@ import { UserModel } from './user.model.js';
 import { UserRepository } from './user.repository.js';
 import { UserService } from './user.service.js';
 
-const userRepository = new UserRepository(UserModel, profileRepository);
-const userService = new UserService(userRepository);
+const userRepository = new UserRepository({
+    userModel: UserModel,
+});
+const userService = new UserService(userRepository, profileRepository);
 const userController = new UserController(logger, userService);
 
 export { userController, userService };

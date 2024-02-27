@@ -1,7 +1,5 @@
 import { type UserAuthResponse } from './user-auth-response.type';
 
-type UserSignUpResponseDto = {
-    user: UserAuthResponse;
-};
+type UserSignUpResponseDto = UserAuthResponse;
 
 export { type UserSignUpResponseDto };

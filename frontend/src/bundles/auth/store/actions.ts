@@ -16,9 +16,7 @@ const signUp = createAsyncThunk<
     AsyncThunkConfig
 >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
     const { authApi } = extra;
-    const { user } = await authApi.signUp(registerPayload);
-
-    return user;
+    return await authApi.signUp(registerPayload);
 });
 
 const signIn = createAsyncThunk<
@@ -31,7 +29,7 @@ const signIn = createAsyncThunk<
 
     await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
 
-    return user;
+    return { user };
 });
 
 // eslint-disable-next-line @typescript-eslint/no-invalid-void-type

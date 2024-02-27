@@ -6,6 +6,7 @@ type ApiHandlerResponseStatus = ValueOf<typeof HttpCode>;
 type ApiHandlerResponse<T> = {
     status: ApiHandlerResponseStatus;
     refreshToken?: string;
+    accessToken?: string;
     contentType?: string;
     payload:
         | {

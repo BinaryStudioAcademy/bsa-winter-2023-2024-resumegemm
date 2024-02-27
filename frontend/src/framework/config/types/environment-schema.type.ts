@@ -7,6 +7,7 @@ type EnvironmentSchema = {
     };
     API: {
         ORIGIN_URL: string;
+        PROXY_URL: string;
     };
 };
 

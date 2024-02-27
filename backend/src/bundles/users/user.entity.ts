@@ -1,4 +1,3 @@
-import { Guid as guid } from 'guid-typescript';
 import { type UserEntityFields } from 'shared/build/index.js';
 
 import { type IEntity } from '~/common/interfaces/interfaces.js';
@@ -55,15 +54,14 @@ class UserEntity implements IEntity {
         profileId,
         passwordHash,
         passwordSalt,
-    }: Omit<UserEntityFields, 'id'>): UserEntity {
-        return new UserEntity({
-            id: guid.raw(),
+    }: Omit<UserEntityFields, 'id' | 'emailSubscriptionId'>): UserEntity {
+        return {
             email,
             profileId,
             emailSubscriptionId: null,
             passwordHash,
             passwordSalt,
-        });
+        } as unknown as UserEntity;
     }
 
     public toObject(): Pick<UserEntityFields, 'id' | 'email'> {
