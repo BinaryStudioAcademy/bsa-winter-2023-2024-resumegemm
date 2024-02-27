@@ -82,13 +82,11 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
                 `viewed_at >= CURRENT_TIMESTAMP - interval '${interval}' AND viewed_at <= CURRENT_TIMESTAMP`,
             )) as RecentlyViewedResumesQueryResult[];
 
-        return result.map((item) => {
-            return {
-                resumeId: item.resumes.id,
-                userId: item.resumes.userId,
-                count: +item.count,
-            };
-        });
+        return result.map((item) => ({
+            resumeId: item.resumes.id,
+            userId: item.resumes.userId,
+            count: +item.count,
+        }));
     }
 }
 
