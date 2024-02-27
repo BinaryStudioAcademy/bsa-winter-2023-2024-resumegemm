@@ -39,6 +39,7 @@ enum DatabaseColumnName {
     VIEWED_AT = 'viewed_at',
     TEMPLATE_ID = 'template_id',
     TEMPLATE_SETTINGS = 'template_settings',
+    EMAIL_SUBSCRIPTION_ID = 'email_subscription_id',
 }
 
 export { DatabaseColumnName };
