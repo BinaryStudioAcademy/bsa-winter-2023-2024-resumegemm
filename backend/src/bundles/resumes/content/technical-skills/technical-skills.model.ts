@@ -1,4 +1,5 @@
 import { type RelationMappings, Model } from 'objection';
+import { type SkillLevel } from 'shared/build/';
 
 import {
     AbstractModel,
@@ -7,7 +8,7 @@ import {
 
 class TechnicalSkillModel extends AbstractModel {
     public 'skillName': string;
-    public 'skillLevel': string;
+    public 'skillLevel': SkillLevel;
     public 'resumeId': string;
 
     public static override get tableName(): typeof DatabaseTableName.TECHNICAL_SKILLS {
