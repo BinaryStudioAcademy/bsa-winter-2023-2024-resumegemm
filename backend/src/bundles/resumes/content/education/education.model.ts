@@ -10,6 +10,7 @@ class EducationModel extends AbstractModel {
     public 'resumeId': string;
     public 'majorName': string;
     public 'degree': string;
+    public 'location': string;
     public 'startDate': string;
     public 'endDate': string;
 

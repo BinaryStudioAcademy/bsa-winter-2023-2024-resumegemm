@@ -8,7 +8,7 @@ import {
 
 class ContactsModel extends AbstractModel {
     public 'resumeId': string;
-    public 'phone': string;
+    public 'mobileNumber': string;
     public 'homeNumber': string;
     public 'address': string;
     public 'socialContact': string;

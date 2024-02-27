@@ -1,7 +1,7 @@
 type Contacts = {
     id: string;
     resumeId: string;
-    phone: string;
+    mobileNumber: string;
     homeNumber: string;
     address: string;
     socialContact: string;
