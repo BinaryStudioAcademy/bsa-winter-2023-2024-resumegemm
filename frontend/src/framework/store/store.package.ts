@@ -12,6 +12,8 @@ import { reducer as templatesReducer } from '~/bundles/edit-temlate/store/';
 import { templateApi } from '~/bundles/edit-temlate/templates.js';
 import { emailSubscriptionsApi } from '~/bundles/email-subscription/email-subscriptions';
 import { reducer as emailSubscriptionsReducer } from '~/bundles/email-subscription/store/';
+import { paymentApi } from '~/bundles/payment/payment.js';
+import { reducer as paymentReducer } from '~/bundles/payment/store';
 import { reducer as usersReducer } from '~/bundles/users/store/';
 import { userApi } from '~/bundles/users/users.js';
 import { type IConfig } from '~/framework/config/config.js';
@@ -22,6 +24,7 @@ type RootReducer = {
     auth: ReturnType<typeof authReducer>;
     users: ReturnType<typeof usersReducer>;
     emailSubscription: ReturnType<typeof emailSubscriptionsReducer>;
+    payment: ReturnType<typeof paymentReducer>;
     templates: ReturnType<typeof templatesReducer>;
 };
 
@@ -29,6 +32,7 @@ type ExtraArguments = {
     authApi: typeof authApi;
     userApi: typeof userApi;
     emailSubscriptionsApi: typeof emailSubscriptionsApi;
+    paymentApi: typeof paymentApi;
     storageApi: typeof storage;
     templateApi: typeof templateApi;
 };
@@ -51,6 +55,7 @@ class Store {
                 auth: authReducer,
                 users: usersReducer,
                 emailSubscription: emailSubscriptionsReducer,
+                payment: paymentReducer,
                 templates: templatesReducer,
             },
             middleware: (getDefaultMiddleware) => {
@@ -67,6 +72,7 @@ class Store {
         return {
             authApi,
             userApi,
+            paymentApi,
             storageApi: storage,
             emailSubscriptionsApi,
             templateApi,
