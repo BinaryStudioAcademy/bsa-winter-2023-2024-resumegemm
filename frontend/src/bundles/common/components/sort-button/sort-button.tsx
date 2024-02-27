@@ -30,11 +30,21 @@ const SortButton = ({
     const [sortMethod, setSortMethod] = useState<SortType>(initialSortType);
 
     const handleSortClick = useCallback(() => {
-        if (sortMethod) {
-            setSortMethod(sortMethod === 'asc' ? 'desc' : null);
-            return;
+        switch (sortMethod) {
+            case 'asc': {
+                setSortMethod('desc');
+                break;
+            }
+            case 'desc': {
+                setSortMethod(null);
+                break;
+            }
+
+            case null: {
+                setSortMethod('asc');
+                break;
+            }
         }
-        setSortMethod('asc');
     }, [sortMethod, setSortMethod]);
 
     useEffect(() => {
