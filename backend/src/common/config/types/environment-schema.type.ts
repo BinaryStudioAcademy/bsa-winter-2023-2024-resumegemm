@@ -23,6 +23,9 @@ type EnvironmentSchema = {
         POOL_MIN: number;
         POOL_MAX: number;
     };
+    OPEN_AI: {
+        API_KEY: string;
+    };
 };
 
 export { type EnvironmentSchema };

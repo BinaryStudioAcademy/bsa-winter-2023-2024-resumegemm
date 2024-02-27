@@ -4,6 +4,7 @@ export {
     type EncryptionDataPayload,
     AuthApiPath,
 } from './bundles/auth/auth.js';
+export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
 export { type Profile } from './bundles/profile/profile.js';
 export {
     type RecentlyViewed,
@@ -11,7 +12,13 @@ export {
     type RecentlyViewedResponseDto,
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
-export { SkillLevel } from './bundles/resumes/resumes.js';
+export {
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
+    type ResumeService,
+    ResumeApiPath,
+    SkillLevel,
+} from './bundles/resumes/resumes.js';
 export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
