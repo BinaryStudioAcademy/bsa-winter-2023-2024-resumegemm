@@ -1,7 +1,9 @@
+import { type UserWithRelations } from 'shared/build';
+
 import { type EmailSubscription } from './types';
 
 interface IEmailSubscriptionService {
-    subscribe(userId: string): Promise<EmailSubscription>;
+    subscribe(user: UserWithRelations): Promise<EmailSubscription>;
     unsubscribe(id: string): Promise<void>;
 }
 

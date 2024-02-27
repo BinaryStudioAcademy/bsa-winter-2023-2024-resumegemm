@@ -50,7 +50,7 @@ class EmailSubscriptionController extends Controller {
     ): Promise<ApiHandlerResponse<EmailSubscription>> {
         try {
             const subscriprion = await this.emailSubscriptionService.subscribe(
-                options.user.id,
+                options.user,
             );
             return {
                 status: HttpCode.OK,
