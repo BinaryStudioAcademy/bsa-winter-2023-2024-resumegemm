@@ -16,7 +16,7 @@ class ResumeShareRepository {
         this.resumeShareModel = resumeShareModel;
     }
 
-    public async getResume(
+    public async getResumeShareLink(
         id: string,
     ): Promise<ResumeShareGetResponseDto | undefined> {
         const resumeShare = await this.resumeShareModel
@@ -35,7 +35,7 @@ class ResumeShareRepository {
         return resumeShare;
     }
 
-    public async create(
+    public async createResumeShareLink(
         resumeId: string,
     ): Promise<ResumeShareCreateResponseDto | unknown> {
         try {

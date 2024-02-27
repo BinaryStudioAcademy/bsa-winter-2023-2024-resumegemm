@@ -14,8 +14,11 @@ export {
 export {
     type ResumeShareAccessCreateRequestDto,
     type ResumeShareAccessCreateResponseDto,
+    type ResumeShareAccessGetResponseDto,
     type ResumeShareCreateRequestDto,
     type ResumeShareCreateResponseDto,
+    type ResumeShareDetailsGetRequestDto,
+    type ResumeShareDetailsGetResponseDto,
     type ResumeShareGetRequestDto,
     type ResumeShareGetResponseDto,
     ResumesApiPath,

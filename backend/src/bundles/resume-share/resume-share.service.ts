@@ -3,6 +3,7 @@ import { type ResumeShareAccessService } from './resume-share-access.service.js'
 import { type IResumeShareService } from './types/resume-share.service.type.js';
 import {
     type ResumeShareCreateResponseDto,
+    type ResumeShareDetailsGetResponseDto,
     type ResumeShareGetResponseDto,
 } from './types/types.js';
 
@@ -21,15 +22,28 @@ class ResumeShareService implements IResumeShareService {
     public async CreateShareLink(
         id: string,
     ): Promise<ResumeShareCreateResponseDto | unknown> {
-        return await this.resumeShareRepository.create(id);
+        return await this.resumeShareRepository.createResumeShareLink(id);
     }
 
     public async GetShareLink(
         id: string,
         ip: string,
     ): Promise<ResumeShareGetResponseDto | unknown> {
-        await this.resumeShareAccessService.CreateShareAccess(id, ip);
-        return await this.resumeShareRepository.getResume(id);
+        await this.resumeShareAccessService.createShareAccess(id, ip);
+        return await this.resumeShareRepository.getResumeShareLink(id);
+    }
+
+    public async GetShareLinkDetails(
+        id: string,
+    ): Promise<ResumeShareDetailsGetResponseDto | unknown> {
+        const sharerLink = await this.resumeShareRepository.getResumeShareLink(
+            id,
+        );
+
+        return {
+            ...sharerLink,
+            accesses: await this.resumeShareAccessService.getResumeAccesses(id),
+        };
     }
 }
 

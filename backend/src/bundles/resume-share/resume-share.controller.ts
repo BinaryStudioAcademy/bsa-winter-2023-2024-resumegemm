@@ -12,6 +12,8 @@ import { type ResumeShareService } from './resume-share.service.js';
 import {
     type ResumeShareCreateRequestDto,
     type ResumeShareCreateResponseDto,
+    type ResumeShareDetailsGetRequestDto,
+    type ResumeShareDetailsGetResponseDto,
     type ResumeShareGetRequestDto,
     type ResumeShareGetResponseDto,
 } from './types/types.js';
@@ -43,6 +45,16 @@ class ResumeShareController extends Controller {
             validation: {},
             handler: (options) =>
                 this.GetShareLink(
+                    options as ApiHandlerOptions<ResumeShareGetRequestDto>,
+                ),
+        });
+
+        this.addRoute({
+            path: ResumesApiPath.SHARE_ID_DETAILS,
+            method: 'GET',
+            validation: {},
+            handler: (options) =>
+                this.GetShareLinkDetails(
                     options as ApiHandlerOptions<ResumeShareGetRequestDto>,
                 ),
         });
@@ -147,6 +159,28 @@ class ResumeShareController extends Controller {
             return {
                 status: HttpCode.OK,
                 payload: await this.resumeShareService.GetShareLink(id, ip),
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async GetShareLinkDetails(
+        options: ApiHandlerOptions<ResumeShareDetailsGetRequestDto>,
+    ): Promise<ApiHandlerResponse<ResumeShareDetailsGetResponseDto | unknown>> {
+        try {
+            const id = options.params.id;
+
+            return {
+                status: HttpCode.OK,
+                payload: await this.resumeShareService.GetShareLinkDetails(id),
             };
         } catch (error: unknown) {
             const { message, status } = error as HttpError;

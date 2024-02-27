@@ -1,5 +1,8 @@
 import { type ResumeShareAccessRepository } from './resume-share-access.repository.js';
-import { type ResumeShareAccessCreateResponseDto } from './types/types.js';
+import {
+    type ResumeShareAccessCreateResponseDto,
+    type ResumeShareAccessGetResponseDto,
+} from './types/types.js';
 
 class ResumeShareAccessService {
     private resumeShareAccessRepository: ResumeShareAccessRepository;
@@ -10,11 +13,19 @@ class ResumeShareAccessService {
         this.resumeShareAccessRepository = resumeShareAccessRepository;
     }
 
-    public async CreateShareAccess(
+    public async createShareAccess(
         resumeId: string,
         ip: string,
     ): Promise<ResumeShareAccessCreateResponseDto | unknown> {
         return await this.resumeShareAccessRepository.create(resumeId, ip);
+    }
+
+    public async getResumeAccesses(
+        resumeId: string,
+    ): Promise<ResumeShareAccessGetResponseDto | unknown> {
+        return await this.resumeShareAccessRepository.getResumeAccesses(
+            resumeId,
+        );
     }
 }
 

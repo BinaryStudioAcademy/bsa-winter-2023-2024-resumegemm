@@ -1,5 +1,9 @@
 import { Guid } from 'guid-typescript';
-import { HttpCode, HttpError } from 'shared/build/index.js';
+import {
+    type ResumeShareAccessGetResponseDto,
+    HttpCode,
+    HttpError,
+} from 'shared/build/index.js';
 
 import { ResumeShareErrorMessage } from './enums/error-messages.js';
 import { type ResumeShareAccessModel } from './resume-share-access.model.js';
@@ -37,6 +41,16 @@ class ResumeShareAccessRepository {
                 });
             }
         }
+    }
+
+    public async getResumeAccesses(
+        resumeShareId: string,
+    ): Promise<ResumeShareAccessGetResponseDto | unknown> {
+        return await this.resumeShareAccessModel
+            .query()
+            .where('resumeShareLinkId', resumeShareId)
+            .returning('*')
+            .execute();
     }
 }
 
