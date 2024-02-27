@@ -21,6 +21,7 @@ import { TooltipDimensions } from '../common/enums/enums';
 import { EditTemplatePage } from '../edit-temlate/edit-template';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
+import { QuestionAndAnswer } from '../question-and-answer/question-and-answer';
 import styles from './styles.module.scss';
 
 const navbarItems = [
@@ -109,6 +110,9 @@ const PreviewPage: React.FC = () => {
                     </li>
                     <li className={styles.auth}>
                         <Auth />
+                    </li>
+                    <li className={styles.item}>
+                        <QuestionAndAnswer />
                     </li>
                     <li className={styles.item}>
                         <EditTemplatePage />

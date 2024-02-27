@@ -40,13 +40,13 @@ const EditTemplatePage: React.FC = () => {
 
     const handleSaveTemplate = useCallback(() => {
         const save = async (): Promise<void> => {
-                const editedTemplate = {
-                    id: '1',
-                    isOwner: true,
-                    templateSettings: selectedBlocks,
-                };
-                await dispatch(templateActions.editTemplate(editedTemplate));
-         };
+            const editedTemplate = {
+                id: '1',
+                isOwner: true,
+                templateSettings: selectedBlocks,
+            };
+            await dispatch(templateActions.editTemplate(editedTemplate));
+        };
         void save();
     }, [dispatch, selectedBlocks]);
 
