@@ -20,6 +20,9 @@ import { LandingPage } from './bundles/landing-page/landing-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { PreviewPage } from './bundles/preview/preview';
 import { Profile } from './bundles/users/pages/profile';
+import { StorageKey } from './framework/storage/storage';
+
+const accesToken = window.localStorage.getItem(StorageKey.ACCESS_TOKEN);
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
@@ -43,16 +46,31 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 },
                                 {
                                     path: AppRoute.SIGN_IN,
-                                    element: <Auth />,
+                                    element: (
+                                        <PrivateRoute
+                                            redirectPath={AppRoute.ROOT}
+                                            statement={!accesToken}
+                                        >
+                                            <Auth />
+                                        </PrivateRoute>
+                                    ),
                                 },
                                 {
                                     path: AppRoute.SIGN_UP,
-                                    element: <Auth />,
+                                    element: (
+                                        <PrivateRoute
+                                            redirectPath={AppRoute.ROOT}
+                                            statement={!accesToken}
+                                        >
+                                            <Auth />
+                                        </PrivateRoute>
+                                    ),
                                 },
                                 {
                                     path: AppRoute.PROFILE,
                                     element: (
                                         <PrivateRoute
+                                            statement={Boolean(accesToken)}
                                             redirectPath={AppRoute.ROOT}
                                         >
                                             <Profile />
