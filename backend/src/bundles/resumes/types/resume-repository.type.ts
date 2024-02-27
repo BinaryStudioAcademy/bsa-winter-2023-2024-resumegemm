@@ -1,4 +1,5 @@
 import {
+    type Resume,
     type ResumeCreateItemRequestDto,
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
@@ -6,7 +7,11 @@ import {
 } from 'shared/build';
 
 interface IResumeRepository {
-    find(id: string): Promise<ResumeGetItemResponseDto | undefined>;
+    find(id: string): Promise<Resume | undefined>;
+
+    findWithRelations(
+        id: string,
+    ): Promise<ResumeGetItemResponseDto | undefined>;
 
     findAll(): Promise<ResumeGetAllResponseDto>;
 
