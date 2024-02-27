@@ -8,8 +8,8 @@ import { type Certification } from '~/bundles/cv-editor/types/certification/cert
 import styles from './styles.module.scss';
 
 type Properties = {
-    onSubmit?: () => void
-    onChange?: (certification: Certification) => void
+    onSubmit?: () => void;
+    onChange?: (certification: Certification) => void;
 };
 
 const CertificationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
@@ -19,23 +19,25 @@ const CertificationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
         url: '',
         description: '',
         startDate: null,
-        endDate: null
+        endDate: null,
     });
 
-    const handleInputChange =
-        useCallback((event_: ChangeEvent<HTMLInputElement>): void => {
+    const handleInputChange = useCallback(
+        (event_: ChangeEvent<HTMLInputElement>): void => {
             const { name, value } = event_.target;
 
-            const updatedCertification = ({
+            const updatedCertification = {
                 ...certification,
-                [name]: value
-            });
+                [name]: value,
+            };
             setCertification(updatedCertification);
 
             if (onChange) {
                 onChange(updatedCertification);
             }
-        }, [certification, onChange]);
+        },
+        [certification, onChange],
+    );
 
     return (
         <form className={styles.certification} onSubmit={onSubmit}>
@@ -76,14 +78,14 @@ const CertificationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
             <div className={styles.certification__last_block}>
                 <FormGroup label={'Start date'} width={'50%'}>
                     <Calendar
-                        // TODO: calendar needs to accept parameters to pre-display the value
-                        // also accept the name field to distinguish it from another calendar
+                    // TODO: calendar needs to accept parameters to pre-display the value
+                    // also accept the name field to distinguish it from another calendar
                     />
                 </FormGroup>
                 <FormGroup label={'End date'} width={'50%'}>
                     <Calendar
-                        // TODO: calendar needs to accept parameters to pre-display the value
-                        // also accept the name field to distinguish it from another calendar
+                    // TODO: calendar needs to accept parameters to pre-display the value
+                    // also accept the name field to distinguish it from another calendar
                     />
                 </FormGroup>
             </div>

@@ -17,8 +17,8 @@ type Experience = {
 };
 
 type Properties = {
-    onSubmit?: () => void
-    onChange?: (experience: Experience) => void
+    onSubmit?: () => void;
+    onChange?: (experience: Experience) => void;
 };
 
 const ExperienceForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
@@ -29,66 +29,74 @@ const ExperienceForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
         city: '',
         description: '',
         startDate: null,
-        endDate: null
+        endDate: null,
     });
 
-    const handleInputChange =
-        useCallback((event_: ChangeEvent<HTMLInputElement>): void => {
+    const handleInputChange = useCallback(
+        (event_: ChangeEvent<HTMLInputElement>): void => {
             const { name, value } = event_.target;
 
             setExperience((previousState) => ({
-                ...previousState, [name]: value
+                ...previousState,
+                [name]: value,
             }));
 
             if (onChange) {
                 onChange({ ...experience, [name]: value });
             }
-    }, [onChange, experience]);
+        },
+        [onChange, experience],
+    );
 
     return (
         <form className={styles.experience} onSubmit={onSubmit}>
             <FormGroup label={'Job title'}>
-                <Input placeholder={'Text'}
-                       name={'jobTitle'}
-                       value={experience.jobTitle}
-                       onChange={handleInputChange}
+                <Input
+                    placeholder={'Text'}
+                    name={'jobTitle'}
+                    value={experience.jobTitle}
+                    onChange={handleInputChange}
                 />
             </FormGroup>
             <FormGroup label={'Company name'}>
-                <Input placeholder={'Text'}
-                       name={'companyName'}
-                       value={experience.companyName}
-                       onChange={handleInputChange}
+                <Input
+                    placeholder={'Text'}
+                    name={'companyName'}
+                    value={experience.companyName}
+                    onChange={handleInputChange}
                 />
             </FormGroup>
             <FormGroup label={'Description'}>
-                <Input placeholder={'Text'}
-                       name={'description'}
-                       value={experience.description}
-                       onChange={handleInputChange}
+                <Input
+                    placeholder={'Text'}
+                    name={'description'}
+                    value={experience.description}
+                    onChange={handleInputChange}
                 />
             </FormGroup>
             <div className={styles.experience__last_block}>
                 <FormGroup label={'City'} width={'50%'}>
-                    <Input placeholder={'Text'}
-                           name={'city'}
-                           value={experience.city}
-                           onChange={handleInputChange}
+                    <Input
+                        placeholder={'Text'}
+                        name={'city'}
+                        value={experience.city}
+                        onChange={handleInputChange}
                     />
                 </FormGroup>
                 <FormGroup label={'Country'} width={'50%'}>
-                    <Input placeholder={'Text'}
-                           name={'country'}
-                           value={experience.country}
-                           onChange={handleInputChange}
+                    <Input
+                        placeholder={'Text'}
+                        name={'country'}
+                        value={experience.country}
+                        onChange={handleInputChange}
                     />
                 </FormGroup>
             </div>
             <div className={styles.experience__last_block}>
                 <FormGroup label={'Start date'} width={'50%'}>
                     <Calendar
-                        // TODO: calendar needs to accept parameters to pre-display the value
-                        // also accept the name field to distinguish it from another calendar
+                    // TODO: calendar needs to accept parameters to pre-display the value
+                    // also accept the name field to distinguish it from another calendar
                     />
                 </FormGroup>
                 <FormGroup label={'End date'} width={'50%'}>
