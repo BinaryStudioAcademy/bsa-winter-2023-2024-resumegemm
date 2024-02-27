@@ -6,6 +6,8 @@ export {
     type ResumeShareAccessGetResponseDto,
     type ResumeShareCreateRequestDto,
     type ResumeShareCreateResponseDto,
+    type ResumeShareDeleteRequestDto,
+    type ResumeShareDeleteResponseDto,
     type ResumeShareDetailsGetRequestDto,
     type ResumeShareDetailsGetResponseDto,
     type ResumeShareGetRequestDto,

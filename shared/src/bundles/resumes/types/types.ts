@@ -3,6 +3,8 @@ export { type ResumeShareAccessCreateResponseDto } from './resume-share-access-c
 export { type ResumeShareAccessGetResponseDto } from './resume-share-access-get-response-dto.type';
 export { type ResumeShareCreateRequestDto } from './resume-share-create-request-dto.type';
 export { type ResumeShareCreateResponseDto } from './resume-share-create-response-dto.type';
+export { type ResumeShareDeleteRequestDto } from './resume-share-delete-request-dto.type';
+export { type ResumeShareDeleteResponseDto } from './resume-share-delete-response-dto.type';
 export { type ResumeShareDetailsGetRequestDto } from './resume-share-details-get-request-dto.type';
 export { type ResumeShareDetailsGetResponseDto } from './resume-share-details-get-response-dto.type';
 export { type ResumeShareGetRequestDto } from './resume-share-get-request-dto.type';

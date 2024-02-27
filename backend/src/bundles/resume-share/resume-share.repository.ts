@@ -1,9 +1,9 @@
 import { Guid } from 'guid-typescript';
 import {
+    type ResumeShareDeleteResponseDto,
     type ResumeShareGetResponseDto,
-    HttpCode,
-    HttpError,
 } from 'shared/build/index.js';
+import { HttpCode, HttpError } from 'shared/build/index.js';
 
 import { ResumeShareErrorMessage } from './enums/error-messages.js';
 import { type ResumeShareModel } from './resume-share.model.js';
@@ -27,7 +27,7 @@ class ResumeShareRepository {
 
         if (!resumeShare) {
             throw new HttpError({
-                message: ResumeShareErrorMessage.RESUME_SHARE_GET_ERROR,
+                message: ResumeShareErrorMessage.RESUME_SHARE_NOT_FOUND_ERROR,
                 status: HttpCode.NOT_FOUND,
             });
         }
@@ -49,6 +49,35 @@ class ResumeShareRepository {
                 .insert(resumeShareModel)
                 .returning('*')
                 .execute();
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new HttpError({
+                    message: ResumeShareErrorMessage.RESUME_SHARE_CREATE_ERROR,
+                    status: HttpCode.BAD_REQUEST,
+                });
+            }
+        }
+    }
+
+    public async DeleteById(
+        resumeId: string,
+    ): Promise<ResumeShareDeleteResponseDto | unknown> {
+        try {
+            const resumeShare = await this.resumeShareModel
+                .query()
+                .deleteById(resumeId)
+                .returning('*')
+                .execute();
+
+            if (!resumeShare) {
+                throw new HttpError({
+                    message:
+                        ResumeShareErrorMessage.RESUME_SHARE_NOT_FOUND_ERROR,
+                    status: HttpCode.NOT_FOUND,
+                });
+            }
+
+            return resumeShare;
         } catch (error) {
             if (error instanceof Error) {
                 throw new HttpError({

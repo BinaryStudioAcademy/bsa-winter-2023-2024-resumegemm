@@ -12,6 +12,8 @@ import { type ResumeShareService } from './resume-share.service.js';
 import {
     type ResumeShareCreateRequestDto,
     type ResumeShareCreateResponseDto,
+    type ResumeShareDeleteRequestDto,
+    type ResumeShareDeleteResponseDto,
     type ResumeShareDetailsGetRequestDto,
     type ResumeShareDetailsGetResponseDto,
     type ResumeShareGetRequestDto,
@@ -50,12 +52,22 @@ class ResumeShareController extends Controller {
         });
 
         this.addRoute({
+            path: ResumesApiPath.SHARE_ID,
+            method: 'DELETE',
+            validation: {},
+            handler: (options) =>
+                this.DeleteShareLink(
+                    options as ApiHandlerOptions<ResumeShareDeleteRequestDto>,
+                ),
+        });
+
+        this.addRoute({
             path: ResumesApiPath.SHARE_ID_DETAILS,
             method: 'GET',
             validation: {},
             handler: (options) =>
                 this.GetShareLinkDetails(
-                    options as ApiHandlerOptions<ResumeShareGetRequestDto>,
+                    options as ApiHandlerOptions<ResumeShareDetailsGetRequestDto>,
                 ),
         });
     }
@@ -181,6 +193,28 @@ class ResumeShareController extends Controller {
             return {
                 status: HttpCode.OK,
                 payload: await this.resumeShareService.GetShareLinkDetails(id),
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async DeleteShareLink(
+        options: ApiHandlerOptions<ResumeShareDeleteRequestDto>,
+    ): Promise<ApiHandlerResponse<ResumeShareDeleteResponseDto | unknown>> {
+        try {
+            const id = options.params.id;
+
+            return {
+                status: HttpCode.OK,
+                payload: await this.resumeShareService.DeleteShareLink(id),
             };
         } catch (error: unknown) {
             const { message, status } = error as HttpError;
