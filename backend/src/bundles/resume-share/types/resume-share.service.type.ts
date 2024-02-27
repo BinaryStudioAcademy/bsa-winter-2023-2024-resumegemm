@@ -1,7 +1,17 @@
-import { type ResumeShareCreateResponseDto } from './types';
+import {
+    type ResumeShareCreateResponseDto,
+    type ResumeShareGetResponseDto,
+} from './types.js';
 
 type IResumeShareService = {
-    GetShareLink(id: string): Promise<ResumeShareCreateResponseDto | unknown>;
+    CreateShareLink(
+        id: string,
+    ): Promise<ResumeShareCreateResponseDto | unknown>;
+
+    GetShareLink(
+        id: string,
+        ip: string,
+    ): Promise<ResumeShareGetResponseDto | unknown>;
 };
 
 export { type IResumeShareService };

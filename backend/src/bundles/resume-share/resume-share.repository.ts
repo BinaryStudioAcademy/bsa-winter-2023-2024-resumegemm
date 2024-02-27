@@ -1,7 +1,9 @@
 import { Guid } from 'guid-typescript';
-import { HttpCode, HttpError } from 'shared/build/index.js';
-
-import { type IRepository } from '~/common/interfaces/interfaces.js';
+import {
+    type ResumeShareGetResponseDto,
+    HttpCode,
+    HttpError,
+} from 'shared/build/index.js';
 
 import { ResumeShareErrorMessage } from './enums/error-messages.js';
 import { type ResumeShareModel } from './resume-share.model.js';
@@ -14,8 +16,23 @@ class ResumeShareRepository {
         this.resumeShareModel = resumeShareModel;
     }
 
-    public find(): ReturnType<IRepository['find']> {
-        return Promise.resolve(null);
+    public async getResume(
+        id: string,
+    ): Promise<ResumeShareGetResponseDto | undefined> {
+        const resumeShare = await this.resumeShareModel
+            .query()
+            .findById(id)
+            .returning('*')
+            .execute();
+
+        if (!resumeShare) {
+            throw new HttpError({
+                message: ResumeShareErrorMessage.RESUME_SHARE_GET_ERROR,
+                status: HttpCode.NOT_FOUND,
+            });
+        }
+
+        return resumeShare;
     }
 
     public async create(

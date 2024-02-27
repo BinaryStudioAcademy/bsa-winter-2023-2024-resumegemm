@@ -12,8 +12,12 @@ export {
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
 export {
+    type ResumeShareAccessCreateRequestDto,
+    type ResumeShareAccessCreateResponseDto,
     type ResumeShareCreateRequestDto,
     type ResumeShareCreateResponseDto,
+    type ResumeShareGetRequestDto,
+    type ResumeShareGetResponseDto,
     ResumesApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';
@@ -22,8 +26,8 @@ export {
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
+    TemplatesApiPath,
 } from './bundles/templates/templates.js';
-export { TemplatesApiPath } from './bundles/templates/templates.js';
 export {
     type User,
     type UserAuthResponse,

@@ -1,5 +1,8 @@
-export { type IResumeShareService } from './resume-share.service.type';
+export { type IResumeShareService } from './resume-share.service.type.js';
 export {
+    type ResumeShareAccessCreateResponseDto,
     type ResumeShareCreateRequestDto,
     type ResumeShareCreateResponseDto,
-} from 'shared/build/index';
+    type ResumeShareGetRequestDto,
+    type ResumeShareGetResponseDto,
+} from 'shared/build/index.js';

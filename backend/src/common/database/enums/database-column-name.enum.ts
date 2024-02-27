@@ -37,6 +37,9 @@ enum DatabaseColumnName {
     VIEWED_AT = 'viewed_at',
     TEMPLATE_ID = 'template_id',
     TEMPLATE_SETTINGS = 'template_settings',
+    RESUME_SHARE_LINK_ID = 'resume_share_link_id',
+    RESUME_SHARE_ACCESS_TIME = 'resume_share_access_time',
+    RESUME_SHARE_ACCESS_IP = 'resume_share_access_ip',
 }
 
 export { DatabaseColumnName };

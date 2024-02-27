@@ -1,5 +1,6 @@
 enum ResumesApiPath {
-    SHARE = '/:id/share',
+    ID_SHARE = '/:id/share',
+    SHARE_ID = '/share/:id',
 }
 
 export { ResumesApiPath };

@@ -1,2 +1,2 @@
-export { ResumeShareErrorMessage } from './error-messages';
-export { ResumesApiPath } from 'shared/build/index';
+export { ResumeShareErrorMessage } from './error-messages.js';
+export { ResumesApiPath } from 'shared/build/index.js';

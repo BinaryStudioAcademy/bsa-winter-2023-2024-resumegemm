@@ -1,20 +1,20 @@
 import {
-    type HttpError,
-    type ResumeShareCreateRequestDto,
-    type ResumeShareCreateResponseDto,
-    ResumesApiPath,
-} from 'shared/build/index.js';
-
-import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
     Controller,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
-import { HttpCode } from '~/common/http/http.js';
+import { type HttpError, HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
+import { ResumesApiPath } from './enums/enums.js';
 import { type ResumeShareService } from './resume-share.service.js';
+import {
+    type ResumeShareCreateRequestDto,
+    type ResumeShareCreateResponseDto,
+    type ResumeShareGetRequestDto,
+    type ResumeShareGetResponseDto,
+} from './types/types.js';
 
 class ResumeShareController extends Controller {
     private resumeShareService: ResumeShareService;
@@ -28,12 +28,22 @@ class ResumeShareController extends Controller {
         this.resumeShareService = resumeShareService;
 
         this.addRoute({
-            path: ResumesApiPath.SHARE,
+            path: ResumesApiPath.ID_SHARE,
             method: 'POST',
             validation: {},
             handler: (options) =>
-                this.GetShareLink(
+                this.CreateShareLink(
                     options as ApiHandlerOptions<ResumeShareCreateRequestDto>,
+                ),
+        });
+
+        this.addRoute({
+            path: ResumesApiPath.SHARE_ID,
+            method: 'GET',
+            validation: {},
+            handler: (options) =>
+                this.GetShareLink(
+                    options as ApiHandlerOptions<ResumeShareGetRequestDto>,
                 ),
         });
     }
@@ -105,15 +115,38 @@ class ResumeShareController extends Controller {
      *        401:
      *          description: Invalid email
      */
-    private async GetShareLink(
+    private async CreateShareLink(
         options: ApiHandlerOptions<ResumeShareCreateRequestDto>,
     ): Promise<ApiHandlerResponse<ResumeShareCreateResponseDto | unknown>> {
         try {
             const id = options.params.id;
 
             return {
+                status: HttpCode.CREATED,
+                payload: await this.resumeShareService.CreateShareLink(id),
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async GetShareLink(
+        options: ApiHandlerOptions<ResumeShareGetRequestDto>,
+    ): Promise<ApiHandlerResponse<ResumeShareGetResponseDto | unknown>> {
+        try {
+            const id = options.params.id;
+            const ip = options.socket.remoteAddress;
+
+            return {
                 status: HttpCode.OK,
-                payload: await this.resumeShareService.GetShareLink(id),
+                payload: await this.resumeShareService.GetShareLink(id, ip),
             };
         } catch (error: unknown) {
             const { message, status } = error as HttpError;
