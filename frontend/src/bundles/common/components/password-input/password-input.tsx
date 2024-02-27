@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { forwardRef } from 'react';
 import { type FieldError } from 'react-hook-form';
 
 import {
@@ -19,22 +20,25 @@ type PasswordInputProperties = {
     className?: string;
 };
 
-const PasswordInput: React.FC<PasswordInputProperties> = ({
-    label = '',
-    placeholder = 'Password',
-    error,
-    className,
-    ...otherProperties
-}) => {
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProperties>(
+    (
+        {
+            label = '',
+            placeholder = 'Password',
+            error,
+            className,
+            ...otherProperties
+        },
+        reference,
+    ) => {
+        const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-    const togglePasswordVisibility = useCallback((): void => {
-        setIsPasswordVisible(!isPasswordVisible);
-    }, [isPasswordVisible]);
+        const togglePasswordVisibility = useCallback((): void => {
+            setIsPasswordVisible(!isPasswordVisible);
+        }, [isPasswordVisible]);
 
-    return (
-        <>
-            <div className={clsx(styles.password, className)}>
+        return (
+            <div ref={reference} className={clsx(styles.password, className)}>
                 <FormGroup label={label} error={error} width="100%">
                     <Input
                         type={isPasswordVisible ? 'text' : 'password'}
@@ -57,8 +61,9 @@ const PasswordInput: React.FC<PasswordInputProperties> = ({
                     </IconButton>
                 </FormGroup>
             </div>
-        </>
-    );
-};
+        );
+    },
+);
 
+PasswordInput.displayName = 'PasswordInput';
 export { PasswordInput };
