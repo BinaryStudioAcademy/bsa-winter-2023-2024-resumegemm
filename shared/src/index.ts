@@ -8,6 +8,7 @@ export {
     type Industry,
     IndustriesApiPath,
 } from './bundles/industries/industries.js';
+export {
     type CreateSubscriptionRequestDto,
     type CreateSubscriptionResponseDto,
     type GetPriceResponseDto,
