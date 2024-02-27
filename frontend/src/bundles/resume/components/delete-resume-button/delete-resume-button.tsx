@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 
-import deleteIcon from '~/assets/img/delete-icon.svg';
 import { BaseButton } from '~/bundles/common/components/components';
 
 import { DeleteResumeModal } from '../delete-resume-modal.tsx/delete-resume-modal';
+import { DeleteIcon } from '../icons/delete-icon';
 import styles from './styles.module.scss';
 
 const DeleteResumeButton: React.FC = () => {
@@ -18,12 +18,12 @@ const DeleteResumeButton: React.FC = () => {
     }, []);
 
     return (
-        <div className={styles.delete__button__wrapper}>
+        <div>
             <BaseButton
                 onClick={handleShowModal}
                 className={styles.delete__button}
             >
-                <img src={deleteIcon} alt="delete icon" />
+                <DeleteIcon className={styles.delete__button__icon} />
                 <span className={styles.delete__button__text}>Delete</span>
             </BaseButton>
             {isModalShown && <DeleteResumeModal onClose={handleCloseModal} />}
