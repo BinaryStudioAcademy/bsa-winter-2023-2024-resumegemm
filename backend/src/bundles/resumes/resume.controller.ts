@@ -9,13 +9,13 @@ import { ApiPath } from '~/common/enums/enums';
 import { HttpCode } from '~/common/http/http';
 import { type ILogger } from '~/common/logger/logger';
 
+import { type IResumeService } from './interfaces/interfaces';
 import {
     type ResumeCreateItemRequestDto,
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
-} from './types/resume.type';
-import { type IResumeService } from './types/resume-service.type';
+} from './types/types';
 
 class ResumeController extends Controller {
     private resumeService: IResumeService;

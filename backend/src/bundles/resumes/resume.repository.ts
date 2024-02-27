@@ -5,6 +5,7 @@ import {
     type PersonalInformationRepository,
     type TechnicalSkillsRepository,
 } from './content/content.js';
+import { type IResumeRepository } from './interfaces/interfaces.js';
 import { type ResumeModel } from './resume.model';
 import {
     type Resume,
@@ -12,8 +13,7 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
-} from './types/resume.type';
-import { type IResumeRepository } from './types/resume-repository.type';
+} from './types/types.js';
 
 interface ResumeRepositoryConfiguration {
     resumeModel: typeof ResumeModel;

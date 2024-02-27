@@ -5,9 +5,11 @@ import {
     type ResumeUpdateItemRequestDto,
 } from 'shared/build';
 
-import { type Resume } from './types/resume.type';
-import { type IResumeRepository } from './types/resume-repository.type';
-import { type IResumeService } from './types/resume-service.type';
+import {
+    type IResumeRepository,
+    type IResumeService,
+} from './interfaces/interfaces';
+import { type Resume } from './types/types';
 
 class ResumeService implements IResumeService {
     private resumeRepository: IResumeRepository;
