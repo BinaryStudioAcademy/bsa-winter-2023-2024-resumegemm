@@ -1,0 +1,44 @@
+.custom__section {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+}
+
+.custom__section__input,
+.custom__section__textarea {
+    padding: 12px;
+    background-color: rgb(235 239 241);
+    border: none;
+    border-radius: 3px;
+}
+
+.custom__section__textarea {
+    min-height: 200px;
+}
+
+.custom__section__input:focus,
+.custom__section__textarea:focus {
+    color: #302e36;
+    border: 1px solid #768fbe;
+    outline: none;
+}
+
+.custom__section__input:focus::placeholder,
+.custom__section__textarea:focus {
+    color: #302e36;
+}
+
+.custom__section__activity {
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom__section__date {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.custom__section__calendar {
+    min-width: 275px;
+}
