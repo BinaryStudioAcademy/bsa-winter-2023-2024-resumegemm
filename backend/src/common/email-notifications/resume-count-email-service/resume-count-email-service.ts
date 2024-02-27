@@ -17,25 +17,17 @@ class ResumeCountEmailService extends MailService {
     }
 
     public async sendEmails(): Promise<void> {
-        const items = await this.userService.findAll();
-        const users = items.items;
-
-        const recentlyViewedWithCountAndUser =
+        const users = await this.userService.findAll();
+        const items =
             await this.recentlyViewedService.findRecentlyViewedResumesWithCount();
 
-        for (const user of users) {
-            const email = user.email;
-            let resumeCount = 0;
+        for (const item of items) {
+            const user = users.items.find((user) => user.id === item.userId);
+            const userEmail = user?.email;
+            const resumeCount = item.count;
 
-            const userData = recentlyViewedWithCountAndUser.find(
-                (data) => data.userId === user.id,
-            );
-
-            if (userData) {
-                resumeCount = userData.count;
-            }
             await this.sendMail({
-                to: email,
+                to: userEmail,
                 subject: 'Resume Views Notification',
                 text: `Your resume was viewed ${resumeCount} times today.`,
             });
