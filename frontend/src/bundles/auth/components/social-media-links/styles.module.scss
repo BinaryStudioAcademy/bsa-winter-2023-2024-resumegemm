@@ -19,3 +19,13 @@
     display: flex;
     gap: 16px;
 }
+
+@media screen and (width <= 500px) {
+    .social_media__description {
+        display: none;
+    }
+
+    .social_media {
+        justify-content: center;
+    }
+}
