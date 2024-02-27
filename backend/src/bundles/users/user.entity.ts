@@ -14,18 +14,22 @@ class UserEntity implements IEntity {
 
     private 'passwordSalt': string;
 
+    private 'emailConfirmed': boolean;
+
     private constructor({
         id,
         email,
         profileId,
         passwordHash,
         passwordSalt,
+        emailConfirmed,
     }: UserEntityFields) {
         this.id = id;
         this.email = email;
         this.profileId = profileId;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
+        this.emailConfirmed = emailConfirmed;
     }
 
     public static initialize({
@@ -34,6 +38,7 @@ class UserEntity implements IEntity {
         profileId,
         passwordHash,
         passwordSalt,
+        emailConfirmed,
     }: UserEntityFields): UserEntity {
         return new UserEntity({
             id,
@@ -41,6 +46,7 @@ class UserEntity implements IEntity {
             profileId,
             passwordHash,
             passwordSalt,
+            emailConfirmed,
         });
     }
 
@@ -49,6 +55,7 @@ class UserEntity implements IEntity {
         profileId,
         passwordHash,
         passwordSalt,
+        emailConfirmed,
     }: Omit<UserEntityFields, 'id'>): UserEntity {
         return new UserEntity({
             id: guid.raw(),
@@ -56,6 +63,7 @@ class UserEntity implements IEntity {
             profileId,
             passwordHash,
             passwordSalt,
+            emailConfirmed,
         });
     }
 
@@ -73,6 +81,7 @@ class UserEntity implements IEntity {
             email: this.email,
             passwordHash: this.passwordHash,
             passwordSalt: this.passwordSalt,
+            emailConfirmed: this.emailConfirmed,
         };
     }
 }

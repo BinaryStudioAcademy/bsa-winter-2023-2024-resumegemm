@@ -67,7 +67,7 @@ class AuthService implements TAuthService {
         const { id, email } = newUser;
         const token = generateToken({ id });
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        this.sendAfterSignUpEmail(email, token);
+        await this.sendAfterSignUpEmail(email, token);
 
         const user = await this.userService.getUserWithProfile(id);
 
@@ -81,7 +81,7 @@ class AuthService implements TAuthService {
         email: string,
         token: string,
     ): Promise<void> {
-        const verificationLink = `${this.config.ENV.APP.ORIGIN_URL}/verify-email?token=${token}`;
+        const verificationLink = `${this.config.ENV.APP.ORIGIN_URL}/confirm-email?token=${token}`;
         const emailMockup = getTemplate({
             name: 'sign-up-email-template',
             context: {

@@ -85,8 +85,14 @@ class UserRepository implements IRepository {
         entity: UserEntity;
         transaction: Transaction;
     }): Promise<UserEntity> {
-        const { email, passwordSalt, passwordHash, id, profileId } =
-            entity.toNewObject();
+        const {
+            email,
+            passwordSalt,
+            passwordHash,
+            id,
+            profileId,
+            emailConfirmed,
+        } = entity.toNewObject();
         const item = await this.userModel
             .query()
             .insert({
@@ -95,11 +101,22 @@ class UserRepository implements IRepository {
                 profileId,
                 passwordSalt,
                 passwordHash,
+                emailConfirmed,
             })
             .returning('*')
             .transacting(transaction)
             .execute();
         return UserEntity.initialize(item);
+    }
+
+    public async updateById(
+        id: string,
+        data: object,
+    ): Promise<UserEntity | null> {
+        await this.userModel.query().update(data).where('id', id).execute();
+
+        const user = await this.userModel.query().findOne({ id });
+        return user ? UserEntity.initialize(user) : null;
     }
 
     public update(): ReturnType<IRepository['update']> {

@@ -8,6 +8,11 @@ import {
     type UserSignUpResponseDto,
 } from './types/types.js';
 
+interface JwtPayload {
+    email: string;
+    id: string;
+}
+
 class UserService implements IService {
     private userRepository: UserRepository;
 
@@ -60,6 +65,14 @@ class UserService implements IService {
 
     public delete(): ReturnType<IService['delete']> {
         return Promise.resolve(true);
+    }
+
+    public async confirmUserEmail(decodedToken: JwtPayload): Promise<void> {
+        const { id } = decodedToken;
+
+        await this.userRepository.updateById(id, {
+            email_confirmed: true,
+        });
     }
 }
 

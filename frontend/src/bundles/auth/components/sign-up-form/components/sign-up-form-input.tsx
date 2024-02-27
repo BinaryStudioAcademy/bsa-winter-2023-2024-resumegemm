@@ -31,7 +31,7 @@ const Input = <T extends FieldValues>({
     const hasError = Boolean(error);
 
     return (
-        <label>
+        <label style={{ position: 'relative' }}>
             <input
                 {...field}
                 type={type}

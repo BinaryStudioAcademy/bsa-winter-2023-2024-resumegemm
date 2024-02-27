@@ -1,3 +1,5 @@
+import { Notify } from 'notiflix';
+
 import {
     BaseButton,
     FormGroup,
@@ -63,11 +65,13 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 !password ||
                 !repeatPassword
             ) {
+                Notify.failure('Missing fields');
                 return;
             }
             void handleSubmit(onSubmit)(event_);
             void storage.drop(StorageKey.NAME_EXIST);
             inputReset && reset();
+            Notify.success('Please check your email to confirm your email');
         },
         [handleSubmit, inputReset, onSubmit, reset, trigger, watch],
     );

@@ -1,4 +1,5 @@
 import { type FastifyRequest } from 'fastify';
+import jwt from 'jsonwebtoken';
 import {
     type HttpError,
     type UserAuthResponse,
@@ -14,6 +15,7 @@ import {
     generateRefreshToken,
     generateToken,
 } from '~/bundles/auth/helpers/helpers.js';
+import { userService } from '~/bundles/users/users.js';
 import {
     type UserSignUpRequestDto,
     userSignInValidationSchema,
@@ -31,6 +33,11 @@ import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
+
+interface JwtPayload {
+    email: string;
+    id: string;
+}
 
 class AuthController extends Controller {
     private authService: AuthService;
@@ -85,6 +92,16 @@ class AuthController extends Controller {
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
                         unsignCookie: FastifyRequest['unsignCookie'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.CONFIRM_EMAIL,
+            method: 'GET',
+            handler: (options) =>
+                this.confirmEmail(
+                    options as ApiHandlerOptions<{
+                        query: { token: string };
                     }>,
                 ),
         });
@@ -255,6 +272,34 @@ class AuthController extends Controller {
                 status,
                 payload: {
                     message: ExceptionMessage.INVALID_REFRESH_TOKEN,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async confirmEmail(
+        options: ApiHandlerOptions<{ query: { token: string } }>,
+    ): Promise<ApiHandlerResponse<{ message: string }>> {
+        try {
+            const { token } = options.query;
+            const decodedToken = jwt.verify(
+                token,
+                config.ENV.JWT.ACCESS_TOKEN_SECRET,
+            ) as JwtPayload;
+            // Call confirmUserEmail function with the decoded token
+            await userService.confirmUserEmail(decodedToken);
+
+            return {
+                status: HttpCode.OK,
+                payload: { message: 'Email confirmed successfully' },
+            };
+        } catch (error: unknown) {
+            const { status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message: ExceptionMessage.INVALID_CONFIRMATION_TOKEN,
                     status,
                 },
             };
