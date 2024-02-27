@@ -44,6 +44,9 @@ const SortButton = ({
                 setSortMethod('asc');
                 break;
             }
+            default: {
+                break;
+            }
         }
     }, [sortMethod, setSortMethod]);
 
