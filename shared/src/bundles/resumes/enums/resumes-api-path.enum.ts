@@ -1,7 +1,7 @@
 enum ResumesApiPath {
     ROOT = '/',
     ID = '/:id',
-    USER_ID = '/user/:userId',
+    USER_ID = '/:userId/resumes',
 }
 
 export { ResumesApiPath };
