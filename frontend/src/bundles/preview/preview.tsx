@@ -35,13 +35,13 @@ const PreviewPage: React.FC = () => {
 
     const handleSuccessButtonClick = useCallback(() => {
         showToast('Hooray!', ToastType.SUCCESS);
-    }, []);
+    }, [showToast]);
 
     const handleErrorButtonClick = useCallback(() => {
         showToast('Error! Whyyyyyy!?!?!?', ToastType.ERROR, {
             theme: 'dark',
         });
-    }, []);
+    }, [showToast]);
 
     const handleInfoButtonClick = useCallback(() => {
         showToast('Pretty informative, yeah?', ToastType.INFO, {
@@ -49,7 +49,7 @@ const PreviewPage: React.FC = () => {
             hideProgressBar: false,
             closeButton: true,
         });
-    }, []);
+    }, [showToast]);
 
     return (
         <>
