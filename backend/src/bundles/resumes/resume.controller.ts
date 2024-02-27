@@ -10,17 +10,17 @@ import { HttpCode } from '~/common/http/http';
 import { type ILogger } from '~/common/logger/logger';
 
 import {
-    type Resume,
     type ResumeCreateItemRequestDto,
     type ResumeGetAllResponseDto,
+    type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
 } from './types/resume.type';
 import { type IResumeService } from './types/resume-service.type';
 
 class ResumeController extends Controller {
-    private resumeService: IResumeService<Resume>;
+    private resumeService: IResumeService;
 
-    public constructor(logger: ILogger, resumeService: IResumeService<Resume>) {
+    public constructor(logger: ILogger, resumeService: IResumeService) {
         super(logger, ApiPath.RESUMES);
 
         this.resumeService = resumeService;
@@ -39,7 +39,7 @@ class ResumeController extends Controller {
             path: ResumesApiPath.ID,
             method: 'GET',
             handler: (options) =>
-                this.findById(
+                this.findByIdWithRelations(
                     options as ApiHandlerOptions<{ params: { id: string } }>,
                 ),
         });
@@ -83,7 +83,7 @@ class ResumeController extends Controller {
         options: ApiHandlerOptions<{
             body: ResumeCreateItemRequestDto;
         }>,
-    ): Promise<ApiHandlerResponse<Resume>> {
+    ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
         const resume = await this.resumeService.create(options.body);
 
         return {
@@ -92,10 +92,12 @@ class ResumeController extends Controller {
         };
     }
 
-    private async findById(
+    private async findByIdWithRelations(
         options: ApiHandlerOptions<{ params: { id: string } }>,
-    ): Promise<ApiHandlerResponse<Resume>> {
-        const resume = await this.resumeService.find(options.params.id);
+    ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
+        const resume = await this.resumeService.findWithRelations(
+            options.params.id,
+        );
 
         if (!resume) {
             throw new HttpError({
@@ -150,7 +152,7 @@ class ResumeController extends Controller {
             params: { id: string };
             body: ResumeUpdateItemRequestDto;
         }>,
-    ): Promise<ApiHandlerResponse<Resume>> {
+    ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
         const resume = await this.resumeService.find(options.params.id);
 
         if (!resume) {
