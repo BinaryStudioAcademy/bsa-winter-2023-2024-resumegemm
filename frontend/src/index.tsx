@@ -10,6 +10,7 @@ import {
     ErrorFallback,
     RouterProvider,
     StoreProvider,
+    StripeProvider,
 } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
@@ -17,6 +18,7 @@ import { store } from '~/framework/store/store';
 
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
+import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-payment';
 import { PreviewPage } from './bundles/preview/preview';
 import { Profile } from './bundles/users/pages/profile';
 
@@ -43,6 +45,14 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 {
                                     path: AppRoute.SIGN_IN,
                                     element: <Auth />,
+                                },
+                                {
+                                    path: AppRoute.PAYMENT,
+                                    element: (
+                                        <StripeProvider>
+                                            <SubscriptionPaymentPage />
+                                        </StripeProvider>
+                                    ),
                                 },
                                 {
                                     path: AppRoute.SIGN_UP,
