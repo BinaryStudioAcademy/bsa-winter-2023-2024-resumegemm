@@ -54,6 +54,5 @@
         "swagger-jsdoc": "6.2.8",
         "guid-typescript": "1.0.9",
         "jsonwebtoken": "9.0.2"
-
     }
 }
