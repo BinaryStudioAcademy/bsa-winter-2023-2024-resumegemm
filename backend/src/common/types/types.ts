@@ -1,5 +1,6 @@
 export { type TemplateBlockSettings } from 'shared/build/bundles/templates/templates';
 export {
+    type HttpError,
     type ServerCommonErrorResponse,
     type ServerErrorResponse,
     type ServerValidationErrorResponse,

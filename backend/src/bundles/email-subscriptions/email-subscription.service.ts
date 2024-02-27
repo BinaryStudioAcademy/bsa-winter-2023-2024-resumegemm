@@ -1,8 +1,7 @@
-import { type UserWithRelations } from 'shared/build/index.js';
-
 import { HttpCode, HttpError } from '~/common/http/http.js';
 
 import { type UserRepository } from '../users/user.repository.js';
+import { type UserWithRelations } from '../users/users.js';
 import { type IEmailSubscriptionRepository } from './types/email-subscription-repository.type.js';
 import { type IEmailSubscriptionService } from './types/email-subscription-service.type.js';
 import { type EmailSubscription } from './types/types.js';

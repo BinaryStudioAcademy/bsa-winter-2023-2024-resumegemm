@@ -16,6 +16,7 @@ export { userController, userRepository, userService };
 export {
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserWithRelations,
 } from './types/types.js';
 export { UserModel } from './user.model.js';
 export {

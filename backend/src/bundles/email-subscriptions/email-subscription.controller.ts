@@ -1,17 +1,17 @@
-import { type EmailSubscription, type HttpError } from 'shared/build/index.js';
-import { ApiPath } from 'shared/build/index.js';
-
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
 } from '~/common/controller/controller';
 import { Controller } from '~/common/controller/controller.package.js';
+import { ApiPath } from '~/common/enums/enums.js';
+import { type HttpError } from '~/common/http/http.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { type UserAuthResponse } from '../users/types/types.js';
 import { EmailSubscriptionsApiPath } from './enums/enums.js';
 import { type IEmailSubscriptionService } from './types/email-subscription-service.type.js';
+import { type EmailSubscription } from './types/types.js';
 
 class EmailSubscriptionController extends Controller {
     public constructor(

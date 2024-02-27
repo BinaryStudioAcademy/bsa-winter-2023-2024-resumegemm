@@ -1,11 +1,13 @@
 import { type Transaction } from 'objection';
-import { type UserWithRelations } from 'shared/build/index.js';
 
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { AbstractRepository } from '~/common/database/abstract.repository.js';
 
-import { type UserEntityFields } from './types/types.js';
+import {
+    type UserEntityFields,
+    type UserWithRelations,
+} from './types/types.js';
 
 type TUserRepo = {
     findOneByEmail(email: string): Promise<UserEntityFields | null>;
