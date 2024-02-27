@@ -86,16 +86,6 @@ class UserService implements Omit<IService, 'getById'> {
             'withoutHashPasswords',
         ) as Promise<UserWithRelations>;
     }
-
-    public async updateEmailSubscription(
-        userId: string,
-        emailSubscriptionId: string,
-    ): Promise<void> {
-        await this.userRepository.updateEmailSubscriptionId(
-            userId,
-            emailSubscriptionId,
-        );
-    }
 }
 
 export { UserService };
