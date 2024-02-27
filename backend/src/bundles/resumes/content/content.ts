@@ -1,5 +1,11 @@
-export { ContactsModel } from './contacts/contacts';
-export { EducationModel } from './education/education';
-export { ExperienceModel } from './experience/experience';
-export { PersonalInformationModel } from './personal-info/personal-info';
-export { TechnicalSkillModel } from './technical-skills/technical-skills';
+export { ContactsModel, ContactsRepository } from './contacts/contacts';
+export { EducationModel, EducationRepository } from './education/education';
+export { ExperienceModel, ExperienceRepository } from './experience/experience';
+export {
+    PersonalInformationModel,
+    PersonalInformationRepository,
+} from './personal-info/personal-info';
+export {
+    TechnicalSkillModel,
+    TechnicalSkillsRepository,
+} from './technical-skills/technical-skills';
