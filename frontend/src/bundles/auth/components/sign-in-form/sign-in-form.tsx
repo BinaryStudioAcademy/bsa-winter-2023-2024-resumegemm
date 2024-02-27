@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
-import { OpenAuthApiPath } from 'shared/build/index.js';
 
+import { Divider } from '~/bundles/auth/components/divider/divider';
+import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
 import {
     BaseButton,
     FormGroup,
@@ -19,7 +19,6 @@ import {
     type UserSignUpRequestDto,
     userSignUpValidationSchema,
 } from '~/bundles/users/users';
-import { config } from '~/framework/config/config.js';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from '../sign-up-form/constants/constants';
 import styles from './styles.module.scss';
@@ -74,11 +73,8 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                 >
                     Sign up
                 </BaseButton>
-                <NavLink
-                    to={`${config.ENV.API.PROXY_URL}${OpenAuthApiPath.GITHUB}`}
-                >
-                    Login Github
-                </NavLink>
+                <Divider />
+                <SocialMediaLinks />
             </form>
         </>
     );

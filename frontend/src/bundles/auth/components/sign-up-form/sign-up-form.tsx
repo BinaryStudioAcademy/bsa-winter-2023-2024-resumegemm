@@ -1,3 +1,5 @@
+import { Divider } from '~/bundles/auth/components/divider/divider';
+import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
 import {
     BaseButton,
     FormGroup,
@@ -85,6 +87,8 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 >
                     Sign up
                 </BaseButton>
+                <Divider isBlue />
+                <SocialMediaLinks />
             </form>
         </>
     );
