@@ -1,31 +1,20 @@
 import { Notify } from 'notiflix';
 
-import {
-    BaseButton,
-    FormGroup,
-    Icon,
-    IconButton,
-} from '~/bundles/common/components/components';
+import { BaseButton, FormGroup } from '~/bundles/common/components/components';
 import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
     ButtonWidth,
-    IconName,
-    IconSize,
 } from '~/bundles/common/enums/enums';
-import {
-    useAppForm,
-    useCallback,
-    useState,
-} from '~/bundles/common/hooks/hooks';
+import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 import {
     type UserSignUpRequestDto,
     userSignUpValidationSchema,
 } from '~/bundles/users/users';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
-import { Input } from './components/sign-up-form-input';
+import { Input, PasswordInput } from './components/sign-up-form-input';
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
 
@@ -34,12 +23,6 @@ type Properties = {
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
-    const togglePasswordVisibility = useCallback((): void => {
-        setIsPasswordVisible(!isPasswordVisible);
-    }, [isPasswordVisible]);
-
     const { control, errors, handleSubmit, reset, watch, trigger } =
         useAppForm<UserSignUpRequestDto>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
@@ -117,48 +100,22 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <FormGroup label="Password">
-                    <Input
+                    <PasswordInput
                         control={control}
                         errors={errors}
                         type="text"
                         placeholder="Your password"
                         name="password"
                     />
-                    <IconButton
-                        className={styles.password__icon}
-                        onClick={togglePasswordVisibility}
-                    >
-                        <Icon
-                            size={IconSize.SMALL}
-                            name={
-                                isPasswordVisible
-                                    ? IconName.EYE_OPEN
-                                    : IconName.EYE_SLASH
-                            }
-                        />
-                    </IconButton>
                 </FormGroup>
                 <FormGroup label="Repeat password">
-                    <Input
+                    <PasswordInput
                         control={control}
                         errors={errors}
                         type="text"
                         placeholder="Confirm your password"
                         name="repeatPassword"
                     />
-                    <IconButton
-                        className={styles.password__icon}
-                        onClick={togglePasswordVisibility}
-                    >
-                        <Icon
-                            size={IconSize.SMALL}
-                            name={
-                                isPasswordVisible
-                                    ? IconName.EYE_OPEN
-                                    : IconName.EYE_SLASH
-                            }
-                        />
-                    </IconButton>
                 </FormGroup>
                 <BaseButton
                     className={styles.registration__form__button}

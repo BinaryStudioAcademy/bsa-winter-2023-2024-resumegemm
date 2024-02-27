@@ -4,6 +4,7 @@ enum AuthApiPath {
     SIGN_IN = '/sign-in',
     USER = '/user',
     TOKEN = '/token',
+    CONFIRM_EMAIL = '/confirm-email',
 }
 
 export { AuthApiPath };

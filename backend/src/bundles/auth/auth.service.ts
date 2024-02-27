@@ -81,7 +81,7 @@ class AuthService implements TAuthService {
         email: string,
         token: string,
     ): Promise<void> {
-        const verificationLink = `${this.config.ENV.APP.ORIGIN_URL}/confirm-email?token=${token}`;
+        const verificationLink = `${this.config.ENV.APP.ORIGIN_URL}/api/v1/auth/confirm-email?token=${token}`;
         const emailMockup = getTemplate({
             name: 'sign-up-email-template',
             context: {

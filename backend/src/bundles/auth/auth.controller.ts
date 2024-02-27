@@ -299,7 +299,7 @@ class AuthController extends Controller {
             return {
                 status,
                 payload: {
-                    message: ExceptionMessage.INVALID_CONFIRMATION_TOKEN,
+                    message: ExceptionMessage.USER_NOT_FOUND,
                     status,
                 },
             };

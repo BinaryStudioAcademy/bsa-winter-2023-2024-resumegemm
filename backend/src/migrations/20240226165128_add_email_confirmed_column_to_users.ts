@@ -9,7 +9,7 @@ const ColumnName = {
     PASSWORD_SALT: 'password_salt',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at',
-    EMAIL_CONFIRMED: 'email_confirmed', // New column
+    EMAIL_CONFIRMED: 'email_confirmed',
 };
 
 function up(knex: Knex): Promise<void> {

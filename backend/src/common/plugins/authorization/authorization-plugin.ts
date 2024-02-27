@@ -22,7 +22,6 @@ const authorization = fp<AuthorizationPluginPayload>(
         fastify,
         { publicRoutes, authService, userService },
     ): Promise<void> => {
-        return await Promise.resolve();
         fastify.decorateRequest('user', null);
 
         fastify.addHook(ControllerHook.ON_REQUEST, async (request, reply) => {
