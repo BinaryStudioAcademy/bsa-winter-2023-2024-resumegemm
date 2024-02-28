@@ -269,6 +269,9 @@ async function down(knex: Knex): Promise<void> {
     await knex.schema.dropTableIfExists(DatabaseTableName.REVIEWS);
     await knex.schema.dropTableIfExists(DatabaseTableName.RECENTLY_VIEWED);
     await knex.schema.dropTableIfExists(DatabaseTableName.USER_TEMPLATES);
+    await knex.schema.dropTableIfExists(DatabaseTableName.CERTIFICATION);
+    await knex.schema.dropTableIfExists(DatabaseTableName.LANGUAGES);
+    await knex.schema.dropTableIfExists(DatabaseTableName.CUSTOM_SECTIONS);
 }
 
 export { down, up };
