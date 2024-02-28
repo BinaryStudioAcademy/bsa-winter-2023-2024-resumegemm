@@ -39,10 +39,13 @@ async function up(knex: Knex): Promise<void> {
         DatabaseTableName.PERSONAL_INFORMATION,
         (table) => {
             table.uuid(DatabaseColumnName.ID).primary();
+            table.string(DatabaseColumnName.FIRST_NAME).notNullable();
+            table.string(DatabaseColumnName.LAST_NAME).notNullable();
+            table.string(DatabaseColumnName.EMAIL).unique().notNullable();
             table.string(DatabaseColumnName.PROFESSION).notNullable();
-            table.string(DatabaseColumnName.ADDRESS).notNullable();
+            table.string(DatabaseColumnName.INDUSTRY).notNullable();
             table.string(DatabaseColumnName.CITY).notNullable();
-            table.string(DatabaseColumnName.STATE).notNullable();
+            table.string(DatabaseColumnName.COUNTRY).notNullable();
             table
                 .dateTime(DatabaseColumnName.CREATED_AT)
                 .notNullable()
@@ -56,10 +59,14 @@ async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(DatabaseTableName.EXPERIENCE, (table) => {
         table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.JOB_TITLE).notNullable();
-        table.string(DatabaseColumnName.EMPLOYER).notNullable();
-        table.string(DatabaseColumnName.EMPLOYMENT_TYPE).notNullable();
+        table.string(DatabaseColumnName.COMPANY_NAME).notNullable();
+        table.string(DatabaseColumnName.EMPLOYMENT_TYPE);
+        table.string(DatabaseColumnName.CITY).notNullable();
+        table.string(DatabaseColumnName.COUNTRY).notNullable();
+        table.text(DatabaseColumnName.DESCRIPTION);
         table.date(DatabaseColumnName.START_DATE).notNullable();
-        table.date(DatabaseColumnName.END_DATE).notNullable();
+        table.date(DatabaseColumnName.END_DATE);
+        table.boolean(DatabaseColumnName.CURRENTLY_STUDYING).defaultTo(false);
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
@@ -89,11 +96,14 @@ async function up(knex: Knex): Promise<void> {
     );
     await knex.schema.createTable(DatabaseTableName.EDUCATION, (table) => {
         table.uuid(DatabaseColumnName.ID).primary();
-        table.string(DatabaseColumnName.MAJOR_NAME).notNullable();
+        table.string(DatabaseColumnName.INSTITUTION).notNullable();
         table.string(DatabaseColumnName.DEGREE).notNullable();
-        table.string(DatabaseColumnName.LOCATION).notNullable();
         table.date(DatabaseColumnName.START_DATE).notNullable();
-        table.date(DatabaseColumnName.END_DATE).notNullable();
+        table.date(DatabaseColumnName.END_DATE);
+        table.boolean(DatabaseColumnName.CURRENTLY_STUDYING).defaultTo(false);
+        table.string(DatabaseColumnName.CITY).notNullable();
+        table.string(DatabaseColumnName.COUNTRY).notNullable();
+        table.text(DatabaseColumnName.DESCRIPTION).notNullable();
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
@@ -108,12 +118,69 @@ async function up(knex: Knex): Promise<void> {
         (table) => {
             table.uuid(DatabaseColumnName.ID).primary();
             table
-                .string(DatabaseColumnName.MOBILE_NUMBER)
+                .string(DatabaseColumnName.PHONE_NUMBER)
                 .unique()
                 .notNullable();
-            table.string(DatabaseColumnName.HOME_NUMBER).unique().notNullable();
-            table.string(DatabaseColumnName.ADDRESS).notNullable();
-            table.string(DatabaseColumnName.SOCIAL_CONTACT).notNullable();
+            table.string(DatabaseColumnName.SOCIAL_CONTACT);
+            table.string(DatabaseColumnName.LINK);
+            table
+                .dateTime(DatabaseColumnName.CREATED_AT)
+                .notNullable()
+                .defaultTo(knex.fn.now());
+            table
+                .dateTime(DatabaseColumnName.UPDATED_AT)
+                .notNullable()
+                .defaultTo(knex.fn.now());
+        },
+    );
+    await knex.schema.createTable(DatabaseTableName.CERTIFICATION, (table) => {
+        table.uuid(DatabaseColumnName.ID).primary();
+        table.string(DatabaseColumnName.CRTIFICATION_NAME).notNullable();
+        table.string(DatabaseColumnName.AUTHORITY).notNullable();
+        table.date(DatabaseColumnName.START_DATE).notNullable();
+        table.date(DatabaseColumnName.END_DATE);
+        table.string(DatabaseColumnName.CERTIFICATION_URL_OR_CODE);
+        table.text(DatabaseColumnName.DESCRIPTION);
+        table
+            .dateTime(DatabaseColumnName.CREATED_AT)
+            .notNullable()
+            .defaultTo(knex.fn.now());
+        table
+            .dateTime(DatabaseColumnName.UPDATED_AT)
+            .notNullable()
+            .defaultTo(knex.fn.now());
+    });
+    await knex.schema.createTable(DatabaseTableName.LANGUAGES, (table) => {
+        table.uuid(DatabaseColumnName.ID).primary();
+        table.string(DatabaseColumnName.LANGUAGE).notNullable();
+        table
+            .enu(DatabaseColumnName.LANGUAGE_LEVEL, [
+                'Beginner',
+                'Elementary',
+                'Intermediate',
+                'Upper-intermediate',
+                'Advanced',
+                'Proficient',
+            ])
+            .notNullable();
+        table
+            .dateTime(DatabaseColumnName.CREATED_AT)
+            .notNullable()
+            .defaultTo(knex.fn.now());
+        table
+            .dateTime(DatabaseColumnName.UPDATED_AT)
+            .notNullable()
+            .defaultTo(knex.fn.now());
+    });
+    await knex.schema.createTable(
+        DatabaseTableName.CUSTOM_SECTIONS,
+        (table) => {
+            table.uuid(DatabaseColumnName.ID).primary();
+            table.string(DatabaseColumnName.ACTIVITY).notNullable();
+            table.string(DatabaseColumnName.CITY).notNullable();
+            table.date(DatabaseColumnName.START_DATE).notNullable();
+            table.date(DatabaseColumnName.END_DATE);
+            table.text(DatabaseColumnName.DESCRIPTION);
             table
                 .dateTime(DatabaseColumnName.CREATED_AT)
                 .notNullable()

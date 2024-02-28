@@ -12,6 +12,9 @@ enum DatabaseTableName {
     USER_TEMPLATES = 'user_templates',
     REVIEWS = 'reviews',
     RECENTLY_VIEWED = 'recently_viewed',
+    CERTIFICATION = 'certification',
+    LANGUAGES = 'languages',
+    CUSTOM_SECTIONS = 'custom_sections',
 }
 
 export { DatabaseTableName };
