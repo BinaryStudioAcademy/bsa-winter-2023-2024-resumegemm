@@ -2,6 +2,7 @@ import {
     type Contacts,
     type Education,
     type Experience,
+    type Language,
     type PersonalInformation,
     type TechnicalSkill,
 } from '../content/content.js';
@@ -23,6 +24,7 @@ type ResumeCreateItemRequestDto = {
         'id' | 'createdAt' | 'updatedAt' | 'resumeId'
     >;
     contacts: Omit<Contacts, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>;
+    languages: Omit<Language, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>[];
 };
 
 export { type ResumeCreateItemRequestDto };

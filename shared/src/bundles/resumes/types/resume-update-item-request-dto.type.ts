@@ -2,6 +2,7 @@ import {
     type Contacts,
     type Education,
     type Experience,
+    type Language,
     type PersonalInformation,
     type TechnicalSkill,
 } from '../content/content.js';
@@ -26,6 +27,9 @@ type ResumeUpdateItemRequestDto = {
     contacts: Partial<
         Omit<Contacts, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>
     >;
+    languages: Partial<
+        Omit<Language, 'createdAt' | 'updatedAt' | 'resumeId'>
+    >[];
 };
 
 export { type ResumeUpdateItemRequestDto };

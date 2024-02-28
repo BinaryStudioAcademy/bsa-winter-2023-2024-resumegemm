@@ -2,6 +2,7 @@ import {
     type Contacts,
     type Education,
     type Experience,
+    type Language,
     type PersonalInformation,
     type TechnicalSkill,
 } from '../content/content.js';
@@ -14,6 +15,7 @@ type ResumeGetItemResponseDto = {
     technicalSkills: TechnicalSkill[] | [];
     contacts: Contacts | null;
     personalInformation: PersonalInformation | null;
+    languages: Language[] | [];
 };
 
 export { type ResumeGetItemResponseDto };
