@@ -1,10 +1,8 @@
-import { type CalendarDate } from '~/bundles/common/types/calendar/calendar-date';
-
 type CustomData = {
     activityName: string;
     city: string;
-    startDate: CalendarDate | null;
-    endDate: CalendarDate | null;
+    startDate: string | null;
+    endDate: string | null;
     description: string;
 };
 
