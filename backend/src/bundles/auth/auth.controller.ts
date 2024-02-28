@@ -1,6 +1,7 @@
 import { type FastifyRequest } from 'fastify';
 import {
     type HttpError,
+    type OauthUserWithProfileRelation,
     type UserAuthResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
@@ -14,6 +15,7 @@ import {
     generateRefreshToken,
     generateToken,
 } from '~/bundles/auth/helpers/helpers.js';
+import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
     type UserSignUpRequestDto,
     userSignInValidationSchema,
@@ -34,11 +36,17 @@ import { type AuthService } from './auth.service.js';
 
 class AuthController extends Controller {
     private authService: AuthService;
+    private openAuthService: OauthService;
 
-    public constructor(logger: ILogger, authService: AuthService) {
+    public constructor(
+        logger: ILogger,
+        authService: AuthService,
+        openAuthService: OauthService,
+    ) {
         super(logger, ApiPath.AUTH);
 
         this.authService = authService;
+        this.openAuthService = openAuthService;
 
         this.addRoute({
             path: AuthApiPath.SIGN_UP,
@@ -72,8 +80,9 @@ class AuthController extends Controller {
             handler: (options) =>
                 this.getUser(
                     options as ApiHandlerOptions<{
-                        user: UserAuthResponse['user'];
-                        cookies: FastifyRequest['cookies'];
+                        user:
+                            | UserAuthResponse['user']
+                            | OauthUserWithProfileRelation;
                     }>,
                 ),
         });
@@ -258,15 +267,25 @@ class AuthController extends Controller {
 
     private async getUser(
         options: ApiHandlerOptions<{
-            user: UserAuthResponse['user'];
+            user: UserAuthResponse['user'] | OauthUserWithProfileRelation;
         }>,
-    ): Promise<ApiHandlerResponse<UserWithProfileRelation>> {
+    ): Promise<
+        ApiHandlerResponse<
+            UserWithProfileRelation | OauthUserWithProfileRelation
+        >
+    > {
         try {
             const { id } = options.user;
-            const payload = await this.authService.getUserWithProfile(id);
+            const oauthId = (options.user as OauthUserWithProfileRelation)
+                .oauthId;
+
+            const userWithProfileRelation = oauthId
+                ? await this.openAuthService.getUserWithProfile(id)
+                : await this.authService.getUserWithProfile(id);
+
             return {
                 status: HttpCode.OK,
-                payload,
+                payload: userWithProfileRelation,
             };
         } catch (error: unknown) {
             const message = (error as Error).message;
