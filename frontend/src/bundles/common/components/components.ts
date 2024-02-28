@@ -17,6 +17,7 @@ export { PasswordInput } from './password-input/password-input.js';
 export { RadioButton } from './radio-button/radio-button.js';
 export { RouterProvider } from './router-provider/router-provider.js';
 export { Spinner } from './spinner/spinner';
+export { StripeProvider } from './stripe-provider/stripe-provider.js';
 export { Switch } from './switch/switch.js';
 export { NavTabs } from './tabs/nav-tab.js';
 export { Tooltip } from './tooltip/tooltip.js';
