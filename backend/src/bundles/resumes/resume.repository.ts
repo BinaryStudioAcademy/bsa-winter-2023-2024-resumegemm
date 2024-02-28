@@ -141,7 +141,12 @@ class ResumeRepository implements IResumeRepository {
     public async findAllByUserId(
         userId: string,
     ): Promise<ResumeGetAllResponseDto> {
-        const resumes = await this.resumeModel.query().where('user_id', userId);
+        const resumes = await this.resumeModel
+            .query()
+            .where('user_id', userId)
+            .withGraphFetched(
+                '[education, experience, technicalSkills, contacts, personalInformation, certification, languages, customSections]',
+            );
 
         const response: ResumeGetItemResponseDto[] = resumes.map((resume) => {
             const {
