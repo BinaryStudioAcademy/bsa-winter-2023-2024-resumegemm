@@ -5,7 +5,7 @@ import { StorageKey } from '~/framework/storage/storage';
 
 import { AppRoute } from '../../enums/app-route.enum';
 
-const PublicRoute: FC = () => {
+const NoAuthRoute: FC = () => {
     const accesToken = window.localStorage.getItem(StorageKey.ACCESS_TOKEN);
     if (accesToken) {
         return <Navigate to={AppRoute.ROOT} />;
@@ -14,4 +14,4 @@ const PublicRoute: FC = () => {
     return <Outlet />;
 };
 
-export { PublicRoute };
+export { NoAuthRoute };
