@@ -10,7 +10,7 @@ import {
     type OauthUserLoginResponseDto,
 } from './types/types.js';
 
-class OauthService implements Pick<IService, 'create' | 'getById'> {
+class OauthService implements Pick<IService, 'create' | 'getUserWithProfile'> {
     private oauthRepository: OauthRepository;
     private profileRepository: ProfileRepository;
 
@@ -22,7 +22,9 @@ class OauthService implements Pick<IService, 'create' | 'getById'> {
         this.profileRepository = profileRepository;
     }
 
-    public async getById(id: string): Promise<OauthUserLoginResponseDto> {
+    public async getUserWithProfile(
+        id: string,
+    ): Promise<OauthUserLoginResponseDto> {
         return this.oauthRepository.getUserWithProfile(
             id,
         ) as Promise<OauthUserLoginResponseDto>;

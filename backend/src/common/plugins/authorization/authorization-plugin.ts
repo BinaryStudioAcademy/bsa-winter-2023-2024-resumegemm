@@ -48,7 +48,9 @@ const authorization = fp<AuthorizationPluginPayload>(
                 const currentUser = await userService.getUserWithProfile(id);
 
                 if (!currentUser) {
-                    const oauthUser = await openAuthService.getById(id);
+                    const oauthUser = await openAuthService.getUserWithProfile(
+                        id,
+                    );
                     request.user = oauthUser;
                     return;
                 }
