@@ -66,7 +66,7 @@ async function up(knex: Knex): Promise<void> {
         table.text(DatabaseColumnName.DESCRIPTION);
         table.date(DatabaseColumnName.START_DATE).notNullable();
         table.date(DatabaseColumnName.END_DATE);
-        table.boolean(DatabaseColumnName.CURRENTLY_STUDYING).defaultTo(false);
+        table.boolean(DatabaseColumnName.CURRENTLY_WORKING).defaultTo(false);
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
