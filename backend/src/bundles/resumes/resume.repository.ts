@@ -162,12 +162,12 @@ class ResumeRepository implements IResumeRepository {
             } = resume;
 
             return {
+                contacts: contacts ?? null,
+                personalInformation: personalInformation ?? null,
                 resume: resumeData,
                 education: education ?? [],
                 experience: experience ?? [],
                 technicalSkills: technicalSkills ?? [],
-                contacts: contacts ?? null,
-                personalInformation: personalInformation ?? null,
                 certification: certification ?? [],
                 languages: languages ?? [],
                 customSections: customSections ?? [],
@@ -195,75 +195,87 @@ class ResumeRepository implements IResumeRepository {
 
             const contacts = await this.contactsRepository.create(
                 resume.id,
-                payload.contacts,
+                payload.contacts ?? {},
                 transaction,
             );
 
             const personalInformation =
                 await this.personalInformationRepository.create(
                     resume.id,
-                    payload.personalInformation,
+                    payload.personalInformation ?? {},
                     transaction,
                 );
 
             const education = await Promise.all(
-                payload.education.map((edu) =>
-                    this.educationRepository.create(
-                        resume.id,
-                        edu,
-                        transaction,
-                    ),
-                ),
+                payload.education
+                    ? payload.education.map((edu) =>
+                          this.educationRepository.create(
+                              resume.id,
+                              edu,
+                              transaction,
+                          ),
+                      )
+                    : [],
             );
 
             const experience = await Promise.all(
-                payload.experience.map((exp) =>
-                    this.experienceRepository.create(
-                        resume.id,
-                        exp,
-                        transaction,
-                    ),
-                ),
+                payload.experience
+                    ? payload.experience.map((exp) =>
+                          this.experienceRepository.create(
+                              resume.id,
+                              exp,
+                              transaction,
+                          ),
+                      )
+                    : [],
             );
 
             const technicalSkills = await Promise.all(
-                payload.technicalSkills.map((skill) =>
-                    this.technicalSkillsRepository.create(
-                        resume.id,
-                        skill,
-                        transaction,
-                    ),
-                ),
+                payload.technicalSkills
+                    ? payload.technicalSkills.map((skill) =>
+                          this.technicalSkillsRepository.create(
+                              resume.id,
+                              skill,
+                              transaction,
+                          ),
+                      )
+                    : [],
             );
 
             const certification = await Promise.all(
-                payload.certification.map((cert) =>
-                    this.certificationRepository.create(
-                        resume.id,
-                        cert,
-                        transaction,
-                    ),
-                ),
+                payload.certification
+                    ? payload.certification.map((cert) =>
+                          this.certificationRepository.create(
+                              resume.id,
+                              cert,
+                              transaction,
+                          ),
+                      )
+                    : [],
             );
 
             const languages = await Promise.all(
-                payload.languages.map((lang) =>
-                    this.languageRepository.create(
-                        resume.id,
-                        lang,
-                        transaction,
-                    ),
-                ),
+                payload.languages
+                    ? payload.languages.map((lang) =>
+                          this.languageRepository.create(
+                              resume.id,
+                              lang,
+                              transaction,
+                          ),
+                      )
+                    : [],
             );
 
             const customSections = await Promise.all(
-                payload.customSections.map((section) =>
-                    this.customSectionRepository.create(
-                        resume.id,
-                        section,
-                        transaction,
-                    ),
-                ),
+                payload.customSections
+                    ? payload.customSections.map((section) =>
+                          this.customSectionRepository.create(
+                              resume.id,
+                              section,
+                              transaction,
+                          ),
+                      )
+                    : [],
             );
 
             await transaction.commit();
@@ -408,16 +420,6 @@ class ResumeRepository implements IResumeRepository {
         }
     }
 
-    // public async update(
-    //     id: string,
-    //     data: ResumeUpdateItemRequestDto,
-    //     transaction?: Transaction,
-    // ): Promise<Resume> {
-    //     return await this.resumeModel
-    //         .query(transaction)
-    //         .updateAndFetchById(id, data);
-    // }
-
     public async delete(id: string): Promise<boolean> {
         const transaction = await this.resumeModel.startTransaction();
 
@@ -428,22 +430,18 @@ class ResumeRepository implements IResumeRepository {
             await this.personalInformationRepository.delete(id, transaction);
             await this.contactsRepository.delete(id, transaction);
             await this.certificationRepository.delete(id, transaction);
-
-            const response = await this.resumeModel.query().deleteById(id);
+            await this.languageRepository.delete(id, transaction);
+            await this.customSectionRepository.delete(id, transaction);
+            await this.resumeModel.query().deleteById(id);
 
             await transaction.commit();
 
-            return response === 1 ? true : false;
+            return true;
         } catch (error) {
             await transaction.rollback();
             throw error;
         }
     }
-
-    // public async delete(id: string): Promise<boolean> {
-    //     const response = await this.resumeModel.query().deleteById(id);
-    //     return response === 1 ? true : false;
-    // }
 }
 
 export { ResumeRepository };
