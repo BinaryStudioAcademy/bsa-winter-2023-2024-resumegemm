@@ -12,26 +12,29 @@ import { type Resume } from './types.js';
 
 type ResumeCreateItemRequestDto = {
     resume: Omit<Resume, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'>;
-    education: Omit<Education, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>[];
-    experience: Omit<
+    education?: Omit<
+        Education,
+        'id' | 'createdAt' | 'updatedAt' | 'resumeId'
+    >[];
+    experience?: Omit<
         Experience,
         'id' | 'createdAt' | 'updatedAt' | 'resumeId'
     >[];
-    technicalSkills: Omit<
+    technicalSkills?: Omit<
         TechnicalSkill,
         'id' | 'createdAt' | 'updatedAt' | 'resumeId'
     >[];
-    personalInformation: Omit<
+    personalInformation?: Omit<
         PersonalInformation,
         'id' | 'createdAt' | 'updatedAt' | 'resumeId'
     >;
-    contacts: Omit<Contacts, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>;
-    languages: Omit<Language, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>[];
-    certification: Omit<
+    contacts?: Omit<Contacts, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>;
+    languages?: Omit<Language, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>[];
+    certification?: Omit<
         Certification,
         'id' | 'createdAt' | 'updatedAt' | 'resumeId'
     >[];
-    customSections: Omit<
+    customSections?: Omit<
         CustomSection,
         'id' | 'createdAt' | 'updatedAt' | 'resumeId'
     >[];
