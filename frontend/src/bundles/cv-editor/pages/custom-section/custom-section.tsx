@@ -1,10 +1,11 @@
 import React, { type ChangeEvent, useCallback, useState } from 'react';
 
-import { Calendar, TextArea } from '~/bundles/common/components/components';
+import { TextArea } from '~/bundles/common/components/components';
 import { FormGroup } from '~/bundles/common/components/form-group/form-group';
 import { Input } from '~/bundles/common/components/input/input';
 import { type CalendarDate } from '~/bundles/common/types/types';
 
+import { DateSelector } from '../../components/common/date-selector/date-selector';
 import { type CustomData } from '../../types/types';
 import styles from './styles.module.scss';
 
@@ -24,7 +25,6 @@ const CustomSection: React.FC<CustomSectionProperties> = ({
         endDate: null,
         description: '',
     });
-
     const handleInputChange = useCallback(
         (
             event:
@@ -43,30 +43,15 @@ const CustomSection: React.FC<CustomSectionProperties> = ({
         },
         [customData, onChange],
     );
-
-    const handleStartDateChange = useCallback(
-        (date: CalendarDate): void => {
+    const handleDateChange = useCallback(
+        (name: string, date: CalendarDate): void => {
             setCustomData((previousData: CustomData) => ({
                 ...previousData,
-                startDate: date,
+                [name]: date,
             }));
 
             if (onChange) {
-                onChange({ ...customData, startDate: date });
-            }
-        },
-        [customData, onChange],
-    );
-
-    const handleEndDateChange = useCallback(
-        (date: CalendarDate): void => {
-            setCustomData((previousState: CustomData) => ({
-                ...previousState,
-                endDate: date,
-            }));
-
-            if (onChange) {
-                onChange({ ...customData, endDate: date });
+                onChange({ ...customData, [name]: date });
             }
         },
         [customData, onChange],
@@ -91,18 +76,8 @@ const CustomSection: React.FC<CustomSectionProperties> = ({
                 />
             </FormGroup>
             <div className={styles.custom__section__date}>
-                <FormGroup label={'Start date'}>
-                    <Calendar
-                        className={styles.custom__section__calendar}
-                        onChange={handleStartDateChange}
-                    />
-                </FormGroup>
-                <FormGroup label={'End date'}>
-                    <Calendar
-                        className={styles.custom__section__calendar}
-                        onChange={handleEndDateChange}
-                    />
-                </FormGroup>
+                <DateSelector name={'startDate'} onChange={handleDateChange} />
+                <DateSelector name={'endDate'} onChange={handleDateChange} />
             </div>
             <div>
                 <FormGroup label={'Description'}>
