@@ -1,9 +1,12 @@
 import { Guid as guid } from 'guid-typescript';
 
 import {
+    type CertificationRepository,
     type ContactsRepository,
+    type CustomSectionRepository,
     type EducationRepository,
     type ExperienceRepository,
+    type LanguageRepository,
     type PersonalInformationRepository,
     type TechnicalSkillsRepository,
 } from './content/content.js';
@@ -24,6 +27,9 @@ interface ResumeRepositoryConfiguration {
     experienceRepository: ExperienceRepository;
     personalInformationRepository: PersonalInformationRepository;
     technicalSkillsRepository: TechnicalSkillsRepository;
+    certificationRepository: CertificationRepository;
+    languageRepository: LanguageRepository;
+    customSectionRepository: CustomSectionRepository;
 }
 
 class ResumeRepository implements IResumeRepository {
@@ -33,6 +39,9 @@ class ResumeRepository implements IResumeRepository {
     private experienceRepository: ExperienceRepository;
     private personalInformationRepository: PersonalInformationRepository;
     private technicalSkillsRepository: TechnicalSkillsRepository;
+    private certificationRepository: CertificationRepository;
+    private languageRepository: LanguageRepository;
+    private customSectionRepository: CustomSectionRepository;
 
     public constructor(configuration: ResumeRepositoryConfiguration) {
         this.resumeModel = configuration.resumeModel;
@@ -43,6 +52,9 @@ class ResumeRepository implements IResumeRepository {
             configuration.personalInformationRepository;
         this.technicalSkillsRepository =
             configuration.technicalSkillsRepository;
+        this.certificationRepository = configuration.certificationRepository;
+        this.languageRepository = configuration.languageRepository;
+        this.customSectionRepository = configuration.customSectionRepository;
     }
 
     public async find(id: string): Promise<Resume | undefined> {
@@ -69,6 +81,9 @@ class ResumeRepository implements IResumeRepository {
             technicalSkills,
             contacts,
             personalInformation,
+            certification,
+            languages,
+            customSections,
             ...resumeData
         } = resume;
 
@@ -79,6 +94,9 @@ class ResumeRepository implements IResumeRepository {
             technicalSkills: technicalSkills ?? [],
             contacts: contacts ?? null,
             personalInformation: personalInformation ?? null,
+            certification: certification ?? [],
+            languages: languages ?? [],
+            customSections: customSections ?? [],
         };
     }
 
@@ -96,6 +114,9 @@ class ResumeRepository implements IResumeRepository {
                 technicalSkills,
                 contacts,
                 personalInformation,
+                certification,
+                languages,
+                customSections,
                 ...resumeData
             } = resume;
 
@@ -106,6 +127,9 @@ class ResumeRepository implements IResumeRepository {
                 technicalSkills: technicalSkills ?? [],
                 contacts: contacts ?? null,
                 personalInformation: personalInformation ?? null,
+                certification: certification ?? [],
+                languages: languages ?? [],
+                customSections: customSections ?? [],
             };
         });
 
@@ -126,6 +150,9 @@ class ResumeRepository implements IResumeRepository {
                 technicalSkills,
                 contacts,
                 personalInformation,
+                certification,
+                languages,
+                customSections,
                 ...resumeData
             } = resume;
 
@@ -136,6 +163,9 @@ class ResumeRepository implements IResumeRepository {
                 technicalSkills: technicalSkills ?? [],
                 contacts: contacts ?? null,
                 personalInformation: personalInformation ?? null,
+                certification: certification ?? [],
+                languages: languages ?? [],
+                customSections: customSections ?? [],
             };
         });
 
@@ -201,6 +231,36 @@ class ResumeRepository implements IResumeRepository {
                 ),
             );
 
+            const certification = await Promise.all(
+                payload.certification.map((cert) =>
+                    this.certificationRepository.create(
+                        resume.id,
+                        cert,
+                        transaction,
+                    ),
+                ),
+            );
+
+            const languages = await Promise.all(
+                payload.languages.map((lang) =>
+                    this.languageRepository.create(
+                        resume.id,
+                        lang,
+                        transaction,
+                    ),
+                ),
+            );
+
+            const customSections = await Promise.all(
+                payload.customSections.map((section) =>
+                    this.customSectionRepository.create(
+                        resume.id,
+                        section,
+                        transaction,
+                    ),
+                ),
+            );
+
             await transaction.commit();
 
             return {
@@ -210,6 +270,9 @@ class ResumeRepository implements IResumeRepository {
                 technicalSkills,
                 contacts,
                 personalInformation,
+                certification,
+                languages,
+                customSections,
             };
         } catch (error) {
             await transaction.rollback();
@@ -282,6 +345,45 @@ class ResumeRepository implements IResumeRepository {
                 }),
             );
 
+            const certification = await Promise.all(
+                data.certification.map((cert) => {
+                    if (cert.id === undefined) {
+                        throw new Error('Certification id is undefined');
+                    }
+                    return this.certificationRepository.update(
+                        cert.id,
+                        cert,
+                        transaction,
+                    );
+                }),
+            );
+
+            const languages = await Promise.all(
+                data.languages.map((lang) => {
+                    if (lang.id === undefined) {
+                        throw new Error('Language id is undefined');
+                    }
+                    return this.languageRepository.update(
+                        lang.id,
+                        lang,
+                        transaction,
+                    );
+                }),
+            );
+
+            const customSections = await Promise.all(
+                data.customSections.map((section) => {
+                    if (section.id === undefined) {
+                        throw new Error('Custom section id is undefined');
+                    }
+                    return this.customSectionRepository.update(
+                        section.id,
+                        section,
+                        transaction,
+                    );
+                }),
+            );
+
             await transaction.commit();
 
             return {
@@ -291,6 +393,9 @@ class ResumeRepository implements IResumeRepository {
                 technicalSkills,
                 contacts,
                 personalInformation,
+                certification,
+                languages,
+                customSections,
             };
         } catch (error) {
             await transaction.rollback();
@@ -317,6 +422,7 @@ class ResumeRepository implements IResumeRepository {
             await this.technicalSkillsRepository.delete(id, transaction);
             await this.personalInformationRepository.delete(id, transaction);
             await this.contactsRepository.delete(id, transaction);
+            await this.certificationRepository.delete(id, transaction);
 
             const response = await this.resumeModel.query().deleteById(id);
 
