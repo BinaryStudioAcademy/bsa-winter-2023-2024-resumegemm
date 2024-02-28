@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { accessResume } from './actions.js';
+import { accessResume, deleteAccessResume } from './actions.js';
 
 type State = {
     resumeId: string | null;
@@ -24,6 +24,10 @@ const { reducer, actions, name } = createSlice({
         });
 
         builder.addCase(accessResume.rejected, (state) => {
+            state.resumeId = null;
+        });
+
+        builder.addCase(deleteAccessResume.fulfilled, (state) => {
             state.resumeId = null;
         });
     },

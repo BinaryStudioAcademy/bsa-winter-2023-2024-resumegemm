@@ -16,6 +16,9 @@ const publicRoutes = {
     [`${ResumesApiPath.SHARE_ID()}`]: `${API_PREFIX}${
         ApiPath.RESUMES
     }${ResumesApiPath.SHARE_ID()}`,
+    [`${ResumesApiPath.ID_SHARE()}`]: `${API_PREFIX}${
+        ApiPath.RESUMES
+    }${ResumesApiPath.ID_SHARE()}`,
 };
 
 export { publicRoutes };

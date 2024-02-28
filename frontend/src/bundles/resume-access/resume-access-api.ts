@@ -4,7 +4,11 @@ import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
 import { ResumesApiPath } from './enums/enums';
-import { type ResumeShareGetResponseDto } from './types/types';
+import {
+    type ResumeShareCreateResponseDto,
+    type ResumeShareDeleteResponseDto,
+    type ResumeShareGetResponseDto,
+} from './types/types';
 
 type Constructor = {
     baseUrl: string;
@@ -25,6 +29,38 @@ class ResumeAccessApi extends HttpApi {
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
+                hasAuth: false,
+            },
+        );
+
+        return await response.json();
+    }
+
+    public async deleteResumeAccess(
+        resumeId: string,
+    ): Promise<ResumeShareDeleteResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(ResumesApiPath.SHARE_ID(resumeId), {}),
+            {
+                method: 'DELETE',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify({}),
+                hasAuth: false,
+            },
+        );
+
+        return await response.json();
+    }
+
+    public async createResumeAccess(
+        resumeId: string,
+    ): Promise<ResumeShareCreateResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(ResumesApiPath.ID_SHARE(resumeId), {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify({}),
                 hasAuth: false,
             },
         );
