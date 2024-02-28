@@ -5,4 +5,6 @@ export {
     type RecentlyViewed,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedTemplatesResponseDto,
 } from 'shared/build/index.js';
