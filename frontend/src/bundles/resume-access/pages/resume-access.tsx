@@ -18,13 +18,13 @@ import { ResumesApiPath } from '../enums/enums';
 import { ResumeAccessMessage } from '../enums/messages';
 import {
     accessResume,
+    accessResumeDetails,
     createResumeAccess,
     deleteAccessResume,
 } from '../store/actions';
 import styles from './styles.module.scss';
 
 const ResumeAccess: React.FC = () => {
-    const [resumeId, setResumeId] = useState<string | null>(null);
     const [resumeIdInput, setResumeIdInput] = useState<string | null>(null);
 
     const { showToast } = useContext(ToastContext);
@@ -43,8 +43,10 @@ const ResumeAccess: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const resumeIdSelector = useAppSelector(
-        (resumeAccess) => resumeAccess.resumeAccess.resumeId,
+        ({ resumeAccess }) => resumeAccess.resumeId,
     );
+
+    const details = useAppSelector(({ resumeAccess }) => resumeAccess.details);
 
     const deleteResumeAccess = useCallback(() => {
         if (!id) {
@@ -87,20 +89,21 @@ const ResumeAccess: React.FC = () => {
         }
 
         void dispatch(accessResume({ id }));
+        void dispatch(accessResumeDetails({ id }));
     }, [dispatch, id]);
-
-    useEffect(() => {
-        setResumeId(resumeIdSelector);
-    }, [resumeIdSelector]);
 
     return (
         <div>
-            <p>resume id: {resumeId}</p>
+            <p>resume id: {resumeIdSelector}</p>
             <div className={styles.resume_access__id_input_container}>
                 <Input onChange={handleIdChange}></Input>
                 <BaseButton onClick={createResumeAccessCallback}>
                     Create share link
                 </BaseButton>
+            </div>
+            <div>
+                <p>Details:</p>
+                {JSON.stringify(details)}
             </div>
             <BaseButton onClick={deleteResumeAccess}>Delete link</BaseButton>
         </div>

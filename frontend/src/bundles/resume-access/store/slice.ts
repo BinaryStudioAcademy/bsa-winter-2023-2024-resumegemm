@@ -1,13 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { accessResume, deleteAccessResume } from './actions.js';
+import { type ResumeShareAccessGetResponseDto } from '../types/types.js';
+import {
+    accessResume,
+    accessResumeDetails,
+    deleteAccessResume,
+} from './actions.js';
 
 type State = {
     resumeId: string | null;
+    details: ResumeShareAccessGetResponseDto[];
 };
 
 const initialState: State = {
     resumeId: null,
+    details: [],
 };
 
 const { reducer, actions, name } = createSlice({
@@ -29,6 +36,18 @@ const { reducer, actions, name } = createSlice({
 
         builder.addCase(deleteAccessResume.fulfilled, (state) => {
             state.resumeId = null;
+        });
+
+        builder.addCase(accessResumeDetails.fulfilled, (state, action) => {
+            state.details = action.payload.accesses;
+        });
+
+        builder.addCase(accessResumeDetails.rejected, (state) => {
+            state.details = [];
+        });
+
+        builder.addCase(accessResumeDetails.pending, (state) => {
+            state.details = [];
         });
     },
 });

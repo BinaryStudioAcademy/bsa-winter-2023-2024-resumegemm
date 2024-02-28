@@ -7,6 +7,7 @@ import { ResumesApiPath } from './enums/enums';
 import {
     type ResumeShareCreateResponseDto,
     type ResumeShareDeleteResponseDto,
+    type ResumeShareDetailsGetResponseDto,
     type ResumeShareGetResponseDto,
 } from './types/types';
 
@@ -26,6 +27,21 @@ class ResumeAccessApi extends HttpApi {
     ): Promise<ResumeShareGetResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(ResumesApiPath.SHARE_ID(resumeId), {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: false,
+            },
+        );
+
+        return await response.json();
+    }
+
+    public async accessResumeDetails(
+        resumeId: string,
+    ): Promise<ResumeShareDetailsGetResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(ResumesApiPath.SHARE_ID_DETAILS(resumeId), {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,

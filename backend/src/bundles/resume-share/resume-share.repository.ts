@@ -19,20 +19,30 @@ class ResumeShareRepository {
     public async getResumeShareLink(
         id: string,
     ): Promise<ResumeShareGetResponseDto | undefined> {
-        const resumeShare = await this.resumeShareModel
-            .query()
-            .findById(id)
-            .returning('*')
-            .execute();
+        try {
+            const resumeShare = await this.resumeShareModel
+                .query()
+                .findById(id)
+                .returning('*')
+                .execute();
 
-        if (!resumeShare) {
-            throw new HttpError({
-                message: ResumeShareErrorMessage.RESUME_SHARE_NOT_FOUND_ERROR,
-                status: HttpCode.NOT_FOUND,
-            });
+            if (!resumeShare) {
+                throw new HttpError({
+                    message:
+                        ResumeShareErrorMessage.RESUME_SHARE_NOT_FOUND_ERROR,
+                    status: HttpCode.NOT_FOUND,
+                });
+            }
+
+            return resumeShare;
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new HttpError({
+                    message: error.message,
+                    status: HttpCode.BAD_REQUEST,
+                });
+            }
         }
-
-        return resumeShare;
     }
 
     public async createResumeShareLink(
