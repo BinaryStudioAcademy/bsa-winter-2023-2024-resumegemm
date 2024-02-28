@@ -1,26 +1,39 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { Calendar } from '~/bundles/common/components/components';
 import { FormGroup } from '~/bundles/common/components/form-group/form-group';
 import { type CalendarDate } from '~/bundles/common/types/types';
+import { formatDate } from '~/bundles/cv-editor/helpers/format-date/format-date';
 
 import styles from './styles.module.scss';
 
 type DateSelectorProperties = {
     name: string;
-    onChange: (name: string, date: CalendarDate) => void;
+    label: string;
+    onChange: (name: string, date: string) => void;
 };
 
-const DateSelector: React.FC<DateSelectorProperties> = ({ name, onChange }) => {
+const DateSelector: React.FC<DateSelectorProperties> = ({
+    name,
+    label,
+    onChange,
+}) => {
+    const [selectedDate, setSelectedDate] = useState('');
+
     const handleDateChange = useCallback(
         (date: CalendarDate): void => {
-            onChange(name, date);
+            const formattedDate = formatDate(date);
+
+            if (formattedDate !== selectedDate) {
+                setSelectedDate(formattedDate);
+                onChange(name, formattedDate);
+            }
         },
-        [name, onChange],
+        [name, onChange, selectedDate],
     );
 
     return (
-        <FormGroup label={name}>
+        <FormGroup label={label}>
             <Calendar
                 className={styles.custom__section__calendar}
                 onChange={handleDateChange}
