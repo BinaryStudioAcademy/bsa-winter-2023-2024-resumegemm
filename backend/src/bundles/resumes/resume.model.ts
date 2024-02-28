@@ -8,9 +8,12 @@ import {
 } from '~/common/database/database.js';
 
 import {
+    CertificationModel,
     ContactsModel,
+    CustomSectionModel,
     EducationModel,
     ExperienceModel,
+    LanguageModel,
     PersonalInformationModel,
     TechnicalSkillModel,
 } from './content/content.js';
@@ -27,6 +30,9 @@ class ResumeModel extends AbstractModel {
     public technicalSkills?: TechnicalSkillModel[];
     public contacts?: ContactsModel;
     public personalInformation?: PersonalInformationModel;
+    public certification?: CertificationModel[];
+    public languages?: LanguageModel[];
+    public customSections?: CustomSectionModel[];
 
     public static override get tableName(): typeof DatabaseTableName.RESUMES {
         return DatabaseTableName.RESUMES;
@@ -88,6 +94,30 @@ class ResumeModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.RESUMES}.id`,
                     to: `${DatabaseTableName.PERSONAL_INFORMATION}.resumeId`,
+                },
+            },
+            certification: {
+                relation: Model.HasManyRelation,
+                modelClass: CertificationModel,
+                join: {
+                    from: `${DatabaseTableName.RESUMES}.id`,
+                    to: `${DatabaseTableName.CERTIFICATION}.resumeId`,
+                },
+            },
+            languages: {
+                relation: Model.HasManyRelation,
+                modelClass: LanguageModel,
+                join: {
+                    from: `${DatabaseTableName.RESUMES}.id`,
+                    to: `${DatabaseTableName.LANGUAGES}.resumeId`,
+                },
+            },
+            customSections: {
+                relation: Model.HasManyRelation,
+                modelClass: CustomSectionModel,
+                join: {
+                    from: `${DatabaseTableName.RESUMES}.id`,
+                    to: `${DatabaseTableName.CUSTOM_SECTIONS}.resumeId`,
                 },
             },
         };
