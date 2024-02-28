@@ -1,25 +1,17 @@
-import { type FC, type ReactNode } from 'react';
+import { type FC } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { type AppRoute } from '../../enums/app-route.enum';
-import { type ValueOf } from '../../types/types';
+import { StorageKey } from '~/framework/storage/storage';
 
-type Properties = {
-    redirectPath: ValueOf<typeof AppRoute>;
-    children: ReactNode;
-    statement: boolean;
-};
+import { AppRoute } from '../../enums/app-route.enum';
 
-const PrivateRoute: FC<Properties> = ({
-    redirectPath,
-    children,
-    statement,
-}) => {
-    if (!statement) {
-        return <Navigate to={redirectPath} />;
+const PrivateRoute: FC = () => {
+    const accesToken = window.localStorage.getItem(StorageKey.ACCESS_TOKEN);
+    if (!accesToken) {
+        return <Navigate to={AppRoute.ROOT} />;
     }
 
-    return <>{children ?? <Outlet />}</>;
+    return <Outlet />;
 };
 
 export { PrivateRoute };
