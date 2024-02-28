@@ -32,7 +32,7 @@ class ResumeShareController extends Controller {
         this.resumeShareService = resumeShareService;
 
         this.addRoute({
-            path: ResumesApiPath.ID_SHARE,
+            path: ResumesApiPath.ID_SHARE(),
             method: 'POST',
             validation: {},
             handler: (options) =>
@@ -42,7 +42,7 @@ class ResumeShareController extends Controller {
         });
 
         this.addRoute({
-            path: ResumesApiPath.SHARE_ID,
+            path: ResumesApiPath.SHARE_ID(),
             method: 'GET',
             validation: {},
             handler: (options) =>
@@ -52,7 +52,7 @@ class ResumeShareController extends Controller {
         });
 
         this.addRoute({
-            path: ResumesApiPath.SHARE_ID,
+            path: ResumesApiPath.SHARE_ID(),
             method: 'DELETE',
             validation: {},
             handler: (options) =>
@@ -62,7 +62,7 @@ class ResumeShareController extends Controller {
         });
 
         this.addRoute({
-            path: ResumesApiPath.SHARE_ID_DETAILS,
+            path: ResumesApiPath.SHARE_ID_DETAILS(),
             method: 'GET',
             validation: {},
             handler: (options) =>

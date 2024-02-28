@@ -18,6 +18,7 @@ import { store } from '~/framework/store/store';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { PreviewPage } from './bundles/preview/preview';
+import { ResumeAccess } from './bundles/resume-access/pages/resume-access';
 import { Profile } from './bundles/users/pages/profile';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
@@ -51,6 +52,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 {
                                     path: AppRoute.PROFILE,
                                     element: <Profile />,
+                                },
+                                {
+                                    path: AppRoute.RESUME_ACCESS,
+                                    element: <ResumeAccess />,
                                 },
                             ],
                         },
