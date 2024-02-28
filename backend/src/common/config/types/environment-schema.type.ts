@@ -22,6 +22,10 @@ type EnvironmentSchema = {
             CLIENT_GOOGLE_ID: string;
             CLIENT_GOOGLE_SECRET: string;
         };
+        FACEBOOK: {
+            CLIENT_FACEBOOK_ID: string;
+            CLIENT_FACEBOOK_SECRET: string;
+        };
         BASE_CALLBACK_URI: string;
     };
     COOKIE: {
