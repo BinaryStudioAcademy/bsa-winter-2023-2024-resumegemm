@@ -4,7 +4,7 @@ import {
     DatabaseColumnName,
     DatabaseTableName,
 } from '~/common/database/enums/enums.js';
-import { SkillLevel } from '~/common/enums/enums.js';
+import { LanguageLevels, SkillLevel } from '~/common/enums/enums.js';
 
 async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(DatabaseTableName.USERS, (table) => {
@@ -154,14 +154,10 @@ async function up(knex: Knex): Promise<void> {
         table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.LANGUAGE).notNullable();
         table
-            .enu(DatabaseColumnName.LANGUAGE_LEVEL, [
-                'Beginner',
-                'Elementary',
-                'Intermediate',
-                'Upper-intermediate',
-                'Advanced',
-                'Proficient',
-            ])
+            .enu(
+                DatabaseColumnName.LANGUAGE_LEVEL,
+                Object.values(LanguageLevels),
+            )
             .notNullable();
         table
             .dateTime(DatabaseColumnName.CREATED_AT)

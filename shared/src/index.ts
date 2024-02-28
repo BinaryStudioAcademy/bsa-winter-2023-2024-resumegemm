@@ -26,6 +26,7 @@ export {
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
     type TechnicalSkill,
+    LanguageLevels,
     ResumesApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';

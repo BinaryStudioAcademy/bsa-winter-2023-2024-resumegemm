@@ -4,6 +4,7 @@ export {
     type Experience,
     type PersonalInformation,
     type TechnicalSkill,
+    LanguageLevels,
     SkillLevel,
 } from './content/content.js';
 export { ResumesApiPath } from './enums/enums.js';
