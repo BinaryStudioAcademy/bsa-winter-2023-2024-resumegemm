@@ -1,12 +1,18 @@
 import { logger } from '~/common/logger/logger.js';
 
 import {
+    CertificationModel,
+    CertificationRepository,
     ContactsModel,
     ContactsRepository,
+    CustomSectionModel,
+    CustomSectionRepository,
     EducationModel,
     EducationRepository,
     ExperienceModel,
     ExperienceRepository,
+    LanguageModel,
+    LanguageRepository,
     PersonalInformationModel,
     PersonalInformationRepository,
     TechnicalSkillModel,
@@ -26,6 +32,9 @@ const personalInformationRepository = new PersonalInformationRepository(
 const technicalSkillsRepository = new TechnicalSkillsRepository(
     TechnicalSkillModel,
 );
+const certificationRepository = new CertificationRepository(CertificationModel);
+const languageRepository = new LanguageRepository(LanguageModel);
+const customSectionRepository = new CustomSectionRepository(CustomSectionModel);
 
 const resumeRepository = new ResumeRepository({
     resumeModel: ResumeModel,
@@ -34,6 +43,9 @@ const resumeRepository = new ResumeRepository({
     experienceRepository,
     personalInformationRepository,
     technicalSkillsRepository,
+    certificationRepository,
+    languageRepository,
+    customSectionRepository,
 });
 
 const resumeService = new ResumeService(resumeRepository);
