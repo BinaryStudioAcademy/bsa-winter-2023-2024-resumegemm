@@ -1,6 +1,7 @@
 export {
     type Certification,
     type Contacts,
+    type CustomSection,
     type Education,
     type Experience,
     type PersonalInformation,

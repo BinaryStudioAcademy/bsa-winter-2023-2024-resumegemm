@@ -1,6 +1,7 @@
 import {
     type Certification,
     type Contacts,
+    type CustomSection,
     type Education,
     type Experience,
     type Language,
@@ -33,6 +34,9 @@ type ResumeUpdateItemRequestDto = {
     >[];
     certification: Partial<
         Omit<Certification, 'createdAt' | 'updatedAt' | 'resumeId'>
+    >[];
+    customSections: Partial<
+        Omit<CustomSection, 'createdAt' | 'updatedAt' | 'resumeId'>
     >[];
 };
 

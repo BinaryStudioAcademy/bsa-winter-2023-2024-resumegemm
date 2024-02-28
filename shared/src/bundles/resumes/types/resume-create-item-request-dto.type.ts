@@ -1,6 +1,7 @@
 import {
     type Certification,
     type Contacts,
+    type CustomSection,
     type Education,
     type Experience,
     type Language,
@@ -28,6 +29,10 @@ type ResumeCreateItemRequestDto = {
     languages: Omit<Language, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>[];
     certification: Omit<
         Certification,
+        'id' | 'createdAt' | 'updatedAt' | 'resumeId'
+    >[];
+    customSections: Omit<
+        CustomSection,
         'id' | 'createdAt' | 'updatedAt' | 'resumeId'
     >[];
 };

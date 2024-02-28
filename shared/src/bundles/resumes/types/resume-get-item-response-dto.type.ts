@@ -1,6 +1,7 @@
 import {
     type Certification,
     type Contacts,
+    type CustomSection,
     type Education,
     type Experience,
     type Language,
@@ -18,6 +19,7 @@ type ResumeGetItemResponseDto = {
     personalInformation: PersonalInformation | null;
     languages: Language[] | [];
     certification: Certification[] | [];
+    customSections: CustomSection[] | [];
 };
 
 export { type ResumeGetItemResponseDto };
