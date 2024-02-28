@@ -5,7 +5,7 @@ const allActions = {
     ...actions,
     getPublishableKey,
     createSubscription,
-    getPrices
+    getPrices,
 };
 
 export { allActions as actions };
