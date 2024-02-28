@@ -1,10 +1,9 @@
 import React, { type ChangeEvent, useCallback } from 'react';
 
-import { Calendar } from '~/bundles/common/components/calendar/calendar';
-import { FormGroup } from '~/bundles/common/components/form-group/form-group';
-import { Input } from '~/bundles/common/components/input/input';
+import { FormGroup, Input } from '~/bundles/common/components/components';
 import { type Certification } from '~/bundles/cv-editor/types/certification/certification.type';
 
+import { DateSelector } from '../../components/common/date-selector/date-selector';
 import styles from './styles.module.scss';
 
 type Properties = {
@@ -21,7 +20,6 @@ const CertificationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
         startDate: null,
         endDate: null,
     });
-
     const handleInputChange = useCallback(
         (event_: ChangeEvent<HTMLInputElement>): void => {
             const { name, value } = event_.target;
@@ -37,6 +35,20 @@ const CertificationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
             }
         },
         [certification, onChange],
+    );
+
+    const handleDateChange = useCallback(
+        (name: string, date: string): void => {
+            setCertification((previousData: Certification) => ({
+                ...previousData,
+                [name]: date,
+            }));
+
+            if (onChange) {
+                onChange({ ...certification, [name]: date });
+            }
+        },
+        [onChange, certification],
     );
 
     return (
@@ -76,18 +88,16 @@ const CertificationForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
                 </FormGroup>
             </div>
             <div className={styles.certification__last_block}>
-                <FormGroup label={'Start date'} width={'50%'}>
-                    <Calendar
-                    // TODO: calendar needs to accept parameters to pre-display the value
-                    // also accept the name field to distinguish it from another calendar
-                    />
-                </FormGroup>
-                <FormGroup label={'End date'} width={'50%'}>
-                    <Calendar
-                    // TODO: calendar needs to accept parameters to pre-display the value
-                    // also accept the name field to distinguish it from another calendar
-                    />
-                </FormGroup>
+                <DateSelector
+                    name={'startDate'}
+                    label={'Start Date'}
+                    onChange={handleDateChange}
+                />
+                <DateSelector
+                    name={'endDate'}
+                    label={'End Date'}
+                    onChange={handleDateChange}
+                />
             </div>
         </form>
     );
