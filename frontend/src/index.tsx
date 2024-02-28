@@ -16,6 +16,8 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
+import { NoAuthRoute } from './bundles/common/components/no-auth-route/no-auth-route';
+import { PrivateRoute } from './bundles/common/components/private-route/private-route';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-payment';
@@ -43,8 +45,28 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     element: <LandingPage />,
                                 },
                                 {
-                                    path: AppRoute.SIGN_IN,
-                                    element: <Auth />,
+                                    path: AppRoute.ROOT,
+                                    element: <NoAuthRoute />,
+                                    children: [
+                                        {
+                                            path: AppRoute.SIGN_IN,
+                                            element: <Auth />,
+                                        },
+                                        {
+                                            path: AppRoute.SIGN_UP,
+                                            element: <Auth />,
+                                        },
+                                    ],
+                                },
+                                {
+                                    path: AppRoute.ROOT,
+                                    element: <PrivateRoute />,
+                                    children: [
+                                        {
+                                            path: AppRoute.PROFILE,
+                                            element: <Profile />,
+                                        },
+                                    ],
                                 },
                                 {
                                     path: AppRoute.PAYMENT,
@@ -53,14 +75,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             <SubscriptionPaymentPage />
                                         </StripeProvider>
                                     ),
-                                },
-                                {
-                                    path: AppRoute.SIGN_UP,
-                                    element: <Auth />,
-                                },
-                                {
-                                    path: AppRoute.PROFILE,
-                                    element: <Profile />,
                                 },
                             ],
                         },
