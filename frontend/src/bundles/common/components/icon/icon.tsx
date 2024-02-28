@@ -8,6 +8,7 @@ import {
     faChevronDown,
     faEye,
     faEyeSlash,
+    faMagnifyingGlass,
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +24,7 @@ const iconNameToSvgIcon = {
     [IconName.LINKEDIN]: faLinkedin,
     [IconName.EYE_OPEN]: faEye,
     [IconName.EYE_SLASH]: faEyeSlash,
+    [IconName.SEARCH]: faMagnifyingGlass,
 };
 
 type IconProperties = {
