@@ -7,10 +7,13 @@ import {
 
 class PersonalInformationModel extends AbstractModel {
     public 'resumeId': string;
+    public 'firstName': string;
+    public 'lastName': string;
+    public 'email': string;
     public 'profession': string;
-    public 'address': string;
+    public 'industry': string;
     public 'city': string;
-    public 'state': string;
+    public 'country': string;
 
     public static override get tableName(): typeof DatabaseTableName.PERSONAL_INFORMATION {
         return DatabaseTableName.PERSONAL_INFORMATION;

@@ -8,11 +8,14 @@ import {
 
 class EducationModel extends AbstractModel {
     public 'resumeId': string;
-    public 'majorName': string;
+    public 'institution': string;
     public 'degree': string;
-    public 'location': string;
     public 'startDate': string;
     public 'endDate': string;
+    public 'currentlyStudying': boolean;
+    public 'city': string;
+    public 'country': string;
+    public 'description': string;
 
     public static override get tableName(): typeof DatabaseTableName.EDUCATION {
         return DatabaseTableName.EDUCATION;

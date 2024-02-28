@@ -68,7 +68,7 @@ class ResumeRepository implements IResumeRepository {
             .query()
             .findById(id)
             .withGraphFetched(
-                '[education, experience, technicalSkills, contacts, personalInformation]',
+                '[education, experience, technicalSkills, contacts, personalInformation, certification, languages, customSections]',
             );
 
         if (!resume) {

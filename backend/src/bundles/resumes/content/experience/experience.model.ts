@@ -8,10 +8,14 @@ import {
 class ExperienceModel extends AbstractModel {
     public 'resumeId': string;
     public 'jobTitle': string;
-    public 'employer': string;
+    public 'companyName': string;
     public 'employmentType': string;
+    public 'city': string;
+    public 'country': string;
+    public 'description': string;
     public 'startDate': string;
     public 'endDate': string;
+    public 'currentlyWorking': boolean;
 
     public static override get tableName(): typeof DatabaseTableName.EXPERIENCE {
         return DatabaseTableName.EXPERIENCE;

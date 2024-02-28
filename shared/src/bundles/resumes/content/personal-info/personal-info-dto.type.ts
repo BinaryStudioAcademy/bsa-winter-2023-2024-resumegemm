@@ -1,10 +1,13 @@
 type PersonalInformation = {
     id: string;
     resumeId: string;
+    firstName: string;
+    lastName: string;
+    email: string;
     profession: string;
-    address: string;
+    industry: string;
     city: string;
-    state: string;
+    country: string;
     createdAt: string;
     updatedAt: string;
 };
