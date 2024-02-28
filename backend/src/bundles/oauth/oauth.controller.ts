@@ -1,6 +1,9 @@
 import { type FastifyRequest } from 'fastify';
 
-import { generateToken } from '~/bundles/auth/helpers/helpers.js';
+import {
+    generateRefreshToken,
+    generateToken,
+} from '~/bundles/auth/helpers/helpers.js';
 import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
     type HttpError,
@@ -70,16 +73,6 @@ class OpenAuthController extends Controller {
                 this.facebookAuthHandler(
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
-                    }>,
-                ),
-        });
-        this.addRoute({
-            path: OpenAuthApiPath.USER,
-            method: 'GET',
-            handler: (options) =>
-                this.getUser(
-                    options as ApiHandlerOptions<{
-                        user: FastifyRequest['user'];
                     }>,
                 ),
         });
@@ -198,6 +191,7 @@ class OpenAuthController extends Controller {
             const user = await this.oauthService.create(userPayload);
             return {
                 accessToken: generateToken({ id: user.id }),
+                refreshToken: generateRefreshToken({ id: user.id }),
                 status: HttpCode.OK,
                 payload: null,
             };
@@ -220,30 +214,6 @@ class OpenAuthController extends Controller {
         return (await this.httpService.load(providerUrl, {
             token,
         })) as T;
-    }
-
-    private async getUser(
-        options: ApiHandlerOptions<{
-            user: FastifyRequest['user'];
-        }>,
-    ): Promise<ApiHandlerResponse<OauthUserLoginResponseDto>> {
-        try {
-            const userId = (options.user as OauthUserEntityFields).id;
-            const user = await this.oauthService.getById(userId);
-            return {
-                status: HttpCode.OK,
-                payload: user,
-            };
-        } catch (error: unknown) {
-            const { message, status } = error as HttpError;
-            return {
-                status,
-                payload: {
-                    message,
-                    status,
-                },
-            };
-        }
     }
 }
 
