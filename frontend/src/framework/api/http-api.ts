@@ -1,3 +1,5 @@
+import { getCookie } from 'shared/build';
+
 import {
     type ContentType,
     ServerErrorType,
@@ -6,8 +8,12 @@ import {
     type ServerErrorResponse,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
-import { type HttpCode, type IHttp } from '~/framework/http/http.js';
-import { HttpError, HttpHeader } from '~/framework/http/http.js';
+import {
+    type HttpCode,
+    type IHttp,
+    HttpError,
+    HttpHeader,
+} from '~/framework/http/http.js';
 import { type IStorage, StorageKey } from '~/framework/storage/storage.js';
 import { configureString } from '~/helpers/helpers.js';
 
@@ -85,11 +91,15 @@ class HttpApi implements IHttpApi {
         headers.append(HttpHeader.CONTENT_TYPE, contentType);
 
         if (hasAuth) {
-            const token = await this.storage.get<string>(
+            const tokenFromLocalStorage = await this.storage.get<string>(
                 StorageKey.ACCESS_TOKEN,
             );
 
-            headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token ?? ''}`);
+            const tokenFromCookie = getCookie(StorageKey.ACCESS_TOKEN);
+
+            const token = tokenFromLocalStorage ?? tokenFromCookie;
+
+            headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
         }
 
         return headers;
