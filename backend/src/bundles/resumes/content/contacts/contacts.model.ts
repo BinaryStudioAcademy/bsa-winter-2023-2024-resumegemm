@@ -8,10 +8,9 @@ import {
 
 class ContactsModel extends AbstractModel {
     public 'resumeId': string;
-    public 'mobileNumber': string;
-    public 'homeNumber': string;
-    public 'address': string;
+    public 'phoneNumber': string;
     public 'socialContact': string;
+    public 'link': string;
 
     public static override get tableName(): typeof DatabaseTableName.CONTACT_DETAILS {
         return DatabaseTableName.CONTACT_DETAILS;
