@@ -3,8 +3,6 @@ interface IService<T = unknown> {
         items: T[];
     }>;
 
-    getById(id: string): Promise<T>;
-
     findByEmail(email: string): Promise<T>;
 
     getUserWithProfile(id: string): Promise<T>;
