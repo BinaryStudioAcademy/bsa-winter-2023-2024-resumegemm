@@ -3,7 +3,6 @@ import React, { type ChangeEvent, useCallback, useState } from 'react';
 import { TextArea } from '~/bundles/common/components/components';
 import { FormGroup } from '~/bundles/common/components/form-group/form-group';
 import { Input } from '~/bundles/common/components/input/input';
-import { type CalendarDate } from '~/bundles/common/types/types';
 
 import { DateSelector } from '../../components/common/date-selector/date-selector';
 import { type CustomData } from '../../types/types';
@@ -43,8 +42,9 @@ const CustomSection: React.FC<CustomSectionProperties> = ({
         },
         [customData, onChange],
     );
+
     const handleDateChange = useCallback(
-        (name: string, date: CalendarDate): void => {
+        (name: string, date: string): void => {
             setCustomData((previousData: CustomData) => ({
                 ...previousData,
                 [name]: date,
@@ -54,7 +54,7 @@ const CustomSection: React.FC<CustomSectionProperties> = ({
                 onChange({ ...customData, [name]: date });
             }
         },
-        [customData, onChange],
+        [onChange, customData],
     );
 
     return (
@@ -76,8 +76,16 @@ const CustomSection: React.FC<CustomSectionProperties> = ({
                 />
             </FormGroup>
             <div className={styles.custom__section__date}>
-                <DateSelector name={'startDate'} onChange={handleDateChange} />
-                <DateSelector name={'endDate'} onChange={handleDateChange} />
+                <DateSelector
+                    name={'startDate'}
+                    label={'Start Date'}
+                    onChange={handleDateChange}
+                />
+                <DateSelector
+                    name={'endDate'}
+                    label={'End Date'}
+                    onChange={handleDateChange}
+                />
             </div>
             <div>
                 <FormGroup label={'Description'}>
