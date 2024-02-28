@@ -40,6 +40,7 @@ enum DatabaseColumnName {
     TEMPLATE_ID = 'template_id',
     TEMPLATE_SETTINGS = 'template_settings',
     EMAIL_SUBSCRIPTION_ID = 'email_subscription_id',
+    OWNER_ID = 'owner_id',
 }
 
 export { DatabaseColumnName };
