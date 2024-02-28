@@ -1,4 +1,5 @@
 import {
+    type Certification,
     type Contacts,
     type Education,
     type Experience,
@@ -16,6 +17,7 @@ type ResumeGetItemResponseDto = {
     contacts: Contacts | null;
     personalInformation: PersonalInformation | null;
     languages: Language[] | [];
+    certification: Certification[] | [];
 };
 
 export { type ResumeGetItemResponseDto };

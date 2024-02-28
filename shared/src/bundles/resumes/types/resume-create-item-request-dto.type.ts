@@ -1,4 +1,5 @@
 import {
+    type Certification,
     type Contacts,
     type Education,
     type Experience,
@@ -25,6 +26,10 @@ type ResumeCreateItemRequestDto = {
     >;
     contacts: Omit<Contacts, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>;
     languages: Omit<Language, 'id' | 'createdAt' | 'updatedAt' | 'resumeId'>[];
+    certification: Omit<
+        Certification,
+        'id' | 'createdAt' | 'updatedAt' | 'resumeId'
+    >[];
 };
 
 export { type ResumeCreateItemRequestDto };

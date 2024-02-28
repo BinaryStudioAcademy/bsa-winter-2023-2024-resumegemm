@@ -1,3 +1,4 @@
+export { type Certification } from './certification/certification-dto.type.js';
 export { type Contacts } from './contacts/contacts.js';
 export { type Education } from './education/education.js';
 export { type Experience } from './experience/experience.js';

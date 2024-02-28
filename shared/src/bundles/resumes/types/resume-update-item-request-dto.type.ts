@@ -1,4 +1,5 @@
 import {
+    type Certification,
     type Contacts,
     type Education,
     type Experience,
@@ -29,6 +30,9 @@ type ResumeUpdateItemRequestDto = {
     >;
     languages: Partial<
         Omit<Language, 'createdAt' | 'updatedAt' | 'resumeId'>
+    >[];
+    certification: Partial<
+        Omit<Certification, 'createdAt' | 'updatedAt' | 'resumeId'>
     >[];
 };
 

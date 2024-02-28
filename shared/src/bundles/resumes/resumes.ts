@@ -1,4 +1,5 @@
 export {
+    type Certification,
     type Contacts,
     type Education,
     type Experience,

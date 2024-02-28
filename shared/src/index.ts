@@ -13,6 +13,7 @@ export {
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
 export {
+    type Certification,
     type Contacts,
     type Education,
     type Experience,
