@@ -10,6 +10,7 @@ import {
     type PersonalInformationRepository,
     type TechnicalSkillsRepository,
 } from './content/content.js';
+import { resumeGraphFetchRelations } from './enums/graph-const-relations.enum.js';
 import { type IResumeRepository } from './interfaces/interfaces.js';
 import { type ResumeModel } from './resume.model.js';
 import {
@@ -67,9 +68,7 @@ class ResumeRepository implements IResumeRepository {
         const resume = await this.resumeModel
             .query()
             .findById(id)
-            .withGraphFetched(
-                '[education, experience, technicalSkills, contacts, personalInformation, certification, languages, customSections]',
-            );
+            .withGraphFetched(resumeGraphFetchRelations);
 
         if (!resume) {
             return undefined;
@@ -103,9 +102,7 @@ class ResumeRepository implements IResumeRepository {
     public async findAll(): Promise<ResumeGetAllResponseDto> {
         const resumes = await this.resumeModel
             .query()
-            .withGraphFetched(
-                '[education, experience, technicalSkills, contacts, personalInformation]',
-            );
+            .withGraphFetched(resumeGraphFetchRelations);
 
         const response: ResumeGetItemResponseDto[] = resumes.map((resume) => {
             const {
@@ -144,9 +141,7 @@ class ResumeRepository implements IResumeRepository {
         const resumes = await this.resumeModel
             .query()
             .where('user_id', userId)
-            .withGraphFetched(
-                '[education, experience, technicalSkills, contacts, personalInformation, certification, languages, customSections]',
-            );
+            .withGraphFetched(resumeGraphFetchRelations);
 
         const response: ResumeGetItemResponseDto[] = resumes.map((resume) => {
             const {
