@@ -12,3 +12,21 @@
 .template_page__card_layout {
     grid-template-rows: 1fr 1fr;
 }
+
+.flex_home_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon_input_wrapper {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.template_icon_input {
+    padding: 8px 5px 8px 25px;
+    color: #848d96;
+    background: #ffffff;
+    border-radius: 5px;
+}

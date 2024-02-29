@@ -12,12 +12,14 @@ import styles from './styles.module.scss';
 type Properties = {
     children?: React.ReactNode;
     name: string;
+    hasIconInput?: boolean;
     classname?: string;
 };
 
 const PanelContainer: React.FC<Properties> = ({
     children,
     name,
+    hasIconInput,
     classname,
 }: Properties) => {
     const sortHandle = useCallback((sortMethod: SortType): void => {
@@ -30,17 +32,22 @@ const PanelContainer: React.FC<Properties> = ({
             <div className={styles.panel_container__top_bar}>
                 {name}
                 <div className={styles.panel_container__options_wrapper}>
-                    <IconInput
-                        prependedIcon={
-                            <Icon
-                                size={IconSize.MEDIUM}
-                                name={IconName.SEARCH}
-                            />
-                        }
-                        input={
-                            <Input className={styles.panel_container__input} />
-                        }
-                    />
+                    {hasIconInput && (
+                        <IconInput
+                            prependedIcon={
+                                <Icon
+                                    size={IconSize.MEDIUM}
+                                    name={IconName.SEARCH}
+                                />
+                            }
+                            input={
+                                <Input
+                                    className={styles.panel_container__input}
+                                />
+                            }
+                        />
+                    )}
+
                     <SortButton onSort={sortHandle}>Sort</SortButton>
                 </div>
             </div>
