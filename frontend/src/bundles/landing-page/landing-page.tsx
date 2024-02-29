@@ -10,9 +10,8 @@ import OnlineEditorFeatureImage from '~/assets/img/mock-resume-designer.png';
 import templateFirstImage from '~/assets/img/resume-template.png';
 import { ButtonSize, ButtonVariant } from '~/bundles/common/enums/enums';
 
-import { RegularButton } from '../common/components/components';
 import { getUser } from '../auth/store/actions';
-import { BaseButton } from '../common/components/base-button/base-button';
+import { RegularButton } from '../common/components/components';
 import { useAppDispatch } from '../common/hooks/hooks';
 import { FeatureImage } from './components/feature-image';
 import styles from './styles.module.scss';

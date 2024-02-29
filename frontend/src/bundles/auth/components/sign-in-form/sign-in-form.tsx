@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
-import { OpenAuthApiPath, userSignInValidationSchema } from 'shared/build';
+import { userSignInValidationSchema } from 'shared/build';
 
+import { Divider } from '~/bundles/auth/components/divider/divider';
+import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
 import {
     FormGroup,
     Input,
@@ -13,11 +14,11 @@ import {
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DividerVariant,
 } from '~/bundles/common/enums/enums';
 import { useAppForm } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
 import { type UserSignInRequestDto } from '~/bundles/users/users';
-import { config } from '~/framework/config/config.js';
 
 import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
@@ -76,12 +77,8 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                 >
                     Sign up
                 </RegularButton>
-                </BaseButton>
-                <NavLink
-                    to={`${config.ENV.API.PROXY_URL}${OpenAuthApiPath.GITHUB}`}
-                >
-                    Login Github
-                </NavLink>
+                <Divider variant={DividerVariant.SECONDARY} />
+                <SocialMediaLinks />
             </form>
         </>
     );
