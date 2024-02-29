@@ -51,7 +51,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     element: <NoAuthRoute />,
                                     children: [
                                         {
-                                            path: AppRoute.SIGN_IN,
+                                            path: AppRoute.LOG_IN,
                                             element: <Auth />,
                                         },
                                         {

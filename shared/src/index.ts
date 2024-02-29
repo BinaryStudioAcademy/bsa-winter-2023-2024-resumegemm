@@ -11,9 +11,11 @@ export {
 export {
     type GithubUserWithProfileRelation,
     type OauthUserEntityFields,
+    type OauthUserLoginRequestDto,
+    type OauthUserLoginResponseDto,
+    type OauthUserWithProfileRelation,
     type UserGithubDataResponseDto,
-    type UserGithubLoginRequestDto,
-    type UserGithubLoginResponseDto,
+    type UserGoogleDataResponseDto,
     OauthStrategy,
     OpenAuthApiGetUserUrl,
     OpenAuthApiPath,

@@ -8,5 +8,7 @@ declare module 'fastify' {
     }
     interface FastifyInstance {
         github: OAuth2Namespace;
+        google: OAuth2Namespace;
+        facebook: OAuth2Namespace;
     }
 }

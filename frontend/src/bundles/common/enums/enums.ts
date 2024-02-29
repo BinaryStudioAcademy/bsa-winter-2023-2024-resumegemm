@@ -9,6 +9,7 @@ export {
     IconSize,
 } from './components/components.js';
 export { DataStatus } from './data-status.enum.js';
+export { DividerVariant } from './divider/divider-variant.enum.js';
 export { ModalVariant } from './modal/modal-variant.enum.js';
 export { TooltipDimensions } from './tooltip/dimension-type.enum.js';
 export {

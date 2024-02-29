@@ -12,6 +12,15 @@ const oauthConfigurations = {
             auth: oauthPlugin.GITHUB_CONFIGURATION,
         },
     },
+    google: {
+        credentials: {
+            client: {
+                id: config.ENV.OAUTH.GOOGLE.CLIENT_GOOGLE_ID,
+                secret: config.ENV.OAUTH.GOOGLE.CLIENT_GOOGLE_SECRET,
+            },
+            auth: oauthPlugin.GOOGLE_CONFIGURATION,
+        },
+    },
 };
 
 export { oauthConfigurations };
