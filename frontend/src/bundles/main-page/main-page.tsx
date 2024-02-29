@@ -10,6 +10,7 @@ import {
     useEffect,
 } from '../common/hooks/hooks';
 import { Home } from '../home/pages/home';
+import styles from './styles.module.scss';
 
 const navbarItems = [
     { label: 'Home', path: AppRoute.HOME },
@@ -35,18 +36,7 @@ const MainPage = (): JSX.Element => {
     return (
         <>
             {dataStatus === 'pending' && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'whitesmoke',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 100,
-                    }}
-                >
+                <div className={styles.spinner_wrapper}>
                     <Spinner />
                 </div>
             )}
