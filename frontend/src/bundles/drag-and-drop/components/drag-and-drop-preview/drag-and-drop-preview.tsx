@@ -20,7 +20,6 @@ import styles from './styles.module.scss';
 const DragAndDropPreview: React.FC = () => {
     const [containers, setContainers] = useState<SortingContainterProperties[]>(
         [
-            // make a resume-like template
             {
                 id: 'personal-information',
                 items: [
