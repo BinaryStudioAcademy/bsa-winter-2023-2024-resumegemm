@@ -27,6 +27,14 @@ async function up(knex: Knex): Promise<void> {
             .onUpdate(RelationRule.CASCADE)
             .onDelete(RelationRule.SET_NULL);
     });
+    await knex.schema.alterTable(DatabaseTableName.OAUTH_USERS, (table) => {
+        table
+            .uuid(DatabaseColumnName.PROFILE_ID)
+            .references(DatabaseColumnName.ID)
+            .inTable(DatabaseTableName.PROFILE)
+            .onUpdate(RelationRule.CASCADE)
+            .onDelete(RelationRule.SET_NULL);
+    });
     await knex.schema.alterTable(DatabaseTableName.REVIEWS, (table) => {
         table
             .uuid(DatabaseColumnName.RESUME_ID)
@@ -89,6 +97,9 @@ async function up(knex: Knex): Promise<void> {
 
 async function down(knex: Knex): Promise<void> {
     await knex.schema.alterTable(DatabaseTableName.USERS, (table) => {
+        table.dropColumn(DatabaseColumnName.PROFILE_ID);
+    });
+    await knex.schema.alterTable(DatabaseTableName.OAUTH_USERS, (table) => {
         table.dropColumn(DatabaseColumnName.PROFILE_ID);
     });
     await knex.schema.alterTable(DatabaseTableName.REVIEWS, (table) => {

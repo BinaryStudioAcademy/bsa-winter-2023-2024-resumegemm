@@ -6,6 +6,9 @@ enum IconName {
     LINKEDIN = 'linkedin',
     EYE_OPEN = 'eye_open',
     EYE_SLASH = 'eye_slash',
+    SEARCH = 'search_glass',
+    ARROW_UP = 'arrow_up',
+    ARROW_DOWN = 'arrow_down',
 }
 
 export { IconName };
