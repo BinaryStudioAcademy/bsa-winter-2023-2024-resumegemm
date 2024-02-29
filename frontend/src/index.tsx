@@ -23,6 +23,7 @@ import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-payment';
 import { PreviewPage } from './bundles/preview/preview';
+import { TemplatePage } from './bundles/templates-page/templates-page';
 import { Profile } from './bundles/users/pages/profile';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
@@ -70,6 +71,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: AppRoute.HOME,
                                             element: <MainPage />,
+                                        },
+                                        {
+                                            path: AppRoute.TEMPLATES,
+                                            element: <TemplatePage />,
                                         },
                                     ],
                                 },
