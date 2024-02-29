@@ -66,10 +66,12 @@ class Controller implements IController {
     private handleRequestOptions(
         request: Parameters<ServerAppRouteParameters['handler']>[0],
     ): ApiHandlerOptions {
-        const { body, query, params, user, headers, cookies } = request;
+        const { body, rawBody, query, params, user, headers, cookies } =
+            request;
         const unsignCookie = request.unsignCookie.bind(request);
         return {
             body,
+            rawBody,
             query,
             params,
             user,
