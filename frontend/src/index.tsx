@@ -18,6 +18,7 @@ import { store } from '~/framework/store/store';
 
 import { NoAuthRoute } from './bundles/common/components/no-auth-route/no-auth-route';
 import { PrivateRoute } from './bundles/common/components/private-route/private-route';
+import { Home } from './bundles/home/pages/home';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-payment';
@@ -62,6 +63,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     path: AppRoute.ROOT,
                                     element: <PrivateRoute />,
                                     children: [
+                                        {
+                                            path: AppRoute.HOME,
+                                            element: <Home />,
+                                        },
                                         {
                                             path: AppRoute.PROFILE,
                                             element: <Profile />,
