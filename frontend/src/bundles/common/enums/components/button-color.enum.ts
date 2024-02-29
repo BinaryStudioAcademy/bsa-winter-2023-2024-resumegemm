@@ -4,6 +4,8 @@ enum ButtonColor {
     GRAY = 'gray',
     LIGHT_GRAY = 'light-gray',
     TRANSPARENT = 'transparent',
+    WHITE = 'white',
+    RED = 'red'
 }
 
 export { ButtonColor };

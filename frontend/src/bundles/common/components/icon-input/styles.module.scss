@@ -1,0 +1,12 @@
+.input__wrapper {
+    position: relative;
+}
+
+.input__wrapper svg {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    display: block;
+    color: #858585;
+    transform: translate(-50%, -50%);
+}

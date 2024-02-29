@@ -2,6 +2,7 @@ export { App } from '../../../app/app.js';
 export { BaseButton } from './base-button/base-button.js';
 export { Calendar } from './calendar/calendar.js';
 export { Checkbox } from './checkbox/checkbox.js';
+export { CreateResumeFreeButton } from './create-resume-button/create-resume-button.js';
 export { DataWrapper } from './data-wrapper/data-wrapper';
 export { Dropdown } from './dropdown/dropdown.js';
 export { ErrorFallback } from './error-fallback/error-fallback.js';

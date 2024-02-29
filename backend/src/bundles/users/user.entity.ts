@@ -1,4 +1,3 @@
-import { Guid as guid } from 'guid-typescript';
 import { type UserEntityFields } from 'shared/build/index.js';
 
 import { type IEntity } from '~/common/interfaces/interfaces.js';
@@ -50,13 +49,12 @@ class UserEntity implements IEntity {
         passwordHash,
         passwordSalt,
     }: Omit<UserEntityFields, 'id'>): UserEntity {
-        return new UserEntity({
-            id: guid.raw(),
+        return {
             email,
             profileId,
             passwordHash,
             passwordSalt,
-        });
+        } as unknown as UserEntity;
     }
 
     public toObject(): Pick<UserEntityFields, 'id' | 'email'> {
