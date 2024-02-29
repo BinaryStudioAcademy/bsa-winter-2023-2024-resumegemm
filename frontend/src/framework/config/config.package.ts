@@ -20,6 +20,7 @@ class Config implements IConfig {
             },
             API: {
                 ORIGIN_URL: import.meta.env.VITE_APP_API_ORIGIN_URL as string,
+                PROXY_URL: import.meta.env.VITE_APP_PROXY_SERVER_URL as string,
             },
         };
     }

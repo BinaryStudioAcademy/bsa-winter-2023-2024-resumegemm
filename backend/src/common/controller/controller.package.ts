@@ -1,3 +1,8 @@
+import { type FastifyReply } from 'fastify';
+import { OpenAuthApiPath } from 'shared/build/index.js';
+
+import { config } from '~/common/config/config.js';
+import { CookieName } from '~/common/controller/enums/enums.js';
 import { type ILogger } from '~/common/logger/logger.js';
 import { type ServerAppRouteParameters } from '~/common/server-application/server-application.js';
 
@@ -29,32 +34,71 @@ class Controller implements IController {
             ...options,
             path: fullPath,
             handler: (request, reply) =>
-                this.mapHandler(handler, request, reply),
+                this.prepareAndHandleApiRequest(handler, request, reply),
         });
     }
 
-    private async mapHandler(
-        handler: ApiHandler,
+    private async setTokenInCookies({
+        reply,
+        accessToken,
+        refreshToken,
+    }: {
+        reply: FastifyReply;
+        accessToken?: string;
+        refreshToken?: string;
+    }): Promise<void> {
+        if (accessToken) {
+            return reply
+                .clearCookie(CookieName.OAUTH_TOKEN)
+                .setCookie(CookieName.ACCESS_TOKEN, accessToken, {
+                    path: OpenAuthApiPath.ROOT,
+                    httpOnly: true,
+                    maxAge: config.ENV.COOKIE.EXPIRES_IN,
+                })
+                .redirect(config.ENV.APP.ORIGIN_URL);
+        }
+        if (refreshToken) {
+            void reply.setCookie(CookieName.REFRESH_TOKEN, refreshToken, {
+                httpOnly: true,
+                maxAge: config.ENV.COOKIE.EXPIRES_IN,
+                signed: true,
+            });
+        }
+    }
+
+    private async prepareAndHandleApiRequest(
+        apiHandler: ApiHandler,
         request: Parameters<ServerAppRouteParameters['handler']>[0],
         reply: Parameters<ServerAppRouteParameters['handler']>[1],
     ): Promise<void> {
         this.logger.info(`${request.method.toUpperCase()} on ${request.url}`);
 
-        const handlerOptions = this.mapRequest(request);
-        const { status, payload } = await handler(handlerOptions);
+        const requestHandlerOptions = this.handleRequestOptions(request);
 
-        return await reply.status(status).send(payload);
+        const { status, payload, refreshToken, accessToken, contentType } =
+            await apiHandler(requestHandlerOptions);
+
+        await this.setTokenInCookies({ reply, accessToken, refreshToken });
+
+        if (contentType) {
+            void reply.header('Content-Type', contentType);
+        }
+        return reply.status(status).send(payload);
     }
 
-    private mapRequest(
+    private handleRequestOptions(
         request: Parameters<ServerAppRouteParameters['handler']>[0],
     ): ApiHandlerOptions {
-        const { body, query, params } = request;
-
+        const { body, query, params, user, headers, cookies } = request;
+        const unsignCookie = request.unsignCookie.bind(request);
         return {
             body,
             query,
             params,
+            user,
+            headers,
+            cookies,
+            unsignCookie,
         };
     }
 }
