@@ -1,4 +1,3 @@
-import { ButtonSize, ButtonVariant } from '../../enums/enums';
 import { useCallback } from '../../hooks/hooks';
 import { BaseButton } from '../components';
 import styles from './styles.module.scss';
@@ -33,16 +32,12 @@ const UserPhotoPreview: React.FC<UserPhotoProperties> = ({
             </div>
             <div className={styles.uploader_preview__buttonThumb}>
                 <BaseButton
-                    size={ButtonSize.SMALL}
-                    variant={ButtonVariant.GHOST}
                     onClick={handleEditClick}
                     className={styles.uploader_preview__button}
                 >
                     Edit
                 </BaseButton>
                 <BaseButton
-                    size={ButtonSize.SMALL}
-                    variant={ButtonVariant.GHOST}
                     onClick={handleDeleteClick}
                     className={styles.uploader_preview__button}
                 >

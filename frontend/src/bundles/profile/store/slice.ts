@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { type UserProfileResponce } from 'shared/build/bundles/profile/types/user-profile-response.type';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
+import { type UserProfileResponce } from '../types/user-profile-responce';
 import { updateUserAvatar } from './actions';
 
 type State = {

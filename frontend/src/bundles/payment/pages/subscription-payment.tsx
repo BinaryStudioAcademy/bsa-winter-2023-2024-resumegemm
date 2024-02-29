@@ -3,8 +3,7 @@ import { type ChangeEvent, type FormEvent, useEffect } from 'react';
 import { useCallback, useState } from 'react';
 
 import { BaseButton, Input } from '~/bundles/common/components/components';
-import { ButtonWidth } from '~/bundles/common/enums/components/button-width.enum';
-import { ButtonType, ButtonVariant } from '~/bundles/common/enums/enums';
+import { ButtonType } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
@@ -32,6 +31,7 @@ const SubscriptionPaymentPage: React.FC = () => {
 
     const [modalIsHidden, setModalIsHidden] = useState(true);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [processing, setProcessing] = useState(false);
 
     const handleNameChange = useCallback(
@@ -201,9 +201,8 @@ const SubscriptionPaymentPage: React.FC = () => {
                             <BaseButton
                                 className={styles.payment__modal_input_button}
                                 type={ButtonType.SUBMIT}
-                                width={ButtonWidth.FULL}
-                                isDisabled={processing}
-                                variant={ButtonVariant.PRIMARY}
+                                // isDisabled={processing}
+                                // variant={ButtonVariant.PRIMARY}
                             >
                                 Confirm payment
                             </BaseButton>

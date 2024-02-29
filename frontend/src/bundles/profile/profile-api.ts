@@ -1,9 +1,9 @@
-import { type UserProfileResponce } from 'shared/build/bundles/profile/types/user-profile-response.type';
-
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
+
+import { type UserProfileResponce } from './types/user-profile-responce';
 
 type Constructor = {
     baseUrl: string;

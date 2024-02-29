@@ -4,12 +4,9 @@ import React, { useCallback, useRef, useState } from 'react';
 import { type ReactCropperElement } from 'react-cropper';
 import { Cropper } from 'react-cropper';
 import { IconContext } from 'react-icons';
-import { BsSave } from 'react-icons/bs';
-import { FaFileUpload } from 'react-icons/fa';
 import { FaArrowRotateRight } from 'react-icons/fa6';
 import { GrZoomIn, GrZoomOut } from 'react-icons/gr';
 
-import { ButtonSize, ButtonVariant } from '../../enums/enums';
 import { BaseButton, IconButton } from '../components';
 import styles from './styles.module.scss';
 
@@ -121,18 +118,18 @@ const UserPhotoCropper: React.FC<UploadCropperProperties> = ({
             </div>
             <div className={styles.uploader_cropper__buttonThumb}>
                 <BaseButton
-                    prependedIcon={<FaFileUpload />}
-                    size={ButtonSize.SMALL}
-                    variant={ButtonVariant.PRIMARY}
+                    // prependedIcon={<FaFileUpload />}
+                    // size={ButtonSize.SMALL}
+                    // variant={ButtonVariant.PRIMARY}
                     onClick={handleNewPhotoClick}
                     className={styles.uploader_cropper__button__anotherPhoto}
                 >
                     Upload another photo
                 </BaseButton>
                 <BaseButton
-                    prependedIcon={<BsSave />}
-                    size={ButtonSize.SMALL}
-                    variant={ButtonVariant.PRIMARY}
+                    // prependedIcon={<BsSave />}
+                    // size={ButtonSize.SMALL}
+                    // variant={ButtonVariant.PRIMARY}
                     onClick={handleSave}
                     className={styles.uploader_cropper__button__save}
                 >

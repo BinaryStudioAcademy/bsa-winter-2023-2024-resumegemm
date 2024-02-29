@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import React, { type ChangeEvent, useCallback, useState } from 'react';
 
 import { BaseButton, Checkbox } from '../common/components/components';
-import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
+import { ButtonType } from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
@@ -83,8 +83,8 @@ const EditTemplatePage: React.FC = () => {
                 <div className={styles.editor_output__block}>
                     <BaseButton
                         type={ButtonType.SUBMIT}
-                        size={ButtonSize.MEDIUM}
-                        variant={ButtonVariant.DEFAULT}
+                        // size={ButtonSize.MEDIUM}
+                        // variant={ButtonVariant.DEFAULT}
                         onClick={handleSaveTemplate}
                         className={clsx(templateStyles.output__button)}
                     >

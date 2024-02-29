@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     font-family: Poppins, sans-serif;
-    background-color: rgba($color: var(--color-disabled-gray), $alpha: 40%);
+    background-color: #ccd7dc40;
     border: 1px solid #f6f6fb;
     border-radius: 30px;
 }
@@ -21,4 +21,17 @@
 
 .panel_container__content {
     padding: 10px 40px 20px;
+}
+
+.panel_container__options_wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.panel_container__input {
+    width: 200px;
+    padding: 8px 5px 8px 25px;
+    color: #848d96;
+    background: #ffffff;
+    border-radius: 5px;
 }

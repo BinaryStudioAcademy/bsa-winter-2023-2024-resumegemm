@@ -1,4 +1,3 @@
-import { ButtonSize } from '../../enums/enums';
 import { useCallback } from '../../hooks/hooks';
 import { BaseButton } from '../components';
 import styles from './styles.module.scss';
@@ -15,7 +14,6 @@ const UserPhotoMockup: React.FC<UserPhotoProperties> = ({ onClickUpload }) => {
 
     return (
         <BaseButton
-            size={ButtonSize.MEDIUM}
             onClick={handleClickUpload}
             className={styles.uploader_mockup}
         >

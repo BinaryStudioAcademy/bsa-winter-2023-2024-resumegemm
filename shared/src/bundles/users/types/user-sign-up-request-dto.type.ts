@@ -4,7 +4,7 @@ type UserSignUpRequestDto = {
     email: string;
     password: string;
     confirm_password: string;
-    emailConfirmed: boolean;
+    emailConfirmed: boolean | undefined;
 };
 
 export { type UserSignUpRequestDto };

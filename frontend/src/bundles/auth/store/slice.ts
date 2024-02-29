@@ -1,5 +1,5 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { type UserAuthResponse } from 'shared/build/index.js';
+import { type UserWithProfileRelation } from 'shared/build/index.js';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
@@ -7,7 +7,7 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 import { signIn, signUp } from './actions.js';
 
 type State = {
-    user: UserAuthResponse | null;
+    user: UserWithProfileRelation | null;
     dataStatus: ValueOf<typeof DataStatus>;
 };
 
@@ -23,8 +23,9 @@ const { reducer, actions, name } = createSlice({
     extraReducers(builder) {
         builder.addMatcher(
             isAnyOf(signUp.fulfilled, signIn.fulfilled),
-            (state) => {
+            (state, action) => {
                 state.dataStatus = DataStatus.FULFILLED;
+                state.user = action.payload as UserWithProfileRelation;
             },
         );
 
