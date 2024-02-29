@@ -4,10 +4,10 @@ import { userSignInValidationSchema } from 'shared/build';
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
 import {
-    BaseButton,
     FormGroup,
     Input,
     PasswordInput,
+    RegularButton,
 } from '~/bundles/common/components/components.js';
 import {
     ButtonSize,
@@ -67,7 +67,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                         {...useFormFieldCreator({ name: 'password', control })}
                     />
                 </div>
-                <BaseButton
+                <RegularButton
                     className={styles.login__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
@@ -75,7 +75,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     type={ButtonType.SUBMIT}
                 >
                     Sign up
-                </BaseButton>
+                </RegularButton>
                 <Divider />
                 <SocialMediaLinks />
             </form>

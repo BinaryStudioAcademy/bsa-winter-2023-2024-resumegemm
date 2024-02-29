@@ -5,6 +5,7 @@ type TemplateDto = {
     isOwner: boolean;
     userId: string;
     createdAt: string;
+    image: string;
     updatedAt: string;
     deletedAt: string | null;
     templateSettings: TemplateBlockSettings;

@@ -94,6 +94,7 @@ export {
     type ServerErrorDetail,
     type ServerErrorResponse,
     type ServerValidationErrorResponse,
+    type SortType,
     type ValidationSchema,
     type ValueOf,
 } from './types/types.js';

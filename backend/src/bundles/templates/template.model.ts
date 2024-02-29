@@ -12,6 +12,7 @@ class TemplateModel extends AbstractModel {
     public 'isOwner': boolean;
     public 'userId': string;
     public 'deletedAt': string;
+    public 'image': string;
     public 'templateSettings': TemplateBlockSettings;
 
     public static override get tableName(): typeof DatabaseTableName.TEMPLATES {

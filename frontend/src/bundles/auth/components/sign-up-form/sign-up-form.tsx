@@ -1,10 +1,10 @@
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
 import {
-    BaseButton,
     FormGroup,
     Input,
     PasswordInput,
+    RegularButton,
 } from '~/bundles/common/components/components';
 import {
     ButtonSize,
@@ -87,7 +87,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                         control,
                     })}
                 />
-                <BaseButton
+                <RegularButton
                     className={styles.registration__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
@@ -95,7 +95,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     type={ButtonType.SUBMIT}
                 >
                     Sign up
-                </BaseButton>
+                </RegularButton>
                 <Divider isBlue />
                 <SocialMediaLinks />
             </form>

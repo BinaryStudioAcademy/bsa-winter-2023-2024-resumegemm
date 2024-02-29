@@ -18,10 +18,13 @@ import { store } from '~/framework/store/store';
 
 import { NoAuthRoute } from './bundles/common/components/no-auth-route/no-auth-route';
 import { PrivateRoute } from './bundles/common/components/private-route/private-route';
+import { Home } from './bundles/home/pages/home';
 import { LandingPage } from './bundles/landing-page/landing-page';
+import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-payment';
 import { PreviewPage } from './bundles/preview/preview';
+import { TemplatePage } from './bundles/templates-page/templates-page';
 import { Profile } from './bundles/users/pages/profile';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
@@ -63,8 +66,20 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     element: <PrivateRoute />,
                                     children: [
                                         {
+                                            path: AppRoute.HOME,
+                                            element: <Home />,
+                                        },
+                                        {
                                             path: AppRoute.PROFILE,
                                             element: <Profile />,
+                                        },
+                                        {
+                                            path: AppRoute.HOME,
+                                            element: <MainPage />,
+                                        },
+                                        {
+                                            path: AppRoute.TEMPLATES,
+                                            element: <TemplatePage />,
                                         },
                                     ],
                                 },
