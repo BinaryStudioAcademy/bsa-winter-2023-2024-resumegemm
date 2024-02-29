@@ -1,3 +1,6 @@
+export { type ResumeAiScoreRequestDto } from './resume-ai-score-request-dto.type.js';
+export { type ResumeAiScoreResponseDto } from './resume-ai-score-response-dto.type.js';
+export { type ResumeService } from './resume-service.type.js';
 export { type ResumeShareAccessCreateRequestDto } from './resume-share-access-create-request-dto.type';
 export { type ResumeShareAccessCreateResponseDto } from './resume-share-access-create-response-dto.type';
 export { type ResumeShareAccessGetResponseDto } from './resume-share-access-get-response-dto.type';

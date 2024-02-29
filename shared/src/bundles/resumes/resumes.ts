@@ -1,6 +1,9 @@
 export { SkillLevel } from './content/content.enum.js';
-export { ResumesApiPath } from './enums/enums.js';
+export { ResumeApiPath } from './enums/enums.js';
 export {
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
+    type ResumeService,
     type ResumeShareAccessCreateRequestDto,
     type ResumeShareAccessCreateResponseDto,
     type ResumeShareAccessGetResponseDto,

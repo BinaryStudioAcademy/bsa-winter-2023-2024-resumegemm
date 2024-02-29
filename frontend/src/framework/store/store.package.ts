@@ -10,6 +10,8 @@ import { reducer as authReducer } from '~/bundles/auth/store/';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as templatesReducer } from '~/bundles/edit-temlate/store/';
 import { templateApi } from '~/bundles/edit-temlate/templates.js';
+import { paymentApi } from '~/bundles/payment/payment.js';
+import { reducer as paymentReducer } from '~/bundles/payment/store';
 import { resumeAccessApi } from '~/bundles/resume-access/resume-access';
 import { reducer as resumeAccessReducer } from '~/bundles/resume-access/store/';
 import { reducer as usersReducer } from '~/bundles/users/store/';
@@ -21,6 +23,7 @@ import { storage } from '../storage/storage';
 type RootReducer = {
     auth: ReturnType<typeof authReducer>;
     users: ReturnType<typeof usersReducer>;
+    payment: ReturnType<typeof paymentReducer>;
     templates: ReturnType<typeof templatesReducer>;
     resumeAccess: ReturnType<typeof resumeAccessReducer>;
 };
@@ -28,6 +31,7 @@ type RootReducer = {
 type ExtraArguments = {
     authApi: typeof authApi;
     userApi: typeof userApi;
+    paymentApi: typeof paymentApi;
     storageApi: typeof storage;
     templateApi: typeof templateApi;
     resumeAccessApi: typeof resumeAccessApi;
@@ -50,6 +54,7 @@ class Store {
             reducer: {
                 auth: authReducer,
                 users: usersReducer,
+                payment: paymentReducer,
                 templates: templatesReducer,
                 resumeAccess: resumeAccessReducer,
             },
@@ -67,6 +72,7 @@ class Store {
         return {
             authApi,
             userApi,
+            paymentApi,
             storageApi: storage,
             templateApi,
             resumeAccessApi,

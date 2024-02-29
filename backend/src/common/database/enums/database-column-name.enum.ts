@@ -1,6 +1,8 @@
 enum DatabaseColumnName {
     ID = 'id',
     PROFILE_ID = 'profile_id',
+    OAUTH_ID = 'oauth_id',
+    OAUTH_STRATEGY = 'oauth_strategy',
     FIRST_NAME = 'first_name',
     IMAGE = 'image',
     LAST_NAME = 'last_name',
@@ -40,6 +42,7 @@ enum DatabaseColumnName {
     RESUME_SHARE_LINK_ID = 'resume_share_link_id',
     RESUME_SHARE_ACCESS_TIME = 'resume_share_access_time',
     RESUME_SHARE_ACCESS_IP = 'resume_share_access_ip',
+    OWNER_ID = 'owner_id',
 }
 
 export { DatabaseColumnName };

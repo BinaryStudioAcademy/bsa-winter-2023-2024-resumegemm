@@ -3,7 +3,7 @@ import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
-import { ResumesApiPath } from './enums/enums';
+import { ResumeApiPath } from './enums/enums';
 import {
     type ResumeShareCreateResponseDto,
     type ResumeShareDeleteResponseDto,
@@ -26,7 +26,7 @@ class ResumeAccessApi extends HttpApi {
         resumeId: string,
     ): Promise<ResumeShareGetResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(ResumesApiPath.SHARE_ID(resumeId), {}),
+            this.getFullEndpoint(ResumeApiPath.SHARE_ID(resumeId), {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
@@ -41,7 +41,7 @@ class ResumeAccessApi extends HttpApi {
         resumeId: string,
     ): Promise<ResumeShareDetailsGetResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(ResumesApiPath.SHARE_ID_DETAILS(resumeId), {}),
+            this.getFullEndpoint(ResumeApiPath.SHARE_ID_DETAILS(resumeId), {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
@@ -56,7 +56,7 @@ class ResumeAccessApi extends HttpApi {
         resumeId: string,
     ): Promise<ResumeShareDeleteResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(ResumesApiPath.SHARE_ID(resumeId), {}),
+            this.getFullEndpoint(ResumeApiPath.SHARE_ID(resumeId), {}),
             {
                 method: 'DELETE',
                 contentType: ContentType.JSON,
@@ -72,7 +72,7 @@ class ResumeAccessApi extends HttpApi {
         resumeId: string,
     ): Promise<ResumeShareCreateResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(ResumesApiPath.ID_SHARE(resumeId), {}),
+            this.getFullEndpoint(ResumeApiPath.ID_SHARE(resumeId), {}),
             {
                 method: 'POST',
                 contentType: ContentType.JSON,
