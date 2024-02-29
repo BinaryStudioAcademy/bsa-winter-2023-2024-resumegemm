@@ -4,6 +4,7 @@ export {
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,
     type OauthUserWithProfileRelation,
+    type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
     type ValueOf,

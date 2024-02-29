@@ -7,6 +7,7 @@ import {
     type OauthUserEntityFields,
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,
+    type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
     type ValueOf,
@@ -63,6 +64,16 @@ class OpenAuthController extends Controller {
                 ),
         });
         this.addRoute({
+            path: OpenAuthApiPath.FACEBOOK,
+            method: 'GET',
+            handler: (options) =>
+                this.facebookAuthHandler(
+                    options as ApiHandlerOptions<{
+                        cookies: FastifyRequest['cookies'];
+                    }>,
+                ),
+        });
+        this.addRoute({
             path: OpenAuthApiPath.USER,
             method: 'GET',
             handler: (options) =>
@@ -104,6 +115,36 @@ class OpenAuthController extends Controller {
      *       500:
      *         description: Invalid authentication request.
      */
+
+    private async facebookAuthHandler({
+        cookies,
+    }: ApiHandlerOptions<{
+        cookies: FastifyRequest['cookies'];
+    }>): Promise<ApiHandlerResponse<unknown>> {
+        const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
+
+        const {
+            email,
+            id,
+            picture: {
+                data: { url },
+            },
+            name,
+            last_name,
+        }: UserFacebookDataResponseDto = await this.requestOAuthProviderUserData(
+            OpenAuthApiGetUserUrl.FACEBOOK,
+            oauthToken,
+        );
+        return await this.createUser({
+            email,
+            firstName: name,
+            avatar: url,
+            oauthId: id,
+            lastName: last_name,
+            oauthStrategy: OauthStrategy.FACEBOOK,
+        });
+    }
+
     private async githubAuthHandler({
         cookies,
     }: ApiHandlerOptions<{

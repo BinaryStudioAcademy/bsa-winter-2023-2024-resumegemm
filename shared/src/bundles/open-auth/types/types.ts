@@ -1,3 +1,4 @@
+export { type UserFacebookDataResponseDto } from './facebook/user-facebook-data-response-dto.type.js';
 export { type UserGithubDataResponseDto } from './github/user-github-data-response-dto.type.js';
 export { type UserGoogleDataResponseDto } from './google/user-google-data-response-dto.type.js';
 export { type OauthUserEntityFields } from './oauth-user-entity-fields.type.js';

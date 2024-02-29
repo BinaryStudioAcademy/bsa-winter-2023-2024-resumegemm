@@ -53,7 +53,7 @@ const Auth: React.FC = () => {
     };
 
     return user ? (
-        <Navigate to={AppRoute.ROOT} />
+        <Navigate to={AppRoute.HOME} />
     ) : (
         <div className={styles.auth}>
             <div className={styles.auth__container}>
