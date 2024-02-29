@@ -5,6 +5,7 @@ const AppRoute = {
     PREVIEW: '/preview',
     PAYMENT: '/payment',
     PROFILE: '/profile',
+    FORGOT_PASSWORD: '/forgot-password',
 } as const;
 
 export { AppRoute };
