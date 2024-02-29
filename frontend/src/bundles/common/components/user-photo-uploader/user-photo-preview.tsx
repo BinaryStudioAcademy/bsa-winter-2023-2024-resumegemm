@@ -1,6 +1,6 @@
 import { ButtonSize, ButtonVariant } from '../../enums/enums';
 import { useCallback } from '../../hooks/hooks';
-import { BaseButton, RegularButton } from '../components';
+import { RegularButton } from '../components';
 import styles from './styles.module.scss';
 
 interface UserPhotoProperties {

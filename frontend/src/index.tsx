@@ -18,6 +18,7 @@ import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
 import { PrivateRoute } from './bundles/common/components/private-route/private-route';
+import { Home } from './bundles/home/pages/home';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
@@ -64,6 +65,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     path: AppRoute.ROOT,
                                     element: <PrivateRoute />,
                                     children: [
+                                        {
+                                            path: AppRoute.HOME,
+                                            element: <Home />,
+                                        },
                                         {
                                             path: AppRoute.PROFILE,
                                             element: <Profile />,
