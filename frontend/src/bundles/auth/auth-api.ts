@@ -1,3 +1,12 @@
+import {
+    type UserForgotPasswordRequestDto,
+    type UserForgotPasswordResponse,
+    type UserResetPasswordRequestDto,
+    type UserResetPasswordResponse,
+    type UserVerifyResetTokenRequestDto,
+    type UserVerifyResetTokenResponse,
+} from 'shared/build/index.js';
+
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import {
     type UserAuthResponse,
@@ -66,6 +75,54 @@ class AuthApi extends HttpApi {
         );
 
         return await response.json<UserAuthResponse>();
+    }
+
+    public async forgotPassword(
+        payload: UserForgotPasswordRequestDto,
+    ): Promise<UserForgotPasswordResponse> {
+        const response = await this.load(
+            this.getFullEndpoint(AuthApiPath.FORGOT_PASSWORD, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                hasAuth: false,
+                payload: JSON.stringify(payload),
+            },
+        );
+
+        return await response.json<UserForgotPasswordResponse>();
+    }
+
+    public async verifyResetToken(
+        payload: UserVerifyResetTokenRequestDto,
+    ): Promise<UserVerifyResetTokenResponse> {
+        const response = await this.load(
+            this.getFullEndpoint(AuthApiPath.VERIFY_RESET_TOKEN, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                hasAuth: false,
+                payload: JSON.stringify(payload),
+            },
+        );
+
+        return await response.json<UserVerifyResetTokenResponse>();
+    }
+
+    public async resetPassword(
+        payload: UserResetPasswordRequestDto,
+    ): Promise<UserResetPasswordResponse> {
+        const response = await this.load(
+            this.getFullEndpoint(AuthApiPath.RESET_PASSWORD, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                hasAuth: false,
+                payload: JSON.stringify(payload),
+            },
+        );
+
+        return await response.json<UserResetPasswordResponse>();
     }
 }
 
