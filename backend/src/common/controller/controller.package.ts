@@ -1,3 +1,6 @@
+import { type FastifyReply } from 'fastify';
+import { OpenAuthApiPath } from 'shared/build/index.js';
+
 import { config } from '~/common/config/config.js';
 import { CookieName } from '~/common/controller/enums/enums.js';
 import { type ILogger } from '~/common/logger/logger.js';
@@ -35,6 +38,34 @@ class Controller implements IController {
         });
     }
 
+    private async setTokenInCookies({
+        reply,
+        accessToken,
+        refreshToken,
+    }: {
+        reply: FastifyReply;
+        accessToken?: string;
+        refreshToken?: string;
+    }): Promise<void> {
+        if (accessToken) {
+            return reply
+                .clearCookie(CookieName.OAUTH_TOKEN)
+                .setCookie(CookieName.ACCESS_TOKEN, accessToken, {
+                    path: OpenAuthApiPath.ROOT,
+                    httpOnly: true,
+                    maxAge: config.ENV.COOKIE.EXPIRES_IN,
+                })
+                .redirect(config.ENV.APP.ORIGIN_URL);
+        }
+        if (refreshToken) {
+            void reply.setCookie(CookieName.REFRESH_TOKEN, refreshToken, {
+                httpOnly: true,
+                maxAge: config.ENV.COOKIE.EXPIRES_IN,
+                signed: true,
+            });
+        }
+    }
+
     private async prepareAndHandleApiRequest(
         apiHandler: ApiHandler,
         request: Parameters<ServerAppRouteParameters['handler']>[0],
@@ -44,16 +75,13 @@ class Controller implements IController {
 
         const requestHandlerOptions = this.handleRequestOptions(request);
 
-        const { status, payload, refreshToken } = await apiHandler(
-            requestHandlerOptions,
-        );
-        if (refreshToken) {
-            void reply.setCookie(CookieName.REFRESH_TOKEN, refreshToken, {
-                path: '/',
-                httpOnly: true,
-                maxAge: config.ENV.COOKIE.EXPIRES_IN,
-                signed: true,
-            });
+        const { status, payload, refreshToken, accessToken, contentType } =
+            await apiHandler(requestHandlerOptions);
+
+        await this.setTokenInCookies({ reply, accessToken, refreshToken });
+
+        if (contentType) {
+            void reply.header('Content-Type', contentType);
         }
         return reply.status(status).send(payload);
     }

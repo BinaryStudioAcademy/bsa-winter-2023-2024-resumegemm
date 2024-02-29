@@ -4,14 +4,44 @@ export {
     type EncryptionDataPayload,
     AuthApiPath,
 } from './bundles/auth/auth.js';
+export {
+    type GithubUserWithProfileRelation,
+    type OauthUserEntityFields,
+    type UserGithubDataResponseDto,
+    type UserGithubLoginRequestDto,
+    type UserGithubLoginResponseDto,
+    OauthStrategy,
+    OpenAuthApiGetUserUrl,
+    OpenAuthApiPath,
+} from './bundles/open-auth/open-auth.js';
+export {
+    type CreateSubscriptionRequestDto,
+    type CreateSubscriptionResponseDto,
+    type GetPriceResponseDto,
+    type GetPricesRequestDto,
+    type GetPricesResponseDto,
+    type GetPublishableKeyRequestDto,
+    type GetPublishableKeyResponseDto,
+    PaymentApiPath,
+    paymentCreateSubscriptionValidationSchema,
+} from './bundles/payment/payment.js';
+export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
 export { type Profile } from './bundles/profile/profile.js';
 export {
     type RecentlyViewed,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedTemplatesResponseDto,
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
-export { SkillLevel } from './bundles/resumes/resumes.js';
+export {
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
+    type ResumeService,
+    ResumeApiPath,
+    SkillLevel,
+} from './bundles/resumes/resumes.js';
 export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
