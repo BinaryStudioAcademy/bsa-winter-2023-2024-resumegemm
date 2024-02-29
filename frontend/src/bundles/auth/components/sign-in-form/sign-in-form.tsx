@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 
 import {
     BaseButton,
@@ -7,6 +8,7 @@ import {
     PasswordInput,
 } from '~/bundles/common/components/components.js';
 import {
+    AppRoute,
     ButtonSize,
     ButtonType,
     ButtonVariant,
@@ -53,9 +55,12 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     <Input type="email" placeholder="Your email" name="email" />
                 </FormGroup>
                 <div className={styles.login__form_password}>
-                    <span className={styles.forgot__link}>
+                    <Link
+                        to={AppRoute.FORGOT_PASSWORD}
+                        className={styles.forgot__link}
+                    >
                         Forgot Password?
-                    </span>
+                    </Link>
                     <PasswordInput
                         label="Your password"
                         error={errors.password}
