@@ -1,14 +1,14 @@
-import {
-    type UserSignInRequestDto,
-    type UserSignUpRequestDto,
-} from '~/bundles/users/users';
+import { type UserSignInRequestDto } from '~/bundles/users/users';
 
-const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpRequestDto = {
+import { type UserSignUpRequestDtoFrontend } from '../validation/sign-up-validation';
+
+const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpRequestDtoFrontend = {
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    repeatPassword: '',
+    confirm_password: '',
+    // emailConfirmed: false
 };
 
 const DEFAULT_SIGN_IN_PAYLOAD: UserSignInRequestDto = {

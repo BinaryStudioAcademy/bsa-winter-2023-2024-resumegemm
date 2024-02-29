@@ -103,6 +103,28 @@ class Config implements IConfig {
                     default: null,
                 },
             },
+            OAUTH: {
+                GITHUB: {
+                    CLIENT_GITHUB_ID: {
+                        doc: 'Github secret for client id',
+                        format: String,
+                        env: 'CLIENT_GITHUB_ID',
+                        default: null,
+                    },
+                    CLIENT_GITHUB_SECRET: {
+                        doc: 'Github secret client token',
+                        format: String,
+                        env: 'CLIENT_GITHUB_SECRET',
+                        default: null,
+                    },
+                },
+                BASE_CALLBACK_URI: {
+                    doc: 'Secret key for callback url',
+                    format: String,
+                    env: 'BASE_OAUTH_CALLBACK_URI',
+                    default: null,
+                },
+            },
             COOKIE: {
                 COOKIE_SECRET: {
                     doc: 'Secret key for cookie',

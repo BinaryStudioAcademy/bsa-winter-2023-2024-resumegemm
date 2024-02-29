@@ -1,6 +1,9 @@
-import { Notify } from 'notiflix';
-
-import { BaseButton, FormGroup } from '~/bundles/common/components/components';
+import {
+    BaseButton,
+    FormGroup,
+    Input,
+    PasswordInput,
+} from '~/bundles/common/components/components';
 import {
     ButtonSize,
     ButtonType,
@@ -8,55 +11,29 @@ import {
     ButtonWidth,
 } from '~/bundles/common/enums/enums';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
-import {
-    type UserSignUpRequestDto,
-    userSignUpValidationSchema,
-} from '~/bundles/users/users';
-import { storage, StorageKey } from '~/framework/storage/storage.js';
+import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
 
-import { Input, PasswordInput } from './components/sign-up-form-input';
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
+import { type UserSignUpRequestDtoFrontend } from './validation/sign-up-validation';
+import { userSignUpValidationFrontend } from './validation/sign-up-validation';
 
 type Properties = {
-    onSubmit: (payload: UserSignUpRequestDto) => void;
+    onSubmit: (payload: UserSignUpRequestDtoFrontend) => void;
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
-    const { control, errors, handleSubmit, reset, watch, trigger } =
-        useAppForm<UserSignUpRequestDto>({
+    const { control, errors, handleSubmit } =
+        useAppForm<UserSignUpRequestDtoFrontend>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
-            validationSchema: userSignUpValidationSchema,
-            mode: 'onBlur',
+            validationSchema: userSignUpValidationFrontend,
         });
-
-    const inputReset = reset;
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
-            event_.preventDefault();
-            void trigger();
-            const firstName = watch('firstName');
-            const lastName = watch('lastName');
-            const email = watch('email');
-            const password = watch('password');
-            const repeatPassword = watch('repeatPassword');
-            if (
-                !firstName ||
-                !lastName ||
-                !email ||
-                !password ||
-                !repeatPassword
-            ) {
-                Notify.failure('Missing fields');
-                return;
-            }
             void handleSubmit(onSubmit)(event_);
-            void storage.drop(StorageKey.NAME_EXIST);
-            inputReset && reset();
-            Notify.success('Please check your email to confirm your email');
         },
-        [handleSubmit, inputReset, onSubmit, reset, trigger, watch],
+        [handleSubmit, onSubmit],
     );
 
     return (
@@ -72,51 +49,42 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 className={styles.registration__form}
                 onSubmit={handleFormSubmit}
             >
-                <FormGroup label="First Name" width="100%">
+                <FormGroup error={errors.firstName} label="First Name">
                     <Input
-                        control={control}
-                        errors={errors}
                         type="text"
                         placeholder="Your first name"
-                        name="firstName"
+                        {...useFormFieldCreator({ name: 'firstName', control })}
                     />
                 </FormGroup>
-                <FormGroup label="Last Name">
+                <FormGroup error={errors.lastName} label="Last Name">
                     <Input
-                        control={control}
-                        errors={errors}
                         type="text"
                         placeholder="Your last name"
-                        name="lastName"
+                        {...useFormFieldCreator({ name: 'lastName', control })}
                     />
                 </FormGroup>
-                <FormGroup label="Email">
+                <FormGroup error={errors.email} label="Email">
                     <Input
-                        control={control}
-                        errors={errors}
-                        type="email"
+                        type="text"
                         placeholder="Your email"
-                        name="email"
+                        {...useFormFieldCreator({ name: 'email', control })}
                     />
                 </FormGroup>
-                <FormGroup label="Password">
-                    <PasswordInput
-                        control={control}
-                        errors={errors}
-                        type="text"
-                        placeholder="Your password"
-                        name="password"
-                    />
-                </FormGroup>
-                <FormGroup label="Repeat password">
-                    <PasswordInput
-                        control={control}
-                        errors={errors}
-                        type="text"
-                        placeholder="Confirm your password"
-                        name="repeatPassword"
-                    />
-                </FormGroup>
+                <PasswordInput
+                    label="Your Password"
+                    placeholder="Your password"
+                    error={errors.password}
+                    {...useFormFieldCreator({ name: 'password', control })}
+                />
+                <PasswordInput
+                    label="Confirm Password"
+                    placeholder="Confirm your password"
+                    error={errors.confirm_password}
+                    {...useFormFieldCreator({
+                        name: 'confirm_password',
+                        control,
+                    })}
+                />
                 <BaseButton
                     className={styles.registration__form__button}
                     size={ButtonSize.MEDIUM}

@@ -1,10 +1,13 @@
 import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
+import oauthPlugin from '@fastify/oauth2';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
+import { OpenAuthApiPath } from 'shared/build/index.js';
 
 import { authService } from '~/bundles/auth/auth.js';
+import { oauthConfigurations } from '~/bundles/oauth/config/oauth-config.js';
 import { userService } from '~/bundles/users/users.js';
 import { type IConfig, config } from '~/common/config/config.js';
 import { ControllerHook } from '~/common/controller/enums/enums.js';
@@ -13,7 +16,10 @@ import { ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
-import { authorization as authorizationPlugin } from '~/common/plugins/plugins.js';
+import {
+    authorizationPlugin,
+    oauthCallbackHandler,
+} from '~/common/plugins/plugins.js';
 import { publicRoutes } from '~/common/server-application/constants/constants.js';
 import {
     type ServerCommonErrorResponse,
@@ -77,7 +83,6 @@ class ServerApp implements IServerApp {
 
     public initRoutes(): void {
         const routers = this.apis.flatMap((it) => it.routes);
-
         this.addRoutes(routers);
     }
 
@@ -87,7 +92,6 @@ class ServerApp implements IServerApp {
                 this.logger.info(
                     `Generate swagger documentation for API ${it.version}`,
                 );
-
                 await this.app.register(authorizationPlugin, {
                     publicRoutes,
                     userService,
@@ -102,6 +106,21 @@ class ServerApp implements IServerApp {
                     secret: config.ENV.COOKIE.COOKIE_SECRET,
                     hook: ControllerHook.ON_REQUEST,
                 });
+
+                const oauthAvailableProviders = Object.keys(
+                    oauthConfigurations,
+                ) as (keyof typeof oauthConfigurations)[];
+
+                for (const oauthProvider of oauthAvailableProviders) {
+                    const { credentials } = oauthConfigurations[oauthProvider];
+                    await this.app.register(oauthPlugin, {
+                        name: oauthProvider,
+                        credentials,
+                        startRedirectPath: `${OpenAuthApiPath.ROOT}${oauthProvider}`,
+                        callbackUri: `${config.ENV.OAUTH.BASE_CALLBACK_URI}${oauthProvider}`,
+                    });
+                }
+                await this.app.register(oauthCallbackHandler);
                 await this.app.register(swagger, {
                     mode: 'static',
                     specification: {

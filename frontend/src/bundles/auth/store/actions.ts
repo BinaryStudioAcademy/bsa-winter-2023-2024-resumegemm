@@ -24,10 +24,8 @@ const signUp = createAsyncThunk<
 
     const response = await authApi.signUp(registerPayload);
 
-    if (response.user) {
-        await dispatch(userActions.loadUser());
-    }
-    return response?.user;
+    await dispatch(userActions.loadUser());
+    return response.user;
 });
 
 const signIn = createAsyncThunk<

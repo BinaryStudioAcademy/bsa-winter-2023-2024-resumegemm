@@ -13,6 +13,13 @@ type EnvironmentSchema = {
         ACCESS_TOKEN_EXPIRES_IN: string;
         REFRESH_TOKEN_EXPIRES_IN: string;
     };
+    OAUTH: {
+        GITHUB: {
+            CLIENT_GITHUB_ID: string;
+            CLIENT_GITHUB_SECRET: string;
+        };
+        BASE_CALLBACK_URI: string;
+    };
     COOKIE: {
         COOKIE_SECRET: string;
         EXPIRES_IN: number;

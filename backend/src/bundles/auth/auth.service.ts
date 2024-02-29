@@ -16,10 +16,7 @@ import {
 } from '~/bundles/auth/helpers/helpers.js';
 import {
     type UserSignInRequestDto,
-    type UserSignInResponseDto,
     type UserSignUpRequestDto,
-    type UserSignUpResponseDto,
-    type UserWithProfileRelation,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 import { type IConfig } from '~/common/config/config.js';
@@ -41,7 +38,7 @@ class AuthService implements TAuthService {
 
     public async signUp(
         userRequestDto: UserSignUpRequestDto,
-    ): Promise<UserSignUpResponseDto> {
+    ): ReturnType<TAuthService['signUp']> {
         const foundUserByEmail = await this.userService.findByEmail(
             userRequestDto.email,
         );
@@ -59,17 +56,16 @@ class AuthService implements TAuthService {
             passwordSalt,
         );
 
-        const newUser = await this.userService.create(
-            userRequestDto,
+        const { id, email } = await this.userService.create({
+            ...userRequestDto,
             passwordSalt,
             passwordHash,
-        );
-        const { id, email } = newUser;
+        });
         const token = generateToken({ id });
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         await this.sendAfterSignUpEmail(email, token);
 
-        const user = await this.userService.getUserWithProfile(id);
+        const user = await this.getUserWithProfile(id);
 
         return {
             user,
@@ -102,7 +98,7 @@ class AuthService implements TAuthService {
     public async login({
         email,
         password,
-    }: UserSignInRequestDto): Promise<UserSignInResponseDto> {
+    }: UserSignInRequestDto): ReturnType<TAuthService['login']> {
         const foundUserByEmail = await this.userService.findByEmail(email);
 
         if (!foundUserByEmail) {
@@ -124,7 +120,7 @@ class AuthService implements TAuthService {
                 status: HttpCode.UNAUTHORIZED,
             });
         }
-        const user = await this.userService.getUserWithProfile(id);
+        const user = await this.getUserWithProfile(id);
         return {
             user,
             accessToken: generateToken({ id }),
@@ -132,7 +128,9 @@ class AuthService implements TAuthService {
         };
     }
 
-    public async getUser(id: string): Promise<UserWithProfileRelation> {
+    public async getUserWithProfile(
+        id: string,
+    ): ReturnType<TAuthService['getUserWithProfile']> {
         return await this.userService.getUserWithProfile(id);
     }
 
