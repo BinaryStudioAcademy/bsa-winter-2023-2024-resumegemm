@@ -2,13 +2,15 @@ import { type FastifyRequest } from 'fastify';
 import {
     type HttpError,
     type UserAuthResponse,
+    type UserForgotPasswordRequestDto,
+    type UserResetPasswordRequestDto,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpResponseDto,
+    type UserVerifyResetTokenRequestDto,
     type UserWithProfileRelation,
-    AuthApiPath,
-    ExceptionMessage,
 } from 'shared/build/index.js';
+import { AuthApiPath, ExceptionMessage } from 'shared/build/index.js';
 
 import {
     generateRefreshToken,
@@ -29,16 +31,26 @@ import { CookieName } from '~/common/controller/enums/enums.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
+import { type IMailService } from '~/common/mail-service/mail-service.js';
 
 import { type AuthService } from './auth.service.js';
+import { AuthMail } from './enums/auth-mail.js';
+import { AuthMessage } from './enums/auth-message.js';
 
 class AuthController extends Controller {
     private authService: AuthService;
+    private mailService: IMailService;
 
-    public constructor(logger: ILogger, authService: AuthService) {
+    public constructor(
+        logger: ILogger,
+        authService: AuthService,
+        mailService: IMailService,
+    ) {
         super(logger, ApiPath.AUTH);
 
         this.authService = authService;
+
+        this.mailService = mailService;
 
         this.addRoute({
             path: AuthApiPath.SIGN_UP,
@@ -85,6 +97,36 @@ class AuthController extends Controller {
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
                         unsignCookie: FastifyRequest['unsignCookie'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.FORGOT_PASSWORD,
+            method: 'POST',
+            handler: (options) =>
+                this.forgotPassword(
+                    options as ApiHandlerOptions<{
+                        body: UserForgotPasswordRequestDto;
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.VERIFY_RESET_TOKEN,
+            method: 'POST',
+            handler: (options) =>
+                this.verifyResetToken(
+                    options as ApiHandlerOptions<{
+                        body: UserVerifyResetTokenRequestDto;
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.RESET_PASSWORD,
+            method: 'POST',
+            handler: (options) =>
+                this.resetPassword(
+                    options as ApiHandlerOptions<{
+                        body: UserResetPasswordRequestDto;
                     }>,
                 ),
         });
@@ -269,6 +311,64 @@ class AuthController extends Controller {
                 },
             };
         }
+    }
+
+    private async forgotPassword(
+        options: ApiHandlerOptions<{ body: UserForgotPasswordRequestDto }>,
+    ): Promise<ApiHandlerResponse<{ message: string; resetToken: string }>> {
+        const resetToken = await this.authService.createResetToken(
+            options.body,
+        );
+
+        await this.mailService.sendMail({
+            to: options.body.email,
+            subject: AuthMail.RESET_PASSWORD.subject,
+            text: `${AuthMail.RESET_PASSWORD.text} ${resetToken}`,
+        });
+
+        return {
+            status: HttpCode.OK,
+            payload: {
+                message: AuthMessage.RESET_TOKEN_SENT,
+            },
+        };
+    }
+
+    private verifyResetToken(
+        options: ApiHandlerOptions<{ body: { resetToken: string } }>,
+    ): ApiHandlerResponse<{ isTokenValid: boolean }> {
+        const {
+            body: { resetToken },
+        } = options;
+
+        const resetTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
+
+        this.authService.verifyResetToken<boolean>(
+            resetToken,
+            resetTokenSecret,
+        );
+
+        return {
+            status: HttpCode.OK,
+            payload: {
+                isTokenValid: true,
+            },
+        };
+    }
+
+    private async resetPassword(
+        options: ApiHandlerOptions<{
+            body: { resetToken: string; password: string };
+        }>,
+    ): Promise<ApiHandlerResponse<{ message: string }>> {
+        const { resetToken, password } = options.body;
+
+        await this.authService.resetPassword({ resetToken, password });
+
+        return {
+            status: HttpCode.OK,
+            payload: { message: AuthMessage.PASSWORD_RESET },
+        };
     }
 }
 

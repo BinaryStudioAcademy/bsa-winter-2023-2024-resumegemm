@@ -18,6 +18,9 @@ const publicRoutes = {
     [`${PDFApiPath.GENERATE}`]: `${API_PREFIX}${ApiPath.PDF}${PDFApiPath.GENERATE}`,
     [`${RecentlyViewedApiPath.ID}`]: `${API_PREFIX}${ApiPath.RECENTLY_VIEWED}${RecentlyViewedApiPath.ID}`,
     [`${RecentlyViewedApiPath.ROOT}`]: `${API_PREFIX}${ApiPath.RECENTLY_VIEWED}${RecentlyViewedApiPath.ROOT}`,
+    [`${AuthApiPath.FORGOT_PASSWORD}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.FORGOT_PASSWORD}`,
+    [`${AuthApiPath.RESET_PASSWORD}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.RESET_PASSWORD}`,
+    [`${AuthApiPath.VERIFY_RESET_TOKEN}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.VERIFY_RESET_TOKEN}`,
 };
 
 export { publicRoutes };
