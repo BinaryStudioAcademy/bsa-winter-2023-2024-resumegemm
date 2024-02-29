@@ -1,7 +1,9 @@
-.uploader_mockup {
+.uploader_wrapper__section > .uploader_mockup {
     display: flex;
     align-items: center;
+    height: 100%;
     padding: 30px;
+    border: none;
     cursor: pointer;
 }
 
@@ -62,9 +64,11 @@
 
 .uploader_modal__button__close {
     position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
+    top: 10px;
+    right: 10px;
+    padding: 0;
+    color: var(--color-white);
+    font-size: var(--font-size-title-h5);
 }
 
 .uploader_modal__button__icon {
@@ -110,7 +114,7 @@
     height: 100%;
 }
 
-.uploader_cropper{
+.uploader_cropper {
     align-self: center;
     width: 80%;
     height: 80%;
@@ -123,7 +127,7 @@
     padding: 10px 0;
 }
 
-.uploader_cropper__buttonThumb .uploader_cropper__button__save, 
+.uploader_cropper__buttonThumb .uploader_cropper__button__save,
 .uploader_cropper__buttonThumb .uploader_cropper__button__anotherPhoto {
     display: flex;
     align-items: center;
@@ -135,22 +139,21 @@
     border-radius: 25px;
 }
 
-.uploader_cropper__button__rotate, 
-.uploader_cropper__button__zoomIn, 
+.uploader_cropper__button__rotate,
+.uploader_cropper__button__zoomIn,
 .uploader_cropper__button__zoomOut {
     padding: 10px 20px;
     color: var(--color-white);
 }
 
-.uploader_cropper__icon__rotate, 
-.uploader_cropper__icon__zoomIn, 
-.uploader_cropper__icon__zoomOut
- {
+.uploader_cropper__icon__rotate,
+.uploader_cropper__icon__zoomIn,
+.uploader_cropper__icon__zoomOut {
     width: 25px;
     height: 25px;
 }
 
-.uploader_cropper__icon__save, 
+.uploader_cropper__icon__save,
 .uploader_cropper__icon__anotherPhoto {
     margin-right: 10px;
 }

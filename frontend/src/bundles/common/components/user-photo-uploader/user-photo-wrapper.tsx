@@ -4,6 +4,7 @@ import { useAppDispatch } from '~/bundles/common/hooks/hooks.js';
 import { updateUserAvatar } from '~/bundles/profile/store/actions';
 
 import { useCallback, useState } from '../../hooks/hooks';
+import styles from './styles.module.scss';
 import { UserPhotoMockup } from './user-photo-mockup';
 import { PhotoUploaderModal } from './user-photo-modal';
 import { UserPhotoPreview } from './user-photo-preview';
@@ -14,7 +15,7 @@ const UserPhotoWrapper: React.FC = () => {
 
     // need future redux integration
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_currentImage, setCurrentImage] = useState<{
+    const [currentImage, setCurrentImage] = useState<{
         src: string;
         blob: Blob;
     } | null>(null);
@@ -23,7 +24,7 @@ const UserPhotoWrapper: React.FC = () => {
 
     // need future redux integration
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const _onHandleImage = useCallback(
+    const onHandleImage = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const reader = new FileReader();
             const [newImage] = event.target.files ?? [];
@@ -43,7 +44,7 @@ const UserPhotoWrapper: React.FC = () => {
     );
 
     return (
-        <section>
+        <section className={styles.uploader_wrapper__section}>
             {!currentPhoto && (
                 <UserPhotoMockup onClickUpload={setIsModalOpen} />
             )}
