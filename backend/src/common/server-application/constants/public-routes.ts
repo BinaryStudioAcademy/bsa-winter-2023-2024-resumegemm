@@ -5,7 +5,6 @@ import {
     OpenAuthApiPath,
     PaymentApiPath,
     PDFApiPath,
-    RecentlyViewedApiPath,
 } from 'shared/build/index.js';
 
 const API_PREFIX = '/api/v1';

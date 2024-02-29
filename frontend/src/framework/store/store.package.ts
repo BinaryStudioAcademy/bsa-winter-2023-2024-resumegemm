@@ -14,6 +14,8 @@ import { industriesApi } from '~/bundles/industries/industries';
 import { reducer as industriesReducer } from '~/bundles/industries/store/';
 import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store';
+import { profileApi } from '~/bundles/profile/profile';
+import { reducer as profileReducer } from '~/bundles/profile/store/';
 import { reducer as usersReducer } from '~/bundles/users/store/';
 import { userApi } from '~/bundles/users/users.js';
 import { type IConfig } from '~/framework/config/config.js';
@@ -26,6 +28,7 @@ type RootReducer = {
     industries: ReturnType<typeof industriesReducer>;
     payment: ReturnType<typeof paymentReducer>;
     templates: ReturnType<typeof templatesReducer>;
+    profile: ReturnType<typeof profileReducer>;
 };
 
 type ExtraArguments = {
@@ -35,6 +38,7 @@ type ExtraArguments = {
     storageApi: typeof storage;
     industriesApi: typeof industriesApi;
     templateApi: typeof templateApi;
+    profileApi: typeof profileApi;
 };
 
 class Store {
@@ -57,6 +61,7 @@ class Store {
                 industries: industriesReducer,
                 payment: paymentReducer,
                 templates: templatesReducer,
+                profile: profileReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
@@ -76,6 +81,7 @@ class Store {
             paymentApi,
             storageApi: storage,
             templateApi,
+            profileApi,
         };
     }
 }

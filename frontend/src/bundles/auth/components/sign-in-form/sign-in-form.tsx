@@ -3,10 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { OpenAuthApiPath, userSignInValidationSchema } from 'shared/build';
 
 import {
-    BaseButton,
     FormGroup,
     Input,
     PasswordInput,
+    RegularButton,
 } from '~/bundles/common/components/components.js';
 import {
     ButtonSize,
@@ -67,7 +67,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                         {...useFormFieldCreator({ name: 'password', control })}
                     />
                 </div>
-                <BaseButton
+                <RegularButton
                     className={styles.login__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
@@ -75,6 +75,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     type={ButtonType.SUBMIT}
                 >
                     Sign up
+                </RegularButton>
                 </BaseButton>
                 <NavLink
                     to={`${config.ENV.API.PROXY_URL}${OpenAuthApiPath.GITHUB}`}
