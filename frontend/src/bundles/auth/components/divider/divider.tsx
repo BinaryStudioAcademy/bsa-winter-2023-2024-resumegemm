@@ -1,15 +1,20 @@
 import clsx from 'clsx';
 
+import { type DividerVariant } from '~/bundles/common/enums/enums.js';
+
 import styles from './styles.module.scss';
 
-type DividerPayload = {
-    isBlue?: boolean;
+const variants: Record<DividerVariant, string> = {
+    primary: styles.divider__blue,
+    secondary: styles.divider__yellow,
 };
 
-const Divider: React.FC<DividerPayload> = ({ isBlue }) => {
-    return (
-        <div className={clsx(styles.divider, isBlue && styles.divider__blue)} />
-    );
+type DividerPayload = {
+    variant: DividerVariant;
+};
+
+const Divider: React.FC<DividerPayload> = ({ variant }) => {
+    return <div className={clsx(styles.divider, variants[variant])} />;
 };
 
 export { Divider };

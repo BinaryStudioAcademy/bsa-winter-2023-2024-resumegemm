@@ -4,16 +4,17 @@ import { userSignInValidationSchema } from 'shared/build';
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
 import {
-    BaseButton,
     FormGroup,
     Input,
     PasswordInput,
+    RegularButton,
 } from '~/bundles/common/components/components.js';
 import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DividerVariant,
 } from '~/bundles/common/enums/enums';
 import { useAppForm } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
@@ -67,7 +68,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                         {...useFormFieldCreator({ name: 'password', control })}
                     />
                 </div>
-                <BaseButton
+                <RegularButton
                     className={styles.login__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
@@ -75,8 +76,8 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     type={ButtonType.SUBMIT}
                 >
                     Sign up
-                </BaseButton>
-                <Divider />
+                </RegularButton>
+                <Divider variant={DividerVariant.SECONDARY} />
                 <SocialMediaLinks />
             </form>
         </>
