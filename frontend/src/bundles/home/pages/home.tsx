@@ -19,14 +19,13 @@ import styles from './styles.module.scss';
 
 const Home: React.FC = () => {
     const dispatch = useAppDispatch();
-    const user = useAppSelector((state) => state.auth.user);
     const templates = useAppSelector((state) => state.templates.templates);
 
     useEffect(() => {
-        if (user) {
+        if (templates.length === 0) {
             void dispatch(loadAllTemplates());
         }
-    }, [user, dispatch]);
+    }, [templates, dispatch]);
 
     return (
         <div className={styles.layout}>

@@ -19,7 +19,7 @@ type Properties = {
 const PanelContainer: React.FC<Properties> = ({
     children,
     name,
-    hasIconInput,
+    hasIconInput = true,
     classname,
 }: Properties) => {
     const sortHandle = useCallback((sortMethod: SortType): void => {

@@ -20,8 +20,10 @@ const Templates: React.FC = () => {
     const { templates } = useAppSelector((state) => state.templates);
 
     useEffect(() => {
-        void dispatch(loadAllTemplates());
-    }, [dispatch]);
+        if (templates.length === 0) {
+            void dispatch(loadAllTemplates());
+        }
+    }, [dispatch, templates]);
 
     return (
         <div className={styles.layout}>

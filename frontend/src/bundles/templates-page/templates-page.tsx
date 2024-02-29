@@ -12,7 +12,7 @@ import { Templates } from '../home/pages/templates';
 
 const navbarItems = [
     { label: 'Home', path: AppRoute.HOME },
-    { label: 'Templates', path: AppRoute.ROOT },
+    { label: 'Templates', path: AppRoute.TEMPLATES },
 ];
 
 const TemplatePage = (): JSX.Element => {
