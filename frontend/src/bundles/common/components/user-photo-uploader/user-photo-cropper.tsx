@@ -1,8 +1,7 @@
 import 'cropperjs/dist/cropper.css';
 
 import React, { useCallback, useRef, useState } from 'react';
-import { type ReactCropperElement } from 'react-cropper';
-import { Cropper } from 'react-cropper';
+import { type ReactCropperElement, Cropper } from 'react-cropper';
 import { IconContext } from 'react-icons';
 import { BsSave } from 'react-icons/bs';
 import { FaFileUpload } from 'react-icons/fa';

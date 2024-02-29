@@ -1,9 +1,6 @@
 import clsx from 'clsx';
 
-import {
-    BaseButton,
-    RegularButton,
-} from '~/bundles/common/components/components';
+import { RegularButton } from '~/bundles/common/components/components';
 import { ButtonVariant } from '~/bundles/common/enums/enums';
 
 import styles from './styles.module.scss';

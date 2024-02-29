@@ -18,6 +18,10 @@ type EnvironmentSchema = {
             CLIENT_GITHUB_ID: string;
             CLIENT_GITHUB_SECRET: string;
         };
+        GOOGLE: {
+            CLIENT_GOOGLE_ID: string;
+            CLIENT_GOOGLE_SECRET: string;
+        };
         BASE_CALLBACK_URI: string;
     };
     COOKIE: {
