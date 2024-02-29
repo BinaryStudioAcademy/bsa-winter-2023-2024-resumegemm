@@ -4,4 +4,4 @@ enum StripeProductEvents {
     PRODUCT_UPDATED = 'product.updated',
 }
 
-export { type StripeProductEvents };
+export { StripeProductEvents };

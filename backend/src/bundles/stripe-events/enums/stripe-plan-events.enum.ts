@@ -4,4 +4,4 @@ enum StripePlanEvents {
     PLAN_UPDATED = 'plan.updated',
 }
 
-export { type StripePlanEvents };
+export { StripePlanEvents };

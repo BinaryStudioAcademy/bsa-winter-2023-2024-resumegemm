@@ -4,4 +4,4 @@ enum StripePriceEvents {
     PRICE_UPDATED = 'price.updated',
 }
 
-export { type StripePriceEvents };
+export { StripePriceEvents };
