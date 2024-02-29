@@ -26,7 +26,7 @@ import styles from './styles.module.scss';
 
 const navbarItems = [
     { label: 'Home', path: AppRoute.ROOT },
-    { label: 'Signin', path: AppRoute.SIGN_IN },
+    { label: 'Login', path: AppRoute.LOG_IN },
     { label: 'Signup', path: AppRoute.SIGN_UP },
     { label: 'Preview', path: AppRoute.PREVIEW },
 ];
