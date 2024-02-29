@@ -39,12 +39,8 @@ const SortButton = ({
                 setSortMethod(null);
                 break;
             }
-
-            case null: {
-                setSortMethod('asc');
-                break;
-            }
             default: {
+                setSortMethod('asc');
                 break;
             }
         }
