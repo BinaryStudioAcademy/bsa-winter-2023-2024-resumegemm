@@ -5,6 +5,8 @@ import {
     faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
 import {
+    faArrowDownLong,
+    faArrowUpLong,
     faChevronDown,
     faEye,
     faEyeSlash,
@@ -25,6 +27,8 @@ const iconNameToSvgIcon = {
     [IconName.EYE_OPEN]: faEye,
     [IconName.EYE_SLASH]: faEyeSlash,
     [IconName.SEARCH]: faMagnifyingGlass,
+    [IconName.ARROW_DOWN]: faArrowDownLong,
+    [IconName.ARROW_UP]: faArrowUpLong,
 };
 
 type IconProperties = {
