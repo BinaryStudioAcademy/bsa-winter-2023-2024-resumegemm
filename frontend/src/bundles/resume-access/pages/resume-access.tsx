@@ -10,6 +10,7 @@ import { ApiPath } from 'shared/build';
 
 import { BaseButton, Input } from '~/bundles/common/components/components';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
+import { ResumePreview } from '~/bundles/resume-preview/components/components';
 import { ToastContext } from '~/bundles/toast/context/toast-context';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { baseUrl } from '~/helpers/base-url';
@@ -106,6 +107,7 @@ const ResumeAccess: React.FC = () => {
                 {JSON.stringify(details)}
             </div>
             <BaseButton onClick={deleteResumeAccess}>Delete link</BaseButton>
+            <ResumePreview />
         </div>
     );
 };
