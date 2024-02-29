@@ -58,7 +58,7 @@ const CustomSection: React.FC<CustomSectionProperties> = ({
     );
 
     return (
-        <form onSubmit={onSubmit} className={styles.custom__section}>
+        <form onSubmit={onSubmit} className={styles.custom_section}>
             <FormGroup label={'Activity name, book title, etc.'}>
                 <Input
                     placeholder={''}
@@ -75,7 +75,7 @@ const CustomSection: React.FC<CustomSectionProperties> = ({
                     onChange={handleInputChange}
                 />
             </FormGroup>
-            <div className={styles.custom__section__date}>
+            <div className={styles.custom_section_date}>
                 <DateSelector
                     name={'startDate'}
                     label={'Start Date'}
@@ -94,7 +94,7 @@ const CustomSection: React.FC<CustomSectionProperties> = ({
                         name={'description'}
                         value={customData.description}
                         onChange={handleInputChange}
-                        className={styles.custom__section__textarea}
+                        className={styles.custom_section__textarea}
                     />
                 </FormGroup>
             </div>
