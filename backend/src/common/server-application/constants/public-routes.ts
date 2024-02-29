@@ -22,4 +22,4 @@ const publicRoutes = {
     [`${RecentlyViewedApiPath.ROOT}`]: `${API_PREFIX}${ApiPath.RECENTLY_VIEWED}${RecentlyViewedApiPath.ROOT}`,
 };
 
-export { publicRoutes };
+export { API_PREFIX, publicRoutes };
