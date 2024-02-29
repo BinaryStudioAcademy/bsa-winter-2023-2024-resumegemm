@@ -63,10 +63,13 @@ TBA
     }
     personal_information {
         uuid id PK
+        varchar first_name
+        varchar last_name
+        varchar email
         varchar profession
-        varchar address
+        varchar industry
         varchar city
-        varchar state
+        varchar country
         timestamp created_at
         timestamp updated_at
         uuid resume_id FK
@@ -74,8 +77,12 @@ TBA
     experience {
         uuid id PK
         varchar job_title
-        varchar employer
+        varchar company_name
         varchar employment_type
+        varchar city
+        varchar country
+        varchar description
+        currently_working boolean
         timestamp created_at
         timestamp updated_at
         Date start_date
@@ -92,9 +99,12 @@ TBA
     }
     education {
         uuid id PK
-        varchar major_name
+        varchar institution
         varchar degree
-        varchar location
+        varchar city
+        varchar country
+        varchar description
+        currently_studying boolean
         Date start_date
         Date end_date
         timestamp created_at
@@ -103,10 +113,40 @@ TBA
     }
     contact_details {
         uuid id PK
-        varchar mobile_number
-        varchar home_number
-        varchar address
+        varchar phone_number
         varchar social_contact
+        varchar link
+        timestamp created_at
+        timestamp updated_at
+        uuid resume_id FK
+    }
+    certification {
+        uuid id PK
+        varchar certification_name
+        varchar authority
+        varchar certification_url_or_code
+        varchar description
+        Date start_date
+        Date end_date
+        timestamp created_at
+        timestamp updated_at
+        uuid resume_id FK
+    }
+    language {
+        uuid id PK
+        varchar language
+        varchar language_level
+        timestamp created_at
+        timestamp updated_at
+        uuid resume_id FK
+    }
+    custom_section {
+        uuid id PK
+        varchar activity
+        varchar city
+        varchar description
+        Date start_date
+        Date end_date
         timestamp created_at
         timestamp updated_at
         uuid resume_id FK
@@ -158,6 +198,9 @@ TBA
     users ||--|| user_profile: profile_id
     technical_skills |o--|| resumes : resume_id
     personal_information |o--|| resumes : resume_id
+    certification |o--|| resumes : resume_id
+    language |o--|| resumes : resume_id
+    custom_section |o--|| resumes : resume_id
     reviews ||--|| resumes : resume_id
     resumes }o--|| templates : template_id
     recently_viewed ||--|| users: user_id
