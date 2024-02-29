@@ -1,3 +1,5 @@
-type UserResetPasswordResponse = unknown;
+type UserResetPasswordResponse = {
+    message: string;
+};
 
 export { type UserResetPasswordResponse };
