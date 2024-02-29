@@ -34,3 +34,10 @@
 .auth {
     height: 100vh;
 }
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 200px;
+}
