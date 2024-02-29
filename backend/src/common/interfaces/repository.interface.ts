@@ -1,19 +1,12 @@
-import { type UserSignUpResponseDto } from 'shared/build/index.js';
+import { type Transaction } from 'objection';
 
 interface IRepository<T = unknown> {
-    find(): Promise<T>;
-
-    findAll(): Promise<T[]>;
-
-    findOneByEmail(email: string): Promise<T>;
-
-    create(payload?: T): Promise<T>;
-
-    update(): Promise<T>;
-
-    getUserWithProfile(id: string): Promise<UserSignUpResponseDto['user']>;
-
-    delete(id: string): Promise<T>;
+    getById(id: string): Promise<T | null>;
+    createWithTransaction(
+        data: Omit<T, 'id' | 'createdAt' | 'updatedAt'>,
+        transaction: Transaction,
+    ): Promise<T>;
+    getUserWithProfile(id: string, modification?: string): Promise<T>;
 }
 
 export { type IRepository };

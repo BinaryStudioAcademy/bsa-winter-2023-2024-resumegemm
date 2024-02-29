@@ -1,29 +1,19 @@
 import { type IncomingHttpHeaders } from 'node:http';
 
-import {
-    type UserEntityFields,
-    type UserSignUpRequestDto,
-    type UserSignUpResponseDto,
-} from 'shared/build/index.js';
+import { type UserEntityFields } from 'shared/build/index.js';
 
 interface IService<T = unknown> {
-    find(): Promise<T>;
-
     findAll(): Promise<{
         items: T[];
     }>;
 
+    getById(id: string): Promise<T>;
+
     findByEmail(email: string): Promise<T>;
 
-    getUserWithProfile(id: string): Promise<UserSignUpResponseDto['user']>;
+    getUserWithProfile(id: string): Promise<T>;
 
-    create(
-        user: UserSignUpRequestDto,
-        passwordSalt: string,
-        passwordHash: string,
-    ): Promise<T>;
-
-    update(): Promise<T>;
+    create(payload: T): Promise<T>;
 
     delete(headers: IncomingHttpHeaders): Promise<UserEntityFields>;
 }
