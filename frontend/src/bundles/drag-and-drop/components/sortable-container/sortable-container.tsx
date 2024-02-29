@@ -5,15 +5,13 @@ import {
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
+import { type SortableNode } from '../../types/types';
 import { DraggableItem } from '../draggable-item/draggable-item';
 import { DropContainer } from '../drop-container/drop-container';
 
 type Properties = {
     id: UniqueIdentifier;
-    items: {
-        id: UniqueIdentifier;
-        item: React.ReactNode;
-    }[];
+    items: SortableNode[];
     strategy?: SortingStrategy;
     className?: string;
 };

@@ -23,10 +23,10 @@ const moveItem = (
         (item) => item.id === over.id,
     );
 
-    const activeItem = containers[activeContainerIndex].items.splice(
+    const [activeItem] = containers[activeContainerIndex].items.splice(
         activeItemIndex,
         1,
-    )[0];
+    );
 
     containers[overContainerIndex].items.splice(overItemIndex, 0, activeItem);
 
@@ -34,11 +34,11 @@ const moveItem = (
 };
 
 const isItemOverContainer = (active: Active, over: Over): boolean => {
-    return (
-        (active.data.current?.type === 'item' &&
-            over.data.current?.type === 'item') ||
-        over.data.current?.type === 'container'
-    );
+    const isOverContainer = over.data.current?.type === 'container';
+    const isOverItem = over.data.current?.type === 'item';
+    const isItemActive = active.data.current?.type === 'item';
+
+    return isItemActive && (isOverItem || isOverContainer);
 };
 
 const findItemWithId = (
