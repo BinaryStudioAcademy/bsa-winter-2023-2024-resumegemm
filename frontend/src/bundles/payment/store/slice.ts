@@ -14,7 +14,7 @@ const initialState: State = {
     publishableKey: null,
     clientSecret: null,
     subscriptionId: null,
-    prices: []
+    prices: [],
 };
 
 const { reducer, actions, name } = createSlice({
@@ -30,7 +30,7 @@ const { reducer, actions, name } = createSlice({
         });
 
         builder.addCase(createSubscription.fulfilled, (state, action) => {
-            state.clientSecret = action.payload.clientSecret;  
+            state.clientSecret = action.payload.clientSecret;
             state.subscriptionId = action.payload.subscriptionId;
         });
         builder.addCase(createSubscription.rejected, (state) => {
@@ -39,7 +39,7 @@ const { reducer, actions, name } = createSlice({
         });
 
         builder.addCase(getPrices.fulfilled, (state, action) => {
-            state.prices = action.payload.prices;  
+            state.prices = action.payload.prices;
         });
         builder.addCase(getPrices.rejected, (state) => {
             state.prices = [];

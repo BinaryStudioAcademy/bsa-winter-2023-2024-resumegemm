@@ -7,7 +7,18 @@ import {
 type IRecentlyViewedService = {
     findAll(data: { limit: number }): Promise<RecentlyViewedResponseDto[]>;
 
+    findRecentlyViewedTemplatesByUser(data: {
+        userId: string;
+        limit: number;
+    }): Promise<RecentlyViewedResponseDto[] | null>;
+
+    findRecentlyViewedResumesByUser(data: {
+        userId: string;
+        limit: number;
+    }): Promise<RecentlyViewedResponseDto[] | null>;
+
     create(
+        userId: string,
         payload: RecentlyViewedRequestDto,
     ): Promise<RecentlyViewedResponseDto>;
 

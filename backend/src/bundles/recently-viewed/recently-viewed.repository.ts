@@ -7,6 +7,8 @@ import {
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesQueryResult,
     type RecentlyViewedResumesWithCount,
+    type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedTemplatesResponseDto,
 } from './types/types';
 
 class RecentlyViewedRepository implements IRecentlyViewedRepository {
@@ -37,10 +39,41 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .limit(limit);
     }
 
+    public async findRecentlyViewedResumesByUser(data: {
+        userId: string;
+        limit: number;
+    }): Promise<RecentlyViewedResumesResponseDto[]> {
+        const { limit, userId } = data;
+
+        return await this.recentlyViewedModel
+            .query()
+            .whereNotNull('resumeId')
+            .where('userId', userId)
+            .withGraphFetched('[resumes]')
+            .orderBy('viewedAt', 'desc')
+            .limit(limit);
+    }
+
+    public async findRecentlyViewedTemplatesByUser(data: {
+        userId: string;
+        limit: number;
+    }): Promise<RecentlyViewedTemplatesResponseDto[]> {
+        const { limit, userId } = data;
+
+        return await this.recentlyViewedModel
+            .query()
+            .whereNotNull('templateId')
+            .where('userId', userId)
+            .withGraphFetched('[templates]')
+            .orderBy('viewedAt', 'desc')
+            .limit(limit);
+    }
+
     public async create(
+        userId: string,
         data: RecentlyViewedRequestDto,
     ): Promise<RecentlyViewedResponseDto> {
-        const newRecentlyViewed = { ...data, id: guid.raw() };
+        const newRecentlyViewed = { ...data, userId, id: guid.raw() };
 
         return await this.recentlyViewedModel
             .query()

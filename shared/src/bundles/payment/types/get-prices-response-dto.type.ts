@@ -1,7 +1,7 @@
 import { type GetPriceResponseDto } from './get-price-response-dto.type';
 
 type GetPricesResponseDto = {
-    prices: GetPriceResponseDto[]
+    prices: GetPriceResponseDto[];
 };
 
 export { type GetPricesResponseDto };

@@ -4,6 +4,8 @@ import {
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesWithCount,
+    type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedTemplatesResponseDto,
 } from './types/types';
 
 class RecentlyViewedService implements IRecentlyViewedService {
@@ -19,10 +21,29 @@ class RecentlyViewedService implements IRecentlyViewedService {
         return await this.recentlyViewedRepository.findAll(data);
     }
 
+    public async findRecentlyViewedTemplatesByUser(data: {
+        userId: string;
+        limit: number;
+    }): Promise<RecentlyViewedTemplatesResponseDto[]> {
+        return await this.recentlyViewedRepository.findRecentlyViewedTemplatesByUser(
+            data,
+        );
+    }
+
+    public async findRecentlyViewedResumesByUser(data: {
+        userId: string;
+        limit: number;
+    }): Promise<RecentlyViewedResumesResponseDto[]> {
+        return await this.recentlyViewedRepository.findRecentlyViewedResumesByUser(
+            data,
+        );
+    }
+
     public async create(
+        userId: string,
         payload: RecentlyViewedRequestDto,
     ): Promise<RecentlyViewedResponseDto> {
-        return await this.recentlyViewedRepository.create(payload);
+        return await this.recentlyViewedRepository.create(userId, payload);
     }
 
     public async update(id: string): Promise<RecentlyViewedResponseDto | null> {
