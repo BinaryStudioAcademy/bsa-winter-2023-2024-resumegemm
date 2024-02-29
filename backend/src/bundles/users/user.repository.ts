@@ -33,10 +33,20 @@ class UserRepository implements IRepository {
         return user ?? null;
     }
 
+    public async changePassword({
+        id,
+        passwordHash,
+    }: {
+        id: string;
+        passwordHash: string;
+    }): Promise<void> {
+        await this.userModel.query().patchAndFetchById(id, { passwordHash });
+    }
+
     public async getUserWithProfile(
         id: string,
     ): Promise<UserSignUpResponseDto['user']> {
-        return this.userModel
+        return await this.userModel
             .query()
             .modify('withoutHashPasswords')
             .findById(id)

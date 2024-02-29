@@ -51,11 +51,24 @@ class UserService implements IService {
     public async getUserWithProfile(
         id: string,
     ): Promise<UserSignUpResponseDto['user']> {
-        return this.userRepository.getUserWithProfile(id);
+        return await this.userRepository.getUserWithProfile(id);
     }
 
     public update(): ReturnType<IService['update']> {
         return Promise.resolve(null);
+    }
+
+    public async changePassword({
+        id,
+        passwordHash,
+    }: {
+        id: string;
+        passwordHash: string;
+    }): Promise<void> {
+        await this.userRepository.changePassword({
+            id,
+            passwordHash,
+        });
     }
 
     public delete(): ReturnType<IService['delete']> {
