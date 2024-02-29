@@ -1,11 +1,10 @@
 import { type UniqueIdentifier } from '@dnd-kit/core';
 
+import { type SortableNode } from './sortable-node.type';
+
 type SortingContainterProperties = {
     id: UniqueIdentifier;
-    items: {
-        id: UniqueIdentifier;
-        item: React.ReactNode;
-    }[];
+    items: SortableNode[];
 };
 
 export { type SortingContainterProperties };
