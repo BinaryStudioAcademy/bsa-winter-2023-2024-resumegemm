@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import {
     FormGroup,
     Input,
@@ -42,7 +44,10 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 <h1 className={styles.registration__title}>Sign Up</h1>
                 <p className={styles.registration__message}>
                     Already have an account? Go to
-                    <span className={styles.registration__link}> Log in</span>
+                    <Link to={'/log-in'} className={styles.registration__link}>
+                        {' '}
+                        Log in
+                    </Link>
                 </p>
             </div>
             <form
