@@ -6,12 +6,11 @@ import {
     useEffect,
     useState,
 } from 'react';
+import { type SortType } from 'shared/build';
 
 import { IconName } from '../../enums/enums';
 import { Icon } from '../components';
 import styles from './styles.module.scss';
-
-type SortType = 'asc' | 'desc' | null;
 
 interface Properties
     extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
