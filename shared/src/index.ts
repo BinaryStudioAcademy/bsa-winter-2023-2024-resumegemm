@@ -30,6 +30,7 @@ export {
     ResumeApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';
+export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
 export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
