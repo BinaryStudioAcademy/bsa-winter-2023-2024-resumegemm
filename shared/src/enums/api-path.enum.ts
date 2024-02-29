@@ -6,6 +6,7 @@ enum ApiPath {
     RECENTLY_VIEWED = '/recently-viewed',
     TEMPLATES = '/templates',
     RESUMES = '/resumes',
+    WEBHOOKS = '/webhooks',
 }
 
 export { ApiPath };
