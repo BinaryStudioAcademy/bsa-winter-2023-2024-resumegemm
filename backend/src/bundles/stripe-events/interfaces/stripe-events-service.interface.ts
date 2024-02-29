@@ -1,10 +1,10 @@
-import {
-    type StripeEventsRequestDto,
-    type StripeEventsResponseDto,
-} from '../types/types.js';
+import { type StripeEventsResponseDto } from '../types/types.js';
 
 interface IStripeEventsService {
-    handleEvent: (event: StripeEventsRequestDto) => StripeEventsResponseDto;
+    handleEvent: (
+        rawBody: string,
+        signature: string,
+    ) => StripeEventsResponseDto;
 }
 
 export { type IStripeEventsService };

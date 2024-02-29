@@ -8,10 +8,7 @@ import {
 } from '../../common/controller/controller.js';
 import { StripeEventsApiPath } from './enums/enums.js';
 import { type StripeEventsService } from './stripe-events.service.js';
-import {
-    type StripeEventsRequestDto,
-    type StripeEventsResponseDto,
-} from './types/types.js';
+import { type StripeEventsResponseDto } from './types/types.js';
 
 class StripeEventsController extends Controller {
     private stripeEventsService: StripeEventsService;
@@ -27,25 +24,29 @@ class StripeEventsController extends Controller {
         this.addRoute({
             path: '',
             method: 'POST',
-            handler: (options) =>
-                this.handleEvent(
+            handler: (options) => {
+                return this.handleStripeWebhook(
                     options as ApiHandlerOptions<{
-                        body: StripeEventsRequestDto;
+                        rawBody: string;
                         headers: Record<string, string>;
                     }>,
-                ),
+                );
+            },
         });
     }
 
-    private handleEvent(
+    private handleStripeWebhook(
         options: ApiHandlerOptions<{
-            body: StripeEventsRequestDto;
+            rawBody: string;
             headers: Record<string, string>;
         }>,
     ): ApiHandlerResponse<StripeEventsResponseDto> {
+        const signature: string = options.headers['stripe-signature'];
+        const { rawBody } = options;
+
         return {
             status: HttpCode.OK,
-            payload: this.stripeEventsService.handleEvent(options.body),
+            payload: this.stripeEventsService.handleEvent(rawBody, signature),
         };
     }
 }
