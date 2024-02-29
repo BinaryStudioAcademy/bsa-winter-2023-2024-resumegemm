@@ -5,6 +5,18 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
+    type OauthUserEntityFields,
+    type OauthUserLoginRequestDto,
+    type OauthUserLoginResponseDto,
+    type OauthUserWithProfileRelation,
+    type UserFacebookDataResponseDto,
+    type UserGithubDataResponseDto,
+    type UserGoogleDataResponseDto,
+    OauthStrategy,
+    OpenAuthApiGetUserUrl,
+    OpenAuthApiPath,
+} from './bundles/open-auth/open-auth.js';
+export {
     type CreateSubscriptionRequestDto,
     type CreateSubscriptionResponseDto,
     type GetPriceResponseDto,
@@ -21,6 +33,8 @@ export {
     type RecentlyViewed,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedTemplatesResponseDto,
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
 export {
@@ -80,6 +94,7 @@ export {
     type ServerErrorDetail,
     type ServerErrorResponse,
     type ServerValidationErrorResponse,
+    type SortType,
     type ValidationSchema,
     type ValueOf,
 } from './types/types.js';

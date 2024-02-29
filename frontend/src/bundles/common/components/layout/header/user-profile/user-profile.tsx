@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { storage, StorageKey } from '~/framework/storage/storage';
+
 import { Menu } from './menu/menu';
 import styles from './styles.module.scss';
 
@@ -24,7 +26,7 @@ const UserProfile: React.FC<Properties> = ({ image }) => {
     );
 
     const logoutHandler = useCallback(() => {
-        //TODO: Logout handler
+        void storage.drop(StorageKey.ACCESS_TOKEN);
     }, []);
 
     useEffect(() => {

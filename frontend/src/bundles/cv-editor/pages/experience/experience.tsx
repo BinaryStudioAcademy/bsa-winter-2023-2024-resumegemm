@@ -1,9 +1,10 @@
 import React, { type ChangeEvent, useCallback } from 'react';
 
-import { Calendar } from '../../../common/components/components';
-import { FormGroup } from '../../../common/components/form-group/form-group';
-import { Input } from '../../../common/components/input/input';
-import { type CalendarDate } from '../../../common/types/types';
+import { FormGroup } from '~/bundles/common/components/form-group/form-group';
+import { Input } from '~/bundles/common/components/input/input';
+import { type CalendarDate } from '~/bundles/common/types/types';
+
+import { DateSelector } from '../../components/common/date-selector/date-selector';
 import styles from './styles.module.scss';
 
 type Experience = {
@@ -43,6 +44,20 @@ const ExperienceForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
 
             if (onChange) {
                 onChange({ ...experience, [name]: value });
+            }
+        },
+        [onChange, experience],
+    );
+
+    const handleDateChange = useCallback(
+        (name: string, date: string): void => {
+            setExperience((previousData: Experience) => ({
+                ...previousData,
+                [name]: date,
+            }));
+
+            if (onChange) {
+                onChange({ ...experience, [name]: date });
             }
         },
         [onChange, experience],
@@ -93,18 +108,16 @@ const ExperienceForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
                 </FormGroup>
             </div>
             <div className={styles.experience__last_block}>
-                <FormGroup label={'Start date'} width={'50%'}>
-                    <Calendar
-                    // TODO: calendar needs to accept parameters to pre-display the value
-                    // also accept the name field to distinguish it from another calendar
-                    />
-                </FormGroup>
-                <FormGroup label={'End date'} width={'50%'}>
-                    <Calendar
-                    // TODO: calendar needs to accept parameters to pre-display the value
-                    // also accept the name field to distinguish it from another calendar
-                    />
-                </FormGroup>
+                <DateSelector
+                    name={'startDate'}
+                    label={'Start Date'}
+                    onChange={handleDateChange}
+                />
+                <DateSelector
+                    name={'endDate'}
+                    label={'End Date'}
+                    onChange={handleDateChange}
+                />
             </div>
         </form>
     );
