@@ -10,6 +10,7 @@ import OnlineEditorFeatureImage from '~/assets/img/mock-resume-designer.png';
 import templateFirstImage from '~/assets/img/resume-template.png';
 import { ButtonSize, ButtonVariant } from '~/bundles/common/enums/enums';
 
+import { RegularButton } from '../common/components/components';
 import { getUser } from '../auth/store/actions';
 import { BaseButton } from '../common/components/base-button/base-button';
 import { useAppDispatch } from '../common/hooks/hooks';
@@ -46,13 +47,13 @@ const LandingPage = (): JSX.Element => {
                             these sections to fit your unique background.
                         </p>
 
-                        <BaseButton
+                        <RegularButton
                             variant={ButtonVariant.PRIMARY}
                             size={ButtonSize.MEDIUM}
                             className={styles.intro__button}
                         >
                             <p>Create Resume for free</p>
-                        </BaseButton>
+                        </RegularButton>
                         <img
                             className={styles.intro__arrow}
                             src={Arrow2}
@@ -150,13 +151,13 @@ const LandingPage = (): JSX.Element => {
                             resumes begins!
                         </p>
 
-                        <BaseButton
+                        <RegularButton
                             variant={ButtonVariant.PRIMARY}
                             size={ButtonSize.MEDIUM}
                             className={styles.get_started_section__button}
                         >
                             <p>Create Resume for free</p>
-                        </BaseButton>
+                        </RegularButton>
                     </div>
                 </div>
 

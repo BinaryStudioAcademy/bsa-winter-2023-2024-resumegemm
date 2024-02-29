@@ -1,11 +1,13 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { BaseButton, Modal } from '~/bundles/common/components/components';
+import { RegularButton } from '~/bundles/common/components/components';
+import { ButtonVariant } from '~/bundles/common/enums/enums';
+
+import { Modal } from '~/bundles/common/components/components';
 import {
     AppRoute,
-    ButtonVariant,
-    ModalVariant,
+    ModalVariant
 } from '~/bundles/common/enums/enums';
 import { useAppDispatch } from '~/bundles/common/hooks/hooks';
 
@@ -37,12 +39,12 @@ const DeleteAccount: React.FC = () => {
                 Once you delete your account, it cannot be undone. This is
                 permanent.
             </p>
-            <BaseButton
+            <RegularButton
                 variant={ButtonVariant.PRIMARY}
                 onClick={handleOpenModal}
             >
                 Delete
-            </BaseButton>
+            </RegularButton>
             <Modal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
@@ -51,14 +53,15 @@ const DeleteAccount: React.FC = () => {
             >
                 <div className={styles.profile__delete__actions}>
                     <p>Are you sure you want delete your profile?</p>
-                    <BaseButton
+                    <RegularButton
                         variant={ButtonVariant.PRIMARY}
                         onClick={handleDeleteAccount}
                     >
                         Delete
-                    </BaseButton>
+                    </RegularButton>
                 </div>
             </Modal>
+
         </div>
     );
 };
