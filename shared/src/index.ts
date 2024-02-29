@@ -8,6 +8,7 @@ export {
     type Industry,
     IndustriesApiPath,
 } from './bundles/industries/industries.js';
+export {
     type GithubUserWithProfileRelation,
     type OauthUserEntityFields,
     type UserGithubDataResponseDto,
