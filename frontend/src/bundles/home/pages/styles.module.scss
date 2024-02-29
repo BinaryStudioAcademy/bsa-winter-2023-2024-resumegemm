@@ -2,11 +2,16 @@
     display: grid;
     grid-template-rows: 136px auto auto;
     grid-template-columns: 1fr 1fr;
+    flex-grow: 1;
     gap: 10px;
     width: 100%;
     max-width: 1250px;
     margin: 0 auto;
     padding: 20px;
+}
+
+.templates_layout {
+    grid-template-rows: 136px auto;
 }
 
 .template_page__card_layout {

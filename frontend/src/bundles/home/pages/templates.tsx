@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import { Icon, Input } from '~/bundles/common/components/components';
 import { IconInput } from '~/bundles/common/components/icon-input/icon-input';
 import { IconName, IconSize } from '~/bundles/common/enums/enums';
@@ -26,7 +28,7 @@ const Templates: React.FC = () => {
     }, [dispatch, templates]);
 
     return (
-        <div className={styles.layout}>
+        <div className={clsx(styles.layout, styles.templates_layout)}>
             <HomeTopSection className={styles.flex_home_wrapper}>
                 <IconInput
                     prependedIcon={
