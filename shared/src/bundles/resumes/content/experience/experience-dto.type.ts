@@ -11,6 +11,7 @@ type Experience = {
     currentlyWorking: boolean;
     createdAt: string;
     updatedAt: string;
+    resumeId: string;
 };
 
 export { type Experience };
