@@ -59,6 +59,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     element: <Auth />,
                                 },
                                 {
+                                    path: AppRoute.FORGOT_PASSWORD,
+                                    element: <Auth />,
+                                },
+                                {
                                     path: AppRoute.PROFILE,
                                     element: <Profile />,
                                 },
