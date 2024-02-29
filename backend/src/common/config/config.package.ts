@@ -123,6 +123,9 @@ class Config implements IConfig {
                     doc: 'AWS bucket name string',
                     format: String,
                     env: 'AWS_BUCKET_NAME',
+                    default: null,
+                },
+            },
             STRIPE: {
                 STRIPE_SECRET_KEY: {
                     doc: 'Stripe secret key',
