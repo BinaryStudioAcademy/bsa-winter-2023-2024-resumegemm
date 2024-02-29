@@ -10,7 +10,7 @@ import { FaArrowRotateRight } from 'react-icons/fa6';
 import { GrZoomIn, GrZoomOut } from 'react-icons/gr';
 
 import { ButtonSize, ButtonVariant } from '../../enums/enums';
-import { BaseButton, IconButton } from '../components';
+import { IconButton, RegularButton } from '../components';
 import styles from './styles.module.scss';
 
 interface UploadCropperProperties {
@@ -120,7 +120,7 @@ const UserPhotoCropper: React.FC<UploadCropperProperties> = ({
                 </IconButton>
             </div>
             <div className={styles.uploader_cropper__buttonThumb}>
-                <BaseButton
+                <RegularButton
                     prependedIcon={<FaFileUpload />}
                     size={ButtonSize.SMALL}
                     variant={ButtonVariant.PRIMARY}
@@ -128,8 +128,8 @@ const UserPhotoCropper: React.FC<UploadCropperProperties> = ({
                     className={styles.uploader_cropper__button__anotherPhoto}
                 >
                     Upload another photo
-                </BaseButton>
-                <BaseButton
+                </RegularButton>
+                <RegularButton
                     prependedIcon={<BsSave />}
                     size={ButtonSize.SMALL}
                     variant={ButtonVariant.PRIMARY}
@@ -137,7 +137,7 @@ const UserPhotoCropper: React.FC<UploadCropperProperties> = ({
                     className={styles.uploader_cropper__button__save}
                 >
                     Save image
-                </BaseButton>
+                </RegularButton>
             </div>
         </div>
     );

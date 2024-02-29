@@ -8,6 +8,7 @@ enum ApiPath {
     TEMPLATES = '/templates',
     OPEN_AUTH = '/oauth',
     RESUMES = '/resumes',
+    AVATAR = '/avatar',
 }
 
 export { ApiPath };

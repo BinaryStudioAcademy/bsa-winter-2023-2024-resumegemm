@@ -1,10 +1,9 @@
-import { ProfileApiPath } from 'shared/build/bundles/profile/enums';
-import { type UserProfileResponce } from 'shared/build/bundles/profile/types/user-profile-response.type';
-
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
+
+import { type UserProfileResponce } from './types/user-profile-responce';
 
 type Constructor = {
     baseUrl: string;
@@ -17,17 +16,19 @@ class ProfileApi extends HttpApi {
         super({ path: ApiPath.PROFILE, baseUrl, http, storage });
     }
 
-    public async updateUserAvatar(payload: FormData): Promise<UserProfileResponce> {
+    public async updateUserAvatar(
+        payload: FormData,
+    ): Promise<UserProfileResponce> {
         const response = await this.load(
-          this.getFullEndpoint(ProfileApiPath.AVATAR, {}),
-          {
-            method: 'PUT',
-            contentType: ContentType.FORM_DATA,
-            hasAuth: true,
-            payload,
-          },
+            this.getFullEndpoint(ApiPath.AVATAR, {}),
+            {
+                method: 'PUT',
+                contentType: ContentType.FORM_DATA,
+                hasAuth: true,
+                payload,
+            },
         );
-    
+
         return await response.json<UserProfileResponce>();
     }
 }
