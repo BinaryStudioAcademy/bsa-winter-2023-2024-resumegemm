@@ -22,23 +22,62 @@ type Properties = {
     onChange?: (date: CalendarDate) => void;
     type?: ValueOf<typeof CalendarTypes>;
     className?: string;
+    initDate?: {
+        year?: number;
+        month?: number;
+        present?: boolean;
+    };
+};
+
+const handleYearInit = (inputYear: number | undefined): number => {
+    if (!inputYear) {
+        return new Date().getFullYear();
+    }
+
+    return inputYear;
+};
+
+const handleMonthInit = (
+    inputMonth: number | undefined,
+): CalendarMonth | null => {
+    const month = CalendarMonths.find((month) => month.num === inputMonth);
+    if (!month) {
+        return null;
+    }
+
+    return month;
+};
+
+const handlePresentInit = (inputPresent: boolean | undefined): boolean => {
+    if (!inputPresent) {
+        return false;
+    }
+
+    return inputPresent;
 };
 
 const Calendar = ({
     type = CalendarTypes.regular,
     className = '',
+    initDate = {
+        year: new Date().getFullYear(),
+        month: new Date().getMonth(),
+        present: false,
+    },
     onChange,
 }: Properties): JSX.Element => {
     const [selected, setSelected] = useState<number | null>(null);
 
-    const [year, setYear] = useState(new Date().getFullYear());
-    const [month, setMonth] = useState<CalendarMonth | null>(null);
+    const [year, setYear] = useState(handleYearInit(initDate.year));
+    const [month, setMonth] = useState<CalendarMonth | null>(
+        handleMonthInit(initDate.month),
+    );
 
     const [text, setText] = useState('');
 
     const [focused, setFocused] = useState(false);
 
-    const [present, setPresent] = useState(false);
+    const [present, setPresent] = useState(handlePresentInit(initDate.present));
 
     const reference = useRef<HTMLDivElement>(null);
 

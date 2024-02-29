@@ -82,8 +82,11 @@ const PreviewPage: React.FC = () => {
                         </BaseButton>
                     </li>
                     <li className={styles.item}>
-                        <Calendar />
-                        <Calendar type={CalendarTypes.withPresent} />
+                        <Calendar initDate={{ year: 1500, month: 9 }} />
+                        <Calendar
+                            initDate={{ present: true }}
+                            type={CalendarTypes.withPresent}
+                        />
                         <div className={styles.tooltip_small_example_container}>
                             <Tooltip
                                 dimensionType={
