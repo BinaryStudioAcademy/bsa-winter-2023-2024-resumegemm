@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { useEffect } from 'react';
 
 import introImage from '~/assets/img/5192055.png';
 import templateThirdImage from '~/assets/img/5297769.png';
@@ -10,17 +9,11 @@ import OnlineEditorFeatureImage from '~/assets/img/mock-resume-designer.png';
 import templateFirstImage from '~/assets/img/resume-template.png';
 import { ButtonSize, ButtonVariant } from '~/bundles/common/enums/enums';
 
-import { getUser } from '../auth/store/actions';
 import { RegularButton } from '../common/components/components';
-import { useAppDispatch } from '../common/hooks/hooks';
 import { FeatureImage } from './components/feature-image';
 import styles from './styles.module.scss';
 
 const LandingPage = (): JSX.Element => {
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        void dispatch(getUser());
-    }, [dispatch]);
     return (
         <div className={styles.landing_page__container}>
             <section className={styles.landing_page__intro}>
