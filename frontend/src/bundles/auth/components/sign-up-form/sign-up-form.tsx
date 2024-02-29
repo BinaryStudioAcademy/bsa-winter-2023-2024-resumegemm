@@ -11,14 +11,17 @@ import {
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DividerVariant,
 } from '~/bundles/common/enums/enums';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
-import { type UserSignUpRequestDtoFrontend } from './validation/sign-up-validation';
-import { userSignUpValidationFrontend } from './validation/sign-up-validation';
+import {
+    type UserSignUpRequestDtoFrontend,
+    userSignUpValidationFrontend,
+} from './validation/sign-up-validation';
 
 type Properties = {
     onSubmit: (payload: UserSignUpRequestDtoFrontend) => void;
@@ -96,7 +99,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 >
                     Sign up
                 </BaseButton>
-                <Divider isBlue />
+                <Divider variant={DividerVariant.PRIMARY} />
                 <SocialMediaLinks />
             </form>
         </>
