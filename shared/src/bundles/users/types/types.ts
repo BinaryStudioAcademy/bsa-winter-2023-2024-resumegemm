@@ -1,10 +1,16 @@
 export { type User } from './user.type.js';
 export { type UserAuthResponse } from './user-auth-response.type.js';
 export { type UserEntityFields } from './user-entity-fields.type.js';
+export { type UserForgotPasswordRequestDto } from './user-forgot-password-request-dto.type.js';
+export { type UserForgotPasswordResponse } from './user-forgot-password-response.type.js';
 export { type UserGetAllItemResponseDto } from './user-get-all-item-response-dto.type.js';
 export { type UserGetAllResponseDto } from './user-get-all-response-dto.type.js';
+export { type UserResetPasswordRequestDto } from './user-reset-password-request-dto.type.js';
+export { type UserResetPasswordResponse } from './user-reset-password-response.type.js';
 export { type UserSignInRequestDto } from './user-sign-in-request-dto.type.js';
 export { type UserSignInResponseDto } from './user-sign-in-response-dto.type.js';
 export { type UserSignUpRequestDto } from './user-sign-up-request-dto.type.js';
 export { type UserSignUpResponseDto } from './user-sign-up-response-dto.type.js';
+export { type UserVerifyResetTokenRequestDto } from './user-verify-reset-token-request-dto.type.js';
+export { type UserVerifyResetTokenResponse } from './user-verify-reset-token-response.type.js';
 export { type UserWithProfileRelation } from './user-with-profile-nested-relation.type.js';
