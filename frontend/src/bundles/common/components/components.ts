@@ -20,6 +20,7 @@ export { Spinner } from './spinner/spinner';
 export { StripeProvider } from './stripe-provider/stripe-provider.js';
 export { Switch } from './switch/switch.js';
 export { NavTabs } from './tabs/nav-tab.js';
+export { TextArea } from './text-area/text-area.js';
 export { Tooltip } from './tooltip/tooltip.js';
 export { Provider as StoreProvider } from 'react-redux';
 export { Outlet as RouterOutlet } from 'react-router-dom';
