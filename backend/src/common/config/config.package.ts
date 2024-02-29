@@ -88,9 +88,23 @@ class Config implements IConfig {
                         default: null,
                     },
                     CLIENT_GOOGLE_SECRET: {
-                        doc: 'Google secret client token',
+                        doc: 'Google client secret',
                         format: String,
                         env: 'CLIENT_GOOGLE_SECRET',
+                        default: null,
+                    },
+                },
+                FACEBOOK: {
+                    CLIENT_FACEBOOK_ID: {
+                        doc: 'Facebook app id',
+                        format: String,
+                        env: 'CLIENT_FACEBOOK_ID',
+                        default: null,
+                    },
+                    CLIENT_FACEBOOK_SECRET: {
+                        doc: 'Facebook client secret',
+                        format: String,
+                        env: 'CLIENT_FACEBOOK_SECRET',
                         default: null,
                     },
                 },
