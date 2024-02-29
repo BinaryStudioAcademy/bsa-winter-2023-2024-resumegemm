@@ -1,0 +1,33 @@
+.button__base {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    min-height: 16px;
+    margin: 0;
+    padding: 8px 16px;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: baseline;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.icon_wrapper {
+    color: var(--color-text-gray);
+    font-size: 14px;
+}
+
+.icon_wrapper svg {
+    font-size: inherit;
+}
+
+.icon_wrapper__asc.icon_wrapper__asc svg:first-child {
+    color: var(--color-black);
+}
+
+.icon_wrapper__desc.icon_wrapper__desc svg:last-child {
+    color: var(--color-black);
+}
