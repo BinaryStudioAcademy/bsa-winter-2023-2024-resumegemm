@@ -3,8 +3,17 @@ import { type UserAuthResponse } from 'shared/build/index.js';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
+import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
+import { showToast } from '~/bundles/toast/helpers/show-toast.js';
 
-import { getUser, signIn, signUp } from './actions.js';
+import {
+    forgotPassword,
+    getUser,
+    resetPassword,
+    signIn,
+    signUp,
+    verifyResetToken,
+} from './actions.js';
 
 type State = {
     user: UserAuthResponse | null;
@@ -36,6 +45,33 @@ const { reducer, actions, name } = createSlice({
             },
         );
 
+        builder.addMatcher(
+            isAnyOf(
+                verifyResetToken.fulfilled,
+                forgotPassword.fulfilled,
+                resetPassword.fulfilled,
+            ),
+            (_, action) => {
+                showToast(
+                    JSON.stringify(action.payload.message),
+                    ToastType.SUCCESS,
+                );
+            },
+        );
+
+        builder.addMatcher(
+            isAnyOf(
+                verifyResetToken.rejected,
+                forgotPassword.rejected,
+                resetPassword.rejected,
+            ),
+            (state, action) => {
+                showToast(
+                    JSON.stringify(action.error.message),
+                    ToastType.ERROR,
+                );
+            },
+        );
         builder.addMatcher(
             isAnyOf(signUp.rejected, signIn.rejected, getUser.rejected),
             (state) => {

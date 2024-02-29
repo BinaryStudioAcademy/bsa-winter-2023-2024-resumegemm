@@ -1,8 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import {
+    type UserResetPasswordRequestDto,
+    type UserResetPasswordResponse,
+    type UserVerifyResetTokenRequestDto,
+    type UserVerifyResetTokenResponse,
+} from 'shared/build/index.js';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
     type UserAuthResponse,
+    type UserForgotPasswordRequestDto,
+    type UserForgotPasswordResponse,
     type UserSignInRequestDto,
     type UserSignUpRequestDto,
 } from '~/bundles/users/users.js';
@@ -34,6 +42,39 @@ const signIn = createAsyncThunk<
     return user;
 });
 
+const forgotPassword = createAsyncThunk<
+    UserForgotPasswordResponse,
+    UserForgotPasswordRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/forgot-password`, async (forgotPasswordPayload, { extra }) => {
+    const { authApi } = extra;
+
+    return await authApi.forgotPassword(forgotPasswordPayload);
+});
+
+const verifyResetToken = createAsyncThunk<
+    UserVerifyResetTokenResponse,
+    UserVerifyResetTokenRequestDto,
+    AsyncThunkConfig
+>(
+    `${sliceName}/verify-reset-token`,
+    async (verifyResetTokenPayload, { extra }) => {
+        const { authApi } = extra;
+
+        return await authApi.verifyResetToken(verifyResetTokenPayload);
+    },
+);
+
+const resetPassword = createAsyncThunk<
+    UserResetPasswordResponse,
+    UserResetPasswordRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/reset-password`, async (resetPasswordPayload, { extra }) => {
+    const { authApi } = extra;
+
+    return await authApi.resetPassword(resetPasswordPayload);
+});
+
 // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 const getUser = createAsyncThunk<UserAuthResponse, void, AsyncThunkConfig>(
     `${sliceName}/get-user`,
@@ -44,4 +85,11 @@ const getUser = createAsyncThunk<UserAuthResponse, void, AsyncThunkConfig>(
     },
 );
 
-export { getUser, signIn, signUp };
+export {
+    forgotPassword,
+    getUser,
+    resetPassword,
+    signIn,
+    signUp,
+    verifyResetToken,
+};
