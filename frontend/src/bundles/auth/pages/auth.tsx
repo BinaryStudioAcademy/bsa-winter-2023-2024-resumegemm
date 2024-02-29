@@ -10,6 +10,7 @@ import {
 import { type UserSignUpRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
+import { PasswordRecovery } from '../components/password-recovery/password-recovery.js';
 import { actions as authActions } from '../store/';
 import styles from './styles.module.scss';
 
@@ -41,6 +42,9 @@ const Auth: React.FC = () => {
             }
             case AppRoute.SIGN_UP: {
                 return <SignUpForm onSubmit={handleSignUpSubmit} />;
+            }
+            case AppRoute.FORGOT_PASSWORD: {
+                return <PasswordRecovery />;
             }
         }
 
