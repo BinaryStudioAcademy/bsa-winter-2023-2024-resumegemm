@@ -23,6 +23,13 @@ class ResumeShareService implements IResumeShareService {
     public async CreateShareLink(
         id: string,
     ): Promise<ResumeShareCreateResponseDto | unknown> {
+        const shareLink =
+            await this.resumeShareRepository.getResumeShareLinkByResumeId(id);
+
+        if (shareLink) {
+            return shareLink;
+        }
+
         return await this.resumeShareRepository.createResumeShareLink(id);
     }
 

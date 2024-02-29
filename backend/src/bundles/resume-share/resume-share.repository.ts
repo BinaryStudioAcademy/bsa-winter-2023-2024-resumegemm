@@ -16,6 +16,16 @@ class ResumeShareRepository {
         this.resumeShareModel = resumeShareModel;
     }
 
+    public async getResumeShareLinkByResumeId(
+        resumeId: string,
+    ): Promise<ResumeShareGetResponseDto | undefined> {
+        return await this.resumeShareModel
+            .query()
+            .findOne('resumeId', resumeId)
+            .returning('*')
+            .execute();
+    }
+
     public async getResumeShareLink(
         id: string,
     ): Promise<ResumeShareGetResponseDto | undefined> {
