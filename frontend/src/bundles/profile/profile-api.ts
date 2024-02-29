@@ -1,5 +1,4 @@
 import { type UserProfileResponce } from 'shared/build/bundles/profile/types/user-profile-response.type';
-import { ProfileApiPath } from 'shared/build/index';
 
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
@@ -21,7 +20,7 @@ class ProfileApi extends HttpApi {
         payload: FormData,
     ): Promise<UserProfileResponce> {
         const response = await this.load(
-            this.getFullEndpoint(ProfileApiPath.AVATAR, {}),
+            this.getFullEndpoint(ApiPath.AVATAR, {}),
             {
                 method: 'PUT',
                 contentType: ContentType.FORM_DATA,
