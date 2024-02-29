@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256" width="30px"
-     height="48px">
-    <g fill="#fff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256" width="100%"
+     height="100%">
+    <g fill="currentColor" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+       stroke-linejoin="miter"
        stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none"
        font-size="none" style="mix-blend-mode: normal">
         <g transform="scale(5.33333,5.33333)">

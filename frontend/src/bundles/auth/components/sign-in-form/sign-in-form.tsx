@@ -14,6 +14,7 @@ import {
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DividerVariant,
 } from '~/bundles/common/enums/enums';
 import { useAppForm } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
@@ -76,7 +77,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                 >
                     Sign up
                 </RegularButton>
-                <Divider />
+                <Divider variant={DividerVariant.SECONDARY} />
                 <SocialMediaLinks />
             </form>
         </>

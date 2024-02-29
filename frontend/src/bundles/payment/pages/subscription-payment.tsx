@@ -1,6 +1,11 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { type ChangeEvent, type FormEvent, useEffect } from 'react';
-import { useCallback, useState } from 'react';
+import {
+    type ChangeEvent,
+    type FormEvent,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react';
 
 import { Input, RegularButton } from '~/bundles/common/components/components';
 import { ButtonWidth } from '~/bundles/common/enums/components/button-width.enum';
