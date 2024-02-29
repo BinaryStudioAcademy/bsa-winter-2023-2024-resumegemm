@@ -1,6 +1,8 @@
 export {
     type AuthTokenResponse,
     type UserAuthResponse,
+    type UserForgotPasswordRequestDto,
+    type UserForgotPasswordResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserSignInRequestDto,
