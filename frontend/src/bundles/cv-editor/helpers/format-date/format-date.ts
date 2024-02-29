@@ -1,10 +1,10 @@
 import { type CalendarDate } from '~/bundles/common/types/types';
 
-const DAY = '01';
+const DEFAULT_DAY = '01';
 
 const formatDate = (date: CalendarDate): string => {
     const year = date.year;
-    const day = DAY;
+    const day = DEFAULT_DAY;
     let month;
 
     if (date.month !== null) {
