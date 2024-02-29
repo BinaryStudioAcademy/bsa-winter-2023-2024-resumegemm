@@ -1,4 +1,6 @@
-import { signIn } from '../auth/store/actions';
+import { type UserWithProfileRelation } from 'shared/build';
+
+import { getUser } from '../auth/store/actions';
 import { Header, NavTabs, Spinner } from '../common/components/components';
 import { UserProfile } from '../common/components/layout/header/user-profile/user-profile';
 import { AppRoute } from '../common/enums/app-route.enum';
@@ -14,15 +16,21 @@ const navbarItems = [
     { label: 'Preview', path: AppRoute.PREVIEW },
 ];
 
+const getUserAvatart = (user: UserWithProfileRelation | null): string => {
+    if (user?.user_profile.avatar) {
+        return user.user_profile.avatar;
+    }
+    return '/src/assets/img/mock-avatar.png';
+};
+
 const MainPage = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const { user, dataStatus } = useAppSelector((state) => state.auth);
-
     useEffect(() => {
-        void dispatch(
-            signIn({ email: 'gbottoms1@arizona.edu', password: 'pxlxvUyyUjE' }),
-        );
-    }, [dispatch]);
+        if (!user) {
+            void dispatch(getUser());
+        }
+    }, [user, dispatch]);
 
     return (
         <>
@@ -44,13 +52,7 @@ const MainPage = (): JSX.Element => {
             )}
             <Header>
                 <NavTabs items={navbarItems} />
-                <UserProfile
-                    image={
-                        user
-                            ? user.user_profile.avatar
-                            : '/src/assets/img/mock-avatar.png'
-                    }
-                />
+                <UserProfile image={getUserAvatart(user)} />
             </Header>
             <Home />
         </>
