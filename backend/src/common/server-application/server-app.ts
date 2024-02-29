@@ -116,6 +116,7 @@ class ServerApp implements IServerApp {
                     await this.app.register(oauthPlugin, {
                         name: oauthProvider,
                         credentials,
+                        scope: ['profile', 'email'],
                         startRedirectPath: `${OpenAuthApiPath.ROOT}${oauthProvider}`,
                         callbackUri: `${config.ENV.OAUTH.BASE_CALLBACK_URI}${oauthProvider}`,
                     });

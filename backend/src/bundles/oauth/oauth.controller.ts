@@ -5,8 +5,11 @@ import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
     type HttpError,
     type OauthUserEntityFields,
+    type OauthUserLoginRequestDto,
+    type OauthUserLoginResponseDto,
     type UserGithubDataResponseDto,
-    type UserGithubLoginResponseDto,
+    type UserGoogleDataResponseDto,
+    type ValueOf,
 } from '~/bundles/oauth/types/types.js';
 import { type HttpApi } from '~/common/api/types/http-api.type.js';
 import {
@@ -49,7 +52,16 @@ class OpenAuthController extends Controller {
                     }>,
                 ),
         });
-
+        this.addRoute({
+            path: OpenAuthApiPath.GOOGLE,
+            method: 'GET',
+            handler: (options) =>
+                this.googleAuthHandler(
+                    options as ApiHandlerOptions<{
+                        cookies: FastifyRequest['cookies'];
+                    }>,
+                ),
+        });
         this.addRoute({
             path: OpenAuthApiPath.USER,
             method: 'GET',
@@ -92,30 +104,60 @@ class OpenAuthController extends Controller {
      *       500:
      *         description: Invalid authentication request.
      */
-    private async githubAuthHandler(
-        options: ApiHandlerOptions<{
-            cookies: FastifyRequest['cookies'];
-        }>,
+    private async githubAuthHandler({
+        cookies,
+    }: ApiHandlerOptions<{
+        cookies: FastifyRequest['cookies'];
+    }>): Promise<ApiHandlerResponse<unknown>> {
+        const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
+        const { email, id, name, avatar_url }: UserGithubDataResponseDto =
+            await this.requestOAuthProviderUserData(
+                OpenAuthApiGetUserUrl.GITHUB,
+                oauthToken,
+            );
+        return await this.createUser({
+            email,
+            firstName: name,
+            avatar: avatar_url,
+            oauthId: String(id),
+            oauthStrategy: OauthStrategy.GITHUB,
+        });
+    }
+
+    private async googleAuthHandler({
+        cookies,
+    }: ApiHandlerOptions<{
+        cookies: FastifyRequest['cookies'];
+    }>): Promise<ApiHandlerResponse<null>> {
+        const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
+        const {
+            id,
+            email,
+            picture,
+            given_name,
+            family_name,
+        }: UserGoogleDataResponseDto = await this.requestOAuthProviderUserData(
+            OpenAuthApiGetUserUrl.GOOGLE,
+            oauthToken,
+        );
+        return await this.createUser({
+            email,
+            firstName: given_name,
+            lastName: family_name,
+            avatar: picture,
+            oauthId: id,
+            oauthStrategy: OauthStrategy.GOOGLE,
+        });
+    }
+
+    private async createUser(
+        userPayload: OauthUserLoginRequestDto,
     ): Promise<ApiHandlerResponse<null>> {
         try {
-            const oauthToken = options.cookies[
-                CookieName.OAUTH_TOKEN
-            ] as string;
-            const { email, id, name, avatar_url }: UserGithubDataResponseDto =
-                await this.requestOAuthProviderUserData(
-                    OpenAuthApiGetUserUrl.GITHUB,
-                    oauthToken,
-                );
-            const user = await this.oauthService.create({
-                email,
-                firstName: name,
-                avatar: avatar_url,
-                oauthId: id,
-                oauthStrategy: OauthStrategy.GITHUB,
-            });
+            const user = await this.oauthService.create(userPayload);
             return {
                 accessToken: generateToken({ id: user.id }),
-                status: HttpCode.CREATED,
+                status: HttpCode.OK,
                 payload: null,
             };
         } catch (error: unknown) {
@@ -124,14 +166,14 @@ class OpenAuthController extends Controller {
                 status,
                 payload: {
                     message,
-                    status,
+                    status: HttpCode.INTERNAL_SERVER_ERROR,
                 },
             };
         }
     }
 
     private async requestOAuthProviderUserData<T>(
-        providerUrl: string,
+        providerUrl: ValueOf<typeof OpenAuthApiGetUserUrl>,
         token: string,
     ): Promise<T> {
         return (await this.httpService.load(providerUrl, {
@@ -143,7 +185,7 @@ class OpenAuthController extends Controller {
         options: ApiHandlerOptions<{
             user: FastifyRequest['user'];
         }>,
-    ): Promise<ApiHandlerResponse<UserGithubLoginResponseDto>> {
+    ): Promise<ApiHandlerResponse<OauthUserLoginResponseDto>> {
         try {
             const userId = (options.user as OauthUserEntityFields).id;
             const user = await this.oauthService.getById(userId);
