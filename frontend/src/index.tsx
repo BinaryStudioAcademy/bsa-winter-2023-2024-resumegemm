@@ -81,15 +81,15 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         </StripeProvider>
                                     ),
                                 },
+                                {
+                                    path: AppRoute.PREVIEW,
+                                    element: <PreviewPage />,
+                                },
                             ],
                         },
                         {
                             path: '*',
                             element: <NotFoundPage />,
-                        },
-                        {
-                            path: AppRoute.PREVIEW,
-                            element: <PreviewPage />,
                         },
                     ]}
                 />
