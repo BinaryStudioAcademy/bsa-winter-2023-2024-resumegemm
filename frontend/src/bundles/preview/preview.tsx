@@ -18,6 +18,7 @@ import {
 import { Auth } from '../auth/pages/auth';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
+import { DragAndDropPreview } from '../drag-and-drop/components/drag-and-drop-preview/drag-and-drop-preview.js';
 import { EditTemplatePage } from '../edit-temlate/edit-template';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
@@ -58,6 +59,9 @@ const PreviewPage: React.FC = () => {
                 <ul className={styles.list}>
                     <li className={styles.item}>
                         <div className={styles.example}>Component preview</div>
+                    </li>
+                    <li className={styles.item}>
+                        <DragAndDropPreview />
                     </li>
                     <li className={styles.item}>
                         <NavTabs items={navbarItems}></NavTabs>
