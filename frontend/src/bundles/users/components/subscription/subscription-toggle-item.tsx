@@ -1,4 +1,4 @@
-import { BaseButton } from '~/bundles/common/components/components';
+import { RegularButton } from '~/bundles/common/components/components';
 
 import styles from './style.module.scss';
 
@@ -26,9 +26,9 @@ const SubscriptionToggleItem: React.FC<Properties> = ({
                 <p>{info}</p>
             </div>
             <div>
-                <BaseButton onClick={onClick}>
+                <RegularButton onClick={onClick}>
                     {isLoading ? 'Loading...' : buttonText}
-                </BaseButton>
+                </RegularButton>
             </div>
         </div>
     );
