@@ -1,5 +1,5 @@
 type Industry = {
-    id: number;
+    id: string;
     industry: string;
 };
 
