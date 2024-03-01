@@ -12,13 +12,13 @@ class ResumeEntity implements IResumeEntity {
 
     private constructor({
         id,
-        resumeTitle,
+        title,
         image,
         userId,
         templateId,
     }: ResumeEntityFields) {
         this.id = id;
-        this.resumeTitle = resumeTitle;
+        this.title = title;
         this.image = image;
         this.userId = userId;
         this.templateId = templateId;
@@ -26,14 +26,14 @@ class ResumeEntity implements IResumeEntity {
 
     public static initialize({
         id,
-        resumeTitle,
+        title,
         image,
         userId,
         templateId,
     }: ResumeEntityFields): ResumeEntity {
         return new ResumeEntity({
             id,
-            resumeTitle,
+            title,
             image,
             userId,
             templateId,
@@ -41,27 +41,24 @@ class ResumeEntity implements IResumeEntity {
     }
 
     public static initializeNew({
-        resumeTitle,
+        title,
         image,
         userId,
         templateId,
     }: Omit<ResumeEntityFields, 'id'>): ResumeEntity {
         return new ResumeEntity({
             id: guid.raw(),
-            resumeTitle,
+            title,
             image,
             userId,
             templateId,
         });
     }
 
-    public toObject(): Pick<
-        ResumeEntityFields,
-        'id' | 'resumeTitle' | 'image'
-    > {
+    public toObject(): Pick<ResumeEntityFields, 'id' | 'title' | 'image'> {
         return {
             id: this.id as string,
-            resumeTitle: this.resumeTitle,
+            title: this.title,
             image: this.image,
         };
     }
@@ -69,7 +66,7 @@ class ResumeEntity implements IResumeEntity {
     public toNewObject(): ResumeEntityFields {
         return {
             id: this.id as NonNullable<string>,
-            resumeTitle: this.resumeTitle,
+            title: this.title,
             image: this.image,
             userId: this.userId,
             templateId: this.templateId,

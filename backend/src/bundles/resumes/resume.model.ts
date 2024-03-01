@@ -8,7 +8,7 @@ import {
 } from '~/common/database/database.js';
 
 class ResumeModel extends AbstractModel {
-    public 'resumeTitle': string;
+    public 'title': string;
     public 'image': string;
     public 'userId': string;
     public 'templateId': string;
