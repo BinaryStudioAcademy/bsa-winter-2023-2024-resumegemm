@@ -1,4 +1,3 @@
-doctype html
 html(lang='en')
   head
     meta(charset='UTF-8')
@@ -18,6 +17,18 @@ html(lang='en')
       .button-container { width: 100%; padding: 30px 0; text-align: center; }
       .button { margin: auto auto; vertical-align: middle; background-color: #434c66; border: none; font-weight: 500; font-size: 18px; line-height: 16px; width: 170px; height: 40px; text-align: center; border-radius: 25px; color: #ffff; cursor: pointer; }
       .link { color: #3f557e; text-decoration-line: underline; cursor: pointer; }
+
+      @media only screen and (max-width: 360px) {
+        .email-container { padding: 0 20px; }
+        .email-thumb { padding: 20px; }
+        .button { width: 150px; font-size: 16px; line-height: 14px; }
+      }
+
+      @media only screen and (min-width: 361px) and (max-width: 768px) {
+        .email-container { padding: 0 50px; }
+        .email-thumb { padding: 25px; }
+        .button { width: 160px; font-size: 16px; line-height: 14px; }
+      }
   body
     section.main-container
       div.header-container
@@ -26,14 +37,14 @@ html(lang='en')
       div.email-container
         .email-thumb
             p.email-text
-                | Congratulations! You are succesfully registrated in ResumeGemm.
-                | Since now you have got a greate opportunity to find job you dream about!
-                | Our very understandable and convenient service is created to make you job searching much more pleasent.
+                | Congratulations! You are successfully registered in ResumeGemm.
+                | Since now you have got a great opportunity to find the job you dream about!
+                | Our very understandable and convenient service is created to make your job searching much more pleasant.
                 | Improve your CV and find your best job!
             .button-container
                 a(href=dashboardLink, target='_blank')
                   button.button Get Started
-            p.email-text What is the main advantages of ResumeGemm?
+            p.email-text What are the main advantages of ResumeGemm?
             ul.email-list
                 li.email-text Created by experts 
                 li.email-text Improved by data

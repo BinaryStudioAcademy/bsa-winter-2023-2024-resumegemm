@@ -7,6 +7,7 @@ const AppRoute = {
     PROFILE: '/profile',
     HOME: '/home',
     TEMPLATES: '/templates',
+    EMAIL_CONFIRMED: '/confirm-email',
 } as const;
 
 export { AppRoute };

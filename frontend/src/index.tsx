@@ -16,6 +16,7 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
+import { EmailConfirmedPage } from './bundles/auth/components/comfirmed-email-page/confirmed-email-page';
 import { NoAuthRoute } from './bundles/common/components/no-auth-route/no-auth-route';
 import { PrivateRoute } from './bundles/common/components/private-route/private-route';
 import { Home } from './bundles/home/pages/home';
@@ -80,6 +81,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: AppRoute.TEMPLATES,
                                             element: <TemplatePage />,
+                                        },
+                                        {
+                                            path: AppRoute.EMAIL_CONFIRMED,
+                                            element: <EmailConfirmedPage />,
                                         },
                                     ],
                                 },
