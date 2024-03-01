@@ -32,10 +32,17 @@ const userSignUpValidationFrontend = joi.object<
             'string.email': UserValidationMessage.EMAIL_WRONG,
             'string.empty': UserValidationMessage.EMAIL_REQUIRE,
         }),
-    password: joi.string().trim().regex(/^\S*$/).required().messages({
-        'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
-        'string.pattern.base': UserValidationMessage.PASSWORD_NO_SPACES,
-    }),
+    password: joi
+        .string()
+        .trim()
+        .regex(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~])(?=\S{8,64}$).*$/,
+        )
+        .required()
+        .messages({
+            'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
+            'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
+        }),
     confirm_password: joi
         .string()
         .trim()
