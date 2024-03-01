@@ -1,4 +1,4 @@
-import { BaseButton, Modal } from '../../../common/components/components.js';
+import { Modal, RegularButton } from '../../../common/components/components.js';
 import {
     ButtonSize,
     ButtonType,
@@ -26,21 +26,21 @@ const DeleteResumeModal: React.FC<DeleteResumeModalProperties> = ({
                     this resume cannot be restored.
                 </p>
                 <div className={styles.modal_buttons}>
-                    <BaseButton
+                    <RegularButton
                         size={ButtonSize.MEDIUM}
                         type={ButtonType.BUTTON}
                         className={styles.modal__delete__button}
                     >
                         Delete
-                    </BaseButton>
-                    <BaseButton
+                    </RegularButton>
+                    <RegularButton
                         size={ButtonSize.MEDIUM}
                         type={ButtonType.BUTTON}
                         className={styles.modal__cancel__button}
                         onClick={onClose}
                     >
                         Cancel
-                    </BaseButton>
+                    </RegularButton>
                 </div>
             </div>
         </Modal>
