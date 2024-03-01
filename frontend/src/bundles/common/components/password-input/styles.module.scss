@@ -13,3 +13,12 @@
     cursor: pointer;
     transform: translateY(-50%);
 }
+
+.password_form > span {
+    bottom: -35px;
+    margin-bottom: 5px;
+}
+
+.password_form > input {
+    padding: 5px 12px;
+}
