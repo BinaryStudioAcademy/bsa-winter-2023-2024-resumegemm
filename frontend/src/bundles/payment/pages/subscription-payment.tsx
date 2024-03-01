@@ -1,8 +1,13 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { type ChangeEvent, type FormEvent, useEffect } from 'react';
-import { useCallback, useState } from 'react';
+import {
+    type ChangeEvent,
+    type FormEvent,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react';
 
-import { BaseButton, Input } from '~/bundles/common/components/components';
+import { Input, RegularButton } from '~/bundles/common/components/components';
 import { ButtonWidth } from '~/bundles/common/enums/components/button-width.enum';
 import { ButtonType, ButtonVariant } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
@@ -198,7 +203,7 @@ const SubscriptionPaymentPage: React.FC = () => {
                                 className={styles.payment__modal_input_card}
                             />
 
-                            <BaseButton
+                            <RegularButton
                                 className={styles.payment__modal_input_button}
                                 type={ButtonType.SUBMIT}
                                 width={ButtonWidth.FULL}
@@ -206,7 +211,7 @@ const SubscriptionPaymentPage: React.FC = () => {
                                 variant={ButtonVariant.PRIMARY}
                             >
                                 Confirm payment
-                            </BaseButton>
+                            </RegularButton>
                         </div>
                     </div>
                 )}

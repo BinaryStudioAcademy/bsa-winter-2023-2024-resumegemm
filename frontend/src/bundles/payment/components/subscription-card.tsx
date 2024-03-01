@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { BaseButton } from '~/bundles/common/components/components';
+import { RegularButton } from '~/bundles/common/components/components';
 import { ButtonVariant } from '~/bundles/common/enums/enums';
 
 import styles from './styles.module.scss';
@@ -63,13 +63,13 @@ const SubscriptionCard: React.FC<Properties> = ({
                 </p>
             )}
 
-            <BaseButton
+            <RegularButton
                 className={styles.subscription_card__button}
                 onClick={onClick}
                 variant={ButtonVariant.SQUARE_ORANGE}
             >
                 Select
-            </BaseButton>
+            </RegularButton>
         </div>
     );
 };
