@@ -41,3 +41,26 @@
     gap: 5px;
     width: 200px;
 }
+
+.progress_preview_container {
+    display: flex;
+    justify-content: space-around;
+    gap: 10%;
+    padding: 50px 100px;
+    background-color: var(--color-background-dark-blue);
+}
+
+.text_editor_preview_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 720px;
+    max-height: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.spinner_preview_container {
+    margin: 0 auto;
+    padding: 20px;
+}

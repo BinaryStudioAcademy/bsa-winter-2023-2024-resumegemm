@@ -2,6 +2,8 @@ import 'react-toastify/dist/ReactToastify.min.css';
 
 import { useCallback, useContext } from 'react';
 
+import { Progress } from '~/bundles/common/components/progress/progress';
+import { TextEditor } from '~/bundles/common/components/text-editor/text-editor';
 import {
     AppRoute,
     ButtonSize,
@@ -18,6 +20,7 @@ import {
     NavTabs,
     RadioButton,
     RegularButton,
+    Spinner,
     Switch,
     Tooltip,
 } from '../../bundles/common/components/components.js';
@@ -161,6 +164,17 @@ const PreviewPage: React.FC = () => {
                     </li>
                     <li className={styles.item}>
                         <EditTemplatePage />
+                    </li>
+                    <li className={styles.progress_preview_container}>
+                        <Progress progressPercentage={5} />
+                        <Progress progressPercentage={50} />
+                        <Progress progressPercentage={100} />
+                    </li>
+                    <li className={styles.text_editor_preview_container}>
+                        <TextEditor />
+                    </li>
+                    <li className={styles.spinner_preview_container}>
+                        <Spinner />
                     </li>
                 </ul>
             </div>
