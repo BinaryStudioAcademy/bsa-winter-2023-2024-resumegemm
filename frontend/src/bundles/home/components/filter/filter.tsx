@@ -1,10 +1,11 @@
+import clsx from 'clsx';
 import { useCallback, useEffect, useState } from 'react';
 
 import { BaseButton } from '~/bundles/common/components/components';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 import { actions as industriesActionCreator } from '~/bundles/industries/store/index.js';
 
-import { DropdownItem, FilterIcon } from './components/components';
+import { DropdownItem } from './components/components';
 import styles from './styles.module.scss';
 
 const Filter: React.FC = () => {
@@ -40,7 +41,9 @@ const Filter: React.FC = () => {
                         onClick={toggleDropdown}
                         className={styles.dropdown__icon__button}
                     >
-                        <FilterIcon />
+                        <div
+                            className={clsx(styles.mask, styles.colored)}
+                        ></div>
                     </BaseButton>
                 </div>
                 {isOpen && (
