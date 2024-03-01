@@ -14,7 +14,7 @@ class ExperienceModel extends AbstractModel {
     public 'country': string;
     public 'description': string;
     public 'startDate': string;
-    public 'endDate': string;
+    public 'endDate'?: string;
     public 'isWorking': boolean;
 
     public static override get tableName(): typeof DatabaseTableName.EXPERIENCE {

@@ -10,7 +10,7 @@ import {
 class LanguageModel extends AbstractModel {
     public 'resumeId': string;
     public 'language': string;
-    public 'languageLevel': LanguageLevels;
+    public 'level': LanguageLevels;
 
     public static override get tableName(): typeof DatabaseTableName.LANGUAGES {
         return DatabaseTableName.LANGUAGES;

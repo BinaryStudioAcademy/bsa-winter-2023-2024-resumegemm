@@ -4,7 +4,7 @@ type Education = {
     institution: string;
     degree: string;
     startDate: string;
-    endDate: string;
+    endDate?: string;
     isStudying: boolean;
     city: string;
     country: string;

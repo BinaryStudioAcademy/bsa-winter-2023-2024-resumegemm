@@ -7,7 +7,7 @@ type Experience = {
     country: string;
     description: string;
     startDate: string;
-    endDate: string;
+    endDate?: string;
     isWorking: boolean;
     createdAt: string;
     updatedAt: string;
