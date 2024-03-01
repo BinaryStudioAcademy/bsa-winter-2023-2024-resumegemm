@@ -1,10 +1,16 @@
 import clsx from 'clsx';
-import { type ChangeEvent, useCallback } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import {
+    type ChangeEvent,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 import { Calendar as ReactCalendar } from 'react-calendar';
 
 import { CalendarTypes } from '../../enums/calendar/calendar-types.enum';
 import { useClickOutside } from '../../hooks/use-click-outside/use-click-outside.hook';
+import { type InitDate } from '../../types/calendar/init-date.type';
 import {
     type CalendarDate,
     type CalendarMonth,
@@ -22,11 +28,7 @@ type Properties = {
     onChange?: (date: CalendarDate) => void;
     type?: ValueOf<typeof CalendarTypes>;
     className?: string;
-    initDate?: {
-        year?: number;
-        month?: number;
-        present?: boolean;
-    };
+    initDate?: InitDate;
 };
 
 const handleYearInit = (inputYear: number | undefined): number => {
