@@ -20,6 +20,60 @@ import {
     type ResumeShareGetResponseDto,
 } from './types/types.js';
 
+/**
+ * @swagger
+ * components:
+ *    schemas:
+ *      ResumeShare:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: string
+ *          resumeId:
+ *            type: string
+ *          createdAt:
+ *            type: string
+ *            format: date-time
+ *          updatedAt:
+ *            type: string
+ *            format: date-time
+ *      ResumeShareAccess:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: string
+ *          resumeShareLinkId:
+ *            type: string
+ *          createdAt:
+ *            type: string
+ *            format: date-time
+ *          updatedAt:
+ *            type: string
+ *            format: date-time
+ *          resumeShareAccessIp:
+ *            type: string
+ *          resumeShareAccessTime:
+ *            type: string
+ *            format: date-time
+ *      ResumeShareDetails:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: string
+ *          resumeId:
+ *            type: string
+ *          createdAt:
+ *            type: string
+ *            format: date-time
+ *          updatedAt:
+ *            type: string
+ *            format: date-time
+ *          accesses:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/ResumeShareAccess'
+ */
+
 class ResumeShareController extends Controller {
     private resumeShareService: ResumeShareService;
 
@@ -74,26 +128,12 @@ class ResumeShareController extends Controller {
 
     /**
      * @swagger
-     * /auth/sign-up:
+     * /resumes/:id/share:
      *    post:
-     *      description: Sign up user into the system
+     *      description: Create a share link
      *      requestBody:
      *        description: User auth data
-     *        required: true
-     *        content:
-     *          application/json:
-     *            schema:
-     *              type: object
-     *              properties:
-     *                email:
-     *                  type: string
-     *                  format: email
-     *                firstName:
-     *                  type string
-     *                lastName:
-     *                  type string
-     *                password:
-     *                  type: string
+     *        required: false
      *      responses:
      *        201:
      *          description: Successful operation
@@ -104,40 +144,89 @@ class ResumeShareController extends Controller {
      *                properties:
      *                  message:
      *                    type: object
-     *                    $ref: '#/components/schemas/User'
+     *                    $ref: '#/components/schemas/ResumeShare'
      *        400:
-     *           description: Email taken
-     *  /auth/sign-in:
-     *      post:
-     *       description: Login user
-     *       requestBody:
-     *          description: User auth data
-     *          required: true
-     *       content:
-     *        application/json:
-     *            schema:
-     *              type: object
-     *              properties:
-     *                email:
-     *                  type: string
-     *                  format: email
-     *                password:
-     *                  type: string
-     *       responses:
-     *          200:
+     *           description: Bad request
+     * /resumes/share/:id:
+     *     get:
+     *      description: Access a resume
+     *      requestBody:
+     *        required: false
+     *      responses:
+     *        200:
      *          description: Successful operation
-     *          content:
-     *            application/json:
-     *              schema:
-     *                type: object
-     *                properties:
-     *                  message:
-     *                    type: object
-     *                    $ref: '#/components/schemas/User'
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: object
+     *                   $ref: '#/components/schemas/ResumeShare'
+     *        404:
+     *           description: Resume share not found
      *        400:
-     *           description: User not found
-     *        401:
-     *          description: Invalid email
+     *          description: Bad request
+     * /resumes/share/:id:
+     *     get:
+     *      description: Access a resume
+     *      requestBody:
+     *        required: false
+     *      responses:
+     *        200:
+     *         description: Successful operation
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: object
+     *                   $ref: '#/components/schemas/ResumeShare'
+     *        404:
+     *           description: Resume access link not found
+     *        400:
+     *          description: Bad request
+     *     delete:
+     *      description: Delete a access link
+     *      requestBody:
+     *        required: false
+     *      responses:
+     *        200:
+     *         description: Successful operation
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: object
+     *                   $ref: '#/components/schemas/ResumeShare'
+     *        404:
+     *           description: Resume access link not found
+     *        400:
+     *          description: Bad request
+     * /resumes/share/:id/details:
+     *     get:
+     *      description: Get resume details
+     *      requestBody:
+     *        required: false
+     *      responses:
+     *        200:
+     *         description: Successful operation
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: object
+     *                   $ref: '#/components/schemas/ResumeShareDetails'
+     *        404:
+     *           description: Resume share not found
+     *        400:
+     *          description: Bad request
+     *
      */
     private async CreateShareLink(
         options: ApiHandlerOptions<ResumeShareCreateRequestDto>,
