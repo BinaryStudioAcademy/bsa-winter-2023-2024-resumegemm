@@ -12,6 +12,8 @@ export {
 export { ResumesApiPath } from './enums/enums.js';
 export {
     type Resume,
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
     type ResumeCreateItemRequestDto,
     type ResumeEntityFields,
     type ResumeGetAllRequestDto,

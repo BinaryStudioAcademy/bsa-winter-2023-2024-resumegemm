@@ -11,6 +11,8 @@ import { type ILogger } from '~/common/logger/logger.js';
 
 import { type IResumeService } from './interfaces/interfaces.js';
 import {
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
     type ResumeCreateItemRequestDto,
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
@@ -76,6 +78,17 @@ class ResumeController extends Controller {
                 this.findAllByUserId(
                     options as ApiHandlerOptions<{
                         params: { userId: string };
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: ResumesApiPath.SCORE,
+            method: 'POST',
+            handler: (options) =>
+                this.giveResumeScore(
+                    options as ApiHandlerOptions<{
+                        body: ResumeAiScoreRequestDto;
                     }>,
                 ),
         });
@@ -172,6 +185,18 @@ class ResumeController extends Controller {
         return {
             status: HttpCode.OK,
             payload: resumes,
+        };
+    }
+
+    private async giveResumeScore(
+        options: ApiHandlerOptions<{
+            body: ResumeAiScoreRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse<ResumeAiScoreResponseDto>> {
+        const score = await this.resumeService.giveResumeScore(options.body);
+        return {
+            status: HttpCode.OK,
+            payload: score,
         };
     }
 }

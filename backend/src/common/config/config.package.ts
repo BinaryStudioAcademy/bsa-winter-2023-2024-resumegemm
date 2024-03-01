@@ -65,6 +65,56 @@ class Config implements IConfig {
                 ACCESS_TOKEN_EXPIRES_IN: '24h',
                 REFRESH_TOKEN_EXPIRES_IN: '30d',
             },
+            OAUTH: {
+                GITHUB: {
+                    CLIENT_GITHUB_ID: {
+                        doc: 'Github secret for client id',
+                        format: String,
+                        env: 'CLIENT_GITHUB_ID',
+                        default: null,
+                    },
+                    CLIENT_GITHUB_SECRET: {
+                        doc: 'Github secret client token',
+                        format: String,
+                        env: 'CLIENT_GITHUB_SECRET',
+                        default: null,
+                    },
+                },
+                GOOGLE: {
+                    CLIENT_GOOGLE_ID: {
+                        doc: 'Google secret for client id',
+                        format: String,
+                        env: 'CLIENT_GOOGLE_ID',
+                        default: null,
+                    },
+                    CLIENT_GOOGLE_SECRET: {
+                        doc: 'Google client secret',
+                        format: String,
+                        env: 'CLIENT_GOOGLE_SECRET',
+                        default: null,
+                    },
+                },
+                FACEBOOK: {
+                    CLIENT_FACEBOOK_ID: {
+                        doc: 'Facebook app id',
+                        format: String,
+                        env: 'CLIENT_FACEBOOK_ID',
+                        default: null,
+                    },
+                    CLIENT_FACEBOOK_SECRET: {
+                        doc: 'Facebook client secret',
+                        format: String,
+                        env: 'CLIENT_FACEBOOK_SECRET',
+                        default: null,
+                    },
+                },
+                BASE_CALLBACK_URI: {
+                    doc: 'Secret key for callback url',
+                    format: String,
+                    env: 'BASE_OAUTH_CALLBACK_URI',
+                    default: null,
+                },
+            },
             COOKIE: {
                 COOKIE_SECRET: {
                     doc: 'Secret key for cookie',
@@ -97,6 +147,28 @@ class Config implements IConfig {
                     doc: 'Database pool max count',
                     format: Number,
                     env: 'DB_POOL_MAX',
+                    default: null,
+                },
+            },
+            STRIPE: {
+                STRIPE_SECRET_KEY: {
+                    doc: 'Stripe secret key',
+                    format: String,
+                    env: 'STRIPE_SECRET_KEY',
+                    default: null,
+                },
+                STRIPE_PUBLISHABLE_KEY: {
+                    doc: 'Stripe publishable key',
+                    format: String,
+                    env: 'STRIPE_PUBLISHABLE_KEY',
+                    default: null,
+                },
+            },
+            OPEN_AI: {
+                API_KEY: {
+                    doc: 'OpenAI API key',
+                    format: String,
+                    env: 'OPEN_AI_API_KEY',
                     default: null,
                 },
             },

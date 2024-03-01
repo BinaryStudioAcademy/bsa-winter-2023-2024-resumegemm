@@ -1,35 +1,36 @@
 import { useCallback } from 'react';
+import { userSignInValidationSchema } from 'shared/build';
 
+import { Divider } from '~/bundles/auth/components/divider/divider';
+import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
 import {
-    BaseButton,
     FormGroup,
     Input,
     PasswordInput,
+    RegularButton,
 } from '~/bundles/common/components/components.js';
 import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DividerVariant,
 } from '~/bundles/common/enums/enums';
 import { useAppForm } from '~/bundles/common/hooks/hooks';
-import {
-    type UserSignUpRequestDto,
-    userSignUpValidationSchema,
-} from '~/bundles/users/users';
+import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
+import { type UserSignInRequestDto } from '~/bundles/users/users';
 
-import { DEFAULT_SIGN_UP_PAYLOAD } from '../sign-up-form/constants/constants';
+import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
 
 type Properties = {
-    onSubmit: () => void;
+    onSubmit: (paload: UserSignInRequestDto) => void;
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
-    // TODO: replace type, payload and validation for sign-in
-    const { errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
-        defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
-        validationSchema: userSignUpValidationSchema,
+    const { control, errors, handleSubmit } = useAppForm<UserSignInRequestDto>({
+        defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
+        validationSchema: userSignInValidationSchema,
     });
 
     const handleFormSubmit = useCallback(
@@ -50,19 +51,24 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
             </div>
             <form onSubmit={handleFormSubmit} className={styles.login__form}>
                 <FormGroup label="Email" error={errors.email}>
-                    <Input type="email" placeholder="Your email" name="email" />
+                    <Input
+                        type="text"
+                        placeholder="Your email"
+                        {...useFormFieldCreator({ name: 'email', control })}
+                    />
                 </FormGroup>
                 <div className={styles.login__form_password}>
                     <span className={styles.forgot__link}>
                         Forgot Password?
                     </span>
                     <PasswordInput
-                        label="Your password"
+                        label="Passwod"
                         error={errors.password}
                         placeholder="Your password"
+                        {...useFormFieldCreator({ name: 'password', control })}
                     />
                 </div>
-                <BaseButton
+                <RegularButton
                     className={styles.login__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
@@ -70,7 +76,9 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     type={ButtonType.SUBMIT}
                 >
                     Sign up
-                </BaseButton>
+                </RegularButton>
+                <Divider variant={DividerVariant.SECONDARY} />
+                <SocialMediaLinks />
             </form>
         </>
     );

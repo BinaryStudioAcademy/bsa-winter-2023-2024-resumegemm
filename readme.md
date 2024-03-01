@@ -53,6 +53,15 @@ TBA
         timestamp created_at
         timestamp updated_at
     }
+    oauth_users {
+        uuid id PK
+        varchar email
+        enu oauth_strategy
+        int oauth_id
+        uuid profile_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
     user_profile {
         uuid id PK
         varchar first_name

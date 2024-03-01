@@ -1,5 +1,6 @@
 import { logger } from '~/common/logger/logger.js';
 
+import { openAIService } from '../open-ai/open-ai.js';
 import {
     CertificationModel,
     CertificationRepository,
@@ -48,7 +49,7 @@ const resumeRepository = new ResumeRepository({
     customSectionRepository,
 });
 
-const resumeService = new ResumeService(resumeRepository);
+const resumeService = new ResumeService(resumeRepository, openAIService);
 
 const resumeController = new ResumeController(logger, resumeService);
 

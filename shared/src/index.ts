@@ -4,12 +4,37 @@ export {
     type EncryptionDataPayload,
     AuthApiPath,
 } from './bundles/auth/auth.js';
+export {
+    type OauthUserEntityFields,
+    type OauthUserLoginRequestDto,
+    type OauthUserLoginResponseDto,
+    type OauthUserWithProfileRelation,
+    type UserFacebookDataResponseDto,
+    type UserGithubDataResponseDto,
+    type UserGoogleDataResponseDto,
+    OauthStrategy,
+    OpenAuthApiGetUserUrl,
+    OpenAuthApiPath,
+} from './bundles/open-auth/open-auth.js';
+export {
+    type CreateSubscriptionRequestDto,
+    type CreateSubscriptionResponseDto,
+    type GetPriceResponseDto,
+    type GetPricesRequestDto,
+    type GetPricesResponseDto,
+    type GetPublishableKeyRequestDto,
+    type GetPublishableKeyResponseDto,
+    PaymentApiPath,
+    paymentCreateSubscriptionValidationSchema,
+} from './bundles/payment/payment.js';
 export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
 export { type Profile } from './bundles/profile/profile.js';
 export {
     type RecentlyViewed,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedTemplatesResponseDto,
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
 export {
@@ -20,6 +45,8 @@ export {
     type Experience,
     type PersonalInformation,
     type Resume,
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
     type ResumeCreateItemRequestDto,
     type ResumeEntityFields,
     type ResumeGetAllRequestDto,
@@ -82,6 +109,7 @@ export {
     type ServerErrorDetail,
     type ServerErrorResponse,
     type ServerValidationErrorResponse,
+    type SortType,
     type ValidationSchema,
     type ValueOf,
 } from './types/types.js';

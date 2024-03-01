@@ -1,5 +1,7 @@
 import {
     type Resume,
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
     type ResumeCreateItemRequestDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
@@ -30,6 +32,10 @@ interface IResumeService {
     ): Promise<ResumeGetItemResponseDto>;
 
     delete(id: string): Promise<boolean>;
+
+    giveResumeScore: (
+        resumeAiScoreRequestDto: ResumeAiScoreRequestDto,
+    ) => Promise<ResumeAiScoreResponseDto>;
 }
 
 export { type IResumeService };

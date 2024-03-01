@@ -1,3 +1,4 @@
+import { type User } from '~/bundles/users/types/types';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -6,6 +7,8 @@ import {
 import {
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedTemplatesResponseDto,
 } from './types';
 
 type IRecentlyViewedController = {
@@ -13,8 +16,21 @@ type IRecentlyViewedController = {
         query: { limit: number };
     }): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>>;
 
+    findRecentlyViewedResumes(options: {
+        user: User;
+        query: { limit: number };
+    }): Promise<ApiHandlerResponse<RecentlyViewedResumesResponseDto[]>>;
+
+    findRecentlyViewedTemplates(options: {
+        user: User;
+        query: { limit: number };
+    }): Promise<ApiHandlerResponse<RecentlyViewedTemplatesResponseDto[]>>;
+
     create(
-        options: ApiHandlerOptions<{ body: RecentlyViewedRequestDto }>,
+        options: ApiHandlerOptions<{
+            user: User;
+            body: RecentlyViewedRequestDto;
+        }>,
     ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>>;
 
     update(
