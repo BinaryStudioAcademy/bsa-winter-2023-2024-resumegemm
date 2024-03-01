@@ -31,7 +31,7 @@ class FileUploadClient implements IFileUploadClient {
     private generateFileKey(extension: string): string {
         const uuid = crypto.randomUUID();
 
-        return `file_${uuid}${extension}`;
+        return `file_${uuid}.${extension}`;
     }
 
     public async upload(
