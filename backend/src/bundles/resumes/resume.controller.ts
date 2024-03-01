@@ -1,4 +1,4 @@
-import { HttpError, ResumesApiPath } from 'shared/build/index.js';
+import { HttpError, ResumesApiPath } from 'shared/build';
 
 import {
     type ApiHandlerOptions,
@@ -36,26 +36,17 @@ class ResumeController extends Controller {
                 ),
         });
         this.addRoute({
+            path: ResumesApiPath.ROOT,
+            method: 'GET',
+            handler: () => this.findAll(),
+        });
+
+        this.addRoute({
             path: ResumesApiPath.ID,
             method: 'GET',
             handler: (options) =>
                 this.findByIdWithRelations(
                     options as ApiHandlerOptions<{ params: { id: string } }>,
-                ),
-        });
-        this.addRoute({
-            path: ResumesApiPath.ROOT,
-            method: 'GET',
-            handler: () => this.findAll(),
-        });
-        this.addRoute({
-            path: ResumesApiPath.USER_ID,
-            method: 'GET',
-            handler: (options) =>
-                this.findAllByUserId(
-                    options as ApiHandlerOptions<{
-                        params: { userId: string };
-                    }>,
                 ),
         });
         this.addRoute({
@@ -77,6 +68,17 @@ class ResumeController extends Controller {
                     }>,
                 ),
         });
+
+        this.addRoute({
+            path: ResumesApiPath.USER_ID,
+            method: 'GET',
+            handler: (options) =>
+                this.findAllByUserId(
+                    options as ApiHandlerOptions<{
+                        params: { userId: string };
+                    }>,
+                ),
+        });
     }
 
     private async create(
@@ -89,6 +91,17 @@ class ResumeController extends Controller {
         return {
             status: HttpCode.CREATED,
             payload: resume,
+        };
+    }
+
+    private async findAll(): Promise<
+        ApiHandlerResponse<ResumeGetAllResponseDto>
+    > {
+        const resumes = await this.resumeService.findAll();
+
+        return {
+            status: HttpCode.OK,
+            payload: resumes,
         };
     }
 
@@ -109,30 +122,6 @@ class ResumeController extends Controller {
         return {
             status: HttpCode.OK,
             payload: resume,
-        };
-    }
-
-    private async findAll(): Promise<
-        ApiHandlerResponse<ResumeGetAllResponseDto>
-    > {
-        const resumes = await this.resumeService.findAll();
-
-        return {
-            status: HttpCode.OK,
-            payload: resumes,
-        };
-    }
-
-    private async findAllByUserId(
-        options: ApiHandlerOptions<{ params: { userId: string } }>,
-    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto>> {
-        const resumes = await this.resumeService.findAllByUserId(
-            options.params.userId,
-        );
-
-        return {
-            status: HttpCode.OK,
-            payload: resumes,
         };
     }
 
@@ -170,6 +159,19 @@ class ResumeController extends Controller {
         return {
             status: HttpCode.OK,
             payload: newResume,
+        };
+    }
+
+    private async findAllByUserId(
+        options: ApiHandlerOptions<{ params: { userId: string } }>,
+    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto>> {
+        const resumes = await this.resumeService.findAllByUserId(
+            options.params.userId,
+        );
+
+        return {
+            status: HttpCode.OK,
+            payload: resumes,
         };
     }
 }
