@@ -11,6 +11,8 @@ import {
     subscribe,
     unsubscribe,
 } from '~/bundles/email-subscription/store/actions';
+import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
+import { showToast } from '~/bundles/toast/helpers/show-toast';
 
 import styles from './style.module.scss';
 import { SubscriptionItem } from './subscription-item';
@@ -23,15 +25,26 @@ const Subscriptions: React.FC = () => {
     const isEmailSubscriptionLoading = useAppSelector(
         (state) => state.emailSubscription.dataStatus,
     );
+
     const dispatch = useAppDispatch();
 
     const handleSubscribe = useCallback(() => {
-        void dispatch(subscribe());
+        void dispatch(subscribe()).then(() => {
+            showToast('Subscribed to email notifications', ToastType.SUCCESS);
+        });
     }, [dispatch]);
 
     const handleUnsubscribe = useCallback(() => {
         if (user?.emailSubscription) {
-            void dispatch(unsubscribe({ id: user.emailSubscription.id }));
+            void dispatch(unsubscribe({ id: user.emailSubscription.id })).then(
+                () => {
+                    setIsModalOpen(false);
+                    showToast(
+                        'Unsubscribed from email notifications',
+                        ToastType.SUCCESS,
+                    );
+                },
+            );
         }
     }, [dispatch, user]);
 
@@ -43,19 +56,21 @@ const Subscriptions: React.FC = () => {
         setIsModalOpen(false);
     }, []);
 
+    const toggleItemProperties = {
+        title: 'Email notifications',
+        info: user?.emailSubscription
+            ? 'Unsubscribe from email notifications.'
+            : 'Subscribe to email notifications.',
+        onClick: user?.emailSubscription ? handleModalOpen : handleSubscribe,
+        isLoading: user?.emailSubscription
+            ? false
+            : isEmailSubscriptionLoading === DataStatus.PENDING,
+        buttonText: user?.emailSubscription ? 'Unsubscribe' : 'Subscribe',
+    };
+
     return (
         <div className={styles.subscription}>
-            <SubscriptionToggleItem
-                title="Email notifications"
-                info="Subscribe to email notifications."
-                onClick={
-                    user?.emailSubscription ? handleModalOpen : handleSubscribe
-                }
-                isLoading={isEmailSubscriptionLoading === DataStatus.PENDING}
-                buttonText={
-                    user?.emailSubscription ? 'Unsubscribe' : 'Subscribe'
-                }
-            />
+            <SubscriptionToggleItem {...toggleItemProperties} />
             <SubscriptionItem
                 title="Resume Analytics"
                 info="Discounts, special offers, new features and more."
@@ -91,7 +106,9 @@ const Subscriptions: React.FC = () => {
                             onClick={handleUnsubscribe}
                             variant={ButtonVariant.PRIMARY}
                         >
-                            Unsubscribe
+                            {isEmailSubscriptionLoading === DataStatus.PENDING
+                                ? 'Loading...'
+                                : 'Unsubscribe'}
                         </RegularButton>
                     </div>
                 </div>
