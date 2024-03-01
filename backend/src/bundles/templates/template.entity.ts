@@ -10,17 +10,21 @@ class TemplateEntity {
 
     private 'userId': string;
 
+    private 'image': string;
+
     private 'templateSettings': TemplateBlockSettings;
 
     private constructor({
         id,
         isOwner,
         userId,
+        image,
         templateSettings,
     }: TemplateEntityFields) {
         this.id = id;
         this.isOwner = isOwner;
         this.userId = userId;
+        this.image = image;
         this.templateSettings = templateSettings;
     }
 
@@ -28,12 +32,14 @@ class TemplateEntity {
         id,
         isOwner,
         userId,
+        image,
         templateSettings,
     }: TemplateEntityFields): TemplateEntity {
         return new TemplateEntity({
             id,
             isOwner,
             userId,
+            image,
             templateSettings,
         });
     }

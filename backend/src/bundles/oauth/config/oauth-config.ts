@@ -11,6 +11,27 @@ const oauthConfigurations = {
             },
             auth: oauthPlugin.GITHUB_CONFIGURATION,
         },
+        scope: ['email'],
+    },
+    google: {
+        credentials: {
+            client: {
+                id: config.ENV.OAUTH.GOOGLE.CLIENT_GOOGLE_ID,
+                secret: config.ENV.OAUTH.GOOGLE.CLIENT_GOOGLE_SECRET,
+            },
+            auth: oauthPlugin.GOOGLE_CONFIGURATION,
+        },
+        scope: ['profile', 'email'],
+    },
+    facebook: {
+        credentials: {
+            client: {
+                id: config.ENV.OAUTH.FACEBOOK.CLIENT_FACEBOOK_ID,
+                secret: config.ENV.OAUTH.FACEBOOK.CLIENT_FACEBOOK_SECRET,
+            },
+            auth: oauthPlugin.FACEBOOK_CONFIGURATION,
+        },
+        scope: ['public_profile', 'email'],
     },
 };
 
