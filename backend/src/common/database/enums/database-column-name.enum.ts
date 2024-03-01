@@ -37,6 +37,14 @@ enum DatabaseColumnName {
     VIEWED_AT = 'viewed_at',
     TEMPLATE_ID = 'template_id',
     TEMPLATE_SETTINGS = 'template_settings',
+    STRIPE_PLAN_ID = 'stripe_plan_id',
+    NAME = 'name',
+    DESCRIPTION = 'description',
+    CURRENCY = 'currency',
+    INTERVAL = 'interval',
+    INTERVAL_COUNT = 'interval_count',
+    AMOUNT = 'amount',
+    ACTIVE = 'active',
 }
 
 export { DatabaseColumnName };
