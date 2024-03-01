@@ -7,9 +7,8 @@ import {
 import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
     type HttpError,
-    type OauthUserEntityFields,
     type OauthUserLoginRequestDto,
-    type OauthUserLoginResponseDto,
+    type OauthUserWithProfileRelation,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
@@ -73,6 +72,16 @@ class OpenAuthController extends Controller {
                 this.facebookAuthHandler(
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: OpenAuthApiPath.USER,
+            method: 'GET',
+            handler: (options) =>
+                this.getUser(
+                    options as ApiHandlerOptions<{
+                        user: FastifyRequest['user'];
                     }>,
                 ),
         });
@@ -206,7 +215,30 @@ class OpenAuthController extends Controller {
             };
         }
     }
-
+    private async getUser(
+        options: ApiHandlerOptions<{
+            user: FastifyRequest['user'];
+        }>,
+    ): Promise<ApiHandlerResponse<OauthUserWithProfileRelation>> {
+        try {
+            const id = (options.user as OauthUserWithProfileRelation).id;
+            const oauthUserWithProfile =
+                await this.oauthService.getUserWithProfile(id);
+            return {
+                status: HttpCode.OK,
+                payload: oauthUserWithProfile,
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HttpError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
     private async requestOAuthProviderUserData<T>(
         providerUrl: ValueOf<typeof OpenAuthApiGetUserUrl>,
         token: string,
