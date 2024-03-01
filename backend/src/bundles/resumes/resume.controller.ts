@@ -1,4 +1,4 @@
-import { HttpError, ResumesApiPath } from 'shared/build';
+import { type IdParameter, HttpError, ResumesApiPath } from 'shared/build';
 
 import {
     type ApiHandlerOptions,
@@ -42,7 +42,7 @@ class ResumeController extends Controller {
             method: 'GET',
             handler: (options) =>
                 this.findById(
-                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
         this.addRoute({
@@ -65,7 +65,7 @@ class ResumeController extends Controller {
             method: 'DELETE',
             handler: (options) =>
                 this.delete(
-                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
         this.addRoute({
@@ -74,7 +74,7 @@ class ResumeController extends Controller {
             handler: (options) =>
                 this.update(
                     options as ApiHandlerOptions<{
-                        params: { id: string };
+                        params: IdParameter;
                         body: ResumeUpdateItemRequestDto;
                     }>,
                 ),
@@ -105,7 +105,7 @@ class ResumeController extends Controller {
     }
 
     private async findById(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<Resume>> {
         const resume = await this.resumeService.find(options.params.id);
 
@@ -147,7 +147,7 @@ class ResumeController extends Controller {
     }
 
     private async delete(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<boolean>> {
         const isDeleted = await this.resumeService.delete(options.params.id);
 
@@ -159,7 +159,7 @@ class ResumeController extends Controller {
 
     private async update(
         options: ApiHandlerOptions<{
-            params: { id: string };
+            params: IdParameter;
             body: ResumeUpdateItemRequestDto;
         }>,
     ): Promise<ApiHandlerResponse<Resume>> {

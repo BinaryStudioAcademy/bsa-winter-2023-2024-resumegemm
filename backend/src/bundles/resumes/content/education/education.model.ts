@@ -8,7 +8,7 @@ class EducationModel extends AbstractModel {
     public 'major': string;
     public 'degree': string;
     public 'startDate': string;
-    public 'endDate': string;
+    public 'endDate'?: string;
 
     public static override get tableName(): typeof DatabaseTableName.EDUCATION {
         return DatabaseTableName.EDUCATION;
