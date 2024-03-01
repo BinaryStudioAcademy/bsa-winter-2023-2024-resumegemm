@@ -1,6 +1,7 @@
+import clsx from 'clsx';
 import { useCallback, useState } from 'react';
 
-import { BaseButton, CustomIcon } from '~/bundles/common/components/components';
+import { BaseButton } from '~/bundles/common/components/components';
 
 import { DeleteResumeModal } from '../delete-resume-modal.tsx/delete-resume-modal';
 import styles from './styles.module.scss';
@@ -22,11 +23,7 @@ const DeleteResumeButton: React.FC = () => {
                 onClick={handleShowModal}
                 className={styles.delete__button}
             >
-                <CustomIcon
-                    size={'24px'}
-                    name={'delete'}
-                    color={'rgb(26 145 240)'}
-                />
+                <div className={clsx(styles.mask, styles.colored)}></div>
                 <span className={styles.delete__button__text}>Delete</span>
             </BaseButton>
             {isModalShown && <DeleteResumeModal onClose={handleCloseModal} />}
