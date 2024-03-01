@@ -11,8 +11,6 @@
 }
 
 .dropdown__icon__button {
-    width: 25px;
-    height: 25px;
     font-size: 16px;
     border: none;
     cursor: pointer;
@@ -25,14 +23,26 @@
     display: none;
     width: 250px;
     min-width: 160px;
-    background-color: #f9f9f9;
+    background-color: var(--color-input-field-gray);
     box-shadow: 0 8px 16px 0 rgba(0 0 0 / 20%);
 }
 
 .dropdown_content li:hover {
-    background-color: #f1f1f1;
+    background-color: var(--color-input-field-gray);
 }
 
 .dropdown:hover .dropdown_content {
     display: block;
+}
+
+.mask {
+    width: 30px;
+    height: 18px;
+    mask-image: url("~/assets//img//filter-icon.svg");
+    mask-size: cover;
+    mask-position: center;
+}
+
+.colored {
+    background-color: var(--color-text-gray);
 }
