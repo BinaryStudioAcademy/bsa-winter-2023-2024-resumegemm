@@ -5,7 +5,7 @@ import { type IResumeEntity } from './interfaces/resume-entity.interface';
 
 class ResumeEntity implements IResumeEntity {
     public 'id': string | null;
-    public 'resumeTitle': string;
+    public 'title': string;
     public 'image': string;
     public 'userId': string;
     public 'templateId': string;
