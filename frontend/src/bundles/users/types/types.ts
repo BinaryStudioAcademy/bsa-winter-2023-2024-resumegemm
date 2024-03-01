@@ -1,5 +1,6 @@
 export {
     type AuthTokenResponse,
+    type OauthUserLoginResponseDto,
     type UserAuthResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
