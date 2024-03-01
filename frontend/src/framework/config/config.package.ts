@@ -27,7 +27,8 @@ class Config implements IConfig {
     }
 
     private get getDomain(): string {
-        return import.meta.env.PROD
+        const isProductionMode = import.meta.env.PROD;
+        return isProductionMode
             ? import.meta.env.VITE_APP_DOMAIN_URL
             : import.meta.env.VITE_APP_PROXY_SERVER_URL;
     }
