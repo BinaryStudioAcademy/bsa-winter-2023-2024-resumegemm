@@ -6,8 +6,10 @@ import styles from './styles.module.scss';
 const UserPhotoPlaceholder: React.FC = () => {
     return (
         <span className={styles.uploader_mockup__thumb}>
-            <IconContext.Provider value={{ className: `${styles.uploader_mockup__icon}` }}>
-                <ImUser/>
+            <IconContext.Provider
+                value={{ className: `${styles.uploader_mockup__icon}` }}
+            >
+                <ImUser />
             </IconContext.Provider>
         </span>
     );

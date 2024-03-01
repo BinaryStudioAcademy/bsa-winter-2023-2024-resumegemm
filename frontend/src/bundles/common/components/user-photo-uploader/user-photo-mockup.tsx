@@ -1,6 +1,6 @@
 import { ButtonSize } from '../../enums/enums';
 import { useCallback } from '../../hooks/hooks';
-import { BaseButton } from '../components';
+import { RegularButton } from '../components';
 import styles from './styles.module.scss';
 import { UserPhotoPlaceholder } from './user-photo-placeholder';
 
@@ -14,14 +14,14 @@ const UserPhotoMockup: React.FC<UserPhotoProperties> = ({ onClickUpload }) => {
     }, [onClickUpload]);
 
     return (
-        <BaseButton
+        <RegularButton
             size={ButtonSize.MEDIUM}
             onClick={handleClickUpload}
             className={styles.uploader_mockup}
         >
             <UserPhotoPlaceholder />
             <p className={styles.uploader_mockup__text}>Upload photo</p>
-        </BaseButton>
+        </RegularButton>
     );
 };
 

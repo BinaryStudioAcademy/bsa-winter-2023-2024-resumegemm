@@ -41,7 +41,7 @@ const Auth: React.FC = () => {
 
     const getScreen = (screen: string): React.ReactNode => {
         switch (screen) {
-            case AppRoute.SIGN_IN: {
+            case AppRoute.LOG_IN: {
                 return <SignInForm onSubmit={handleSignInSubmit} />;
             }
             case AppRoute.SIGN_UP: {
@@ -53,7 +53,7 @@ const Auth: React.FC = () => {
     };
 
     return user ? (
-        <Navigate to={AppRoute.ROOT} />
+        <Navigate to={AppRoute.HOME} />
     ) : (
         <div className={styles.auth}>
             <div className={styles.auth__container}>

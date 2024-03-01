@@ -1,1 +1,0 @@
-export { ProfileApiPath } from 'shared/build/index';

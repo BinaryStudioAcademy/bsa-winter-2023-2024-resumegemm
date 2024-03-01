@@ -2,10 +2,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     min-height: 16px;
     margin: 0;
-    padding: 8px 16px;
+    color: #848d96;
     font-size: 16px;
     line-height: 24px;
     text-align: center;
@@ -16,8 +16,9 @@
 }
 
 .icon_wrapper {
+    display: flex;
     color: var(--color-text-gray);
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .icon_wrapper svg {
