@@ -1,5 +1,9 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type UserWithProfileRelation } from 'shared/build/bundles/users/types/user-with-profile-nested-relation.type.js';
+import {
+    type OauthUserWithProfileRelation,
+    type UserWithProfileRelation,
+} from 'shared/build';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
@@ -35,14 +39,20 @@ const signIn = createAsyncThunk<
     return user;
 });
 
-// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 const getUser = createAsyncThunk<UserAuthResponse, void, AsyncThunkConfig>(
     `${sliceName}/get-user`,
     async (_, { extra }) => {
         const { authApi } = extra;
-
         return await authApi.getUser();
     },
 );
+const getOauthUser = createAsyncThunk<
+    OauthUserWithProfileRelation,
+    void,
+    AsyncThunkConfig
+>(`${sliceName}/get-user`, async (_, { extra }) => {
+    const { openAuthApi } = extra;
+    return await openAuthApi.getOauthUser();
+});
 
-export { getUser, signIn, signUp };
+export { getOauthUser, getUser, signIn, signUp };
