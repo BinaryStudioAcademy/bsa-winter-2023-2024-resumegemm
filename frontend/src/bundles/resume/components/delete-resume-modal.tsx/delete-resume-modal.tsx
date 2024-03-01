@@ -2,6 +2,7 @@ import { Modal, RegularButton } from '../../../common/components/components.js';
 import {
     ButtonSize,
     ButtonType,
+    ButtonVariant,
     ModalVariant,
 } from '../../../common/enums/enums';
 import styles from './styles.module.scss';
@@ -27,6 +28,7 @@ const DeleteResumeModal: React.FC<DeleteResumeModalProperties> = ({
                 </p>
                 <div className={styles.modal_buttons}>
                     <RegularButton
+                        variant={ButtonVariant.GHOST}
                         size={ButtonSize.MEDIUM}
                         type={ButtonType.BUTTON}
                         className={styles.modal__delete__button}
@@ -34,6 +36,7 @@ const DeleteResumeModal: React.FC<DeleteResumeModalProperties> = ({
                         Delete
                     </RegularButton>
                     <RegularButton
+                        variant={ButtonVariant.GHOST}
                         size={ButtonSize.MEDIUM}
                         type={ButtonType.BUTTON}
                         className={styles.modal__cancel__button}
