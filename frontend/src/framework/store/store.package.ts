@@ -14,6 +14,8 @@ import { emailSubscriptionsApi } from '~/bundles/email-subscription/email-subscr
 import { reducer as emailSubscriptionsReducer } from '~/bundles/email-subscription/store/';
 import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store';
+import { profileApi } from '~/bundles/profile/profile';
+import { reducer as profileReducer } from '~/bundles/profile/store/';
 import { reducer as usersReducer } from '~/bundles/users/store/';
 import { userApi } from '~/bundles/users/users.js';
 import { type IConfig } from '~/framework/config/config.js';
@@ -26,6 +28,7 @@ type RootReducer = {
     emailSubscription: ReturnType<typeof emailSubscriptionsReducer>;
     payment: ReturnType<typeof paymentReducer>;
     templates: ReturnType<typeof templatesReducer>;
+    profile: ReturnType<typeof profileReducer>;
 };
 
 type ExtraArguments = {
@@ -35,6 +38,7 @@ type ExtraArguments = {
     paymentApi: typeof paymentApi;
     storageApi: typeof storage;
     templateApi: typeof templateApi;
+    profileApi: typeof profileApi;
 };
 
 class Store {
@@ -57,6 +61,7 @@ class Store {
                 emailSubscription: emailSubscriptionsReducer,
                 payment: paymentReducer,
                 templates: templatesReducer,
+                profile: profileReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
@@ -76,6 +81,7 @@ class Store {
             storageApi: storage,
             emailSubscriptionsApi,
             templateApi,
+            profileApi,
         };
     }
 }

@@ -1,5 +1,11 @@
 import mockResume from '~/assets/img/mock-resume.png';
 import {
+    useAppDispatch,
+    useAppSelector,
+    useEffect,
+} from '~/bundles/common/hooks/hooks';
+import { loadAllTemplates } from '~/bundles/edit-temlate/store/actions';
+import {
     CreateNewCard,
     CreateResumeButton,
     Greeting,
@@ -12,6 +18,15 @@ import {
 import styles from './styles.module.scss';
 
 const Home: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const templates = useAppSelector((state) => state.templates.templates);
+
+    useEffect(() => {
+        if (templates.length === 0) {
+            void dispatch(loadAllTemplates());
+        }
+    }, [templates, dispatch]);
+
     return (
         <div className={styles.layout}>
             <HomeTopSection>
@@ -34,7 +49,16 @@ const Home: React.FC = () => {
                 />
             </ResumeSection>
             <TemplateSection name="Templates">
-                <ResumeCard title="My Resume" image={mockResume} />
+                {templates.length > 0 &&
+                    templates.map((template) => {
+                        return (
+                            <ResumeCard
+                                key={template.id}
+                                title="My Resume"
+                                image={template.image}
+                            />
+                        );
+                    })}
             </TemplateSection>
         </div>
     );

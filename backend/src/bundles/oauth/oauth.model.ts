@@ -15,7 +15,7 @@ class OauthModel extends AbstractModel {
 
     public 'oauthStrategy': OauthStrategy;
 
-    public 'oauthId': number;
+    public 'oauthId': string;
     public static override get tableName(): typeof DatabaseTableName.OAUTH_USERS {
         return DatabaseTableName.OAUTH_USERS;
     }

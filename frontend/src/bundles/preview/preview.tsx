@@ -2,20 +2,30 @@ import 'react-toastify/dist/ReactToastify.min.css';
 
 import { useCallback, useContext } from 'react';
 
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import {
+    AppRoute,
+    ButtonSize,
+    ButtonVariant,
+    IconName,
+} from '~/bundles/common/enums/enums.js';
 import { ToastContext } from '~/bundles/toast/context/toast-context';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 
 import {
-    BaseButton,
     Calendar,
     Checkbox,
+    Dropdown,
+    Footer,
+    Header,
+    Icon,
     NavTabs,
     RadioButton,
+    RegularButton,
     Switch,
     Tooltip,
 } from '../../bundles/common/components/components.js';
 import { Auth } from '../auth/pages/auth';
+import { UserProfile } from '../common/components/layout/header/user-profile/user-profile.js';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
 import { EditTemplatePage } from '../edit-temlate/edit-template';
@@ -26,9 +36,29 @@ import styles from './styles.module.scss';
 
 const navbarItems = [
     { label: 'Home', path: AppRoute.ROOT },
-    { label: 'Signin', path: AppRoute.SIGN_IN },
+    { label: 'Login', path: AppRoute.LOG_IN },
     { label: 'Signup', path: AppRoute.SIGN_UP },
     { label: 'Preview', path: AppRoute.PREVIEW },
+];
+
+const headerItems = [
+    { label: 'Home', path: AppRoute.ROOT },
+    { label: 'Templates', path: AppRoute.TEMPLATES },
+];
+
+const dropdownOptions = [
+    {
+        label: 'Native speaker',
+        value: 'C1',
+    },
+    {
+        label: 'Highly proficient',
+        value: 'B2',
+    },
+    {
+        label: 'Very good command',
+        value: 'B1',
+    },
 ];
 
 const PreviewPage: React.FC = () => {
@@ -52,6 +82,10 @@ const PreviewPage: React.FC = () => {
         });
     }, [showToast]);
 
+    const handleDropdownChange = useCallback((value: string | undefined) => {
+        return value;
+    }, []);
+
     return (
         <>
             <div className={styles.preview}>
@@ -63,6 +97,33 @@ const PreviewPage: React.FC = () => {
                         <NavTabs items={navbarItems}></NavTabs>
                     </li>
                     <li className={styles.item}>
+                        <Header>
+                            <NavTabs items={headerItems}></NavTabs>
+                            <UserProfile image="https://avatars.githubusercontent.com/u/810438?v=4" />
+                        </Header>
+                    </li>
+                    <li className={styles.item}>
+                        <Footer>
+                            <div className={styles.footer__actions}>
+                                <RegularButton variant={ButtonVariant.OUTLINED}>
+                                    Edit template
+                                </RegularButton>
+                                <RegularButton variant={ButtonVariant.PRIMARY}>
+                                    Save & Publish
+                                </RegularButton>
+                            </div>
+                        </Footer>
+                    </li>
+                    <li className={styles.item}>
+                        <Dropdown
+                            name="language"
+                            className={styles.dropdown}
+                            options={dropdownOptions}
+                            label="Select level"
+                            onChange={handleDropdownChange}
+                        />
+                    </li>
+                    <li className={styles.item}>
                         <Checkbox
                             name="preview-page-checkbox"
                             label="Checkbox"
@@ -71,15 +132,54 @@ const PreviewPage: React.FC = () => {
                         <Switch label="Switch" />
                     </li>
                     <li className={styles.item}>
-                        <BaseButton onClick={handleSuccessButtonClick}>
+                        <RegularButton onClick={handleSuccessButtonClick}>
                             Success toast!
-                        </BaseButton>
-                        <BaseButton onClick={handleErrorButtonClick}>
+                        </RegularButton>
+                        <RegularButton onClick={handleErrorButtonClick}>
                             Error toast!
-                        </BaseButton>
-                        <BaseButton onClick={handleInfoButtonClick}>
+                        </RegularButton>
+                        <RegularButton onClick={handleInfoButtonClick}>
                             Info toast!
-                        </BaseButton>
+                        </RegularButton>
+                    </li>
+                    <li>
+                        <div className={styles.buttons}>
+                            <RegularButton variant={ButtonVariant.DEFAULT}>
+                                Default
+                            </RegularButton>
+                            <RegularButton
+                                prependedIcon={
+                                    <Icon name={IconName.CHEVRON_DOWN} />
+                                }
+                                variant={ButtonVariant.GHOST}
+                            >
+                                Ghost
+                            </RegularButton>
+                            <RegularButton
+                                appendedIcon={<Icon name={IconName.PLUS} />}
+                                variant={ButtonVariant.OUTLINED}
+                            >
+                                Outlined
+                            </RegularButton>
+                            <RegularButton variant={ButtonVariant.PRIMARY}>
+                                Primary
+                            </RegularButton>
+                            <RegularButton
+                                appendedIcon={<Icon name={IconName.PLUS} />}
+                                prependedIcon={
+                                    <Icon name={IconName.CHEVRON_DOWN} />
+                                }
+                                size={ButtonSize.MEDIUM}
+                                variant={ButtonVariant.PRIMARY}
+                            >
+                                Primary
+                            </RegularButton>
+                            <RegularButton
+                                variant={ButtonVariant.SQUARE_ORANGE}
+                            >
+                                <Icon name={IconName.FACEBOOK} />
+                            </RegularButton>
+                        </div>
                     </li>
                     <li className={styles.item}>
                         <Calendar />
