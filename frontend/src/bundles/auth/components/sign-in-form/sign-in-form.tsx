@@ -62,7 +62,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                         Forgot Password?
                     </span>
                     <PasswordInput
-                        label="Passwod"
+                        label="Password"
                         error={errors.password}
                         placeholder="Your password"
                         {...useFormFieldCreator({ name: 'password', control })}
@@ -75,7 +75,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
-                    Sign up
+                    Log in
                 </RegularButton>
                 <Divider variant={DividerVariant.SECONDARY} />
                 <SocialMediaLinks />

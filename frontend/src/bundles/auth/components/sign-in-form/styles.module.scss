@@ -1,6 +1,6 @@
 .login__title {
     width: 100%;
-    margin: 0;
+    margin: 10px 0;
     padding: 0;
     color: #434c66;
     font-weight: 600;
@@ -13,7 +13,7 @@
     margin: 0;
     padding: 0;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 19.5px;
 }
 
@@ -27,6 +27,7 @@
     flex-direction: column;
     gap: 10px;
     width: 100%;
+    margin-top: 20px;
 }
 
 .login__button {
