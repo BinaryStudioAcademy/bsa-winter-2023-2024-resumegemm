@@ -4,7 +4,7 @@ import {
 } from '~/common/database/database.js';
 
 class TechnicalSkillModel extends AbstractModel {
-    public 'skillName': string;
+    public 'name': string;
     public 'skillLevel': string;
     public 'resumeId': string;
 
