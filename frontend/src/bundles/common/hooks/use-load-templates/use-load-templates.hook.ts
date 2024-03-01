@@ -3,6 +3,7 @@ import { type TemplateDto } from 'shared/build/bundles/templates/templates';
 
 import { loadAllTemplates } from '~/bundles/edit-temlate/store/actions';
 
+import { DataStatus } from '../../enums/data-status.enum';
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 type ReturnValue = {
@@ -16,7 +17,7 @@ const useLoadTemplates = (): ReturnValue => {
     );
 
     useEffect(() => {
-        if (templates.length === 0 && dataStatus === 'idle') {
+        if (dataStatus === DataStatus.IDLE) {
             void dispatch(loadAllTemplates());
         }
     }, [dispatch, templates, dataStatus]);
