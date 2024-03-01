@@ -5,7 +5,7 @@ import {
 
 class TechnicalSkillModel extends AbstractModel {
     public 'name': string;
-    public 'skillLevel': string;
+    public 'level': string;
     public 'resumeId': string;
 
     public static override get tableName(): typeof DatabaseTableName.TECHNICAL_SKILLS {
