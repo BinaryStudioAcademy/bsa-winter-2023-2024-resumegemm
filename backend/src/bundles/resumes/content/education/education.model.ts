@@ -12,7 +12,7 @@ class EducationModel extends AbstractModel {
     public 'degree': string;
     public 'startDate': string;
     public 'endDate': string;
-    public 'currentlyStudying': boolean;
+    public 'isStudying': boolean;
     public 'city': string;
     public 'country': string;
     public 'description': string;

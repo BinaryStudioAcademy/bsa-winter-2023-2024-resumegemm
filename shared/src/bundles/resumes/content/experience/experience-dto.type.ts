@@ -8,7 +8,7 @@ type Experience = {
     description: string;
     startDate: string;
     endDate: string;
-    currentlyWorking: boolean;
+    isWorking: boolean;
     createdAt: string;
     updatedAt: string;
     resumeId: string;
