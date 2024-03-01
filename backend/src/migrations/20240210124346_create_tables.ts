@@ -31,7 +31,7 @@ async function up(knex: Knex): Promise<void> {
                 Object.values(OauthStrategy),
             )
             .notNullable();
-        table.integer(DatabaseColumnName.OAUTH_ID).notNullable();
+        table.string(DatabaseColumnName.OAUTH_ID).notNullable();
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
@@ -225,8 +225,8 @@ async function down(knex: Knex): Promise<void> {
     await knex.schema.dropTableIfExists(DatabaseTableName.TECHNICAL_SKILLS);
     await knex.schema.dropTableIfExists(DatabaseTableName.EDUCATION);
     await knex.schema.dropTableIfExists(DatabaseTableName.CONTACT_DETAILS);
-    await knex.schema.dropTableIfExists(DatabaseTableName.RESUMES);
     await knex.schema.dropTableIfExists(DatabaseTableName.TEMPLATES);
+    await knex.schema.dropTableIfExists(DatabaseTableName.RESUMES);
     await knex.schema.dropTableIfExists(DatabaseTableName.REVIEWS);
     await knex.schema.dropTableIfExists(DatabaseTableName.RECENTLY_VIEWED);
     await knex.schema.dropTableIfExists(DatabaseTableName.USER_TEMPLATES);

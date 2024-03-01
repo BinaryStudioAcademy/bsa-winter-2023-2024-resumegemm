@@ -112,10 +112,12 @@ class ServerApp implements IServerApp {
                 ) as (keyof typeof oauthConfigurations)[];
 
                 for (const oauthProvider of oauthAvailableProviders) {
-                    const { credentials } = oauthConfigurations[oauthProvider];
+                    const { credentials, scope } =
+                        oauthConfigurations[oauthProvider];
                     await this.app.register(oauthPlugin, {
                         name: oauthProvider,
                         credentials,
+                        scope,
                         startRedirectPath: `${OpenAuthApiPath.ROOT}${oauthProvider}`,
                         callbackUri: `${config.ENV.OAUTH.BASE_CALLBACK_URI}${oauthProvider}`,
                     });
