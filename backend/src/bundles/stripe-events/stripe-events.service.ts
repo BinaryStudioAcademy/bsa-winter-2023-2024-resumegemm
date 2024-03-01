@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 
+import { StripePlanEvents } from '~/bundles/stripe-events/enums/enums.js';
 import { type IStripeEventsService } from '~/bundles/stripe-events/interfaces/stripe-events-service.interface';
 import { type IConfig } from '~/common/config/interfaces/config.interface';
 
@@ -24,11 +25,7 @@ class StripeEventsService implements IStripeEventsService {
             this.appConfig.ENV.STRIPE.STRIPE_WEBHOOK_SECRET,
         );
 
-        if (event) {
-            // switch (event) {
-            //
-            // }
-        }
+        // handle event
 
         return { resolved: true };
     }
