@@ -13,6 +13,18 @@
 }
 
 .delete__button__text:hover {
-    color: rgb(26 145 240);
+    color: var(--color-button-blue);
     transition: color 0.15s ease 0s;
+}
+
+.mask {
+    width: 24px;
+    height: 24px;
+    mask-image: url("~/assets/img/delete-icon.svg");
+    mask-size: cover;
+    mask-position: center;
+}
+
+.colored {
+    background-color: var(--color-button-blue);
 }
