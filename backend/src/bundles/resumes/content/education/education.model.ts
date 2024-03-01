@@ -5,7 +5,7 @@ import {
 
 class EducationModel extends AbstractModel {
     public 'resumeId': string;
-    public 'majorName': string;
+    public 'major': string;
     public 'degree': string;
     public 'startDate': string;
     public 'endDate': string;
