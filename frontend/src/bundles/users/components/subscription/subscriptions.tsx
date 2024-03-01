@@ -1,4 +1,4 @@
-import { BaseButton, Modal } from '~/bundles/common/components/components';
+import { Modal, RegularButton } from '~/bundles/common/components/components';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum';
 import { ButtonVariant, ModalVariant } from '~/bundles/common/enums/enums';
 import {
@@ -30,8 +30,8 @@ const Subscriptions: React.FC = () => {
     }, [dispatch]);
 
     const handleUnsubscribe = useCallback(() => {
-        if (user?.user.emailSubscription) {
-            void dispatch(unsubscribe({ id: user.user.emailSubscription.id }));
+        if (user?.emailSubscription) {
+            void dispatch(unsubscribe({ id: user.emailSubscription.id }));
         }
     }, [dispatch, user]);
 
@@ -49,13 +49,11 @@ const Subscriptions: React.FC = () => {
                 title="Email notifications"
                 info="Subscribe to email notifications."
                 onClick={
-                    user?.user.emailSubscription
-                        ? handleModalOpen
-                        : handleSubscribe
+                    user?.emailSubscription ? handleModalOpen : handleSubscribe
                 }
                 isLoading={isEmailSubscriptionLoading === DataStatus.PENDING}
                 buttonText={
-                    user?.user.emailSubscription ? 'Unsubscribe' : 'Subscribe'
+                    user?.emailSubscription ? 'Unsubscribe' : 'Subscribe'
                 }
             />
             <SubscriptionItem
@@ -86,15 +84,15 @@ const Subscriptions: React.FC = () => {
                         notifications?
                     </p>
                     <div className={styles.modal__buttons}>
-                        <BaseButton onClick={handleModalClose}>
+                        <RegularButton onClick={handleModalClose}>
                             Cancel
-                        </BaseButton>
-                        <BaseButton
+                        </RegularButton>
+                        <RegularButton
                             onClick={handleUnsubscribe}
                             variant={ButtonVariant.PRIMARY}
                         >
                             Unsubscribe
-                        </BaseButton>
+                        </RegularButton>
                     </div>
                 </div>
             </Modal>
