@@ -1,9 +1,14 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { type ChangeEvent, type FormEvent, useEffect } from 'react';
-import { useCallback, useState } from 'react';
+import {
+    type ChangeEvent,
+    type FormEvent,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react';
 
-import { BaseButton, Input } from '~/bundles/common/components/components';
-import { ButtonType } from '~/bundles/common/enums/enums';
+import { Input, RegularButton } from '~/bundles/common/components/components';
+import { ButtonType, ButtonVariant } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
@@ -198,14 +203,14 @@ const SubscriptionPaymentPage: React.FC = () => {
                                 className={styles.payment__modal_input_card}
                             />
 
-                            <BaseButton
+                            <RegularButton
                                 className={styles.payment__modal_input_button}
                                 type={ButtonType.SUBMIT}
-                                // isDisabled={processing}
-                                // variant={ButtonVariant.PRIMARY}
+                                isDisabled={processing}
+                                variant={ButtonVariant.PRIMARY}
                             >
                                 Confirm payment
-                            </BaseButton>
+                            </RegularButton>
                         </div>
                     </div>
                 )}

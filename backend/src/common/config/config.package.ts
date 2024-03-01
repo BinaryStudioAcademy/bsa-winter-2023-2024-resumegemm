@@ -118,6 +118,34 @@ class Config implements IConfig {
                         default: null,
                     },
                 },
+                GOOGLE: {
+                    CLIENT_GOOGLE_ID: {
+                        doc: 'Google secret for client id',
+                        format: String,
+                        env: 'CLIENT_GOOGLE_ID',
+                        default: null,
+                    },
+                    CLIENT_GOOGLE_SECRET: {
+                        doc: 'Google client secret',
+                        format: String,
+                        env: 'CLIENT_GOOGLE_SECRET',
+                        default: null,
+                    },
+                },
+                FACEBOOK: {
+                    CLIENT_FACEBOOK_ID: {
+                        doc: 'Facebook app id',
+                        format: String,
+                        env: 'CLIENT_FACEBOOK_ID',
+                        default: null,
+                    },
+                    CLIENT_FACEBOOK_SECRET: {
+                        doc: 'Facebook client secret',
+                        format: String,
+                        env: 'CLIENT_FACEBOOK_SECRET',
+                        default: null,
+                    },
+                },
                 BASE_CALLBACK_URI: {
                     doc: 'Secret key for callback url',
                     format: String,

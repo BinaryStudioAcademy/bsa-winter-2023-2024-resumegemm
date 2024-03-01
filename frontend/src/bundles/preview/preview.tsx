@@ -2,16 +2,22 @@ import 'react-toastify/dist/ReactToastify.min.css';
 
 import { useCallback, useContext } from 'react';
 
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import {
+    AppRoute,
+    ButtonSize,
+    ButtonVariant,
+    IconName,
+} from '~/bundles/common/enums/enums.js';
 import { ToastContext } from '~/bundles/toast/context/toast-context';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 
 import {
-    BaseButton,
     Calendar,
     Checkbox,
+    Icon,
     NavTabs,
     RadioButton,
+    RegularButton,
     Switch,
     Tooltip,
 } from '../../bundles/common/components/components.js';
@@ -26,7 +32,7 @@ import styles from './styles.module.scss';
 
 const navbarItems = [
     { label: 'Home', path: AppRoute.ROOT },
-    { label: 'Signin', path: AppRoute.SIGN_IN },
+    { label: 'Login', path: AppRoute.LOG_IN },
     { label: 'Signup', path: AppRoute.SIGN_UP },
     { label: 'Preview', path: AppRoute.PREVIEW },
 ];
@@ -71,15 +77,54 @@ const PreviewPage: React.FC = () => {
                         <Switch label="Switch" />
                     </li>
                     <li className={styles.item}>
-                        <BaseButton onClick={handleSuccessButtonClick}>
+                        <RegularButton onClick={handleSuccessButtonClick}>
                             Success toast!
-                        </BaseButton>
-                        <BaseButton onClick={handleErrorButtonClick}>
+                        </RegularButton>
+                        <RegularButton onClick={handleErrorButtonClick}>
                             Error toast!
-                        </BaseButton>
-                        <BaseButton onClick={handleInfoButtonClick}>
+                        </RegularButton>
+                        <RegularButton onClick={handleInfoButtonClick}>
                             Info toast!
-                        </BaseButton>
+                        </RegularButton>
+                    </li>
+                    <li>
+                        <div className={styles.buttons}>
+                            <RegularButton variant={ButtonVariant.DEFAULT}>
+                                Default
+                            </RegularButton>
+                            <RegularButton
+                                prependedIcon={
+                                    <Icon name={IconName.CHEVRON_DOWN} />
+                                }
+                                variant={ButtonVariant.GHOST}
+                            >
+                                Ghost
+                            </RegularButton>
+                            <RegularButton
+                                appendedIcon={<Icon name={IconName.PLUS} />}
+                                variant={ButtonVariant.OUTLINED}
+                            >
+                                Outlined
+                            </RegularButton>
+                            <RegularButton variant={ButtonVariant.PRIMARY}>
+                                Primary
+                            </RegularButton>
+                            <RegularButton
+                                appendedIcon={<Icon name={IconName.PLUS} />}
+                                prependedIcon={
+                                    <Icon name={IconName.CHEVRON_DOWN} />
+                                }
+                                size={ButtonSize.MEDIUM}
+                                variant={ButtonVariant.PRIMARY}
+                            >
+                                Primary
+                            </RegularButton>
+                            <RegularButton
+                                variant={ButtonVariant.SQUARE_ORANGE}
+                            >
+                                <Icon name={IconName.FACEBOOK} />
+                            </RegularButton>
+                        </div>
                     </li>
                     <li className={styles.item}>
                         <Calendar />

@@ -1,4 +1,4 @@
-import { HttpError } from 'shared/build/index.js';
+import { HttpCode, HttpError } from 'shared/build/index.js';
 
 import { type OauthRepository } from '~/bundles/oauth/oauth.repository';
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
@@ -6,8 +6,8 @@ import { type IService } from '~/common/interfaces/service.interface';
 
 import {
     type OauthUserEntityFields,
-    type UserGithubLoginRequestDto,
-    type UserGithubLoginResponseDto,
+    type OauthUserLoginRequestDto,
+    type OauthUserLoginResponseDto,
 } from './types/types.js';
 
 class OauthService implements Pick<IService, 'create' | 'getById'> {
@@ -22,10 +22,10 @@ class OauthService implements Pick<IService, 'create' | 'getById'> {
         this.profileRepository = profileRepository;
     }
 
-    public async getById(id: string): Promise<UserGithubLoginResponseDto> {
+    public async getById(id: string): Promise<OauthUserLoginResponseDto> {
         return this.oauthRepository.getUserWithProfile(
             id,
-        ) as Promise<UserGithubLoginResponseDto>;
+        ) as Promise<OauthUserLoginResponseDto>;
     }
 
     public async create({
@@ -33,8 +33,9 @@ class OauthService implements Pick<IService, 'create' | 'getById'> {
         avatar,
         email,
         oauthId,
+        lastName,
         oauthStrategy,
-    }: UserGithubLoginRequestDto): Promise<OauthUserEntityFields> {
+    }: OauthUserLoginRequestDto): Promise<OauthUserEntityFields> {
         const foundUserByOauthId = await this.oauthRepository.findByOauthId(
             oauthId,
         );
@@ -48,6 +49,7 @@ class OauthService implements Pick<IService, 'create' | 'getById'> {
                 {
                     firstName,
                     avatar,
+                    lastName,
                 },
                 transaction,
             );
@@ -63,10 +65,10 @@ class OauthService implements Pick<IService, 'create' | 'getById'> {
             await transaction.commit();
             return user;
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message } = error as HttpError;
             throw new HttpError({
                 message,
-                status,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
             });
         }
     }
