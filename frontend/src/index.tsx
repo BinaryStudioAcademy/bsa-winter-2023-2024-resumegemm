@@ -8,16 +8,16 @@ import { Auth } from '~/bundles/auth/pages/auth';
 import {
     App,
     ErrorFallback,
+    FreeAccessRoute,
     RouterProvider,
     StoreProvider,
     StripeProvider,
 } from '~/bundles/common/components/components';
+import { RestrictedAccessRoute } from '~/bundles/common/components/restricted-access-route/restricted-access-route';
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
-import { NoAuthRoute } from './bundles/common/components/no-auth-route/no-auth-route';
-import { PrivateRoute } from './bundles/common/components/private-route/private-route';
 import { Home } from './bundles/home/pages/home';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
@@ -49,7 +49,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 },
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <NoAuthRoute />,
+                                    element: <FreeAccessRoute />,
                                     children: [
                                         {
                                             path: AppRoute.LOG_IN,
@@ -63,7 +63,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 },
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <PrivateRoute />,
+                                    element: <RestrictedAccessRoute />,
                                     children: [
                                         {
                                             path: AppRoute.HOME,

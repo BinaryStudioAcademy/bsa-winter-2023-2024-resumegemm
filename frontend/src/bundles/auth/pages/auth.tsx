@@ -1,9 +1,6 @@
-import { Navigate } from 'react-router-dom';
-
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
-    useAppSelector,
     useCallback,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
@@ -11,22 +8,17 @@ import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
 import { type UserSignUpRequestDtoFrontend } from '../components/sign-up-form/validation/sign-up-validation.js';
-import { signIn, signUp } from '../store/actions.js';
+import { actions as authActions } from '../store/index';
 import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    const { dataStatus, user } = useAppSelector(({ auth }) => ({
-        dataStatus: auth.dataStatus,
-        user: auth.user,
-    }));
-
     const { pathname } = useLocation();
 
     const handleSignInSubmit = useCallback(
         (payload: UserSignInRequestDto): void => {
-            void dispatch(signIn(payload));
+            void dispatch(authActions.signIn(payload));
         },
         [dispatch],
     );
@@ -34,7 +26,7 @@ const Auth: React.FC = () => {
     const handleSignUpSubmit = useCallback(
         (payload: UserSignUpRequestDtoFrontend): void => {
             delete payload.confirm_password;
-            void dispatch(signUp(payload));
+            void dispatch(authActions.signUp(payload));
         },
         [dispatch],
     );
@@ -52,9 +44,7 @@ const Auth: React.FC = () => {
         return null;
     };
 
-    return user ? (
-        <Navigate to={AppRoute.HOME} />
-    ) : (
+    return (
         <div className={styles.auth}>
             <div className={styles.auth__container}>
                 <section className={styles['auth__logo-container']}>
@@ -64,7 +54,6 @@ const Auth: React.FC = () => {
                 </section>
                 <section className={styles['auth__form-container']}>
                     <div className={styles['auth__form-content']}>
-                        state: {dataStatus}
                         {getScreen(pathname)}
                     </div>
                 </section>
