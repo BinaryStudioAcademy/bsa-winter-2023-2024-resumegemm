@@ -4,7 +4,7 @@ type Language = {
     id: string;
     resumeId: string;
     language: string;
-    languageLevel: LanguageLevels;
+    level: LanguageLevels;
     createdAt: string;
     updatedAt: string;
 };
