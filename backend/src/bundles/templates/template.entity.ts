@@ -4,7 +4,7 @@ import {
 } from 'shared/build/bundles/templates/templates.js';
 
 class TemplateEntity {
-    private 'id': string | null;
+    private 'id': string;
 
     private 'isOwner': boolean;
 
