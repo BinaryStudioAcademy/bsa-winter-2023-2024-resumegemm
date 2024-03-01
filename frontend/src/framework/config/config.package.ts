@@ -17,12 +17,19 @@ class Config implements IConfig {
                 ENVIRONMENT: import.meta.env.VITE_APP_NODE_ENV as ValueOf<
                     typeof AppEnvironment
                 >,
+                DOMAIN_URL: this.getDomain,
             },
             API: {
                 ORIGIN_URL: import.meta.env.VITE_APP_API_ORIGIN_URL as string,
                 PROXY_URL: import.meta.env.VITE_APP_PROXY_SERVER_URL as string,
             },
         };
+    }
+
+    private get getDomain(): string {
+        return import.meta.env.PROD
+            ? import.meta.env.VITE_APP_DOMAIN_URL
+            : import.meta.env.VITE_APP_PROXY_SERVER_URL;
     }
 }
 
