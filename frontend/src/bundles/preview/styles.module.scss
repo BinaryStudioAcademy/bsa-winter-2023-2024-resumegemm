@@ -34,3 +34,19 @@
 .auth {
     height: 100vh;
 }
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 200px;
+}
+
+.footer__actions {
+    display: flex;
+    gap: 10px;
+}
+
+.dropdown {
+    max-width: 250px;
+}

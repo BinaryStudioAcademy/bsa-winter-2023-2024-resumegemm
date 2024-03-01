@@ -8,6 +8,7 @@ import {
     faArrowDownLong,
     faArrowUpLong,
     faChevronDown,
+    faClose,
     faEye,
     faEyeSlash,
     faMagnifyingGlass,
@@ -29,6 +30,7 @@ const iconNameToSvgIcon = {
     [IconName.SEARCH]: faMagnifyingGlass,
     [IconName.ARROW_DOWN]: faArrowDownLong,
     [IconName.ARROW_UP]: faArrowUpLong,
+    [IconName.CLOSE_CROSS]: faClose,
 };
 
 type IconProperties = {
