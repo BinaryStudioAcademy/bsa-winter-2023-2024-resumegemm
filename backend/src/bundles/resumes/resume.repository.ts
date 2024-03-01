@@ -1,5 +1,6 @@
 import { Guid as guid } from 'guid-typescript';
 
+import { resumeGraphFetchRelations } from './constants/constants.js';
 import {
     type CertificationRepository,
     type ContactsRepository,
@@ -10,7 +11,6 @@ import {
     type PersonalInformationRepository,
     type TechnicalSkillsRepository,
 } from './content/content.js';
-import { resumeGraphFetchRelations } from './enums/graph-const-relations.enum.js';
 import { type IResumeRepository } from './interfaces/interfaces.js';
 import { type ResumeModel } from './resume.model.js';
 import {
