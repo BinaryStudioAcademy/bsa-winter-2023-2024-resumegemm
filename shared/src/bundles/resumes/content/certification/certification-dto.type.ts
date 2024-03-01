@@ -5,7 +5,7 @@ type Certification = {
     authority: string;
     startDate: string;
     endDate: string;
-    certificationUrlOrCode: string;
+    certificationUrl: string;
     description: string;
     createdAt: string;
     updatedAt: string;

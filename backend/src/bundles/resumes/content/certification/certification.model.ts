@@ -12,7 +12,7 @@ class CertificationModel extends AbstractModel {
     public 'authority': string;
     public 'startDate': string;
     public 'endDate': string;
-    public 'certificationUrlOrCode': string;
+    public 'certificationUrl': string;
     public 'description': string;
 
     public static override get tableName(): typeof DatabaseTableName.CERTIFICATION {
