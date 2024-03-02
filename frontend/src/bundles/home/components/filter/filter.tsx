@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { useCallback, useEffect, useState } from 'react';
 
+import filterIcon from '~/assets/img/filter-icon.svg';
 import { BaseButton } from '~/bundles/common/components/components';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 import { actions as industriesActionCreator } from '~/bundles/industries/store/index.js';
@@ -23,7 +24,7 @@ const Filter: React.FC = () => {
 
     useEffect(() => {
         handleIndustriesLoad();
-    }, [isOpen, handleIndustriesLoad]);
+    }, [handleIndustriesLoad]);
 
     const toggleDropdown = useCallback((): void => {
         setIsOpen(!isOpen);
@@ -42,6 +43,7 @@ const Filter: React.FC = () => {
                         className={styles.dropdown__icon__button}
                     >
                         <div
+                            style={{ maskImage: `url(${filterIcon})` }}
                             className={clsx(styles.mask, styles.colored)}
                         ></div>
                     </BaseButton>

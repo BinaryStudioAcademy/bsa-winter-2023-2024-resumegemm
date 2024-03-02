@@ -1,8 +1,12 @@
 .dropdown_content__item {
     display: block;
     width: 100%;
-    padding: 8px 16px;
-    color: black;
+    padding: 5px 16px;
+    color: var(--color-black);
     text-align: left;
     text-decoration: none;
+}
+
+.dropdown_content__item:hover {
+    background-color: var(--color-disabled-gray);
 }
