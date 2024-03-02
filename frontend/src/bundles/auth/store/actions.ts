@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type UserWithProfileRelation } from 'shared/build/bundles/users/types/user-with-profile-nested-relation.type.js';
+import { type UserWithProfileRelationAndOauthConnections } from 'shared/build';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
@@ -23,7 +23,7 @@ const signUp = createAsyncThunk<
 });
 
 const signIn = createAsyncThunk<
-    UserWithProfileRelation,
+    UserWithProfileRelationAndOauthConnections,
     UserSignInRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-in`, async (signInPayload, { extra }) => {
