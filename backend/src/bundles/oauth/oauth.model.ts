@@ -1,6 +1,6 @@
 import { type RelationMappings, Model } from 'objection';
 
-import { ProfileModel } from '~/bundles/profile/profile.model.js';
+import { UserModel } from '~/bundles/users/users.js';
 import {
     AbstractModel,
     DatabaseTableName,
@@ -11,23 +11,24 @@ import { type OauthStrategy } from './enums/enums.js';
 class OauthModel extends AbstractModel {
     public 'email': string;
 
-    public 'profileId': string;
+    public 'userId': string;
 
     public 'oauthStrategy': OauthStrategy;
 
     public 'oauthId': string;
-    public static override get tableName(): typeof DatabaseTableName.OAUTH_USERS {
-        return DatabaseTableName.OAUTH_USERS;
+
+    public static override get tableName(): typeof DatabaseTableName.OAUTH_CONNECTIONS {
+        return DatabaseTableName.OAUTH_CONNECTIONS;
     }
 
     public static getRelationMappings(): RelationMappings {
         return {
-            user_profile: {
-                relation: Model.HasOneRelation,
-                modelClass: ProfileModel,
+            users: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: UserModel,
                 join: {
-                    from: `${DatabaseTableName.OAUTH_USERS}.profileId`,
-                    to: `${DatabaseTableName.PROFILE}.id`,
+                    from: `${DatabaseTableName.OAUTH_CONNECTIONS}.userId`,
+                    to: `${DatabaseTableName.USERS}.id`,
                 },
             },
         };
