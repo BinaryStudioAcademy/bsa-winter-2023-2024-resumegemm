@@ -5,11 +5,9 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
+    type OauthConnectionEntityFields,
     type OauthConnectionPayload,
-    type OauthUserEntityFields,
     type OauthUserLoginRequestDto,
-    type OauthUserLoginResponseDto,
-    type OauthUserWithProfileRelation,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
@@ -62,7 +60,7 @@ export {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelation,
+    type UserWithProfileRelationAndOauthConnections,
     UsersApiPath,
     userSignInValidationSchema,
     userSignUpValidationSchema,

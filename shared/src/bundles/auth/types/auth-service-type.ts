@@ -3,7 +3,7 @@ import {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelation,
+    type UserWithProfileRelationAndOauthConnections,
 } from '../../users/users.js';
 
 type AuthService = {
@@ -16,7 +16,7 @@ type AuthService = {
         password,
     }: UserSignInRequestDto): Promise<UserSignInResponseDto>;
 
-    getUser(id: string): Promise<UserWithProfileRelation>;
+    getUser(id: string): Promise<UserWithProfileRelationAndOauthConnections>;
 
     verifyToken<T>(token: string, isRefreshToken?: boolean): T;
 };

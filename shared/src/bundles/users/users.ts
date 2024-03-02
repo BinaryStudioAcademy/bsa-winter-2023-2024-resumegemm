@@ -9,7 +9,7 @@ export {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelation,
+    type UserWithProfileRelationAndOauthConnections,
 } from './types/types.js';
 export {
     userSignIn as userSignInValidationSchema,

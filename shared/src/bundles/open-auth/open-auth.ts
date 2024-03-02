@@ -4,11 +4,9 @@ export {
     OpenAuthApiPath,
 } from './enums/enums.js';
 export {
+    type OauthConnectionEntityFields,
     type OauthConnectionPayload,
-    type OauthUserEntityFields,
     type OauthUserLoginRequestDto,
-    type OauthUserLoginResponseDto,
-    type OauthUserWithProfileRelation,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,

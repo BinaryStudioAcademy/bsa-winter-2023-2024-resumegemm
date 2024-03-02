@@ -1,6 +1,6 @@
 import { type OauthStrategy } from '../enums/enums.js';
 
-type OauthUserEntityFields = {
+type OauthConnectionEntityFields = {
     id: string;
     email: string;
     oauthStrategy: OauthStrategy;
@@ -8,4 +8,4 @@ type OauthUserEntityFields = {
     userId: string;
 };
 
-export { type OauthUserEntityFields };
+export { type OauthConnectionEntityFields };
