@@ -37,11 +37,26 @@ class AbstractRepository<T extends typeof AbstractModel, K>
             .execute();
     }
 
-    public getUserWithProfile(id: string, modification?: string): Promise<K> {
+    public create(data: Omit<K, 'id'>): Promise<K> {
+        return this.modelInstance
+            .query()
+            .insert({
+                ...data,
+                id: guid.raw(),
+            })
+            .returning('*')
+            .castTo<K>()
+            .execute();
+    }
+
+    public getUserWithProfileAndOauthConnections(
+        id: string,
+        modification?: string,
+    ): Promise<K> {
         let query = this.modelInstance
             .query()
             .findById(id)
-            .withGraphFetched('[user_profile]');
+            .withGraphFetched('[profile, oauth_connections]');
         if (modification) {
             query = query.modify(modification);
         }
