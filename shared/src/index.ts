@@ -5,6 +5,7 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
+    type OauthConnectionPayload,
     type OauthUserEntityFields,
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,
