@@ -1,10 +1,8 @@
 export {
     type HttpError,
+    type OauthConnectionEntityFields,
     type OauthConnectionPayload,
-    type OauthUserEntityFields,
     type OauthUserLoginRequestDto,
-    type OauthUserLoginResponseDto,
-    type OauthUserWithProfileRelation,
     type UserEntityFields,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,

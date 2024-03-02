@@ -4,7 +4,7 @@ import { generateToken } from '~/bundles/auth/helpers/helpers.js';
 import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
     type HttpError,
-    type OauthUserEntityFields,
+    type OauthConnectionEntityFields,
     type OauthUserLoginRequestDto,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
@@ -228,7 +228,7 @@ class OpenAuthController extends Controller {
         params: FastifyRequest['params'];
     }>): Promise<ApiHandlerResponse<boolean>> {
         try {
-            const id = (params as OauthUserEntityFields).id;
+            const id = (params as OauthConnectionEntityFields).id;
             const hasConnectionRemoved = await this.oauthService.deleteById(id);
             return {
                 status: HttpCode.OK,
