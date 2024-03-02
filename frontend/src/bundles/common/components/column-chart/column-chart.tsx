@@ -6,12 +6,14 @@ type Properties = {
     color?: ColumnChartColor;
     measure: string;
     data: [string, number][];
+    className?: string;
 };
 
 const ColumnChart: React.FC<Properties> = ({
     color = ColumnChartColor.DarkBlue,
     measure,
     data,
+    className,
 }: Properties) => {
     const options = {
         vAxis: {
@@ -29,6 +31,7 @@ const ColumnChart: React.FC<Properties> = ({
 
     return (
         <Chart
+            className={className}
             chartType="ColumnChart"
             data={[['', measure], ...data]}
             options={options}
