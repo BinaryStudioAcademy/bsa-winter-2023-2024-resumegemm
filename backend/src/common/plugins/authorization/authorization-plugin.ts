@@ -7,14 +7,13 @@ import {
 
 import { type AuthService } from '~/bundles/auth/auth.service.js';
 import { getToken } from '~/bundles/auth/helpers/helpers.js';
-import { openAuthService } from '~/bundles/oauth/oauth.js';
 import { config } from '~/common/config/config.js';
 import { ControllerHook } from '~/common/controller/enums/enums.js';
 import { type IService } from '~/common/interfaces/service.interface.js';
 
 type AuthorizationPluginPayload = {
     publicRoutes: Partial<Record<AuthApiPath, string>>;
-    userService: Omit<IService, 'getById'>;
+    userService: Pick<IService, 'getUserWithProfileAndOauthConnections'>;
     authService: AuthService;
 };
 
@@ -45,13 +44,8 @@ const authorization = fp<AuthorizationPluginPayload>(
                     token,
                     config.ENV.JWT.ACCESS_TOKEN_SECRET,
                 );
-                const currentUser = await userService.getUserWithProfile(id);
-
-                if (!currentUser) {
-                    const oauthUser = await openAuthService.getById(id);
-                    request.user = oauthUser;
-                    return;
-                }
+                const currentUser =
+                    await userService.getUserWithProfileAndOauthConnections(id);
 
                 request.user = currentUser;
             } catch (error) {
