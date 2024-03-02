@@ -3,6 +3,8 @@ interface IService<T = unknown> {
         items: T[];
     }>;
 
+    deleteById(id: string): Promise<boolean>;
+
     getById(id: string): Promise<T>;
 
     findByEmail(email: string): Promise<T>;

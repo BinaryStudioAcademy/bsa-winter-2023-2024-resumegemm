@@ -49,6 +49,10 @@ class AbstractRepository<T extends typeof AbstractModel, K>
             .execute();
     }
 
+    public deleteById(id: string): Promise<number> {
+        return this.modelInstance.query().deleteById(id).execute();
+    }
+
     public getUserWithProfileAndOauthConnections(
         id: string,
         modification?: string,
