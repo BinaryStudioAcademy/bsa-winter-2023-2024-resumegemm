@@ -9,11 +9,11 @@ import {
     App,
     ErrorFallback,
     FreeAccessRoute,
+    RestrictedAccessRoute,
     RouterProvider,
     StoreProvider,
     StripeProvider,
 } from '~/bundles/common/components/components';
-import { RestrictedAccessRoute } from '~/bundles/common/components/restricted-access-route/restricted-access-route';
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';

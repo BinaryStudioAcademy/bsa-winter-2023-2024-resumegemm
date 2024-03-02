@@ -73,7 +73,6 @@ class AuthController extends Controller {
                 this.getUser(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponse['user'];
-                        cookies: FastifyRequest['cookies'];
                     }>,
                 ),
         });
@@ -263,10 +262,13 @@ class AuthController extends Controller {
     ): Promise<ApiHandlerResponse<UserWithProfileRelationAndOauthConnections>> {
         try {
             const { id } = options.user;
-            const payload = await this.authService.getUserWithProfile(id);
+
+            const userWithProfileRelation =
+                await this.authService.getUserWithProfile(id);
+
             return {
                 status: HttpCode.OK,
-                payload,
+                payload: userWithProfileRelation,
             };
         } catch (error: unknown) {
             const message = (error as Error).message;

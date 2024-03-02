@@ -12,6 +12,7 @@ const userApi = new UserApi({
 
 export { userApi };
 export {
+    type OauthConnectionEntityFields,
     type UserAuthResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,

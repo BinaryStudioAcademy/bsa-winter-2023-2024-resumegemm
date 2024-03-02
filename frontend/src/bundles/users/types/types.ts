@@ -1,5 +1,6 @@
 export {
     type AuthTokenResponse,
+    type OauthConnectionEntityFields,
     type UserAuthResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,

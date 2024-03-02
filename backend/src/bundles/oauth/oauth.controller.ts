@@ -1,6 +1,9 @@
 import { type FastifyRequest } from 'fastify';
 
-import { generateToken } from '~/bundles/auth/helpers/helpers.js';
+import {
+    generateRefreshToken,
+    generateToken,
+} from '~/bundles/auth/helpers/helpers.js';
 import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
     type HttpError,
@@ -198,6 +201,7 @@ class OpenAuthController extends Controller {
             const user = await this.oauthService.create(userPayload);
             return {
                 accessToken: generateToken({ id: user.id }),
+                refreshToken: generateRefreshToken({ id: user.id }),
                 status: HttpCode.OK,
                 payload: null,
             };
