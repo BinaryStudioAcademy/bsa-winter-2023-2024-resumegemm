@@ -5,10 +5,10 @@
 }
 
 .delete__button__text {
-    color: rgb(30 37 50);
-    font-weight: 400;
+    color: var(--color-text-black);
+    font-weight: var(--font-weight-text);
     font-size: 19px;
-    font-family: "TT Commons", system-ui, "Segoe UI";
+    font-family: var(--font-family-resume-button);
     transition: color 0.15s ease 0s;
 }
 
@@ -20,7 +20,6 @@
 .mask {
     width: 24px;
     height: 24px;
-    mask-image: url("~/assets/img/delete-icon.svg");
     mask-size: cover;
     mask-position: center;
 }

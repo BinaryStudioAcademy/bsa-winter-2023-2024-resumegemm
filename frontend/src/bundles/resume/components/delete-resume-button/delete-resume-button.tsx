@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { useCallback, useState } from 'react';
 
+import deleteIcon from '~/assets/img/delete-icon.svg';
 import { BaseButton } from '~/bundles/common/components/components';
 
 import { DeleteResumeModal } from '../delete-resume-modal.tsx/delete-resume-modal';
@@ -23,7 +24,10 @@ const DeleteResumeButton: React.FC = () => {
                 onClick={handleShowModal}
                 className={styles.delete__button}
             >
-                <div className={clsx(styles.mask, styles.colored)}></div>
+                <div
+                    style={{ maskImage: `url(${deleteIcon})` }}
+                    className={clsx(styles.mask, styles.colored)}
+                ></div>
                 <span className={styles.delete__button__text}>Delete</span>
             </BaseButton>
             {isModalShown && <DeleteResumeModal onClose={handleCloseModal} />}

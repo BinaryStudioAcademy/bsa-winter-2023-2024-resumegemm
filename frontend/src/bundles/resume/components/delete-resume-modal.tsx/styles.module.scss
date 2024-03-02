@@ -13,17 +13,17 @@
 .modal_buttons .modal__cancel__button,
 .modal_buttons .modal__delete__button {
     padding: 13px 24px 13px 20px;
-    font-weight: 600;
+    font-weight: var(--font-weight-title);
     font-size: 18px;
     line-height: 22px;
     border-radius: 4px;
 }
 
 .modal_buttons .modal__cancel__button {
-    color: #ffffff;
-    background-color: rgb(26 145 240);
+    color: var(--color-white);
+    background-color: var(--color-button-blue);
 }
 
 .modal_buttons .modal__delete__button {
-    box-shadow: rgba(217 222 235 / 50%) 0 0 10px 1px inset;
+    box-shadow: var(--color-box-shadow-button) 0 0 10px 1px inset;
 }
