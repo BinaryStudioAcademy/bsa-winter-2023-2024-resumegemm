@@ -9,5 +9,6 @@ export {
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
+    type UserSignUpRequestDto,
     type ValueOf,
 } from 'shared/build/index.js';
