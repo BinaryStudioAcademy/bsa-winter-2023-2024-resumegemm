@@ -1,8 +1,8 @@
 type UserSignUpRequestDto = {
     firstName: string;
-    lastName: string;
+    lastName: string | null;
     email: string;
-    password: string;
+    password: string | null;
 };
 
 export { type UserSignUpRequestDto };

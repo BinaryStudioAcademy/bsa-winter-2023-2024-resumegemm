@@ -1,7 +1,7 @@
 type EncryptionDataPayload = {
     plaintTextPassword: string;
-    passwordSalt: string;
-    passwordHash: string;
+    passwordSalt: string | null;
+    passwordHash: string | null;
 };
 
 export { type EncryptionDataPayload };

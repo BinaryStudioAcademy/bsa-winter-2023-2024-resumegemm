@@ -5,7 +5,7 @@ type OauthUserEntityFields = {
     email: string;
     oauthStrategy: OauthStrategy;
     oauthId: string;
-    profileId: string;
+    userId: string;
 };
 
 export { type OauthUserEntityFields };
