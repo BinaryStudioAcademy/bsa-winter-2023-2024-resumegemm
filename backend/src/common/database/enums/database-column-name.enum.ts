@@ -38,13 +38,14 @@ enum DatabaseColumnName {
     TEMPLATE_ID = 'template_id',
     TEMPLATE_SETTINGS = 'template_settings',
     STRIPE_PLAN_ID = 'stripe_plan_id',
+    STRIPE_PRODUCT_ID = 'stripe_product_id',
     NAME = 'name',
     DESCRIPTION = 'description',
     CURRENCY = 'currency',
     INTERVAL = 'interval',
     INTERVAL_COUNT = 'interval_count',
     AMOUNT = 'amount',
-    ACTIVE = 'active',
+    IS_ACTIVE = 'is_active',
 }
 
 export { DatabaseColumnName };
