@@ -1,26 +1,41 @@
-import { IconName } from '~/bundles/common/enums/enums';
+import { type SocialMediaProfiles, type ValueOf } from 'shared/build';
+
+import { type DataStatus, type IconName } from '~/bundles/common/enums/enums';
 
 import { SocialItem } from './socials-item';
 import styles from './style.module.scss';
 
-const Socials: React.FC = () => {
+type SocialsPayload = {
+    socialMediaConnections: SocialMediaProfiles[];
+    onSocialDisconnect: (id: string) => void;
+    dataStatus: ValueOf<typeof DataStatus>;
+};
+
+const Socials: React.FC<SocialsPayload> = ({
+    socialMediaConnections,
+    onSocialDisconnect,
+    dataStatus,
+}) => {
     return (
         <div className={styles.socials}>
-            <SocialItem
-                icon={IconName.FACEBOOK}
-                network="Facebook"
-                buttonText="Connect"
-            />
-            <SocialItem
-                icon={IconName.LINKEDIN}
-                network="LinkedIn"
-                buttonText="Connect"
-            />
-            <SocialItem
-                icon={IconName.GOOGLE}
-                network="Google"
-                buttonText="Connect"
-            />
+            {socialMediaConnections.map(
+                ({ provider, id, connected, redirect }, index) => {
+                    return (
+                        <SocialItem
+                            key={index}
+                            icon={
+                                provider as unknown as ValueOf<typeof IconName>
+                            }
+                            id={id}
+                            redirectPath={redirect}
+                            dataStatus={dataStatus}
+                            provider={provider}
+                            isConnected={connected}
+                            onSocialDisconnect={onSocialDisconnect}
+                        />
+                    );
+                },
+            )}
         </div>
     );
 };

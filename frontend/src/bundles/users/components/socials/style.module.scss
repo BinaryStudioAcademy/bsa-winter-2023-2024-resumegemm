@@ -30,3 +30,9 @@ $border-color: #ccd7dc;
 .socials__item__name p {
     margin-left: 5px;
 }
+
+.flex__button {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
