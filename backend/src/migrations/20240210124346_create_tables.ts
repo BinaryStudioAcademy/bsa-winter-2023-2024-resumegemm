@@ -198,18 +198,12 @@ async function up(knex: Knex): Promise<void> {
         DatabaseTableName.SUBSCRIPTION_PLANS,
         (table) => {
             table.uuid(DatabaseColumnName.ID).primary();
-            table.string(DatabaseColumnName.STRIPE_PLAN_ID).unique();
-            table.string(DatabaseColumnName.NAME).notNullable();
-            table.string(DatabaseColumnName.DESCRIPTION).notNullable();
-            table.string(DatabaseColumnName.CURRENCY).notNullable();
-            table.string(DatabaseColumnName.INTERVAL).notNullable();
-            table.integer(DatabaseColumnName.INTERVAL_COUNT).notNullable();
-            table.integer(DatabaseColumnName.AMOUNT).notNullable();
+            table.string(DatabaseColumnName.STRIPE_PLAN_ID).notNullable();
+            table.string(DatabaseColumnName.STRIPE_PRODUCT_ID).notNullable();
             table
-                .boolean(DatabaseColumnName.ACTIVE)
+                .boolean(DatabaseColumnName.IS_ACTIVE)
                 .notNullable()
                 .defaultTo(true);
-            table.string(DatabaseColumnName.IMAGE);
             table
                 .dateTime(DatabaseColumnName.CREATED_AT)
                 .notNullable()
