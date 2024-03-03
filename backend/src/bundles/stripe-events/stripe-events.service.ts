@@ -1,11 +1,17 @@
 import Stripe from 'stripe';
 
-import { StripePlanEvents } from '~/bundles/stripe-events/enums/enums.js';
+import {
+    StripeCustomerEvents,
+    StripePlanEvents,
+} from '~/bundles/stripe-events/enums/enums.js';
 import { type IStripeEventsService } from '~/bundles/stripe-events/interfaces/stripe-events-service.interface.js';
 import { type SubscriptionPlanRepository } from '~/bundles/stripe-events/repositories/subscription-plan.repository.js';
 import { type IConfig } from '~/common/config/interfaces/config.interface.js';
+import { MailService } from '~/common/mail-service/mail-service.package.js';
+import { generateSubscriptionEmailPayload } from './helpers/subscription-email-generator.js';
 
 import {
+    type StripeCustomer,
     type StripeEventsResponseDto,
     type SubscriptionPlan,
 } from './types/types.js';
@@ -14,6 +20,7 @@ class StripeEventsService implements IStripeEventsService {
     private appConfig: IConfig;
     private subscriptionPlanRepository: SubscriptionPlanRepository;
     private stripe: Stripe;
+    private mailSender: MailService;
 
     public constructor(
         config: IConfig,
@@ -21,7 +28,10 @@ class StripeEventsService implements IStripeEventsService {
     ) {
         this.appConfig = config;
         this.subscriptionPlanRepository = subscriptionPlanRepository;
-        this.stripe = new Stripe(this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY);
+        this.stripe = new Stripe(
+            this.appConfig.ENV.STRIPE.STRIPE_WEBHOOK_SECRET,
+        );
+        this.mailSender = MailService.getInstance();
     }
 
     public async handleEvent(
@@ -31,7 +41,7 @@ class StripeEventsService implements IStripeEventsService {
         const event: Stripe.Event = this.stripe.webhooks.constructEvent(
             rawBody,
             signature,
-            this.appConfig.ENV.STRIPE.STRIPE_WEBHOOK_SECRET,
+            this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY,
         );
 
         switch (event.type) {
@@ -43,10 +53,16 @@ class StripeEventsService implements IStripeEventsService {
                 await this.handlePlanDeleted(event.data);
                 break;
             }
+            case StripeCustomerEvents.SUBSCRIPTION_CREATED: {
+                await this.handleSubscriptionCreated(event.data);
+                break;
+            }
         }
-
-        return { resolved: true };
+        return {
+            resolved: true,
+        };
     }
+
     private async handlePlanCreated(
         data: Stripe.PlanCreatedEvent.Data,
     ): Promise<void> {
@@ -71,6 +87,26 @@ class StripeEventsService implements IStripeEventsService {
         if (existingPlan) {
             await this.subscriptionPlanRepository.delete(existingPlan.id);
         }
+    }
+
+    private async handleSubscriptionCreated(
+        data: Stripe.CustomerSubscriptionCreatedEvent.Data,
+    ): Promise<void> {
+        const subscription: Stripe.Subscription = data.object;
+        const customerId = subscription.customer as string;
+        const customer = (await this.stripe.customers.retrieve(
+            customerId,
+        )) as StripeCustomer;
+        const { current_period_start, current_period_end } = subscription;
+        const { name, email } = customer;
+        const emailPayload = generateSubscriptionEmailPayload({
+            email,
+            subject: 'Subscription',
+            name,
+            current_period_start,
+            current_period_end,
+        });
+        void this.mailSender.sendMail(emailPayload);
     }
 }
 

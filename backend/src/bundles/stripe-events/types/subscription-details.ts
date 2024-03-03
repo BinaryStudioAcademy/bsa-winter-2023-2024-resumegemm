@@ -2,10 +2,10 @@ type SubscriptionDetails = {
     email: string;
     subject: string;
     name: string;
-    start: number;
-    end: number;
+    current_period_start: number;
+    current_period_end: number;
     items?: { description: string }[];
-    description: string | null;
+    description?: string | null;
 };
 
 export { type SubscriptionDetails };

@@ -2,9 +2,9 @@ import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import {
+    Controller,
     type ApiHandlerOptions,
     type ApiHandlerResponse,
-    Controller,
 } from '../../common/controller/controller.js';
 import { StripeEventsApiPath, StripeEventsHeaders } from './enums/enums.js';
 import { type StripeEventsService } from './stripe-events.service.js';
@@ -44,6 +44,7 @@ class StripeEventsController extends Controller {
         const signature: string =
             options.headers[StripeEventsHeaders.STRIPE_SIGNATURE];
         const { rawBody } = options;
+        void this.stripeEventsService.handleEvent(rawBody, signature);
 
         return {
             status: HttpCode.OK,
