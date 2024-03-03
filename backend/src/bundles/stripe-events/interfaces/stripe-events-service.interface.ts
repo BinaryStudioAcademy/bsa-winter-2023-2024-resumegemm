@@ -4,7 +4,7 @@ interface IStripeEventsService {
     handleEvent: (
         rawBody: string,
         signature: string,
-    ) => StripeEventsResponseDto;
+    ) => Promise<StripeEventsResponseDto>;
 }
 
 export { type IStripeEventsService };
