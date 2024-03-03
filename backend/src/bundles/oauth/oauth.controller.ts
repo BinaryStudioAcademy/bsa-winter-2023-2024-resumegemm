@@ -76,7 +76,7 @@ class OpenAuthController extends Controller {
                 ),
         });
         this.addRoute({
-            path: OpenAuthApiPath.DISCONNECT,
+            path: OpenAuthApiPath.ID,
             method: 'DELETE',
             handler: (options) =>
                 this.deleteById(

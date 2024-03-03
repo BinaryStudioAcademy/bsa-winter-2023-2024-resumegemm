@@ -60,7 +60,7 @@ class Controller implements IController {
                     refreshToken as string,
                     cookieOptions,
                 )
-                .redirect(config.ENV.APP.ORIGIN_URL);
+                .redirect(`${config.ENV.APP.ORIGIN_URL}/profile`);
         }
         if (refreshToken) {
             void reply.setCookie(
