@@ -35,18 +35,21 @@ class StripeEventsController extends Controller {
         });
     }
 
-    private handleStripeWebhook(
+    private async handleStripeWebhook(
         options: ApiHandlerOptions<{
             rawBody: string;
             headers: Record<string, string>;
         }>,
-    ): ApiHandlerResponse<StripeEventsResponseDto> {
+    ): Promise<ApiHandlerResponse<StripeEventsResponseDto>> {
         const signature: string = options.headers['stripe-signature'];
         const { rawBody } = options;
 
         return {
             status: HttpCode.OK,
-            payload: this.stripeEventsService.handleEvent(rawBody, signature),
+            payload: await this.stripeEventsService.handleEvent(
+                rawBody,
+                signature,
+            ),
         };
     }
 }
