@@ -4,7 +4,7 @@ enum OpenAuthApiPath {
     GITHUB = '/github',
     GOOGLE = '/google',
     FACEBOOK = '/facebook',
-    DISCONNECT = '/disconnect/:id',
+    ID = '/:id',
     REDIRECT_CALLBACK = '/oauth/login/:provider',
 }
 
