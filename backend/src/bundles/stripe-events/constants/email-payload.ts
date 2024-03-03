@@ -35,9 +35,15 @@ const EmailPayload = {
         </head>
         <body>
             <div class="container">
-                <h1>Congratulations on successful subscription!</h1>
+                <h1>Congratulations {name} on successful subscription!</h1>
                 <p>We're excited to have you on board.</p>
                 <p>Thank you for choosing our service.</p>
+                <p>Your subscription details:</p>
+                <ul>
+                    <li><strong>Start Date:</strong> {startDate}</li>
+                    <li><strong>End Date:</strong> {endDate}</li>
+                    {descriptionBlock}
+                </ul>
                 <div class="footer">
                     <p>Best regards,</p>
                     <p>Resumegemm</p>
