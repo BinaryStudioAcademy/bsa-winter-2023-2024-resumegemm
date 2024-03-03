@@ -1,6 +1,6 @@
 import 'react-toastify/dist/ReactToastify.min.css';
 
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useRef, useState } from 'react';
 
 import {
     AppRoute,
@@ -29,6 +29,7 @@ import { UserProfile } from '../common/components/layout/header/user-profile/use
 import { Stepper } from '../common/components/stepper/stepper.js';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
+import { useTakeScreenShot } from '../common/hooks/use-take-screenshot/use-take-screenshot.hook.js';
 import { EditTemplatePage } from '../edit-temlate/edit-template';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
@@ -71,6 +72,8 @@ const dropdownOptions = [
 
 const PreviewPage: React.FC = () => {
     const { showToast } = useContext(ToastContext);
+    const { screenshot, takeScreenshot } = useTakeScreenShot();
+    const screenShotReference = useRef(null);
     const [activeStep, setActiveStep] = useState(0);
 
     const handleGoToNextStep = useCallback(() => {
@@ -78,6 +81,19 @@ const PreviewPage: React.FC = () => {
             setActiveStep(activeStep + 1);
         }
     }, [activeStep]);
+
+    const handleTakeScreenshot = useCallback(() => {
+        void takeScreenshot({
+            ref: screenShotReference,
+            convertOptions: {
+                quality: 0.9,
+                type: 'image/png',
+            },
+            options: {
+                scale: 1,
+            },
+        });
+    }, [takeScreenshot]);
     const handleSuccessButtonClick = useCallback(() => {
         showToast('Hooray!', ToastType.SUCCESS);
     }, [showToast]);
@@ -229,13 +245,25 @@ const PreviewPage: React.FC = () => {
                         <QuestionAndAnswer />
                     </li>
                     <li className={styles.item}>
-                        <EditTemplatePage />
+                        <div ref={screenShotReference}>
+                            <EditTemplatePage />
+                        </div>
                     </li>
                     <li className={styles.item}>
                         <Stepper steps={steps} activeStep={activeStep} />
                         <RegularButton onClick={handleGoToNextStep}>
                             Next
                         </RegularButton>
+                    </li>
+                    <li className={styles.item}>
+                        <RegularButton onClick={handleTakeScreenshot}>
+                            Take a Screenshot of Edit Templates
+                        </RegularButton>
+                        <div>
+                            {screenshot && (
+                                <img src={screenshot} alt="screenshot" />
+                            )}
+                        </div>
                     </li>
                 </ul>
             </div>
