@@ -47,8 +47,10 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
             <div className={styles.login__header}>
                 <h1 className={styles.login__title}>Log In</h1>
                 <p className={styles.login__message}>
-                    No account? Go to
-                    <span className={styles.login__link}> Sign Up</span>
+                    No account? Go to {''}
+                    <Link to={AppRoute.SIGN_UP} className={styles.login__link}>
+                        Sign Up
+                    </Link>
                 </p>
             </div>
             <form onSubmit={handleFormSubmit} className={styles.login__form}>
