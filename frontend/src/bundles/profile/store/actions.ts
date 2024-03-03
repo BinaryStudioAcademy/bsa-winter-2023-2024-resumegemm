@@ -41,7 +41,7 @@ const disconnectSocialMedia = createAsyncThunk<
     SocialMediaProfiles[],
     string,
     AsyncThunkConfig
->(`${sliceName}/get-social-media-profiles`, async (id, { extra, getState }) => {
+>(`${sliceName}/disconnect-social-profile`, async (id, { extra, getState }) => {
     const {
         profile: { socialMediaProfiles },
     } = getState();
