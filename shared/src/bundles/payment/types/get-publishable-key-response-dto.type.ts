@@ -1,5 +1,5 @@
 type GetPublishableKeyResponseDto = {
-    publishableKey: string
+    publishableKey: string;
 };
 
 export { type GetPublishableKeyResponseDto };

@@ -1,6 +1,8 @@
 enum DatabaseColumnName {
     ID = 'id',
     PROFILE_ID = 'profile_id',
+    OAUTH_ID = 'oauth_id',
+    OAUTH_STRATEGY = 'oauth_strategy',
     FIRST_NAME = 'first_name',
     IMAGE = 'image',
     LAST_NAME = 'last_name',
@@ -46,6 +48,7 @@ enum DatabaseColumnName {
     INTERVAL_COUNT = 'interval_count',
     AMOUNT = 'amount',
     IS_ACTIVE = 'is_active',
+    OWNER_ID = 'owner_id',
 }
 
 export { DatabaseColumnName };

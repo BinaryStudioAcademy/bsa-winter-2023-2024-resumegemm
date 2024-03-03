@@ -6,6 +6,6 @@ export {
     type GetPricesRequestDto,
     type GetPricesResponseDto,
     type GetPublishableKeyRequestDto,
-    type GetPublishableKeyResponseDto 
+    type GetPublishableKeyResponseDto,
 } from './types/types.js';
 export { paymentCreateSubscriptionValidationSchema } from './validation-schemas/validation-schemas.js';

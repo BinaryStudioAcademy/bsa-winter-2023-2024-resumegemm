@@ -1,0 +1,31 @@
+.custom__section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.custom__section__textarea {
+    min-height: 200px;
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: rgb(235 239 241);
+    border: none;
+    border-radius: 3px;
+}
+
+.custom__section__textarea:focus {
+    color: #302e36;
+    border: 1px solid #768fbe;
+    outline: none;
+}
+
+.custom__section__activity {
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom__section__date {
+    display: flex;
+    justify-content: flex-start;
+}

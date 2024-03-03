@@ -7,10 +7,11 @@ import {
     useCallback,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
-import { type UserSignUpRequestDto } from '~/bundles/users/users.js';
+import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
-import { actions as authActions } from '../store/';
+import { type UserSignUpRequestDtoFrontend } from '../components/sign-up-form/validation/sign-up-validation.js';
+import { signIn, signUp } from '../store/actions.js';
 import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
@@ -23,20 +24,24 @@ const Auth: React.FC = () => {
 
     const { pathname } = useLocation();
 
-    const handleSignInSubmit = useCallback((): void => {
-        // handle sign in
-    }, []);
+    const handleSignInSubmit = useCallback(
+        (payload: UserSignInRequestDto): void => {
+            void dispatch(signIn(payload));
+        },
+        [dispatch],
+    );
 
     const handleSignUpSubmit = useCallback(
-        (payload: UserSignUpRequestDto): void => {
-            void dispatch(authActions.signUp(payload));
+        (payload: UserSignUpRequestDtoFrontend): void => {
+            delete payload.confirm_password;
+            void dispatch(signUp(payload));
         },
         [dispatch],
     );
 
     const getScreen = (screen: string): React.ReactNode => {
         switch (screen) {
-            case AppRoute.SIGN_IN: {
+            case AppRoute.LOG_IN: {
                 return <SignInForm onSubmit={handleSignInSubmit} />;
             }
             case AppRoute.SIGN_UP: {
@@ -48,7 +53,7 @@ const Auth: React.FC = () => {
     };
 
     return user ? (
-        <Navigate to={AppRoute.ROOT} />
+        <Navigate to={AppRoute.HOME} />
     ) : (
         <div className={styles.auth}>
             <div className={styles.auth__container}>
