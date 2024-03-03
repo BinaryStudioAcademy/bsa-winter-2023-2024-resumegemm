@@ -1,6 +1,6 @@
 import 'react-toastify/dist/ReactToastify.min.css';
 
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
 import {
     AppRoute,
@@ -26,6 +26,7 @@ import {
 } from '../../bundles/common/components/components.js';
 import { Auth } from '../auth/pages/auth';
 import { UserProfile } from '../common/components/layout/header/user-profile/user-profile.js';
+import { Stepper } from '../common/components/stepper/stepper.js';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
 import { EditTemplatePage } from '../edit-temlate/edit-template';
@@ -33,6 +34,13 @@ import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import { QuestionAndAnswer } from '../question-and-answer/question-and-answer';
 import styles from './styles.module.scss';
+
+const steps = [
+    { label: 'Create resume' },
+    { label: 'Choose plan' },
+    { label: 'Payment details' },
+    { label: 'Download resume' },
+];
 
 const navbarItems = [
     { label: 'Home', path: AppRoute.ROOT },
@@ -63,7 +71,13 @@ const dropdownOptions = [
 
 const PreviewPage: React.FC = () => {
     const { showToast } = useContext(ToastContext);
+    const [activeStep, setActiveStep] = useState(0);
 
+    const handleGoToNextStep = useCallback(() => {
+        if (activeStep < steps.length) {
+            setActiveStep(activeStep + 1);
+        }
+    }, [activeStep]);
     const handleSuccessButtonClick = useCallback(() => {
         showToast('Hooray!', ToastType.SUCCESS);
     }, [showToast]);
@@ -216,6 +230,12 @@ const PreviewPage: React.FC = () => {
                     </li>
                     <li className={styles.item}>
                         <EditTemplatePage />
+                    </li>
+                    <li className={styles.item}>
+                        <Stepper steps={steps} activeStep={activeStep} />
+                        <RegularButton onClick={handleGoToNextStep}>
+                            Next
+                        </RegularButton>
                     </li>
                 </ul>
             </div>
