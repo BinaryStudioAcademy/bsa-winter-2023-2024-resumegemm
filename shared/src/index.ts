@@ -51,6 +51,7 @@ export {
 } from './bundles/templates/templates.js';
 export { TemplatesApiPath } from './bundles/templates/templates.js';
 export {
+    type SocialMediaProfiles,
     type User,
     type UserAuthResponse,
     type UserEntityFields,

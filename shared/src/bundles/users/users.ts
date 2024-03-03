@@ -1,5 +1,6 @@
 export { UsersApiPath, UserValidationMessage } from './enums/enums.js';
 export {
+    type SocialMediaProfiles,
     type User,
     type UserAuthResponse,
     type UserEntityFields,

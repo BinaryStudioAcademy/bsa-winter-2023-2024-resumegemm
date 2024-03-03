@@ -1,3 +1,4 @@
+export { type SocialMediaProfiles } from './social-media-profiles.type.js';
 export { type User } from './user.type.js';
 export { type UserAuthResponse } from './user-auth-response.type.js';
 export { type UserEntityFields } from './user-entity-fields.type.js';
