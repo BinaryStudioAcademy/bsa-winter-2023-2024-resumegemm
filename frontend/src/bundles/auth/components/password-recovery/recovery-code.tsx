@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { type UserVerifyResetTokenRequestDto } from 'shared/build';
 
 import {
-    BaseButton,
     FormGroup,
     Input,
+    RegularButton,
 } from '~/bundles/common/components/components.js';
 import {
     ButtonSize,
@@ -64,22 +64,22 @@ const RecoveryCodeForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <div className={styles.restore__form__actions}>
-                    <BaseButton
+                    <RegularButton
                         size={ButtonSize.SMALL}
                         width={ButtonWidth.FULL}
                         variant={ButtonVariant.OUTLINED}
                         onClick={handleButtonBack}
                     >
                         Back
-                    </BaseButton>
-                    <BaseButton
+                    </RegularButton>
+                    <RegularButton
                         size={ButtonSize.SMALL}
                         width={ButtonWidth.FULL}
                         variant={ButtonVariant.OUTLINED}
                     >
                         Send new code
-                    </BaseButton>
-                    <BaseButton
+                    </RegularButton>
+                    <RegularButton
                         className={styles.restore__form__button}
                         size={ButtonSize.SMALL}
                         width={ButtonWidth.FULL}
@@ -87,7 +87,7 @@ const RecoveryCodeForm: React.FC<Properties> = ({ onSubmit }) => {
                         type={ButtonType.SUBMIT}
                     >
                         Reset Password
-                    </BaseButton>
+                    </RegularButton>
                 </div>
             </form>
         </>

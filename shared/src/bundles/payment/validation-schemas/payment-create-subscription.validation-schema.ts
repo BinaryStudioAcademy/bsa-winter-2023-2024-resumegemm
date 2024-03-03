@@ -3,7 +3,10 @@ import joi from 'joi';
 import { PaymentValidationMessage } from '../enums/enums.js';
 import { type CreateSubscriptionRequestDto } from '../types/types.js';
 
-const paymentCreateSubscriptionValidationSchema = joi.object<CreateSubscriptionRequestDto, true>({
+const paymentCreateSubscriptionValidationSchema = joi.object<
+    CreateSubscriptionRequestDto,
+    true
+>({
     email: joi
         .string()
         .trim()

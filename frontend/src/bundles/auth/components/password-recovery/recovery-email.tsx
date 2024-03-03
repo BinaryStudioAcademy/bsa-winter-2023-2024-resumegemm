@@ -2,9 +2,9 @@ import { useCallback } from 'react';
 import { type UserForgotPasswordRequestDto } from 'shared/build';
 
 import {
-    BaseButton,
     FormGroup,
     Input,
+    RegularButton,
 } from '~/bundles/common/components/components.js';
 import {
     ButtonSize,
@@ -59,7 +59,7 @@ const RecoveryEmailForm: React.FC<Properties> = ({ onSubmit }) => {
                         onChange={onChange}
                     />
                 </FormGroup>
-                <BaseButton
+                <RegularButton
                     className={styles.restore__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
@@ -67,7 +67,7 @@ const RecoveryEmailForm: React.FC<Properties> = ({ onSubmit }) => {
                     type={ButtonType.SUBMIT}
                 >
                     Send recovery code
-                </BaseButton>
+                </RegularButton>
             </form>
         </>
     );

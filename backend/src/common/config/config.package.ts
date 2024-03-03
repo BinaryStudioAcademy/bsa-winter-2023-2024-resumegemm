@@ -72,6 +72,56 @@ class Config implements IConfig {
                 REFRESH_TOKEN_EXPIRES_IN: '30d',
                 RESET_TOKEN_EXPIRES_IN: '10m',
             },
+            OAUTH: {
+                GITHUB: {
+                    CLIENT_GITHUB_ID: {
+                        doc: 'Github secret for client id',
+                        format: String,
+                        env: 'CLIENT_GITHUB_ID',
+                        default: null,
+                    },
+                    CLIENT_GITHUB_SECRET: {
+                        doc: 'Github secret client token',
+                        format: String,
+                        env: 'CLIENT_GITHUB_SECRET',
+                        default: null,
+                    },
+                },
+                GOOGLE: {
+                    CLIENT_GOOGLE_ID: {
+                        doc: 'Google secret for client id',
+                        format: String,
+                        env: 'CLIENT_GOOGLE_ID',
+                        default: null,
+                    },
+                    CLIENT_GOOGLE_SECRET: {
+                        doc: 'Google client secret',
+                        format: String,
+                        env: 'CLIENT_GOOGLE_SECRET',
+                        default: null,
+                    },
+                },
+                FACEBOOK: {
+                    CLIENT_FACEBOOK_ID: {
+                        doc: 'Facebook app id',
+                        format: String,
+                        env: 'CLIENT_FACEBOOK_ID',
+                        default: null,
+                    },
+                    CLIENT_FACEBOOK_SECRET: {
+                        doc: 'Facebook client secret',
+                        format: String,
+                        env: 'CLIENT_FACEBOOK_SECRET',
+                        default: null,
+                    },
+                },
+                BASE_CALLBACK_URI: {
+                    doc: 'Secret key for callback url',
+                    format: String,
+                    env: 'BASE_OAUTH_CALLBACK_URI',
+                    default: null,
+                },
+            },
             COOKIE: {
                 COOKIE_SECRET: {
                     doc: 'Secret key for cookie',

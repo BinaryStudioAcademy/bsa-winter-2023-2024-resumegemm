@@ -15,6 +15,21 @@ type EnvironmentSchema = {
         REFRESH_TOKEN_EXPIRES_IN: string;
         RESET_TOKEN_EXPIRES_IN: string;
     };
+    OAUTH: {
+        GITHUB: {
+            CLIENT_GITHUB_ID: string;
+            CLIENT_GITHUB_SECRET: string;
+        };
+        GOOGLE: {
+            CLIENT_GOOGLE_ID: string;
+            CLIENT_GOOGLE_SECRET: string;
+        };
+        FACEBOOK: {
+            CLIENT_FACEBOOK_ID: string;
+            CLIENT_FACEBOOK_SECRET: string;
+        };
+        BASE_CALLBACK_URI: string;
+    };
     COOKIE: {
         COOKIE_SECRET: string;
         EXPIRES_IN: number;

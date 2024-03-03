@@ -2,9 +2,9 @@ import { useCallback } from 'react';
 import { type UserResetPasswordRequestDto } from 'shared/build';
 
 import {
-    BaseButton,
     FormGroup,
     Input,
+    RegularButton,
 } from '~/bundles/common/components/components.js';
 import {
     ButtonSize,
@@ -84,7 +84,7 @@ const ResetPasswordForm: React.FC<Properties> = ({ onSubmit }) => {
                         onChange={onRepeatPasswordChange}
                     />
                 </FormGroup>
-                <BaseButton
+                <RegularButton
                     className={styles.restore__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
@@ -92,7 +92,7 @@ const ResetPasswordForm: React.FC<Properties> = ({ onSubmit }) => {
                     type={ButtonType.SUBMIT}
                 >
                     Save New Password and Login
-                </BaseButton>
+                </RegularButton>
             </form>
         </>
     );

@@ -1,12 +1,16 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { BaseButton } from '../common/components/components';
+import { RegularButton } from '../common/components/components';
 import { AppRoute } from '../common/enums/app-route.enum';
 import { ButtonVariant } from '../common/enums/enums';
 import styles from './styles.module.scss';
 
 const NotFoundPage = (): JSX.Element => {
+    useEffect(() => {
+        document.title = '404 | This page could not be found';
+    }, []);
+
     const navigate = useNavigate();
 
     const navigateHome = useCallback((): void => {
@@ -30,12 +34,12 @@ const NotFoundPage = (): JSX.Element => {
                     Oops, no resume for you here. Sorry about that! Try
                     searching elsewhere or reaching out for help.
                 </p>
-                <BaseButton
+                <RegularButton
                     variant={ButtonVariant.PRIMARY}
                     onClick={navigateHome}
                 >
                     <p>Go home</p>
-                </BaseButton>
+                </RegularButton>
             </div>
         </div>
     );

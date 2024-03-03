@@ -4,7 +4,6 @@ type RecentlyViewedResponseDto = {
     resumeId: string;
     templateId: string;
     viewedAt: string;
-    // add type resume: Resume
 };
 
 export { type RecentlyViewedResponseDto };
