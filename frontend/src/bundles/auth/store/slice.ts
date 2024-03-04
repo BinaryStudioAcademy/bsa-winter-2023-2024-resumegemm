@@ -38,7 +38,12 @@ const { reducer, actions, name } = createSlice({
         );
 
         builder.addMatcher(
-            isAnyOf(signUp.fulfilled, signIn.fulfilled, getUser.fulfilled),
+            isAnyOf(
+                signUp.fulfilled,
+                signIn.fulfilled,
+                getUser.fulfilled,
+                resetPassword.fulfilled,
+            ),
             (state, action) => {
                 state.dataStatus = DataStatus.FULFILLED;
                 state.user = action.payload as UserWithProfileRelation;
@@ -51,11 +56,8 @@ const { reducer, actions, name } = createSlice({
                 forgotPassword.fulfilled,
                 resetPassword.fulfilled,
             ),
-            (_, action) => {
-                showToast(
-                    JSON.stringify(action.payload.message),
-                    ToastType.SUCCESS,
-                );
+            (state) => {
+                state.dataStatus = DataStatus.FULFILLED;
             },
         );
 
@@ -66,6 +68,8 @@ const { reducer, actions, name } = createSlice({
                 resetPassword.rejected,
             ),
             (state, action) => {
+                state.dataStatus = DataStatus.REJECTED;
+
                 showToast(
                     JSON.stringify(action.error.message),
                     ToastType.ERROR,
