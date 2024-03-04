@@ -1,5 +1,6 @@
 import { type Knex } from 'knex';
 
+import { OauthStrategy } from '~/bundles/oauth/enums/enums.js';
 import {
     DatabaseColumnName,
     DatabaseTableName,
@@ -10,8 +11,27 @@ async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(DatabaseTableName.USERS, (table) => {
         table.uuid(DatabaseColumnName.ID).primary();
         table.string(DatabaseColumnName.EMAIL).unique().notNullable();
-        table.text(DatabaseColumnName.PASSWORD_HASH);
-        table.text(DatabaseColumnName.PASSWORD_SALT);
+        table.text(DatabaseColumnName.PASSWORD_HASH).notNullable();
+        table.text(DatabaseColumnName.PASSWORD_SALT).notNullable();
+        table
+            .dateTime(DatabaseColumnName.CREATED_AT)
+            .notNullable()
+            .defaultTo(knex.fn.now());
+        table
+            .dateTime(DatabaseColumnName.UPDATED_AT)
+            .notNullable()
+            .defaultTo(knex.fn.now());
+    });
+    await knex.schema.createTable(DatabaseTableName.OAUTH_USERS, (table) => {
+        table.uuid(DatabaseColumnName.ID).primary();
+        table.string(DatabaseColumnName.EMAIL).notNullable();
+        table
+            .enu(
+                DatabaseColumnName.OAUTH_STRATEGY,
+                Object.values(OauthStrategy),
+            )
+            .notNullable();
+        table.string(DatabaseColumnName.OAUTH_ID).notNullable();
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
@@ -198,6 +218,7 @@ async function up(knex: Knex): Promise<void> {
 
 async function down(knex: Knex): Promise<void> {
     await knex.schema.dropTableIfExists(DatabaseTableName.USERS);
+    await knex.schema.dropTableIfExists(DatabaseTableName.OAUTH_USERS);
     await knex.schema.dropTableIfExists(DatabaseTableName.PROFILE);
     await knex.schema.dropTableIfExists(DatabaseTableName.PERSONAL_INFORMATION);
     await knex.schema.dropTableIfExists(DatabaseTableName.EXPERIENCE);
