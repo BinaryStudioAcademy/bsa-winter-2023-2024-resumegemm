@@ -5,23 +5,23 @@
 
 .registration__title {
     margin: 0;
-    color: #434c66;
-    font-weight: 600;
+    color: var(--color-text-blue);
+    font-weight: var(--font-weight-title);
     font-size: 30px;
-    font-family: Poppins, Arial, sans-serif;
+    font-family: var(--font-family-main);
     line-height: 48px;
 }
 
 .registration__message {
     margin: 0;
-    font-weight: 400;
-    font-size: 12px;
+    font-weight: var(--font-weight-text);
+    font-size: var(--font-size-secondary-text);
     line-height: 19.5px;
 }
 
 .registration__link {
-    color: #dbaf2d;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: var(--color-accent-dark-yellow);
+    font-family: var(--font-family-secondary);
 }
 
 .registration__form {
@@ -34,7 +34,7 @@
 
 .registration__form__button {
     height: 40px;
-    margin-top: 15px;
+    margin-top: 25px;
 }
 
 .form_group > span {
