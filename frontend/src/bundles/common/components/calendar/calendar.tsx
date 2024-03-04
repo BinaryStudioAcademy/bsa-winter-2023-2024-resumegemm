@@ -36,7 +36,7 @@ const Calendar = ({
 
     const [text, setText] = useState('');
 
-    const [focused, setFocused] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
 
     const [present, setPresent] = useState(false);
 
@@ -77,17 +77,17 @@ const Calendar = ({
     );
 
     const handleInputFocus = useCallback(
-        (focused: boolean) =>
+        (isFocused: boolean) =>
             clsx(
                 styles.calendar__date_input,
                 styles.calendar__date_input,
-                focused && styles.focused,
+                isFocused && styles.focused,
             ),
         [],
     );
 
-    const setCurrentlyFocused = useCallback((): void => setFocused(true), []);
-    const setUnfocused = useCallback((): void => setFocused(false), []);
+    const setFocused = useCallback((): void => setIsFocused(true), []);
+    const setUnfocused = useCallback((): void => setIsFocused(false), []);
 
     const increaseYear = useCallback((): void => setYear(year + 1), [year]);
     const decreaseYear = useCallback((): void => setYear(year - 1), [year]);
@@ -159,10 +159,10 @@ const Calendar = ({
                 value={text}
                 onChange={handleTextChange}
                 type="text"
-                className={handleInputFocus(focused)}
-                onFocus={setCurrentlyFocused}
+                className={handleInputFocus(isFocused)}
+                onFocus={setFocused}
             />
-            {focused && (
+            {isFocused && (
                 <div className={styles.calendar__date_picker}>
                     <div className={styles.date_picker__header}>
                         <button
