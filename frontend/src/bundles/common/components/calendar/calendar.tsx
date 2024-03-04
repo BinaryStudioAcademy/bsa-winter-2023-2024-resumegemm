@@ -12,9 +12,9 @@ import {
 } from '../../types/types';
 import { Switch } from '../components';
 import {
-    CalendarMonths,
-    monthRegex,
-    yearRegex,
+    CALENDAR_MONTHS,
+    MONTH_REGEX,
+    YEAR_REGEX,
 } from './constants/calendar.constants';
 import styles from './styles.module.scss';
 
@@ -46,12 +46,12 @@ const Calendar = ({
         (event: ChangeEvent<HTMLInputElement>): void => {
             setText(event.target.value);
 
-            const year = event.target.value.match(yearRegex);
+            const year = event.target.value.match(YEAR_REGEX);
             if (year) {
                 setYear(Number(year[0]));
             }
 
-            const monthMatch = event.target.value.match(monthRegex);
+            const monthMatch = event.target.value.match(MONTH_REGEX);
 
             if (!monthMatch) {
                 setMonth(null);
@@ -59,7 +59,7 @@ const Calendar = ({
                 return;
             }
 
-            for (const month of CalendarMonths) {
+            for (const month of CALENDAR_MONTHS) {
                 if (
                     monthMatch[0]
                         .toLowerCase()
@@ -93,7 +93,7 @@ const Calendar = ({
     const decreaseYear = useCallback((): void => setYear(year - 1), [year]);
 
     const selectMonth = useCallback((value: Date): void => {
-        const inputMonth = CalendarMonths.find(
+        const inputMonth = CALENDAR_MONTHS.find(
             (month) => month.num === value.getMonth(),
         );
         if (inputMonth) {
