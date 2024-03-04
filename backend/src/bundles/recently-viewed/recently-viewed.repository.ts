@@ -95,7 +95,7 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .query()
             .deleteById(id);
 
-        return deletedItem ? true : false;
+        return Boolean(deletedItem);
     }
 }
 

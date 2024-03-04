@@ -2,8 +2,12 @@ import { titles } from '../titles/titles';
 
 const updatePageTab = (): void => {
     const title = titles[location.pathname];
+    if (title) {
+        document.title = title;
+        return;
+    }
 
-    title ? (document.title = title) : (document.title = 'Resume Gemm');
+    document.title = 'Resume Gemm';
 };
 
 export { updatePageTab };

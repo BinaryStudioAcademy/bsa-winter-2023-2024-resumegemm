@@ -44,7 +44,7 @@ class TemplateRepository implements ITemplateRepository {
 
     public async delete(id: string): Promise<boolean> {
         const response = await this.templateModel.query().deleteById(id);
-        return response === 1 ? true : false;
+        return response === 1;
     }
 }
 
