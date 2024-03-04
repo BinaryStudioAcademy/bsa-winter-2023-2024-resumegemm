@@ -14,7 +14,7 @@ import { ControllerHook } from '~/common/controller/enums/enums.js';
 import { type IDatabase } from '~/common/database/database.js';
 import { ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
-import { HttpCode, HttpError } from '~/common/http/http.js';
+import { HttpCode, HTTPError } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 import {
     authorizationPlugin,
@@ -174,7 +174,7 @@ class ServerApp implements IServerApp {
                         .send(response);
                 }
 
-                if (error instanceof HttpError) {
+                if (error instanceof HTTPError) {
                     this.logger.error(
                         `[Http Error]: ${error.status.toString()} – ${
                             error.message

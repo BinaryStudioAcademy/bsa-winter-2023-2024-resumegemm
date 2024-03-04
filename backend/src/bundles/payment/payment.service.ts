@@ -1,4 +1,4 @@
-import { HttpCode, HttpError } from 'shared/build/index.js';
+import { HttpCode, HTTPError } from 'shared/build/index.js';
 import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
@@ -42,7 +42,7 @@ class PaymentService implements IPaymentService {
                 ),
             };
         } catch {
-            throw new HttpError({
+            throw new HTTPError({
                 message: PaymentErrorMessage.GET_PRICES_ERROR,
                 status: HttpCode.BAD_REQUEST,
             });
@@ -64,7 +64,7 @@ class PaymentService implements IPaymentService {
                 },
             });
         } catch {
-            throw new HttpError({
+            throw new HTTPError({
                 message: PaymentErrorMessage.STRIPE_USER_CREATE_ERROR,
                 status: HttpCode.BAD_REQUEST,
             });
@@ -91,7 +91,7 @@ class PaymentService implements IPaymentService {
                 expand: ['latest_invoice.payment_intent'],
             });
         } catch {
-            throw new HttpError({
+            throw new HTTPError({
                 message: PaymentErrorMessage.STRIPE_SUBSCRIPTION_CREATE_ERROR,
                 status: HttpCode.BAD_REQUEST,
             });

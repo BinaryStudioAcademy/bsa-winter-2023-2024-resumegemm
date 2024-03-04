@@ -49,8 +49,8 @@ export {
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
+    TemplatesApiPath,
 } from './bundles/templates/templates.js';
-export { TemplatesApiPath } from './bundles/templates/templates.js';
 export {
     type User,
     type UserAuthResponse,
@@ -77,7 +77,7 @@ export { type IConfig } from './framework/config/config.js';
 export {
     ApplicationError,
     AuthException,
-    HttpError,
+    HTTPError,
     ValidationError,
 } from './framework/exceptions/exceptions.js';
 export {

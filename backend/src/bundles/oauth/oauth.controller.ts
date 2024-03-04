@@ -3,7 +3,7 @@ import { type FastifyRequest } from 'fastify';
 import { generateToken } from '~/bundles/auth/helpers/helpers.js';
 import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
-    type HttpError,
+    type HTTPError,
     type OauthUserEntityFields,
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,
@@ -202,7 +202,7 @@ class OpenAuthController extends Controller {
                 payload: null,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {
@@ -235,7 +235,7 @@ class OpenAuthController extends Controller {
                 payload: user,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {
