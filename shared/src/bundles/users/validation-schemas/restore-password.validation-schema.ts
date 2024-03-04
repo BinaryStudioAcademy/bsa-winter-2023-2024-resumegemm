@@ -1,20 +1,21 @@
 import joi from 'joi';
 
-import { RestorePasswordValidationMessage } from '../enums/password.validation-message.js';
 import { type UserResetPassword } from '../types/user-reset-password.type.js';
+import { UserValidationMessage } from '../users.js';
 
 const passwordValidationSchema = joi.object<UserResetPassword, true>({
-    password: joi.string().trim().required().min(8).max(64).messages({
-        'string.empty': RestorePasswordValidationMessage.PASSWORD_REQUIRE,
-        'string.min': RestorePasswordValidationMessage.INVALID_PASSWORD,
-        'string.max': RestorePasswordValidationMessage.INVALID_PASSWORD,
+    password: joi.string().regex(/^\S*$/).min(8).max(64).messages({
+        'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
+        'string.min': UserValidationMessage.PASSWORD_INVALID,
+        'string.max': UserValidationMessage.PASSWORD_INVALID,
+        'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
     }),
     repeat_password: joi
         .string()
         .required()
         .valid(joi.ref('password'))
         .messages({
-            'any.only': RestorePasswordValidationMessage.PASSWORDS_DONT_MATCH,
+            'any.only': UserValidationMessage.CONFIRM_PASSWORD_MATCH,
         }),
 });
 

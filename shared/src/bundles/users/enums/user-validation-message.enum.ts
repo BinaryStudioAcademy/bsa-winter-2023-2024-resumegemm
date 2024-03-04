@@ -5,6 +5,7 @@ enum UserValidationMessage {
     EMAIL_WRONG = 'Email is wrong',
     PASSWORD_REQUIRED = 'Password is required',
     PASSWORD_NO_SPACES = 'No spaces allowed',
+    PASSWORD_INVALID = 'Invalid password. Use 8-64 characters, mix uppercase, lowercase, numbers, and special characters. No spaces allowed.',
     CONFIRM_PASSWORD_REQUIRED = 'Confirm password required',
     CONFIRM_PASSWORD_MATCH = 'Confirm password should match the password',
 }
