@@ -1,4 +1,4 @@
-import { type TemplateBlockSettings } from './types';
+import { type TemplateBlockSettings } from './types.js';
 
 type Template = {
     id: string;
