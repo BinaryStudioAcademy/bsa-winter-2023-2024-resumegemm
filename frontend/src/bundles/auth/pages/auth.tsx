@@ -17,8 +17,7 @@ import styles from './styles.module.scss';
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    const { dataStatus, user } = useAppSelector(({ auth }) => ({
-        dataStatus: auth.dataStatus,
+    const { user } = useAppSelector(({ auth }) => ({
         user: auth.user,
     }));
 
@@ -64,7 +63,6 @@ const Auth: React.FC = () => {
                 </section>
                 <section className={styles['auth__form-container']}>
                     <div className={styles['auth__form-content']}>
-                        state: {dataStatus}
                         {getScreen(pathname)}
                     </div>
                 </section>
