@@ -32,19 +32,19 @@
     width: 80%;
     height: fit-content;
     margin-left: auto;
-    font-family: Poppins, sans-serif;
+    font-family: var(--font-family-main);
 }
 
 .intro__title {
     color: var(--color-text-black);
-    font-weight: 600;
-    font-size: 64px;
+    font-weight: var(--font-weight-title);
+    font-size: var(--font-size-large);
     line-height: 70px;
 }
 
 .intro__title_highlighted {
     color: var(--color-accent-dark-yellow);
-    font-size: 96px;
+    font-size: var(--font-size-extra-large);
 }
 
 .intro__title_highlighted::after {
@@ -120,7 +120,7 @@
     justify-content: center;
     gap: 10px;
     width: 80%;
-    font-family: Poppins, sans-serif;
+    font-family: var(--font-family-main);
 }
 
 .features__content_container_left {
@@ -144,21 +144,21 @@
 
 .features__title {
     color: var(--color-accent-dark-yellow);
-    font-weight: 500;
-    font-size: 48px;
-    font-family: Poppins, sans-serif;
+    font-weight: var(--font-weight-subtitle);
+    font-size: var(--font-size-medium);
+    font-family: var(--font-family-main);
 }
 
 .features__subtitle {
-    font-weight: 500;
+    font-weight: var(--font-weight-subtitle);
     font-size: 24px;
-    font-family: Poppins, sans-serif;
+    font-family: var(--font-family-main);
 }
 
 .features__text {
     color: var(--color-text-black);
     font-size: 17px;
-    font-family: Poppins, sans-serif;
+    font-family: var(--font-family-main);
     line-height: 30px;
 }
 
@@ -187,22 +187,22 @@
     width: 80%;
     height: 100%;
     margin-left: auto;
-    font-family: Poppins, sans-serif;
+    font-family: var(--font-family-main);
 }
 
 .get_started_section__title {
     color: var(--color-text-black);
-    font-weight: 500;
+    font-weight: var(--font-weight-subtitle);
     font-size: 60px;
-    font-family: Poppins, sans-serif;
+    font-family: var(--font-family-main);
     line-height: 63px;
 }
 
 .get_started_section__text {
     width: 90%;
     color: var(--color-text-blue);
-    font-weight: 400;
-    font-family: Poppins, sans-serif;
+    font-weight: var(--font-weight-text);
+    font-family: var(--font-family-main);
     line-height: 27px;
     size: 18px;
 }
@@ -222,5 +222,5 @@
     width: 270px;
     margin-top: 30px;
     color: var(--color-text-black);
-    background-color: white;
+    background-color: var(--color-white);
 }

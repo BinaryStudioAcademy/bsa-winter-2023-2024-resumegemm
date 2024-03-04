@@ -10,9 +10,9 @@
 
 .social_media__description {
     color: var(--color-text-blue);
-    font-weight: 500;
-    font-size: 13px;
-    font-family: Poppins, sans-serif;
+    font-weight: var(--font-weight-subtitle);
+    font-size: var(--font-size-main-text);
+    font-family: var(--font-family-main);
 }
 
 .social_media__links {
