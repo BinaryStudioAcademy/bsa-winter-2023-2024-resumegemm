@@ -18,7 +18,6 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
-import { Home } from './bundles/home/pages/home';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
@@ -65,10 +64,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     path: AppRoute.ROOT,
                                     element: <RestrictedAccessRoute />,
                                     children: [
-                                        {
-                                            path: AppRoute.HOME,
-                                            element: <Home />,
-                                        },
                                         {
                                             path: AppRoute.PROFILE,
                                             element: <Profile />,
