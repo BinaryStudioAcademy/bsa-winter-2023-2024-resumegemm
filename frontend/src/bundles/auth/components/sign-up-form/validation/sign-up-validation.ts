@@ -28,9 +28,19 @@ const userSignUpValidationFrontend = joi.object<
             },
         })
         .required()
+        .custom((value, helpers) => {
+            const domain = value.split('@')[1];
+
+            if (domain.length > 63) {
+                return helpers.error('domainLengthInvalid');
+            }
+
+            return value;
+        })
         .messages({
             'string.email': UserValidationMessage.EMAIL_WRONG,
             'string.empty': UserValidationMessage.EMAIL_REQUIRE,
+            'domainLengthInvalid': UserValidationMessage.EMAIL_INVALID,
         }),
     password: joi.string().trim().regex(/^\S*$/).required().messages({
         'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
