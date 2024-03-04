@@ -1,9 +1,9 @@
 .panel_container {
     display: flex;
     flex-direction: column;
-    font-family: Poppins, sans-serif;
-    background-color: #ccd7dc40;
-    border: 1px solid #f6f6fb;
+    font-family: var(--font-family-main);
+    background-color: var(--color-background-gray);
+    border: 1px solid var(--color-border-panel-gray);
     border-radius: 30px;
 }
 
@@ -13,7 +13,7 @@
     align-items: center;
     padding: 10px 40px;
     color: var(--color-text-blue);
-    font-size: 16px;
+    font-size: var(--font-size-subtitle);
     line-height: 1.5;
     border-bottom: 1px solid var(--color-white);
     border-radius: 30px 30px 0 0;
@@ -31,7 +31,7 @@
 .panel_container__input {
     width: 200px;
     padding: 8px 5px 8px 25px;
-    color: #848d96;
-    background: #ffffff;
+    color: var(--color-text-gray);
+    background: var(--color-white);
     border-radius: 5px;
 }
