@@ -11,7 +11,7 @@ import {
     type RecentlyViewedTemplatesResponseDto,
 } from './types';
 
-type IRecentlyViewedController = {
+interface IRecentlyViewedController {
     findAll(options: {
         query: { limit: number };
     }): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>>;
@@ -40,6 +40,6 @@ type IRecentlyViewedController = {
     delete(
         options: ApiHandlerOptions<{ params: { id: string } }>,
     ): Promise<ApiHandlerResponse<boolean>>;
-};
+}
 
 export { type IRecentlyViewedController };
