@@ -40,6 +40,11 @@ enum DatabaseColumnName {
     TEMPLATE_ID = 'template_id',
     TEMPLATE_SETTINGS = 'template_settings',
     OWNER_ID = 'owner_id',
+    NEW_ID = 'new_id',
+    NEW_USER_ID = 'new_user_id',
+    NEW_PROFILE_ID = 'new_profile_id',
+    NEW_RESUME_ID = 'new_resume_id',
+    NEW_TEMPLATE_ID = 'new_template_id',
 }
 
 export { DatabaseColumnName };
