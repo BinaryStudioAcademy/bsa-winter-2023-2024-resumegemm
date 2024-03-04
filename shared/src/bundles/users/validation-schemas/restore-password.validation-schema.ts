@@ -10,7 +10,7 @@ const passwordValidationSchema = joi.object<UserResetPassword, true>({
         'string.max': UserValidationMessage.PASSWORD_INVALID,
         'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
     }),
-    repeat_password: joi
+    confirm_password: joi
         .string()
         .required()
         .valid(joi.ref('password'))
