@@ -1,8 +1,5 @@
-type ResumeShareCreateResponseDto = {
-    id: string;
-    resumeId: string;
-    createdAt: string;
-    updatedAt: string;
-};
+import { type ResumeShareResponseDto } from './resume-share-response-dto.type';
+
+type ResumeShareCreateResponseDto = ResumeShareResponseDto;
 
 export { type ResumeShareCreateResponseDto };
