@@ -89,13 +89,16 @@ class UserService implements Omit<IService, 'getById'> {
     public async changePassword({
         id,
         passwordHash,
+        passwordSalt,
     }: {
         id: string;
         passwordHash: string;
+        passwordSalt: string;
     }): Promise<void> {
         await this.userRepository.changePassword({
             id,
             passwordHash,
+            passwordSalt,
         });
     }
 }
