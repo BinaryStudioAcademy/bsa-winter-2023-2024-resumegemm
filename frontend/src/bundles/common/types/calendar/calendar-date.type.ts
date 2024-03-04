@@ -1,4 +1,4 @@
-import { type CalendarMonth } from './calendar-month';
+import { type CalendarMonth } from './calendar-month.type';
 
 type CalendarDate = {
     present: boolean;

@@ -5,8 +5,8 @@
     align-items: center;
     gap: 10px;
     width: 100%;
-    color: #393e4de5;
-    border: 2px solid white;
+    color: var(--color-text-dark-blue);
+    border: 2px solid var(--color-white);
     border-radius: 8px;
-    box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 0 10px 0 var(--color-box-shadow-dark);
 }

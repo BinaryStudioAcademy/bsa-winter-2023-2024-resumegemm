@@ -2,9 +2,12 @@ import { type OAuth2Namespace } from '@fastify/oauth2';
 
 import { type User } from '~/packages/user/user.js';
 
+import { type FileUploadRequestDto } from './common/files/types/types.js';
+
 declare module 'fastify' {
     interface FastifyRequest {
         user?: User;
+        fileBuffer?: FileUploadRequestDto;
     }
     interface FastifyInstance {
         github: OAuth2Namespace;
