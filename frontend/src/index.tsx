@@ -44,7 +44,12 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             children: [
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <LandingPage />,
+                                    element: <FreeAccessRoute />,
+                                    children: [
+                                        {
+                                            element: <LandingPage />,
+                                        },
+                                    ],
                                 },
                                 {
                                     path: AppRoute.ROOT,
