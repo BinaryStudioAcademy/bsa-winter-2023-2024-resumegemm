@@ -13,7 +13,7 @@ const Menu = forwardRef<HTMLMenuElement, Properties>(function Menu(
 ) {
     const navigate = useNavigate();
 
-    const logoutHandler = useCallback(() => {
+    const handleLogout = useCallback(() => {
         onLogout();
         navigate('/');
     }, [navigate, onLogout]);
@@ -23,7 +23,7 @@ const Menu = forwardRef<HTMLMenuElement, Properties>(function Menu(
             <Link className={styles.menu__link} to={'/account-settings'}>
                 Account Settings
             </Link>
-            <button className={styles.menu__link} onClick={logoutHandler}>
+            <button className={styles.menu__link} onClick={handleLogout}>
                 Log Out
             </button>
         </menu>

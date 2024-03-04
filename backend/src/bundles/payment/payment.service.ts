@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 import { type IConfig } from '~/common/config/config';
 
 import { PaymentErrorMessage } from './enums/error-message.js';
-import { priceMapper } from './helpers/price-mapper.js';
+import { mapPrices } from './helpers/price-mapper.js';
 import {
     type CreateSubscriptionRequestDto,
     type CreateSubscriptionResponseDto,
@@ -36,7 +36,7 @@ class PaymentService implements IPaymentService {
 
             return {
                 prices: data.map((price) =>
-                    priceMapper(
+                    mapPrices(
                         price as Stripe.Price & { product: Stripe.Product },
                     ),
                 ),
