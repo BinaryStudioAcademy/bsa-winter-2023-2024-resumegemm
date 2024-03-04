@@ -21,9 +21,10 @@ import styles from './styles.module.scss';
 
 type Properties = {
     onSubmit: ({ resetToken }: UserVerifyResetTokenRequestDto) => Promise<void>;
+    onResendCode: () => void;
 };
 
-const RecoveryCodeForm: React.FC<Properties> = ({ onSubmit }) => {
+const RecoveryCodeForm: React.FC<Properties> = ({ onSubmit, onResendCode }) => {
     const navigate = useNavigate();
 
     const { errors, handleSubmit, control } =
@@ -76,6 +77,7 @@ const RecoveryCodeForm: React.FC<Properties> = ({ onSubmit }) => {
                         size={ButtonSize.SMALL}
                         width={ButtonWidth.FULL}
                         variant={ButtonVariant.OUTLINED}
+                        onClick={onResendCode}
                     >
                         Send new code
                     </RegularButton>

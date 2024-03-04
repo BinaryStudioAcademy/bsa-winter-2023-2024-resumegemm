@@ -56,10 +56,15 @@ const PasswordRecovery: React.FC = () => {
         [setSearchParameters, dispatch, email],
     );
 
+    const handleResendCode = useCallback((): void => {
+        void dispatch(authActions.forgotPassword({ email }));
+    }, [dispatch, email]);
+
     const handlePasswordSubmit = useCallback(
         async ({ password }: { password: string }): Promise<void> => {
             const response = await dispatch(
                 authActions.resetPassword({
+                    email,
                     password,
                     resetToken,
                 }),
@@ -69,13 +74,18 @@ const PasswordRecovery: React.FC = () => {
                 return;
             }
         },
-        [dispatch, resetToken],
+        [dispatch, resetToken, email],
     );
 
     const getCurrentStage = (currentStage: string | null): React.ReactNode => {
         switch (currentStage) {
             case RecoveryStage.CODE: {
-                return <RecoveryCodeForm onSubmit={handleCodeSubmit} />;
+                return (
+                    <RecoveryCodeForm
+                        onSubmit={handleCodeSubmit}
+                        onResendCode={handleResendCode}
+                    />
+                );
             }
             case RecoveryStage.PASSWORD: {
                 return <ResetPasswordForm onSubmit={handlePasswordSubmit} />;
