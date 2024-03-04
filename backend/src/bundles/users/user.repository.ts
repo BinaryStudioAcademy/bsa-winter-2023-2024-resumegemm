@@ -33,11 +33,15 @@ class UserRepository
     public async changePassword({
         id,
         passwordHash,
+        passwordSalt,
     }: {
         id: string;
         passwordHash: string;
+        passwordSalt: string;
     }): Promise<void> {
-        await this.model.query().patchAndFetchById(id, { passwordHash });
+        await this.model
+            .query()
+            .patchAndFetchById(id, { passwordHash, passwordSalt });
     }
 
     public async findAll(): ReturnType<TUserRepo['findAll']> {
