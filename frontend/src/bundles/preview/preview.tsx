@@ -63,12 +63,13 @@ const dropdownOptions = [
 ];
 
 const ColumnChartDate: [string, number][] = [
-    ['Test1', 1],
-    ['Test2', 2],
-    ['Test3', 3],
-    ['Test4', 4],
-    ['Test5', 5],
-    ['Test6', 6],
+    ['Monday', 23],
+    ['Tuesday', 34],
+    ['Wednesday', 5],
+    ['Thursday', 70],
+    ['Friday', 100],
+    ['Saturday', 110],
+    ['Sunday', 160],
 ];
 
 const PreviewPage: React.FC = () => {
@@ -228,10 +229,7 @@ const PreviewPage: React.FC = () => {
                         <EditTemplatePage />
                     </li>
                     <li className={styles.item}>
-                        <ColumnChart
-                            measure="TestMeasure"
-                            data={ColumnChartDate}
-                        />
+                        <ColumnChart measure="Views" data={ColumnChartDate} />
                     </li>
                 </ul>
             </div>
