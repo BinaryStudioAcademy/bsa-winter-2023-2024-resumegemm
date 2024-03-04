@@ -65,7 +65,7 @@ class PaymentService implements IPaymentService {
             });
         } catch {
             throw new HttpError({
-                message: PaymentErrorMessage.STRIRE_USER_CREATE_ERROR,
+                message: PaymentErrorMessage.STRIPE_USER_CREATE_ERROR,
                 status: HttpCode.BAD_REQUEST,
             });
         }
@@ -92,7 +92,7 @@ class PaymentService implements IPaymentService {
             });
         } catch {
             throw new HttpError({
-                message: PaymentErrorMessage.STRIRE_SUBSCRIPTION_CREATE_ERROR,
+                message: PaymentErrorMessage.STRIPE_SUBSCRIPTION_CREATE_ERROR,
                 status: HttpCode.BAD_REQUEST,
             });
         }

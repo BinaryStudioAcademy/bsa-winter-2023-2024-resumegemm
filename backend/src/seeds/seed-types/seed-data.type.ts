@@ -24,7 +24,7 @@ type Resume = {
 type Template = {
     id: string;
     is_owner: boolean;
-    templapte_settings: TemplateBlockSettings;
+    template_settings: TemplateBlockSettings;
 };
 
 type Review = {

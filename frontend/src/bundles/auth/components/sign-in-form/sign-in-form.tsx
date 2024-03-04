@@ -24,7 +24,7 @@ import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
 
 type Properties = {
-    onSubmit: (paload: UserSignInRequestDto) => void;
+    onSubmit: (payload: UserSignInRequestDto) => void;
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
@@ -62,7 +62,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                         Forgot Password?
                     </span>
                     <PasswordInput
-                        label="Passwod"
+                        label="Password"
                         error={errors.password}
                         placeholder="Your password"
                         {...useFormFieldCreator({ name: 'password', control })}

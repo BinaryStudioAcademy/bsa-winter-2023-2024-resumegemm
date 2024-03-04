@@ -28,7 +28,7 @@ import { Auth } from '../auth/pages/auth';
 import { UserProfile } from '../common/components/layout/header/user-profile/user-profile.js';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
-import { EditTemplatePage } from '../edit-temlate/edit-template';
+import { EditTemplatePage } from '../edit-template/edit-template';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import { QuestionAndAnswer } from '../question-and-answer/question-and-answer';
@@ -37,7 +37,7 @@ import styles from './styles.module.scss';
 const navbarItems = [
     { label: 'Home', path: AppRoute.ROOT },
     { label: 'Login', path: AppRoute.LOG_IN },
-    { label: 'Signup', path: AppRoute.SIGN_UP },
+    { label: 'SignUp', path: AppRoute.SIGN_UP },
     { label: 'Preview', path: AppRoute.PREVIEW },
 ];
 

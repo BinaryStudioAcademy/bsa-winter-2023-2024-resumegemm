@@ -6,8 +6,8 @@ import { StorageKey } from '~/framework/storage/storage';
 import { AppRoute } from '../../enums/app-route.enum';
 
 const PrivateRoute: FC = () => {
-    const accesToken = window.localStorage.getItem(StorageKey.ACCESS_TOKEN);
-    if (!accesToken) {
+    const accessToken = window.localStorage.getItem(StorageKey.ACCESS_TOKEN);
+    if (!accessToken) {
         return <Navigate to={AppRoute.ROOT} />;
     }
 

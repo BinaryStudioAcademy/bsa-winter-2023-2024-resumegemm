@@ -2,7 +2,7 @@ import { getUser } from '../auth/store/actions';
 import { Header, NavTabs, Spinner } from '../common/components/components';
 import { UserProfile } from '../common/components/layout/header/user-profile/user-profile';
 import { AppRoute } from '../common/enums/app-route.enum';
-import { getUserAvatart } from '../common/helpers/get-user-avatar';
+import { getUserAvatar } from '../common/helpers/get-user-avatar';
 import {
     useAppDispatch,
     useAppSelector,
@@ -34,7 +34,7 @@ const MainPage = (): JSX.Element => {
             )}
             <Header>
                 <NavTabs items={navbarItems} />
-                <UserProfile image={getUserAvatart(user)} />
+                <UserProfile image={getUserAvatar(user)} />
             </Header>
             <Home />
         </>

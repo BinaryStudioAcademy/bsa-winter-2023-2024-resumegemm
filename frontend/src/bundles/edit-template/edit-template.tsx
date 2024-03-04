@@ -6,7 +6,7 @@ import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
-import { EditableTemplate } from './components/editable-templte';
+import { EditableTemplate } from './components/editable-template';
 import { transformTemplateSettings } from './helpers/get-initial-template-state.helper';
 import { actions as templateActions } from './store';
 import templateStyles from './styles.module.scss';
