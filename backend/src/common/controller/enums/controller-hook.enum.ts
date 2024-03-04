@@ -1,5 +1,5 @@
-const ControllerHook = {
-    ON_REQUEST: 'onRequest',
-} as const;
+enum ControllerHook {
+    ON_REQUEST = 'onRequest',
+}
 
 export { ControllerHook };
