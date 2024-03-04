@@ -3,22 +3,12 @@
     display: inline-block;
     flex-direction: column;
     width: 100%;
-    margin: 5px 0;
 }
 
 .password__icon {
     position: absolute;
-    top: 70%;
+    top: 45px;
     right: 20px;
     cursor: pointer;
     transform: translateY(-50%);
-}
-
-.password_form > span {
-    bottom: -38px;
-    margin-bottom: 5px;
-}
-
-.password_form > input {
-    padding: 5px 12px;
 }
