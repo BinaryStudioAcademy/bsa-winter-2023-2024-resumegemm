@@ -1,5 +1,6 @@
 type UserResetPasswordRequestDto = {
     password: string;
+    email: string;
     resetToken: string;
 };
 
