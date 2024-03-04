@@ -8,7 +8,7 @@ import editorStyles from '../cv-editor/components/online-editor/online-editor-ha
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
 import { EditableTemplate } from './components/editable-template';
 import { transformTemplateSettings } from './helpers/get-initial-template-state.helper';
-import { actions as templateActions } from './store';
+import { actions as templateActions } from './store/edit-template.store';
 import templateStyles from './styles.module.scss';
 import { TemplateBlockTitles } from './types/types';
 
