@@ -1,5 +1,8 @@
 import joi from 'joi';
-import { UserValidationMessage } from 'shared/build/bundles/users/users';
+import {
+    UserValidationMessage,
+    UserValidationRule,
+} from 'shared/build/bundles/users/users';
 
 type UserSignUpRequestDtoFrontend = {
     firstName: string;
@@ -21,7 +24,6 @@ const userSignUpValidationFrontend = joi.object<
     }),
     email: joi
         .string()
-        .trim()
         .email({
             tlds: {
                 allow: false,
@@ -31,7 +33,7 @@ const userSignUpValidationFrontend = joi.object<
         .custom((value, helpers) => {
             const domain = value.split('@')[1];
 
-            if (domain.length > 63) {
+            if (domain.length > UserValidationRule.EMAIL_MAX_DOMAIN_LENGTH) {
                 return helpers.error('domainLengthInvalid');
             }
 
@@ -42,13 +44,12 @@ const userSignUpValidationFrontend = joi.object<
             'string.empty': UserValidationMessage.EMAIL_REQUIRE,
             'domainLengthInvalid': UserValidationMessage.EMAIL_INVALID,
         }),
-    password: joi.string().trim().regex(/^\S*$/).required().messages({
+    password: joi.string().regex(/^\S*$/).required().messages({
         'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
-        'string.pattern.base': UserValidationMessage.PASSWORD_NO_SPACES,
+        'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
     }),
     confirm_password: joi
         .string()
-        .trim()
         .valid(joi.ref('password'))
         .required()
         .messages({
