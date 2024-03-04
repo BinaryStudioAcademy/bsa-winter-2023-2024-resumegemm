@@ -1,10 +1,11 @@
 import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
+import fastifyExpress from '@fastify/express';
 import oauthPlugin from '@fastify/oauth2';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
-import { OpenAuthApiPath } from 'shared/build/index.js';
+import { AuthApiPath, OpenAuthApiPath } from 'shared/build/index.js';
 
 import { authService } from '~/bundles/auth/auth.js';
 import { oauthConfigurations } from '~/bundles/oauth/config/oauth-config.js';
@@ -27,6 +28,7 @@ import {
     type ValidationSchema,
 } from '~/common/types/types.js';
 
+import { resetPasswordLimiter } from '../rate-limit/reset-password.rate-limit.js';
 import {
     type IServerApp,
     type IServerAppApi,
@@ -92,11 +94,22 @@ class ServerApp implements IServerApp {
                 this.logger.info(
                     `Generate swagger documentation for API ${it.version}`,
                 );
+                await this.app.register(fastifyExpress);
+
+                await this.app.use(
+                    [
+                        publicRoutes[AuthApiPath.VERIFY_RESET_TOKEN],
+                        publicRoutes[AuthApiPath.RESET_PASSWORD],
+                    ],
+                    resetPasswordLimiter,
+                );
+
                 await this.app.register(authorizationPlugin, {
                     publicRoutes,
                     userService,
                     authService,
                 });
+
                 await this.app.register(cors, {
                     origin: config.ENV.APP.ORIGIN_URL,
                     methods: '*',
