@@ -43,9 +43,6 @@ class StripeEventsService implements IStripeEventsService {
                 await this.handlePlanDeleted(event.data);
                 break;
             }
-            default: {
-                throw new Error('Unknown event.');
-            }
         }
 
         return { resolved: true };
