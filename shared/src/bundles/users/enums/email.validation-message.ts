@@ -1,6 +1,6 @@
 enum EmailValidationMessage {
     EMAIL_REQUIRE = 'Email is required',
-    EMAIL_WRONG = 'Email is wrong',
+    EMAIL_WRONG = 'Invalid email format. Please use a valid email address.',
 }
 
 export { EmailValidationMessage };

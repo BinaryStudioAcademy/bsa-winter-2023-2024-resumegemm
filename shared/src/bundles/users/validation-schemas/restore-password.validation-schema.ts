@@ -4,9 +4,10 @@ import { RestorePasswordValidationMessage } from '../enums/password.validation-m
 import { type UserResetPassword } from '../types/user-reset-password.type.js';
 
 const passwordValidationSchema = joi.object<UserResetPassword, true>({
-    password: joi.string().trim().required().min(8).messages({
+    password: joi.string().trim().required().min(8).max(64).messages({
         'string.empty': RestorePasswordValidationMessage.PASSWORD_REQUIRE,
-        'string.min': RestorePasswordValidationMessage.WRONG_PASSWORD_LENGTH,
+        'string.min': RestorePasswordValidationMessage.INVALID_PASSWORD,
+        'string.max': RestorePasswordValidationMessage.INVALID_PASSWORD,
     }),
     repeat_password: joi
         .string()
