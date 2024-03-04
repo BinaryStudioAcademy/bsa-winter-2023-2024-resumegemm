@@ -4,16 +4,15 @@
     gap: 10px;
     width: 100%;
     padding: 10px;
-    border: 2px solid #8a8a8a60;
+    border: 2px solid black;
     border-radius: 5px;
 }
 
 .example_block {
     padding: 10px;
-    background-color: #a7c1ffad;
+    background-color: var(--color-background-dark-blue);
     border: 1px solid black;
     border-radius: 5px;
-    box-shadow: 2px 2px 5px 0 #00000060;
     pointer-events: none;
     user-select: none;
 }
@@ -24,7 +23,6 @@
     gap: 10px;
     min-height: 100px;
     padding: 10px;
-    border: 1px solid #8a8a8a60;
+    border: 1px solid black;
     border-radius: 5px;
-    box-shadow: 1px 1px 5px 0 #d1d1d160;
 }
