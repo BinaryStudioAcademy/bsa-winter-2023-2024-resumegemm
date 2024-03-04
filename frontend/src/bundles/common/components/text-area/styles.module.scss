@@ -1,25 +1,25 @@
 .textArea {
     padding: 12px 0 12px 12px;
-    color: #434c66;
-    font-size: 14px;
+    color: var(--color-text-blue);
+    font-size: var(-font-size-main-text);
     line-height: 20px;
-    background: #ebeff1;
+    background: var(--color-input-field-gray);
     border: none;
     border-radius: 8px;
     outline: none;
 }
 
 .textArea:focus {
-    color: #302e36;
-    border: 1px solid #687a9c;
+    color: var(--color-text-black);
+    border: 1px solid var(--color-background-dark-blue);
 }
 
 .textArea::placeholder {
-    color: #302e36;
+    color: var(--color-text-black);
 }
 
 .textArea:focus::placeholder {
-    color: #302e36;
+    color: var(--color-text-black);
 }
 
 .textArea::-webkit-scrollbar {
@@ -27,36 +27,36 @@
 }
 
 .textArea::-webkit-scrollbar-track {
-    background: #ebeff1;
+    background: var(--color-input-field-gray);
     border-radius: 50px;
 }
 
 .textArea::-webkit-scrollbar-thumb {
-    background: #ccd7dc;
+    background: var(--color-disabled-gray);
     border-radius: 50px;
 }
 
 .textArea:-webkit-scrollbar-thumb:hover {
-    background: #ccd7dc;
+    background: var(--color-disabled-gray);
 }
 
 .textArea__disabled {
-    color: #ccd7dc;
+    color: var(--color-disabled-gray);
 }
 
 .textArea__disabled::placeholder {
-    color: #ccd7dc;
+    color: var(--color-disabled-gray);
 }
 
 .textArea__error {
-    color: #ccd7dc;
-    border: 1px solid #ff5757;
+    color: var(--color-disabled-gray);
+    border: 1px solid var(--color-error-red);
 }
 
 .textArea__error:focus {
-    border: 1px solid #ff5757;
+    border: 1px solid var(--color-error-red);
 }
 
 .textArea__error::placeholder {
-    color: #ccd7dc;
+    color: var(--color-disabled-gray);
 }

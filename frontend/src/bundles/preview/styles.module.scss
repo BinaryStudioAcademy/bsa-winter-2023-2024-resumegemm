@@ -16,19 +16,19 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background-color: rgb(157 168 255);
+    background-color: var(--color-background-light-purple);
 }
 
 .tooltip_small_example_container {
     width: 10px;
     height: 10px;
-    background-color: red;
+    background-color: var(--color-error-red-bright);
 }
 
 .tooltip_big_example_container {
     width: 100px;
     height: 100px;
-    background-color: blue;
+    background-color: var(--color-tooltip-blue);
 }
 
 .auth {
@@ -40,4 +40,13 @@
     flex-direction: column;
     gap: 5px;
     width: 200px;
+}
+
+.footer__actions {
+    display: flex;
+    gap: 10px;
+}
+
+.dropdown {
+    max-width: 250px;
 }
