@@ -10,6 +10,7 @@ import {
     type UserSignUpResponseDto,
     type UserVerifyResetTokenRequestDto,
     type UserWithProfileRelation,
+    emailValidationSchema,
 } from 'shared/build/index.js';
 import { AuthApiPath, ExceptionMessage } from 'shared/build/index.js';
 
@@ -34,6 +35,8 @@ import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 import { type IMailService } from '~/common/mail-service/mail-service.js';
 
+import { resetPasswordValidatioSchema } from '../users/validation-schemas/reset-password.validation-schema.js';
+import { resetTokenValidationSchema } from '../users/validation-schemas/reset-token.validation-schema.js';
 import { type AuthService } from './auth.service.js';
 import { AuthMail } from './enums/auth-mail.js';
 import { AuthMessage } from './enums/auth-message.js';
@@ -104,6 +107,9 @@ class AuthController extends Controller {
         this.addRoute({
             path: AuthApiPath.FORGOT_PASSWORD,
             method: 'POST',
+            validation: {
+                body: emailValidationSchema,
+            },
             handler: (options) =>
                 this.forgotPassword(
                     options as ApiHandlerOptions<{
@@ -113,6 +119,9 @@ class AuthController extends Controller {
         });
         this.addRoute({
             path: AuthApiPath.VERIFY_RESET_TOKEN,
+            validation: {
+                body: resetTokenValidationSchema,
+            },
             method: 'POST',
             handler: (options) =>
                 this.verifyResetToken(
@@ -123,6 +132,9 @@ class AuthController extends Controller {
         });
         this.addRoute({
             path: AuthApiPath.RESET_PASSWORD,
+            validation: {
+                body: resetPasswordValidatioSchema,
+            },
             method: 'POST',
             handler: (options) =>
                 this.resetPassword(
