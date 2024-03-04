@@ -26,15 +26,8 @@ const preParsing = fp(async (fastify): Promise<void> => {
                     chunks.push(chunk);
                     request.rawBody += chunk.toString();
                 }
-                const newPayload = new Readable({
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    read(): void {},
-                });
-                newPayload.push(Buffer.concat(chunks));
-                // eslint-disable-next-line unicorn/no-array-push-push
-                newPayload.push(null);
 
-                return newPayload;
+                return Readable.from(Buffer.concat(chunks));
             } catch (error) {
                 const { status, message } = error as HttpError;
                 void reply.code(status).send({ status, message });
