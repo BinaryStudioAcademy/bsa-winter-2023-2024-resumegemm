@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { type UserVerifyResetTokenRequestDto } from 'shared/build';
+import { recoveryCodeValidationSchema } from 'shared/build';
 
 import {
     FormGroup,
@@ -14,7 +15,6 @@ import {
     ButtonWidth,
 } from '~/bundles/common/enums/enums';
 import { useAppForm, useFormController } from '~/bundles/common/hooks/hooks';
-import { recoveryCodeValidationSchema } from '~/bundles/users/validation-schemas/recovery-code.validation-schema';
 
 import { DEFAULT_RESET_TOKEN_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';

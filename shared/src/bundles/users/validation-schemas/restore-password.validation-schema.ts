@@ -1,8 +1,7 @@
 import joi from 'joi';
 
-import { type UserResetPassword } from '~/bundles/auth/components/password-recovery/types/user-reset-password.type.js';
-
-import { RestorePasswordValidationMessage } from './enums/enums.js';
+import { RestorePasswordValidationMessage } from '../enums/password.validation-message.js';
+import { type UserResetPassword } from '../types/user-reset-password.type.js';
 
 const passwordValidationSchema = joi.object<UserResetPassword, true>({
     password: joi.string().trim().required().min(8).messages({

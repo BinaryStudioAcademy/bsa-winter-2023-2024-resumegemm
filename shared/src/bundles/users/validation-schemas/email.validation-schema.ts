@@ -1,7 +1,7 @@
 import joi from 'joi';
 
+import { EmailValidationMessage } from '../enums/email.validation-message.js';
 import { type UserForgotPasswordRequestDto } from '../users.js';
-import { EmailValidationMessage } from './enums/enums.js';
 
 const emailValidationSchema = joi.object<UserForgotPasswordRequestDto, true>({
     email: joi

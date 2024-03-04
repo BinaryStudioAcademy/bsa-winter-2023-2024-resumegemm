@@ -5,6 +5,7 @@ export { type UserForgotPasswordRequestDto } from './user-forgot-password-reques
 export { type UserForgotPasswordResponse } from './user-forgot-password-response.type.js';
 export { type UserGetAllItemResponseDto } from './user-get-all-item-response-dto.type.js';
 export { type UserGetAllResponseDto } from './user-get-all-response-dto.type.js';
+export { type UserResetPassword } from './user-reset-password.type.js';
 export { type UserResetPasswordRequestDto } from './user-reset-password-request-dto.type.js';
 export { type UserResetPasswordResponse } from './user-reset-password-response.type.js';
 export { type UserSignInRequestDto } from './user-sign-in-request-dto.type.js';

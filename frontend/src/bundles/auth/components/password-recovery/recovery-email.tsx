@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { type UserForgotPasswordRequestDto } from 'shared/build';
+import { emailValidationSchema } from 'shared/build';
 
 import {
     FormGroup,
@@ -13,7 +14,6 @@ import {
     ButtonWidth,
 } from '~/bundles/common/enums/enums';
 import { useAppForm, useFormController } from '~/bundles/common/hooks/hooks';
-import { emailValidationSchema } from '~/bundles/users/validation-schemas/email.validation-schema';
 
 import { DEFAULT_FORGOT_PASSWORD_PAYLOAD } from './constants/default-forgot-password-payload';
 import styles from './styles.module.scss';

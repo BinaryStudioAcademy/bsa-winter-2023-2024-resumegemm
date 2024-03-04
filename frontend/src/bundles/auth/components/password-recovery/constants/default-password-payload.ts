@@ -1,4 +1,4 @@
-import { type UserResetPassword } from '../types/user-reset-password.type.js';
+import { type UserResetPassword } from 'shared/src/bundles/users/types/user-reset-password.type.js';
 
 const DEFAULT_PASSWORD_PAYLOAD: UserResetPassword = {
     password: '',

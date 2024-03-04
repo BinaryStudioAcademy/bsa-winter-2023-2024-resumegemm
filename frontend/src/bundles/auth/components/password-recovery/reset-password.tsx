@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 import { type UserResetPasswordRequestDto } from 'shared/build';
+import { passwordValidationSchema } from 'shared/build';
+import { type UserResetPassword } from 'shared/src/bundles/users/types/user-reset-password.type';
 
 import {
     FormGroup,
@@ -13,11 +15,9 @@ import {
     ButtonWidth,
 } from '~/bundles/common/enums/enums';
 import { useAppForm, useFormController } from '~/bundles/common/hooks/hooks';
-import { passwordValidationSchema } from '~/bundles/users/validation-schemas/restore-password.validation-schema';
 
 import { DEFAULT_PASSWORD_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
-import { type UserResetPassword } from './types/user-reset-password.type';
 
 type Properties = {
     onSubmit: ({

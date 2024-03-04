@@ -1,7 +1,7 @@
 import joi from 'joi';
-import { type UserVerifyResetTokenRequestDto } from 'shared/build/index.js';
 
-import { RecoveryCodeValidationMessage } from './enums/enums.js';
+import { RecoveryCodeValidationMessage } from '../enums/recovery-code.validation-message';
+import { type UserVerifyResetTokenRequestDto } from '../users';
 
 const recoveryCodeValidationSchema = joi.object<
     Omit<UserVerifyResetTokenRequestDto, 'email'>,
