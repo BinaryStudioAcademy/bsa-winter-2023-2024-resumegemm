@@ -1,7 +1,13 @@
+.landing_page__header__button {
+    width: 230px;
+    max-width: 230px;
+}
+
 .landing_page__container {
     display: flex;
     flex-direction: column;
     gap: 75px;
+    margin-top: 50px;
 }
 
 .landing_page__intro {

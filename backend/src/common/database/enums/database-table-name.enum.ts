@@ -15,6 +15,9 @@ enum DatabaseTableName {
     RECENTLY_VIEWED = 'recently_viewed',
     INDUSTRIES = 'industries',
     PROFESSIONS = 'professions',
+    CERTIFICATION = 'certification',
+    LANGUAGES = 'languages',
+    CUSTOM_SECTIONS = 'custom_sections',
 }
 
 export { DatabaseTableName };
