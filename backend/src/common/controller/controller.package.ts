@@ -42,10 +42,12 @@ class Controller implements IController {
         reply,
         accessToken,
         refreshToken,
+        redirectSubPathCookie,
     }: {
         reply: FastifyReply;
         accessToken?: string;
         refreshToken?: string;
+        redirectSubPathCookie?: string;
     }): Promise<void> {
         if (accessToken) {
             return reply
@@ -55,7 +57,9 @@ class Controller implements IController {
                     httpOnly: true,
                     maxAge: config.ENV.COOKIE.EXPIRES_IN,
                 })
-                .redirect(config.ENV.APP.ORIGIN_URL);
+                .redirect(
+                    `${config.ENV.APP.ORIGIN_URL}${redirectSubPathCookie}`,
+                );
         }
         if (refreshToken) {
             void reply.setCookie(CookieName.REFRESH_TOKEN, refreshToken, {
@@ -75,10 +79,18 @@ class Controller implements IController {
 
         const requestHandlerOptions = this.handleRequestOptions(request);
 
+        const redirectSubPathCookie =
+            request.cookies[CookieName.REDIRECT_PATH] ?? '';
+
         const { status, payload, refreshToken, accessToken, contentType } =
             await apiHandler(requestHandlerOptions);
 
-        await this.setTokenInCookies({ reply, accessToken, refreshToken });
+        await this.setTokenInCookies({
+            reply,
+            accessToken,
+            refreshToken,
+            redirectSubPathCookie,
+        });
 
         if (contentType) {
             void reply.header('Content-Type', contentType);
