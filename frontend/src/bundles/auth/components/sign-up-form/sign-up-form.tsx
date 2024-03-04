@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
 import {
@@ -8,6 +9,7 @@ import {
     RegularButton,
 } from '~/bundles/common/components/components';
 import {
+    AppRoute,
     ButtonSize,
     ButtonType,
     ButtonVariant,
@@ -48,8 +50,10 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 <h1 className={styles.registration__title}>Sign Up</h1>
                 <p className={styles.registration__message}>
                     Already have an account? Go to
-                    <Link to={'/log-in'} className={styles.registration__link}>
-                        {' '}
+                    <Link
+                        to={AppRoute.LOG_IN}
+                        className={styles.registration__link}
+                    >
                         Log in
                     </Link>
                 </p>
