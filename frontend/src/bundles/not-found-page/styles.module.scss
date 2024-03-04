@@ -20,7 +20,7 @@
 }
 
 .not_found_page__title {
-    font-weight: 500;
+    font-weight: var(--font-weight-subtitle);
     font-size: 128px;
     line-height: 90px;
 }
@@ -30,11 +30,11 @@
 }
 
 .not_found_page__subtitle {
-    font-weight: 400;
+    font-weight: var(--font-weight-text);
     font-size: 26px;
 }
 
 .not_found_page__text {
     margin: 20px 0;
-    font-size: 16px;
+    font-size: var(--font-size-subtitle);
 }

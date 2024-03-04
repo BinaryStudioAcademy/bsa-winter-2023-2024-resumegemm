@@ -9,14 +9,14 @@
     min-height: 200px;
     margin-bottom: 20px;
     padding: 12px;
-    background-color: rgb(235 239 241);
+    background-color: var(--color-input-field-gray);
     border: none;
     border-radius: 3px;
 }
 
 .custom__section__textarea:focus {
-    color: #302e36;
-    border: 1px solid #768fbe;
+    color: var(--color-text-black);
+    border: 1px solid var(--color-background-light-blue);
     outline: none;
 }
 
