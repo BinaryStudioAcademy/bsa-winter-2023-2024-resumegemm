@@ -67,10 +67,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     element: <RestrictedAccessRoute />,
                                     children: [
                                         {
-                                            path: AppRoute.HOME,
-                                            element: <Home />,
-                                        },
-                                        {
                                             path: AppRoute.PROFILE,
                                             element: <Profile />,
                                         },
