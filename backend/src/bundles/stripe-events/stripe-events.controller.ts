@@ -6,7 +6,7 @@ import {
     type ApiHandlerResponse,
     Controller,
 } from '../../common/controller/controller.js';
-import { StripeEventsApiPath } from './enums/enums.js';
+import { StripeEventsApiPath, StripeEventsHeaders } from './enums/enums.js';
 import { type StripeEventsService } from './stripe-events.service.js';
 import { type StripeEventsResponseDto } from './types/types.js';
 
@@ -41,7 +41,8 @@ class StripeEventsController extends Controller {
             headers: Record<string, string>;
         }>,
     ): Promise<ApiHandlerResponse<StripeEventsResponseDto>> {
-        const signature: string = options.headers['stripe-signature'];
+        const signature: string =
+            options.headers[StripeEventsHeaders.STRIPE_SIGNATURE];
         const { rawBody } = options;
 
         return {
