@@ -21,8 +21,10 @@
     right: -15px;
     z-index: 1;
     display: none;
-    width: 250px;
+    width: 270px;
     min-width: 160px;
+    max-height: 200px;
+    overflow-y: scroll;
     background-color: var(--color-white);
     box-shadow: 0 8px 16px 0 var(--color-box-shadow);
 }
@@ -40,4 +42,12 @@
 
 .colored {
     background-color: var(--color-text-gray);
+}
+
+.filter-dropdown {
+    width: 300px;
+}
+
+.dropdown_container {
+    width: 250px;
 }
