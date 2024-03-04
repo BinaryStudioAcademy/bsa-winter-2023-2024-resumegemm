@@ -17,27 +17,22 @@ const generateSubscriptionEmailPayload = ({
     email,
     subject = 'Subscription',
     name,
-    start,
-    end,
-    items,
-    description,
+    current_period_start,
+    current_period_end,
 }: SubscriptionDetails): SendMailOptions => {
+    const startDate = new Date(
+        current_period_start * 1000,
+    ).toLocaleDateString();
+    const endDate = new Date(current_period_end * 1000).toLocaleDateString();
+
     const textContent = `Congratulations ${name} on successful subscription. Your subscription details are:
-        Start Date: ${new Date(start * 1000).toLocaleDateString()}
-        End Date: ${new Date(end * 1000).toLocaleDateString()}
-        Description: ${description}`;
-
-    let descriptionBlock = '';
-
-    if (description) {
-        descriptionBlock = `<li><strong>Description:</strong> ${description}</li>`;
-    }
+        Start Date: ${startDate}
+        End Date: ${endDate}`;
 
     const templateVariables = {
         name,
-        startDate: new Date(start * 1000).toLocaleDateString(),
-        endDate: new Date(end * 1000).toLocaleDateString(),
-        descriptionBlock,
+        startDate,
+        endDate,
     };
     const htmlContent = loadAndReplaceTemplate(templateVariables);
 

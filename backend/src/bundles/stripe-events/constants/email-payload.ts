@@ -42,7 +42,6 @@ const EmailPayload = {
                 <ul>
                     <li><strong>Start Date:</strong> {startDate}</li>
                     <li><strong>End Date:</strong> {endDate}</li>
-                    {descriptionBlock}
                 </ul>
                 <div class="footer">
                     <p>Best regards,</p>
