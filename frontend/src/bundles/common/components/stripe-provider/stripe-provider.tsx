@@ -39,11 +39,7 @@ const StripeProvider: React.FC<Properties> = ({ children }) => {
         }
     }, [publishableKey]);
 
-    return (
-        <>
-            <Elements stripe={stripePromise}>{children}</Elements>
-        </>
-    );
+    return <Elements stripe={stripePromise}>{children}</Elements>;
 };
 
 export { StripeProvider };

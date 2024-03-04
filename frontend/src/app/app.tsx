@@ -11,11 +11,7 @@ const App: React.FC = () => {
         updatePageTab();
     }, [location]);
 
-    return (
-        <>
-            <RouterOutlet />
-        </>
-    );
+    return <RouterOutlet />;
 };
 
 export { App };

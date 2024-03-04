@@ -87,139 +87,128 @@ const PreviewPage: React.FC = () => {
     }, []);
 
     return (
-        <>
-            <div className={styles.preview}>
-                <ul className={styles.list}>
-                    <li className={styles.item}>
-                        <div className={styles.example}>Component preview</div>
-                    </li>
-                    <li className={styles.item}>
-                        <NavTabs items={navbarItems}></NavTabs>
-                    </li>
-                    <li className={styles.item}>
-                        <Header>
-                            <NavTabs items={headerItems}></NavTabs>
-                            <UserProfile image="https://avatars.githubusercontent.com/u/810438?v=4" />
-                        </Header>
-                    </li>
-                    <li className={styles.item}>
-                        <Footer>
-                            <div className={styles.footer__actions}>
-                                <RegularButton variant={ButtonVariant.OUTLINED}>
-                                    Edit template
-                                </RegularButton>
-                                <RegularButton variant={ButtonVariant.PRIMARY}>
-                                    Save & Publish
-                                </RegularButton>
-                            </div>
-                        </Footer>
-                    </li>
-                    <li className={styles.item}>
-                        <Dropdown
-                            name="language"
-                            className={styles.dropdown}
-                            options={dropdownOptions}
-                            label="Select level"
-                            onChange={handleDropdownChange}
-                        />
-                    </li>
-                    <li className={styles.item}>
-                        <Checkbox
-                            name="preview-page-checkbox"
-                            label="Checkbox"
-                        />
-                        <RadioButton label="Radio button" />
-                        <Switch label="Switch" />
-                    </li>
-                    <li className={styles.item}>
-                        <RegularButton onClick={handleSuccessButtonClick}>
-                            Success toast!
-                        </RegularButton>
-                        <RegularButton onClick={handleErrorButtonClick}>
-                            Error toast!
-                        </RegularButton>
-                        <RegularButton onClick={handleInfoButtonClick}>
-                            Info toast!
-                        </RegularButton>
-                    </li>
-                    <li>
-                        <div className={styles.buttons}>
-                            <RegularButton variant={ButtonVariant.DEFAULT}>
-                                Default
-                            </RegularButton>
-                            <RegularButton
-                                prependedIcon={
-                                    <Icon name={IconName.CHEVRON_DOWN} />
-                                }
-                                variant={ButtonVariant.GHOST}
-                            >
-                                Ghost
-                            </RegularButton>
-                            <RegularButton
-                                appendedIcon={<Icon name={IconName.PLUS} />}
-                                variant={ButtonVariant.OUTLINED}
-                            >
-                                Outlined
+        <div className={styles.preview}>
+            <ul className={styles.list}>
+                <li className={styles.item}>
+                    <div className={styles.example}>Component preview</div>
+                </li>
+                <li className={styles.item}>
+                    <NavTabs items={navbarItems}></NavTabs>
+                </li>
+                <li className={styles.item}>
+                    <Header>
+                        <NavTabs items={headerItems}></NavTabs>
+                        <UserProfile image="https://avatars.githubusercontent.com/u/810438?v=4" />
+                    </Header>
+                </li>
+                <li className={styles.item}>
+                    <Footer>
+                        <div className={styles.footer__actions}>
+                            <RegularButton variant={ButtonVariant.OUTLINED}>
+                                Edit template
                             </RegularButton>
                             <RegularButton variant={ButtonVariant.PRIMARY}>
-                                Primary
-                            </RegularButton>
-                            <RegularButton
-                                appendedIcon={<Icon name={IconName.PLUS} />}
-                                prependedIcon={
-                                    <Icon name={IconName.CHEVRON_DOWN} />
-                                }
-                                size={ButtonSize.MEDIUM}
-                                variant={ButtonVariant.PRIMARY}
-                            >
-                                Primary
-                            </RegularButton>
-                            <RegularButton
-                                variant={ButtonVariant.SQUARE_ORANGE}
-                            >
-                                <Icon name={IconName.FACEBOOK} />
+                                Save & Publish
                             </RegularButton>
                         </div>
-                    </li>
-                    <li className={styles.item}>
-                        <Calendar />
-                        <Calendar type={CalendarTypes.withPresent} />
-                        <div className={styles.tooltip_small_example_container}>
-                            <Tooltip
-                                dimensionType={
-                                    TooltipDimensions.expand100Percent
-                                }
-                                text="tooltip text"
-                            />
-                        </div>
-                        <div className={styles.tooltip_big_example_container}>
-                            <Tooltip
-                                dimensionType={
-                                    TooltipDimensions.expand100Percent
-                                }
-                                text="tooltip text"
-                            />
-                        </div>
-                        <Tooltip text="tooltip text">
-                            <p>Tooltip</p>
-                        </Tooltip>
-                        <Home />
-                    </li>
-                    <li className={styles.item}>
-                        <Templates />
-                    </li>
-                    <li className={styles.auth}>
-                        <Auth />
-                    </li>
-                    <li className={styles.item}>
-                        <QuestionAndAnswer />
-                    </li>
-                    <li className={styles.item}>
-                        <EditTemplatePage />
-                    </li>
-                </ul>
-            </div>
-        </>
+                    </Footer>
+                </li>
+                <li className={styles.item}>
+                    <Dropdown
+                        name="language"
+                        className={styles.dropdown}
+                        options={dropdownOptions}
+                        label="Select level"
+                        onChange={handleDropdownChange}
+                    />
+                </li>
+                <li className={styles.item}>
+                    <Checkbox name="preview-page-checkbox" label="Checkbox" />
+                    <RadioButton label="Radio button" />
+                    <Switch label="Switch" />
+                </li>
+                <li className={styles.item}>
+                    <RegularButton onClick={handleSuccessButtonClick}>
+                        Success toast!
+                    </RegularButton>
+                    <RegularButton onClick={handleErrorButtonClick}>
+                        Error toast!
+                    </RegularButton>
+                    <RegularButton onClick={handleInfoButtonClick}>
+                        Info toast!
+                    </RegularButton>
+                </li>
+                <li>
+                    <div className={styles.buttons}>
+                        <RegularButton variant={ButtonVariant.DEFAULT}>
+                            Default
+                        </RegularButton>
+                        <RegularButton
+                            prependedIcon={
+                                <Icon name={IconName.CHEVRON_DOWN} />
+                            }
+                            variant={ButtonVariant.GHOST}
+                        >
+                            Ghost
+                        </RegularButton>
+                        <RegularButton
+                            appendedIcon={<Icon name={IconName.PLUS} />}
+                            variant={ButtonVariant.OUTLINED}
+                        >
+                            Outlined
+                        </RegularButton>
+                        <RegularButton variant={ButtonVariant.PRIMARY}>
+                            Primary
+                        </RegularButton>
+                        <RegularButton
+                            appendedIcon={<Icon name={IconName.PLUS} />}
+                            prependedIcon={
+                                <Icon name={IconName.CHEVRON_DOWN} />
+                            }
+                            size={ButtonSize.MEDIUM}
+                            variant={ButtonVariant.PRIMARY}
+                        >
+                            Primary
+                        </RegularButton>
+                        <RegularButton variant={ButtonVariant.SQUARE_ORANGE}>
+                            <Icon name={IconName.FACEBOOK} />
+                        </RegularButton>
+                    </div>
+                </li>
+                <li className={styles.item}>
+                    <Calendar />
+                    <Calendar type={CalendarTypes.withPresent} />
+                    <div className={styles.tooltip_small_example_container}>
+                        <Tooltip
+                            dimensionType={TooltipDimensions.expand100Percent}
+                            text="tooltip text"
+                        />
+                    </div>
+                    <div className={styles.tooltip_big_example_container}>
+                        <Tooltip
+                            dimensionType={TooltipDimensions.expand100Percent}
+                            text="tooltip text"
+                        />
+                    </div>
+                    <Tooltip text="tooltip text">
+                        <p>Tooltip</p>
+                    </Tooltip>
+                    <Home />
+                </li>
+                <li className={styles.item}>
+                    <Templates />
+                </li>
+                <li className={styles.auth}>
+                    <Auth />
+                </li>
+                <li className={styles.item}>
+                    <QuestionAndAnswer />
+                </li>
+                <li className={styles.item}>
+                    <EditTemplatePage />
+                </li>
+            </ul>
+        </div>
     );
 };
 
