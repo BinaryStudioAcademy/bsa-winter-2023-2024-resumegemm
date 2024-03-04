@@ -28,9 +28,9 @@ type IRecentlyViewedRepository = {
 
     delete(id: string): Promise<boolean>;
 
-    findRecentlyViewedResumesWithCount(): Promise<
-        RecentlyViewedResumesWithCount[]
-    >;
+    findRecentlyViewedResumesWithCount(
+        interval: string,
+    ): Promise<RecentlyViewedResumesWithCount[]>;
 };
 
 export { type IRecentlyViewedRepository };

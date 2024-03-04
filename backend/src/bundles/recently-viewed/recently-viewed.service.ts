@@ -3,8 +3,8 @@ import {
     type IRecentlyViewedService,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
-    type RecentlyViewedResumesWithCount,
     type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedResumesWithCount,
     type RecentlyViewedTemplatesResponseDto,
 } from './types/types';
 

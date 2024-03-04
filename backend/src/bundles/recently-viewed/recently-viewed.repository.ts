@@ -6,8 +6,8 @@ import {
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesQueryResult,
-    type RecentlyViewedResumesWithCount,
     type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedResumesWithCount,
     type RecentlyViewedTemplatesResponseDto,
 } from './types/types';
 
@@ -100,10 +100,9 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
         return deletedItem ? true : false;
     }
 
-    public async findRecentlyViewedResumesWithCount(): Promise<
-        RecentlyViewedResumesWithCount[]
-    > {
-        const interval = '1 day';
+    public async findRecentlyViewedResumesWithCount(
+        interval = '1 day',
+    ): Promise<RecentlyViewedResumesWithCount[]> {
         const result = (await this.recentlyViewedModel
             .query()
             .select('resume_id', 'viewed_at')
