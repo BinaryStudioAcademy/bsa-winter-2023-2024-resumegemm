@@ -27,16 +27,12 @@
 .registration__form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     width: 100%;
     margin-top: 5px;
 }
 
 .registration__form__button {
     height: 40px;
-    margin-top: 25px;
-}
-
-.form_group > span {
-    margin-bottom: 5px;
+    margin-top: 5px;
 }

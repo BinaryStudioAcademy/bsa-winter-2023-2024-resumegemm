@@ -47,10 +47,6 @@
 }
 
 @media only screen and (width >= 1024px) {
-    .auth__container {
-        padding: 25px;
-    }
-
     .auth__logo-container {
         display: flex;
         max-height: 20%;
@@ -62,6 +58,6 @@
     }
 
     .auth__form-content {
-        width: 80%;
+        width: 88%;
     }
 }
