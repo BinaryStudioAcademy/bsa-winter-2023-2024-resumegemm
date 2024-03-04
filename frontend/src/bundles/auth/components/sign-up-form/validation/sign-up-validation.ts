@@ -6,7 +6,7 @@ type UserSignUpRequestDtoFrontend = {
     lastName: string;
     email: string;
     password: string;
-    confirm_password?: string;
+    confirmPassword?: string;
 };
 
 const userSignUpValidationFrontend = joi.object<
@@ -36,7 +36,7 @@ const userSignUpValidationFrontend = joi.object<
         'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
         'string.pattern.base': UserValidationMessage.PASSWORD_NO_SPACES,
     }),
-    confirm_password: joi
+    confirmPassword: joi
         .string()
         .trim()
         .valid(joi.ref('password'))
@@ -47,5 +47,4 @@ const userSignUpValidationFrontend = joi.object<
         }),
 });
 
-export { type UserSignUpRequestDtoFrontend };
-export { userSignUpValidationFrontend };
+export { type UserSignUpRequestDtoFrontend, userSignUpValidationFrontend };

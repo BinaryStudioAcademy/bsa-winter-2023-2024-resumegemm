@@ -33,7 +33,7 @@ const Auth: React.FC = () => {
 
     const handleSignUpSubmit = useCallback(
         (payload: UserSignUpRequestDtoFrontend): void => {
-            delete payload.confirm_password;
+            delete payload.confirmPassword;
             void dispatch(signUp(payload));
         },
         [dispatch],

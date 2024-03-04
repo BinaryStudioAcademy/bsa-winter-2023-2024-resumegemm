@@ -64,9 +64,9 @@ const SubscriptionPaymentPage: React.FC = () => {
         setModalIsHidden(true);
     }, []);
 
-    const HandleSubmit = useCallback(
+    const handleSubmit = useCallback(
         (event: FormEvent<HTMLFormElement>): void => {
-            async function HandleSubmitAsync(): Promise<void> {
+            async function handleSubmitAsync(): Promise<void> {
                 try {
                     setProcessing(true);
 
@@ -149,7 +149,7 @@ const SubscriptionPaymentPage: React.FC = () => {
                 }
             }
 
-            void HandleSubmitAsync();
+            void handleSubmitAsync();
         },
         [elements, stripe, dispatch, name, email, priceId],
     );
@@ -160,7 +160,7 @@ const SubscriptionPaymentPage: React.FC = () => {
 
     return (
         <div className={styles.payment__container}>
-            <form className={styles.payment__form} onSubmit={HandleSubmit}>
+            <form className={styles.payment__form} onSubmit={handleSubmit}>
                 <div className={styles.payment__prices_container}>
                     {prices.map((price) => (
                         <SubscriptionCard

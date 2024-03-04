@@ -84,9 +84,9 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 <PasswordInput
                     label="Confirm Password"
                     placeholder="Confirm your password"
-                    error={errors.confirm_password}
+                    error={errors.confirmPassword}
                     {...useFormFieldCreator({
-                        name: 'confirm_password',
+                        name: 'confirmPassword',
                         control,
                     })}
                 />
