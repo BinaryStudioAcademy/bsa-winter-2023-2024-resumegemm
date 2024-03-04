@@ -1,12 +1,12 @@
 import { PROMPTS } from '../open-ai/open-ai.js';
 import { type OpenAIService } from '../open-ai/open-ai.service.js';
 import {
+    type IResumeService,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
-    type ResumeService as TResumeService,
 } from './types/types';
 
-class ResumeService implements TResumeService {
+class ResumeService implements IResumeService {
     private openAIService: OpenAIService;
 
     public constructor(openAIService: OpenAIService) {

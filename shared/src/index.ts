@@ -38,9 +38,9 @@ export {
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
 export {
+    type IResumeService,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
-    type ResumeService,
     ResumeApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';

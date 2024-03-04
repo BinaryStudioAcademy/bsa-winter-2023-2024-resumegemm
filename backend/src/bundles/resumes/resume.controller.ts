@@ -9,15 +9,15 @@ import { type ILogger } from '~/common/logger/logger.js';
 
 import { ResumeApiPath } from './enums/enums.js';
 import {
+    type IResumeService,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
-    type ResumeService as TResumeService,
 } from './types/types.js';
 
 class ResumeController extends Controller {
-    private resumeService: TResumeService;
+    private resumeService: IResumeService;
 
-    public constructor(logger: ILogger, resumeService: TResumeService) {
+    public constructor(logger: ILogger, resumeService: IResumeService) {
         super(logger, ApiPath.RESUMES);
         this.resumeService = resumeService;
 
