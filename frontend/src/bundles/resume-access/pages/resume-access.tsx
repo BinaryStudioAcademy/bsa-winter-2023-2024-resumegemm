@@ -96,7 +96,7 @@ const ResumeAccess: React.FC = () => {
     return (
         <div>
             <p>resume id: {resumeIdSelector}</p>
-            <div className={styles.resume_access__id_input_container}>
+            <div className={styles.resume_access__input_container}>
                 <Input onChange={handleIdChange}></Input>
                 <BaseButton onClick={createResumeAccessCallback}>
                     Create share link
