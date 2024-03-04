@@ -42,6 +42,7 @@ const PanelContainer: React.FC<Properties> = ({
                             }
                             input={
                                 <Input
+                                    placeholder=" Search"
                                     className={styles.panel_container__input}
                                 />
                             }
