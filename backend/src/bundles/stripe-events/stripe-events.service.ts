@@ -45,55 +45,30 @@ class StripeEventsService implements IStripeEventsService {
         );
 
         switch (event.type) {
+            case StripeCustomerEvents.SUBSCRIPTION_CREATED: {
+                await this.handleSubscriptionCreated(event.data);
+                break;
+            }
             case StripePlanEvents.PLAN_CREATED: {
                 await this.handlePlanCreated(event.data);
                 break;
             }
-            case StripePlanEvents.PLAN_DELETED: {
+            case StripePlanEvents.PLAN_UPDATED: {
                 await this.handlePlanDeleted(event.data);
                 break;
             }
-<<<<<<< HEAD
-            case StripeCustomerEvents.SUBSCRIPTION_CREATED: {
-                await this.handleSubscriptionCreated(event.data);
-                break;
-=======
             default: {
-                throw new Error('Unknown event.');
-=======
-        if (event) {
-            switch (event.type) {
-                case StripeCustomerEvents.SUBSCRIPTION_CREATED: {
-                    await this.handleSubscriptionCreated(event.data);
-                    break;
-                }
-                case StripePlanEvents.PLAN_CREATED: {
-                    return {
-                        resolved: true,
-                    };
-                }
-                case StripePlanEvents.PLAN_UPDATED: {
-                    break;
-                }
-
-                default: {
-                    return {
-                        resolved: false,
-                    };
-                }
->>>>>>> b63f7079 (rg-85: * Updated controller and service.)
->>>>>>> 2258acd9 (rg-85: * Revorked events service)
+                return {
+                    resolved: false,
+                };
             }
         }
+
         return {
             resolved: true,
         };
     }
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
->>>>>>> 2258acd9 (rg-85: * Revorked events service)
     private async handlePlanCreated(
         data: Stripe.PlanCreatedEvent.Data,
     ): Promise<void> {
@@ -118,27 +93,6 @@ class StripeEventsService implements IStripeEventsService {
         if (existingPlan) {
             await this.subscriptionPlanRepository.delete(existingPlan.id);
         }
-=======
-
-    private async handleSubscriptionCreated(
-        data: Stripe.CustomerSubscriptionCreatedEvent.Data,
-    ): Promise<void> {
-        const subscription: Stripe.Subscription = data.object;
-        const customerId = subscription.customer as string;
-        const customer = (await this.stripe.customers.retrieve(
-            customerId,
-        )) as StripeCustomer;
-        const { current_period_start, current_period_end } = subscription;
-        const { name, email } = customer;
-        const emailPayload = generateSubscriptionEmailPayload({
-            email,
-            subject: 'Subscription',
-            name,
-            current_period_start,
-            current_period_end,
-        });
-        void this.mailSender.sendMail(emailPayload);
->>>>>>> 24a64152 (rg-85: * Revorked events service)
     }
 
     private async handleSubscriptionCreated(
