@@ -22,7 +22,7 @@ import { type UserResetPassword } from './types/user-reset-password.type';
 type Properties = {
     onSubmit: ({
         password,
-    }: Omit<UserResetPasswordRequestDto, 'resetToken'>) => Promise<void>;
+    }: Pick<UserResetPasswordRequestDto, 'password'>) => Promise<void>;
 };
 
 const ResetPasswordForm: React.FC<Properties> = ({ onSubmit }) => {
