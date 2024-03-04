@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { type ResumeShareAccessGetResponseDto } from '../types/types.js';
 import {
@@ -22,33 +22,31 @@ const { reducer, actions, name } = createSlice({
     name: 'resumeAccess',
     reducers: {},
     extraReducers(builder) {
-        builder.addCase(accessResume.pending, (state) => {
-            state.resumeId = null;
-        });
-
         builder.addCase(accessResume.fulfilled, (state, action) => {
             state.resumeId = action.payload.resumeId;
-        });
-
-        builder.addCase(accessResume.rejected, (state) => {
-            state.resumeId = null;
-        });
-
-        builder.addCase(deleteAccessResume.fulfilled, (state) => {
-            state.resumeId = null;
         });
 
         builder.addCase(accessResumeDetails.fulfilled, (state, action) => {
             state.details = action.payload.accesses;
         });
 
-        builder.addCase(accessResumeDetails.rejected, (state) => {
-            state.details = [];
-        });
+        builder.addMatcher(
+            isAnyOf(
+                deleteAccessResume.fulfilled,
+                accessResume.rejected,
+                accessResume.pending,
+            ),
+            (state) => {
+                state.resumeId = null;
+            },
+        );
 
-        builder.addCase(accessResumeDetails.pending, (state) => {
-            state.details = [];
-        });
+        builder.addMatcher(
+            isAnyOf(accessResumeDetails.rejected, accessResumeDetails.pending),
+            (state) => {
+                state.details = [];
+            },
+        );
     },
 });
 
