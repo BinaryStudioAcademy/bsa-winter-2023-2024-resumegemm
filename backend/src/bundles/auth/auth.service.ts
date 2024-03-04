@@ -4,6 +4,7 @@ import {
     type EncryptionDataPayload,
     type UserForgotPasswordRequestDto,
     type UserResetPasswordRequestDto,
+    type UserVerifyResetTokenRequestDto,
 } from 'shared/build/index.js';
 import {
     AuthException,
@@ -131,9 +132,11 @@ class AuthService implements TAuthService {
         }
     }
 
-    public verifyResetToken<T>(token: string, tokenSecret: string): T {
+    public verifyResetToken<T>(resetToken: string): T {
         try {
-            return verifyToken(token, tokenSecret) as T;
+            const resetTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
+
+            return verifyToken(resetToken, resetTokenSecret) as T;
         } catch {
             throw new HttpError({
                 message: ExceptionMessage.INVALID_RESET_TOKEN,
@@ -142,39 +145,64 @@ class AuthService implements TAuthService {
         }
     }
 
-    public async resetPassword({
+    public async tokenEqualsEmail({
+        email,
         resetToken,
-        password,
-    }: UserResetPasswordRequestDto): Promise<void> {
-        const resetTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
+    }: UserVerifyResetTokenRequestDto): ReturnType<
+        TAuthService['tokenEqualsEmail']
+    > {
+        const user = await this.userService.findByEmail(email);
 
-        const { id } = this.verifyResetToken<{ id: string }>(
+        const tokenPayload = this.verifyResetToken<{ email: string }>(
             resetToken,
-            resetTokenSecret,
         );
 
-        const user = await this.userService.getUserWithProfile(id);
-
-        if (!user) {
+        if (user?.email !== tokenPayload.email) {
             throw new HttpError({
-                status: HttpCode.BAD_REQUEST,
                 message: ExceptionMessage.INVALID_RESET_TOKEN,
+                status: HttpCode.BAD_REQUEST,
             });
         }
+
+        return user;
+    }
+
+    public async resetPassword({
+        email,
+        resetToken,
+        password,
+    }: UserResetPasswordRequestDto): ReturnType<TAuthService['resetPassword']> {
+        const user = await this.tokenEqualsEmail({
+            resetToken,
+            email,
+        });
 
         const passwordSalt = await this.generateSalt();
 
         const passwordHash = await this.encrypt(password, passwordSalt);
 
+        const userWithProfile = await this.userService.getUserWithProfile(
+            user.id,
+        );
+
         await this.userService.changePassword({
-            id,
+            id: user.id,
             passwordHash,
+            passwordSalt,
         });
+
+        return {
+            user: userWithProfile,
+            accessToken: generateToken({ id: user.id }),
+            refreshToken: generateRefreshToken({ id: user.id }),
+        };
     }
 
     public async createResetToken({
         email,
-    }: UserForgotPasswordRequestDto): Promise<string> {
+    }: UserForgotPasswordRequestDto): ReturnType<
+        TAuthService['createResetToken']
+    > {
         const user = await this.userService.findByEmail(email);
 
         if (!user) {
@@ -184,7 +212,7 @@ class AuthService implements TAuthService {
             });
         }
 
-        return generateResetToken({ id: user.id });
+        return generateResetToken({ email });
     }
 }
 
