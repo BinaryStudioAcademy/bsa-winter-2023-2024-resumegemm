@@ -4,6 +4,7 @@ import {
     type UserAuthResponse,
     type UserForgotPasswordRequestDto,
     type UserResetPasswordRequestDto,
+    type UserResetPasswordResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpResponseDto,
@@ -381,40 +382,49 @@ class AuthController extends Controller {
         };
     }
 
-    private verifyResetToken(
-        options: ApiHandlerOptions<{ body: { resetToken: string } }>,
-    ): ApiHandlerResponse<{ isTokenValid: boolean }> {
+    private async verifyResetToken(
+        options: ApiHandlerOptions<{ body: UserVerifyResetTokenRequestDto }>,
+    ): Promise<ApiHandlerResponse<{ isTokenValid: boolean }>> {
         const {
-            body: { resetToken },
+            body: { resetToken, email },
         } = options;
 
-        const resetTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
-
-        this.authService.verifyResetToken<boolean>(
+        await this.authService.tokenEqualsEmail({
+            email,
             resetToken,
-            resetTokenSecret,
-        );
+        });
 
         return {
             status: HttpCode.OK,
             payload: {
-                isTokenValid: true,
+                status: HttpCode.OK,
+                message: AuthMessage.RESET_TOKEN_CORRECT,
             },
         };
     }
 
     private async resetPassword(
         options: ApiHandlerOptions<{
-            body: { resetToken: string; password: string };
+            body: UserResetPasswordRequestDto;
         }>,
-    ): Promise<ApiHandlerResponse<{ message: string }>> {
-        const { resetToken, password } = options.body;
+    ): Promise<ApiHandlerResponse<UserResetPasswordResponse>> {
+        const { resetToken, password, email } = options.body;
 
-        await this.authService.resetPassword({ resetToken, password });
+        const { refreshToken, ...userData } =
+            await this.authService.resetPassword({
+                resetToken,
+                password,
+                email,
+            });
 
         return {
             status: HttpCode.OK,
-            payload: { message: AuthMessage.PASSWORD_RESET },
+            refreshToken,
+            payload: {
+                ...userData,
+                status: HttpCode.OK,
+                message: AuthMessage.PASSWORD_RESET,
+            },
         };
     }
 }
