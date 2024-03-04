@@ -27,9 +27,13 @@
 .restore__form {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 50px;
     width: 100%;
     margin: 10px 0;
+}
+
+.restore__form_group > span:last-child {
+    bottom: -40px;
 }
 
 .restore__form__actions {

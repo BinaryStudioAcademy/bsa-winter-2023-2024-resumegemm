@@ -63,7 +63,11 @@ const ResetPasswordForm: React.FC<Properties> = ({ onSubmit }) => {
                 </p>
             </div>
             <form onSubmit={handleFormSubmit} className={styles.restore__form}>
-                <FormGroup label="New password" error={errors.password}>
+                <FormGroup
+                    label="New password"
+                    error={errors.password}
+                    className={styles.restore__form_group}
+                >
                     <Input
                         type="password"
                         placeholder="New password"
@@ -75,6 +79,7 @@ const ResetPasswordForm: React.FC<Properties> = ({ onSubmit }) => {
                 <FormGroup
                     label="Repeat New password"
                     error={errors.confirm_password}
+                    className={styles.restore__form_group}
                 >
                     <Input
                         type="password"
