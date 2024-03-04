@@ -8,7 +8,7 @@
     width: 100%;
     height: 100%;
     padding: 16px;
-    background-color: #000000b3; // TODO: add to global vars once PR merged
+    background-color: var(--color-background-modal);
 }
 
 .modal_content {
@@ -21,7 +21,7 @@
     min-height: 240px;
     max-height: 90vh;
     padding: 32px;
-    background: #ffffff;
+    background: var(--color-white);
     border-radius: 4.5px;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .content_title {
-    font-weight: 600;
+    font-weight: var(--font-weight-title);
     font-size: 25px;
     line-height: 30px;
 }

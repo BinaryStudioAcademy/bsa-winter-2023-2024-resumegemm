@@ -45,6 +45,12 @@ type EnvironmentSchema = {
     OPEN_AI: {
         API_KEY: string;
     };
+    AWS: {
+        REGION: string;
+        SECRET_ACCESS_KEY: string;
+        ACCESS_KEY: string;
+        BUCKET_NAME: string;
+    };
 };
 
 export { type EnvironmentSchema };
