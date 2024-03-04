@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { type UserWithProfileRelation } from 'shared/build/bundles/users/types/user-with-profile-nested-relation.type.js';
 import {
     type UserResetPasswordRequestDto,
-    type UserResetPasswordResponse,
     type UserVerifyResetTokenRequestDto,
     type UserVerifyResetTokenResponse,
 } from 'shared/build/index.js';
@@ -67,13 +66,19 @@ const verifyResetToken = createAsyncThunk<
 );
 
 const resetPassword = createAsyncThunk<
-    UserResetPasswordResponse,
+    UserWithProfileRelation,
     UserResetPasswordRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/reset-password`, async (resetPasswordPayload, { extra }) => {
-    const { authApi } = extra;
+    const { authApi, storageApi } = extra;
 
-    return await authApi.resetPassword(resetPasswordPayload);
+    const { accessToken, user } = await authApi.resetPassword(
+        resetPasswordPayload,
+    );
+
+    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+    return user;
 });
 
 // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
