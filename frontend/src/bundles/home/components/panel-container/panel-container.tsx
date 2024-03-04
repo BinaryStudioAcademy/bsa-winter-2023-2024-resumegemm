@@ -13,14 +13,14 @@ type Properties = {
     children?: React.ReactNode;
     name: string;
     hasIconInput?: boolean;
-    classname?: string;
+    className?: string;
 };
 
 const PanelContainer: React.FC<Properties> = ({
     children,
     name,
     hasIconInput = true,
-    classname,
+    className,
 }: Properties) => {
     const sortHandle = useCallback((sortMethod: SortDirection): void => {
         // TODO: handle sort action
@@ -28,7 +28,7 @@ const PanelContainer: React.FC<Properties> = ({
     }, []);
 
     return (
-        <div className={clsx(styles.panel_container, classname)}>
+        <div className={clsx(styles.panel_container, className)}>
             <div className={styles.panel_container__top_bar}>
                 {name}
                 <div className={styles.panel_container__options_wrapper}>
