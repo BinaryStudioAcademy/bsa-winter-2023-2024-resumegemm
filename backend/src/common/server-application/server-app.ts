@@ -17,13 +17,14 @@ import { type ValidationError } from '~/common/exceptions/exceptions.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 import {
+    authorizationPlugin,
+    oauthCallbackHandler,
+    preParsingPlugin,
+} from '~/common/plugins/plugins.js';
+import {
     preParsingRoutes,
     publicRoutes,
 } from '~/common/server-application/constants/constants.js';
-    authorizationPlugin,
-    oauthCallbackHandler,
-    preParsing as preParsingPlugin
-} from '~/common/plugins/plugins.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
@@ -95,7 +96,7 @@ class ServerApp implements IServerApp {
                 this.logger.info(
                     `Generate swagger documentation for API ${it.version}`,
                 );
-                
+
                 await this.app.register(preParsingPlugin, {
                     preParsingRoutes,
                 });
