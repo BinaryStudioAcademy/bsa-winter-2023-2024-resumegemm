@@ -1,4 +1,4 @@
-import { type CalendarDate } from '~/bundles/common/types/calendar/calendar-date';
+import { type CalendarDate } from '~/bundles/common/types/calendar/calendar-date.type';
 
 type Education = {
     institutionName: string;

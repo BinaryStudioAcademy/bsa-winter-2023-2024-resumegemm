@@ -8,14 +8,14 @@
     position: absolute;
     right: 0;
     bottom: -22px;
-    color: #ff5757;
-    font-size: 12px;
+    color: var(--color-error-red);
+    font-size: var(--font-size-secondary-text);
     text-align: right;
 }
 
 .label__name {
     margin-bottom: 13px;
-    color: #313134;
-    font-weight: 500;
+    color: var(--color-label-blue);
+    font-weight: var(--font-weight-subtitle);
     line-height: 16px;
 }

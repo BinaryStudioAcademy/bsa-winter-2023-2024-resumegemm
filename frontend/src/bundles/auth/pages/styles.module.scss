@@ -2,7 +2,7 @@
     width: 100vw;
     height: 100vh;
     padding: 30px;
-    background-color: #687a9c;
+    background-color: var(--color-background-dark-blue);
 }
 
 .auth__container {
@@ -11,7 +11,7 @@
     align-items: center;
     gap: 20px;
     height: 100%;
-    background-color: #768fbe;
+    background-color: var(--color-background-light-blue);
     border-radius: 20px;
 }
 
@@ -31,7 +31,7 @@
     width: 100%;
     height: 100%;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     border-radius: 15px;
 }
 
