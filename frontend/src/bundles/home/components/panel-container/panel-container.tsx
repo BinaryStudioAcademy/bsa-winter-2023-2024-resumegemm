@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useCallback } from 'react';
-import { type SortType } from 'shared/build';
+import { type SortDirection } from 'shared/build';
 
 import { Icon, Input } from '~/bundles/common/components/components';
 import { IconInput } from '~/bundles/common/components/icon-input/icon-input';
@@ -22,7 +22,7 @@ const PanelContainer: React.FC<Properties> = ({
     hasIconInput = true,
     classname,
 }: Properties) => {
-    const sortHandle = useCallback((sortMethod: SortType): void => {
+    const sortHandle = useCallback((sortMethod: SortDirection): void => {
         // TODO: handle sort action
         sortMethod;
     }, []);
