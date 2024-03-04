@@ -14,6 +14,9 @@ import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import {
     Calendar,
     Checkbox,
+    Dropdown,
+    Footer,
+    Header,
     Icon,
     NavTabs,
     RadioButton,
@@ -22,6 +25,7 @@ import {
     Tooltip,
 } from '../../bundles/common/components/components.js';
 import { Auth } from '../auth/pages/auth';
+import { UserProfile } from '../common/components/layout/header/user-profile/user-profile.js';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
 import { EditTemplatePage } from '../edit-temlate/edit-template';
@@ -35,6 +39,26 @@ const navbarItems = [
     { label: 'Login', path: AppRoute.LOG_IN },
     { label: 'Signup', path: AppRoute.SIGN_UP },
     { label: 'Preview', path: AppRoute.PREVIEW },
+];
+
+const headerItems = [
+    { label: 'Home', path: AppRoute.ROOT },
+    { label: 'Templates', path: AppRoute.TEMPLATES },
+];
+
+const dropdownOptions = [
+    {
+        label: 'Native speaker',
+        value: 'C1',
+    },
+    {
+        label: 'Highly proficient',
+        value: 'B2',
+    },
+    {
+        label: 'Very good command',
+        value: 'B1',
+    },
 ];
 
 const PreviewPage: React.FC = () => {
@@ -58,6 +82,10 @@ const PreviewPage: React.FC = () => {
         });
     }, [showToast]);
 
+    const handleDropdownChange = useCallback((value: string | undefined) => {
+        return value;
+    }, []);
+
     return (
         <>
             <div className={styles.preview}>
@@ -67,6 +95,33 @@ const PreviewPage: React.FC = () => {
                     </li>
                     <li className={styles.item}>
                         <NavTabs items={navbarItems}></NavTabs>
+                    </li>
+                    <li className={styles.item}>
+                        <Header>
+                            <NavTabs items={headerItems}></NavTabs>
+                            <UserProfile image="https://avatars.githubusercontent.com/u/810438?v=4" />
+                        </Header>
+                    </li>
+                    <li className={styles.item}>
+                        <Footer>
+                            <div className={styles.footer__actions}>
+                                <RegularButton variant={ButtonVariant.OUTLINED}>
+                                    Edit template
+                                </RegularButton>
+                                <RegularButton variant={ButtonVariant.PRIMARY}>
+                                    Save & Publish
+                                </RegularButton>
+                            </div>
+                        </Footer>
+                    </li>
+                    <li className={styles.item}>
+                        <Dropdown
+                            name="language"
+                            className={styles.dropdown}
+                            options={dropdownOptions}
+                            label="Select level"
+                            onChange={handleDropdownChange}
+                        />
                     </li>
                     <li className={styles.item}>
                         <Checkbox

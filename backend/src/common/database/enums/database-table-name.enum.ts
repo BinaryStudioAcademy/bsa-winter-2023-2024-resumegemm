@@ -15,6 +15,9 @@ enum DatabaseTableName {
     RECENTLY_VIEWED = 'recently_viewed',
     RESUME_SHARE_LINK = 'resume_share_link',
     RESUME_SHARE_ACCESS = 'resume_share_access',
+    CERTIFICATION = 'certification',
+    LANGUAGES = 'languages',
+    CUSTOM_SECTIONS = 'custom_sections',
 }
 
 export { DatabaseTableName };

@@ -7,7 +7,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { type HttpError, HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
-import { ResumeApiPath } from './enums/enums.js';
+import { ResumesApiPath } from './enums/enums.js';
 import { type ResumeShareService } from './resume-share.service.js';
 import {
     type ResumeShareCreateRequestDto,
@@ -86,7 +86,7 @@ class ResumeShareController extends Controller {
         this.resumeShareService = resumeShareService;
 
         this.addRoute({
-            path: ResumeApiPath.ID_SHARE(),
+            path: ResumesApiPath.ID_SHARE(),
             method: 'POST',
             validation: {},
             handler: (options) =>
@@ -96,7 +96,7 @@ class ResumeShareController extends Controller {
         });
 
         this.addRoute({
-            path: ResumeApiPath.SHARE_ID(),
+            path: ResumesApiPath.SHARE_ID(),
             method: 'GET',
             validation: {},
             handler: (options) =>
@@ -106,7 +106,7 @@ class ResumeShareController extends Controller {
         });
 
         this.addRoute({
-            path: ResumeApiPath.SHARE_ID(),
+            path: ResumesApiPath.SHARE_ID(),
             method: 'DELETE',
             validation: {},
             handler: (options) =>
@@ -116,7 +116,7 @@ class ResumeShareController extends Controller {
         });
 
         this.addRoute({
-            path: ResumeApiPath.SHARE_ID_DETAILS(),
+            path: ResumesApiPath.SHARE_ID_DETAILS(),
             method: 'GET',
             validation: {},
             handler: (options) =>

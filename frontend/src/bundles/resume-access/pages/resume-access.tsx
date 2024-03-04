@@ -15,7 +15,7 @@ import { ToastContext } from '~/bundles/toast/context/toast-context';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { baseUrl } from '~/helpers/base-url';
 
-import { ResumeApiPath } from '../enums/enums';
+import { ResumesApiPath } from '../enums/enums';
 import { ResumeAccessMessage } from '../enums/messages';
 import {
     accessResume,
@@ -75,7 +75,7 @@ const ResumeAccess: React.FC = () => {
                 showToast(
                     `Created link: ${baseUrl()}${
                         ApiPath.RESUMES
-                    }${ResumeApiPath.SHARE_ID(linkId)}`,
+                    }${ResumesApiPath.SHARE_ID(linkId)}`,
                     ToastType.SUCCESS,
                 );
             })

@@ -5,7 +5,7 @@ import {
     PaymentApiPath,
     PDFApiPath,
     RecentlyViewedApiPath,
-    ResumeApiPath,
+    ResumesApiPath,
 } from 'shared/build/index.js';
 
 const API_PREFIX = '/api/v1';
@@ -16,15 +16,15 @@ const publicRoutes = {
     [`${AuthApiPath.TOKEN}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.TOKEN}`,
     [`${RecentlyViewedApiPath.ID}`]: `${API_PREFIX}${ApiPath.RECENTLY_VIEWED}${RecentlyViewedApiPath.ID}`,
     [`${RecentlyViewedApiPath.ROOT}`]: `${API_PREFIX}${ApiPath.RECENTLY_VIEWED}${RecentlyViewedApiPath.ROOT}`,
-    [`${ResumeApiPath.SHARE_ID()}`]: `${API_PREFIX}${
+    [`${ResumesApiPath.SHARE_ID()}`]: `${API_PREFIX}${
         ApiPath.RESUMES
-    }${ResumeApiPath.SHARE_ID()}`,
-    [`${ResumeApiPath.ID_SHARE()}`]: `${API_PREFIX}${
+    }${ResumesApiPath.SHARE_ID()}`,
+    [`${ResumesApiPath.ID_SHARE()}`]: `${API_PREFIX}${
         ApiPath.RESUMES
-    }${ResumeApiPath.ID_SHARE()}`,
-    [`${ResumeApiPath.SHARE_ID_DETAILS()}`]: `${API_PREFIX}${
+    }${ResumesApiPath.ID_SHARE()}`,
+    [`${ResumesApiPath.SHARE_ID_DETAILS()}`]: `${API_PREFIX}${
         ApiPath.RESUMES
-    }${ResumeApiPath.SHARE_ID_DETAILS()}`,
+    }${ResumesApiPath.SHARE_ID_DETAILS()}`,
     [`${OpenAuthApiPath.REDIRECT_CALLBACK}`]: `${OpenAuthApiPath.REDIRECT_CALLBACK}`,
     [`${OpenAuthApiPath.GITHUB}`]: `${OpenAuthApiPath.GITHUB}`,
     [`${OpenAuthApiPath.GOOGLE}`]: `${OpenAuthApiPath.GOOGLE}`,
