@@ -1,5 +1,4 @@
 export { AppRoute } from './app-route.enum.js';
-export { ColumnChartColor } from './column-chart/column-chart-colors.enum.js';
 export {
     ButtonColor,
     ButtonSize,

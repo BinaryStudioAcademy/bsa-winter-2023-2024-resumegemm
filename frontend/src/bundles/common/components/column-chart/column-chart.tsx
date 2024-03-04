@@ -1,16 +1,16 @@
 import { Chart } from 'react-google-charts';
 
-import { ColumnChartColor } from '../../enums/enums';
-
 type Properties = {
-    color?: ColumnChartColor;
+    color?: string;
     measure: string;
     data: [string, number][];
     className?: string;
 };
 
 const ColumnChart: React.FC<Properties> = ({
-    color = ColumnChartColor.DarkBlue,
+    color = getComputedStyle(document.documentElement).getPropertyValue(
+        '--color-background-dark-blue',
+    ),
     measure,
     data,
     className,
