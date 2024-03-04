@@ -12,8 +12,8 @@ $layout-breakpoint-small: 768px;
     align-items: center;
     width: 100%;
     padding: 24px 40px;
-    background-color: white;
-    border: 1px solid #687a9c;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-background-dark-blue);
     border-radius: 12px;
 }
 
@@ -37,16 +37,16 @@ $layout-breakpoint-small: 768px;
 }
 
 .profile__card__title span {
-    color: #848d96;
-    font-weight: 400;
-    font-size: 14px;
-    font-family: Poppins, sans-serif;
+    color: var(--color-text-gray);
+    font-weight: var(--font-weight-text);
+    font-size: var(--font-size-main-text);
+    font-family: var(--font-family-main);
     line-height: 20px;
 }
 
 @media only screen and (max-device-width: $layout-breakpoint-small) {
     .profile__card__title span {
-        font-size: 12px;
+        font-size: var(--font-size-secondary-text);
         line-height: 16px;
     }
 }

@@ -2,8 +2,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: gray;
-    font-size: 14px;
+    color: var(--color-text-gray);
+    font-size: var(--font-size-main-text);
 }
 
 .step__active {
@@ -17,19 +17,19 @@
     width: 35px;
     height: 35px;
     color: var(--color-text-blue);
-    font-weight: 500;
+    font-weight: var(--font-weight-subtitle);
     background-color: var(--color-disabled-gray);
     border-radius: 100%;
 }
 
 .step__index_active {
     color: var(--color-white);
-    background-color: rgb(67 142 255);
+    background-color: var(--color-background-bright-blue);
 }
 
 .step__index_done {
     position: relative;
-    background-color: rgb(67 142 255);
+    background-color: var(--color-background-bright-blue);
 }
 
 .step__index_done::after {
