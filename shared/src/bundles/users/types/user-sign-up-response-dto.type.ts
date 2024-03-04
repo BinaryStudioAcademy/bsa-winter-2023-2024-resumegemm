@@ -2,6 +2,7 @@ import { type UserWithProfileRelationAndOauthConnections } from './user-with-pro
 
 type UserSignUpResponseDto = {
     user: UserWithProfileRelationAndOauthConnections;
+    token: string;
 };
 
 export { type UserSignUpResponseDto };
