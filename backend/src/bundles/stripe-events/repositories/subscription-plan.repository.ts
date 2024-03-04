@@ -36,7 +36,7 @@ class SubscriptionPlanRepository implements ISubscriptionPlanRepository {
         const response = await this.subscriptionPlanModel
             .query()
             .deleteById(id);
-        return response === 1;
+        return !!response;
     }
 }
 
