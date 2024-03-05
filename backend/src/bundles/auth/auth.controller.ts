@@ -8,7 +8,7 @@ import {
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpResponseDto,
-    type UserVerifyResetTokenRequestDto,
+    type UserVerifyResetPasswordTokenRequestDto,
     type UserWithProfileRelation,
     emailValidationSchema,
 } from 'shared/build/index.js';
@@ -36,7 +36,7 @@ import { type ILogger } from '~/common/logger/logger.js';
 import { type IMailService } from '~/common/mail-service/mail-service.js';
 
 import { resetPasswordValidatioSchema } from '../users/validation-schemas/reset-password.validation-schema.js';
-import { resetTokenValidationSchema } from '../users/validation-schemas/reset-token.validation-schema.js';
+import { resetPasswordTokenValidationSchema } from '../users/validation-schemas/reset-token.validation-schema.js';
 import { type AuthService } from './auth.service.js';
 import { AuthMail } from './enums/auth-mail.js';
 import { AuthMessage } from './enums/auth-message.js';
@@ -120,13 +120,13 @@ class AuthController extends Controller {
         this.addRoute({
             path: AuthApiPath.VERIFY_RESET_TOKEN,
             validation: {
-                body: resetTokenValidationSchema,
+                body: resetPasswordTokenValidationSchema,
             },
             method: 'POST',
             handler: (options) =>
-                this.verifyResetToken(
+                this.verifyResetPasswordToken(
                     options as ApiHandlerOptions<{
-                        body: UserVerifyResetTokenRequestDto;
+                        body: UserVerifyResetPasswordTokenRequestDto;
                     }>,
                 ),
         });
@@ -375,15 +375,16 @@ class AuthController extends Controller {
 
     private async forgotPassword(
         options: ApiHandlerOptions<{ body: UserForgotPasswordRequestDto }>,
-    ): Promise<ApiHandlerResponse<{ message: string; resetToken: string }>> {
-        const resetToken = await this.authService.createResetToken(
-            options.body,
-        );
+    ): Promise<
+        ApiHandlerResponse<{ message: string; resetPasswordToken: string }>
+    > {
+        const resetPasswordToken =
+            await this.authService.createResetPasswordToken(options.body);
 
         await this.mailService.sendMail({
             to: options.body.email,
             subject: AuthMail.RESET_PASSWORD.subject,
-            text: `${AuthMail.RESET_PASSWORD.text} ${resetToken}`,
+            text: `${AuthMail.RESET_PASSWORD.text} ${resetPasswordToken}`,
         });
 
         return {
@@ -394,16 +395,18 @@ class AuthController extends Controller {
         };
     }
 
-    private async verifyResetToken(
-        options: ApiHandlerOptions<{ body: UserVerifyResetTokenRequestDto }>,
+    private async verifyResetPasswordToken(
+        options: ApiHandlerOptions<{
+            body: UserVerifyResetPasswordTokenRequestDto;
+        }>,
     ): Promise<ApiHandlerResponse<{ isTokenValid: boolean }>> {
         const {
-            body: { resetToken, email },
+            body: { resetPasswordToken, email },
         } = options;
 
         await this.authService.tokenEqualsEmail({
             email,
-            resetToken,
+            resetPasswordToken,
         });
 
         return {
@@ -420,11 +423,11 @@ class AuthController extends Controller {
             body: UserResetPasswordRequestDto;
         }>,
     ): Promise<ApiHandlerResponse<UserResetPasswordResponse>> {
-        const { resetToken, password, email } = options.body;
+        const { resetPasswordToken, password, email } = options.body;
 
         const { refreshToken, ...userData } =
             await this.authService.resetPassword({
-                resetToken,
+                resetPasswordToken,
                 password,
                 email,
             });

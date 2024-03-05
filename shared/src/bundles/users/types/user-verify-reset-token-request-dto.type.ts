@@ -1,6 +1,6 @@
-type UserVerifyResetTokenRequestDto = {
-    resetToken: string;
+type UserVerifyResetPasswordTokenRequestDto = {
+    resetPasswordToken: string;
     email: string;
 };
 
-export { type UserVerifyResetTokenRequestDto };
+export { type UserVerifyResetPasswordTokenRequestDto };

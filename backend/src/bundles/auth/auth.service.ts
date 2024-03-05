@@ -4,7 +4,7 @@ import {
     type EncryptionDataPayload,
     type UserForgotPasswordRequestDto,
     type UserResetPasswordRequestDto,
-    type UserVerifyResetTokenRequestDto,
+    type UserVerifyResetPasswordTokenRequestDto,
 } from 'shared/build/index.js';
 import {
     AuthException,
@@ -25,7 +25,7 @@ import {
 import { type UserService } from '~/bundles/users/user.service.js';
 import { config } from '~/common/config/config.js';
 
-import { generateResetToken } from './helpers/token/token.js';
+import { generateResetPasswordToken } from './helpers/token/token.js';
 
 class AuthService implements TAuthService {
     private userService: UserService;
@@ -132,11 +132,14 @@ class AuthService implements TAuthService {
         }
     }
 
-    public verifyResetToken<T>(resetToken: string): T {
+    public verifyResetPasswordToken<T>(resetPasswordToken: string): T {
         try {
-            const resetTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
+            const resetPasswordTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
 
-            return verifyToken(resetToken, resetTokenSecret) as T;
+            return verifyToken(
+                resetPasswordToken,
+                resetPasswordTokenSecret,
+            ) as T;
         } catch {
             throw new HttpError({
                 message: ExceptionMessage.INVALID_RESET_TOKEN,
@@ -147,14 +150,14 @@ class AuthService implements TAuthService {
 
     public async tokenEqualsEmail({
         email,
-        resetToken,
-    }: UserVerifyResetTokenRequestDto): ReturnType<
+        resetPasswordToken,
+    }: UserVerifyResetPasswordTokenRequestDto): ReturnType<
         TAuthService['tokenEqualsEmail']
     > {
         const user = await this.userService.findByEmail(email);
 
-        const tokenPayload = this.verifyResetToken<{ email: string }>(
-            resetToken,
+        const tokenPayload = this.verifyResetPasswordToken<{ email: string }>(
+            resetPasswordToken,
         );
 
         if (user?.email !== tokenPayload.email) {
@@ -169,11 +172,11 @@ class AuthService implements TAuthService {
 
     public async resetPassword({
         email,
-        resetToken,
+        resetPasswordToken,
         password,
     }: UserResetPasswordRequestDto): ReturnType<TAuthService['resetPassword']> {
         const user = await this.tokenEqualsEmail({
-            resetToken,
+            resetPasswordToken,
             email,
         });
 
@@ -198,10 +201,10 @@ class AuthService implements TAuthService {
         };
     }
 
-    public async createResetToken({
+    public async createResetPasswordToken({
         email,
     }: UserForgotPasswordRequestDto): ReturnType<
-        TAuthService['createResetToken']
+        TAuthService['createResetPasswordToken']
     > {
         const user = await this.userService.findByEmail(email);
 
@@ -212,7 +215,7 @@ class AuthService implements TAuthService {
             });
         }
 
-        return generateResetToken({ email });
+        return generateResetPasswordToken({ email });
     }
 }
 

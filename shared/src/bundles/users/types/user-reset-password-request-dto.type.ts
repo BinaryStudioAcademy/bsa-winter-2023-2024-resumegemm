@@ -1,7 +1,7 @@
 type UserResetPasswordRequestDto = {
     password: string;
     email: string;
-    resetToken: string;
+    resetPasswordToken: string;
 };
 
 export { type UserResetPasswordRequestDto };

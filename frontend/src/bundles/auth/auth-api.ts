@@ -3,8 +3,8 @@ import {
     type UserForgotPasswordResponse,
     type UserResetPasswordRequestDto,
     type UserResetPasswordResponse,
-    type UserVerifyResetTokenRequestDto,
-    type UserVerifyResetTokenResponse,
+    type UserVerifyResetPasswordTokenRequestDto,
+    type UserVerifyResetPasswordTokenResponse,
 } from 'shared/build/index.js';
 
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
@@ -93,9 +93,9 @@ class AuthApi extends HttpApi {
         return await response.json<UserForgotPasswordResponse>();
     }
 
-    public async verifyResetToken(
-        payload: UserVerifyResetTokenRequestDto,
-    ): Promise<UserVerifyResetTokenResponse> {
+    public async verifyResetPasswordToken(
+        payload: UserVerifyResetPasswordTokenRequestDto,
+    ): Promise<UserVerifyResetPasswordTokenResponse> {
         const response = await this.load(
             this.getFullEndpoint(AuthApiPath.VERIFY_RESET_TOKEN, {}),
             {
@@ -106,7 +106,7 @@ class AuthApi extends HttpApi {
             },
         );
 
-        return await response.json<UserVerifyResetTokenResponse>();
+        return await response.json<UserVerifyResetPasswordTokenResponse>();
     }
 
     public async resetPassword(

@@ -14,8 +14,8 @@ export {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserVerifyResetTokenRequestDto,
-    type UserVerifyResetTokenResponse,
+    type UserVerifyResetPasswordTokenRequestDto,
+    type UserVerifyResetPasswordTokenResponse,
     type UserWithProfileRelation,
 } from './types/types.js';
 export {

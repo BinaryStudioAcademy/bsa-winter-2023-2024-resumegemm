@@ -9,7 +9,8 @@ import {
 const resetPasswordValidatioSchema = joi.object({
     email: emailValidationSchema.extract('email'),
     password: passwordValidationSchema.extract('password'),
-    resetToken: recoveryCodeValidationSchema.extract('resetToken'),
+    resetPasswordToken:
+        recoveryCodeValidationSchema.extract('resetPasswordToken'),
 });
 
 export { resetPasswordValidatioSchema };

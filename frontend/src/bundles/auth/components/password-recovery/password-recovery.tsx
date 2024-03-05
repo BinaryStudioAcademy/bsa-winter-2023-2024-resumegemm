@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import {
     type UserForgotPasswordRequestDto,
-    type UserVerifyResetTokenRequestDto,
+    type UserVerifyResetPasswordTokenRequestDto,
 } from 'shared/build/index.js';
 
 import {
@@ -19,7 +19,7 @@ import { ResetPasswordForm } from './reset-password.js';
 const PasswordRecovery: React.FC = () => {
     const dispatch = useAppDispatch();
     const [searchParameters, setSearchParameters] = useSearchParams();
-    const [resetToken, setResetToken] = useState('');
+    const [resetPasswordToken, setResetPasswordToken] = useState('');
     const [email, setEmail] = useState('');
 
     const currentStage = searchParameters.get('stage');
@@ -41,16 +41,19 @@ const PasswordRecovery: React.FC = () => {
 
     const handleCodeSubmit = useCallback(
         async ({
-            resetToken,
-        }: UserVerifyResetTokenRequestDto): Promise<void> => {
+            resetPasswordToken,
+        }: UserVerifyResetPasswordTokenRequestDto): Promise<void> => {
             const response = await dispatch(
-                authActions.verifyResetToken({ resetToken, email }),
+                authActions.verifyResetPasswordToken({
+                    resetPasswordToken,
+                    email,
+                }),
             );
 
             if (response.meta.requestStatus === 'fulfilled') {
                 setSearchParameters({ stage: RecoveryStage.PASSWORD });
 
-                setResetToken(resetToken);
+                setResetPasswordToken(resetPasswordToken);
             }
         },
         [setSearchParameters, dispatch, email],
@@ -66,7 +69,7 @@ const PasswordRecovery: React.FC = () => {
                 authActions.resetPassword({
                     email,
                     password,
-                    resetToken,
+                    resetPasswordToken,
                 }),
             );
 
@@ -74,7 +77,7 @@ const PasswordRecovery: React.FC = () => {
                 return;
             }
         },
-        [dispatch, resetToken, email],
+        [dispatch, resetPasswordToken, email],
     );
 
     const getCurrentStage = (currentStage: string | null): React.ReactNode => {

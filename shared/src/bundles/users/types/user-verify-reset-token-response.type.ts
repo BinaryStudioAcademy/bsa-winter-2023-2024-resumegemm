@@ -1,8 +1,8 @@
 import { type HttpCode } from '~/framework/http/http';
 
-type UserVerifyResetTokenResponse = {
+type UserVerifyResetPasswordTokenResponse = {
     status: typeof HttpCode.BAD_REQUEST | typeof HttpCode.OK;
     message: string;
 };
 
-export { type UserVerifyResetTokenResponse };
+export { type UserVerifyResetPasswordTokenResponse };

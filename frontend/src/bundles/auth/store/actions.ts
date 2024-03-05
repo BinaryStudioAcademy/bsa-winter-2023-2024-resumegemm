@@ -2,8 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { type UserWithProfileRelation } from 'shared/build/bundles/users/types/user-with-profile-nested-relation.type.js';
 import {
     type UserResetPasswordRequestDto,
-    type UserVerifyResetTokenRequestDto,
-    type UserVerifyResetTokenResponse,
+    type UserVerifyResetPasswordTokenRequestDto,
+    type UserVerifyResetPasswordTokenResponse,
 } from 'shared/build/index.js';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
@@ -52,16 +52,18 @@ const forgotPassword = createAsyncThunk<
     return await authApi.forgotPassword(forgotPasswordPayload);
 });
 
-const verifyResetToken = createAsyncThunk<
-    UserVerifyResetTokenResponse,
-    UserVerifyResetTokenRequestDto,
+const verifyResetPasswordToken = createAsyncThunk<
+    UserVerifyResetPasswordTokenResponse,
+    UserVerifyResetPasswordTokenRequestDto,
     AsyncThunkConfig
 >(
     `${sliceName}/verify-reset-token`,
-    async (verifyResetTokenPayload, { extra }) => {
+    async (verifyResetPasswordTokenPayload, { extra }) => {
         const { authApi } = extra;
 
-        return await authApi.verifyResetToken(verifyResetTokenPayload);
+        return await authApi.verifyResetPasswordToken(
+            verifyResetPasswordTokenPayload,
+        );
     },
 );
 
@@ -97,5 +99,5 @@ export {
     resetPassword,
     signIn,
     signUp,
-    verifyResetToken,
+    verifyResetPasswordToken,
 };

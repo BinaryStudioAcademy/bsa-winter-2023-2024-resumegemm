@@ -5,9 +5,10 @@ import {
     recoveryCodeValidationSchema,
 } from './validation-schemas.js';
 
-const resetTokenValidationSchema = joi.object({
-    resetToken: recoveryCodeValidationSchema.extract('resetToken'),
+const resetPasswordTokenValidationSchema = joi.object({
+    resetPasswordToken:
+        recoveryCodeValidationSchema.extract('resetPasswordToken'),
     email: emailValidationSchema.extract('email'),
 });
 
-export { resetTokenValidationSchema };
+export { resetPasswordTokenValidationSchema };

@@ -2,7 +2,7 @@ import {
     forgotPassword,
     resetPassword,
     signUp,
-    verifyResetToken,
+    verifyResetPasswordToken,
 } from './actions.js';
 import { actions } from './slice.js';
 
@@ -10,7 +10,7 @@ const allActions = {
     ...actions,
     signUp,
     forgotPassword,
-    verifyResetToken,
+    verifyResetPasswordToken,
     resetPassword,
 };
 

@@ -12,7 +12,7 @@ import {
     resetPassword,
     signIn,
     signUp,
-    verifyResetToken,
+    verifyResetPasswordToken,
 } from './actions.js';
 
 type State = {
@@ -52,7 +52,7 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(
             isAnyOf(
-                verifyResetToken.fulfilled,
+                verifyResetPasswordToken.fulfilled,
                 forgotPassword.fulfilled,
                 resetPassword.fulfilled,
             ),
@@ -63,7 +63,7 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(
             isAnyOf(
-                verifyResetToken.rejected,
+                verifyResetPasswordToken.rejected,
                 forgotPassword.rejected,
                 resetPassword.rejected,
             ),

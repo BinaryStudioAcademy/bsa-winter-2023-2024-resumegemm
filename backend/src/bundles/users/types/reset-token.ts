@@ -1,5 +1,5 @@
-type ResetToken = {
+type ResetPasswordToken = {
     id: string;
 };
 
-export { type ResetToken };
+export { type ResetPasswordToken };

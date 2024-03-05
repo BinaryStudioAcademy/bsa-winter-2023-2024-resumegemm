@@ -1,13 +1,13 @@
 import joi from 'joi';
 
 import { RecoveryCodeValidationMessage } from '../enums/recovery-code.validation-message.js';
-import { type UserVerifyResetTokenRequestDto } from '../users.js';
+import { type UserVerifyResetPasswordTokenRequestDto } from '../users.js';
 
 const recoveryCodeValidationSchema = joi.object<
-    Omit<UserVerifyResetTokenRequestDto, 'email'>,
+    Omit<UserVerifyResetPasswordTokenRequestDto, 'email'>,
     true
 >({
-    resetToken: joi.string().trim().required().messages({
+    resetPasswordToken: joi.string().trim().required().messages({
         'string.empty': RecoveryCodeValidationMessage.RECOVERY_CODE_REQUIRE,
     }),
 });

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import { config } from '~/common/config/config.js';
 
-const generateResetToken = <T extends object>(data: T): string => {
+const generateResetPasswordToken = <T extends object>(data: T): string => {
     const {
         JWT: { RESET_TOKEN_SECRET, RESET_TOKEN_EXPIRES_IN },
     } = config.ENV;
@@ -12,4 +12,4 @@ const generateResetToken = <T extends object>(data: T): string => {
     });
 };
 
-export { generateResetToken };
+export { generateResetPasswordToken };

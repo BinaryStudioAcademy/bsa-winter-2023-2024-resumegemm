@@ -1,10 +1,10 @@
-import { type UserVerifyResetTokenRequestDto } from 'shared/build/index.js';
+import { type UserVerifyResetPasswordTokenRequestDto } from 'shared/build/index.js';
 
-const DEFAULT_RESET_TOKEN_PAYLOAD: Omit<
-    UserVerifyResetTokenRequestDto,
+const DEFAULT_RESET_PASSWORD_TOKEN_PAYLOAD: Omit<
+    UserVerifyResetPasswordTokenRequestDto,
     'email'
 > = {
-    resetToken: '',
+    resetPasswordToken: '',
 } as const;
 
-export { DEFAULT_RESET_TOKEN_PAYLOAD };
+export { DEFAULT_RESET_PASSWORD_TOKEN_PAYLOAD };
