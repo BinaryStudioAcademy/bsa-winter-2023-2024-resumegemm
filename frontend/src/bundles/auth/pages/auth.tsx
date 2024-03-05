@@ -1,8 +1,10 @@
 import { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
+    useAppSelector,
     useCallback,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
@@ -19,6 +21,10 @@ import styles from './styles.module.scss';
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
     const { showToast } = useContext(ToastContext);
+
+    const { user } = useAppSelector(({ auth }) => ({
+        user: auth.user,
+    }));
 
     const { pathname } = useLocation();
 
@@ -54,7 +60,9 @@ const Auth: React.FC = () => {
         return null;
     };
 
-    return (
+    return user ? (
+        <Navigate to={AppRoute.HOME} />
+    ) : (
         <div className={styles.auth}>
             <div className={styles.auth__container}>
                 <section className={styles['auth__logo-container']}>

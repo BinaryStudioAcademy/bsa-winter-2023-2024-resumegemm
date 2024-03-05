@@ -14,6 +14,7 @@ enum DatabaseTableName {
     REVIEWS = 'reviews',
     RECENTLY_VIEWED = 'recently_viewed',
     EMAIL_SUBSCRIPTIONS = 'email_subscriptions',
+    SUBSCRIPTION_PLANS = 'subscription_plans',
     CERTIFICATION = 'certification',
     LANGUAGES = 'languages',
     CUSTOM_SECTIONS = 'custom_sections',
