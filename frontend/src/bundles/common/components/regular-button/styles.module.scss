@@ -14,18 +14,18 @@
     min-height: 16px;
     margin: 0;
     padding: 8px 24px;
-    font-size: 16px;
+    font-size: var(--font-size-title-h5);
     line-height: 24px;
     text-align: center;
     text-decoration: none;
     vertical-align: baseline;
-    border: 1px solid #000000;
+    border: 1px solid var(--color-black);
     border-radius: 12px;
     cursor: pointer;
 }
 
 .button__regular:hover {
-    color: #3b3a3a;
+    color: var(--color-button-hover);
 }
 
 .button__regular:disabled {
@@ -37,7 +37,7 @@
     gap: 4px;
     height: 32px;
     padding: 4px 16px;
-    font-size: 14px;
+    font-size: var(--font-size-main-text);
     line-height: 20px;
 }
 
@@ -48,54 +48,54 @@
 }
 
 .button__primary {
-    color: #ffffff;
-    font-weight: 600;
-    background-color: #687a9c;
+    color: var(--color-white);
+    font-weight: var(--font-weight-title);
+    background-color: var(--color-background-dark-blue);
     border: none;
     border-radius: 52px;
 }
 
 .button__primary:hover {
-    color: #ffffff;
-    background-color: #3f557e;
+    color: var(--color-white);
+    background-color: var(--color-hover-blue);
 }
 
 .button__primary:disabled {
-    background-color: #ccd7dc;
+    background-color: var(--color-disabled-gray);
 }
 
 .button__outlined {
-    color: #687a9c;
-    font-weight: 600;
+    color: var(--color-background-dark-blue);
+    font-weight: var(--font-weight-title);
     background-color: transparent;
-    border: 1px solid #687a9c;
+    border: 1px solid var(--color-background-dark-blue);
     border-radius: 52px;
 }
 
 .button__outlined:hover {
-    color: #3f557e;
-    border: 1px solid #3f557e;
+    color: var(--color-background-blue);
+    border: 1px solid var(--color-background-blue);
 }
 
 .button__outlined:disabled {
-    color: #ffffff;
-    background-color: #ccd7dc;
+    color: var(--color-white);
+    background-color: var(--color-disabled-gray);
     border: none;
 }
 
 .button__ghost {
-    color: #687a9c;
-    font-weight: 600;
+    color: var(--color-background-dark-blue);
+    font-weight: var(--font-weight-title);
     background-color: transparent;
     border: none;
 }
 
 .button__ghost:hover {
-    color: #3f557e;
+    color: var(--color-background-blue);
 }
 
 .button__ghost:disabled {
-    color: #ccd7dc;
+    color: var(--color-disabled-gray);
 }
 
 .button__orange,
@@ -104,9 +104,9 @@
     width: 48px;
     height: 48px;
     padding: 0;
-    color: #ffffff;
+    color: var(--color-white);
     line-height: 50px;
-    background: #dbae2d;
+    background: var(--color-accent-dark-yellow);
     border: none;
     border-radius: 9px;
     outline: none;
