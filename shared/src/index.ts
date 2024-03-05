@@ -87,6 +87,7 @@ export {
     type LayoutContainer,
     type LayoutItem,
     type TemplateCreateItemRequestDto,
+    type TemplateDto,
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateSettings,
