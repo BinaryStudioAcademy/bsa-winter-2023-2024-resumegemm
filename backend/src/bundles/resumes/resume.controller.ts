@@ -3,26 +3,26 @@ import { type IdParameter, HttpError, ResumesApiPath } from 'shared/build';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
-} from '~/common/controller/controller';
-import { Controller } from '~/common/controller/controller';
-import { ApiPath } from '~/common/enums/enums';
-import { HttpCode } from '~/common/http/http';
-import { type ILogger } from '~/common/logger/logger';
+} from '~/common/controller/controller.js';
+import { Controller } from '~/common/controller/controller.js';
+import { ApiPath } from '~/common/enums/enums.js';
+import { HttpCode } from '~/common/http/http.js';
+import { type ILogger } from '~/common/logger/logger.js';
 
 import { type IResumeService } from './interfaces/interfaces.js';
 import {
-    type Resume,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
     type ResumeCreateItemRequestDto,
     type ResumeGetAllResponseDto,
+    type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
 } from './types/types.js';
 
 class ResumeController extends Controller {
-    private resumeService: IResumeService<Resume>;
+    private resumeService: IResumeService;
 
-    public constructor(logger: ILogger, resumeService: IResumeService<Resume>) {
+    public constructor(logger: ILogger, resumeService: IResumeService) {
         super(logger, ApiPath.RESUMES);
 
         this.resumeService = resumeService;
@@ -38,26 +38,17 @@ class ResumeController extends Controller {
                 ),
         });
         this.addRoute({
-            path: ResumesApiPath.ID,
-            method: 'GET',
-            handler: (options) =>
-                this.findById(
-                    options as ApiHandlerOptions<{ params: IdParameter }>,
-                ),
-        });
-        this.addRoute({
             path: ResumesApiPath.ROOT,
             method: 'GET',
             handler: () => this.findAll(),
         });
+
         this.addRoute({
-            path: ResumesApiPath.USER_ID,
+            path: ResumesApiPath.ID,
             method: 'GET',
             handler: (options) =>
-                this.findAllByUserId(
-                    options as ApiHandlerOptions<{
-                        params: { userId: string };
-                    }>,
+                this.findByIdWithRelations(
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
         this.addRoute({
@@ -79,6 +70,18 @@ class ResumeController extends Controller {
                     }>,
                 ),
         });
+
+        this.addRoute({
+            path: ResumesApiPath.USER_ID,
+            method: 'GET',
+            handler: (options) =>
+                this.findAllByUserId(
+                    options as ApiHandlerOptions<{
+                        params: { userId: string };
+                    }>,
+                ),
+        });
+
         this.addRoute({
             path: ResumesApiPath.SCORE,
             method: 'POST',
@@ -95,29 +98,11 @@ class ResumeController extends Controller {
         options: ApiHandlerOptions<{
             body: ResumeCreateItemRequestDto;
         }>,
-    ): Promise<ApiHandlerResponse<Resume>> {
+    ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
         const resume = await this.resumeService.create(options.body);
 
         return {
             status: HttpCode.CREATED,
-            payload: resume,
-        };
-    }
-
-    private async findById(
-        options: ApiHandlerOptions<{ params: IdParameter }>,
-    ): Promise<ApiHandlerResponse<Resume>> {
-        const resume = await this.resumeService.find(options.params.id);
-
-        if (!resume) {
-            throw new HttpError({
-                status: HttpCode.BAD_REQUEST,
-                message: `Resume with id ${options.params.id} not found`,
-            });
-        }
-
-        return {
-            status: HttpCode.OK,
             payload: resume,
         };
     }
@@ -133,16 +118,23 @@ class ResumeController extends Controller {
         };
     }
 
-    private async findAllByUserId(
-        options: ApiHandlerOptions<{ params: { userId: string } }>,
-    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto>> {
-        const resumes = await this.resumeService.findAllByUserId(
-            options.params.userId,
+    private async findByIdWithRelations(
+        options: ApiHandlerOptions<{ params: IdParameter }>,
+    ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
+        const resume = await this.resumeService.findWithRelations(
+            options.params.id,
         );
+
+        if (!resume) {
+            throw new HttpError({
+                status: HttpCode.BAD_REQUEST,
+                message: `Resume with id ${options.params.id} not found`,
+            });
+        }
 
         return {
             status: HttpCode.OK,
-            payload: resumes,
+            payload: resume,
         };
     }
 
@@ -162,7 +154,7 @@ class ResumeController extends Controller {
             params: IdParameter;
             body: ResumeUpdateItemRequestDto;
         }>,
-    ): Promise<ApiHandlerResponse<Resume>> {
+    ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
         const resume = await this.resumeService.find(options.params.id);
 
         if (!resume) {
@@ -180,6 +172,19 @@ class ResumeController extends Controller {
         return {
             status: HttpCode.OK,
             payload: newResume,
+        };
+    }
+
+    private async findAllByUserId(
+        options: ApiHandlerOptions<{ params: { userId: string } }>,
+    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto>> {
+        const resumes = await this.resumeService.findAllByUserId(
+            options.params.userId,
+        );
+
+        return {
+            status: HttpCode.OK,
+            payload: resumes,
         };
     }
 

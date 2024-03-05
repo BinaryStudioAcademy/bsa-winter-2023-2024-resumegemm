@@ -38,7 +38,9 @@ export {
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
 export {
+    type Certification,
     type Contacts,
+    type CustomSection,
     type Education,
     type Experience,
     type PersonalInformation,
@@ -51,9 +53,9 @@ export {
     type ResumeGetAllResponseDto,
     type ResumeGetItemRequestDto,
     type ResumeGetItemResponseDto,
-    type ResumeService,
     type ResumeUpdateItemRequestDto,
     type TechnicalSkill,
+    LanguageLevels,
     ResumesApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';

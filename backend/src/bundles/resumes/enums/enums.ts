@@ -1,1 +1,1 @@
-export { ResumesApiPath } from 'shared/build/index.js';
+export { ResumesApiPath } from 'shared/build';

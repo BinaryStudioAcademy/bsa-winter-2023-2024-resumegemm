@@ -1,24 +1,35 @@
 import {
+    type Resume,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
     type ResumeCreateItemRequestDto,
+    type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
-} from 'shared/build';
+} from 'shared/build/index.js';
 
-interface IResumeService<T> {
-    find(id: string): Promise<T | undefined>;
+interface IResumeService {
+    find(id: string): Promise<Resume | undefined>;
+
+    findWithRelations(
+        id: string,
+    ): Promise<ResumeGetItemResponseDto | undefined>;
 
     findAll(): Promise<{
-        resumes: T[];
+        resumes: ResumeGetItemResponseDto[];
     }>;
 
     findAllByUserId(userId: string): Promise<{
-        resumes: T[];
+        resumes: ResumeGetItemResponseDto[];
     }>;
 
-    create(payload: ResumeCreateItemRequestDto): Promise<T>;
+    create(
+        payload: ResumeCreateItemRequestDto,
+    ): Promise<ResumeGetItemResponseDto>;
 
-    update(id: string, data: ResumeUpdateItemRequestDto): Promise<T>;
+    update(
+        id: string,
+        data: ResumeUpdateItemRequestDto,
+    ): Promise<ResumeGetItemResponseDto>;
 
     delete(id: string): Promise<boolean>;
 

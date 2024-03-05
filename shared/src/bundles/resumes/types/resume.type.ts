@@ -4,7 +4,7 @@ type Resume = {
     image: string;
     createdAt: string;
     updatedAt?: string;
-    deletedAt?: string;
+    deletedAt: string | null;
     userId: string;
     templateId: string;
 };

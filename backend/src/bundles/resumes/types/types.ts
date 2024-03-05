@@ -4,16 +4,15 @@ export {
     type Experience,
     type PersonalInformation,
     type Resume,
-    type ResumeAiScoreRequestDto,
-    type ResumeAiScoreResponseDto,
     type ResumeCreateItemRequestDto,
     type ResumeGetAllRequestDto,
     type ResumeGetAllResponseDto,
     type ResumeGetItemRequestDto,
     type ResumeGetItemResponseDto,
-    type ResumeService,
     type ResumeUpdateItemRequestDto,
     type TechnicalSkill,
     ResumesApiPath,
     SkillLevel,
 } from 'shared/build/index.js';
+export { type ResumeAiScoreResponseDto } from 'shared/build/index.js';
+export { type ResumeAiScoreRequestDto } from 'shared/build/index.js';

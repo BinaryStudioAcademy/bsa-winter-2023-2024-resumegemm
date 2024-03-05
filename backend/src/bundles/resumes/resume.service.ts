@@ -1,19 +1,21 @@
+import {
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
+    type ResumeCreateItemRequestDto,
+    type ResumeGetAllResponseDto,
+    type ResumeGetItemResponseDto,
+    type ResumeUpdateItemRequestDto,
+} from 'shared/build/index.js';
+
 import { Prompts } from '../open-ai/open-ai.js';
 import { type OpenAIService } from '../open-ai/open-ai.service.js';
 import {
     type IResumeRepository,
     type IResumeService,
 } from './interfaces/interfaces.js';
-import {
-    type Resume,
-    type ResumeAiScoreRequestDto,
-    type ResumeAiScoreResponseDto,
-    type ResumeCreateItemRequestDto,
-    type ResumeGetAllResponseDto,
-    type ResumeUpdateItemRequestDto,
-} from './types/types.js';
+import { type Resume } from './types/types.js';
 
-class ResumeService implements IResumeService<Resume> {
+class ResumeService implements IResumeService {
     private resumeRepository: IResumeRepository;
     private openAIService: OpenAIService;
 
@@ -21,12 +23,18 @@ class ResumeService implements IResumeService<Resume> {
         resumeRepository: IResumeRepository,
         openAIService: OpenAIService,
     ) {
-        this.openAIService = openAIService;
         this.resumeRepository = resumeRepository;
+        this.openAIService = openAIService;
     }
 
     public async find(id: string): Promise<Resume | undefined> {
         return await this.resumeRepository.find(id);
+    }
+
+    public async findWithRelations(
+        id: string,
+    ): Promise<ResumeGetItemResponseDto | undefined> {
+        return await this.resumeRepository.findWithRelations(id);
     }
 
     public async findAll(): Promise<ResumeGetAllResponseDto> {
@@ -39,14 +47,16 @@ class ResumeService implements IResumeService<Resume> {
         return await this.resumeRepository.findAllByUserId(userId);
     }
 
-    public async create(payload: ResumeCreateItemRequestDto): Promise<Resume> {
+    public async create(
+        payload: ResumeCreateItemRequestDto,
+    ): Promise<ResumeGetItemResponseDto> {
         return await this.resumeRepository.create(payload);
     }
 
     public async update(
         id: string,
         data: ResumeUpdateItemRequestDto,
-    ): Promise<Resume> {
+    ): Promise<ResumeGetItemResponseDto> {
         return await this.resumeRepository.update(id, data);
     }
 

@@ -1,3 +1,6 @@
+import { type RelationMappings, Model } from 'objection';
+
+import { ResumeModel } from '~/bundles/resumes/resumes.js';
 import {
     AbstractModel,
     DatabaseTableName,
@@ -5,13 +8,30 @@ import {
 
 class EducationModel extends AbstractModel {
     public 'resumeId': string;
-    public 'major': string;
+    public 'institution': string;
     public 'degree': string;
     public 'startDate': string;
     public 'endDate'?: string;
+    public 'isStudying': boolean;
+    public 'city': string;
+    public 'country': string;
+    public 'description': string;
 
     public static override get tableName(): typeof DatabaseTableName.EDUCATION {
         return DatabaseTableName.EDUCATION;
+    }
+
+    public static getRelationMappings(): RelationMappings {
+        return {
+            resume: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: ResumeModel,
+                join: {
+                    from: `${DatabaseTableName.EDUCATION}.resumeId`,
+                    to: `${DatabaseTableName.RESUMES}.id`,
+                },
+            },
+        };
     }
 }
 

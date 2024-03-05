@@ -3,7 +3,7 @@
     flex-direction: column;
     margin-bottom: 4.95px;
     padding: 9.9px;
-    border: 1px solid #eceef3;
+    border: 1px solid var(--color-border-gray);
     border-radius: 8.25px;
 }
 
@@ -14,12 +14,12 @@
     align-items: center;
     margin-bottom: 8.25px;
     padding-bottom: 7.3px;
-    border-bottom: 0.83px dashed #eceef3;
+    border-bottom: 0.83px dashed var(--color-border-gray);
 }
 
 .section__header_title {
-    color: #36394a;
-    font-weight: 500;
+    color: var(--color-text-dark-blue);
+    font-weight: var(--font-weight-subtitle);
     font-size: 8.25px;
     line-height: 13.2px;
 }
@@ -45,8 +45,8 @@ ul.section_description__list li {
 
 .experience__info_position {
     margin-bottom: 1.65px;
-    color: #36394a;
-    font-weight: 400;
+    color: var(--color-text-dark-blue);
+    font-weight: var(--font-weight-text);
     font-size: 9.9px;
     line-height: 13.2px;
 }
@@ -57,19 +57,19 @@ ul.section_description__list li {
     gap: 4.95px;
     height: 10px;
     margin-bottom: 1.65px;
-    color: #36394a;
-    font-weight: 400;
+    color: var(--color-text-dark-blue);
+    font-weight: var(--font-weight-text);
     font-size: 6.6px;
     line-height: 9.9px;
 }
 
 .experience__info_work_period {
-    color: #818898;
+    color: var(--color-text-recommendation);
 }
 
 .experience__info_work_location {
     margin-bottom: 1.65px;
-    color: #666d80;
+    color: var(--color-text-experience);
 }
 
 .section_body__item_recommendation {
@@ -78,6 +78,6 @@ ul.section_description__list li {
     height: 64.56px;
     padding: 4.95px;
     overflow: hidden;
-    border: 0.83px solid #eceff3;
+    border: 0.83px solid var(--color-border-light-gray);
     border-radius: 6.6px;
 }

@@ -1,10 +1,14 @@
 type Education = {
     id: string;
     resumeId: string;
-    majorName: string;
+    institution: string;
     degree: string;
     startDate: string;
-    endDate: string;
+    endDate?: string;
+    isStudying: boolean;
+    city: string;
+    country: string;
+    description: string;
     createdAt: string;
     updatedAt: string;
 };
