@@ -6,10 +6,10 @@
 
 a.tab__item {
     padding: 5px 20px;
-    color: #848d96;
-    font-weight: 500;
-    font-size: 16px;
-    font-family: Poppins, sans-serif;
+    color: var(--color-text-gray);
+    font-weight: var(--font-weight-subtitle);
+    font-size: var(--font-size-subtitle);
+    font-family: var(--font-family-main);
     line-height: 24px;
     border: none;
     border-radius: 34px;
@@ -17,6 +17,6 @@ a.tab__item {
 }
 
 a.active {
-    color: #434c66;
-    background-color: #fdf3d3;
+    color: var(--color-text-blue);
+    background-color: var(--color-accent-light-yellow);
 }

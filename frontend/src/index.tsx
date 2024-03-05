@@ -19,7 +19,6 @@ import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
 import { EmailSubscriptionPage } from './bundles/email-subscription/pages/email-subscription-page';
-import { Home } from './bundles/home/pages/home';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';

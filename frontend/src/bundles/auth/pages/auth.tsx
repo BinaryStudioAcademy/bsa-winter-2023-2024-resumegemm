@@ -1,18 +1,24 @@
+import { useContext } from 'react';
+
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useCallback,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
+import { ToastContext } from '~/bundles/toast/context/toast-context.js';
+import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
 import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
 import { type UserSignUpRequestDtoFrontend } from '../components/sign-up-form/validation/sign-up-validation.js';
+import { signUp } from '../store/actions.js';
 import { actions as authActions } from '../store/index';
 import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
+    const { showToast } = useContext(ToastContext);
 
     const { pathname } = useLocation();
 
@@ -26,9 +32,13 @@ const Auth: React.FC = () => {
     const handleSignUpSubmit = useCallback(
         (payload: UserSignUpRequestDtoFrontend): void => {
             delete payload.confirm_password;
-            void dispatch(authActions.signUp(payload));
+            void dispatch(signUp(payload))
+                .unwrap()
+                .catch((error: Error) => {
+                    showToast(error.message, ToastType.ERROR);
+                });
         },
-        [dispatch],
+        [dispatch, showToast],
     );
 
     const getScreen = (screen: string): React.ReactNode => {
