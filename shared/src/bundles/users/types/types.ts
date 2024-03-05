@@ -8,4 +8,5 @@ export { type UserSignInRequestDto } from './user-sign-in-request-dto.type.js';
 export { type UserSignInResponseDto } from './user-sign-in-response-dto.type.js';
 export { type UserSignUpRequestDto } from './user-sign-up-request-dto.type.js';
 export { type UserSignUpResponseDto } from './user-sign-up-response-dto.type.js';
+export { type UpdateUserProfileAndEmailRequestDto } from './user-update-profile-and-email-request-dto.type.js';
 export { type UserWithProfileRelationAndOauthConnections } from './user-with-profile-and-oauth-connections.type';
