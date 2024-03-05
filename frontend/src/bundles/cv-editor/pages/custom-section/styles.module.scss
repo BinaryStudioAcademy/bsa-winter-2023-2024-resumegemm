@@ -1,0 +1,31 @@
+.custom__section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.custom__section__textarea {
+    min-height: 200px;
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: var(--color-input-field-gray);
+    border: none;
+    border-radius: 3px;
+}
+
+.custom__section__textarea:focus {
+    color: var(--color-text-black);
+    border: 1px solid var(--color-background-light-blue);
+    outline: none;
+}
+
+.custom__section__activity {
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom__section__date {
+    display: flex;
+    justify-content: flex-start;
+}

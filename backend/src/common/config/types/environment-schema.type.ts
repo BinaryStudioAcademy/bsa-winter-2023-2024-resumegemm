@@ -18,6 +18,14 @@ type EnvironmentSchema = {
             CLIENT_GITHUB_ID: string;
             CLIENT_GITHUB_SECRET: string;
         };
+        GOOGLE: {
+            CLIENT_GOOGLE_ID: string;
+            CLIENT_GOOGLE_SECRET: string;
+        };
+        FACEBOOK: {
+            CLIENT_FACEBOOK_ID: string;
+            CLIENT_FACEBOOK_SECRET: string;
+        };
         BASE_CALLBACK_URI: string;
     };
     COOKIE: {
@@ -33,9 +41,16 @@ type EnvironmentSchema = {
     STRIPE: {
         STRIPE_SECRET_KEY: string;
         STRIPE_PUBLISHABLE_KEY: string;
+        STRIPE_WEBHOOK_SECRET: string;
     };
     OPEN_AI: {
         API_KEY: string;
+    };
+    AWS: {
+        REGION: string;
+        SECRET_ACCESS_KEY: string;
+        ACCESS_KEY: string;
+        BUCKET_NAME: string;
     };
 };
 

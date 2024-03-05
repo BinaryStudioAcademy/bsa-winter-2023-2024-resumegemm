@@ -6,5 +6,6 @@ build
 .idea
 # misc
 .DS_Store
+.vscode
 .env
 .vscode/

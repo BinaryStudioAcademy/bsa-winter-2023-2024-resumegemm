@@ -80,6 +80,34 @@ class Config implements IConfig {
                         default: null,
                     },
                 },
+                GOOGLE: {
+                    CLIENT_GOOGLE_ID: {
+                        doc: 'Google secret for client id',
+                        format: String,
+                        env: 'CLIENT_GOOGLE_ID',
+                        default: null,
+                    },
+                    CLIENT_GOOGLE_SECRET: {
+                        doc: 'Google client secret',
+                        format: String,
+                        env: 'CLIENT_GOOGLE_SECRET',
+                        default: null,
+                    },
+                },
+                FACEBOOK: {
+                    CLIENT_FACEBOOK_ID: {
+                        doc: 'Facebook app id',
+                        format: String,
+                        env: 'CLIENT_FACEBOOK_ID',
+                        default: null,
+                    },
+                    CLIENT_FACEBOOK_SECRET: {
+                        doc: 'Facebook client secret',
+                        format: String,
+                        env: 'CLIENT_FACEBOOK_SECRET',
+                        default: null,
+                    },
+                },
                 BASE_CALLBACK_URI: {
                     doc: 'Secret key for callback url',
                     format: String,
@@ -135,12 +163,44 @@ class Config implements IConfig {
                     env: 'STRIPE_PUBLISHABLE_KEY',
                     default: null,
                 },
+                STRIPE_WEBHOOK_SECRET: {
+                    doc: 'Stripe webhook secret',
+                    format: String,
+                    env: 'STRIPE_WEBHOOK_SECRET',
+                    default: null,
+                },
             },
             OPEN_AI: {
                 API_KEY: {
                     doc: 'OpenAI API key',
                     format: String,
                     env: 'OPEN_AI_API_KEY',
+                    default: null,
+                },
+            },
+            AWS: {
+                REGION: {
+                    doc: 'AWS region string',
+                    format: String,
+                    env: 'AWS_REGION',
+                    default: null,
+                },
+                SECRET_ACCESS_KEY: {
+                    doc: 'AWS secret key string',
+                    format: String,
+                    env: 'AWS_SECRET_ACCESS_KEY',
+                    default: null,
+                },
+                ACCESS_KEY: {
+                    doc: 'AWS access key string',
+                    format: String,
+                    env: 'AWS_ACCESS_KEY',
+                    default: null,
+                },
+                BUCKET_NAME: {
+                    doc: 'AWS bucket name string',
+                    format: String,
+                    env: 'AWS_BUCKET_NAME',
                     default: null,
                 },
             },

@@ -1,4 +1,4 @@
-import { type UserGithubLoginResponseDto } from 'shared/build/index.js';
+import { type OauthUserLoginResponseDto } from 'shared/build/index.js';
 
 import { type OauthModel } from '~/bundles/oauth/oauth.model.js';
 import { AbstractRepository } from '~/common/database/abstract.repository.js';
@@ -6,13 +6,13 @@ import { AbstractRepository } from '~/common/database/abstract.repository.js';
 import { type OauthUserEntityFields } from './types/types.js';
 
 type TOauthRepository = {
-    findByOauthId(oauthId: number): Promise<OauthUserEntityFields | null>;
+    findByOauthId(oauthId: string): Promise<OauthUserEntityFields | null>;
 };
 
 class OauthRepository
     extends AbstractRepository<
         typeof OauthModel,
-        UserGithubLoginResponseDto | OauthUserEntityFields
+        OauthUserLoginResponseDto | OauthUserEntityFields
     >
     implements TOauthRepository
 {
@@ -23,7 +23,7 @@ class OauthRepository
     }
 
     public async findByOauthId(
-        oauthId: number,
+        oauthId: string,
     ): ReturnType<TOauthRepository['findByOauthId']> {
         const foundUser = await this.model
             .query()

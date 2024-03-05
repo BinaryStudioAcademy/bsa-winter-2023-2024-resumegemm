@@ -31,10 +31,10 @@ h6 {
     max-width: 491px;
     margin: 0 auto;
     padding: 29.71px 40.85px;
-    color: #36394a;
+    color: var(--color-text-dark-blue);
     font-size: 6.6px;
     font-family: Inter, sans-serif;
-    border: 1px solid #687a9c;
+    border: 1px solid var(--color-background-dark-blue);
     border-radius: 20px;
 }
 
