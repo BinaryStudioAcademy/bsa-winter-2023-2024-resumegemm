@@ -37,26 +37,18 @@ import {
 type Constructor = {
     logger: ILogger;
     oauthService: OauthService;
-    authService: AuthService;
     httpService: HttpApi;
 };
 
 class OpenAuthController extends Controller {
     private oauthService: OauthService;
     private httpService: HttpApi;
-    private authService: AuthService;
 
-    public constructor({
-        logger,
-        oauthService,
-        authService,
-        httpService,
-    }: Constructor) {
+    public constructor({ logger, oauthService, httpService }: Constructor) {
         super(logger, ApiPath.OPEN_AUTH);
 
         this.oauthService = oauthService;
         this.httpService = httpService;
-        this.authService = authService;
 
         this.addRoute({
             path: OpenAuthApiPath.GITHUB,
@@ -157,7 +149,7 @@ class OpenAuthController extends Controller {
             oauthToken,
         );
         return await this.createUser({
-            email: email ?? null,
+            email,
             firstName: name,
             avatar: url,
             oauthId: id,
@@ -187,7 +179,7 @@ class OpenAuthController extends Controller {
             );
 
         return await this.createUser({
-            email: email ?? null,
+            email,
             firstName: name,
             lastName: null,
             avatar: avatar_url,
@@ -220,7 +212,7 @@ class OpenAuthController extends Controller {
             oauthToken,
         );
         return await this.createUser({
-            email: email ?? null,
+            email,
             firstName: given_name,
             lastName: family_name,
             avatar: picture,

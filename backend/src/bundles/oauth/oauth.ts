@@ -10,10 +10,10 @@ const openAuthRepository = new OauthRepository({
     oauthModel: OauthModel,
 });
 const openAuthService = new OauthService(openAuthRepository, userService);
-const openAuthController = new OpenAuthController(
+const openAuthController = new OpenAuthController({
     logger,
-    openAuthService,
-    httpApi,
-);
+    oauthService: openAuthService,
+    httpService: httpApi,
+});
 
 export { openAuthController, openAuthRepository, openAuthService };

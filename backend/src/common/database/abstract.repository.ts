@@ -17,7 +17,7 @@ class AbstractRepository<T extends typeof AbstractModel, K>
         return this.modelInstance;
     }
 
-    public getById(id: string): Promise<K> {
+    public getById(id: string): Promise<K | null> {
         return this.modelInstance.query().findById(id).castTo<K>().execute();
     }
 
