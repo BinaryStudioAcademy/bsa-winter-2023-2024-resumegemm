@@ -46,6 +46,7 @@ export {
 } from './bundles/resumes/resumes.js';
 export {
     type TemplateCreateItemRequestDto,
+    type TemplateDto,
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
