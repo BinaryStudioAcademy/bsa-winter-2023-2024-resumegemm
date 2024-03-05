@@ -1,6 +1,7 @@
 import {
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedTemplatesResponseDto,
 } from './types';
 
 type IRecentlyViewedRepository = {
@@ -16,7 +17,7 @@ type IRecentlyViewedRepository = {
     findRecentlyViewedTemplatesByUser(data: {
         userId: string;
         limit: number;
-    }): Promise<RecentlyViewedResponseDto[]>;
+    }): Promise<RecentlyViewedTemplatesResponseDto[]>;
 
     create(
         userId: string,
