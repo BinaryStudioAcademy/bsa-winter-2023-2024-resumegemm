@@ -41,7 +41,7 @@ class SubscriptionPlanRepository implements ISubscriptionPlanRepository {
             .query()
             .where({ stripePlanId })
             .delete();
-        return !!response;
+        return Boolean(response);
     }
 }
 
