@@ -103,6 +103,7 @@ class Controller implements IController {
     ): ApiHandlerOptions {
         const {
             body,
+            rawBody,
             query,
             params,
             user,
@@ -114,6 +115,7 @@ class Controller implements IController {
         const unsignCookie = request.unsignCookie.bind(request);
         return {
             body,
+            rawBody,
             query,
             params,
             user,

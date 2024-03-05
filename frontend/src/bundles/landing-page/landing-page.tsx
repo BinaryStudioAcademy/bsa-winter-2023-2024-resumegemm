@@ -8,11 +8,7 @@ import Arrow2 from '~/assets/img/arrow.png';
 import GettingStarted from '~/assets/img/get-started.png';
 import OnlineEditorFeatureImage from '~/assets/img/mock-resume-designer.png';
 import templateFirstImage from '~/assets/img/resume-template.png';
-import {
-    ButtonSize,
-    ButtonVariant,
-    ButtonWidth,
-} from '~/bundles/common/enums/enums';
+import { ButtonSize, ButtonVariant } from '~/bundles/common/enums/enums';
 
 import { getUser } from '../auth/store/actions';
 import { Header, RegularButton } from '../common/components/components';

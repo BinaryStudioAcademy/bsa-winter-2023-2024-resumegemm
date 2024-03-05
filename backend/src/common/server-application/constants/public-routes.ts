@@ -6,6 +6,7 @@ import {
     PDFApiPath,
     RecentlyViewedApiPath,
     ResumesApiPath,
+    StripeEventsApiPath,
 } from 'shared/build/index.js';
 
 const API_PREFIX = '/api/v1';
@@ -36,7 +37,8 @@ const publicRoutes = {
     [`${PaymentApiPath.PRICES}`]: `${API_PREFIX}${ApiPath.PAYMENT}${PaymentApiPath.PRICES}`,
     [`${PaymentApiPath.CONFIG}`]: `${API_PREFIX}${ApiPath.PAYMENT}${PaymentApiPath.CONFIG}`,
     [`${PaymentApiPath.CREATE_SUBSCRIPTION}`]: `${API_PREFIX}${ApiPath.PAYMENT}${PaymentApiPath.CREATE_SUBSCRIPTION}`,
+    [`${StripeEventsApiPath.WEBHOOKS}`]: `${API_PREFIX}${ApiPath.WEBHOOKS}`,
     [`${PDFApiPath.GENERATE}`]: `${API_PREFIX}${ApiPath.PDF}${PDFApiPath.GENERATE}`,
 };
 
-export { publicRoutes };
+export { API_PREFIX, publicRoutes };
