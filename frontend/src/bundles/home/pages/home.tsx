@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
 
 import mockResume from '~/assets/img/mock-resume.png';
-import { AppRoute } from '~/bundles/common/enums/app-route.enum';
-import { useLoadTemplates } from '~/bundles/common/hooks/use-load-templates/use-load-templates.hook';
 import {
     CreateNewCard,
     CreateResumeButton,
     Greeting,
     HomeTopSection,
+    RecentlyViewedTemplates,
     ResumeCard,
     ResumeSection,
     TemplateSection,
@@ -16,8 +15,6 @@ import {
 import styles from './styles.module.scss';
 
 const Home: React.FC = () => {
-    const { templates } = useLoadTemplates();
-
     return (
         <div className={styles.layout}>
             <HomeTopSection>
@@ -40,20 +37,7 @@ const Home: React.FC = () => {
                 />
             </ResumeSection>
             <TemplateSection name="Templates">
-                {templates.length > 0 &&
-                    templates.map((template) => {
-                        return (
-                            <Link
-                                to={`${AppRoute.TEMPLATE}/${template.id}`}
-                                key={template.id}
-                            >
-                                <ResumeCard
-                                    title="My Resume"
-                                    image={template.image}
-                                />
-                            </Link>
-                        );
-                    })}
+                <RecentlyViewedTemplates />
             </TemplateSection>
         </div>
     );
