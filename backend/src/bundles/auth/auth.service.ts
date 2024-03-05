@@ -2,8 +2,6 @@ import { genSalt, hash } from 'bcrypt';
 import {
     type AuthService as TAuthService,
     type EncryptionDataPayload,
-} from 'shared/build/index.js';
-import {
     AuthException,
     ExceptionMessage,
     HttpCode,
