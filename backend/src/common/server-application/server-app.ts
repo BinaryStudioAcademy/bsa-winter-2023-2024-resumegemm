@@ -1,10 +1,12 @@
 import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fastifyExpress from '@fastify/express';
+import fastifyMultipart from '@fastify/multipart';
 import oauthPlugin from '@fastify/oauth2';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
+import { FileUploadValidationRule } from 'shared/build/bundles/files/enums/file-upload.validation-rule.js';
 import { AuthApiPath, OpenAuthApiPath } from 'shared/build/index.js';
 
 import { authService } from '~/bundles/auth/auth.js';
@@ -20,14 +22,19 @@ import { type ILogger } from '~/common/logger/logger.js';
 import {
     authorizationPlugin,
     oauthCallbackHandler,
+    preParsingPlugin,
 } from '~/common/plugins/plugins.js';
-import { publicRoutes } from '~/common/server-application/constants/constants.js';
+import {
+    preParsingRoutes,
+    publicRoutes,
+} from '~/common/server-application/constants/constants.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
     type ValidationSchema,
 } from '~/common/types/types.js';
 
+import { fileUpload as fileUploadPlugin } from '../plugins/file-upload/file-upload-plugin.js';
 import { resetPasswordLimiter } from '../rate-limit/reset-password.rate-limit.js';
 import {
     type IServerApp,
@@ -94,6 +101,10 @@ class ServerApp implements IServerApp {
                 this.logger.info(
                     `Generate swagger documentation for API ${it.version}`,
                 );
+
+                await this.app.register(preParsingPlugin, {
+                    preParsingRoutes,
+                });
                 await this.app.register(fastifyExpress);
 
                 await this.app.use(
@@ -136,6 +147,19 @@ class ServerApp implements IServerApp {
                     });
                 }
                 await this.app.register(oauthCallbackHandler);
+                await this.app.register(fastifyMultipart, {
+                    limits: {
+                        fileSize: FileUploadValidationRule.MAXIMUM_FILE_SIZE,
+                    },
+                    attachFieldsToBody: true,
+                    throwFileSizeLimit: false,
+                });
+
+                await this.app.register(fileUploadPlugin, {
+                    extensions:
+                        FileUploadValidationRule.UPLOAD_FILE_CONTENT_TYPES as unknown as string[],
+                });
+
                 await this.app.register(swagger, {
                     mode: 'static',
                     specification: {

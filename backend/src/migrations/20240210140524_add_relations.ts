@@ -16,6 +16,9 @@ const tablesToAlter = [
     DatabaseTableName.TECHNICAL_SKILLS,
     DatabaseTableName.CONTACT_DETAILS,
     DatabaseTableName.EXPERIENCE,
+    DatabaseTableName.CERTIFICATION,
+    DatabaseTableName.LANGUAGES,
+    DatabaseTableName.CUSTOM_SECTIONS,
 ];
 
 async function up(knex: Knex): Promise<void> {
@@ -107,6 +110,7 @@ async function down(knex: Knex): Promise<void> {
     });
     await knex.schema.alterTable(DatabaseTableName.RESUMES, (table) => {
         table.dropColumn(DatabaseColumnName.USER_ID);
+        table.dropColumn(DatabaseColumnName.TEMPLATE_ID);
     });
     await knex.schema.alterTable(DatabaseTableName.TEMPLATES, (table) => {
         table.dropColumn(DatabaseColumnName.USER_ID);

@@ -60,10 +60,12 @@ class AuthService implements TAuthService {
             passwordHash,
         });
 
+        const token = generateToken({ id });
         const user = await this.getUserWithProfile(id);
 
         return {
             user,
+            token,
         };
     }
 

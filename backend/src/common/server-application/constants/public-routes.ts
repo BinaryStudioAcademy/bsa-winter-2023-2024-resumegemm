@@ -4,6 +4,7 @@ import {
     OpenAuthApiPath,
     PaymentApiPath,
     PDFApiPath,
+    StripeEventsApiPath,
 } from 'shared/build/index.js';
 
 const API_PREFIX = '/api/v1';
@@ -23,10 +24,11 @@ const publicRoutes = {
     [`${PaymentApiPath.PRICES}`]: `${API_PREFIX}${ApiPath.PAYMENT}${PaymentApiPath.PRICES}`,
     [`${PaymentApiPath.CONFIG}`]: `${API_PREFIX}${ApiPath.PAYMENT}${PaymentApiPath.CONFIG}`,
     [`${PaymentApiPath.CREATE_SUBSCRIPTION}`]: `${API_PREFIX}${ApiPath.PAYMENT}${PaymentApiPath.CREATE_SUBSCRIPTION}`,
+    [`${StripeEventsApiPath.WEBHOOKS}`]: `${API_PREFIX}${ApiPath.WEBHOOKS}`,
     [`${PDFApiPath.GENERATE}`]: `${API_PREFIX}${ApiPath.PDF}${PDFApiPath.GENERATE}`,
     [`${AuthApiPath.FORGOT_PASSWORD}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.FORGOT_PASSWORD}`,
     [`${AuthApiPath.RESET_PASSWORD}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.RESET_PASSWORD}`,
     [`${AuthApiPath.VERIFY_RESET_TOKEN}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.VERIFY_RESET_TOKEN}`,
 };
 
-export { publicRoutes };
+export { API_PREFIX, publicRoutes };

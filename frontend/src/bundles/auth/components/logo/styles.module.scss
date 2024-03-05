@@ -5,14 +5,14 @@
     max-width: 60%;
     margin: auto;
     padding-left: 45px;
-    border-left: 4px solid #e3c97e;
+    border-left: 4px solid var(--color-accent-yellow);
 }
 
 .logo__text {
     width: 100%;
-    color: #ffffff;
+    color: var(--color-white);
     font-weight: 500;
-    font-size: 24px;
+    font-size: var(--font-size-title-h3);
     line-height: 36px;
     transform: rotate(-0.41deg);
     opacity: 0.7;

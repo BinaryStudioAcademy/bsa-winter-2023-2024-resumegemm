@@ -1,9 +1,9 @@
 $layout-breakpoint-small: 768px;
 
 h2 {
-    font-weight: 600;
-    font-size: 28px;
-    font-family: Poppins, sans-serif;
+    font-weight: var(--font-weight-title);
+    font-size: var(--font-size-title-h2);
+    font-family: var(--font-family-main);
     line-height: 36px;
     text-align: left;
 }

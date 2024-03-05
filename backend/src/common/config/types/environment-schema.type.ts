@@ -43,9 +43,16 @@ type EnvironmentSchema = {
     STRIPE: {
         STRIPE_SECRET_KEY: string;
         STRIPE_PUBLISHABLE_KEY: string;
+        STRIPE_WEBHOOK_SECRET: string;
     };
     OPEN_AI: {
         API_KEY: string;
+    };
+    AWS: {
+        REGION: string;
+        SECRET_ACCESS_KEY: string;
+        ACCESS_KEY: string;
+        BUCKET_NAME: string;
     };
 };
 

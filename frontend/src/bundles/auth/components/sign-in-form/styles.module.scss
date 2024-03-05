@@ -2,24 +2,24 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    color: #434c66;
-    font-weight: 600;
-    font-size: 30px;
-    font-family: Poppins, Arial, sans-serif;
+    color: var(--color-text-blue);
+    font-weight: var(--font-weight-title);
+    font-size: var(--font-size-title-h2);
+    font-family: var(--font-family-main);
     line-height: 48px;
 }
 
 .login__message {
     margin: 0;
     padding: 0;
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: var(--font-weight-text);
+    font-size: var(--font-size-main-text);
     line-height: 19.5px;
 }
 
 .login__link {
-    color: #dbaf2d;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: var(--color-accent-dark-yellow);
+    font-family: var(--font-family-secondary);
 }
 
 .login__form {
@@ -47,10 +47,10 @@
     align-self: flex-end;
     margin-left: auto;
     padding: 0;
-    color: #dbaf2d;
-    font-weight: 400;
-    font-size: 12px;
-    font-family: Poppins, Arial, sans-serif;
+    color: var(--color-accent-dark-yellow);
+    font-weight: var(--font-weight-text);
+    font-size: var(--font-size-secondary-text);
+    font-family: var(--font-family-main);
     line-height: 18px;
     text-decoration: none;
 }
