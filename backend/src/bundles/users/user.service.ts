@@ -28,7 +28,14 @@ class UserService
     }
 
     public async findByEmail(email: string): Promise<UserEntityFields | null> {
+        if (!email) {
+            return null;
+        }
         return await this.userRepository.findOneByEmail(email);
+    }
+
+    public async getById(id: string): Promise<UserEntityFields | null> {
+        return this.userRepository.getById(id) as Promise<UserEntityFields>;
     }
 
     public async findAll(): Promise<UserGetAllResponseDto> {

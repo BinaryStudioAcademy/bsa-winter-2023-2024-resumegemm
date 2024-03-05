@@ -6,6 +6,8 @@ type OauthUserLoginRequestDto = Pick<
     Profile,
     'firstName' | 'avatar' | 'lastName'
 > &
-    Pick<OauthConnectionEntityFields, 'oauthId' | 'oauthStrategy' | 'email'>;
+    Pick<OauthConnectionEntityFields, 'oauthId' | 'oauthStrategy' | 'email'> & {
+        userId: string;
+    };
 
 export { type OauthUserLoginRequestDto };
