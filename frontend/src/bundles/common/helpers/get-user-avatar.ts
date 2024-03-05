@@ -1,8 +1,6 @@
-import { type UserWithProfileRelationAndOauthConnections } from 'shared/build';
+import { type UserWithProfileRelation } from 'shared/build';
 
-const getUserAvatar = (
-    user: UserWithProfileRelationAndOauthConnections | null,
-): string => {
+const getUserAvatar = (user: UserWithProfileRelation | null): string => {
     if (user?.profile.avatar) {
         return user.profile.avatar;
     }

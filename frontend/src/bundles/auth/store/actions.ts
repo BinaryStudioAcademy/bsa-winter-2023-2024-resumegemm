@@ -6,14 +6,14 @@ import {
     type UserAuthResponse,
     type UserSignInRequestDto,
     type UserSignUpRequestDto,
-    type UserWithProfileRelationAndOauthConnections,
+    type UserWithProfileRelation,
 } from '~/bundles/users/users.js';
 import { StorageKey } from '~/framework/storage/storage.js';
 
 import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
-    UserAuthResponse,
+    UserAuthResponse['user'],
     UserSignUpRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
@@ -24,7 +24,7 @@ const signUp = createAsyncThunk<
 });
 
 const signIn = createAsyncThunk<
-    UserWithProfileRelationAndOauthConnections,
+    UserWithProfileRelation,
     UserSignInRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-in`, async (signInPayload, { extra }) => {
@@ -37,7 +37,7 @@ const signIn = createAsyncThunk<
 });
 
 const getUser = createAsyncThunk<
-    UserWithProfileRelationAndOauthConnections,
+    UserWithProfileRelation,
     void,
     AsyncThunkConfig
 >(`${sliceName}/get-user`, async (_, { extra }) => {

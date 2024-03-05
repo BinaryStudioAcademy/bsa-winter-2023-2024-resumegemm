@@ -6,7 +6,6 @@ import {
 } from '~/bundles/common/hooks/hooks';
 import { useAppSelector } from '~/bundles/common/hooks/use-app-selector/use-app-selector.hook';
 import { actions as profileActions } from '~/bundles/profile/store/index';
-import { type UserAuthResponse } from '~/bundles/users/types/types';
 
 import { DeleteAccount } from '../components/delete-account/delete-account';
 import { ProfileCard } from '../components/profile-card/profile-card';
@@ -37,11 +36,12 @@ const Profile: React.FC = () => {
     const { profile, firstName, lastName, email } = useAppSelector(
         ({ auth, profile }) => ({
             profile,
-            firstName: auth.user?.profile.firstName as NonNullable<string>,
+            firstName: auth.user?.profile.firstName as string,
             lastName: auth.user?.profile.lastName ?? '',
-            email: (auth.user as unknown as UserAuthResponse['user']).email,
+            email: auth.user?.email as string,
         }),
     );
+
     return (
         <div className={styles.profile}>
             <div className={styles.profile__container}>

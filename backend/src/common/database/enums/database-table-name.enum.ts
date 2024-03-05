@@ -2,6 +2,7 @@ enum DatabaseTableName {
     MIGRATIONS = 'migrations',
     USERS = 'users',
     OAUTH_CONNECTIONS = 'oauth_connections',
+    OAUTH_USERS = 'oauth_users',
     PROFILE = 'user_profile',
     PERSONAL_INFORMATION = 'personal_information',
     EXPERIENCE = 'experience',

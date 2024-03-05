@@ -5,7 +5,7 @@ import {
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelationAndOauthConnections,
+    type UserWithProfileRelation,
     AuthApiPath,
     ExceptionMessage,
 } from 'shared/build/index.js';
@@ -259,7 +259,7 @@ class AuthController extends Controller {
         options: ApiHandlerOptions<{
             user: UserAuthResponse['user'];
         }>,
-    ): Promise<ApiHandlerResponse<UserWithProfileRelationAndOauthConnections>> {
+    ): Promise<ApiHandlerResponse<UserWithProfileRelation>> {
         try {
             const { id } = options.user;
 

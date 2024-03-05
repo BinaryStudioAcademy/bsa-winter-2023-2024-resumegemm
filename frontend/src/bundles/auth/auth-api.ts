@@ -4,7 +4,7 @@ import {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelationAndOauthConnections,
+    type UserWithProfileRelation,
 } from '~/bundles/users/users.js';
 import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
@@ -55,7 +55,7 @@ class AuthApi extends HttpApi {
         return await response.json<UserSignInResponseDto>();
     }
 
-    public async getUser(): Promise<UserWithProfileRelationAndOauthConnections> {
+    public async getUser(): Promise<UserWithProfileRelation> {
         const response = await this.load(
             this.getFullEndpoint(AuthApiPath.USER, {}),
             {
@@ -65,7 +65,7 @@ class AuthApi extends HttpApi {
             },
         );
 
-        return await response.json<UserWithProfileRelationAndOauthConnections>();
+        return await response.json<UserWithProfileRelation>();
     }
 }
 

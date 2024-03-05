@@ -4,7 +4,7 @@ import { AbstractRepository } from '~/common/database/abstract.repository.js';
 
 import {
     type UserEntityFields,
-    type UserWithProfileRelationAndOauthConnections,
+    type UserWithProfileRelation,
 } from './types/types.js';
 
 type TUserRepo = {
@@ -15,7 +15,7 @@ type TUserRepo = {
 class UserRepository
     extends AbstractRepository<
         typeof UserModel,
-        UserWithProfileRelationAndOauthConnections | UserEntityFields
+        UserWithProfileRelation | UserEntityFields
     >
     implements TUserRepo
 {

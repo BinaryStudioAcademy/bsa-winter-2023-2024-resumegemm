@@ -9,7 +9,7 @@ import {
     type UserEntityFields,
     type UserGetAllResponseDto,
     type UserSignUpRequestDto,
-    type UserWithProfileRelationAndOauthConnections,
+    type UserWithProfileRelation,
 } from './types/types.js';
 
 class UserService
@@ -85,11 +85,11 @@ class UserService
 
     public async getUserWithProfileAndOauthConnections(
         id: string,
-    ): Promise<UserWithProfileRelationAndOauthConnections> {
+    ): Promise<UserWithProfileRelation> {
         return this.userRepository.getUserWithProfileAndOauthConnections(
             id,
             'withoutHashPasswords',
-        ) as Promise<UserWithProfileRelationAndOauthConnections>;
+        ) as Promise<UserWithProfileRelation>;
     }
 }
 

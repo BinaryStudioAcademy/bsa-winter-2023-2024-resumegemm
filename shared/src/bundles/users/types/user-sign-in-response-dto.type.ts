@@ -1,7 +1,7 @@
-import { type UserWithProfileRelationAndOauthConnections } from './user-with-profile-and-oauth-connections.type';
+import { type UserWithProfileRelation } from './user-with-profile-relation.type.js';
 
 type UserSignInResponseDto = {
-    user: UserWithProfileRelationAndOauthConnections;
+    user: UserWithProfileRelation;
     accessToken: string;
     refreshToken: string;
 };

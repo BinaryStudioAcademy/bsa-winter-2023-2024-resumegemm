@@ -7,5 +7,5 @@ export {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelationAndOauthConnections,
+    type UserWithProfileRelation,
 } from 'shared/build/index.js';
