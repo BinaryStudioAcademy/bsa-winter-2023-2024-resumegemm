@@ -56,19 +56,24 @@ class OauthService
         oauthId,
         lastName,
         oauthStrategy,
+        userId,
     }: OauthUserLoginRequestDto): Promise<UserEntityFields> {
-        const foundUserByEmail = await this.userService.findByEmail(email);
-
-        if (foundUserByEmail) {
-            await this.findByOauthIdAndCreate({
-                oauthId,
-                email,
-                oauthStrategy,
-                userId: foundUserByEmail.id,
-            });
-            return foundUserByEmail;
+        const userToFind = [userId, email];
+        for (const user of userToFind) {
+            const foundUser =
+                user === userId
+                    ? await this.userService.getById(user)
+                    : await this.userService.findByEmail(user);
+            if (foundUser) {
+                await this.findByOauthIdAndCreate({
+                    oauthId,
+                    email,
+                    oauthStrategy,
+                    userId,
+                });
+                return foundUser;
+            }
         }
-
         const user = await this.userService.create({
             email,
             lastName,
