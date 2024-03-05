@@ -1,3 +1,4 @@
+import { type PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { type UserWithProfileRelationAndOauthConnections } from 'shared/build/index.js';
 
@@ -19,7 +20,16 @@ const initialState: State = {
 const { reducer, actions, name } = createSlice({
     initialState,
     name: 'auth',
-    reducers: {},
+    reducers: {
+        setUser: (
+            state,
+            action: PayloadAction<UserWithProfileRelationAndOauthConnections>,
+        ) => {
+            if (state.user) {
+                state.user = action.payload;
+            }
+        },
+    },
     extraReducers(builder) {
         builder.addMatcher(
             isAnyOf(signUp.pending, signIn.pending, getUser.pending),

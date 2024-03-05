@@ -1,10 +1,15 @@
+import { type UpdateUserProfileAndEmailRequestDto } from 'shared/build/index.js';
+
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
 import { UsersApiPath } from './enums/enums.js';
-import { type UserGetAllResponseDto } from './types/types.js';
+import {
+    type UserGetAllResponseDto,
+    type UserWithProfileRelationAndOauthConnections,
+} from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -28,6 +33,23 @@ class UserApi extends HttpApi {
         );
 
         return await response.json<UserGetAllResponseDto>();
+    }
+
+    public async updateProfileAndEmail(
+        id: string,
+        payload: UpdateUserProfileAndEmailRequestDto,
+    ): Promise<UserWithProfileRelationAndOauthConnections> {
+        const response = await this.load(
+            this.getFullEndpoint(`${UsersApiPath.ROOT}/${id}`, {}),
+            {
+                method: 'PUT',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify(payload),
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<UserWithProfileRelationAndOauthConnections>();
     }
 }
 

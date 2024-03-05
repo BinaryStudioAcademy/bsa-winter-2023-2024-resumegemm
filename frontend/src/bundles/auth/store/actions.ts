@@ -31,7 +31,6 @@ const signIn = createAsyncThunk<
     const { user, accessToken } = await authApi.signIn(signInPayload);
 
     await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
-
     return user;
 });
 
