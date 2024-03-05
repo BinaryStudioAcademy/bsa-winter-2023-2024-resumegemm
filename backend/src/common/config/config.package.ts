@@ -45,7 +45,10 @@ class Config implements IConfig {
                 ORIGIN_URL: {
                     doc: 'Http origin for development',
                     format: String,
-                    env: 'CLIENT_DEVELOPMENT_SERVER_URL',
+                    env:
+                        process.env.NODE_ENV === AppEnvironment.PRODUCTION
+                            ? 'PRODUCTION_ORIGIN_URL'
+                            : 'CLIENT_DEVELOPMENT_SERVER_URL',
                     default: null,
                 },
             },
@@ -161,6 +164,12 @@ class Config implements IConfig {
                     doc: 'Stripe publishable key',
                     format: String,
                     env: 'STRIPE_PUBLISHABLE_KEY',
+                    default: null,
+                },
+                STRIPE_WEBHOOK_SECRET: {
+                    doc: 'Stripe webhook secret',
+                    format: String,
+                    env: 'STRIPE_WEBHOOK_SECRET',
                     default: null,
                 },
             },
