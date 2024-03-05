@@ -1,5 +1,8 @@
 import joi from 'joi';
-import { UserValidationMessage } from 'shared/build/bundles/users/users';
+import {
+    UserValidationMessage,
+    UserValidationRule,
+} from 'shared/build/bundles/users/users';
 
 type UserSignUpRequestDtoFrontend = {
     firstName: string;
@@ -36,13 +39,18 @@ const userSignUpValidationFrontend = joi.object<
             'string.email': UserValidationMessage.EMAIL_WRONG,
             'string.empty': UserValidationMessage.EMAIL_REQUIRE,
         }),
-    password: joi.string().regex(/^\S*$/).required().messages({
-        'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
-        'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
-    }),
+    password: joi
+        .string()
+        .max(UserValidationRule.PASSWORD_MAX_LENGTH)
+        .regex(/^\S*$/)
+        .required()
+        .messages({
+            'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
+            'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
+            'string.max': UserValidationMessage.PASSWORD_INVALID,
+        }),
     confirm_password: joi
         .string()
-        .trim()
         .valid(joi.ref('password'))
         .required()
         .messages({
