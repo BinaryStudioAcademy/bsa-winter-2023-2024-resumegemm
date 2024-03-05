@@ -1,3 +1,4 @@
+import { AuthApi } from '~/bundles/auth/auth-api.js';
 import {
     type ContentType,
     ServerErrorType,
@@ -6,7 +7,7 @@ import {
     type ServerErrorResponse,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
-import { type HttpCode, type IHttp } from '~/framework/http/http.js';
+import { type IHttp, HttpCode } from '~/framework/http/http.js';
 import { HttpError, HttpHeader } from '~/framework/http/http.js';
 import { type IStorage, StorageKey } from '~/framework/storage/storage.js';
 import { configureString } from '~/helpers/helpers.js';
@@ -58,6 +59,11 @@ class HttpApi implements IHttpApi {
             withCredentials,
         });
 
+        if (response.status === HttpCode.UNAUTHORIZED && hasAuth) {
+            await this.refreshAccessToken();
+            return this.load(path, options);
+        }
+
         return (await this.checkResponse(response)) as HttpApiResponse;
     }
 
@@ -93,6 +99,11 @@ class HttpApi implements IHttpApi {
         }
 
         return headers;
+    }
+
+    private async refreshAccessToken(): Promise<void> {
+        const newAccessToken = await AuthApi.refreshAccessToken();
+        await this.storage.set(StorageKey.ACCESS_TOKEN, newAccessToken);
     }
 
     private async checkResponse(response: Response): Promise<Response | never> {

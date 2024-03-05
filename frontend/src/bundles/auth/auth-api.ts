@@ -67,6 +67,30 @@ class AuthApi extends HttpApi {
 
         return await response.json<UserAuthResponse>();
     }
+    public static async refreshAccessToken(): Promise<string> {
+        const response = await fetch(AuthApiPath.REFRESH_TOKEN, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem(
+                    'refreshToken',
+                )}`,
+            },
+
+            body: JSON.stringify({}),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to refresh access token');
+        }
+
+        const data = await response.json();
+        const newAccessToken = data.accessToken;
+
+        localStorage.setItem('accessToken', newAccessToken);
+
+        return newAccessToken;
+    }
 }
 
 export { AuthApi };

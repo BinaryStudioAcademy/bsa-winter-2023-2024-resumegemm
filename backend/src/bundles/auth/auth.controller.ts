@@ -88,6 +88,17 @@ class AuthController extends Controller {
                     }>,
                 ),
         });
+        this.addRoute({
+            path: AuthApiPath.REFRESH_TOKEN,
+            method: 'POST',
+            handler: (options) =>
+                this.regenerateToken(
+                    options as ApiHandlerOptions<{
+                        cookies: FastifyRequest['cookies'];
+                        unsignCookie: FastifyRequest['unsignCookie'];
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -292,6 +303,7 @@ class AuthController extends Controller {
             const unsignedCookie = unsignCookie(
                 cookies[CookieName.REFRESH_TOKEN] as NonNullable<string>,
             );
+
             const oldRefreshToken = unsignedCookie.value as string;
 
             const { id } = this.authService.verifyToken<Record<'id', string>>(
@@ -301,9 +313,10 @@ class AuthController extends Controller {
 
             const accessToken = generateToken({ id });
             const refreshToken = generateRefreshToken({ id });
+
             return {
-                refreshToken,
                 status: HttpCode.OK,
+                refreshToken,
                 payload: { accessToken },
             };
         } catch (error: unknown) {
