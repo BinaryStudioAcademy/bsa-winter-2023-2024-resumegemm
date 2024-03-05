@@ -21,8 +21,12 @@ import { type ILogger } from '~/common/logger/logger.js';
 import {
     authorizationPlugin,
     oauthCallbackHandler,
+    preParsingPlugin,
 } from '~/common/plugins/plugins.js';
-import { publicRoutes } from '~/common/server-application/constants/constants.js';
+import {
+    preParsingRoutes,
+    publicRoutes,
+} from '~/common/server-application/constants/constants.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
@@ -95,6 +99,10 @@ class ServerApp implements IServerApp {
                 this.logger.info(
                     `Generate swagger documentation for API ${it.version}`,
                 );
+
+                await this.app.register(preParsingPlugin, {
+                    preParsingRoutes,
+                });
                 await this.app.register(authorizationPlugin, {
                     publicRoutes,
                     userService,
