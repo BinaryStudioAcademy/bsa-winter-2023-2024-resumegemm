@@ -32,10 +32,15 @@ class SubscriptionPlanRepository implements ISubscriptionPlanRepository {
             .returning('*');
     }
 
-    public async delete(id: string): Promise<boolean> {
+    public async delete({
+        stripePlanId,
+    }: {
+        stripePlanId: string;
+    }): Promise<boolean> {
         const response = await this.subscriptionPlanModel
             .query()
-            .deleteById(id);
+            .where({ stripePlanId })
+            .delete();
         return !!response;
     }
 }
