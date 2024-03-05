@@ -14,6 +14,8 @@ import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store';
 import { profileApi } from '~/bundles/profile/profile';
 import { reducer as profileReducer } from '~/bundles/profile/store/';
+import { recentlyViewedApi } from '~/bundles/recently-viewed/recently-viewed';
+import { reducer as recentlyViewedReducer } from '~/bundles/recently-viewed/store/';
 import { reducer as usersReducer } from '~/bundles/users/store/';
 import { userApi } from '~/bundles/users/users.js';
 import { type IConfig } from '~/framework/config/config.js';
@@ -26,6 +28,7 @@ type RootReducer = {
     payment: ReturnType<typeof paymentReducer>;
     templates: ReturnType<typeof templatesReducer>;
     profile: ReturnType<typeof profileReducer>;
+    recentlyViewed: ReturnType<typeof recentlyViewedReducer>;
 };
 
 type ExtraArguments = {
@@ -35,6 +38,7 @@ type ExtraArguments = {
     storageApi: typeof storage;
     templateApi: typeof templateApi;
     profileApi: typeof profileApi;
+    recentlyViewedApi: typeof recentlyViewedApi;
 };
 
 class Store {
@@ -57,6 +61,7 @@ class Store {
                 payment: paymentReducer,
                 templates: templatesReducer,
                 profile: profileReducer,
+                recentlyViewed: recentlyViewedReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
@@ -76,6 +81,7 @@ class Store {
             storageApi: storage,
             templateApi,
             profileApi,
+            recentlyViewedApi,
         };
     }
 }
