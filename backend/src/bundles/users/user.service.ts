@@ -115,6 +115,16 @@ class UserService implements Omit<IService, 'getById'> {
 
         return deletedUser;
     }
+    
+    public async addStripeId(
+        stripeId: string,
+        email: string,
+    ): Promise<UserEntityFields | null> {
+        return this.userRepository.addStripeId({
+            stripeId,
+            email,
+        });
+    }
 }
 
 export { UserService };
