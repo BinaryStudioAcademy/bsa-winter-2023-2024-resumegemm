@@ -5,6 +5,7 @@ import { paymentController } from '~/bundles/payment/payment.js';
 import { pdfController } from '~/bundles/pdf/pdf.js';
 import { recentlyViewedController } from '~/bundles/recently-viewed/recently-viewed.js';
 import { resumeController } from '~/bundles/resumes/resumes.js';
+import { stripeEventsController } from '~/bundles/stripe-events/stripe-events.js';
 import { templateController } from '~/bundles/templates/templates.js';
 import { userController } from '~/bundles/users/users.js';
 import { config } from '~/common/config/config.js';
@@ -27,6 +28,7 @@ const apiV1 = new ServerAppApi(
     ...resumeController.routes,
     ...recentlyViewedController.routes,
     ...templateController.routes,
+    ...stripeEventsController.routes,
 );
 const serverApp = new ServerApp({
     config,
