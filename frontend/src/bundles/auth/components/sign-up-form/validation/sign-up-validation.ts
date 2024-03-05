@@ -48,10 +48,16 @@ const userSignUpValidationFrontend = joi.object<
             'string.empty': UserValidationMessage.EMAIL_REQUIRE,
             'domainLengthInvalid': UserValidationMessage.EMAIL_INVALID,
         }),
-    password: joi.string().regex(/^\S*$/).required().messages({
-        'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
-        'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
-    }),
+    password: joi
+        .string()
+        .max(UserValidationRule.PASSWORD_MAX_LENGTH)
+        .regex(/^\S*$/)
+        .required()
+        .messages({
+            'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
+            'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
+            'string.max': UserValidationMessage.PASSWORD_INVALID,
+        }),
     confirm_password: joi
         .string()
         .valid(joi.ref('password'))

@@ -163,6 +163,12 @@ class Config implements IConfig {
                     env: 'STRIPE_PUBLISHABLE_KEY',
                     default: null,
                 },
+                STRIPE_WEBHOOK_SECRET: {
+                    doc: 'Stripe webhook secret',
+                    format: String,
+                    env: 'STRIPE_WEBHOOK_SECRET',
+                    default: null,
+                },
             },
             OPEN_AI: {
                 API_KEY: {
