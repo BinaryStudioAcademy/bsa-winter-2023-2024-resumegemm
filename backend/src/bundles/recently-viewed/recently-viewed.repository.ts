@@ -1,11 +1,13 @@
 import { Guid as guid } from 'guid-typescript';
 
+import { getUniqueTemplatesViewedByUser } from './helpers/get-unique-templates-viewed-by-user.js';
 import { type RecentlyViewedModel } from './recently-viewed.model';
 import {
     type IRecentlyViewedRepository,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedTemplatesQueryResult,
     type RecentlyViewedTemplatesResponseDto,
 } from './types/types';
 
@@ -32,7 +34,6 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
         return await this.recentlyViewedModel
             .query()
             .whereNotNull('resumeId')
-            .withGraphFetched('[resumes]')
             .orderBy('viewedAt', 'desc')
             .limit(limit);
     }
@@ -57,14 +58,16 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
         limit: number;
     }): Promise<RecentlyViewedTemplatesResponseDto[]> {
         const { limit, userId } = data;
-
-        return await this.recentlyViewedModel
+        const result = (await this.recentlyViewedModel
             .query()
             .whereNotNull('templateId')
             .where('userId', userId)
             .withGraphFetched('[templates]')
+            .withGraphFetched('[resumes]')
             .orderBy('viewedAt', 'desc')
-            .limit(limit);
+            .limit(limit)) as RecentlyViewedTemplatesQueryResult[];
+
+        return getUniqueTemplatesViewedByUser(result);
     }
 
     public async create(
