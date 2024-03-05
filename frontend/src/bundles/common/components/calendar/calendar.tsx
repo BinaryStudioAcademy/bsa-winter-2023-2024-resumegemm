@@ -1,10 +1,16 @@
 import clsx from 'clsx';
-import { type ChangeEvent, useCallback } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import {
+    type ChangeEvent,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 import { Calendar as ReactCalendar } from 'react-calendar';
 
 import { CalendarTypes } from '../../enums/calendar/calendar-types.enum';
 import { useClickOutside } from '../../hooks/use-click-outside/use-click-outside.hook';
+import { type InitDate } from '../../types/calendar/init-date.type';
 import {
     type CalendarDate,
     type CalendarMonth,
@@ -22,23 +28,58 @@ type Properties = {
     onChange?: (date: CalendarDate) => void;
     type?: ValueOf<typeof CalendarTypes>;
     className?: string;
+    initDate?: InitDate;
+};
+
+const handleYearInit = (inputYear: number | undefined): number => {
+    if (!inputYear) {
+        return new Date().getFullYear();
+    }
+
+    return inputYear;
+};
+
+const handleMonthInit = (
+    inputMonth: number | undefined,
+): CalendarMonth | null => {
+    const month = CALENDAR_MONTHS.find((month) => month.num === inputMonth);
+    if (!month) {
+        return null;
+    }
+
+    return month;
+};
+
+const handlePresentInit = (inputPresent: boolean | undefined): boolean => {
+    if (!inputPresent) {
+        return false;
+    }
+
+    return inputPresent;
 };
 
 const Calendar = ({
     type = CalendarTypes.regular,
     className = '',
+    initDate = {
+        year: new Date().getFullYear(),
+        month: new Date().getMonth(),
+        present: false,
+    },
     onChange,
 }: Properties): JSX.Element => {
     const [selected, setSelected] = useState<number | null>(null);
 
-    const [year, setYear] = useState(new Date().getFullYear());
-    const [month, setMonth] = useState<CalendarMonth | null>(null);
+    const [year, setYear] = useState(handleYearInit(initDate.year));
+    const [month, setMonth] = useState<CalendarMonth | null>(
+        handleMonthInit(initDate.month),
+    );
 
     const [text, setText] = useState('');
 
     const [isFocused, setIsFocused] = useState(false);
 
-    const [present, setPresent] = useState(false);
+    const [present, setPresent] = useState(handlePresentInit(initDate.present));
 
     const reference = useRef<HTMLDivElement>(null);
 

@@ -17,12 +17,12 @@
     width: 100%;
     max-width: 1000px;
     padding: 20px;
-    color: #ffffff;
-    border: 1px solid #ffffff;
+    color: var(--color-white);
+    border: 1px solid var(--color-white);
     transition: all 0.3s ease;
 }
 
 .output__button:hover {
-    color: #ffffff;
+    color: var(--color-white);
     background-color: var(--color-accent-dark-yellow);
 }

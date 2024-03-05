@@ -38,10 +38,26 @@ export {
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
 export {
+    type Certification,
+    type Contacts,
+    type CustomSection,
+    type Education,
+    type Experience,
     type IResumeService,
+    type PersonalInformation,
+    type Resume,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
-    ResumeApiPath,
+    type ResumeCreateItemRequestDto,
+    type ResumeEntityFields,
+    type ResumeGetAllRequestDto,
+    type ResumeGetAllResponseDto,
+    type ResumeGetItemRequestDto,
+    type ResumeGetItemResponseDto,
+    type ResumeUpdateItemRequestDto,
+    type TechnicalSkill,
+    LanguageLevels,
+    ResumesApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';
 export {
