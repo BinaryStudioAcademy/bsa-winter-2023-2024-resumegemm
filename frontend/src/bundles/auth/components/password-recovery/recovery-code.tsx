@@ -87,7 +87,6 @@ const RecoveryCodeForm: React.FC<Properties> = ({ onSubmit, onResendCode }) => {
                         Send new code
                     </RegularButton>
                     <RegularButton
-                        className={styles.restore__form_button}
                         size={ButtonSize.SMALL}
                         width={ButtonWidth.FULL}
                         variant={ButtonVariant.PRIMARY}
