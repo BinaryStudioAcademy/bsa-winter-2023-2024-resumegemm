@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 const Greeting: React.FC = () => {
     const firstName = useAppSelector(
-        (state) => state.auth.user?.user_profile.firstName,
+        (state) => state.auth.user?.profile.firstName,
     );
     return (
         <div className={styles.greeting}>

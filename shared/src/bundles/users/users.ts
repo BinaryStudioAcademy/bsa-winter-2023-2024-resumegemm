@@ -4,6 +4,7 @@ export {
     UserValidationRule,
 } from './enums/enums.js';
 export {
+    type SocialMediaProfiles,
     type User,
     type UserAuthResponse,
     type UserEntityFields,
@@ -13,7 +14,7 @@ export {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelation,
+    type UserWithProfileRelationAndOauthConnections,
 } from './types/types.js';
 export {
     userSignIn as userSignInValidationSchema,

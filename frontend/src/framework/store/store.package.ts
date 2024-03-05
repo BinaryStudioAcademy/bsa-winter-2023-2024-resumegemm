@@ -2,14 +2,15 @@ import {
     type AnyAction,
     type MiddlewareArray,
     type ThunkMiddleware,
+    configureStore,
 } from '@reduxjs/toolkit';
-import { configureStore } from '@reduxjs/toolkit';
 
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as templatesReducer } from '~/bundles/edit-temlate/store/';
 import { templateApi } from '~/bundles/edit-temlate/templates.js';
+import { openAuthApi } from '~/bundles/open-auth/open-auth.js';
 import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store';
 import { profileApi } from '~/bundles/profile/profile';
@@ -31,6 +32,7 @@ type RootReducer = {
 type ExtraArguments = {
     authApi: typeof authApi;
     userApi: typeof userApi;
+    openAuthApi: typeof openAuthApi;
     paymentApi: typeof paymentApi;
     storageApi: typeof storage;
     templateApi: typeof templateApi;
@@ -75,6 +77,7 @@ class Store {
             paymentApi,
             storageApi: storage,
             templateApi,
+            openAuthApi,
             profileApi,
         };
     }

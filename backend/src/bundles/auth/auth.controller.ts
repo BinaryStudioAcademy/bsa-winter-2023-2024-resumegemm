@@ -5,7 +5,7 @@ import {
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelation,
+    type UserWithProfileRelationAndOauthConnections,
     AuthApiPath,
     ExceptionMessage,
 } from 'shared/build/index.js';
@@ -73,7 +73,6 @@ class AuthController extends Controller {
                 this.getUser(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponse['user'];
-                        cookies: FastifyRequest['cookies'];
                     }>,
                 ),
         });
@@ -260,13 +259,16 @@ class AuthController extends Controller {
         options: ApiHandlerOptions<{
             user: UserAuthResponse['user'];
         }>,
-    ): Promise<ApiHandlerResponse<UserWithProfileRelation>> {
+    ): Promise<ApiHandlerResponse<UserWithProfileRelationAndOauthConnections>> {
         try {
             const { id } = options.user;
-            const payload = await this.authService.getUserWithProfile(id);
+
+            const userWithProfileRelation =
+                await this.authService.getUserWithProfile(id);
+
             return {
                 status: HttpCode.OK,
-                payload,
+                payload: userWithProfileRelation,
             };
         } catch (error: unknown) {
             const message = (error as Error).message;

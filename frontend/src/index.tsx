@@ -8,6 +8,8 @@ import { Auth } from '~/bundles/auth/pages/auth';
 import {
     App,
     ErrorFallback,
+    FreeAccessRoute,
+    RestrictedAccessRoute,
     RouterProvider,
     StoreProvider,
     StripeProvider,
@@ -16,8 +18,6 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
-import { NoAuthRoute } from './bundles/common/components/no-auth-route/no-auth-route';
-import { PrivateRoute } from './bundles/common/components/private-route/private-route';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
@@ -44,11 +44,16 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             children: [
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <LandingPage />,
+                                    element: <FreeAccessRoute />,
+                                    children: [
+                                        {
+                                            element: <LandingPage />,
+                                        },
+                                    ],
                                 },
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <NoAuthRoute />,
+                                    element: <FreeAccessRoute />,
                                     children: [
                                         {
                                             path: AppRoute.LOG_IN,
@@ -62,7 +67,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 },
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <PrivateRoute />,
+                                    element: <RestrictedAccessRoute />,
                                     children: [
                                         {
                                             path: AppRoute.PROFILE,

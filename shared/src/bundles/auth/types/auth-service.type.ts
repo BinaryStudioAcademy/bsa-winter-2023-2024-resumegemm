@@ -3,7 +3,7 @@ import {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelation,
+    type UserWithProfileRelationAndOauthConnections,
 } from '../../users/users.js';
 import { type EncryptionDataPayload } from './encryption-data-payload.type.js';
 
@@ -20,7 +20,9 @@ type AuthService = {
     generateSalt(): Promise<string>;
     encrypt(data: string, salt: string): Promise<string>;
     compare(encryptionData: EncryptionDataPayload): Promise<boolean>;
-    getUserWithProfile(id: string): Promise<UserWithProfileRelation>;
+    getUserWithProfile(
+        id: string,
+    ): Promise<UserWithProfileRelationAndOauthConnections>;
     verifyToken<T>(token: string, tokenSecret: string): T;
 };
 

@@ -9,10 +9,13 @@ import {
     type UserEntityFields,
     type UserGetAllResponseDto,
     type UserSignUpRequestDto,
-    type UserWithProfileRelation,
+    type UserWithProfileRelationAndOauthConnections,
 } from './types/types.js';
 
-class UserService implements Omit<IService, 'getById'> {
+class UserService
+    implements
+        Omit<IService, 'getById' | 'findByOauthIdAndCreate' | 'deleteById'>
+{
     private userRepository: UserRepository;
     private profileRepository: ProfileRepository;
 
@@ -40,11 +43,13 @@ class UserService implements Omit<IService, 'getById'> {
         email,
         firstName,
         lastName,
+        avatar,
         passwordSalt,
         passwordHash,
     }: UserSignUpRequestDto & {
-        passwordSalt: string;
-        passwordHash: string;
+        passwordSalt?: string;
+        passwordHash?: string;
+        avatar?: string;
     }): Promise<Pick<UserEntityFields, 'id'>> {
         const transaction = await this.userRepository.model.startTransaction();
         try {
@@ -52,16 +57,20 @@ class UserService implements Omit<IService, 'getById'> {
                 {
                     firstName,
                     lastName,
+                    avatar,
                 },
                 transaction,
             );
             const item = (await this.userRepository.createWithTransaction(
                 UserEntity.initializeNew({
                     email,
-                    passwordSalt,
-                    passwordHash,
+                    passwordSalt: passwordSalt ?? null,
+                    passwordHash: passwordHash ?? null,
                     profileId: id,
-                }),
+                }) as unknown as Omit<
+                    UserEntityFields,
+                    'createdAt' | 'updatedAt' | 'id'
+                >,
                 transaction,
             )) as UserEntityFields;
             await transaction.commit();
@@ -77,13 +86,13 @@ class UserService implements Omit<IService, 'getById'> {
         }
     }
 
-    public async getUserWithProfile(
+    public async getUserWithProfileAndOauthConnections(
         id: string,
-    ): Promise<UserWithProfileRelation> {
-        return this.userRepository.getUserWithProfile(
+    ): Promise<UserWithProfileRelationAndOauthConnections> {
+        return this.userRepository.getUserWithProfileAndOauthConnections(
             id,
             'withoutHashPasswords',
-        ) as Promise<UserWithProfileRelation>;
+        ) as Promise<UserWithProfileRelationAndOauthConnections>;
     }
 }
 

@@ -5,10 +5,9 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
-    type OauthUserEntityFields,
+    type OauthConnectionEntityFields,
+    type OauthConnectionPayload,
     type OauthUserLoginRequestDto,
-    type OauthUserLoginResponseDto,
-    type OauthUserWithProfileRelation,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
@@ -68,6 +67,7 @@ export {
 } from './bundles/templates/templates.js';
 export { TemplatesApiPath } from './bundles/templates/templates.js';
 export {
+    type SocialMediaProfiles,
     type User,
     type UserAuthResponse,
     type UserEntityFields,
@@ -77,7 +77,7 @@ export {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelation,
+    type UserWithProfileRelationAndOauthConnections,
     UsersApiPath,
     userSignInValidationSchema,
     userSignUpValidationSchema,
@@ -104,7 +104,7 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type IStorage } from './framework/storage/storage.js';
-export { configureString } from './helpers/helpers.js';
+export { configureString, getCookie } from './helpers/helpers.js';
 export {
     type ServerCommonErrorResponse,
     type ServerErrorDetail,

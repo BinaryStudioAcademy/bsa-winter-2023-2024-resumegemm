@@ -1,12 +1,14 @@
 import { type FastifyRequest } from 'fastify';
 
-import { generateToken } from '~/bundles/auth/helpers/helpers.js';
+import {
+    generateRefreshToken,
+    generateToken,
+} from '~/bundles/auth/helpers/helpers.js';
 import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
     type HttpError,
-    type OauthUserEntityFields,
+    type OauthConnectionEntityFields,
     type OauthUserLoginRequestDto,
-    type OauthUserLoginResponseDto,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
@@ -74,12 +76,12 @@ class OpenAuthController extends Controller {
                 ),
         });
         this.addRoute({
-            path: OpenAuthApiPath.USER,
-            method: 'GET',
+            path: OpenAuthApiPath.ID,
+            method: 'DELETE',
             handler: (options) =>
-                this.getUser(
+                this.deleteById(
                     options as ApiHandlerOptions<{
-                        user: FastifyRequest['user'];
+                        params: FastifyRequest['params'];
                     }>,
                 ),
         });
@@ -159,6 +161,7 @@ class OpenAuthController extends Controller {
         return await this.createUser({
             email,
             firstName: name,
+            lastName: null,
             avatar: avatar_url,
             oauthId: String(id),
             oauthStrategy: OauthStrategy.GITHUB,
@@ -198,6 +201,7 @@ class OpenAuthController extends Controller {
             const user = await this.oauthService.create(userPayload);
             return {
                 accessToken: generateToken({ id: user.id }),
+                refreshToken: generateRefreshToken({ id: user.id }),
                 status: HttpCode.OK,
                 payload: null,
             };
@@ -222,25 +226,25 @@ class OpenAuthController extends Controller {
         })) as T;
     }
 
-    private async getUser(
-        options: ApiHandlerOptions<{
-            user: FastifyRequest['user'];
-        }>,
-    ): Promise<ApiHandlerResponse<OauthUserLoginResponseDto>> {
+    private async deleteById({
+        params,
+    }: ApiHandlerOptions<{
+        params: FastifyRequest['params'];
+    }>): Promise<ApiHandlerResponse<boolean>> {
         try {
-            const userId = (options.user as OauthUserEntityFields).id;
-            const user = await this.oauthService.getById(userId);
+            const id = (params as OauthConnectionEntityFields).id;
+            const hasConnectionRemoved = await this.oauthService.deleteById(id);
             return {
                 status: HttpCode.OK,
-                payload: user,
+                payload: hasConnectionRemoved,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { status, message } = error as HttpError;
             return {
                 status,
                 payload: {
                     message,
-                    status,
+                    status: HttpCode.INTERNAL_SERVER_ERROR,
                 },
             };
         }

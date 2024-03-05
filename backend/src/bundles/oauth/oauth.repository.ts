@@ -1,19 +1,14 @@
-import { type OauthUserLoginResponseDto } from 'shared/build/index.js';
-
 import { type OauthModel } from '~/bundles/oauth/oauth.model.js';
 import { AbstractRepository } from '~/common/database/abstract.repository.js';
 
-import { type OauthUserEntityFields } from './types/types.js';
+import { type OauthConnectionEntityFields } from './types/types.js';
 
 type TOauthRepository = {
-    findByOauthId(oauthId: string): Promise<OauthUserEntityFields | null>;
+    findByOauthId(oauthId: string): Promise<OauthConnectionEntityFields | null>;
 };
 
 class OauthRepository
-    extends AbstractRepository<
-        typeof OauthModel,
-        OauthUserLoginResponseDto | OauthUserEntityFields
-    >
+    extends AbstractRepository<typeof OauthModel, OauthConnectionEntityFields>
     implements TOauthRepository
 {
     public constructor({

@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
 
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
@@ -14,22 +13,20 @@ import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
 import { type UserSignUpRequestDtoFrontend } from '../components/sign-up-form/validation/sign-up-validation.js';
-import { signIn, signUp } from '../store/actions.js';
+import { actions as authActions } from '../store/index';
 import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { showToast } = useContext(ToastContext);
 
-    const { user } = useAppSelector(({ auth }) => ({
-        user: auth.user,
-    }));
+    const { dataStatus } = useAppSelector((state) => state.auth);
+    const { showToast } = useContext(ToastContext);
 
     const { pathname } = useLocation();
 
     const handleSignInSubmit = useCallback(
         (payload: UserSignInRequestDto): void => {
-            void dispatch(signIn(payload));
+            void dispatch(authActions.signIn(payload));
         },
         [dispatch],
     );
@@ -37,7 +34,7 @@ const Auth: React.FC = () => {
     const handleSignUpSubmit = useCallback(
         (payload: UserSignUpRequestDtoFrontend): void => {
             delete payload.confirm_password;
-            void dispatch(signUp(payload))
+            void dispatch(authActions.signUp(payload))
                 .unwrap()
                 .catch((error: Error) => {
                     showToast(error.message, ToastType.ERROR);
@@ -49,19 +46,27 @@ const Auth: React.FC = () => {
     const getScreen = (screen: string): React.ReactNode => {
         switch (screen) {
             case AppRoute.LOG_IN: {
-                return <SignInForm onSubmit={handleSignInSubmit} />;
+                return (
+                    <SignInForm
+                        onSubmit={handleSignInSubmit}
+                        dataStatus={dataStatus}
+                    />
+                );
             }
             case AppRoute.SIGN_UP: {
-                return <SignUpForm onSubmit={handleSignUpSubmit} />;
+                return (
+                    <SignUpForm
+                        onSubmit={handleSignUpSubmit}
+                        dataStatus={dataStatus}
+                    />
+                );
             }
         }
 
         return null;
     };
 
-    return user ? (
-        <Navigate to={AppRoute.HOME} />
-    ) : (
+    return (
         <div className={styles.auth}>
             <div className={styles.auth__container}>
                 <section className={styles['auth__logo-container']}>

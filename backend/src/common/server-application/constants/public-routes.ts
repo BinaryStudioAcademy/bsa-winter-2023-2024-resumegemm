@@ -4,8 +4,7 @@ import {
     OpenAuthApiPath,
     PaymentApiPath,
     PDFApiPath,
-    RecentlyViewedApiPath,
-    StripeEventsApiPath
+    StripeEventsApiPath,
 } from 'shared/build/index.js';
 
 const API_PREFIX = '/api/v1';
