@@ -8,12 +8,12 @@ import { Auth } from '~/bundles/auth/pages/auth';
 import {
     App,
     ErrorFallback,
-    FreeAccessRoute,
+    GuestRoute,
     RouterProvider,
     StoreProvider,
     StripeProvider,
 } from '~/bundles/common/components/components';
-import { RestrictedAccessRoute } from '~/bundles/common/components/restricted-access-route/restricted-access-route';
+import { PrivateRoute } from '~/bundles/common/components/private-route/private-route';
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
@@ -44,7 +44,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             children: [
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <FreeAccessRoute />,
+                                    element: <GuestRoute />,
                                     children: [
                                         {
                                             path: AppRoute.ROOT,
@@ -54,7 +54,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 },
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <FreeAccessRoute />,
+                                    element: <GuestRoute />,
                                     children: [
                                         {
                                             path: AppRoute.LOG_IN,
@@ -68,7 +68,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 },
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <RestrictedAccessRoute />,
+                                    element: <PrivateRoute />,
                                     children: [
                                         {
                                             path: AppRoute.PROFILE,

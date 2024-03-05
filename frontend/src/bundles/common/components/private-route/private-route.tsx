@@ -5,7 +5,7 @@ import { useAppSelector } from '~/bundles/common/hooks/use-app-selector/use-app-
 
 import { AppRoute } from '../../enums/app-route.enum';
 
-const RestrictedAccessRoute: React.FC = () => {
+const PrivateRoute: React.FC = () => {
     const { user, dataStatus } = useAppSelector(({ auth }) => ({
         dataStatus: auth.dataStatus,
         user: auth.user,
@@ -21,4 +21,4 @@ const RestrictedAccessRoute: React.FC = () => {
     return user ? <Outlet /> : <Navigate to={AppRoute.ROOT} />;
 };
 
-export { RestrictedAccessRoute };
+export { PrivateRoute };

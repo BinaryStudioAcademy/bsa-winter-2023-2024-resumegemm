@@ -5,7 +5,7 @@ import { useAppSelector } from '~/bundles/common/hooks/hooks';
 
 import { AppRoute } from '../../enums/app-route.enum';
 
-const FreeAccessRoute: FC = () => {
+const GuestRoute: FC = () => {
     const { user } = useAppSelector(({ auth }) => ({
         user: auth.user,
     }));
@@ -13,4 +13,4 @@ const FreeAccessRoute: FC = () => {
     return user ? <Navigate to={AppRoute.HOME} /> : <Outlet />;
 };
 
-export { FreeAccessRoute };
+export { GuestRoute };
