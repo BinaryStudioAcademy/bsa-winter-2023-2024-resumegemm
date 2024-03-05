@@ -17,9 +17,11 @@ import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store/payment.store';
 import { profileApi } from '~/bundles/profile/profile';
 import { reducer as profileReducer } from '~/bundles/profile/store/profile.store';
+import { recentlyViewedApi } from '~/bundles/recently-viewed/recently-viewed';
+import { reducer as recentlyViewedReducer } from '~/bundles/recently-viewed/store/index.js';
 import { resumeAccessApi } from '~/bundles/resume-access/resume-access';
-import { reducer as resumeAccessReducer } from '~/bundles/resume-access/store/';
-import { reducer as templatesReducer } from '~/bundles/templates-page/store';
+import { reducer as resumeAccessReducer } from '~/bundles/resume-access/store/index.js';
+import { reducer as templatesReducer } from '~/bundles/templates-page/store/index.js';
 import { reducer as usersReducer } from '~/bundles/users/store/user.store';
 import { userApi } from '~/bundles/users/users.js';
 import { type IConfig } from '~/framework/config/config.js';
@@ -35,6 +37,7 @@ type RootReducer = {
     resumeAccess: ReturnType<typeof resumeAccessReducer>;
     profile: ReturnType<typeof profileReducer>;
     editTemplate: ReturnType<typeof editTemplateReducer>;
+    recentlyViewed: ReturnType<typeof recentlyViewedReducer>;
 };
 
 type ExtraArguments = {
@@ -47,6 +50,7 @@ type ExtraArguments = {
     templateApi: typeof templateApi;
     resumeAccessApi: typeof resumeAccessApi;
     profileApi: typeof profileApi;
+    recentlyViewedApi: typeof recentlyViewedApi;
 };
 
 class Store {
@@ -72,6 +76,7 @@ class Store {
                 resumeAccess: resumeAccessReducer,
                 profile: profileReducer,
                 editTemplate: editTemplateReducer,
+                recentlyViewed: recentlyViewedReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
@@ -94,6 +99,7 @@ class Store {
             resumeAccessApi,
             openAuthApi,
             profileApi,
+            recentlyViewedApi,
         };
     }
 }
