@@ -25,9 +25,7 @@ const { reducer, actions, name } = createSlice({
             state,
             action: PayloadAction<UserWithProfileRelationAndOauthConnections>,
         ) => {
-            if (state.user) {
-                state.user = action.payload;
-            }
+            state.user = action.payload;
         },
     },
     extraReducers(builder) {
