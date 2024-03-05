@@ -1,1 +1,4 @@
-export { EmailSubscriptionsApiPath } from 'shared/build/index.js';
+export {
+    EmailSubscriptionsApiPath,
+    EmailSubscriptionsValidationMessage,
+} from 'shared/build/index.js';

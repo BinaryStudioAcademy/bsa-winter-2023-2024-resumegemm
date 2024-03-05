@@ -28,7 +28,7 @@ class EmailSubscriptionRepository implements IEmailSubscriptionRepository {
         const response = await this.emailSubscriptionModel
             .query()
             .deleteById(id);
-        return response === 1 ? true : false;
+        return !!response;
     }
 }
 

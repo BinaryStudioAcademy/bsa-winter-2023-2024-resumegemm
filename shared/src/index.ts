@@ -7,6 +7,7 @@ export {
 export {
     type EmailSubscription,
     EmailSubscriptionsApiPath,
+    EmailSubscriptionsValidationMessage,
 } from './bundles/email-subscriptions/email-subscriptions.js';
 export {
     type OauthUserEntityFields,
