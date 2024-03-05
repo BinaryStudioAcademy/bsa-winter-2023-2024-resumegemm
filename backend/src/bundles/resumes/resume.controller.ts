@@ -1,4 +1,4 @@
-import { HttpError, ResumesApiPath } from 'shared/build';
+import { HttpError, ResumesApiPath } from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
