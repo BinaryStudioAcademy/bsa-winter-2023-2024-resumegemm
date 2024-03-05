@@ -1,5 +1,6 @@
 import { forwardRef, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ApiPath } from 'shared/build';
 
 import styles from './styles.module.scss';
 
@@ -20,8 +21,8 @@ const Menu = forwardRef<HTMLMenuElement, Properties>(function Menu(
 
     return (
         <menu ref={menuReference} className={styles.menu}>
-            <Link className={styles.menu__link} to={'/account-settings'}>
-                Account Settings
+            <Link className={styles.menu__link} to={ApiPath.PROFILE}>
+                Profile
             </Link>
             <button className={styles.menu__link} onClick={logoutHandler}>
                 Log Out
