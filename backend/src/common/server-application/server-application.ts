@@ -22,7 +22,6 @@ const apiV1 = new ServerAppApi(
     ...resumeController.routes,
     ...userController.routes,
     ...paymentController.routes,
-    ...resumeController.routes,
     ...recentlyViewedController.routes,
     ...templateController.routes,
 );
