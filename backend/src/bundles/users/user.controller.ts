@@ -1,8 +1,14 @@
+import {
+    type UpdateUserProfileAndEmailRequestDto,
+    type UserWithProfileRelationAndOauthConnections,
+} from 'shared/build/index.js';
+
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
+    type ApiHandlerOptions,
     type ApiHandlerResponse,
-    Controller,
 } from '~/common/controller/controller.js';
+import { Controller } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
@@ -38,6 +44,20 @@ class UserController extends Controller {
             method: 'GET',
             handler: () => this.findAll(),
         });
+
+        this.addRoute({
+            path: UsersApiPath.ID,
+            method: 'PUT',
+            handler: (options) =>
+                this.updateUserProfileAndEmail(
+                    options as ApiHandlerOptions<{
+                        body: UpdateUserProfileAndEmailRequestDto;
+                        params: {
+                            id: string;
+                        };
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -61,6 +81,23 @@ class UserController extends Controller {
         return {
             status: HttpCode.OK,
             payload: await this.userService.findAll(),
+        };
+    }
+
+    private async updateUserProfileAndEmail(
+        options: ApiHandlerOptions<{
+            body: UpdateUserProfileAndEmailRequestDto;
+            params: {
+                id: string;
+            };
+        }>,
+    ): Promise<ApiHandlerResponse<UserWithProfileRelationAndOauthConnections>> {
+        return {
+            status: HttpCode.OK,
+            payload: await this.userService.updateUserProfileAndEmail(
+                options.params.id,
+                options.body,
+            ),
         };
     }
 }

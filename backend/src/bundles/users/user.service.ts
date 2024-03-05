@@ -1,3 +1,4 @@
+import { type UpdateUserProfileAndEmailRequestDto } from 'shared/build/index.js';
 import { HttpCode, HttpError } from 'shared/build/index.js';
 
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
@@ -68,7 +69,8 @@ class UserService
                     passwordHash: passwordHash ?? null,
                     profileId: id,
                 }) as unknown as Omit<
-                    UserEntityFields,
+                    | UserWithProfileRelationAndOauthConnections
+                    | UserEntityFields,
                     'createdAt' | 'updatedAt' | 'id'
                 >,
                 transaction,
@@ -84,6 +86,23 @@ class UserService
                 message: (error as HttpError).message,
             });
         }
+    }
+
+    public async updateUserProfileAndEmail(
+        id: string,
+        { firstName, lastName, email }: UpdateUserProfileAndEmailRequestDto,
+    ): Promise<UserWithProfileRelationAndOauthConnections> {
+        const userWithNewEmail = await this.userRepository.updateById(id, {
+            email,
+        });
+        await this.profileRepository.updateById(userWithNewEmail.profileId, {
+            firstName,
+            lastName,
+        });
+        return this.userRepository.getUserWithProfileAndOauthConnections(
+            id,
+            'withoutHashPasswords',
+        ) as Promise<UserWithProfileRelationAndOauthConnections>;
     }
 
     public async getUserWithProfileAndOauthConnections(
