@@ -21,7 +21,11 @@ class UserModel extends AbstractModel {
 
     public 'passwordSalt': string;
 
+<<<<<<< HEAD
     public deletedAt!: string | null;
+=======
+    public 'stripeId': string;
+>>>>>>> 9ef4e6e6 (rg-139: + Added stripe id to user model.)
 
     public static override get tableName(): typeof DatabaseTableName.USERS {
         return DatabaseTableName.USERS;
@@ -36,7 +40,11 @@ class UserModel extends AbstractModel {
                     'profileId',
                     'createdAt',
                     'updatedAt',
+<<<<<<< HEAD
                     'deletedAt',
+=======
+                    'stripeId',
+>>>>>>> 9ef4e6e6 (rg-139: + Added stripe id to user model.)
                 );
             },
         };
