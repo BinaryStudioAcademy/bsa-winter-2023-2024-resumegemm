@@ -69,7 +69,7 @@ const RecoveryCodeForm: React.FC<Properties> = ({ onSubmit, onResendCode }) => {
                         value={value}
                     />
                 </FormGroup>
-                <div className={styles.restore__form__actions}>
+                <div className={styles.restore__form_actions}>
                     <RegularButton
                         size={ButtonSize.SMALL}
                         width={ButtonWidth.FULL}
@@ -87,7 +87,7 @@ const RecoveryCodeForm: React.FC<Properties> = ({ onSubmit, onResendCode }) => {
                         Send new code
                     </RegularButton>
                     <RegularButton
-                        className={styles.restore__form__button}
+                        className={styles.restore__form_button}
                         size={ButtonSize.SMALL}
                         width={ButtonWidth.FULL}
                         variant={ButtonVariant.PRIMARY}
