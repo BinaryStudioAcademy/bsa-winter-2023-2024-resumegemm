@@ -1,4 +1,8 @@
-export { UsersApiPath, UserValidationMessage } from './enums/enums.js';
+export {
+    UsersApiPath,
+    UserValidationMessage,
+    UserValidationRule,
+} from './enums/enums.js';
 export {
     type SocialMediaProfiles,
     type User,
