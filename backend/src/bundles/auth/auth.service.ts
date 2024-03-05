@@ -67,7 +67,6 @@ class AuthService implements TAuthService {
 
         const token = generateToken({ id });
         const user = await this.getUserWithProfile(id);
-        const token = generateToken({ id });
 
         return {
             user,
