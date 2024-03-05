@@ -1,8 +1,10 @@
 import { type FastifyRequest } from 'fastify';
 
+import { type AuthService } from '~/bundles/auth/auth.service';
 import {
     generateRefreshToken,
     generateToken,
+    verifyToken,
 } from '~/bundles/auth/helpers/helpers.js';
 import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
@@ -15,6 +17,7 @@ import {
     type ValueOf,
 } from '~/bundles/oauth/types/types.js';
 import { type HttpApi } from '~/common/api/types/http-api.type.js';
+import { config } from '~/common/config/config.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -31,19 +34,29 @@ import {
     OpenAuthApiPath,
 } from './enums/enums.js';
 
+type Constructor = {
+    logger: ILogger;
+    oauthService: OauthService;
+    authService: AuthService;
+    httpService: HttpApi;
+};
+
 class OpenAuthController extends Controller {
     private oauthService: OauthService;
     private httpService: HttpApi;
+    private authService: AuthService;
 
-    public constructor(
-        logger: ILogger,
-        oauthService: OauthService,
-        httpService: HttpApi,
-    ) {
+    public constructor({
+        logger,
+        oauthService,
+        authService,
+        httpService,
+    }: Constructor) {
         super(logger, ApiPath.OPEN_AUTH);
 
         this.oauthService = oauthService;
         this.httpService = httpService;
+        this.authService = authService;
 
         this.addRoute({
             path: OpenAuthApiPath.GITHUB,
@@ -125,6 +138,12 @@ class OpenAuthController extends Controller {
     }>): Promise<ApiHandlerResponse<unknown>> {
         const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
 
+        const accessToken = cookies[CookieName.ACCESS_TOKEN];
+
+        const userId = this.verifyTokenAndGetUserId(
+            accessToken as string,
+        ) as string;
+
         const {
             email,
             id,
@@ -138,12 +157,13 @@ class OpenAuthController extends Controller {
             oauthToken,
         );
         return await this.createUser({
-            email,
+            email: email ?? null,
             firstName: name,
             avatar: url,
             oauthId: id,
             lastName: last_name,
             oauthStrategy: OauthStrategy.FACEBOOK,
+            userId,
         });
     }
 
@@ -153,18 +173,27 @@ class OpenAuthController extends Controller {
         cookies: FastifyRequest['cookies'];
     }>): Promise<ApiHandlerResponse<unknown>> {
         const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
+
+        const accessToken = cookies[CookieName.ACCESS_TOKEN];
+
+        const userId = this.verifyTokenAndGetUserId(
+            accessToken as string,
+        ) as string;
+
         const { email, id, name, avatar_url }: UserGithubDataResponseDto =
             await this.requestOAuthProviderUserData(
                 OpenAuthApiGetUserUrl.GITHUB,
                 oauthToken,
             );
+
         return await this.createUser({
-            email,
+            email: email ?? null,
             firstName: name,
             lastName: null,
             avatar: avatar_url,
             oauthId: String(id),
             oauthStrategy: OauthStrategy.GITHUB,
+            userId,
         });
     }
 
@@ -174,6 +203,12 @@ class OpenAuthController extends Controller {
         cookies: FastifyRequest['cookies'];
     }>): Promise<ApiHandlerResponse<null>> {
         const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
+        const accessToken = cookies[CookieName.ACCESS_TOKEN];
+
+        const userId = this.verifyTokenAndGetUserId(
+            accessToken as string,
+        ) as string;
+
         const {
             id,
             email,
@@ -185,12 +220,13 @@ class OpenAuthController extends Controller {
             oauthToken,
         );
         return await this.createUser({
-            email,
+            email: email ?? null,
             firstName: given_name,
             lastName: family_name,
             avatar: picture,
             oauthId: id,
             oauthStrategy: OauthStrategy.GOOGLE,
+            userId,
         });
     }
 
@@ -215,6 +251,17 @@ class OpenAuthController extends Controller {
                 },
             };
         }
+    }
+
+    private verifyTokenAndGetUserId(token: string): string | null {
+        return token
+            ? (
+                  verifyToken(
+                      token,
+                      config.ENV.JWT.ACCESS_TOKEN_SECRET,
+                  ) as Record<'id', string>
+              ).id
+            : null;
     }
 
     private async requestOAuthProviderUserData<T>(
