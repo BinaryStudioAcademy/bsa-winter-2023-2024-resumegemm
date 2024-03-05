@@ -5,8 +5,8 @@
     gap: 4px;
     min-height: 16px;
     margin: 0;
-    color: #848d96;
-    font-size: 16px;
+    color: var(--color-text-gray);
+    font-size: var(--font-size-subtitle);
     line-height: 24px;
     text-align: center;
     text-decoration: none;
@@ -18,7 +18,7 @@
 .icon_wrapper {
     display: flex;
     color: var(--color-text-gray);
-    font-size: 12px;
+    font-size: var(--font-size-secondary-text);
 }
 
 .icon_wrapper svg {

@@ -49,7 +49,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(63 85 126 / 80%);
+    background-color: var(--color-background-blue);
 }
 
 .uploader_modal__overlay {
@@ -134,7 +134,7 @@
     width: 220px;
     padding: 12px;
     color: var(--color-text-blue);
-    font-size: var(--font-size-title-h5);
+    font-size: 14px;
     background-color: var(--color-white);
     border-radius: 25px;
 }

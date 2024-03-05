@@ -12,7 +12,7 @@ type SocialMediaLinkPayload = {
 };
 
 const SocialMediaLink: React.FC<SocialMediaLinkPayload> = ({ route, icon }) => (
-    <NavLink to={`${config.ENV.API.PROXY_URL}${route}`}>
+    <NavLink to={`${config.ENV.APP.DOMAIN_URL}${route}`}>
         <RegularButton variant={ButtonVariant.SQUARE_ORANGE}>
             <div
                 className={styles.icon}

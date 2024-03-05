@@ -2,12 +2,12 @@
     width: 90%;
     padding: 10px;
     border-radius: 8px;
-    box-shadow: rgb(0 0 0 / 24%) 0 3px 8px;
+    box-shadow: var(--color-box-shadow-dark) 0 3px 8px;
     transition: box-shadow 0.2s ease;
 }
 
 .question_and_answer_item__container_selected {
-    box-shadow: rgb(0 0 0 / 16%) 0 1px 4px;
+    box-shadow: var(--color-box-shadow-black) 0 1px 4px;
     transition: box-shadow 0.2s ease;
 }
 

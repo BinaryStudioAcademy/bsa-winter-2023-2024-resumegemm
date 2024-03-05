@@ -65,7 +65,9 @@ class AuthService implements TAuthService {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         await this.sendAfterSignUpEmail(email, token);
 
+        const token = generateToken({ id });
         const user = await this.getUserWithProfile(id);
+        const token = generateToken({ id });
 
         return {
             user,
