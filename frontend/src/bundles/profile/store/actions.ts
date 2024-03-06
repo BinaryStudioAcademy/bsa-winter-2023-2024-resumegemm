@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { type SocialMediaProfiles } from 'shared/build';
 
@@ -24,7 +22,7 @@ const updateUserAvatar = createAsyncThunk<
 
 const getUserProfileAndSocials = createAsyncThunk<
     SocialMediaProfiles[],
-    void,
+    undefined,
     AsyncThunkConfig
 >(`${sliceName}/get-social-media-profiles`, (_, { getState }) => {
     const {
