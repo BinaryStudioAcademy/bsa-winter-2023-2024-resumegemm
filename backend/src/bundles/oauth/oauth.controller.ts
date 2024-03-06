@@ -10,8 +10,10 @@ import {
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
+    type UserLinkedinDataResponseDto,
     type ValueOf,
 } from '~/bundles/oauth/types/types.js';
+import { type User } from '~/bundles/users/types/types';
 import { type HttpApi } from '~/common/api/types/http-api.type.js';
 import {
     type ApiHandlerOptions,
@@ -68,6 +70,16 @@ class OpenAuthController extends Controller {
             method: 'GET',
             handler: (options) =>
                 this.facebookAuthHandler(
+                    options as ApiHandlerOptions<{
+                        cookies: FastifyRequest['cookies'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: OpenAuthApiPath.LINKEDIN,
+            method: 'GET',
+            handler: (options) =>
+                this.linkedinAuthHandler(
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
                     }>,
@@ -188,6 +200,32 @@ class OpenAuthController extends Controller {
             avatar: picture,
             oauthId: id,
             oauthStrategy: OauthStrategy.GOOGLE,
+        });
+    }
+
+    private async linkedinAuthHandler({
+        cookies,
+    }: ApiHandlerOptions<{
+        cookies: FastifyRequest['cookies'];
+    }>): Promise<ApiHandlerResponse<unknown>> {
+        const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
+        const {
+            sub: id,
+            given_name: firstName,
+            family_name: lastName,
+            picture: avatar,
+            email,
+        }: UserLinkedinDataResponseDto = await this.requestOAuthProviderUserData(
+            OpenAuthApiGetUserUrl.LINKEDIN,
+            oauthToken,
+        );
+        return await this.createUser({
+            email,
+            firstName,
+            lastName,
+            avatar,
+            oauthId: id,
+            oauthStrategy: OauthStrategy.LINKEDIN,
         });
     }
 
