@@ -86,6 +86,7 @@ export {
     ApiPath,
     AppEnvironment,
     ContentType,
+    CookieName,
     ExceptionMessage,
     ServerErrorType,
 } from './enums/enums.js';
@@ -104,7 +105,7 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type IStorage } from './framework/storage/storage.js';
-export { configureString, getCookie } from './helpers/helpers.js';
+export { configureString, getCookie, setCookie } from './helpers/helpers.js';
 export {
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
