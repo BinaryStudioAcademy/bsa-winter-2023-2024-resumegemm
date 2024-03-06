@@ -108,6 +108,20 @@ class Config implements IConfig {
                         default: null,
                     },
                 },
+                LINKEDIN: {
+                    CLIENT_LINKEDIN_ID: {
+                        doc: 'Linkedin app id',
+                        format: String,
+                        env: 'CLIENT_LINKEDIN_ID',
+                        default: null,
+                    },
+                    CLIENT_LINKEDIN_SECRET: {
+                        doc: 'Linkedin client secret',
+                        format: String,
+                        env: 'CLIENT_LINKEDIN_SECRET',
+                        default: null,
+                    },
+                },
                 BASE_CALLBACK_URI: {
                     doc: 'Secret key for callback url',
                     format: String,
