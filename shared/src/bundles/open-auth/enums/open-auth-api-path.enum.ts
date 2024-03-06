@@ -4,6 +4,7 @@ enum OpenAuthApiPath {
     GITHUB = '/github',
     GOOGLE = '/google',
     FACEBOOK = '/facebook',
+    LINKEDIN = '/linkedin',
     REDIRECT_CALLBACK = '/oauth/login/:provider',
 }
 
