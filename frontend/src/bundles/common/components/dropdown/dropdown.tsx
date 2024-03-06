@@ -28,7 +28,7 @@ const Dropdown: React.FC<Properties> = ({
     isDisabled,
     options,
 }) => {
-    const optionChangeHandler = useCallback(
+    const handleOptionChange = useCallback(
         (option: Option | null) => {
             onChange(option?.value);
         },
@@ -44,7 +44,7 @@ const Dropdown: React.FC<Properties> = ({
                 name={name}
                 options={options}
                 isDisabled={isDisabled}
-                onChange={optionChangeHandler}
+                onChange={handleOptionChange}
             />
         </div>
     );

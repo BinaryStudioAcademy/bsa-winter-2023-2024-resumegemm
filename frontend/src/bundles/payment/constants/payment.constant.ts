@@ -1,3 +1,3 @@
-const coinsInBanknote = 100;
+const COINS_IN_BANKNOTE = 100;
 
-export { coinsInBanknote };
+export { COINS_IN_BANKNOTE };

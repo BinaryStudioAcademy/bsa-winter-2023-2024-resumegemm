@@ -13,24 +13,22 @@ const ToastProvider: FC<Properties> = ({ children }) => {
     const { showToast } = useContext(ToastContext);
 
     return (
-        <>
-            <ToastContext.Provider value={{ showToast }}>
-                <ToastContainer
-                    position="bottom-right"
-                    autoClose={5000}
-                    hideProgressBar={true}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="light"
-                    transition={Bounce}
-                />
-                {children}
-            </ToastContext.Provider>
-        </>
+        <ToastContext.Provider value={{ showToast }}>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+            />
+            {children}
+        </ToastContext.Provider>
     );
 };
 
