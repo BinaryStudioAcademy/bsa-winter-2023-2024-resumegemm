@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-    type Profile,
-    type SocialMediaProfiles,
-    type UpdateUserProfileAndEmailRequestDto,
-} from 'shared/build';
+import { type Profile, type SocialMediaProfiles } from 'shared/build';
 
 import { actions } from '~/bundles/auth/store/slice.js';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
@@ -13,6 +9,7 @@ import {
     getCurrentlyConnectedSocialMedias,
     updatedSocialMediaProfiles,
 } from '../helpers/helpers.js';
+import { type UpdateProfileAndEmailDto } from '../types/update-email-and-profile.js';
 import { name as sliceName } from './slice.js';
 
 const updateUserAvatar = createAsyncThunk<Profile, FormData, AsyncThunkConfig>(
@@ -57,18 +54,16 @@ const disconnectSocialMedia = createAsyncThunk<
 
 const updateProfileAndEmail = createAsyncThunk<
     Profile,
-    { id: string; payload: UpdateUserProfileAndEmailRequestDto },
+    UpdateProfileAndEmailDto,
     AsyncThunkConfig
 >(
     `${sliceName}/update-profile-and-email`,
     async ({ id, payload }, { extra, dispatch }) => {
         const { userApi } = extra;
-        const updatedUserWithProfile = await userApi.updateProfileAndEmail(
-            id,
-            payload,
-        );
-        dispatch(actions.setUser(updatedUserWithProfile));
-        return updatedUserWithProfile.profile;
+        const user = await userApi.updateProfileAndEmail(id, payload);
+        dispatch(actions.setUser(user));
+
+        return user.profile;
     },
 );
 

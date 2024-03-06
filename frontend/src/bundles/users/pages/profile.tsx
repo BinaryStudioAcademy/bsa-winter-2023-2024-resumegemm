@@ -9,7 +9,6 @@ import {
 import { useAppSelector } from '~/bundles/common/hooks/use-app-selector/use-app-selector.hook';
 import { updateProfileAndEmail } from '~/bundles/profile/store/actions';
 import { actions as profileActions } from '~/bundles/profile/store/index';
-import { type UserAuthResponse } from '~/bundles/users/types/types';
 
 import { DeleteAccount } from '../components/delete-account/delete-account';
 import { ProfileCard } from '../components/profile-card/profile-card';
@@ -33,21 +32,21 @@ const Profile: React.FC = () => {
         [dispatch],
     );
 
-    const { profile, id, firstName, lastName, email } = useAppSelector(
+    const { profile, userId, firstName, lastName, email } = useAppSelector(
         ({ auth, profile }) => ({
             profile,
             firstName: auth.user?.profile.firstName as NonNullable<string>,
             lastName: auth.user?.profile.lastName ?? '',
-            id: (auth.user as unknown as UserAuthResponse['user']).id,
-            email: (auth.user as unknown as UserAuthResponse['user']).email,
+            userId: auth.user?.id as string,
+            email: auth.user?.email as string,
         }),
     );
 
     const handleFormSubmit = useCallback(
         (payload: UpdateUserProfileAndEmailRequestDto) => {
-            void dispatch(updateProfileAndEmail({ id, payload }));
+            void dispatch(updateProfileAndEmail({ id: userId, payload }));
         },
-        [dispatch, id],
+        [dispatch, userId],
     );
 
     return (
