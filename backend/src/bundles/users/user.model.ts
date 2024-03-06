@@ -23,6 +23,8 @@ class UserModel extends AbstractModel {
 
     public deletedAt!: string | null;
 
+    public 'stripeId': string;
+
     public static override get tableName(): typeof DatabaseTableName.USERS {
         return DatabaseTableName.USERS;
     }
@@ -37,6 +39,7 @@ class UserModel extends AbstractModel {
                     'createdAt',
                     'updatedAt',
                     'deletedAt',
+                    'stripeId',
                 );
             },
         };

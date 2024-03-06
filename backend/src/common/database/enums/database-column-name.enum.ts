@@ -39,6 +39,7 @@ enum DatabaseColumnName {
     VIEWED_AT = 'viewed_at',
     TEMPLATE_ID = 'template_id',
     TEMPLATE_SETTINGS = 'template_settings',
+    STRIPE_ID = 'stripe_id',
     STRIPE_PLAN_ID = 'stripe_plan_id',
     STRIPE_PRODUCT_ID = 'stripe_product_id',
     NAME = 'name',
@@ -54,13 +55,14 @@ enum DatabaseColumnName {
     CURRENTLY_STUDYING = 'currently_studying',
     CURRENTLY_WORKING = 'currently_working',
     LINK = 'link',
-    CRTIFICATION_NAME = 'certification_name',
+    CERTIFICATION_NAME = 'certification_name',
     AUTHORITY = 'authority',
     CERTIFICATION_URL_OR_CODE = 'certification_url_or_code',
     LANGUAGE = 'language',
     LANGUAGE_LEVEL = 'language_level',
     ACTIVITY = 'activity',
     OWNER_ID = 'owner_id',
+    DESCRIPTION = 'description',
 }
 
 export { DatabaseColumnName };
