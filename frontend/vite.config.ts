@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url';
 
-import svgr from "vite-plugin-svgr";
+import svgr from 'vite-plugin-svgr';
 import reactPlugin from '@vitejs/plugin-react';
 import { type ConfigEnv, defineConfig, loadEnv } from 'vite';
 import tsconfigPathsPlugin from 'vite-tsconfig-paths';
