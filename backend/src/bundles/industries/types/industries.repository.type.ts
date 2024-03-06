@@ -1,7 +1,7 @@
 import { type Industry } from './types';
 
-type IIndustriesRepository = {
+interface IIndustriesRepository {
     findAll: () => Promise<Industry[]>;
-};
+}
 
 export { type IIndustriesRepository };

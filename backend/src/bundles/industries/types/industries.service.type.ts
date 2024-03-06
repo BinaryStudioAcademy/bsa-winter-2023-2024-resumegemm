@@ -1,7 +1,7 @@
 import { type Industry } from './types';
 
-type IIndustriesService = {
+interface IIndustriesService {
     findAll(data: { limit: number }): Promise<Industry[]>;
-};
+}
 
 export { type IIndustriesService };
