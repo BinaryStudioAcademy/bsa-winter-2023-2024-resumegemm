@@ -15,7 +15,7 @@ import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
 
 import { SubscriptionCard } from '../components/subscription-card';
-import { coinsInBanknote } from '../constants/payment.constant';
+import { COINS_IN_BANKNOTE } from '../constants/payment.constant';
 import { PaymentMessage } from '../enums/messages';
 import { createSubscription, getPrices } from '../store/actions';
 import { type CreateSubscriptionResponseDto } from '../types/types';
@@ -64,9 +64,9 @@ const SubscriptionPaymentPage: React.FC = () => {
         setModalIsHidden(true);
     }, []);
 
-    const HandleSubmit = useCallback(
+    const handleSubmit = useCallback(
         (event: FormEvent<HTMLFormElement>): void => {
-            async function HandleSubmitAsync(): Promise<void> {
+            async function handleSubmitAsync(): Promise<void> {
                 try {
                     setProcessing(true);
 
@@ -149,7 +149,7 @@ const SubscriptionPaymentPage: React.FC = () => {
                 }
             }
 
-            void HandleSubmitAsync();
+            void handleSubmitAsync();
         },
         [elements, stripe, dispatch, name, email, priceId],
     );
@@ -160,7 +160,7 @@ const SubscriptionPaymentPage: React.FC = () => {
 
     return (
         <div className={styles.payment__container}>
-            <form className={styles.payment__form} onSubmit={HandleSubmit}>
+            <form className={styles.payment__form} onSubmit={handleSubmit}>
                 <div className={styles.payment__prices_container}>
                     {prices.map((price) => (
                         <SubscriptionCard
@@ -169,7 +169,7 @@ const SubscriptionPaymentPage: React.FC = () => {
                             key={price.id}
                             price={
                                 price.unit_amount &&
-                                price.unit_amount / coinsInBanknote
+                                price.unit_amount / COINS_IN_BANKNOTE
                             }
                             currency={price.currency}
                             duration={`${price.recurring.interval_count} ${price.recurring.interval}`}

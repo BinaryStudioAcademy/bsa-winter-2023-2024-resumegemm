@@ -5,16 +5,16 @@ import { AbstractRepository } from '~/common/database/abstract.repository.js';
 
 import { type OauthUserEntityFields } from './types/types.js';
 
-type TOauthRepository = {
+interface IOauthRepository {
     findByOauthId(oauthId: string): Promise<OauthUserEntityFields | null>;
-};
+}
 
 class OauthRepository
     extends AbstractRepository<
         typeof OauthModel,
         OauthUserLoginResponseDto | OauthUserEntityFields
     >
-    implements TOauthRepository
+    implements IOauthRepository
 {
     public constructor({
         oauthModel,
@@ -24,7 +24,7 @@ class OauthRepository
 
     public async findByOauthId(
         oauthId: string,
-    ): ReturnType<TOauthRepository['findByOauthId']> {
+    ): ReturnType<IOauthRepository['findByOauthId']> {
         const foundUser = await this.model
             .query()
             .where('oauth_id', oauthId)

@@ -9,7 +9,7 @@ enum ApiPath {
     OPEN_AUTH = '/oauth',
     RESUMES = '/resumes',
     WEBHOOKS = '/webhooks',
-    AVATAR = '/avatar'
+    AVATAR = '/avatar',
 }
 
 export { ApiPath };

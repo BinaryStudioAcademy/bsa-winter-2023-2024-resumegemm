@@ -67,8 +67,14 @@
 .intro__arrow {
     position: absolute;
     bottom: -100px;
-    left: 45%;
+    left: 50%;
     width: 70%;
+    height: 55%;
+    background-color: var(--color-accent-light-yellow);
+    mask-image: url("../../assets/img/Arrow2.svg");
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    mask-position: center;
 }
 
 .intro__image_container {
