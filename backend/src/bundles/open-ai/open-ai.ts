@@ -9,5 +9,5 @@ const {
 const openAIService = new OpenAIService(API_KEY);
 
 export { openAIService };
-export { ModelSettings, Prompts } from './constants/constants.js';
+export { MODEL_SETTINGS, PROMPTS } from './constants/constants.js';
 export { Roles } from './enums/enums.js';

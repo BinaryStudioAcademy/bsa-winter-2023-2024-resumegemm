@@ -3,8 +3,7 @@ import { type TPDFService } from 'shared/build';
 import { type ApiHandlerResponse } from '~/common/controller/controller.js';
 import { Controller } from '~/common/controller/controller.package.js';
 import { ApiPath } from '~/common/enums/enums.js';
-import { type HttpError } from '~/common/http/http.js';
-import { HttpCode } from '~/common/http/http.js';
+import { type HTTPError, HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { PDFApiPath } from './enums/enums.js';
@@ -43,7 +42,7 @@ class PDFController extends Controller {
                 contentType: 'application/pdf',
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {
