@@ -50,7 +50,6 @@ enum DatabaseColumnName {
     IS_ACTIVE = 'is_active',
     INDUSTRY = 'industry',
     INSTITUTION = 'institution',
-    DESCRIPTION = 'description',
     COUNTRY = 'country',
     CURRENTLY_STUDYING = 'currently_studying',
     CURRENTLY_WORKING = 'currently_working',
