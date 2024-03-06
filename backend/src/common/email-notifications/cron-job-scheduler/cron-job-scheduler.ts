@@ -3,6 +3,7 @@ import cron from 'node-cron';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { SEND_EMAIL_TIME } from '../common/constants.js';
+import { CronJobResultMessage } from '../enums/cron-job-result-message.enum.js';
 import { type ResumeCountEmailService } from '../resume-count-email-service/resume-count-email-service.js';
 
 class CronJobScheduler {
@@ -19,10 +20,10 @@ class CronJobScheduler {
             this.emailSender
                 .sendEmails()
                 .then(() => {
-                    this.logger.info('Emails sent successfully.');
+                    this.logger.info(CronJobResultMessage.SUCCESS);
                 })
                 .catch((error: Error) => {
-                    this.logger.error('Error sending emails:', {
+                    this.logger.error(CronJobResultMessage.ERROR, {
                         error: error.message,
                     });
                 });
