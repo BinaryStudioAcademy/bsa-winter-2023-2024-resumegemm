@@ -1,13 +1,8 @@
-import { getUser } from '../auth/store/actions';
 import { Header, NavTabs, Spinner } from '../common/components/components';
 import { UserProfile } from '../common/components/layout/header/user-profile/user-profile';
 import { AppRoute } from '../common/enums/app-route.enum';
 import { getUserAvatart } from '../common/helpers/get-user-avatar';
-import {
-    useAppDispatch,
-    useAppSelector,
-    useEffect,
-} from '../common/hooks/hooks';
+import { useAppSelector } from '../common/hooks/hooks';
 import { Home } from '../home/pages/home';
 import styles from './styles.module.scss';
 
@@ -17,13 +12,7 @@ const navbarItems = [
 ];
 
 const MainPage = (): JSX.Element => {
-    const dispatch = useAppDispatch();
     const { user, dataStatus } = useAppSelector((state) => state.auth);
-    useEffect(() => {
-        if (!user) {
-            void dispatch(getUser());
-        }
-    }, [user, dispatch]);
 
     return (
         <>

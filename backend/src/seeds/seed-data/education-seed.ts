@@ -1,29 +1,41 @@
 const educationSeed = [
     {
-        major_name: 'University of California, Los Angeles',
+        institution: 'University of California, Los Angeles',
         degree: 'Bachelor of Science',
-        location: 'Los Angeles, CA',
+        city: 'Los Angeles, CA',
+        country: 'USA',
+        description:
+            'Studied Computer Science with a focus on software engineering and data structures.',
         start_date: new Date(2015, 1),
         end_date: new Date(2017, 2),
     },
     {
-        major_name: 'Lviv University',
+        institution: 'Lviv University',
         degree: 'Master of Science',
-        location: 'Lviv, Ukraine',
+        city: 'Lviv, Ukraine',
+        country: 'Ukraine',
+        description:
+            'Specialized in Artificial Intelligence and Machine Learning during the master program.',
         start_date: new Date(2015, 2),
         end_date: new Date(2017, 3),
     },
     {
-        major_name: 'Milan University',
-        degree: 'Barchelor of Science',
-        location: 'Nilan, Italy',
+        institution: 'Milan University',
+        degree: 'Bachelor of Science',
+        city: 'Milan',
+        country: 'Italy',
+        description:
+            'Focused on Computer Engineering with coursework in software development and embedded systems.',
         start_date: new Date(2015, 3),
         end_date: new Date(2017, 4),
     },
     {
-        major_name: 'Kyiv University',
+        institution: 'Kyiv University',
         degree: 'Master of Science',
-        location: 'Kyiv, Ukraine',
+        city: 'Kyiv',
+        country: 'Ukraine',
+        description:
+            'Explored advanced topics in Computer Science such as distributed systems and cryptography.',
         start_date: new Date(2015, 5),
         end_date: new Date(2017, 6),
     },

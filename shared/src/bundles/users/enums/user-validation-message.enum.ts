@@ -7,6 +7,7 @@ enum UserValidationMessage {
     LASTNAME_LONG = 'Last name length must be less than or equal to 50 characters long',
     EMAIL_REQUIRE = 'Email is required',
     EMAIL_WRONG = 'Email is wrong',
+    EMAIL_INVALID = 'Invalid email format. Please use a valid email address',
     PASSWORD_REQUIRED = 'Password is required',
     PASSWORD_INVALID = 'Invalid password.Use 8-64 characters, mix uppercase, lowercase, numbers, and special characters. No spaces allowed',
     CONFIRM_PASSWORD_REQUIRED = 'Confirm password required',

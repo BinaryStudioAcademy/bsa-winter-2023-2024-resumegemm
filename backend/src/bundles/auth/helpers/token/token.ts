@@ -1,3 +1,4 @@
+export { decodeToken } from './decode-token/decode-token.js';
 export { generateRefreshToken } from './generate-refresh-token/generate-refresh-token.js';
 export { generateResetPasswordToken } from './generate-reset-password-token/generate-reset-password-token.js';
 export { generateToken } from './generate-token/generate-token.js';

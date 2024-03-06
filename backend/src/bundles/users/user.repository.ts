@@ -26,7 +26,11 @@ class UserRepository
     public async findOneByEmail(
         email: string,
     ): ReturnType<TUserRepo['findOneByEmail']> {
-        const user = await this.model.query().findOne({ email });
+        const user = await this.model
+            .query()
+            .findOne({ email })
+            .whereNull('deletedAt');
+
         return user ?? null;
     }
 
@@ -45,9 +49,21 @@ class UserRepository
     }
 
     public async findAll(): ReturnType<TUserRepo['findAll']> {
-        const users = await this.model.query().execute();
+        const users = await this.model.query().whereNull('deletedAt').execute();
 
         return users.map((it) => UserEntity.initialize(it));
+    }
+
+    public async delete(id: string): Promise<UserEntityFields> {
+        const user = await this.model
+            .query()
+            .findOne({ id })
+            .whereNull('deletedAt')
+            .patch({ deletedAt: new Date().toISOString() })
+            .returning(['id', 'email', 'deleted_at', 'profile_id'])
+            .castTo<UserEntityFields>();
+
+        return user ?? null;
     }
 }
 
