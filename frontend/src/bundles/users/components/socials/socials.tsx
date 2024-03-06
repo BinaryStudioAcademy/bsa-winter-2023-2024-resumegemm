@@ -27,7 +27,7 @@ const Socials: React.FC<SocialsPayload> = ({
                                 provider as unknown as ValueOf<typeof IconName>
                             }
                             id={id}
-                            redirectPath={redirect}
+                            subPath={redirect}
                             dataStatus={dataStatus}
                             provider={provider}
                             isConnected={connected}

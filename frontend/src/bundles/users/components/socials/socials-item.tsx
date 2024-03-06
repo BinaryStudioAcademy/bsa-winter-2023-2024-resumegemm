@@ -1,5 +1,4 @@
-import { NavLink } from 'react-router-dom';
-import { type ValueOf } from 'shared/build';
+import { type ValueOf, ApiPath } from 'shared/build';
 
 import {
     BaseButton,
@@ -11,8 +10,11 @@ import {
     DataStatus,
     SpinnerVariant,
 } from '~/bundles/common/enums/enums';
-import { useCallback, useState } from '~/bundles/common/hooks/hooks';
-import { config } from '~/framework/config/config';
+import {
+    useCallback,
+    useRedirect,
+    useState,
+} from '~/bundles/common/hooks/hooks';
 
 import styles from './style.module.scss';
 
@@ -21,7 +23,7 @@ type Properties = {
     provider: string;
     isConnected: boolean;
     id: string | null;
-    redirectPath: string;
+    subPath: string;
     onSocialDisconnect: (id: string) => void;
     dataStatus: ValueOf<typeof DataStatus>;
 };
@@ -32,12 +34,17 @@ const SocialItem: React.FC<Properties> = ({
     isConnected,
     id,
     onSocialDisconnect,
-    redirectPath,
+    subPath,
     dataStatus,
 }) => {
     const [currentSocialItemId, setCurrentSocialItemId] = useState<
         string | null
     >(null);
+
+    const { handleRedirect } = useRedirect({
+        subPath,
+        redirectPath: ApiPath.PROFILE,
+    });
 
     const handleSocialMediaDisconnect = useCallback(
         (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -72,9 +79,7 @@ const SocialItem: React.FC<Properties> = ({
                         Disconnect
                     </BaseButton>
                 ) : (
-                    <NavLink to={`${config.ENV.APP.DOMAIN_URL}${redirectPath}`}>
-                        Connect
-                    </NavLink>
+                    <BaseButton onClick={handleRedirect}>Connect</BaseButton>
                 )}
             </div>
         </div>
