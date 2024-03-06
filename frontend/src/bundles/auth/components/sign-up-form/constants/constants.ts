@@ -7,7 +7,7 @@ const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpRequestDtoFrontend = {
     lastName: '',
     email: '',
     password: '',
-    confirm_password: '',
+    // confirm_password?: '',
     // emailConfirmed: false
 };
 

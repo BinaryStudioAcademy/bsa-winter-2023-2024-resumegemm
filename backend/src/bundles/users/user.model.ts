@@ -25,6 +25,8 @@ class UserModel extends AbstractModel {
 
     public deletedAt!: string | null;
 
+    public 'stripeId': string;
+
     public static override get tableName(): typeof DatabaseTableName.USERS {
         return DatabaseTableName.USERS;
     }
@@ -40,6 +42,7 @@ class UserModel extends AbstractModel {
                     'updatedAt',
                     'emailConfirmed',
                     'deletedAt',
+                    'stripeId',
                 );
             },
         };
@@ -47,7 +50,7 @@ class UserModel extends AbstractModel {
 
     public static getRelationMappings(): RelationMappings {
         return {
-            user_profile: {
+            userProfile: {
                 relation: Model.HasOneRelation,
                 modelClass: ProfileModel,
                 join: {

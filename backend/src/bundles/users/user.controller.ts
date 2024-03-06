@@ -1,5 +1,5 @@
 import { type FastifyRequest } from 'fastify';
-import { type UserEntityFields, HttpError } from 'shared/build/index.js';
+import { type UserEntityFields, HTTPError } from 'shared/build/index.js';
 
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
@@ -126,7 +126,7 @@ class UserController extends Controller {
                 payload,
             };
         } catch (error: unknown) {
-            return error instanceof HttpError
+            return error instanceof HTTPError
                 ? {
                       status: error.status,
                       payload: {

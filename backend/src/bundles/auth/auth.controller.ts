@@ -1,15 +1,13 @@
 import { type FastifyRequest } from 'fastify';
 import jwt from 'jsonwebtoken';
 import {
-    type HttpError,
+    type HTTPError,
     type UserAuthResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
-    type UserSignUpResponseDto,
     type UserWithProfileRelation,
-    AuthApiPath,
-    ExceptionMessage,
 } from 'shared/build/index.js';
+import { AuthApiPath, ExceptionMessage } from 'shared/build/index.js';
 
 import {
     generateRefreshToken,
@@ -18,6 +16,7 @@ import {
 import { userService } from '~/bundles/users/users.js';
 import {
     type UserSignUpRequestDto,
+    type UserSignUpResponseDto,
     userSignInValidationSchema,
     userSignUpValidationSchema,
 } from '~/bundles/users/users.js';
@@ -223,12 +222,23 @@ class AuthController extends Controller {
             body: UserSignUpRequestDto;
         }>,
     ): Promise<ApiHandlerResponse<UserSignUpResponseDto>> {
-        const token = await this.authService.signUp(options.body);
+        try {
+            const token = await this.authService.signUp(options.body);
 
-        return {
-            status: HttpCode.CREATED,
-            payload: token,
-        };
+            return {
+                status: HttpCode.CREATED,
+                payload: token,
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HTTPError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
     }
 
     private async login(
@@ -248,7 +258,7 @@ class AuthController extends Controller {
                 payload: userData,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {
@@ -310,7 +320,7 @@ class AuthController extends Controller {
                 payload: { accessToken },
             };
         } catch (error: unknown) {
-            const { status } = error as HttpError;
+            const { status } = error as HTTPError;
             return {
                 status,
                 payload: {
@@ -337,7 +347,7 @@ class AuthController extends Controller {
                 payload: { message: userMessages.EMAIL_CONFIRMED },
             };
         } catch (error: unknown) {
-            const { status } = error as HttpError;
+            const { status } = error as HTTPError;
             return {
                 status,
                 payload: {

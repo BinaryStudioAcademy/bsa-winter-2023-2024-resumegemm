@@ -2,13 +2,13 @@ import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 import {
     type HttpCode,
     type ValueOf,
-    HttpError,
+    HTTPError,
     HttpHeader,
 } from 'shared/build/index.js';
 
 import { type HttpApi, type HttpOptions } from '~/common/api/types/types.js';
 
-class Http implements HttpApi {
+class HTTP implements HttpApi {
     private axiosInstance: AxiosInstance;
 
     public constructor() {
@@ -47,11 +47,11 @@ class Http implements HttpApi {
         const {
             response: { data, status },
         } = error;
-        throw new HttpError({
+        throw new HTTPError({
             message: JSON.stringify(data),
             status,
         });
     };
 }
 
-export { Http };
+export { HTTP };

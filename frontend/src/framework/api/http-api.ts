@@ -6,8 +6,12 @@ import {
     type ServerErrorResponse,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
-import { type HttpCode, type IHttp } from '~/framework/http/http.js';
-import { HttpError, HttpHeader } from '~/framework/http/http.js';
+import {
+    type HttpCode,
+    type IHttp,
+    HTTPError,
+    HttpHeader,
+} from '~/framework/http/http.js';
 import { type IStorage, StorageKey } from '~/framework/storage/storage.js';
 import { configureString } from '~/helpers/helpers.js';
 
@@ -21,7 +25,7 @@ type Constructor = {
     storage: IStorage;
 };
 
-class HttpApi implements IHttpApi {
+class HTTPApi implements IHttpApi {
     private baseUrl: string;
 
     private path: string;
@@ -113,7 +117,8 @@ class HttpApi implements IHttpApi {
 
         const isCustomException = Boolean(parsedException.errorType);
 
-        throw new HttpError({
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        throw new HTTPError({
             status: response.status as ValueOf<typeof HttpCode>,
             errorType: isCustomException
                 ? parsedException.errorType
@@ -125,4 +130,4 @@ class HttpApi implements IHttpApi {
     }
 }
 
-export { HttpApi };
+export { HTTPApi as HttpApi };

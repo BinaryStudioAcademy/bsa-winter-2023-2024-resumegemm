@@ -1,5 +1,5 @@
 interface IMailService {
-    sendMail(parametres: {
+    sendMail(parameters: {
         to: string;
         subject: string;
         text?: string;

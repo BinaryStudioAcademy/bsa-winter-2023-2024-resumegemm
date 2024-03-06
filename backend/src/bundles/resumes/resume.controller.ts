@@ -1,4 +1,8 @@
-import { type IdParameter, HttpError, ResumesApiPath } from 'shared/build';
+import {
+    type IdParameter,
+    HTTPError,
+    ResumesApiPath,
+} from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
@@ -9,7 +13,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
-import { type IResumeService } from './interfaces/interfaces.js';
+import { type IResumeService } from './interfaces/resume-service.interface.js';
 import {
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
@@ -126,7 +130,7 @@ class ResumeController extends Controller {
         );
 
         if (!resume) {
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.BAD_REQUEST,
                 message: `Resume with id ${options.params.id} not found`,
             });
@@ -158,7 +162,7 @@ class ResumeController extends Controller {
         const resume = await this.resumeService.find(options.params.id);
 
         if (!resume) {
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.BAD_REQUEST,
                 message: `Resume with id ${options.params.id} not found`,
             });

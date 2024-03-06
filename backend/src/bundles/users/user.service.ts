@@ -1,6 +1,6 @@
 import { type IncomingHttpHeaders } from 'node:http';
 
-import { HttpCode, HttpError } from 'shared/build/index.js';
+import { HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
 import { UserEntity } from '~/bundles/users/user.entity.js';
@@ -77,9 +77,9 @@ class UserService implements Omit<IService, 'getById'> {
             return user.toObject();
         } catch (error: unknown) {
             await transaction.rollback();
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                message: (error as HttpError).message,
+                message: (error as HTTPError).message,
             });
         }
     }
@@ -107,7 +107,7 @@ class UserService implements Omit<IService, 'getById'> {
         const token = getToken(headers);
 
         if (!token) {
-            throw new HttpError({
+            throw new HTTPError({
                 message: 'Token not found',
                 status: HttpCode.BAD_REQUEST,
             });
@@ -115,6 +115,16 @@ class UserService implements Omit<IService, 'getById'> {
 
         const { id } = decodeToken(token) as JwtPayload;
         return await this.userRepository.delete(id);
+    }
+
+    public async addStripeId(
+        stripeId: string,
+        email: string,
+    ): Promise<UserEntityFields | null> {
+        return this.userRepository.addStripeId({
+            stripeId,
+            email,
+        });
     }
 }
 

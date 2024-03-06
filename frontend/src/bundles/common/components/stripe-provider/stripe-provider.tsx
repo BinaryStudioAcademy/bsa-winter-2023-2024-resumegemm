@@ -1,8 +1,7 @@
 import { Elements } from '@stripe/react-stripe-js';
-import { type Stripe } from '@stripe/stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { type Stripe, loadStripe } from '@stripe/stripe-js';
 
-import { actions as PaymentActions } from '~/bundles/payment/store/';
+import { actions as PaymentActions } from '~/bundles/payment/store/payment.store';
 
 import {
     useAppDispatch,
@@ -39,11 +38,7 @@ const StripeProvider: React.FC<Properties> = ({ children }) => {
         }
     }, [publishableKey]);
 
-    return (
-        <>
-            <Elements stripe={stripePromise}>{children}</Elements>
-        </>
-    );
+    return <Elements stripe={stripePromise}>{children}</Elements>;
 };
 
 export { StripeProvider };

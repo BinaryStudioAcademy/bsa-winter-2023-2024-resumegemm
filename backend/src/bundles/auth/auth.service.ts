@@ -5,7 +5,7 @@ import {
     AuthException,
     ExceptionMessage,
     HttpCode,
-    HttpError,
+    HTTPError,
 } from 'shared/build/index.js';
 
 import { getTemplate } from '~/bundles/auth/helpers/get-template.js';
@@ -45,7 +45,7 @@ class AuthService implements TAuthService {
             userRequestDto.email,
         );
         if (foundUserByEmail) {
-            throw new HttpError({
+            throw new HTTPError({
                 message: ExceptionMessage.EMAIL_TAKEN,
                 status: HttpCode.BAD_REQUEST,
             });
@@ -103,7 +103,7 @@ class AuthService implements TAuthService {
         const foundUserByEmail = await this.userService.findByEmail(email);
 
         if (!foundUserByEmail) {
-            throw new HttpError({
+            throw new HTTPError({
                 message: ExceptionMessage.USER_NOT_FOUND,
                 status: HttpCode.BAD_REQUEST,
             });
@@ -116,7 +116,7 @@ class AuthService implements TAuthService {
         });
 
         if (!isEqualPassword) {
-            throw new HttpError({
+            throw new HTTPError({
                 message: ExceptionMessage.INVALID_PASSWORD,
                 status: HttpCode.UNAUTHORIZED,
             });
