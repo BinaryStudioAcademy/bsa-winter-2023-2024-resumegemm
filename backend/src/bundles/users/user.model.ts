@@ -1,8 +1,8 @@
 import {
-    Model,
     type Modifiers,
     type QueryBuilder,
     type RelationMappings,
+    Model,
 } from 'objection';
 
 import { ProfileModel } from '~/bundles/profile/profile.model.js';
@@ -22,7 +22,7 @@ class UserModel extends AbstractModel {
     public 'passwordSalt': string;
 
     public deletedAt!: string | null;
-    
+
     public 'stripeId': string;
 
     public static override get tableName(): typeof DatabaseTableName.USERS {
@@ -38,11 +38,8 @@ class UserModel extends AbstractModel {
                     'profileId',
                     'createdAt',
                     'updatedAt',
-<<<<<<< HEAD
                     'deletedAt',
-=======
                     'stripeId',
->>>>>>> 9ef4e6e6 (rg-139: + Added stripe id to user model.)
                 );
             },
         };
