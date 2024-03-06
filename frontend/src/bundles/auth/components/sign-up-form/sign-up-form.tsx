@@ -49,7 +49,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
             <div className={styles.registration__header}>
                 <h1 className={styles.registration__title}>Sign Up</h1>
                 <p className={styles.registration__message}>
-                    Already have an account? Go to
+                    Already have an account? Go to {''}
                     <Link
                         to={AppRoute.LOG_IN}
                         className={styles.registration__link}
