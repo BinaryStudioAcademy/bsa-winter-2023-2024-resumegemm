@@ -3,7 +3,7 @@ import {
     type ResumeShareDeleteResponseDto,
     type ResumeShareGetResponseDto,
 } from 'shared/build/index.js';
-import { HttpCode, HttpError } from 'shared/build/index.js';
+import { HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { ResumeShareErrorMessage } from './enums/error-messages.js';
 import { type ResumeShareModel } from './resume-share.model.js';
@@ -37,7 +37,7 @@ class ResumeShareRepository {
                 .execute();
 
             if (!resumeShare) {
-                throw new HttpError({
+                throw new HTTPError({
                     message:
                         ResumeShareErrorMessage.RESUME_SHARE_NOT_FOUND_ERROR,
                     status: HttpCode.NOT_FOUND,
@@ -47,7 +47,7 @@ class ResumeShareRepository {
             return resumeShare;
         } catch (error) {
             if (error instanceof Error) {
-                throw new HttpError({
+                throw new HTTPError({
                     message: error.message,
                     status: HttpCode.BAD_REQUEST,
                 });
@@ -71,7 +71,7 @@ class ResumeShareRepository {
                 .execute();
         } catch (error) {
             if (error instanceof Error) {
-                throw new HttpError({
+                throw new HTTPError({
                     message: ResumeShareErrorMessage.RESUME_SHARE_CREATE_ERROR,
                     status: HttpCode.BAD_REQUEST,
                 });
@@ -90,7 +90,7 @@ class ResumeShareRepository {
                 .execute();
 
             if (!resumeShare) {
-                throw new HttpError({
+                throw new HTTPError({
                     message:
                         ResumeShareErrorMessage.RESUME_SHARE_NOT_FOUND_ERROR,
                     status: HttpCode.NOT_FOUND,
@@ -100,7 +100,7 @@ class ResumeShareRepository {
             return resumeShare;
         } catch (error) {
             if (error instanceof Error) {
-                throw new HttpError({
+                throw new HTTPError({
                     message: ResumeShareErrorMessage.RESUME_SHARE_CREATE_ERROR,
                     status: HttpCode.BAD_REQUEST,
                 });

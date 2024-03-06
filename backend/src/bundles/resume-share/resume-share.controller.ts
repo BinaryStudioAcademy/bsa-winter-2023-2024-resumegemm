@@ -4,7 +4,7 @@ import {
     Controller,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
-import { type HttpError, HttpCode } from '~/common/http/http.js';
+import { type HTTPError, HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { ResumesApiPath } from './enums/enums.js';
@@ -239,7 +239,7 @@ class ResumeShareController extends Controller {
                 payload: await this.resumeShareService.CreateShareLink(id),
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {
@@ -262,7 +262,7 @@ class ResumeShareController extends Controller {
                 payload: await this.resumeShareService.GetShareLink(id, ip),
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {
@@ -284,7 +284,7 @@ class ResumeShareController extends Controller {
                 payload: await this.resumeShareService.GetShareLinkDetails(id),
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {
@@ -306,7 +306,7 @@ class ResumeShareController extends Controller {
                 payload: await this.resumeShareService.DeleteShareLink(id),
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {

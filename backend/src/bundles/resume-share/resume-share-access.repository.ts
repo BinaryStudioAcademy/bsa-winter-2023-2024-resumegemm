@@ -2,7 +2,7 @@ import { Guid } from 'guid-typescript';
 import {
     type ResumeShareAccessGetResponseDto,
     HttpCode,
-    HttpError,
+    HTTPError,
 } from 'shared/build/index.js';
 
 import { ResumeShareErrorMessage } from './enums/error-messages.js';
@@ -34,7 +34,7 @@ class ResumeShareAccessRepository {
                 .execute();
         } catch (error) {
             if (error instanceof Error) {
-                throw new HttpError({
+                throw new HTTPError({
                     message:
                         ResumeShareErrorMessage.RESUME_SHARE_ACCESS_CREATE_ERROR,
                     status: HttpCode.BAD_REQUEST,

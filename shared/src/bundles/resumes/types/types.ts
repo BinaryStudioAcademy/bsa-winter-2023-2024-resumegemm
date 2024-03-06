@@ -7,7 +7,7 @@ export { type ResumeGetAllRequestDto } from './resume-get-all-request-dto.type.j
 export { type ResumeGetAllResponseDto } from './resume-get-all-response-dto.type.js';
 export { type ResumeGetItemRequestDto } from './resume-get-item-request-dto.type.js';
 export { type ResumeGetItemResponseDto } from './resume-get-item-response-dto.type.js';
-export { type ResumeService } from './resume-service.type.js';
+export { type IResumeService } from './resume-service.type.js';
 export { type ResumeShareAccessCreateRequestDto } from './resume-share-access-create-request-dto.type';
 export { type ResumeShareAccessCreateResponseDto } from './resume-share-access-create-response-dto.type';
 export { type ResumeShareAccessGetResponseDto } from './resume-share-access-get-response-dto.type';

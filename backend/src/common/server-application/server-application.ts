@@ -21,7 +21,6 @@ const apiV1 = new ServerAppApi(
     ...openAuthController.routes,
     ...pdfController.routes,
     ...authController.routes,
-    ...resumeController.routes,
     ...userController.routes,
     ...paymentController.routes,
     ...recentlyViewedController.routes,
