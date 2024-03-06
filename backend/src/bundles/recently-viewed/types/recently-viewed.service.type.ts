@@ -4,7 +4,7 @@ import {
     type RecentlyViewedResumesWithCount,
 } from './types';
 
-type IRecentlyViewedService = {
+interface IRecentlyViewedService {
     findAll(data: { limit: number }): Promise<RecentlyViewedResponseDto[]>;
 
     findRecentlyViewedTemplatesByUser(data: {
@@ -29,6 +29,6 @@ type IRecentlyViewedService = {
     findRecentlyViewedResumesWithCount(): Promise<
         RecentlyViewedResumesWithCount[]
     >;
-};
+}
 
 export { type IRecentlyViewedService };
