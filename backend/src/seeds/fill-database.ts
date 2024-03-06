@@ -30,7 +30,7 @@ import {
     imagesSeed,
     industriesSeed,
     personalInformationSeed,
-    profileSeeds,
+    profileSeed,
     resumesSeed,
     reviewsSeed,
     technicalSkillsSeed,
@@ -69,7 +69,7 @@ async function seed(knex: Knex): Promise<void> {
 
         // PROFILE
 
-        const profileMappedSeed = profileSeeds.map((profile, index) => ({
+        const profileMappedSeed = profileSeed.map((profile, index) => ({
             ...profile,
             [DatabaseColumnName.ID]: guid.raw(),
             [DatabaseColumnName.AVATAR]: imagesSeed[index].image,

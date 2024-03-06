@@ -3,7 +3,7 @@ import { type FastifyRequest } from 'fastify';
 import { generateToken } from '~/bundles/auth/helpers/helpers.js';
 import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
-    type HttpError,
+    type HTTPError,
     type OauthUserEntityFields,
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,
@@ -47,7 +47,7 @@ class OpenAuthController extends Controller {
             path: OpenAuthApiPath.GITHUB,
             method: 'GET',
             handler: (options) =>
-                this.githubAuthHandler(
+                this.handleGithubAuth(
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
                     }>,
@@ -57,7 +57,7 @@ class OpenAuthController extends Controller {
             path: OpenAuthApiPath.GOOGLE,
             method: 'GET',
             handler: (options) =>
-                this.googleAuthHandler(
+                this.handleGoogleAuth(
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
                     }>,
@@ -67,7 +67,7 @@ class OpenAuthController extends Controller {
             path: OpenAuthApiPath.FACEBOOK,
             method: 'GET',
             handler: (options) =>
-                this.facebookAuthHandler(
+                this.handleFacebookAuth(
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
                     }>,
@@ -116,7 +116,7 @@ class OpenAuthController extends Controller {
      *         description: Invalid authentication request.
      */
 
-    private async facebookAuthHandler({
+    private async handleFacebookAuth({
         cookies,
     }: ApiHandlerOptions<{
         cookies: FastifyRequest['cookies'];
@@ -145,7 +145,7 @@ class OpenAuthController extends Controller {
         });
     }
 
-    private async githubAuthHandler({
+    private async handleGithubAuth({
         cookies,
     }: ApiHandlerOptions<{
         cookies: FastifyRequest['cookies'];
@@ -165,7 +165,7 @@ class OpenAuthController extends Controller {
         });
     }
 
-    private async googleAuthHandler({
+    private async handleGoogleAuth({
         cookies,
     }: ApiHandlerOptions<{
         cookies: FastifyRequest['cookies'];
@@ -202,7 +202,7 @@ class OpenAuthController extends Controller {
                 payload: null,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {
@@ -235,7 +235,7 @@ class OpenAuthController extends Controller {
                 payload: user,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {

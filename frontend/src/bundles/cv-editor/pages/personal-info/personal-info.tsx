@@ -2,16 +2,16 @@ import React, { type ChangeEvent, useCallback } from 'react';
 
 import { Input } from '../../../common/components/components';
 import { FormGroup } from '../../../common/components/form-group/form-group';
-import { type PersonalInfoType } from '../../types/personal-info/personal-info.type';
+import { type PersonalInfo } from '../../types/personal-info/personal-info.type';
 import styles from './styles.module.scss';
 
 type Properties = {
     onSubmit?: () => void;
-    onChange?: (personalInfo: PersonalInfoType) => void;
+    onChange?: (personalInfo: PersonalInfo) => void;
 };
 
 const PersonalInfoForm: React.FC<Properties> = ({ onSubmit, onChange }) => {
-    const [personalInfo, setPersonalInfo] = React.useState<PersonalInfoType>({
+    const [personalInfo, setPersonalInfo] = React.useState<PersonalInfo>({
         fullName: '',
         address: '',
         city: '',
