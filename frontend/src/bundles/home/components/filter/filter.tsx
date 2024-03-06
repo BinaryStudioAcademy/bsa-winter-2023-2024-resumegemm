@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useCallback, useEffect, useState } from 'react';
 
-import filterIcon from '~/assets/img/filter-icon.svg';
+import FilterIcon from '~/assets/img/filter-icon.svg?react';
 import { BaseButton } from '~/bundles/common/components/components';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 import { actions as industriesActionCreator } from '~/bundles/industries/store/index.js';
@@ -36,16 +36,20 @@ const Filter: React.FC = () => {
 
     return (
         <>
-            <div className={styles.dropdown}>
-                <div className={styles.dropdown__button}>
+            <div className={styles.dropdown_wrapper}>
+                <div className={styles.dropdown}>
                     <BaseButton
                         onClick={toggleDropdown}
-                        className={styles.dropdown__icon__button}
+                        className={styles.dropdown__button}
                     >
                         <div
-                            style={{ maskImage: `url(${filterIcon})` }}
-                            className={clsx(styles.mask, styles.colored)}
-                        ></div>
+                            className={clsx(
+                                styles.button__icon,
+                                styles.colored,
+                            )}
+                        >
+                            <FilterIcon />
+                        </div>
                     </BaseButton>
                 </div>
                 {isOpen && (

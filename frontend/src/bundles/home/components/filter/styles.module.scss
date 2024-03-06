@@ -1,8 +1,8 @@
-.dropdown {
+.dropdown_wrapper {
     position: relative;
 }
 
-.dropdown__button {
+.dropdown {
     display: flex;
     align-items: center;
     padding: 8px 10px;
@@ -10,7 +10,7 @@
     border-radius: 48%;
 }
 
-.dropdown__icon__button {
+.dropdown__button {
     font-size: var(--font-size-subtitle);
     border: none;
     cursor: pointer;
@@ -33,21 +33,8 @@
     display: block;
 }
 
-.mask {
-    width: 30px;
+.button__icon {
+    width: 24px;
     height: 18px;
-    mask-size: cover;
-    mask-position: center;
-}
-
-.colored {
-    background-color: var(--color-text-gray);
-}
-
-.filter-dropdown {
-    width: 300px;
-}
-
-.dropdown_container {
-    width: 250px;
+    color: var(--color-text-gray);
 }
