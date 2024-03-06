@@ -13,8 +13,7 @@ import {
 } from './types/types.js';
 
 class UserService
-    implements
-        Omit<IService, 'getById' | 'findByOauthIdAndCreate' | 'deleteById'>
+    implements Omit<IService, 'findByOauthIdAndCreate' | 'deleteById'>
 {
     private userRepository: UserRepository;
     private profileRepository: ProfileRepository;
@@ -32,6 +31,18 @@ class UserService
             return null;
         }
         return await this.userRepository.findOneByEmail(email);
+    }
+
+    public async findByIdOrEmail(
+        userId: string,
+        email: string,
+    ): ReturnType<IService['findByIdOrEmail']> {
+        const [userById, userByEmail] = await Promise.all([
+            this.getById(userId),
+            this.findByEmail(email),
+        ]);
+
+        return userById ?? userByEmail ?? null;
     }
 
     public async getById(id: string): Promise<UserEntityFields | null> {

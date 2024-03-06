@@ -1,3 +1,5 @@
+import { type UserEntityFields } from 'shared/build/index.js';
+
 interface IService<T = unknown> {
     findAll(): Promise<{
         items: T[];
@@ -10,6 +12,11 @@ interface IService<T = unknown> {
     findByEmail(email: string): Promise<T>;
 
     findByOauthIdAndCreate(data: T): Promise<void>;
+
+    findByIdOrEmail(
+        userId: string,
+        email: string,
+    ): Promise<UserEntityFields | null>;
 
     getUserWithProfileAndOauthConnections(id: string): Promise<T>;
 
