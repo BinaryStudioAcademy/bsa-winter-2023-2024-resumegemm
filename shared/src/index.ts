@@ -110,6 +110,7 @@ export {
 export { type IStorage } from './framework/storage/storage.js';
 export { configureString } from './helpers/helpers.js';
 export {
+    type IdParameter,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,

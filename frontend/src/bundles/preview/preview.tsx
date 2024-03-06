@@ -14,6 +14,7 @@ import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import {
     Calendar,
     Checkbox,
+    ColumnChart,
     Dropdown,
     Footer,
     Header,
@@ -68,6 +69,16 @@ const dropdownOptions = [
         label: 'Very good command',
         value: 'B1',
     },
+];
+
+const ColumnChartDate: [string, number][] = [
+    ['Monday', 23],
+    ['Tuesday', 34],
+    ['Wednesday', 5],
+    ['Thursday', 70],
+    ['Friday', 100],
+    ['Saturday', 110],
+    ['Sunday', 160],
 ];
 
 const PreviewPage: React.FC = () => {
@@ -267,6 +278,9 @@ const PreviewPage: React.FC = () => {
                                 <img src={screenshot} alt="screenshot" />
                             )}
                         </div>
+                    </li>
+                    <li className={styles.item}>
+                        <ColumnChart measure="Views" data={ColumnChartDate} />
                     </li>
                 </ul>
             </div>
