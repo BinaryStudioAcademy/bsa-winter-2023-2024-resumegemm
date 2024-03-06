@@ -1,4 +1,8 @@
-import { HttpError, ResumesApiPath } from 'shared/build';
+import {
+    type IdParameter,
+    HTTPError,
+    ResumesApiPath,
+} from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
@@ -9,7 +13,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
-import { type IResumeService } from './interfaces/interfaces.js';
+import { type IResumeService } from './interfaces/resume-service.interface.js';
 import {
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
@@ -48,7 +52,7 @@ class ResumeController extends Controller {
             method: 'GET',
             handler: (options) =>
                 this.findByIdWithRelations(
-                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
         this.addRoute({
@@ -56,7 +60,7 @@ class ResumeController extends Controller {
             method: 'DELETE',
             handler: (options) =>
                 this.delete(
-                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
         this.addRoute({
@@ -65,7 +69,7 @@ class ResumeController extends Controller {
             handler: (options) =>
                 this.update(
                     options as ApiHandlerOptions<{
-                        params: { id: string };
+                        params: IdParameter;
                         body: ResumeUpdateItemRequestDto;
                     }>,
                 ),
@@ -119,14 +123,14 @@ class ResumeController extends Controller {
     }
 
     private async findByIdWithRelations(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
         const resume = await this.resumeService.findWithRelations(
             options.params.id,
         );
 
         if (!resume) {
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.BAD_REQUEST,
                 message: `Resume with id ${options.params.id} not found`,
             });
@@ -139,7 +143,7 @@ class ResumeController extends Controller {
     }
 
     private async delete(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<boolean>> {
         const isDeleted = await this.resumeService.delete(options.params.id);
 
@@ -151,14 +155,14 @@ class ResumeController extends Controller {
 
     private async update(
         options: ApiHandlerOptions<{
-            params: { id: string };
+            params: IdParameter;
             body: ResumeUpdateItemRequestDto;
         }>,
     ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
         const resume = await this.resumeService.find(options.params.id);
 
         if (!resume) {
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.BAD_REQUEST,
                 message: `Resume with id ${options.params.id} not found`,
             });

@@ -6,7 +6,7 @@ import {
     useEffect,
     useState,
 } from 'react';
-import { type SortType } from 'shared/build';
+import { type SortDirection } from 'shared/build';
 
 import { IconName } from '../../enums/enums';
 import { Icon } from '../components';
@@ -14,19 +14,20 @@ import styles from './styles.module.scss';
 
 interface Properties
     extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
-    initialSortType?: SortType;
+    initialSortDirection?: SortDirection;
     children: ReactNode;
     className?: string;
-    onSort: (sortMethod: SortType) => void;
+    onSort: (sortMethod: SortDirection) => void;
 }
 
 const SortButton = ({
     children,
-    initialSortType = null,
+    initialSortDirection = null,
     className = '',
     onSort,
 }: Properties): JSX.Element => {
-    const [sortMethod, setSortMethod] = useState<SortType>(initialSortType);
+    const [sortMethod, setSortMethod] =
+        useState<SortDirection>(initialSortDirection);
 
     const handleSortClick = useCallback(() => {
         switch (sortMethod) {

@@ -9,7 +9,7 @@ type Constructor = {
     cause?: unknown;
 };
 
-class HttpError extends ApplicationError {
+class HTTPError extends ApplicationError {
     public status: ValueOf<typeof HttpCode>;
 
     public constructor({ message, cause, status }: Constructor) {
@@ -22,4 +22,4 @@ class HttpError extends ApplicationError {
     }
 }
 
-export { HttpError };
+export { HTTPError };

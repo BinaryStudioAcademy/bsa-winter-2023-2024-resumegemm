@@ -1,7 +1,7 @@
 import { Readable } from 'node:stream';
 
 import fp from 'fastify-plugin';
-import { type HttpError } from 'shared/build';
+import { type HTTPError } from 'shared/build';
 
 import { ControllerHook } from '~/common/controller/enums/enums.js';
 import { preParsingRoutes } from '~/common/server-application/constants/constants.js';
@@ -29,7 +29,7 @@ const preParsing = fp(async (fastify): Promise<void> => {
 
                 return Readable.from(Buffer.concat(chunks));
             } catch (error) {
-                const { status, message } = error as HttpError;
+                const { status, message } = error as HTTPError;
                 void reply.code(status).send({ status, message });
             }
         },
