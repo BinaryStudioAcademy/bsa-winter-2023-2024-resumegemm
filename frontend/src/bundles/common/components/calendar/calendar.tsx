@@ -18,9 +18,9 @@ import {
 } from '../../types/types';
 import { Switch } from '../components';
 import {
-    CalendarMonths,
-    monthRegex,
-    yearRegex,
+    CALENDAR_MONTHS,
+    MONTH_REGEX,
+    YEAR_REGEX,
 } from './constants/calendar.constants';
 import styles from './styles.module.scss';
 
@@ -42,7 +42,7 @@ const handleYearInit = (inputYear: number | undefined): number => {
 const handleMonthInit = (
     inputMonth: number | undefined,
 ): CalendarMonth | null => {
-    const month = CalendarMonths.find((month) => month.num === inputMonth);
+    const month = CALENDAR_MONTHS.find((month) => month.num === inputMonth);
     if (!month) {
         return null;
     }
@@ -77,7 +77,7 @@ const Calendar = ({
 
     const [text, setText] = useState('');
 
-    const [focused, setFocused] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
 
     const [present, setPresent] = useState(handlePresentInit(initDate.present));
 
@@ -87,12 +87,12 @@ const Calendar = ({
         (event: ChangeEvent<HTMLInputElement>): void => {
             setText(event.target.value);
 
-            const year = event.target.value.match(yearRegex);
+            const year = event.target.value.match(YEAR_REGEX);
             if (year) {
                 setYear(Number(year[0]));
             }
 
-            const monthMatch = event.target.value.match(monthRegex);
+            const monthMatch = event.target.value.match(MONTH_REGEX);
 
             if (!monthMatch) {
                 setMonth(null);
@@ -100,7 +100,7 @@ const Calendar = ({
                 return;
             }
 
-            for (const month of CalendarMonths) {
+            for (const month of CALENDAR_MONTHS) {
                 if (
                     monthMatch[0]
                         .toLowerCase()
@@ -118,23 +118,23 @@ const Calendar = ({
     );
 
     const handleInputFocus = useCallback(
-        (focused: boolean) =>
+        (isFocused: boolean) =>
             clsx(
                 styles.calendar__date_input,
                 styles.calendar__date_input,
-                focused && styles.focused,
+                isFocused && styles.focused,
             ),
         [],
     );
 
-    const setCurrentlyFocused = useCallback((): void => setFocused(true), []);
-    const setUnfocused = useCallback((): void => setFocused(false), []);
+    const setFocused = useCallback((): void => setIsFocused(true), []);
+    const setUnfocused = useCallback((): void => setIsFocused(false), []);
 
     const increaseYear = useCallback((): void => setYear(year + 1), [year]);
     const decreaseYear = useCallback((): void => setYear(year - 1), [year]);
 
     const selectMonth = useCallback((value: Date): void => {
-        const inputMonth = CalendarMonths.find(
+        const inputMonth = CALENDAR_MONTHS.find(
             (month) => month.num === value.getMonth(),
         );
         if (inputMonth) {
@@ -200,10 +200,10 @@ const Calendar = ({
                 value={text}
                 onChange={handleTextChange}
                 type="text"
-                className={handleInputFocus(focused)}
-                onFocus={setCurrentlyFocused}
+                className={handleInputFocus(isFocused)}
+                onFocus={setFocused}
             />
-            {focused && (
+            {isFocused && (
                 <div className={styles.calendar__date_picker}>
                     <div className={styles.date_picker__header}>
                         <button

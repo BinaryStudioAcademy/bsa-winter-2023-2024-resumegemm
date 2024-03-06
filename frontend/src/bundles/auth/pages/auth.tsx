@@ -12,7 +12,7 @@ import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
 import { type UserSignUpRequestDtoFrontend } from '../components/sign-up-form/validation/sign-up-validation.js';
-import { actions as authActions } from '../store/index';
+import { actions as authActions } from '../store/auth.store.js';
 import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
@@ -30,7 +30,7 @@ const Auth: React.FC = () => {
 
     const handleSignUpSubmit = useCallback(
         (payload: UserSignUpRequestDtoFrontend): void => {
-            delete payload.confirm_password;
+            delete payload.confirmPassword;
             void dispatch(authActions.signUp(payload))
                 .unwrap()
                 .catch((error: Error) => {

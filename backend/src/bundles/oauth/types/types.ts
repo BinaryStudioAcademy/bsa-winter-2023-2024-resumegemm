@@ -1,5 +1,5 @@
 export {
-    type HttpError,
+    type HTTPError,
     type OauthUserEntityFields,
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,
