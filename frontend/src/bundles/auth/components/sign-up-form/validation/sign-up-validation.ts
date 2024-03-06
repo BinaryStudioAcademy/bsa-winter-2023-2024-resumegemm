@@ -34,10 +34,18 @@ const userSignUpValidationFrontend = joi.object<
                 allow: false,
             },
         })
+        .custom((value, helpers) => {
+            const [localPart] = value.split('@');
+            if (localPart.length <= 1) {
+                return helpers.error('string.emailInvalid');
+            }
+            return value;
+        })
         .required()
         .messages({
             'string.email': UserValidationMessage.EMAIL_WRONG,
             'string.empty': UserValidationMessage.EMAIL_REQUIRE,
+            'string.emailInvalid': UserValidationMessage.EMAIL_INVALID,
         }),
     password: joi
         .string()
