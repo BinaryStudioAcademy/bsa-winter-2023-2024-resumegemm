@@ -33,11 +33,8 @@ import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
-
-interface JwtPayload {
-    email: string;
-    id: string;
-}
+import { userMessages } from './enums/message.enum.js';
+import { type JwtPayload } from './types/types.js';
 
 class AuthController extends Controller {
     private authService: AuthService;
@@ -333,12 +330,11 @@ class AuthController extends Controller {
                 token,
                 config.ENV.JWT.ACCESS_TOKEN_SECRET,
             ) as JwtPayload;
-            // Call confirmUserEmail function with the decoded token
             await userService.confirmUserEmail(decodedToken);
 
             return {
                 status: HttpCode.OK,
-                payload: { message: 'Email confirmed successfully' },
+                payload: { message: userMessages.EMAIL_CONFIRMED },
             };
         } catch (error: unknown) {
             const { status } = error as HttpError;

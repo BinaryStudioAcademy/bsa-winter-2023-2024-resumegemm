@@ -5,6 +5,7 @@ import {
     type UserGetAllResponseDto,
     type UserSignUpResponseDto,
 } from '~/bundles/users/users.js';
+import { StorageKey } from '~/framework/storage/storage.js';
 
 import { name as sliceName } from './slice.js';
 
@@ -14,6 +15,20 @@ const loadAll = createAsyncThunk<
     AsyncThunkConfig
 >(`${sliceName}/sign-up`, (_, { extra }) => {
     const { userApi } = extra;
+
+    return userApi.getAll();
+});
+
+const deleteProfile = createAsyncThunk<
+    UserGetAllResponseDto,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/delete`, async (_, { extra }) => {
+    const { userApi, storageApi } = extra;
+
+    await userApi.deleteProfile();
+
+    await storageApi.drop(StorageKey.ACCESS_TOKEN);
 
     return userApi.getAll();
 });
@@ -28,4 +43,4 @@ const loadUser = createAsyncThunk<
     return await userApi.loadUser();
 });
 
-export { loadAll, loadUser };
+export { deleteProfile, loadAll, loadUser };

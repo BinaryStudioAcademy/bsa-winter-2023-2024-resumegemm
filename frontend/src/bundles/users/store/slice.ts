@@ -7,7 +7,7 @@ import {
     type UserSignUpResponseDto,
 } from '~/bundles/users/users.js';
 
-import { loadAll, loadUser } from './actions.js';
+import { deleteProfile, loadAll, loadUser } from './actions.js';
 
 type State = {
     users: UserGetAllItemResponseDto[];
@@ -42,6 +42,16 @@ const { reducer, actions, name } = createSlice({
             state.user = action.payload;
             state.dataStatus = DataStatus.FULFILLED;
             state.isLoaded = true;
+        });
+        builder.addCase(deleteProfile.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(deleteProfile.fulfilled, (state, action) => {
+            state.users = action.payload.items;
+            state.dataStatus = DataStatus.FULFILLED;
+        });
+        builder.addCase(deleteProfile.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
         });
     },
 });

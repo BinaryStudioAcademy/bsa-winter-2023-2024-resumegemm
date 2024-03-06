@@ -36,7 +36,6 @@ const SubscriptionPaymentPage: React.FC = () => {
 
     const [modalIsHidden, setModalIsHidden] = useState(true);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [processing, setProcessing] = useState(false);
 
     const handleNameChange = useCallback(

@@ -1,3 +1,5 @@
+import { type UserEntityFields } from 'shared/build/index.js';
+
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
@@ -42,8 +44,19 @@ class UserApi extends HttpApi {
                 hasAuth: true,
             },
         );
-        setTimeout(() => false, 5000);
         return await response.json<UserSignUpResponseDto>();
+    }
+
+    public async deleteProfile(): Promise<UserEntityFields> {
+        const response = await this.load(
+            this.getFullEndpoint(`${UsersApiPath.ROOT}`, {}),
+            {
+                method: 'DELETE',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<UserEntityFields>();
     }
 }
 

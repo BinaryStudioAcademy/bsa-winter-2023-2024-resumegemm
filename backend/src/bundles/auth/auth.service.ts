@@ -22,6 +22,8 @@ import { type UserService } from '~/bundles/users/user.service.js';
 import { type IConfig } from '~/common/config/config.js';
 import { mailService } from '~/common/mail-service/mail-service.js';
 
+import { userMessages } from './enums/message.enum.js';
+
 type ConstructorType = {
     userService: UserService;
     config: IConfig;
@@ -62,7 +64,6 @@ class AuthService implements TAuthService {
             passwordHash,
         });
         const token = generateToken({ id });
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         await this.sendAfterSignUpEmail(email, token);
 
         const user = await this.getUserWithProfile(id);
@@ -89,8 +90,8 @@ class AuthService implements TAuthService {
 
         await mailService.sendMail({
             to: email,
-            subject: 'You have successfully registred on ResumeGemm',
-            text: 'You have successfully registred on ResumeGemm',
+            subject: userMessages.SUCCESSFULLY_REGISTRED,
+            text: userMessages.SUCCESSFULLY_REGISTRED,
             html: emailMockup,
         });
     }

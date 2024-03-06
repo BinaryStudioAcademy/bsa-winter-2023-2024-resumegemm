@@ -1,3 +1,5 @@
+import { type IdParameter } from 'shared/build';
+
 import { type User } from '~/bundles/users/types/types';
 import {
     type ApiHandlerOptions,
@@ -34,11 +36,11 @@ type IRecentlyViewedController = {
     ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>>;
 
     update(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>>;
 
     delete(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<boolean>>;
 };
 

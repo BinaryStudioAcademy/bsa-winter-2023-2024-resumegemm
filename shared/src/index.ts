@@ -38,12 +38,28 @@ export {
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
 export {
+    type Certification,
+    type Contacts,
+    type CustomSection,
+    type Education,
+    type Experience,
+    type PersonalInformation,
+    type Resume,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
-    type ResumeService,
-    ResumeApiPath,
+    type ResumeCreateItemRequestDto,
+    type ResumeEntityFields,
+    type ResumeGetAllRequestDto,
+    type ResumeGetAllResponseDto,
+    type ResumeGetItemRequestDto,
+    type ResumeGetItemResponseDto,
+    type ResumeUpdateItemRequestDto,
+    type TechnicalSkill,
+    LanguageLevels,
+    ResumesApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';
+export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
 export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
@@ -90,6 +106,7 @@ export {
 export { type IStorage } from './framework/storage/storage.js';
 export { configureString } from './helpers/helpers.js';
 export {
+    type IdParameter,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,
