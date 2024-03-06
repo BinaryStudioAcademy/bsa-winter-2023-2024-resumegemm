@@ -69,7 +69,7 @@ class AuthService implements TAuthService {
 
         if (!foundUserByEmail) {
             throw new HTTPError({
-                message: ExceptionMessage.USER_NOT_FOUND,
+                message: ExceptionMessage.INVALID_EMAIL,
                 status: HttpCode.BAD_REQUEST,
             });
         }
