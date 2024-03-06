@@ -4,7 +4,7 @@ import {
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
 } from 'shared/build/bundles/templates/templates.js';
-import { HTTPError } from 'shared/build/index.js';
+import { type IdParameter, HTTPError } from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
@@ -41,7 +41,7 @@ class TemplateController extends Controller {
             method: 'GET',
             handler: (options) =>
                 this.findById(
-                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
         this.addRoute({
@@ -54,7 +54,7 @@ class TemplateController extends Controller {
             method: 'DELETE',
             handler: (options) =>
                 this.delete(
-                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
         this.addRoute({
@@ -83,7 +83,7 @@ class TemplateController extends Controller {
     }
 
     private async findById(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<Template>> {
         const template = await this.templateService.find(options.params.id);
         if (!template) {
@@ -109,7 +109,7 @@ class TemplateController extends Controller {
     }
 
     private async delete(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<boolean>> {
         const isDeleted = await this.templateService.delete(options.params.id);
         return {

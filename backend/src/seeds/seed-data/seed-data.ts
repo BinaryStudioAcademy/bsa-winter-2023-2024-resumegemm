@@ -1,4 +1,6 @@
+export { certificationsSeed } from './certifications-seed';
 export { contactsSeed } from './contacts-seed.js';
+export { customSectionSeed } from './custom-section-seed';
 export { educationSeed } from './education-seed.js';
 export { experienceSeed } from './experience-seed.js';
 export { imagesSeed } from './images-seed.js';

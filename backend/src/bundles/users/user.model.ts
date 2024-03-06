@@ -21,6 +21,8 @@ class UserModel extends AbstractModel {
 
     public 'passwordSalt': string;
 
+    public deletedAt!: string | null;
+
     public static override get tableName(): typeof DatabaseTableName.USERS {
         return DatabaseTableName.USERS;
     }
@@ -34,6 +36,7 @@ class UserModel extends AbstractModel {
                     'profileId',
                     'createdAt',
                     'updatedAt',
+                    'deletedAt',
                 );
             },
         };

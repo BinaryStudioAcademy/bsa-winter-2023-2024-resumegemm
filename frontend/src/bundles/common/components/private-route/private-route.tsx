@@ -1,17 +1,24 @@
-import { type FC } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { StorageKey } from '~/framework/storage/storage';
+import { DataStatus } from '~/bundles/common/enums/enums';
+import { useAppSelector } from '~/bundles/common/hooks/use-app-selector/use-app-selector.hook';
 
 import { AppRoute } from '../../enums/app-route.enum';
 
-const PrivateRoute: FC = () => {
-    const accessToken = window.localStorage.getItem(StorageKey.ACCESS_TOKEN);
-    if (!accessToken) {
-        return <Navigate to={AppRoute.ROOT} />;
+const PrivateRoute: React.FC = () => {
+    const { user, dataStatus } = useAppSelector(({ auth }) => ({
+        dataStatus: auth.dataStatus,
+        user: auth.user,
+    }));
+
+    if (
+        dataStatus !== DataStatus.FULFILLED &&
+        dataStatus !== DataStatus.REJECTED
+    ) {
+        return null;
     }
 
-    return <Outlet />;
+    return user ? <Outlet /> : <Navigate to={AppRoute.ROOT} />;
 };
 
 export { PrivateRoute };

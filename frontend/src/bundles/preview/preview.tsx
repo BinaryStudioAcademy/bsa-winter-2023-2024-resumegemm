@@ -4,7 +4,6 @@ import { useCallback, useContext, useRef, useState } from 'react';
 
 import {
     AppRoute,
-    ButtonSize,
     ButtonVariant,
     IconName,
 } from '~/bundles/common/enums/enums.js';
@@ -14,6 +13,7 @@ import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import {
     Calendar,
     Checkbox,
+    ColumnChart,
     Dropdown,
     Footer,
     Header,
@@ -24,16 +24,18 @@ import {
     Switch,
     Tooltip,
 } from '../../bundles/common/components/components.js';
-import { Auth } from '../auth/pages/auth';
+import { Auth } from '../auth/pages/auth.js';
 import { UserProfile } from '../common/components/layout/header/user-profile/user-profile.js';
 import { Stepper } from '../common/components/stepper/stepper.js';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
 import { useTakeScreenShot } from '../common/hooks/use-take-screenshot/use-take-screenshot.hook.js';
+import { DragAndDropPreview } from '../drag-and-drop/components/drag-and-drop-preview/drag-and-drop-preview.js';
 import { EditTemplatePage } from '../edit-template/edit-template';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import { QuestionAndAnswer } from '../question-and-answer/question-and-answer';
+import { DeleteResumeButton } from '../resume/components/delete-resume-button/delete-resume-button.js';
 import styles from './styles.module.scss';
 
 const steps = [
@@ -68,6 +70,16 @@ const dropdownOptions = [
         label: 'Very good command',
         value: 'B1',
     },
+];
+
+const ColumnChartDate: [string, number][] = [
+    ['Monday', 23],
+    ['Tuesday', 34],
+    ['Wednesday', 5],
+    ['Thursday', 70],
+    ['Friday', 100],
+    ['Saturday', 110],
+    ['Sunday', 160],
 ];
 
 const PreviewPage: React.FC = () => {
@@ -121,6 +133,9 @@ const PreviewPage: React.FC = () => {
             <ul className={styles.list}>
                 <li className={styles.item}>
                     <div className={styles.example}>Component preview</div>
+                </li>
+                <li className={styles.item}>
+                    <DragAndDropPreview />
                 </li>
                 <li className={styles.item}>
                     <NavTabs items={navbarItems}></NavTabs>
@@ -188,22 +203,12 @@ const PreviewPage: React.FC = () => {
                             Outlined
                         </RegularButton>
                         <RegularButton variant={ButtonVariant.PRIMARY}>
-                            Primary
-                        </RegularButton>
-                        <RegularButton
-                            appendedIcon={<Icon name={IconName.PLUS} />}
-                            prependedIcon={
-                                <Icon name={IconName.CHEVRON_DOWN} />
-                            }
-                            size={ButtonSize.MEDIUM}
-                            variant={ButtonVariant.PRIMARY}
-                        >
-                            Primary
-                        </RegularButton>
-                        <RegularButton variant={ButtonVariant.SQUARE_ORANGE}>
-                            <Icon name={IconName.FACEBOOK} />
+                            Save & Publish
                         </RegularButton>
                     </div>
+                </li>
+                <li>
+                    <DeleteResumeButton />
                 </li>
                 <li className={styles.item}>
                     <Calendar initDate={{ year: 1500, month: 9 }} />
@@ -257,6 +262,9 @@ const PreviewPage: React.FC = () => {
                             <img src={screenshot} alt="screenshot" />
                         )}
                     </div>
+                </li>
+                <li className={styles.item}>
+                    <ColumnChart measure="Views" data={ColumnChartDate} />
                 </li>
             </ul>
         </div>

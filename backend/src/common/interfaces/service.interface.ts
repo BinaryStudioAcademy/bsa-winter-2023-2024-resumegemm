@@ -1,3 +1,7 @@
+import { type IncomingHttpHeaders } from 'node:http';
+
+import { type UserEntityFields } from 'shared/build/index.js';
+
 interface IService<T = unknown> {
     findAll(): Promise<{
         items: T[];
@@ -10,6 +14,8 @@ interface IService<T = unknown> {
     getUserWithProfile(id: string): Promise<T>;
 
     create(payload: T): Promise<T>;
+
+    delete(headers: IncomingHttpHeaders): Promise<UserEntityFields>;
 }
 
 export { type IService };
