@@ -1,6 +1,6 @@
 import { type RelationMappings, Model } from 'objection';
 
-import { UserModel } from '~/bundles/users/users.js';
+import { ProfileModel } from '~/bundles/profile/profile.model.js';
 import {
     AbstractModel,
     DatabaseTableName,
@@ -23,9 +23,9 @@ class OauthModel extends AbstractModel {
 
     public static getRelationMappings(): RelationMappings {
         return {
-            users: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: UserModel,
+            userProfile: {
+                relation: Model.HasOneRelation,
+                modelClass: ProfileModel,
                 join: {
                     from: `${DatabaseTableName.OAUTH_CONNECTIONS}.userId`,
                     to: `${DatabaseTableName.USERS}.id`,

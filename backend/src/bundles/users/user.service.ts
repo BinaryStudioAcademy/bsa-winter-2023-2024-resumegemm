@@ -1,7 +1,7 @@
 import { type IncomingHttpHeaders } from 'node:http';
 
 import { type JwtPayload } from 'jsonwebtoken';
-import { HttpCode, HttpError } from 'shared/build/index.js';
+import { HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
 import { UserEntity } from '~/bundles/users/user.entity.js';
@@ -98,9 +98,9 @@ class UserService
             return user.toObject();
         } catch (error: unknown) {
             await transaction.rollback();
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                message: (error as HttpError).message,
+                message: (error as HTTPError).message,
             });
         }
     }
@@ -120,7 +120,7 @@ class UserService
         const token = getToken(headers);
 
         if (!token) {
-            throw new HttpError({
+            throw new HTTPError({
                 message: 'Token not found',
                 status: HttpCode.BAD_REQUEST,
             });
@@ -130,7 +130,7 @@ class UserService
         const deletedUser = await this.userRepository.delete(id);
 
         if (!deletedUser) {
-            throw new HttpError({
+            throw new HTTPError({
                 message: 'User not found',
                 status: HttpCode.NOT_FOUND,
             });

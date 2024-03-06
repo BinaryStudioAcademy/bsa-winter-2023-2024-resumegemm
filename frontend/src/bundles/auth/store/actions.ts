@@ -38,10 +38,11 @@ const signIn = createAsyncThunk<
 
 const getUser = createAsyncThunk<
     UserWithProfileRelation,
-    void,
+    undefined,
     AsyncThunkConfig
 >(`${sliceName}/get-user`, async (_, { extra }) => {
     const { authApi } = extra;
+
     return await authApi.getUser();
 });
 

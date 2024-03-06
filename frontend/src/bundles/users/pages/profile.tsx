@@ -5,7 +5,7 @@ import {
     useEffect,
 } from '~/bundles/common/hooks/hooks';
 import { useAppSelector } from '~/bundles/common/hooks/use-app-selector/use-app-selector.hook';
-import { actions as profileActions } from '~/bundles/profile/store/index';
+import { actions as profileActions } from '~/bundles/profile/store/profile.store';
 
 import { DeleteAccount } from '../components/delete-account/delete-account';
 import { ProfileCard } from '../components/profile-card/profile-card';
@@ -36,8 +36,8 @@ const Profile: React.FC = () => {
     const { profile, firstName, lastName, email } = useAppSelector(
         ({ auth, profile }) => ({
             profile,
-            firstName: auth.user?.profile.firstName as string,
-            lastName: auth.user?.profile.lastName ?? '',
+            firstName: auth.user?.userProfile.firstName as string,
+            lastName: auth.user?.userProfile.lastName ?? '',
             email: auth.user?.email as string,
         }),
     );

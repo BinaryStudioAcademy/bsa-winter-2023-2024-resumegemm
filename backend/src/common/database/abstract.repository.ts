@@ -60,7 +60,7 @@ class AbstractRepository<T extends typeof AbstractModel, K>
         let query = this.modelInstance
             .query()
             .findById(id)
-            .withGraphFetched('[profile, oauth_connections]');
+            .withGraphFetched('[userProfile, oauth_connections]');
         if (modification) {
             query = query.modify(modification);
         }

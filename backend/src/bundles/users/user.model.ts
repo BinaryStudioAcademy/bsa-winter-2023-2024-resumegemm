@@ -45,7 +45,7 @@ class UserModel extends AbstractModel {
 
     public static getRelationMappings(): RelationMappings {
         return {
-            profile: {
+            userProfile: {
                 relation: Model.HasOneRelation,
                 modelClass: ProfileModel,
                 join: {

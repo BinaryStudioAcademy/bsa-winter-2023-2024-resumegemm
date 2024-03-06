@@ -1,8 +1,8 @@
 import { type UserWithProfileRelation } from 'shared/build';
 
 const getUserAvatar = (user: UserWithProfileRelation | null): string => {
-    if (user?.profile.avatar) {
-        return user.profile.avatar;
+    if (user?.userProfile.avatar) {
+        return user.userProfile.avatar;
     }
     return '/src/assets/img/mock-avatar.png';
 };

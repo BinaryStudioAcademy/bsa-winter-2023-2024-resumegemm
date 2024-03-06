@@ -1,11 +1,11 @@
-import { ExceptionMessage, HttpCode, HttpError } from 'shared/build/index.js';
+import { ExceptionMessage, HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { type OauthRepository } from '~/bundles/oauth/oauth.repository';
 import { type UserService } from '~/bundles/users/user.service.js';
 import { type IService } from '~/common/interfaces/service.interface';
 
 import {
-    type OauthConnectionPayload,
+    type OauthConnectionEntityFields,
     type OauthUserLoginRequestDto,
     type UserEntityFields,
     type UserSignUpRequestDto,
@@ -29,7 +29,7 @@ class OauthService
     public async deleteById(id: string): Promise<boolean> {
         const foundRecord = await this.oauthRepository.getById(id);
         if (!foundRecord) {
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.BAD_REQUEST,
                 message: ExceptionMessage.INVALID_OAUTH_ID,
             });
@@ -38,7 +38,7 @@ class OauthService
     }
 
     public async findByOauthIdAndCreate(
-        oauthPayload: OauthConnectionPayload,
+        oauthPayload: Omit<OauthConnectionEntityFields, 'id'>,
     ): Promise<void> {
         const foundConnection = await this.oauthRepository.findByOauthId(
             oauthPayload.oauthId,

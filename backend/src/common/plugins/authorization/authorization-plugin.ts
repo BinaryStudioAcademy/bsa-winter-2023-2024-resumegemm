@@ -1,8 +1,9 @@
 import fp from 'fastify-plugin';
 import {
     type AuthApiPath,
-    type HttpError,
+    type HTTPError,
     AuthException,
+    HttpCode,
 } from 'shared/build/index.js';
 
 import { type AuthService } from '~/bundles/auth/auth.service.js';
@@ -49,7 +50,8 @@ const authorization = fp<AuthorizationPluginPayload>(
 
                 request.user = currentUser;
             } catch (error) {
-                const { status, message } = error as HttpError;
+                const { status = HttpCode.INTERNAL_SERVER_ERROR, message } =
+                    error as HTTPError;
                 void reply.code(status).send({ status, message });
             }
         });

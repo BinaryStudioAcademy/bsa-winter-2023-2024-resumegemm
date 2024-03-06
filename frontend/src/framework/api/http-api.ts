@@ -11,7 +11,7 @@ import {
 import {
     type HttpCode,
     type IHttp,
-    HttpError,
+    HTTPError,
     HttpHeader,
 } from '~/framework/http/http.js';
 import { type IStorage, StorageKey } from '~/framework/storage/storage.js';
@@ -27,7 +27,7 @@ type Constructor = {
     storage: IStorage;
 };
 
-class HttpApi implements IHttpApi {
+class HTTPApi implements IHttpApi {
     private baseUrl: string;
 
     private path: string;
@@ -123,7 +123,7 @@ class HttpApi implements IHttpApi {
 
         const isCustomException = Boolean(parsedException.errorType);
 
-        throw new HttpError({
+        throw new HTTPError({
             status: response.status as ValueOf<typeof HttpCode>,
             errorType: isCustomException
                 ? parsedException.errorType
@@ -135,4 +135,4 @@ class HttpApi implements IHttpApi {
     }
 }
 
-export { HttpApi };
+export { HTTPApi as HttpApi };

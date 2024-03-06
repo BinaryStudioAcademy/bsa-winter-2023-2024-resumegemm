@@ -5,8 +5,8 @@ export {
 } from './enums/enums.js';
 export {
     type OauthConnectionEntityFields,
-    type OauthConnectionPayload,
     type OauthUserLoginRequestDto,
+    type OauthUserLoginResponseDto,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
