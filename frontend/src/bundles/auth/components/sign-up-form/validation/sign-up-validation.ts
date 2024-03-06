@@ -28,7 +28,6 @@ const userSignUpValidationFrontend = joi.object<
     }),
     email: joi
         .string()
-        .trim()
         .email({
             tlds: {
                 allow: false,
@@ -49,12 +48,14 @@ const userSignUpValidationFrontend = joi.object<
         }),
     password: joi
         .string()
+        .min(UserValidationRule.PASSWORD_MIN_LENGTH)
         .max(UserValidationRule.PASSWORD_MAX_LENGTH)
         .regex(/^\S*$/)
         .required()
         .messages({
             'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
             'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
+            'string.min': UserValidationMessage.PASSWORD_INVALID,
             'string.max': UserValidationMessage.PASSWORD_INVALID,
         }),
     confirm_password: joi
