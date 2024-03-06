@@ -1,0 +1,28 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.example_block {
+    padding: 10px;
+    background-color: var(--color-background-dark-blue);
+    border: 1px solid black;
+    border-radius: 5px;
+    pointer-events: none;
+    user-select: none;
+}
+
+.container__block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}

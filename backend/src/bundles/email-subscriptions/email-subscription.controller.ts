@@ -4,7 +4,7 @@ import {
 } from '~/common/controller/controller';
 import { Controller } from '~/common/controller/controller.package.js';
 import { ApiPath } from '~/common/enums/enums.js';
-import { type HttpError } from '~/common/http/http.js';
+import { type HTTPError } from '~/common/http/http.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
@@ -91,7 +91,7 @@ class EmailSubscriptionController extends Controller {
                 payload: subscriprion,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status: status,
                 payload: {
@@ -146,7 +146,7 @@ class EmailSubscriptionController extends Controller {
                 },
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status: status,
                 payload: {

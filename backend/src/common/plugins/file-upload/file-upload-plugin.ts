@@ -2,7 +2,7 @@ import { type MultipartFile } from '@fastify/multipart';
 import { type FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
 import { FileUploadValidationMessage } from 'shared/build/bundles/files/enums/enums.js';
-import { HttpCode, HttpError } from 'shared/build/index.js';
+import { HttpCode, HTTPError } from 'shared/build/index.js';
 import { type ContentType } from 'shared/src/enums/content-type.enum';
 import { type ValueOf } from 'shared/src/types/value-of.type';
 
@@ -25,14 +25,14 @@ const fileUpload = fp<Options>((fastify, { extensions }, done) => {
             const { file } = request.body;
 
             if (file.file.truncated) {
-                throw new HttpError({
+                throw new HTTPError({
                     status: HttpCode.BAD_REQUEST,
                     message: FileUploadValidationMessage.FILE_TOO_LARGE,
                 });
             }
 
             if (!extensions.includes(file.mimetype)) {
-                throw new HttpError({
+                throw new HTTPError({
                     status: HttpCode.BAD_REQUEST,
                     message: FileUploadValidationMessage.INCORRECT_FILE_TYPE,
                 });

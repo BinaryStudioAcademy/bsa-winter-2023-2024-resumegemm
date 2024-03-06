@@ -2,8 +2,8 @@ import { type SkillLevel } from './technical-skills-level.enum';
 
 type TechnicalSkill = {
     id: string;
-    skillName: string;
-    skillLevel: SkillLevel;
+    name: string;
+    level: SkillLevel;
     resumeId: string;
     createdAt: string;
     updatedAt: string;

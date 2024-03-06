@@ -9,17 +9,17 @@ import {
     type UserWithRelations,
 } from './types/types.js';
 
-type TUserRepo = {
+interface IUserRepo {
     findOneByEmail(email: string): Promise<UserEntityFields | null>;
     findAll(): Promise<UserEntity[]>;
-};
+}
 
 class UserRepository
     extends AbstractRepository<
         typeof UserModel,
         UserWithRelations | UserEntityFields | UserEntity
     >
-    implements TUserRepo
+    implements IUserRepo
 {
     public constructor({ userModel }: Record<'userModel', typeof UserModel>) {
         super(userModel);
@@ -27,13 +27,17 @@ class UserRepository
 
     public async findOneByEmail(
         email: string,
-    ): ReturnType<TUserRepo['findOneByEmail']> {
-        const user = await this.model.query().findOne({ email });
+    ): ReturnType<IUserRepo['findOneByEmail']> {
+        const user = await this.model
+            .query()
+            .findOne({ email })
+            .whereNull('deletedAt');
+
         return user ?? null;
     }
 
-    public async findAll(): ReturnType<TUserRepo['findAll']> {
-        const users = await this.model.query().execute();
+    public async findAll(): ReturnType<IUserRepo['findAll']> {
+        const users = await this.model.query().whereNull('deletedAt').execute();
 
         return users.map((it) => UserEntity.initialize(it));
     }
@@ -43,14 +47,26 @@ class UserRepository
         emailSubscriptionId: string,
         transaction: Transaction,
     ): Promise<UserEntity> {
-        const user = await this.model
+        const [user] = await this.model
             .query()
             .patch({ emailSubscriptionId })
             .where({ id: userId })
             .transacting(transaction)
             .returning('*')
             .execute();
-        return UserEntity.initialize(user[0]);
+        return UserEntity.initialize(user);
+    }
+
+    public async delete(id: string): Promise<UserEntityFields> {
+        const user = await this.model
+            .query()
+            .findOne({ id })
+            .whereNull('deletedAt')
+            .patch({ deletedAt: new Date().toISOString() })
+            .returning(['id', 'email', 'deleted_at', 'profile_id'])
+            .castTo<UserEntityFields>();
+
+        return user ?? null;
     }
 }
 

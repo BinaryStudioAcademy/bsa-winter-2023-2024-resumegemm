@@ -32,8 +32,7 @@ const signIn = createAsyncThunk<
     return { user };
 });
 
-// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-const getUser = createAsyncThunk<UserAuthResponse, void, AsyncThunkConfig>(
+const getUser = createAsyncThunk<UserAuthResponse, undefined, AsyncThunkConfig>(
     `${sliceName}/get-user`,
     async (_, { extra }) => {
         const { authApi } = extra;

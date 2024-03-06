@@ -1,5 +1,5 @@
-import { Http } from './http-api.js';
+import { HTTP } from './http-api.js';
 
-const httpApi = new Http();
+const httpApi = new HTTP();
 
 export { httpApi };

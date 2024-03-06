@@ -2,7 +2,7 @@ import { type Stripe } from 'stripe';
 
 import { type GetPriceResponseDto } from '../types/types';
 
-const priceMapper = (
+const mapPrices = (
     price: Stripe.Price & { product: Stripe.Product },
 ): GetPriceResponseDto => {
     return {
@@ -21,4 +21,4 @@ const priceMapper = (
     };
 };
 
-export { priceMapper };
+export { mapPrices };

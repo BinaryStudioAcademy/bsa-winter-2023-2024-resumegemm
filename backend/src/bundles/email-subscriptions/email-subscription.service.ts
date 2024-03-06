@@ -1,4 +1,4 @@
-import { HttpCode, HttpError } from '~/common/http/http.js';
+import { HttpCode, HTTPError } from '~/common/http/http.js';
 
 import { type UserRepository } from '../users/user.repository.js';
 import { type UserWithRelations } from '../users/users.js';
@@ -17,7 +17,7 @@ class EmailSubscriptionService implements IEmailSubscriptionService {
         user: UserWithRelations,
     ): Promise<EmailSubscription> {
         if (user.emailSubscription !== null) {
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.BAD_REQUEST,
                 message: EmailSubscriptionsValidationMessage.ALREADY_SUBSCRIBED,
             });
@@ -39,8 +39,8 @@ class EmailSubscriptionService implements IEmailSubscriptionService {
             return subscription;
         } catch (error: unknown) {
             await transaction.rollback();
-            const { message } = error as HttpError;
-            throw new HttpError({
+            const { message } = error as HTTPError;
+            throw new HTTPError({
                 status: HttpCode.INTERNAL_SERVER_ERROR,
                 message,
             });
