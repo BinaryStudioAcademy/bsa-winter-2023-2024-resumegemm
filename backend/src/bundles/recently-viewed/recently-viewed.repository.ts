@@ -1,5 +1,6 @@
 import { Guid as guid } from 'guid-typescript';
 
+import { RESUME_COUNT_INTERVAL } from './constants/resume-count-interval';
 import { type RecentlyViewedModel } from './recently-viewed.model';
 import {
     type IRecentlyViewedRepository,
@@ -101,7 +102,7 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
     }
 
     public async findRecentlyViewedResumesWithCount(
-        interval = '1 day',
+        interval = RESUME_COUNT_INTERVAL,
     ): Promise<RecentlyViewedResumesWithCount[]> {
         const result = (await this.recentlyViewedModel
             .query()
