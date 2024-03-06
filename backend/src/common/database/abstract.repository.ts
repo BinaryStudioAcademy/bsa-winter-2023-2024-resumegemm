@@ -41,7 +41,7 @@ class AbstractRepository<T extends typeof AbstractModel, K>
         let query = this.modelInstance
             .query()
             .findById(id)
-            .withGraphFetched('[user_profile]');
+            .withGraphFetched('[userProfile]');
         if (modification) {
             query = query.modify(modification);
         }
