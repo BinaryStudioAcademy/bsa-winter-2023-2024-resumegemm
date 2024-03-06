@@ -8,8 +8,8 @@ import { Auth } from '~/bundles/auth/pages/auth';
 import {
     App,
     ErrorFallback,
-    FreeAccessRoute,
-    RestrictedAccessRoute,
+    GuestRoute,
+    PrivateRoute,
     RouterProvider,
     StoreProvider,
     StripeProvider,
@@ -44,11 +44,17 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             children: [
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <LandingPage />,
+                                    element: <GuestRoute />,
+                                    children: [
+                                        {
+                                            path: AppRoute.ROOT,
+                                            element: <LandingPage />,
+                                        },
+                                    ],
                                 },
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <FreeAccessRoute />,
+                                    element: <GuestRoute />,
                                     children: [
                                         {
                                             path: AppRoute.LOG_IN,
@@ -62,7 +68,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 },
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <RestrictedAccessRoute />,
+                                    element: <PrivateRoute />,
                                     children: [
                                         {
                                             path: AppRoute.PROFILE,

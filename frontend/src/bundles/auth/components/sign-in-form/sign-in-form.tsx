@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { type ValueOf, userSignInValidationSchema } from 'shared/build';
 
 import { Divider } from '~/bundles/auth/components/divider/divider';
@@ -10,6 +11,7 @@ import {
     Spinner,
 } from '~/bundles/common/components/components.js';
 import {
+    AppRoute,
     ButtonSize,
     ButtonType,
     ButtonVariant,
@@ -49,7 +51,9 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
                 <h1 className={styles.login__title}>Log In</h1>
                 <p className={styles.login__message}>
                     No account? Go to
-                    <span className={styles.login__link}> Sign Up</span>
+                    <Link to={AppRoute.SIGN_UP} className={styles.login__link}>
+                        Sign Up
+                    </Link>
                 </p>
             </div>
             <form onSubmit={handleFormSubmit} className={styles.login__form}>

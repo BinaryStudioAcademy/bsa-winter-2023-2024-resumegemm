@@ -107,6 +107,7 @@ export {
 export { type IStorage } from './framework/storage/storage.js';
 export { configureString, getCookie, setCookie } from './helpers/helpers.js';
 export {
+    type IdParameter,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,

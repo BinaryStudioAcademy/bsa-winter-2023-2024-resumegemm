@@ -14,6 +14,7 @@ import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import {
     Calendar,
     Checkbox,
+    ColumnChart,
     Dropdown,
     Footer,
     Header,
@@ -30,10 +31,12 @@ import { Stepper } from '../common/components/stepper/stepper.js';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';
 import { TooltipDimensions } from '../common/enums/enums';
 import { useTakeScreenShot } from '../common/hooks/use-take-screenshot/use-take-screenshot.hook.js';
+import { DragAndDropPreview } from '../drag-and-drop/components/drag-and-drop-preview/drag-and-drop-preview.js';
 import { EditTemplatePage } from '../edit-temlate/edit-template';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import { QuestionAndAnswer } from '../question-and-answer/question-and-answer';
+import { DeleteResumeButton } from '../resume/components/delete-resume-button/delete-resume-button.js';
 import styles from './styles.module.scss';
 
 const steps = [
@@ -68,6 +71,16 @@ const dropdownOptions = [
         label: 'Very good command',
         value: 'B1',
     },
+];
+
+const ColumnChartDate: [string, number][] = [
+    ['Monday', 23],
+    ['Tuesday', 34],
+    ['Wednesday', 5],
+    ['Thursday', 70],
+    ['Friday', 100],
+    ['Saturday', 110],
+    ['Sunday', 160],
 ];
 
 const PreviewPage: React.FC = () => {
@@ -122,6 +135,9 @@ const PreviewPage: React.FC = () => {
                 <ul className={styles.list}>
                     <li className={styles.item}>
                         <div className={styles.example}>Component preview</div>
+                    </li>
+                    <li className={styles.item}>
+                        <DragAndDropPreview />
                     </li>
                     <li className={styles.item}>
                         <NavTabs items={navbarItems}></NavTabs>
@@ -211,6 +227,9 @@ const PreviewPage: React.FC = () => {
                             </RegularButton>
                         </div>
                     </li>
+                    <li>
+                        <DeleteResumeButton />
+                    </li>
                     <li className={styles.item}>
                         <Calendar initDate={{ year: 1500, month: 9 }} />
                         <Calendar
@@ -267,6 +286,9 @@ const PreviewPage: React.FC = () => {
                                 <img src={screenshot} alt="screenshot" />
                             )}
                         </div>
+                    </li>
+                    <li className={styles.item}>
+                        <ColumnChart measure="Views" data={ColumnChartDate} />
                     </li>
                 </ul>
             </div>

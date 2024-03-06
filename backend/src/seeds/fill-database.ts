@@ -6,7 +6,9 @@ import {
     DatabaseTableName,
 } from '~/common/database/enums/enums.js';
 import {
+    type Certification,
     type ContactDetails,
+    type CustomSection,
     type Education,
     type Experience,
     type PersonalInformation,
@@ -19,7 +21,9 @@ import {
 } from '~/seeds/seed-types/seed-data.type';
 
 import {
+    certificationsSeed,
     contactsSeed,
+    customSectionSeed,
     educationSeed,
     experienceSeed,
     imagesSeed,
@@ -150,6 +154,18 @@ async function seed(knex: Knex): Promise<void> {
 
         await trx<PersonalInformation>(DatabaseTableName.PERSONAL_INFORMATION)
             .insert(mapResumeContent(personalInformationSeed))
+            .returning('*');
+
+        // CERTIFICATION
+
+        await trx<Certification>(DatabaseTableName.CERTIFICATION)
+            .insert(mapResumeContent(certificationsSeed))
+            .returning('*');
+
+        // CUSTOM_SECTION
+
+        await trx<CustomSection>(DatabaseTableName.CUSTOM_SECTIONS)
+            .insert(mapResumeContent(customSectionSeed))
             .returning('*');
 
         // USER_TEMPLATES junction table
