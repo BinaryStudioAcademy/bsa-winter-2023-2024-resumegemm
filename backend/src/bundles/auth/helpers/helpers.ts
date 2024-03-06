@@ -1,4 +1,5 @@
 export {
+    decodeToken,
     generateRefreshToken,
     generateToken,
     getToken,

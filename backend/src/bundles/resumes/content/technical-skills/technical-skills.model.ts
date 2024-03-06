@@ -7,8 +7,8 @@ import {
 } from '~/common/database/database.js';
 
 class TechnicalSkillModel extends AbstractModel {
-    public 'skillName': string;
-    public 'skillLevel': SkillLevel;
+    public 'name': string;
+    public 'level': SkillLevel;
     public 'resumeId': string;
 
     public static override get tableName(): typeof DatabaseTableName.TECHNICAL_SKILLS {

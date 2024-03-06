@@ -9,6 +9,7 @@ enum ApiPath {
     TEMPLATES = '/templates',
     OPEN_AUTH = '/oauth',
     RESUMES = '/resumes',
+    WEBHOOKS = '/webhooks',
     AVATAR = '/avatar',
 }
 

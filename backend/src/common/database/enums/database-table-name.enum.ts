@@ -15,6 +15,7 @@ enum DatabaseTableName {
     RECENTLY_VIEWED = 'recently_viewed',
     INDUSTRIES = 'industries',
     PROFESSIONS = 'professions',
+    SUBSCRIPTION_PLANS = 'subscription_plans',
     CERTIFICATION = 'certification',
     LANGUAGES = 'languages',
     CUSTOM_SECTIONS = 'custom_sections',

@@ -63,6 +63,7 @@ export {
     ResumesApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';
+export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
 export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
@@ -109,6 +110,7 @@ export {
 export { type IStorage } from './framework/storage/storage.js';
 export { configureString } from './helpers/helpers.js';
 export {
+    type IdParameter,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,
