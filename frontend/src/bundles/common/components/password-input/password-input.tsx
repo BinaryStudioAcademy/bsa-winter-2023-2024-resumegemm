@@ -40,25 +40,28 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProperties>(
         return (
             <div ref={reference} className={clsx(styles.password, className)}>
                 <FormGroup label={label} error={error} width="100%">
-                    <Input
-                        type={isPasswordVisible ? 'text' : 'password'}
-                        placeholder={placeholder}
-                        name="password"
-                        {...otherProperties}
-                    />
-                    <IconButton
-                        className={styles.password__icon}
-                        onClick={togglePasswordVisibility}
-                    >
-                        <Icon
-                            size={IconSize.SMALL}
-                            name={
-                                isPasswordVisible
-                                    ? IconName.EYE_OPEN
-                                    : IconName.EYE_SLASH
-                            }
+                    <div className={styles.password__input_wrapper}>
+                        <Input
+                            type={isPasswordVisible ? 'text' : 'password'}
+                            placeholder={placeholder}
+                            name="password"
+                            width="100%"
+                            {...otherProperties}
                         />
-                    </IconButton>
+                        <IconButton
+                            className={styles.password__icon}
+                            onClick={togglePasswordVisibility}
+                        >
+                            <Icon
+                                size={IconSize.SMALL}
+                                name={
+                                    isPasswordVisible
+                                        ? IconName.EYE_OPEN
+                                        : IconName.EYE_SLASH
+                                }
+                            />
+                        </IconButton>
+                    </div>
                 </FormGroup>
             </div>
         );

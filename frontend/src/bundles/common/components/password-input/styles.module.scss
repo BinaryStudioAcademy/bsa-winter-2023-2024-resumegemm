@@ -1,14 +1,18 @@
 .password {
-    position: relative;
     display: inline-block;
     flex-direction: column;
     width: 100%;
     margin: 5px 0;
 }
 
+.password__input_wrapper {
+    position: relative;
+    width: 100%;
+}
+
 .password__icon {
     position: absolute;
-    top: 70%;
+    top: 50%;
     right: 20px;
     cursor: pointer;
     transform: translateY(-50%);
