@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useCallback } from 'react';
-import { type SortType } from 'shared/build';
+import { type SortDirection } from 'shared/build';
 
 import { Icon, Input } from '~/bundles/common/components/components';
 import { IconInput } from '~/bundles/common/components/icon-input/icon-input';
@@ -13,22 +13,22 @@ type Properties = {
     children?: React.ReactNode;
     name: string;
     hasIconInput?: boolean;
-    classname?: string;
+    className?: string;
 };
 
 const PanelContainer: React.FC<Properties> = ({
     children,
     name,
     hasIconInput = true,
-    classname,
+    className,
 }: Properties) => {
-    const sortHandle = useCallback((sortMethod: SortType): void => {
+    const sortHandle = useCallback((sortMethod: SortDirection): void => {
         // TODO: handle sort action
         sortMethod;
     }, []);
 
     return (
-        <div className={clsx(styles.panel_container, classname)}>
+        <div className={clsx(styles.panel_container, className)}>
             <div className={styles.panel_container__top_bar}>
                 {name}
                 <div className={styles.panel_container__options_wrapper}>

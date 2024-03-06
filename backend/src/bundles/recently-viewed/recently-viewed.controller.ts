@@ -1,3 +1,5 @@
+import { type IdParameter } from 'shared/build';
+
 import { type User } from '~/bundles/users/types/types';
 import {
     type ApiHandlerOptions,
@@ -76,7 +78,7 @@ class RecentlyViewedController
             method: 'PUT',
             handler: (options) =>
                 this.update(
-                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
         this.addRoute({
@@ -84,7 +86,7 @@ class RecentlyViewedController
             method: 'DELETE',
             handler: (options) =>
                 this.delete(
-                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
     }
@@ -203,7 +205,7 @@ class RecentlyViewedController
     }
 
     public async update(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>> {
         try {
             const id = options.params.id;
@@ -229,7 +231,7 @@ class RecentlyViewedController
     }
 
     public async delete(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<boolean>> {
         try {
             const id = options.params.id;
