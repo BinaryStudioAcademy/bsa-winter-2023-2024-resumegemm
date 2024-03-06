@@ -202,13 +202,8 @@ async function seed(knex: Knex): Promise<void> {
 
         // INDUSTRIES
 
-        const industriesMappedSeed = industriesSeed.map((industry) => ({
-            ...industry,
-            [DatabaseColumnName.ID]: guid.raw(),
-        }));
-
         await trx<Industry>(DatabaseTableName.INDUSTRIES)
-            .insert(industriesMappedSeed)
+            .insert(industriesSeed)
             .returning('*');
     });
 }

@@ -3,9 +3,14 @@ import { type Knex } from 'knex';
 import { DatabaseTableName } from '~/common/database/database.package.js';
 import { DatabaseColumnName } from '~/common/database/enums/database-column-name.enum.js';
 
-function up(knex: Knex): Promise<void> {
+async function up(knex: Knex): Promise<void> {
+    await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
     return knex.schema.createTable(DatabaseTableName.INDUSTRIES, (table) => {
-        table.uuid(DatabaseColumnName.ID).primary();
+        table
+            .uuid(DatabaseColumnName.ID)
+            .unique()
+            .primary()
+            .defaultTo(knex.raw('uuid_generate_v4()'));
         table.string(DatabaseColumnName.INDUSTRY).notNullable();
     });
 }
