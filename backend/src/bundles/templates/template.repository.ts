@@ -1,13 +1,14 @@
-import { type TemplateModel } from './template.model.js';
-import { type Template } from './types/template.type';
+import crypto from 'node:crypto';
+
+import { type Transaction } from 'objection';
 import {
-    type ITemplateRepository,
-    type TemplateCreateItemRequestDto,
-    type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
-    type TemplateUpdateItemResponseDto,
-} from './types/types.js';
+} from 'shared/build';
+
+import { type TemplateModel } from './template.model';
+import { type Template } from './types/template.type';
+import { type ITemplateRepository } from './types/template-repository.type';
 
 class TemplateRepository implements ITemplateRepository {
     private templateModel: typeof TemplateModel;
@@ -15,7 +16,6 @@ class TemplateRepository implements ITemplateRepository {
     public constructor(templateModel: typeof TemplateModel) {
         this.templateModel = templateModel;
     }
-
     public async find(id: string): Promise<Template | undefined> {
         return await this.templateModel.query().findById(id);
     }
@@ -28,23 +28,29 @@ class TemplateRepository implements ITemplateRepository {
     }
 
     public async create(
-        payload: TemplateCreateItemRequestDto,
-    ): Promise<TemplateGetAllItemResponseDto> {
-        return await this.templateModel.query().insert(payload).returning('*');
+        payload: Template,
+        transaction?: Transaction,
+    ): Promise<Template> {
+        payload.id = crypto.randomUUID();
+        return await this.templateModel
+            .query(transaction)
+            .insert(payload)
+            .returning('*');
     }
 
     public async update(
-        templateId: string,
-        editedSettings: TemplateUpdateItemRequestDto,
-    ): Promise<TemplateUpdateItemResponseDto> {
-        return await this.templateModel.query().updateAndFetchById(templateId, {
-            templateSettings: editedSettings.templateSettings,
-        });
+        id: string,
+        data: TemplateUpdateItemRequestDto,
+        transaction?: Transaction,
+    ): Promise<Template> {
+        return await this.templateModel
+            .query(transaction)
+            .updateAndFetchById(id, data);
     }
 
     public async delete(id: string): Promise<boolean> {
         const response = await this.templateModel.query().deleteById(id);
-        return response === 1 ? true : false;
+        return response === 1;
     }
 }
 

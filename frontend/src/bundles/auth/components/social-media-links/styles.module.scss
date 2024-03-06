@@ -1,0 +1,31 @@
+.social_media {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+    padding: 0 16px;
+    background: var(--color-accent-light-yellow);
+    border-radius: 10px;
+}
+
+.social_media__description {
+    color: var(--color-text-blue);
+    font-weight: var(--font-weight-subtitle);
+    font-size: var(--font-size-main-text);
+    font-family: var(--font-family-main);
+}
+
+.social_media__links {
+    display: flex;
+    gap: 16px;
+}
+
+@media screen and (width <= 500px) {
+    .social_media__description {
+        display: none;
+    }
+
+    .social_media {
+        justify-content: center;
+    }
+}

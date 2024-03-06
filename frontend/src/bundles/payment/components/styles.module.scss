@@ -30,7 +30,7 @@
 .subscription_card__title {
     width: min-content;
     color: var(--color-accent-dark-yellow);
-    font-weight: 500;
+    font-weight: var(--font-weight-subtitle);
     font-size: 48px;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .subscription_card__info {
-    font-weight: 500;
+    font-weight: var(--font-weight-subtitle);
     font-size: 24px;
 }
 

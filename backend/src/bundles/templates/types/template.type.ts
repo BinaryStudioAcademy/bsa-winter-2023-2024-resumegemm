@@ -1,9 +1,10 @@
-import { type TemplateBlockSettings } from './types';
+import { type TemplateBlockSettings } from './types.js';
 
 type Template = {
     id: string;
     isOwner: boolean;
     userId: string;
+    image: string;
     createdAt: string;
     updatedAt: string;
     deletedAt: string | null;

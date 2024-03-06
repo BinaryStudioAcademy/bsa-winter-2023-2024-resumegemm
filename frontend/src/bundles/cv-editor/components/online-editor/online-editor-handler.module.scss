@@ -8,7 +8,7 @@
     flex-grow: 1;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #687a9c;
+    background-color: var(--color-background-dark-blue);
 }
 
 .editor_sidebar__list {
@@ -19,7 +19,7 @@
 .editor_sidebar__item {
     width: 100%;
     padding: 17px 65px 22px;
-    color: white;
+    color: var(--color-white);
     text-align: center;
     background-color: inherit;
     border: none;
@@ -27,7 +27,7 @@
 }
 
 .editor_sidebar__item__active {
-    background-color: #768fbe;
+    background-color: var(--color-background-light-blue);
 }
 
 .editor_output__block {
@@ -40,15 +40,15 @@
 
 .editor_output__block .editor_output__button {
     padding: 15px 24px;
-    color: white;
-    font-size: 16px;
+    color: var(--color-white);
+    font-size: var(--font-size-subtitle);
     line-height: 24px;
-    background-color: #687a9c;
+    background-color: var(--color-background-dark-blue);
     border: none;
     border-radius: 50px;
 }
 
 .editor_output__block .editor_output__button:hover {
-    color: white;
-    background-color: #3f557e;
+    color: var(--color-white);
+    background-color: var(--color-background-blue);
 }

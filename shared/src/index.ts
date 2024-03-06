@@ -5,11 +5,13 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
-    type GithubUserWithProfileRelation,
     type OauthUserEntityFields,
+    type OauthUserLoginRequestDto,
+    type OauthUserLoginResponseDto,
+    type OauthUserWithProfileRelation,
+    type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
-    type UserGithubLoginRequestDto,
-    type UserGithubLoginResponseDto,
+    type UserGoogleDataResponseDto,
     OauthStrategy,
     OpenAuthApiGetUserUrl,
     OpenAuthApiPath,
@@ -36,19 +38,36 @@ export {
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
 export {
+    type Certification,
+    type Contacts,
+    type CustomSection,
+    type Education,
+    type Experience,
+    type IResumeService,
+    type PersonalInformation,
+    type Resume,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
-    type ResumeService,
-    ResumeApiPath,
+    type ResumeCreateItemRequestDto,
+    type ResumeEntityFields,
+    type ResumeGetAllRequestDto,
+    type ResumeGetAllResponseDto,
+    type ResumeGetItemRequestDto,
+    type ResumeGetItemResponseDto,
+    type ResumeUpdateItemRequestDto,
+    type TechnicalSkill,
+    LanguageLevels,
+    ResumesApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';
+export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
 export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
+    TemplatesApiPath,
 } from './bundles/templates/templates.js';
-export { TemplatesApiPath } from './bundles/templates/templates.js';
 export {
     type User,
     type UserAuthResponse,
@@ -75,7 +94,7 @@ export { type IConfig } from './framework/config/config.js';
 export {
     ApplicationError,
     AuthException,
-    HttpError,
+    HTTPError,
     ValidationError,
 } from './framework/exceptions/exceptions.js';
 export {
@@ -88,10 +107,12 @@ export {
 export { type IStorage } from './framework/storage/storage.js';
 export { configureString } from './helpers/helpers.js';
 export {
+    type IdParameter,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,
     type ServerValidationErrorResponse,
+    type SortDirection,
     type ValidationSchema,
     type ValueOf,
 } from './types/types.js';

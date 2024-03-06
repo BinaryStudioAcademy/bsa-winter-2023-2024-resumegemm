@@ -12,18 +12,18 @@
     width: 85%;
     height: 16px;
     overflow: hidden;
-    background: #768fbe;
+    background: var(--color-background-light-blue);
     border-radius: 16px;
 }
 
 .progress__innerBar {
     height: 16px;
-    background: #dbae2d;
+    background: var(--color-accent-dark-yellow);
     border-radius: 16px 0 0 16px;
 }
 
 .progress__percentage {
-    color: #ccd7dc;
-    font-size: 16px;
+    color: var(--color-disabled-gray);
+    font-size: var(--font-size-title-h5);
     text-align: center;
 }

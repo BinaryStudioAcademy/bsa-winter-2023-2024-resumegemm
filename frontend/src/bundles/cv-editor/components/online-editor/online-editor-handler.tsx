@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React, { useCallback, useState } from 'react';
 
-import { BaseButton } from '~/bundles/common/components/components';
+import { RegularButton } from '~/bundles/common/components/components';
 import {
     ButtonSize,
     ButtonType,
@@ -46,7 +46,7 @@ const OnlineEditorTabsHandler: React.FC<TabsProperties> = ({ tabs }) => {
             </nav>
             <div className={styles.editor_output__block}>
                 <div>{tabs[activeTabIndex].content}</div>
-                <BaseButton
+                <RegularButton
                     type={ButtonType.SUBMIT}
                     size={ButtonSize.MEDIUM}
                     variant={ButtonVariant.DEFAULT}
@@ -54,7 +54,7 @@ const OnlineEditorTabsHandler: React.FC<TabsProperties> = ({ tabs }) => {
                     className={styles.editor_output__button}
                 >
                     Next
-                </BaseButton>
+                </RegularButton>
             </div>
         </section>
     );

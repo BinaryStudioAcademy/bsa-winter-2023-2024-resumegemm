@@ -1,0 +1,34 @@
+.button__base {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    min-height: 16px;
+    margin: 0;
+    color: var(--color-text-gray);
+    font-size: var(--font-size-subtitle);
+    line-height: 24px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: baseline;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.icon_wrapper {
+    display: flex;
+    color: var(--color-text-gray);
+    font-size: var(--font-size-secondary-text);
+}
+
+.icon_wrapper svg {
+    font-size: inherit;
+}
+
+.icon_wrapper__asc.icon_wrapper__asc svg:first-child {
+    color: var(--color-black);
+}
+
+.icon_wrapper__desc.icon_wrapper__desc svg:last-child {
+    color: var(--color-black);
+}

@@ -1,20 +1,20 @@
 .preview {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .example {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  background-color: rgb(157, 168, 255);
-}/*# sourceMappingURL=styles.module.css.map */
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: var(--color-background-light-purple);
+} /*# sourceMappingURL=styles.module.css.map */

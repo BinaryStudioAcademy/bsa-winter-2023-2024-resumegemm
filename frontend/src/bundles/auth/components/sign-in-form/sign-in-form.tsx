@@ -1,29 +1,32 @@
 import { useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
-import { OpenAuthApiPath, userSignInValidationSchema } from 'shared/build';
+import { Link } from 'react-router-dom';
+import { userSignInValidationSchema } from 'shared/build';
 
+import { Divider } from '~/bundles/auth/components/divider/divider';
+import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
 import {
-    BaseButton,
     FormGroup,
     Input,
     PasswordInput,
+    RegularButton,
 } from '~/bundles/common/components/components.js';
 import {
+    AppRoute,
     ButtonSize,
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DividerVariant,
 } from '~/bundles/common/enums/enums';
 import { useAppForm } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
 import { type UserSignInRequestDto } from '~/bundles/users/users';
-import { config } from '~/framework/config/config.js';
 
 import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
 
 type Properties = {
-    onSubmit: (paload: UserSignInRequestDto) => void;
+    onSubmit: (payload: UserSignInRequestDto) => void;
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
@@ -45,7 +48,9 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                 <h1 className={styles.login__title}>Log In</h1>
                 <p className={styles.login__message}>
                     No account? Go to
-                    <span className={styles.login__link}> Sign Up</span>
+                    <Link to={AppRoute.SIGN_UP} className={styles.login__link}>
+                        Sign Up
+                    </Link>
                 </p>
             </div>
             <form onSubmit={handleFormSubmit} className={styles.login__form}>
@@ -61,13 +66,13 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                         Forgot Password?
                     </span>
                     <PasswordInput
-                        label="Passwod"
+                        label="Password"
                         error={errors.password}
                         placeholder="Your password"
                         {...useFormFieldCreator({ name: 'password', control })}
                     />
                 </div>
-                <BaseButton
+                <RegularButton
                     className={styles.login__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
@@ -75,12 +80,9 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     type={ButtonType.SUBMIT}
                 >
                     Sign up
-                </BaseButton>
-                <NavLink
-                    to={`${config.ENV.API.PROXY_URL}${OpenAuthApiPath.GITHUB}`}
-                >
-                    Login Github
-                </NavLink>
+                </RegularButton>
+                <Divider variant={DividerVariant.SECONDARY} />
+                <SocialMediaLinks />
             </form>
         </>
     );

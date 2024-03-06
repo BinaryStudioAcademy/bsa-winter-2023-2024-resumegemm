@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type UserWithProfileRelation } from 'shared/build/bundles/users/types/user-with-profile-nested-relation.type.js';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
@@ -22,7 +23,7 @@ const signUp = createAsyncThunk<
 });
 
 const signIn = createAsyncThunk<
-    UserAuthResponse,
+    UserWithProfileRelation,
     UserSignInRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-in`, async (signInPayload, { extra }) => {
@@ -34,8 +35,7 @@ const signIn = createAsyncThunk<
     return user;
 });
 
-// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-const getUser = createAsyncThunk<UserAuthResponse, void, AsyncThunkConfig>(
+const getUser = createAsyncThunk<UserAuthResponse, undefined, AsyncThunkConfig>(
     `${sliceName}/get-user`,
     async (_, { extra }) => {
         const { authApi } = extra;

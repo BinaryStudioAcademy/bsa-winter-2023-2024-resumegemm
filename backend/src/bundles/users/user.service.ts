@@ -1,10 +1,14 @@
-import { HttpCode, HttpError } from 'shared/build/index.js';
+import { type IncomingHttpHeaders } from 'node:http';
+
+import { type JwtPayload } from 'jsonwebtoken';
+import { HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { type IService } from '~/common/interfaces/interfaces.js';
 
+import { decodeToken, getToken } from '../auth/helpers/helpers.js';
 import {
     type UserEntityFields,
     type UserGetAllResponseDto,
@@ -52,6 +56,7 @@ class UserService implements Omit<IService, 'getById'> {
                 {
                     firstName,
                     lastName,
+                    avatar: 'avatar', //TODO: remove, when fixed!!!
                 },
                 transaction,
             );
@@ -70,9 +75,9 @@ class UserService implements Omit<IService, 'getById'> {
             return user.toObject();
         } catch (error: unknown) {
             await transaction.rollback();
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.INTERNAL_SERVER_ERROR,
-                message: (error as HttpError).message,
+                message: (error as HTTPError).message,
             });
         }
     }
@@ -84,6 +89,31 @@ class UserService implements Omit<IService, 'getById'> {
             id,
             'withoutHashPasswords',
         ) as Promise<UserWithProfileRelation>;
+    }
+
+    public async delete(
+        headers: IncomingHttpHeaders,
+    ): Promise<UserEntityFields> {
+        const token = getToken(headers);
+
+        if (!token) {
+            throw new HTTPError({
+                message: 'Token not found',
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        const { id } = decodeToken(token) as JwtPayload;
+        const deletedUser = await this.userRepository.delete(id);
+
+        if (!deletedUser) {
+            throw new HTTPError({
+                message: 'User not found',
+                status: HttpCode.NOT_FOUND,
+            });
+        }
+
+        return deletedUser;
     }
 }
 
