@@ -138,6 +138,16 @@ class UserService
 
         return deletedUser;
     }
+
+    public async addStripeId(
+        stripeId: string,
+        email: string,
+    ): Promise<UserEntityFields | null> {
+        return this.userRepository.addStripeId({
+            stripeId,
+            email,
+        });
+    }
 }
 
 export { UserService };
