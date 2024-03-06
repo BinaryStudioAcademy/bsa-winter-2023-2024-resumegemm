@@ -1,13 +1,11 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { RegularButton } from '~/bundles/common/components/components';
-import { ButtonVariant } from '~/bundles/common/enums/enums';
-
-import { Modal } from '~/bundles/common/components/components';
+import { Modal, RegularButton } from '~/bundles/common/components/components';
 import {
     AppRoute,
-    ModalVariant
+    ButtonVariant,
+    ModalVariant,
 } from '~/bundles/common/enums/enums';
 import { useAppDispatch } from '~/bundles/common/hooks/hooks';
 
@@ -30,7 +28,7 @@ const DeleteAccount: React.FC = () => {
     const handleDeleteAccount = useCallback(() => {
         void dispatch(userActions.deleteProfile());
         setIsModalOpen(false);
-        navigate(AppRoute.SIGN_IN);
+        navigate(AppRoute.LOG_IN);
     }, [dispatch, navigate]);
 
     return (
@@ -61,7 +59,6 @@ const DeleteAccount: React.FC = () => {
                     </RegularButton>
                 </div>
             </Modal>
-
         </div>
     );
 };
