@@ -9,7 +9,7 @@ type UserSignUpRequestDtoFrontend = {
     lastName: string;
     email: string;
     password: string;
-    confirm_password?: string;
+    confirmPassword?: string;
 };
 
 const userSignUpValidationFrontend = joi.object<
@@ -58,7 +58,7 @@ const userSignUpValidationFrontend = joi.object<
             'string.min': UserValidationMessage.PASSWORD_INVALID,
             'string.max': UserValidationMessage.PASSWORD_INVALID,
         }),
-    confirm_password: joi
+    confirmPassword: joi
         .string()
         .valid(joi.ref('password'))
         .required()
@@ -68,5 +68,4 @@ const userSignUpValidationFrontend = joi.object<
         }),
 });
 
-export { type UserSignUpRequestDtoFrontend };
-export { userSignUpValidationFrontend };
+export { type UserSignUpRequestDtoFrontend, userSignUpValidationFrontend };

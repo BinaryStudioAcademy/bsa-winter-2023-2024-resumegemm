@@ -7,17 +7,17 @@ import {
     type UserWithProfileRelation,
 } from './types/types.js';
 
-type TUserRepo = {
+interface IUserRepo {
     findOneByEmail(email: string): Promise<UserEntityFields | null>;
     findAll(): Promise<UserEntity[]>;
-};
+}
 
 class UserRepository
     extends AbstractRepository<
         typeof UserModel,
         UserWithProfileRelation | UserEntityFields
     >
-    implements TUserRepo
+    implements IUserRepo
 {
     public constructor({ userModel }: Record<'userModel', typeof UserModel>) {
         super(userModel);
@@ -25,7 +25,7 @@ class UserRepository
 
     public async findOneByEmail(
         email: string,
-    ): ReturnType<TUserRepo['findOneByEmail']> {
+    ): ReturnType<IUserRepo['findOneByEmail']> {
         const user = await this.model
             .query()
             .findOne({ email })
@@ -48,7 +48,7 @@ class UserRepository
             .patchAndFetchById(id, { passwordHash, passwordSalt });
     }
 
-    public async findAll(): ReturnType<TUserRepo['findAll']> {
+    public async findAll(): ReturnType<IUserRepo['findAll']> {
         const users = await this.model.query().whereNull('deletedAt').execute();
 
         return users.map((it) => UserEntity.initialize(it));

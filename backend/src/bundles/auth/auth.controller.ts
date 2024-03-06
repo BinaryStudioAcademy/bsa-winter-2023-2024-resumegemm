@@ -1,6 +1,6 @@
 import { type FastifyRequest } from 'fastify';
 import {
-    type HttpError,
+    type HTTPError,
     type UserAuthResponse,
     type UserForgotPasswordRequestDto,
     type UserResetPasswordRequestDto,
@@ -272,7 +272,7 @@ class AuthController extends Controller {
                 payload,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {
@@ -300,7 +300,7 @@ class AuthController extends Controller {
                 payload: userData,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {
@@ -362,7 +362,7 @@ class AuthController extends Controller {
                 payload: { accessToken },
             };
         } catch (error: unknown) {
-            const { status } = error as HttpError;
+            const { status } = error as HTTPError;
             return {
                 status,
                 payload: {

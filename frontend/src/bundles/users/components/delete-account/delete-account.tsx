@@ -9,7 +9,7 @@ import {
 } from '~/bundles/common/enums/enums';
 import { useAppDispatch } from '~/bundles/common/hooks/hooks';
 
-import { actions as userActions } from '../../store/';
+import { actions as userActions } from '../../store/user.store';
 import styles from './style.module.scss';
 
 const DeleteAccount: React.FC = () => {

@@ -10,7 +10,7 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 
-import { actions as authActions } from '../../store/index.js';
+import { actions as authActions } from '../../store/auth.store.js';
 import { RecoveryStage } from './enums/enums.js';
 import { RecoveryCodeForm } from './recovery-code.js';
 import { RecoveryEmailForm } from './recovery-email.js';

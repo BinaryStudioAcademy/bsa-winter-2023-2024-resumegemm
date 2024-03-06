@@ -4,7 +4,7 @@ import {
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
 } from 'shared/build/bundles/templates/templates.js';
-import { type IdParameter, HttpError } from 'shared/build/index.js';
+import { type IdParameter, HTTPError } from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
@@ -87,7 +87,7 @@ class TemplateController extends Controller {
     ): Promise<ApiHandlerResponse<Template>> {
         const template = await this.templateService.find(options.params.id);
         if (!template) {
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.BAD_REQUEST,
                 message: 'User with this id not found',
             });
@@ -133,7 +133,7 @@ class TemplateController extends Controller {
                 payload: {},
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {

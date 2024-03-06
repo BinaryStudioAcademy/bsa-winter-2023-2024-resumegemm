@@ -1,9 +1,9 @@
 import { type CalendarMonth } from '~/bundles/common/types/types';
 
-const yearRegex = /\d{4}/g;
-const monthRegex = /[A-Za-z]+/;
+const YEAR_REGEX = /\d{4}/g;
+const MONTH_REGEX = /[A-Za-z]+/;
 
-const CalendarMonths: CalendarMonth[] = [
+const CALENDAR_MONTHS: CalendarMonth[] = [
     { num: 0, name: 'Jan' },
     { num: 1, name: 'Feb' },
     { num: 2, name: 'Mar' },
@@ -18,4 +18,4 @@ const CalendarMonths: CalendarMonth[] = [
     { num: 11, name: 'Dec' },
 ];
 
-export { CalendarMonths, monthRegex, yearRegex };
+export { CALENDAR_MONTHS, MONTH_REGEX, YEAR_REGEX };

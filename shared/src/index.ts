@@ -43,6 +43,7 @@ export {
     type CustomSection,
     type Education,
     type Experience,
+    type IResumeService,
     type PersonalInformation,
     type Resume,
     type ResumeAiScoreRequestDto,
@@ -65,8 +66,8 @@ export {
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
+    TemplatesApiPath,
 } from './bundles/templates/templates.js';
-export { TemplatesApiPath } from './bundles/templates/templates.js';
 export {
     type User,
     type UserAuthResponse,
@@ -103,7 +104,7 @@ export { type IConfig } from './framework/config/config.js';
 export {
     ApplicationError,
     AuthException,
-    HttpError,
+    HTTPError,
     ValidationError,
 } from './framework/exceptions/exceptions.js';
 export {
@@ -121,7 +122,7 @@ export {
     type ServerErrorDetail,
     type ServerErrorResponse,
     type ServerValidationErrorResponse,
-    type SortType,
+    type SortDirection,
     type ValidationSchema,
     type ValueOf,
 } from './types/types.js';

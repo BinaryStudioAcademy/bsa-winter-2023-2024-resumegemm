@@ -11,6 +11,7 @@ export {
 } from './content/content.js';
 export { ResumesApiPath } from './enums/enums.js';
 export {
+    type IResumeService,
     type Resume,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
