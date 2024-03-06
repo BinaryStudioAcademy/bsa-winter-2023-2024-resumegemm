@@ -23,9 +23,15 @@ const Auth: React.FC = () => {
 
     const handleSignInSubmit = useCallback(
         (payload: UserSignInRequestDto): void => {
-            void dispatch(authActions.signIn(payload));
+            void dispatch(authActions.signIn(payload))
+                .unwrap()
+                .catch((error: Error) => {
+                    showToast(error.message, ToastType.ERROR, {
+                        position: 'top-right',
+                    });
+                });
         },
-        [dispatch],
+        [showToast, dispatch],
     );
 
     const handleSignUpSubmit = useCallback(
@@ -34,7 +40,9 @@ const Auth: React.FC = () => {
             void dispatch(authActions.signUp(payload))
                 .unwrap()
                 .catch((error: Error) => {
-                    showToast(error.message, ToastType.ERROR);
+                    showToast(error.message, ToastType.ERROR, {
+                        position: 'top-right',
+                    });
                 });
         },
         [dispatch, showToast],
