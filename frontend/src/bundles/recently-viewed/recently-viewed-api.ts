@@ -3,6 +3,7 @@ import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
+import { TEMPLATES_LIMIT } from './constants/template-limit.js';
 import { RecentlyViewedApiPath } from './enums/enums.js';
 import { type RecentlyViewedTemplatesResponseDto } from './types/types.js';
 
@@ -18,7 +19,7 @@ class RecentlyViewedApi extends HttpApi {
     }
 
     public async getRecentlyViewedTemplates(
-        limit = '10',
+        limit = TEMPLATES_LIMIT,
     ): Promise<RecentlyViewedTemplatesResponseDto[]> {
         const query = `?limit=${limit}`;
         const response = await this.load(
