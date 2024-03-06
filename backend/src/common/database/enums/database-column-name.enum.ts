@@ -61,6 +61,9 @@ enum DatabaseColumnName {
     LANGUAGE_LEVEL = 'language_level',
     ACTIVITY = 'activity',
     OWNER_ID = 'owner_id',
+    PAYMENT_METHOD_ID = 'payment_method_id',
+    TYPE = 'type',
+    CUSTOMER_ID = 'customer_id',
 }
 
 export { DatabaseColumnName };
