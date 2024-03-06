@@ -1,6 +1,5 @@
 import { type FastifyRequest } from 'fastify';
 
-import { type AuthService } from '~/bundles/auth/auth.service';
 import {
     generateRefreshToken,
     generateToken,
@@ -234,12 +233,13 @@ class OpenAuthController extends Controller {
                 payload: null,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status = HttpCode.INTERNAL_SERVER_ERROR } =
+                error as HttpError;
             return {
                 status,
                 payload: {
                     message,
-                    status: HttpCode.INTERNAL_SERVER_ERROR,
+                    status,
                 },
             };
         }
