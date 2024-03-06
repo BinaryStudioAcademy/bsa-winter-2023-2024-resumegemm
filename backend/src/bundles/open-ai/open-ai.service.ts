@@ -2,8 +2,8 @@ import OpenAI from 'openai';
 
 import { type ValueOf } from '~/common/types/types.js';
 
-import { ModelSettings } from './constants/model-settings.js';
-import { type Prompts } from './constants/prompts.js';
+import { MODEL_SETTINGS } from './constants/model-settings.js';
+import { type PROMPTS } from './constants/prompts.js';
 import { Roles } from './enums/roles.js';
 
 class OpenAIService {
@@ -14,7 +14,7 @@ class OpenAIService {
     }
 
     public async generateResponse<T>(
-        systemMessage: ValueOf<typeof Prompts>,
+        systemMessage: ValueOf<typeof PROMPTS>,
         userMessage: string,
     ): Promise<T> {
         const response = await this.openAI.chat.completions.create({
@@ -28,10 +28,10 @@ class OpenAIService {
                     'content': userMessage,
                 },
             ],
-            model: ModelSettings.MODEL_NAME,
-            max_tokens: ModelSettings.MAX_TOKENS,
+            model: MODEL_SETTINGS.MODEL_NAME,
+            max_tokens: MODEL_SETTINGS.MAX_TOKENS,
             response_format: { type: 'json_object' },
-            temperature: ModelSettings.TEMPERATURE,
+            temperature: MODEL_SETTINGS.TEMPERATURE,
         });
 
         const result = response.choices[0].message.content as string;

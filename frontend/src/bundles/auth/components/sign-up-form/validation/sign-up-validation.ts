@@ -9,7 +9,7 @@ type UserSignUpRequestDtoFrontend = {
     lastName: string;
     email: string;
     password: string;
-    confirm_password?: string;
+    confirmPassword?: string;
 };
 
 const userSignUpValidationFrontend = joi.object<
@@ -28,30 +28,39 @@ const userSignUpValidationFrontend = joi.object<
     }),
     email: joi
         .string()
-        .trim()
         .email({
             tlds: {
                 allow: false,
             },
         })
+        .custom((value, helpers) => {
+            const [localPart] = value.split('@');
+            if (localPart.length <= 1) {
+                return helpers.error('string.emailInvalid');
+            }
+            return value;
+        })
         .required()
         .messages({
             'string.email': UserValidationMessage.EMAIL_WRONG,
             'string.empty': UserValidationMessage.EMAIL_REQUIRE,
+            'string.emailInvalid': UserValidationMessage.EMAIL_INVALID,
         }),
     password: joi
         .string()
         .regex(
             /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~])(?=\S{8,64}$).*$/,
         )
+        .min(UserValidationRule.PASSWORD_MIN_LENGTH)
         .max(UserValidationRule.PASSWORD_MAX_LENGTH)
         .required()
         .messages({
             'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
             'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
+            'string.min': UserValidationMessage.PASSWORD_INVALID,
             'string.max': UserValidationMessage.PASSWORD_INVALID,
         }),
-    confirm_password: joi
+    confirmPassword: joi
         .string()
         .valid(joi.ref('password'))
         .required()
@@ -61,5 +70,4 @@ const userSignUpValidationFrontend = joi.object<
         }),
 });
 
-export { type UserSignUpRequestDtoFrontend };
-export { userSignUpValidationFrontend };
+export { type UserSignUpRequestDtoFrontend, userSignUpValidationFrontend };
