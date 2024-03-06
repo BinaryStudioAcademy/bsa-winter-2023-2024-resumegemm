@@ -7,6 +7,7 @@ import { type FileUploadRequestDto } from './common/files/types/types.js';
 declare module 'fastify' {
     interface FastifyRequest {
         user?: User;
+        rawBody?: string | null;
         fileBuffer?: FileUploadRequestDto;
     }
     interface FastifyInstance {

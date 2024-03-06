@@ -14,3 +14,15 @@ $layout-breakpoint-small: 768px;
         gap: 10px;
     }
 }
+
+.profile__delete__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile__delete__actions p {
+    color: red;
+    font-weight: 600;
+}

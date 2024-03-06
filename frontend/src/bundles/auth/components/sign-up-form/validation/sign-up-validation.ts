@@ -1,12 +1,15 @@
 import joi from 'joi';
-import { UserValidationMessage } from 'shared/build/bundles/users/users';
+import {
+    UserValidationMessage,
+    UserValidationRule,
+} from 'shared/build/bundles/users/users';
 
 type UserSignUpRequestDtoFrontend = {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
-    confirm_password?: string;
+    confirmPassword?: string;
 };
 
 const userSignUpValidationFrontend = joi.object<
@@ -25,24 +28,38 @@ const userSignUpValidationFrontend = joi.object<
     }),
     email: joi
         .string()
-        .trim()
         .email({
             tlds: {
                 allow: false,
             },
         })
+        .custom((value, helpers) => {
+            const [localPart] = value.split('@');
+            if (localPart.length <= 1) {
+                return helpers.error('string.emailInvalid');
+            }
+            return value;
+        })
         .required()
         .messages({
             'string.email': UserValidationMessage.EMAIL_WRONG,
             'string.empty': UserValidationMessage.EMAIL_REQUIRE,
+            'string.emailInvalid': UserValidationMessage.EMAIL_INVALID,
         }),
-    password: joi.string().regex(/^\S*$/).required().messages({
-        'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
-        'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
-    }),
-    confirm_password: joi
+    password: joi
         .string()
-        .trim()
+        .min(UserValidationRule.PASSWORD_MIN_LENGTH)
+        .max(UserValidationRule.PASSWORD_MAX_LENGTH)
+        .regex(/^\S*$/)
+        .required()
+        .messages({
+            'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
+            'string.pattern.base': UserValidationMessage.PASSWORD_INVALID,
+            'string.min': UserValidationMessage.PASSWORD_INVALID,
+            'string.max': UserValidationMessage.PASSWORD_INVALID,
+        }),
+    confirmPassword: joi
+        .string()
         .valid(joi.ref('password'))
         .required()
         .messages({
@@ -51,5 +68,4 @@ const userSignUpValidationFrontend = joi.object<
         }),
 });
 
-export { type UserSignUpRequestDtoFrontend };
-export { userSignUpValidationFrontend };
+export { type UserSignUpRequestDtoFrontend, userSignUpValidationFrontend };

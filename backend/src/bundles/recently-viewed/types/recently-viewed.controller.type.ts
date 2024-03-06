@@ -1,3 +1,5 @@
+import { type IdParameter } from 'shared/build';
+
 import { type User } from '~/bundles/users/types/types';
 import {
     type ApiHandlerOptions,
@@ -11,7 +13,7 @@ import {
     type RecentlyViewedTemplatesResponseDto,
 } from './types';
 
-type IRecentlyViewedController = {
+interface IRecentlyViewedController {
     findAll(options: {
         query: { limit: number };
     }): Promise<ApiHandlerResponse<RecentlyViewedResponseDto[]>>;
@@ -34,12 +36,12 @@ type IRecentlyViewedController = {
     ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>>;
 
     update(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<RecentlyViewedResponseDto>>;
 
     delete(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<boolean>>;
-};
+}
 
 export { type IRecentlyViewedController };

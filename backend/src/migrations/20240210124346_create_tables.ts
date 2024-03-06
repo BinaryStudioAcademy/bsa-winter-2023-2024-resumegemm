@@ -13,6 +13,7 @@ async function up(knex: Knex): Promise<void> {
         table.string(DatabaseColumnName.EMAIL).unique().notNullable();
         table.text(DatabaseColumnName.PASSWORD_HASH).notNullable();
         table.text(DatabaseColumnName.PASSWORD_SALT).notNullable();
+        table.text(DatabaseColumnName.STRIPE_ID);
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
@@ -155,7 +156,7 @@ async function up(knex: Knex): Promise<void> {
     );
     await knex.schema.createTable(DatabaseTableName.CERTIFICATION, (table) => {
         table.uuid(DatabaseColumnName.ID).primary();
-        table.string(DatabaseColumnName.CRTIFICATION_NAME).notNullable();
+        table.string(DatabaseColumnName.CERTIFICATION_NAME).notNullable();
         table.string(DatabaseColumnName.AUTHORITY).notNullable();
         table.date(DatabaseColumnName.START_DATE).notNullable();
         table.date(DatabaseColumnName.END_DATE);
@@ -274,6 +275,26 @@ async function up(knex: Knex): Promise<void> {
             DatabaseColumnName.TEMPLATE_ID,
         ]);
     });
+    await knex.schema.createTable(
+        DatabaseTableName.SUBSCRIPTION_PLANS,
+        (table) => {
+            table.uuid(DatabaseColumnName.ID).primary();
+            table.string(DatabaseColumnName.STRIPE_PLAN_ID).notNullable();
+            table.string(DatabaseColumnName.STRIPE_PRODUCT_ID).notNullable();
+            table
+                .boolean(DatabaseColumnName.IS_ACTIVE)
+                .notNullable()
+                .defaultTo(true);
+            table
+                .dateTime(DatabaseColumnName.CREATED_AT)
+                .notNullable()
+                .defaultTo(knex.fn.now());
+            table
+                .dateTime(DatabaseColumnName.UPDATED_AT)
+                .notNullable()
+                .defaultTo(knex.fn.now());
+        },
+    );
 }
 
 async function down(knex: Knex): Promise<void> {
@@ -290,6 +311,7 @@ async function down(knex: Knex): Promise<void> {
     await knex.schema.dropTableIfExists(DatabaseTableName.REVIEWS);
     await knex.schema.dropTableIfExists(DatabaseTableName.RECENTLY_VIEWED);
     await knex.schema.dropTableIfExists(DatabaseTableName.USER_TEMPLATES);
+    await knex.schema.dropTableIfExists(DatabaseTableName.SUBSCRIPTION_PLANS);
     await knex.schema.dropTableIfExists(DatabaseTableName.CERTIFICATION);
     await knex.schema.dropTableIfExists(DatabaseTableName.LANGUAGES);
     await knex.schema.dropTableIfExists(DatabaseTableName.CUSTOM_SECTIONS);

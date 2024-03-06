@@ -1,30 +1,18 @@
 import clsx from 'clsx';
-import { useEffect } from 'react';
 
 import introImage from '~/assets/img/5192055.png';
 import templateThirdImage from '~/assets/img/5297769.png';
 import templateSecondImage from '~/assets/img/6450724.png';
-import Arrow2 from '~/assets/img/arrow.png';
 import GettingStarted from '~/assets/img/get-started.png';
 import OnlineEditorFeatureImage from '~/assets/img/mock-resume-designer.png';
 import templateFirstImage from '~/assets/img/resume-template.png';
-import {
-    ButtonSize,
-    ButtonVariant,
-    ButtonWidth,
-} from '~/bundles/common/enums/enums';
+import { ButtonSize, ButtonVariant } from '~/bundles/common/enums/enums';
 
-import { getUser } from '../auth/store/actions';
 import { Header, RegularButton } from '../common/components/components';
-import { useAppDispatch } from '../common/hooks/hooks';
 import { FeatureImage } from './components/feature-image';
 import styles from './styles.module.scss';
 
 const LandingPage = (): JSX.Element => {
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        void dispatch(getUser());
-    }, [dispatch]);
     return (
         <>
             <Header>
@@ -70,11 +58,7 @@ const LandingPage = (): JSX.Element => {
                             >
                                 <p>Create Resume for free</p>
                             </RegularButton>
-                            <img
-                                className={styles.intro__arrow}
-                                src={Arrow2}
-                                alt="arrow"
-                            />
+                            <div className={styles.intro__arrow}></div>
                         </div>
                     </div>
 
