@@ -1,4 +1,4 @@
-type PersonalInfoType = {
+type PersonalInfo = {
     fullName: string;
     email: string;
     profession: string;
@@ -7,4 +7,4 @@ type PersonalInfoType = {
     country: string;
 };
 
-export { type PersonalInfoType };
+export { type PersonalInfo };
