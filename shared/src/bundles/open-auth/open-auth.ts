@@ -11,4 +11,5 @@ export {
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
+    type UserLinkedinDataResponseDto,
 } from './types/types.js';

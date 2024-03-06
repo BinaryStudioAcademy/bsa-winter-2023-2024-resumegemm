@@ -12,6 +12,7 @@ export {
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
+    type UserLinkedinDataResponseDto,
     OauthStrategy,
     OpenAuthApiGetUserUrl,
     OpenAuthApiPath,
