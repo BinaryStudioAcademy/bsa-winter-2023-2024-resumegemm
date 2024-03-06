@@ -35,6 +35,7 @@ import { EditTemplatePage } from '../edit-temlate/edit-template';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import { QuestionAndAnswer } from '../question-and-answer/question-and-answer';
+import { DeleteResumeButton } from '../resume/components/delete-resume-button/delete-resume-button.js';
 import styles from './styles.module.scss';
 
 const steps = [
@@ -221,6 +222,9 @@ const PreviewPage: React.FC = () => {
                                 <Icon name={IconName.FACEBOOK} />
                             </RegularButton>
                         </div>
+                    </li>
+                    <li>
+                        <DeleteResumeButton />
                     </li>
                     <li className={styles.item}>
                         <Calendar initDate={{ year: 1500, month: 9 }} />
