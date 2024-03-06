@@ -566,196 +566,151 @@ async function up(knex: Knex): Promise<void> {
 
 async function down(knex: Knex): Promise<void> {
     await knex.schema.alterTable(DatabaseTableName.USERS, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-    await knex.schema.alterTable(DatabaseTableName.OAUTH_USERS, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-    await knex.schema.alterTable(DatabaseTableName.PROFILE, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-    await knex.schema.alterTable(
-        DatabaseTableName.PERSONAL_INFORMATION,
-        (table) => {
-            table.dropColumn(DatabaseColumnName.ID);
-            table.uuid(DatabaseColumnName.ID).primary();
-        },
-    );
-    await knex.schema.alterTable(
-        DatabaseTableName.TECHNICAL_SKILLS,
-        (table) => {
-            table.dropColumn(DatabaseColumnName.ID);
-            table.uuid(DatabaseColumnName.ID).primary();
-        },
-    );
-    await knex.schema.alterTable(DatabaseTableName.CONTACT_DETAILS, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-    await knex.schema.alterTable(DatabaseTableName.EDUCATION, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-    await knex.schema.alterTable(DatabaseTableName.EXPERIENCE, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-    await knex.schema.alterTable(DatabaseTableName.REVIEWS, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-    await knex.schema.alterTable(DatabaseTableName.RESUMES, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-    await knex.schema.alterTable(DatabaseTableName.TEMPLATES, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-    await knex.schema.alterTable(DatabaseTableName.RECENTLY_VIEWED, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-    await knex.schema.alterTable(DatabaseTableName.USER_TEMPLATES, (table) => {
-        table.dropColumn(DatabaseColumnName.ID);
-        table.uuid(DatabaseColumnName.ID).primary();
-    });
-
-    // Rename foreign keys in other tables
-    await knex.schema.alterTable(DatabaseTableName.RESUMES, (table) => {
-        table.dropColumn(DatabaseColumnName.USER_ID);
-        table
-            .uuid(DatabaseColumnName.USER_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.USERS)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
-    });
-    await knex.schema.alterTable(DatabaseTableName.TEMPLATES, (table) => {
-        table.dropColumn(DatabaseColumnName.USER_ID);
-        table
-            .uuid(DatabaseColumnName.USER_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.USERS)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
-    });
-    await knex.schema.alterTable(DatabaseTableName.RECENTLY_VIEWED, (table) => {
-        table.dropColumn(DatabaseColumnName.USER_ID);
-        table
-            .uuid(DatabaseColumnName.USER_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.USERS)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
+        table.dropPrimary();
     });
     await knex.schema.alterTable(DatabaseTableName.USERS, (table) => {
-        table.dropColumn(DatabaseColumnName.PROFILE_ID);
-        table
-            .uuid(DatabaseColumnName.PROFILE_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.PROFILE)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
+    });
+    await knex.schema.alterTable(DatabaseTableName.USERS, (table) => {
+        table.primary([DatabaseColumnName.ID]);
+    });
+
+    await knex.schema.alterTable(DatabaseTableName.OAUTH_USERS, (table) => {
+        table.dropPrimary();
     });
     await knex.schema.alterTable(DatabaseTableName.OAUTH_USERS, (table) => {
-        table.dropColumn(DatabaseColumnName.PROFILE_ID);
-        table
-            .uuid(DatabaseColumnName.PROFILE_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.PROFILE)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
     });
-    await knex.schema.alterTable(DatabaseTableName.REVIEWS, (table) => {
-        table.dropColumn(DatabaseColumnName.RESUME_ID);
-        table
-            .uuid(DatabaseColumnName.RESUME_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.RESUMES)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
+    await knex.schema.alterTable(DatabaseTableName.OAUTH_USERS, (table) => {
+        table.primary([DatabaseColumnName.ID]);
     });
-    await knex.schema.alterTable(DatabaseTableName.RECENTLY_VIEWED, (table) => {
-        table.dropColumn(DatabaseColumnName.RESUME_ID);
-        table
-            .uuid(DatabaseColumnName.RESUME_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.RESUMES)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
+
+    await knex.schema.alterTable(DatabaseTableName.PROFILE, (table) => {
+        table.dropPrimary();
     });
-    await knex.schema.alterTable(DatabaseTableName.EDUCATION, (table) => {
-        table.dropColumn(DatabaseColumnName.RESUME_ID);
-        table
-            .uuid(DatabaseColumnName.RESUME_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.RESUMES)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
+    await knex.schema.alterTable(DatabaseTableName.PROFILE, (table) => {
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
     });
-    await knex.schema.alterTable(DatabaseTableName.EXPERIENCE, (table) => {
-        table.dropColumn(DatabaseColumnName.RESUME_ID);
-        table
-            .uuid(DatabaseColumnName.RESUME_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.RESUMES)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
+    await knex.schema.alterTable(DatabaseTableName.PROFILE, (table) => {
+        table.primary([DatabaseColumnName.ID]);
     });
+
     await knex.schema.alterTable(
         DatabaseTableName.PERSONAL_INFORMATION,
         (table) => {
-            table.dropColumn(DatabaseColumnName.RESUME_ID);
-            table
-                .uuid(DatabaseColumnName.RESUME_ID)
-                .references(DatabaseColumnName.ID)
-                .inTable(DatabaseTableName.RESUMES)
-                .onUpdate(RelationRule.CASCADE)
-                .onDelete(RelationRule.SET_NULL);
+            table.dropPrimary();
+        },
+    );
+    await knex.schema.alterTable(
+        DatabaseTableName.PERSONAL_INFORMATION,
+        (table) => {
+            table.uuid(DatabaseColumnName.ID).notNullable().alter();
+        },
+    );
+    await knex.schema.alterTable(
+        DatabaseTableName.PERSONAL_INFORMATION,
+        (table) => {
+            table.primary([DatabaseColumnName.ID]);
+        },
+    );
+
+    await knex.schema.alterTable(
+        DatabaseTableName.TECHNICAL_SKILLS,
+        (table) => {
+            table.dropPrimary();
         },
     );
     await knex.schema.alterTable(
         DatabaseTableName.TECHNICAL_SKILLS,
         (table) => {
-            table.dropColumn(DatabaseColumnName.RESUME_ID);
-            table
-                .uuid(DatabaseColumnName.RESUME_ID)
-                .references(DatabaseColumnName.ID)
-                .inTable(DatabaseTableName.RESUMES)
-                .onUpdate(RelationRule.CASCADE)
-                .onDelete(RelationRule.SET_NULL);
+            table.uuid(DatabaseColumnName.ID).notNullable().alter();
         },
     );
+    await knex.schema.alterTable(
+        DatabaseTableName.TECHNICAL_SKILLS,
+        (table) => {
+            table.primary([DatabaseColumnName.ID]);
+        },
+    );
+
     await knex.schema.alterTable(DatabaseTableName.CONTACT_DETAILS, (table) => {
-        table.dropColumn(DatabaseColumnName.RESUME_ID);
-        table
-            .uuid(DatabaseColumnName.RESUME_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.RESUMES)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
+        table.dropPrimary();
+    });
+    await knex.schema.alterTable(DatabaseTableName.CONTACT_DETAILS, (table) => {
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
+    });
+    await knex.schema.alterTable(DatabaseTableName.CONTACT_DETAILS, (table) => {
+        table.primary([DatabaseColumnName.ID]);
+    });
+
+    await knex.schema.alterTable(DatabaseTableName.EDUCATION, (table) => {
+        table.dropPrimary();
+    });
+    await knex.schema.alterTable(DatabaseTableName.EDUCATION, (table) => {
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
+    });
+    await knex.schema.alterTable(DatabaseTableName.EDUCATION, (table) => {
+        table.primary([DatabaseColumnName.ID]);
+    });
+
+    await knex.schema.alterTable(DatabaseTableName.EXPERIENCE, (table) => {
+        table.dropPrimary();
+    });
+    await knex.schema.alterTable(DatabaseTableName.EXPERIENCE, (table) => {
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
+    });
+    await knex.schema.alterTable(DatabaseTableName.EXPERIENCE, (table) => {
+        table.primary([DatabaseColumnName.ID]);
+    });
+
+    await knex.schema.alterTable(DatabaseTableName.REVIEWS, (table) => {
+        table.dropPrimary();
+    });
+    await knex.schema.alterTable(DatabaseTableName.REVIEWS, (table) => {
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
+    });
+    await knex.schema.alterTable(DatabaseTableName.REVIEWS, (table) => {
+        table.primary([DatabaseColumnName.ID]);
+    });
+
+    await knex.schema.alterTable(DatabaseTableName.RESUMES, (table) => {
+        table.dropPrimary();
     });
     await knex.schema.alterTable(DatabaseTableName.RESUMES, (table) => {
-        table.dropColumn(DatabaseColumnName.TEMPLATE_ID);
-        table
-            .uuid(DatabaseColumnName.TEMPLATE_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.TEMPLATES)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
+    });
+    await knex.schema.alterTable(DatabaseTableName.RESUMES, (table) => {
+        table.primary([DatabaseColumnName.ID]);
+    });
+
+    await knex.schema.alterTable(DatabaseTableName.TEMPLATES, (table) => {
+        table.dropPrimary();
+    });
+    await knex.schema.alterTable(DatabaseTableName.TEMPLATES, (table) => {
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
+    });
+    await knex.schema.alterTable(DatabaseTableName.TEMPLATES, (table) => {
+        table.primary([DatabaseColumnName.ID]);
+    });
+
+    await knex.schema.alterTable(DatabaseTableName.RECENTLY_VIEWED, (table) => {
+        table.dropPrimary();
     });
     await knex.schema.alterTable(DatabaseTableName.RECENTLY_VIEWED, (table) => {
-        table.dropColumn(DatabaseColumnName.TEMPLATE_ID);
-        table
-            .uuid(DatabaseColumnName.TEMPLATE_ID)
-            .references(DatabaseColumnName.ID)
-            .inTable(DatabaseTableName.TEMPLATES)
-            .onUpdate(RelationRule.CASCADE)
-            .onDelete(RelationRule.SET_NULL);
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
+    });
+    await knex.schema.alterTable(DatabaseTableName.RECENTLY_VIEWED, (table) => {
+        table.primary([DatabaseColumnName.ID]);
+    });
+
+    await knex.schema.alterTable(DatabaseTableName.USER_TEMPLATES, (table) => {
+        table.dropPrimary();
+    });
+    await knex.schema.alterTable(DatabaseTableName.USER_TEMPLATES, (table) => {
+        table.uuid(DatabaseColumnName.ID).notNullable().alter();
+    });
+    await knex.schema.alterTable(DatabaseTableName.USER_TEMPLATES, (table) => {
+        table.primary([DatabaseColumnName.ID]);
     });
 }
 
