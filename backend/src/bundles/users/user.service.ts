@@ -110,13 +110,14 @@ class UserService
         id: string,
         { firstName, lastName, email }: UpdateUserProfileAndEmailRequestDto,
     ): Promise<UserWithProfileRelation> {
-        const userWithNewEmail = await this.userRepository.updateById(id, {
+        const { profileId } = await this.userRepository.updateById(id, {
             email,
         });
-        await this.profileRepository.updateById(userWithNewEmail.profileId, {
+        await this.profileRepository.updateById(profileId, {
             firstName,
             lastName,
         });
+
         return this.userRepository.getUserWithProfileAndOauthConnections(
             id,
             'withoutHashPasswords',
