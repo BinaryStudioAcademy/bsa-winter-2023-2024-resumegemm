@@ -70,21 +70,33 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 className={styles.registration__form}
                 onSubmit={handleFormSubmit}
             >
-                <FormGroup error={errors.firstName} label="First Name">
+                <FormGroup
+                    className={styles.form_group}
+                    error={errors.firstName}
+                    label="First Name"
+                >
                     <Input
                         type="text"
                         placeholder="Your first name"
                         {...useFormFieldCreator({ name: 'firstName', control })}
                     />
                 </FormGroup>
-                <FormGroup error={errors.lastName} label="Last Name">
+                <FormGroup
+                    className={styles.form_group}
+                    error={errors.lastName}
+                    label="Last Name"
+                >
                     <Input
                         type="text"
                         placeholder="Your last name"
                         {...useFormFieldCreator({ name: 'lastName', control })}
                     />
                 </FormGroup>
-                <FormGroup error={errors.email} label="Email">
+                <FormGroup
+                    className={styles.form_group}
+                    error={errors.email}
+                    label="Email"
+                >
                     <Input
                         type="text"
                         placeholder="Your email"
