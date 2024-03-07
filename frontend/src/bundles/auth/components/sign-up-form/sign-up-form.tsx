@@ -62,21 +62,33 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 className={styles.registration__form}
                 onSubmit={handleFormSubmit}
             >
-                <FormGroup error={errors.firstName} label="First Name">
+                <FormGroup
+                    className={styles.form_element_1}
+                    error={errors.firstName}
+                    label="First Name"
+                >
                     <Input
                         type="text"
                         placeholder="Your first name"
                         {...useFormFieldCreator({ name: 'firstName', control })}
                     />
                 </FormGroup>
-                <FormGroup error={errors.lastName} label="Last Name">
+                <FormGroup
+                    className={styles.form_element_2}
+                    error={errors.lastName}
+                    label="Last Name"
+                >
                     <Input
                         type="text"
                         placeholder="Your last name"
                         {...useFormFieldCreator({ name: 'lastName', control })}
                     />
                 </FormGroup>
-                <FormGroup error={errors.email} label="Email">
+                <FormGroup
+                    className={styles.form_element_3}
+                    error={errors.email}
+                    label="Email"
+                >
                     <Input
                         type="text"
                         placeholder="Your email"
@@ -84,12 +96,14 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <PasswordInput
+                    className={styles.form_element_4}
                     label="Your Password"
                     placeholder="Your password"
                     error={errors.password}
                     {...useFormFieldCreator({ name: 'password', control })}
                 />
                 <PasswordInput
+                    className={styles.form_element_5}
                     label="Confirm Password"
                     placeholder="Confirm your password"
                     error={errors.confirmPassword}
@@ -99,7 +113,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     })}
                 />
                 <RegularButton
-                    className={styles.registration__form__button}
+                    className={`${styles.form_element_6} ${styles.registration__form__button}`}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
                     variant={ButtonVariant.PRIMARY}
@@ -107,8 +121,11 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 >
                     Sign up
                 </RegularButton>
-                <Divider variant={DividerVariant.PRIMARY} />
-                <SocialMediaLinks />
+                <Divider
+                    className={styles.form_element_none}
+                    variant={DividerVariant.PRIMARY}
+                />
+                <SocialMediaLinks className={styles.form_element_7} />
             </form>
         </>
     );
