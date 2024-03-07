@@ -26,6 +26,7 @@ const Templates: React.FC = () => {
                         <Input
                             width="100%"
                             className={styles.template_icon_input}
+                            placeholder="Search"
                         />
                     }
                     className={styles.icon_input_wrapper}

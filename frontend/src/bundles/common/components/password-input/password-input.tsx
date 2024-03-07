@@ -39,7 +39,12 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProperties>(
 
         return (
             <div ref={reference} className={clsx(styles.password, className)}>
-                <FormGroup label={label} error={error} width="100%">
+                <FormGroup
+                    className={styles.password_form}
+                    label={label}
+                    error={error}
+                    width="100%"
+                >
                     <Input
                         type={isPasswordVisible ? 'text' : 'password'}
                         placeholder={placeholder}
