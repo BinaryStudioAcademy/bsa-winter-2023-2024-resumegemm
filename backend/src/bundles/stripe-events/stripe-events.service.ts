@@ -85,14 +85,9 @@ class StripeEventsService implements IStripeEventsService {
     ): Promise<void> {
         const plan: Stripe.Plan = data.object;
 
-        const existingPlan: SubscriptionPlan | undefined =
-            await this.subscriptionPlanRepository.find({
-                stripePlanId: plan.id,
-            });
-
-        if (existingPlan) {
-            await this.subscriptionPlanRepository.delete(existingPlan.id);
-        }
+        await this.subscriptionPlanRepository.delete({
+            stripePlanId: plan.id,
+        });
     }
 
     private async handleSubscriptionCreated(
