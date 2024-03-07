@@ -16,12 +16,20 @@ const signUp = createAsyncThunk<
     UserAuthResponse,
     UserSignUpRequestDto,
     AsyncThunkConfig
->(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
-    const { authApi } = extra;
-    const { user } = await authApi.signUp(registerPayload);
+>(
+    `${sliceName}/sign-up`,
+    async (registerPayload, { extra, rejectWithValue }) => {
+        try {
+            const { authApi } = extra;
+            const { user } = await authApi.signUp(registerPayload);
 
-    return user;
-});
+            return user;
+        } catch (error: unknown) {
+            const { message, errorType } = error as AuthException;
+            return rejectWithValue({ message, errorType });
+        }
+    },
+);
 
 const signIn = createAsyncThunk<
     UserWithProfileRelation,
