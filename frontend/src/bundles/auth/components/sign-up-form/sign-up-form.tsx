@@ -64,7 +64,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 onSubmit={handleFormSubmit}
             >
                 <FormGroup
-                    className={clsx(styles.form_group)}
+                    className={styles.form_group}
                     error={errors.firstName}
                     label="First Name"
                 >
@@ -75,7 +75,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <FormGroup
-                    className={clsx(styles.form_group)}
+                    className={styles.form_group}
                     error={errors.lastName}
                     label="Last Name"
                 >
@@ -86,7 +86,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <FormGroup
-                    className={clsx(styles.form_group)}
+                    className={styles.form_group}
                     error={errors.email}
                     label="Email"
                 >
@@ -112,7 +112,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     })}
                 />
                 <RegularButton
-                    className={clsx(styles.registration__form__button)}
+                    className={styles.registration__form__button}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
                     variant={ButtonVariant.PRIMARY}
