@@ -1,10 +1,16 @@
+import clsx from 'clsx';
+
 import { socialMediaLinksWithIcons } from './helpers/social-media-links-with-icons';
 import { SocialMediaLink } from './social-media-link/social-media-link';
 import styles from './styles.module.scss';
 
-const SocialMediaLinks: React.FC = () => {
+type Properties = {
+    className?: string;
+};
+
+const SocialMediaLinks: React.FC<Properties> = ({ className = '' }) => {
     return (
-        <div className={styles.social_media}>
+        <div className={clsx(styles.social_media, className)}>
             <span className={styles.social_media__description}>
                 Or log in with
             </span>
