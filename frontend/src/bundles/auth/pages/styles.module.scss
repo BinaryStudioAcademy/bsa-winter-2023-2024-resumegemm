@@ -1,7 +1,7 @@
 .auth {
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    max-width: 100vw;
     min-height: 100vh;
     padding: 30px;
     background-color: var(--color-background-dark-blue);
@@ -60,30 +60,5 @@
 
     .auth__form-content {
         width: 88%;
-    }
-}
-
-@media only screen and (width >= 1024px) and (height <= 706px) {
-    .auth__form-content {
-        gap: 40px;
-        width: 100%;
-        height: 100%;
-    }
-
-    .auth__form-container {
-        width: 70%;
-    }
-}
-
-@media only screen and (width >= 1024px) and (height <= 642px) {
-    .auth__form-content {
-        gap: 10px;
-    }
-}
-
-@media only screen and (width <= 400px) {
-    .auth__form-content {
-        gap: 10px;
-        width: 100%;
     }
 }

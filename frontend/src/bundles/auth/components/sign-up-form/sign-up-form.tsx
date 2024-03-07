@@ -64,7 +64,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 onSubmit={handleFormSubmit}
             >
                 <FormGroup
-                    className={clsx(styles.form_group, styles.grid_element_1)}
+                    className={clsx(styles.form_group)}
                     error={errors.firstName}
                     label="First Name"
                 >
@@ -75,7 +75,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <FormGroup
-                    className={clsx(styles.form_group, styles.grid_element_2)}
+                    className={clsx(styles.form_group)}
                     error={errors.lastName}
                     label="Last Name"
                 >
@@ -86,7 +86,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <FormGroup
-                    className={clsx(styles.form_group, styles.grid_element_3)}
+                    className={clsx(styles.form_group)}
                     error={errors.email}
                     label="Email"
                 >
@@ -97,14 +97,12 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <PasswordInput
-                    className={styles.grid_element_4}
                     label="Your Password"
                     placeholder="Your password"
                     error={errors.password}
                     {...useFormFieldCreator({ name: 'password', control })}
                 />
                 <PasswordInput
-                    className={styles.grid_element_5}
                     label="Confirm Password"
                     placeholder="Confirm your password"
                     error={errors.confirmPassword}
@@ -114,10 +112,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     })}
                 />
                 <RegularButton
-                    className={clsx(
-                        styles.registration__form__button,
-                        styles.grid_element_6,
-                    )}
+                    className={clsx(styles.registration__form__button)}
                     size={ButtonSize.MEDIUM}
                     width={ButtonWidth.FULL}
                     variant={ButtonVariant.PRIMARY}
@@ -125,11 +120,8 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 >
                     Sign Up
                 </RegularButton>
-                <Divider
-                    className={styles.form_element_none}
-                    variant={DividerVariant.PRIMARY}
-                />
-                <SocialMediaLinks className={styles.grid_element_7} />
+                <Divider variant={DividerVariant.PRIMARY} />
+                <SocialMediaLinks />
             </form>
         </>
     );
