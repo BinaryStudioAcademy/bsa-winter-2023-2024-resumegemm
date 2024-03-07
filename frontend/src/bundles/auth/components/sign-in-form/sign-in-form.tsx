@@ -85,7 +85,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
                     {dataStatus === DataStatus.PENDING && (
                         <Spinner variant={SpinnerVariant.SMALL} />
                     )}
-                    Sign up
+                    Log in
                 </RegularButton>
                 <Divider variant={DividerVariant.SECONDARY} />
                 <SocialMediaLinks />

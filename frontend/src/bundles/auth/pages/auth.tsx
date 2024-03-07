@@ -22,7 +22,6 @@ const Auth: React.FC = () => {
     const { dataStatus } = useAppSelector((state) => state.auth);
 
     const { showToast } = useContext(ToastContext);
-
     const { pathname } = useLocation();
 
     const handleSignInSubmit = useCallback(
