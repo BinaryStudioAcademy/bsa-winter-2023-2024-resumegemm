@@ -18,7 +18,7 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
-import { EmailConfirmedPage } from './bundles/auth/components/comfirmed-email-page/confirmed-email-page';
+import { EmailConfirmedPage } from './bundles/auth/components/confirmed-email-page/confirmed-email-page';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
