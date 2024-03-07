@@ -7,13 +7,22 @@ import { type SubscriptionDetails } from '../types/types';
 const MILLIS_TO_SECOND = 1000;
 
 const loadAndReplaceTemplate = (variables: Record<string, string>): string => {
-    let htmlContent: string = EmailPayload.HTML;
+    let htmlContent = EmailPayload.HTML;
     for (const key of Object.keys(variables)) {
         const regex = new RegExp(`{${key}}`, 'g');
         htmlContent = htmlContent.replace(regex, variables[key]);
     }
 
     return htmlContent;
+};
+
+const formatDate = (timeStamp: number): string => {
+    const date = new Date(timeStamp * MILLIS_TO_SECOND);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
 };
 
 const generateSubscriptionEmailPayload = ({
@@ -23,12 +32,8 @@ const generateSubscriptionEmailPayload = ({
     current_period_start,
     current_period_end,
 }: SubscriptionDetails): SendMailOptions => {
-    const startDate = new Date(
-        current_period_start * MILLIS_TO_SECOND,
-    ).toLocaleDateString();
-    const endDate = new Date(
-        current_period_end * MILLIS_TO_SECOND,
-    ).toLocaleDateString();
+    const startDate = formatDate(current_period_start);
+    const endDate = formatDate(current_period_end);
 
     const textContent = `Congratulations ${name} on successful subscription. Your subscription details are:
         Start Date: ${startDate}
