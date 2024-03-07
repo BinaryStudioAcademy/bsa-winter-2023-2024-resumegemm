@@ -1,0 +1,35 @@
+.resume_card__container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: fit-content;
+    background: linear-gradient(to top, white 98%, transparent 0);
+    border-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.resume_card__image_container {
+    height: fit-content;
+}
+
+.resume_card {
+    width: 100%;
+    max-height: 100%;
+    border: white 2px solid;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.resume_card__text_container {
+    display: flex;
+    align-items: center;
+    padding: 10% 5px;
+    padding-left: 10px;
+}
+
+.resume_card__text {
+    font-weight: 500;
+    font-size: 13.4px;
+    font-family: Poppins, sans-serif;
+}

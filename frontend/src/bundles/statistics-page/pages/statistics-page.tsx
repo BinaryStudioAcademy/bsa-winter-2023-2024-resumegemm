@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+import templateThirdImage from '~/assets/img/5297769.png';
 import {
     ColumnChart,
     Dropdown,
@@ -10,6 +11,7 @@ import { UserProfile } from '~/bundles/common/components/layout/header/user-prof
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { StatisticsPeriods } from '~/bundles/common/enums/enums';
 
+import { StatisticResumeCard } from '../components/resume-card/resume-card';
 import styles from './styles.module.scss';
 
 const ColumnChartData: [string, number][] = [
@@ -81,6 +83,31 @@ const StatisticsPage = (): JSX.Element => {
                     />
 
                     <p>Views: {views}</p>
+                </section>
+
+                <section className={styles.statistics__select_container}>
+                    <h1>My Resume</h1>
+
+                    <hr />
+
+                    <div className={styles.statistics__select_resume}>
+                        <div className={styles.statistics__select_arrow}></div>
+
+                        <div className={styles.statistics__resumes_container}>
+                            <StatisticResumeCard
+                                label="PHP"
+                                src={templateThirdImage}
+                            />
+                            <StatisticResumeCard
+                                label="PHP"
+                                src={templateThirdImage}
+                            />
+                        </div>
+
+                        <div
+                            className={styles.statistics__select_reverse_arrow}
+                        ></div>
+                    </div>
                 </section>
             </div>
         </>

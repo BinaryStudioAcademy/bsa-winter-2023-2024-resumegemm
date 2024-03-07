@@ -32,3 +32,17 @@
 .statistics__column_chart {
     height: 100%;
 }
+
+.statistics__select_resume {
+    display: flex;
+    max-height: 30vh;
+}
+
+.statistics__resumes_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 90%;
+    height: 80%;
+}
