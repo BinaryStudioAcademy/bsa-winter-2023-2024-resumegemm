@@ -5,7 +5,6 @@ import {
     AuthException,
     ExceptionMessage,
     HttpCode,
-    HTTPError,
     ServerErrorType,
 } from 'shared/build/index.js';
 
@@ -34,9 +33,10 @@ class AuthService implements TAuthService {
             userRequestDto.email,
         );
         if (foundUserByEmail) {
-            throw new HTTPError({
+            throw new AuthException({
                 message: ExceptionMessage.EMAIL_TAKEN,
                 status: HttpCode.BAD_REQUEST,
+                errorType: ServerErrorType.EMAIL,
             });
         }
 
