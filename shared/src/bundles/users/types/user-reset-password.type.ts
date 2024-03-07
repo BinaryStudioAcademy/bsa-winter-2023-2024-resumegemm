@@ -1,6 +1,6 @@
 type UserResetPassword = {
     password: string;
-    confirm_password: string;
+    confirmPassword: string;
 };
 
 export { type UserResetPassword };
