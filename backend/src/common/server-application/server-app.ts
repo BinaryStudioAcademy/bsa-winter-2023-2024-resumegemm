@@ -2,6 +2,7 @@ import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fastifyMultipart from '@fastify/multipart';
 import oauthPlugin from '@fastify/oauth2';
+import fastifyRateLimit from '@fastify/rate-limit';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
@@ -68,7 +69,7 @@ class ServerApp implements IServerApp {
     }
 
     public addRoute(parameters: ServerAppRouteParameters): void {
-        const { path, method, handler, validation } = parameters;
+        const { path, method, handler, validation, config } = parameters;
 
         this.app.route({
             url: path,
@@ -77,6 +78,7 @@ class ServerApp implements IServerApp {
             schema: {
                 body: validation?.body,
             },
+            config,
         });
 
         this.logger.info(`Route: ${method as string} ${path} is registered`);
@@ -107,6 +109,9 @@ class ServerApp implements IServerApp {
                     publicRoutes,
                     userService,
                     authService,
+                });
+                await this.app.register(fastifyRateLimit, {
+                    global: false,
                 });
                 await this.app.register(cors, {
                     origin: config.ENV.APP.ORIGIN_URL,
