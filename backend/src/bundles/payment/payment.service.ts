@@ -1,10 +1,11 @@
-import { HttpCode, HttpError } from 'shared/build/index.js';
+import { HttpCode, HTTPError } from 'shared/build/index.js';
 import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
 
+import { type UserService } from '../users/user.service.js';
 import { PaymentErrorMessage } from './enums/error-message.js';
-import { priceMapper } from './helpers/price-mapper.js';
+import { mapPrices } from './helpers/price-mapper.js';
 import {
     type CreateSubscriptionRequestDto,
     type CreateSubscriptionResponseDto,
@@ -16,10 +17,12 @@ import {
 class PaymentService implements IPaymentService {
     private appConfig: IConfig;
     private stripe: Stripe;
+    private userService: UserService;
 
-    public constructor(config: IConfig) {
+    public constructor(config: IConfig, userService: UserService) {
         this.appConfig = config;
         this.stripe = new Stripe(this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY);
+        this.userService = userService;
     }
 
     public getPublishableKey(): GetPublishableKeyResponseDto {
@@ -36,13 +39,13 @@ class PaymentService implements IPaymentService {
 
             return {
                 prices: data.map((price) =>
-                    priceMapper(
+                    mapPrices(
                         price as Stripe.Price & { product: Stripe.Product },
                     ),
                 ),
             };
         } catch {
-            throw new HttpError({
+            throw new HTTPError({
                 message: PaymentErrorMessage.GET_PRICES_ERROR,
                 status: HttpCode.BAD_REQUEST,
             });
@@ -55,7 +58,7 @@ class PaymentService implements IPaymentService {
         paymentMethod: string,
     ): Promise<Stripe.Customer> {
         try {
-            return await this.stripe.customers.create({
+            const customer = await this.stripe.customers.create({
                 name: name,
                 email: email,
                 payment_method: paymentMethod,
@@ -63,9 +66,12 @@ class PaymentService implements IPaymentService {
                     default_payment_method: paymentMethod,
                 },
             });
+            const { id: stripeId } = customer;
+            await this.userService.addStripeId(stripeId, email);
+            return customer;
         } catch {
-            throw new HttpError({
-                message: PaymentErrorMessage.STRIRE_USER_CREATE_ERROR,
+            throw new HTTPError({
+                message: PaymentErrorMessage.STRIPE_USER_CREATE_ERROR,
                 status: HttpCode.BAD_REQUEST,
             });
         }
@@ -91,8 +97,8 @@ class PaymentService implements IPaymentService {
                 expand: ['latest_invoice.payment_intent'],
             });
         } catch {
-            throw new HttpError({
-                message: PaymentErrorMessage.STRIRE_SUBSCRIPTION_CREATE_ERROR,
+            throw new HTTPError({
+                message: PaymentErrorMessage.STRIPE_SUBSCRIPTION_CREATE_ERROR,
                 status: HttpCode.BAD_REQUEST,
             });
         }

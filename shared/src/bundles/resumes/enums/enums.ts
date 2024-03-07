@@ -1,1 +1,1 @@
-export { ResumeApiPath } from './resume-api-path.enum.js';
+export { ResumesApiPath } from './resumes-api-path.enum.js';

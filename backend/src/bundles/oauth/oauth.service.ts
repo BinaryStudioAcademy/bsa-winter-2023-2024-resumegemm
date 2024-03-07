@@ -1,4 +1,4 @@
-import { HttpCode, HttpError } from 'shared/build/index.js';
+import { HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { type OauthRepository } from '~/bundles/oauth/oauth.repository';
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
@@ -65,8 +65,8 @@ class OauthService implements Pick<IService, 'create' | 'getById'> {
             await transaction.commit();
             return user;
         } catch (error: unknown) {
-            const { message } = error as HttpError;
-            throw new HttpError({
+            const { message } = error as HTTPError;
+            throw new HTTPError({
                 message,
                 status: HttpCode.INTERNAL_SERVER_ERROR,
             });

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
 import {
@@ -7,6 +9,7 @@ import {
     RegularButton,
 } from '~/bundles/common/components/components';
 import {
+    AppRoute,
     ButtonSize,
     ButtonType,
     ButtonVariant,
@@ -47,28 +50,45 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 <h1 className={styles.registration__title}>Sign Up</h1>
                 <p className={styles.registration__message}>
                     Already have an account? Go to
-                    <span className={styles.registration__link}> Log in</span>
+                    <Link
+                        to={AppRoute.LOG_IN}
+                        className={styles.registration__link}
+                    >
+                        Log in
+                    </Link>
                 </p>
             </div>
             <form
                 className={styles.registration__form}
                 onSubmit={handleFormSubmit}
             >
-                <FormGroup error={errors.firstName} label="First Name">
+                <FormGroup
+                    className={styles.form_group}
+                    error={errors.firstName}
+                    label="First Name"
+                >
                     <Input
                         type="text"
                         placeholder="Your first name"
                         {...useFormFieldCreator({ name: 'firstName', control })}
                     />
                 </FormGroup>
-                <FormGroup error={errors.lastName} label="Last Name">
+                <FormGroup
+                    className={styles.form_group}
+                    error={errors.lastName}
+                    label="Last Name"
+                >
                     <Input
                         type="text"
                         placeholder="Your last name"
                         {...useFormFieldCreator({ name: 'lastName', control })}
                     />
                 </FormGroup>
-                <FormGroup error={errors.email} label="Email">
+                <FormGroup
+                    className={styles.form_group}
+                    error={errors.email}
+                    label="Email"
+                >
                     <Input
                         type="text"
                         placeholder="Your email"
@@ -84,9 +104,9 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 <PasswordInput
                     label="Confirm Password"
                     placeholder="Confirm your password"
-                    error={errors.confirm_password}
+                    error={errors.confirmPassword}
                     {...useFormFieldCreator({
-                        name: 'confirm_password',
+                        name: 'confirmPassword',
                         control,
                     })}
                 />
