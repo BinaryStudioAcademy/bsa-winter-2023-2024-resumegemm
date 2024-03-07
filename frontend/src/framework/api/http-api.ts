@@ -6,6 +6,8 @@ import {
     type ServerErrorResponse,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
+import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
+import { showToast } from '~/bundles/toast/helpers/show-toast.js';
 import {
     type HttpCode,
     type IHttp,
@@ -116,6 +118,11 @@ class HTTPApi implements IHttpApi {
         )) as ServerErrorResponse;
 
         const isCustomException = Boolean(parsedException.errorType);
+        if (response.status >= 400 && response.status < 600) {
+            showToast(parsedException.message, ToastType.ERROR, {
+                theme: 'dark',
+            });
+        }
 
         throw new HTTPError({
             status: response.status as ValueOf<typeof HttpCode>,
