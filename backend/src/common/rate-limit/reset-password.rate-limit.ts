@@ -2,7 +2,7 @@ import { rateLimit } from 'express-rate-limit';
 import { type UserVerifyResetPasswordTokenRequestDto } from 'shared/build';
 
 import { HttpCode } from '../http/http.js';
-import { RESET_PASSWORD } from './constants/reset-password.js';
+import { RESET_PASSWORD } from './enums/reset-password.js';
 
 const resetPasswordLimiter = rateLimit({
     windowMs: RESET_PASSWORD.TIMEOUT,
