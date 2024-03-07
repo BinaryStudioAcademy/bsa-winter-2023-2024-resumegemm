@@ -12,7 +12,7 @@ const SocialMediaLinks: React.FC<Properties> = ({ className = '' }) => {
     return (
         <div className={clsx(styles.social_media, className)}>
             <span className={styles.social_media__description}>
-                Or log in with
+                Or Log In with
             </span>
             <div className={styles.social_media__links}>
                 {socialMediaLinksWithIcons.map(([route, icon], index) => (
