@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type AuthException } from 'shared/build';
 import { type UserWithProfileRelation } from 'shared/build/bundles/users/types/user-with-profile-nested-relation.type.js';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
@@ -26,13 +27,18 @@ const signIn = createAsyncThunk<
     UserWithProfileRelation,
     UserSignInRequestDto,
     AsyncThunkConfig
->(`${sliceName}/sign-in`, async (signInPayload, { extra }) => {
-    const { authApi, storageApi } = extra;
-    const { user, accessToken } = await authApi.signIn(signInPayload);
+>(`${sliceName}/sign-in`, async (signInPayload, { extra, rejectWithValue }) => {
+    try {
+        const { authApi, storageApi } = extra;
+        const { user, accessToken } = await authApi.signIn(signInPayload);
 
-    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+        await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
 
-    return user;
+        return user;
+    } catch (error: unknown) {
+        const { message, errorType } = error as AuthException;
+        return rejectWithValue({ message, errorType });
+    }
 });
 
 const getUser = createAsyncThunk<UserAuthResponse, undefined, AsyncThunkConfig>(
