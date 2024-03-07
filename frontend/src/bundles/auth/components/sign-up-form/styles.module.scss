@@ -15,7 +15,7 @@
 .registration__message {
     margin: 0;
     font-weight: var(--font-weight-text);
-    font-size: var(--font-size-main-text);
+    font-size: var(--font-size-secondary-text);
     line-height: 19.5px;
 }
 
@@ -27,12 +27,14 @@
 .registration__form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     width: 100%;
+    margin-top: 5px;
 }
 
 .registration__form__button {
-    margin-top: 10px;
+    height: 40px;
+    margin-top: 5px;
 }
 
 @media only screen and (width >= 1024px) and (height <= 806px) {

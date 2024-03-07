@@ -40,16 +40,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 30px;
+    gap: 5px;
     width: 80%;
+    height: 100%;
     margin: 0 auto;
 }
 
 @media only screen and (width >= 1024px) {
-    .auth__container {
-        padding: 25px;
-    }
-
     .auth__logo-container {
         display: flex;
         max-height: 20%;
@@ -61,7 +58,7 @@
     }
 
     .auth__form-content {
-        width: 60%;
+        width: 88%;
     }
 }
 

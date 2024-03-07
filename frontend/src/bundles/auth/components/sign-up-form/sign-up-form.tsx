@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
 import { Divider } from '~/bundles/auth/components/divider/divider';
@@ -63,7 +64,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 onSubmit={handleFormSubmit}
             >
                 <FormGroup
-                    className={styles.form_element_1}
+                    className={clsx(styles.form_group, styles.form_element_1)}
                     error={errors.firstName}
                     label="First Name"
                 >
@@ -74,7 +75,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <FormGroup
-                    className={styles.form_element_2}
+                    className={clsx(styles.form_group, styles.form_element_2)}
                     error={errors.lastName}
                     label="Last Name"
                 >
@@ -85,7 +86,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     />
                 </FormGroup>
                 <FormGroup
-                    className={styles.form_element_3}
+                    className={clsx(styles.form_group, styles.form_element_3)}
                     error={errors.email}
                     label="Email"
                 >
