@@ -7,6 +7,7 @@ enum AppRoute {
     PROFILE = '/profile',
     HOME = '/home',
     TEMPLATES = '/templates',
+    STATISTICS = '/statistics',
 }
 
 export { AppRoute };
