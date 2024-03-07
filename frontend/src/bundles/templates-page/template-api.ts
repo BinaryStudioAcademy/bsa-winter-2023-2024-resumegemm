@@ -9,7 +9,7 @@ import { type IStorage } from '~/framework/storage/storage.js';
 import {
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
-} from './types/types';
+} from '../edit-temlate/types/types';
 
 type Constructor = {
     baseUrl: string;

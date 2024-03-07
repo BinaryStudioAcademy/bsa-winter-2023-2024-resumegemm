@@ -3,7 +3,7 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { type TemplateDto } from '../types/types.js';
+import { type TemplateDto } from '../../edit-temlate/types/types.js';
 import { editTemplate, loadAllTemplates } from './actions.js';
 
 type State = {
@@ -30,11 +30,6 @@ const { reducer, actions, name } = createSlice({
                 state.dataStatus = DataStatus.PENDING;
             },
         );
-
-        builder.addMatcher(isAnyOf(editTemplate.fulfilled), (state, action) => {
-            state.dataStatus = DataStatus.FULFILLED;
-            state.templates.push(action.payload);
-        });
 
         builder.addMatcher(
             isAnyOf(editTemplate.rejected, loadAllTemplates.rejected),

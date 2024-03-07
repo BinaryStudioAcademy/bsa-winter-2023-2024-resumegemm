@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { type TemplateDto } from 'shared/build/bundles/templates/templates';
 
-import { loadAllTemplates } from '~/bundles/edit-temlate/store/actions';
+import { loadAllTemplates } from '~/bundles/templates-page/store/actions';
 
 import { DataStatus } from '../../enums/data-status.enum';
 import { useAppDispatch, useAppSelector } from '../hooks';
