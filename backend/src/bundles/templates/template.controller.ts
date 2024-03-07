@@ -1,5 +1,4 @@
 import {
-    type TemplateCreateItemRequestDto,
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
@@ -15,6 +14,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
+import { type User } from '../users/types/types.js';
 import { TemplatesApiPath } from './enums/enums.js';
 import { type ITemplateService, type Template } from './types/types.js';
 
@@ -32,7 +32,7 @@ class TemplateController extends Controller {
             handler: (options) =>
                 this.create(
                     options as ApiHandlerOptions<{
-                        body: TemplateCreateItemRequestDto;
+                        user: User;
                     }>,
                 ),
         });
@@ -73,9 +73,13 @@ class TemplateController extends Controller {
     }
 
     private async create(
-        options: ApiHandlerOptions<{ body: TemplateCreateItemRequestDto }>,
+        options: ApiHandlerOptions<{
+            user: User;
+        }>,
     ): Promise<ApiHandlerResponse<Template>> {
-        const template = await this.templateService.create(options.body);
+        const template = await this.templateService.create({
+            userId: options.user.id,
+        });
         return {
             status: HttpCode.CREATED,
             payload: template,
@@ -89,7 +93,7 @@ class TemplateController extends Controller {
         if (!template) {
             throw new HttpError({
                 status: HttpCode.BAD_REQUEST,
-                message: 'User with this id not found',
+                message: 'Template with this id not found',
             });
         }
         return {
