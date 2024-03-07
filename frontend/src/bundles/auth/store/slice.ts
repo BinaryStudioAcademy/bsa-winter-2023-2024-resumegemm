@@ -21,6 +21,9 @@ const { reducer, actions, name } = createSlice({
     name: 'auth',
     reducers: {},
     extraReducers(builder) {
+        builder.addCase(updateAccessToken.fulfilled, (state) => {
+            state.dataStatus = DataStatus.FULFILLED;
+        });
         builder.addMatcher(
             isAnyOf(
                 signUp.pending,
