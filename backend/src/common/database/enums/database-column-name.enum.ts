@@ -51,7 +51,6 @@ enum DatabaseColumnName {
     INDUSTRY = 'industry',
     INSTITUTION = 'institution',
     COUNTRY = 'country',
-    DESCRIPTION = 'description',
     CURRENTLY_STUDYING = 'currently_studying',
     CURRENTLY_WORKING = 'currently_working',
     LINK = 'link',
