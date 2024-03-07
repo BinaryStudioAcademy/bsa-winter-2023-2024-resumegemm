@@ -19,7 +19,6 @@ import styles from './styles.module.scss';
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
     const { showToast } = useContext(ToastContext);
-
     const { pathname } = useLocation();
 
     const handleSignInSubmit = useCallback(

@@ -25,9 +25,7 @@ const FormGroup = ({
         <label className={clsx(styles.label, className)} style={{ width }}>
             <span className={styles.label__name}>{label}</span>
             {children}
-            {errorMessage && (
-                <span className={styles.error}>{errorMessage}</span>
-            )}
+            {errorMessage && <p className={styles.error}>{errorMessage}</p>}
         </label>
     );
 };

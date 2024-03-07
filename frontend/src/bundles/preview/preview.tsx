@@ -24,6 +24,7 @@ import {
     Switch,
     Tooltip,
 } from '../../bundles/common/components/components.js';
+import { authApi } from '../auth/auth.js';
 import { Auth } from '../auth/pages/auth.js';
 import { UserProfile } from '../common/components/layout/header/user-profile/user-profile.js';
 import { Stepper } from '../common/components/stepper/stepper.js';
@@ -116,6 +117,13 @@ const PreviewPage: React.FC = () => {
         });
     }, [showToast]);
 
+    const handleErrorLoad = useCallback(() => {
+        void authApi.signIn({
+            email: '',
+            password: '',
+        });
+    }, []);
+
     const handleInfoButtonClick = useCallback(() => {
         showToast('Pretty informative, yeah?', ToastType.INFO, {
             theme: 'colored',
@@ -181,6 +189,9 @@ const PreviewPage: React.FC = () => {
                     </RegularButton>
                     <RegularButton onClick={handleInfoButtonClick}>
                         Info toast!
+                    </RegularButton>
+                    <RegularButton onClick={handleErrorLoad}>
+                        Error log-in
                     </RegularButton>
                 </li>
                 <li>
