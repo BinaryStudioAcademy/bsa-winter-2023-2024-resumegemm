@@ -4,6 +4,7 @@ import {
     type UserVerifyResetPasswordTokenRequestDto,
 } from 'shared/build/index.js';
 
+import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
 import {
     useAppDispatch,
     useCallback,
@@ -30,7 +31,7 @@ const PasswordRecovery: React.FC = () => {
                 authActions.forgotPassword({ email }),
             );
 
-            if (response.meta.requestStatus === 'fulfilled') {
+            if (response.meta.requestStatus === DataStatus.FULFILLED) {
                 setSearchParameters({ stage: RecoveryStage.CODE });
 
                 setEmail(email);
@@ -50,7 +51,7 @@ const PasswordRecovery: React.FC = () => {
                 }),
             );
 
-            if (response.meta.requestStatus === 'fulfilled') {
+            if (response.meta.requestStatus === DataStatus.FULFILLED) {
                 setSearchParameters({ stage: RecoveryStage.PASSWORD });
 
                 setResetPasswordToken(resetPasswordToken);
@@ -73,7 +74,7 @@ const PasswordRecovery: React.FC = () => {
                 }),
             );
 
-            if (response.meta.requestStatus === 'rejected') {
+            if (response.meta.requestStatus === DataStatus.REJECTED) {
                 return;
             }
         },
