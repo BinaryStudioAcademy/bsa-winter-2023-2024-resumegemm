@@ -23,15 +23,9 @@ const Auth: React.FC = () => {
 
     const handleSignInSubmit = useCallback(
         (payload: UserSignInRequestDto): void => {
-            void dispatch(authActions.signIn(payload))
-                .unwrap()
-                .catch((error: Error) => {
-                    showToast(error.message, ToastType.ERROR, {
-                        position: 'top-right',
-                    });
-                });
+            void dispatch(authActions.signIn(payload));
         },
-        [showToast, dispatch],
+        [dispatch],
     );
 
     const handleSignUpSubmit = useCallback(

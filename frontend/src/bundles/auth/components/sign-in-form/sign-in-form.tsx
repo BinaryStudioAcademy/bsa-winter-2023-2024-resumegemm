@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { userSignInValidationSchema } from 'shared/build';
 
@@ -18,7 +17,11 @@ import {
     ButtonWidth,
     DividerVariant,
 } from '~/bundles/common/enums/enums';
-import { useAppForm } from '~/bundles/common/hooks/hooks';
+import {
+    useAppForm,
+    useCallback,
+    useFormError,
+} from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
 import { type UserSignInRequestDto } from '~/bundles/users/users';
 
@@ -30,9 +33,14 @@ type Properties = {
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
-    const { control, errors, handleSubmit } = useAppForm<UserSignInRequestDto>({
-        defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
-        validationSchema: userSignInValidationSchema,
+    const { control, errors, handleSubmit, setError } =
+        useAppForm<UserSignInRequestDto>({
+            defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
+            validationSchema: userSignInValidationSchema,
+        });
+
+    useFormError({
+        setError,
     });
 
     const handleFormSubmit = useCallback(
