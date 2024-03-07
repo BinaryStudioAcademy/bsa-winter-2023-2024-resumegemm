@@ -23,6 +23,7 @@ import { ToastContext } from '~/bundles/toast/context/toast-context';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
+import { UserRegistrationMessage } from './enums/user-registration-message.enum';
 import styles from './styles.module.scss';
 import {
     type UserSignUpRequestDtoFrontend,
@@ -45,10 +46,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit(onSubmit)(event_);
-            showToast(
-                'Thank you for sign up! Check please your email to confirm registration',
-                ToastType.SUCCESS,
-            );
+            showToast(UserRegistrationMessage.CONFIRM_EMAIL, ToastType.SUCCESS);
         },
         [handleSubmit, onSubmit, showToast],
     );

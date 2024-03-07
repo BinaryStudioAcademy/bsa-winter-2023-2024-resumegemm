@@ -90,8 +90,8 @@ class AuthService implements TAuthService {
 
         await mailService.sendMail({
             to: email,
-            subject: userMessages.SUCCESSFULLY_REGISTRED,
-            text: userMessages.SUCCESSFULLY_REGISTRED,
+            subject: userMessages.SUCCESSFULLY_REGISTERED,
+            text: userMessages.SUCCESSFULLY_REGISTERED,
             html: emailMockup,
         });
     }
