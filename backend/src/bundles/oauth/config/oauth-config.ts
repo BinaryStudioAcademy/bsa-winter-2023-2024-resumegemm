@@ -33,6 +33,16 @@ const oauthConfigurations = {
         },
         scope: ['public_profile', 'email'],
     },
+    linkedin: {
+        credentials: {
+            client: {
+                id: config.ENV.OAUTH.LINKEDIN.CLIENT_LINKEDIN_ID,
+                secret: config.ENV.OAUTH.LINKEDIN.CLIENT_LINKEDIN_SECRET,
+            },
+            auth: oauthPlugin.LINKEDIN_CONFIGURATION,
+        },
+        scope: ['profile', 'email'],
+    },
 };
 
 export { oauthConfigurations };
