@@ -44,7 +44,6 @@ class StripeEventsController extends Controller {
         const signature: string =
             options.headers[StripeEventsHeaders.STRIPE_SIGNATURE];
         const { rawBody } = options;
-        void this.stripeEventsService.handleEvent(rawBody, signature);
 
         return {
             status: HttpCode.OK,
