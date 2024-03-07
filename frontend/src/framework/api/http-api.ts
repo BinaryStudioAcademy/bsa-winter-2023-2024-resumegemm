@@ -117,7 +117,6 @@ class HTTPApi implements IHttpApi {
 
         const isCustomException = Boolean(parsedException.errorType);
 
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
         throw new HTTPError({
             status: response.status as ValueOf<typeof HttpCode>,
             errorType: isCustomException
