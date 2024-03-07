@@ -4,7 +4,7 @@ import { type UserWithProfileRelation } from 'shared/build/index.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { getUser, signIn, signUp } from './actions.js';
+import { getUser, signIn, signUp, updateAccessToken } from './actions.js';
 
 type State = {
     user: UserWithProfileRelation | null;
@@ -22,7 +22,12 @@ const { reducer, actions, name } = createSlice({
     reducers: {},
     extraReducers(builder) {
         builder.addMatcher(
-            isAnyOf(signUp.pending, signIn.pending, getUser.pending),
+            isAnyOf(
+                signUp.pending,
+                signIn.pending,
+                getUser.pending,
+                updateAccessToken.pending,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
             },
@@ -37,7 +42,12 @@ const { reducer, actions, name } = createSlice({
         );
 
         builder.addMatcher(
-            isAnyOf(signUp.rejected, signIn.rejected, getUser.rejected),
+            isAnyOf(
+                signUp.rejected,
+                signIn.rejected,
+                getUser.rejected,
+                updateAccessToken.rejected,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
                 state.user = null;
