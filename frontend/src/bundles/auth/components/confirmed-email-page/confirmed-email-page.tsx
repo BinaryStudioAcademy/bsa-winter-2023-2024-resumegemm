@@ -2,16 +2,20 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Logo } from '../components';
+import {
+    CONFIRM_EMAIL_TIME,
+    CONFIRM_EMAIL_TIMER_INTERVAL,
+} from './constants/constants';
 import styles from './styles.module.scss';
 
 const EmailConfirmedPage = (): JSX.Element => {
-    const [counter, setCounter] = useState(15);
+    const [counter, setCounter] = useState(CONFIRM_EMAIL_TIME);
     const navigate = useNavigate();
 
     useEffect(() => {
         const timer = setInterval(() => {
             setCounter((previousCounter) => previousCounter - 1);
-        }, 1000);
+        }, CONFIRM_EMAIL_TIMER_INTERVAL);
 
         if (counter === 0) {
             clearInterval(timer);
