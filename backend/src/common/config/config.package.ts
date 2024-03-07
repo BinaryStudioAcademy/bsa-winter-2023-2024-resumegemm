@@ -68,6 +68,44 @@ class Config implements IConfig {
                 ACCESS_TOKEN_EXPIRES_IN: '24h',
                 REFRESH_TOKEN_EXPIRES_IN: '30d',
             },
+            EMAIL: {
+                SMTP_HOST: {
+                    doc: 'mock.smtp.server',
+                    format: String,
+                    env: 'SMTP_HOST',
+                    default: null,
+                },
+                SMTP_PORT: {
+                    doc: 'port',
+                    format: String,
+                    env: 'SMTP_PORT',
+                    default: null,
+                },
+                SMTP_USER: {
+                    doc: 'your email',
+                    format: String,
+                    env: 'SMTP_USER',
+                    default: null,
+                },
+                SMTP_PASSWORD: {
+                    doc: 'your password',
+                    format: String,
+                    env: 'SMTP_PASSWORD',
+                    default: null,
+                },
+                SMTP_DASHBOARD: {
+                    doc: 'dashboard link to redirect user in email',
+                    format: String,
+                    env: 'SMTP_DASHBOARD',
+                    default: null,
+                },
+                SMTP_LOGO: {
+                    doc: 'logo link image',
+                    format: String,
+                    env: 'SMTP_LOGO',
+                    default: null,
+                },
+            },
             OAUTH: {
                 GITHUB: {
                     CLIENT_GITHUB_ID: {

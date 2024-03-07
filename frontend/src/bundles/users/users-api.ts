@@ -6,7 +6,10 @@ import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
 import { UsersApiPath } from './enums/enums.js';
-import { type UserGetAllResponseDto } from './types/types.js';
+import {
+    type UserGetAllResponseDto,
+    type UserSignUpResponseDto,
+} from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -32,6 +35,18 @@ class UserApi extends HttpApi {
         return await response.json<UserGetAllResponseDto>();
     }
 
+    public async loadUser(): Promise<UserSignUpResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(UsersApiPath.GET_USER, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<UserSignUpResponseDto>();
+    }
+
     public async deleteProfile(): Promise<UserEntityFields> {
         const response = await this.load(
             this.getFullEndpoint(`${UsersApiPath.ROOT}`, {}),
@@ -41,7 +56,6 @@ class UserApi extends HttpApi {
                 hasAuth: true,
             },
         );
-
         return await response.json<UserEntityFields>();
     }
 }

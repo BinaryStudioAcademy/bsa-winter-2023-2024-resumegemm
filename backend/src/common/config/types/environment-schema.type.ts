@@ -38,6 +38,14 @@ type EnvironmentSchema = {
         POOL_MIN: number;
         POOL_MAX: number;
     };
+    EMAIL: {
+        SMTP_HOST: string;
+        SMTP_PORT: string;
+        SMTP_USER: string;
+        SMTP_PASSWORD: string;
+        SMTP_DASHBOARD: string;
+        SMTP_LOGO: string;
+    };
     STRIPE: {
         STRIPE_SECRET_KEY: string;
         STRIPE_PUBLISHABLE_KEY: string;

@@ -8,7 +8,6 @@ import {
 } from 'react';
 
 import { Input, RegularButton } from '~/bundles/common/components/components';
-import { ButtonWidth } from '~/bundles/common/enums/components/button-width.enum';
 import { ButtonType, ButtonVariant } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
@@ -206,7 +205,6 @@ const SubscriptionPaymentPage: React.FC = () => {
                             <RegularButton
                                 className={styles.payment__modal_input_button}
                                 type={ButtonType.SUBMIT}
-                                width={ButtonWidth.FULL}
                                 isDisabled={processing}
                                 variant={ButtonVariant.PRIMARY}
                             >

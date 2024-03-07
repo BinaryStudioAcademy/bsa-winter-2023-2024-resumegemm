@@ -1,21 +1,22 @@
 import { type FastifyRequest } from 'fastify';
+import jwt from 'jsonwebtoken';
 import {
     type HTTPError,
     type UserAuthResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
-    type UserSignUpResponseDto,
     type UserWithProfileRelation,
-    AuthApiPath,
-    ExceptionMessage,
 } from 'shared/build/index.js';
+import { AuthApiPath, ExceptionMessage } from 'shared/build/index.js';
 
 import {
     generateRefreshToken,
     generateToken,
 } from '~/bundles/auth/helpers/helpers.js';
+import { userService } from '~/bundles/users/users.js';
 import {
     type UserSignUpRequestDto,
+    type UserSignUpResponseDto,
     userSignInValidationSchema,
     userSignUpValidationSchema,
 } from '~/bundles/users/users.js';
@@ -31,6 +32,8 @@ import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
+import { userMessages } from './enums/message.enum.js';
+import { type JwtPayload } from './types/types.js';
 
 class AuthController extends Controller {
     private authService: AuthService;
@@ -85,6 +88,16 @@ class AuthController extends Controller {
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
                         unsignCookie: FastifyRequest['unsignCookie'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.CONFIRM_EMAIL,
+            method: 'GET',
+            handler: (options) =>
+                this.confirmEmail(
+                    options as ApiHandlerOptions<{
+                        query: { token: string };
                     }>,
                 ),
         });
@@ -210,11 +223,11 @@ class AuthController extends Controller {
         }>,
     ): Promise<ApiHandlerResponse<UserSignUpResponseDto>> {
         try {
-            const payload = await this.authService.signUp(options.body);
+            const token = await this.authService.signUp(options.body);
 
             return {
                 status: HttpCode.CREATED,
-                payload,
+                payload: token,
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;
@@ -312,6 +325,33 @@ class AuthController extends Controller {
                 status,
                 payload: {
                     message: ExceptionMessage.INVALID_REFRESH_TOKEN,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async confirmEmail(
+        options: ApiHandlerOptions<{ query: { token: string } }>,
+    ): Promise<ApiHandlerResponse<{ message: string }>> {
+        try {
+            const { token } = options.query;
+            const decodedToken = jwt.verify(
+                token,
+                config.ENV.JWT.ACCESS_TOKEN_SECRET,
+            ) as JwtPayload;
+            await userService.confirmUserEmail(decodedToken);
+
+            return {
+                status: HttpCode.OK,
+                payload: { message: userMessages.EMAIL_CONFIRMED },
+            };
+        } catch (error: unknown) {
+            const { status } = error as HTTPError;
+            return {
+                status,
+                payload: {
+                    message: ExceptionMessage.USER_NOT_FOUND,
                     status,
                 },
             };

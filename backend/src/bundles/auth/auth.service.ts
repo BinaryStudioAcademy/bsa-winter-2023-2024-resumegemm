@@ -8,6 +8,7 @@ import {
     HTTPError,
 } from 'shared/build/index.js';
 
+import { getTemplate } from '~/bundles/auth/helpers/get-template.js';
 import {
     generateRefreshToken,
     generateToken,
@@ -18,12 +19,23 @@ import {
     type UserSignUpRequestDto,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
+import { type IConfig } from '~/common/config/config.js';
+import { mailService } from '~/common/mail-service/mail-service.js';
+
+import { userMessages } from './enums/message.enum.js';
+
+type ConstructorType = {
+    userService: UserService;
+    config: IConfig;
+};
 
 class AuthService implements TAuthService {
     private userService: UserService;
+    private config: IConfig;
 
-    public constructor(userService: UserService) {
+    public constructor({ userService, config }: ConstructorType) {
         this.userService = userService;
+        this.config = config;
     }
 
     public async signUp(
@@ -46,19 +58,42 @@ class AuthService implements TAuthService {
             passwordSalt,
         );
 
-        const { id } = await this.userService.create({
+        const { id, email } = await this.userService.create({
             ...userRequestDto,
             passwordSalt,
             passwordHash,
         });
+        const token = generateToken({ id });
+        await this.sendAfterSignUpEmail(email, token);
 
         const user = await this.getUserWithProfile(id);
-        const token = generateToken({ id });
 
         return {
             user,
             token,
         };
+    }
+
+    private async sendAfterSignUpEmail(
+        email: string,
+        token: string,
+    ): Promise<void> {
+        const verificationLink = `${this.config.ENV.APP.ORIGIN_URL}/confirm-email?token=${token}`;
+        const emailMockup = getTemplate({
+            name: 'sign-up-email-template',
+            context: {
+                title: 'ResumeGemm',
+                dashboardLink: verificationLink,
+                logoLink: this.config.ENV.EMAIL.SMTP_LOGO,
+            },
+        });
+
+        await mailService.sendMail({
+            to: email,
+            subject: userMessages.SUCCESSFULLY_REGISTRED,
+            text: userMessages.SUCCESSFULLY_REGISTRED,
+            html: emailMockup,
+        });
     }
 
     public async login({

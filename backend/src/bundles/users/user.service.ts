@@ -1,6 +1,5 @@
 import { type IncomingHttpHeaders } from 'node:http';
 
-import { type JwtPayload } from 'jsonwebtoken';
 import { HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
@@ -9,6 +8,7 @@ import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { type IService } from '~/common/interfaces/interfaces.js';
 
 import { decodeToken, getToken } from '../auth/helpers/helpers.js';
+import { type JwtPayload } from '../auth/types/types.js';
 import {
     type UserEntityFields,
     type UserGetAllResponseDto,
@@ -46,10 +46,11 @@ class UserService implements Omit<IService, 'getById'> {
         lastName,
         passwordSalt,
         passwordHash,
+        emailConfirmed,
     }: UserSignUpRequestDto & {
         passwordSalt: string;
         passwordHash: string;
-    }): Promise<Pick<UserEntityFields, 'id'>> {
+    }): Promise<Pick<UserEntityFields, 'id' | 'email'>> {
         const transaction = await this.userRepository.model.startTransaction();
         try {
             const { id } = await this.profileRepository.createWithTransaction(
@@ -66,6 +67,7 @@ class UserService implements Omit<IService, 'getById'> {
                     passwordSalt,
                     passwordHash,
                     profileId: id,
+                    emailConfirmed,
                 }),
                 transaction,
             )) as UserEntityFields;
@@ -91,6 +93,14 @@ class UserService implements Omit<IService, 'getById'> {
         ) as Promise<UserWithProfileRelation>;
     }
 
+    public async confirmUserEmail(decodedToken: JwtPayload): Promise<void> {
+        const { id } = decodedToken;
+
+        await this.userRepository.updateById(id, {
+            email_confirmed: true,
+        });
+    }
+
     public async delete(
         headers: IncomingHttpHeaders,
     ): Promise<UserEntityFields> {
@@ -104,18 +114,9 @@ class UserService implements Omit<IService, 'getById'> {
         }
 
         const { id } = decodeToken(token) as JwtPayload;
-        const deletedUser = await this.userRepository.delete(id);
-
-        if (!deletedUser) {
-            throw new HTTPError({
-                message: 'User not found',
-                status: HttpCode.NOT_FOUND,
-            });
-        }
-
-        return deletedUser;
+        return await this.userRepository.delete(id);
     }
-    
+
     public async addStripeId(
         stripeId: string,
         email: string,

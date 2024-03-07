@@ -43,30 +43,36 @@ class UserRepository
         return users.map((it) => UserEntity.initialize(it));
     }
 
+    public async updateById(
+        id: string,
+        data: object,
+    ): Promise<UserEntity | null> {
+        await this.model.query().update(data).where('id', id).execute();
+
+        const user = await this.model.query().findOne({ id });
+        return user ? UserEntity.initialize(user) : null;
+    }
+
     public async delete(id: string): Promise<UserEntityFields> {
-        const user = await this.model
+        return await this.model
             .query()
             .findOne({ id })
             .whereNull('deletedAt')
             .patch({ deletedAt: new Date().toISOString() })
             .returning(['id', 'email', 'deleted_at', 'profile_id'])
             .castTo<UserEntityFields>();
-
-        return user ?? null;
     }
 
     public async addStripeId(
         userUpdate: Pick<UserModel, 'email' | 'stripeId'>,
     ): ReturnType<IUserRepo['addStripeId']> {
         const { email, stripeId } = userUpdate;
-        const user = await this.model
+        return await this.model
             .query()
             .findOne({ email })
             .patch({ stripeId: stripeId })
             .returning(['id', 'email', 'stripe_id', 'profile_id'])
             .castTo<UserEntityFields>();
-
-        return user ?? null;
     }
 }
 
