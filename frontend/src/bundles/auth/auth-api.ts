@@ -67,6 +67,18 @@ class AuthApi extends HttpApi {
 
         return await response.json<UserAuthResponse>();
     }
+
+    public async updateRefreshToken(): Promise<{ accessToken: string }> {
+        const response = await this.load(
+            this.getFullEndpoint(AuthApiPath.TOKEN, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<{ accessToken: string }>();
+    }
 }
 
 export { AuthApi };
