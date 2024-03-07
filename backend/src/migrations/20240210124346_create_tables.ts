@@ -13,6 +13,7 @@ async function up(knex: Knex): Promise<void> {
         table.string(DatabaseColumnName.EMAIL).unique().notNullable();
         table.text(DatabaseColumnName.PASSWORD_HASH).notNullable();
         table.text(DatabaseColumnName.PASSWORD_SALT).notNullable();
+        table.text(DatabaseColumnName.STRIPE_ID);
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()
@@ -155,7 +156,7 @@ async function up(knex: Knex): Promise<void> {
     );
     await knex.schema.createTable(DatabaseTableName.CERTIFICATION, (table) => {
         table.uuid(DatabaseColumnName.ID).primary();
-        table.string(DatabaseColumnName.CRTIFICATION_NAME).notNullable();
+        table.string(DatabaseColumnName.CERTIFICATION_NAME).notNullable();
         table.string(DatabaseColumnName.AUTHORITY).notNullable();
         table.date(DatabaseColumnName.START_DATE).notNullable();
         table.date(DatabaseColumnName.END_DATE);

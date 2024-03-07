@@ -42,6 +42,7 @@ enum DatabaseColumnName {
     RESUME_SHARE_LINK_ID = 'resume_share_link_id',
     RESUME_SHARE_ACCESS_TIME = 'resume_share_access_time',
     RESUME_SHARE_ACCESS_IP = 'resume_share_access_ip',
+    STRIPE_ID = 'stripe_id',
     STRIPE_PLAN_ID = 'stripe_plan_id',
     STRIPE_PRODUCT_ID = 'stripe_product_id',
     NAME = 'name',
@@ -52,18 +53,18 @@ enum DatabaseColumnName {
     IS_ACTIVE = 'is_active',
     INDUSTRY = 'industry',
     INSTITUTION = 'institution',
-    DESCRIPTION = 'description',
     COUNTRY = 'country',
     CURRENTLY_STUDYING = 'currently_studying',
     CURRENTLY_WORKING = 'currently_working',
     LINK = 'link',
-    CRTIFICATION_NAME = 'certification_name',
+    CERTIFICATION_NAME = 'certification_name',
     AUTHORITY = 'authority',
     CERTIFICATION_URL_OR_CODE = 'certification_url_or_code',
     LANGUAGE = 'language',
     LANGUAGE_LEVEL = 'language_level',
     ACTIVITY = 'activity',
     OWNER_ID = 'owner_id',
+    DESCRIPTION = 'description',
 }
 
 export { DatabaseColumnName };
