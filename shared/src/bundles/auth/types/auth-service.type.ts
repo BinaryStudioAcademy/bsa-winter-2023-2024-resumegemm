@@ -27,7 +27,6 @@ type AuthService = {
     compare(encryptionData: EncryptionDataPayload): Promise<boolean>;
     getUserWithProfile(id: string): Promise<UserWithProfileRelation>;
     verifyToken<T>(token: string, tokenSecret: string): T;
-    verifyResetPasswordToken<T>(token: string): T;
     tokenEqualsEmail(
         payload: UserVerifyResetPasswordTokenRequestDto,
     ): Promise<UserEntityFields>;

@@ -134,22 +134,6 @@ class AuthService implements TAuthService {
         }
     }
 
-    public verifyResetPasswordToken<T>(resetPasswordToken: string): T {
-        try {
-            const resetPasswordTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
-
-            return verifyToken(
-                resetPasswordToken,
-                resetPasswordTokenSecret,
-            ) as T;
-        } catch {
-            throw new HTTPError({
-                message: ExceptionMessage.INVALID_RESET_TOKEN,
-                status: HttpCode.BAD_REQUEST,
-            });
-        }
-    }
-
     public async tokenEqualsEmail({
         email,
         resetPasswordToken,
@@ -158,8 +142,11 @@ class AuthService implements TAuthService {
     > {
         const user = await this.userService.findByEmail(email);
 
-        const tokenPayload = this.verifyResetPasswordToken<{ email: string }>(
+        const resetPasswordTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
+
+        const tokenPayload = this.verifyToken<{ email: string }>(
             resetPasswordToken,
+            resetPasswordTokenSecret,
         );
 
         if (user?.email !== tokenPayload.email) {
