@@ -79,7 +79,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
-                    Log in
+                    Log In
                 </RegularButton>
                 <Divider variant={DividerVariant.SECONDARY} />
                 <SocialMediaLinks />

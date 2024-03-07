@@ -55,7 +55,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                         to={AppRoute.LOG_IN}
                         className={styles.registration__link}
                     >
-                        Log in
+                        Log In
                     </Link>
                 </p>
             </div>
@@ -123,7 +123,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
-                    Sign up
+                    Sign Up
                 </RegularButton>
                 <Divider
                     className={styles.form_element_none}
