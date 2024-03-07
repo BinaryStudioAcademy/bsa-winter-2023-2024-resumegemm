@@ -24,7 +24,7 @@ const useFormError = ({ setError }: UseFormErrorPayload): ReturnValue => {
     useEffect(() => {
         if (error && dataStatus === DataStatus.REJECTED) {
             const { errorType, message } = error;
-            const fieldName = errorType as keyof UserAuthDto;
+            const fieldName = errorType?.toLowerCase() as keyof UserAuthDto;
             setError(fieldName, {
                 message,
             });
