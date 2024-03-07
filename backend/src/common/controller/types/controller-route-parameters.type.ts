@@ -1,3 +1,5 @@
+import { type FastifyRateLimitOptions } from '@fastify/rate-limit';
+
 import { type HttpMethod } from '~/common/http/http.js';
 import { type ValidationSchema } from '~/common/types/types.js';
 
@@ -7,6 +9,7 @@ type ControllerRouteParameters = {
     path: string;
     method: HttpMethod;
     handler: ApiHandler;
+    config?: FastifyRateLimitOptions;
     validation?: {
         body?: ValidationSchema;
     };

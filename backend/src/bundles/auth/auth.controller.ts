@@ -29,6 +29,7 @@ import { CookieName } from '~/common/controller/enums/enums.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
+import { rateLimitConfig } from '~/common/server-application/constants/constants.js';
 
 import { type AuthService } from './auth.service.js';
 
@@ -43,6 +44,9 @@ class AuthController extends Controller {
         this.addRoute({
             path: AuthApiPath.SIGN_UP,
             method: 'POST',
+            config: {
+                ...rateLimitConfig,
+            },
             validation: {
                 body: userSignUpValidationSchema,
             },
@@ -56,6 +60,7 @@ class AuthController extends Controller {
         this.addRoute({
             path: AuthApiPath.SIGN_IN,
             method: 'POST',
+            config: rateLimitConfig,
             validation: {
                 body: userSignInValidationSchema,
             },

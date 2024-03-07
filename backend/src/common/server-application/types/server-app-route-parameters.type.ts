@@ -1,3 +1,4 @@
+import { type FastifyRateLimitOptions } from '@fastify/rate-limit';
 import { type FastifyReply, type FastifyRequest } from 'fastify';
 
 import { type HttpMethod } from '~/common/http/http.js';
@@ -13,6 +14,7 @@ type ServerAppRouteParameters = {
     validation?: {
         body?: ValidationSchema;
     };
+    config?: FastifyRateLimitOptions;
 };
 
 export { type ServerAppRouteParameters };
