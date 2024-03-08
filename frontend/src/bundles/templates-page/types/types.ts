@@ -6,6 +6,7 @@ export {
     type Item,
     type TemplateBlockSettings,
     type TemplateDto,
+    type TemplateGetAllResponseDto,
     type TemplateSettings,
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
