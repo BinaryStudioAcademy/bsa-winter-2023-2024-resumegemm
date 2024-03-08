@@ -26,7 +26,7 @@ class ProfileService implements IProfileService {
     }): ReturnType<IProfileService['uploadAvatar']> {
         const { url, key } = await this.fileService.create(fileBuffer);
 
-        await this.profileRepository.uploadAvatar({ id, key });
+        await this.profileRepository.updateAvatar({ id, key });
 
         return { url, key };
     }
@@ -43,7 +43,7 @@ class ProfileService implements IProfileService {
         if (userProfile?.avatar) {
             const { avatar, id: profileId } = userProfile;
 
-            await this.profileRepository.deleteAvatar(profileId);
+            await this.profileRepository.updateAvatar({ id: profileId });
             await this.fileService.delete(avatar);
         }
     }

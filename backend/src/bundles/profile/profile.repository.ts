@@ -13,18 +13,14 @@ class ProfileRepository extends AbstractRepository<
         super(profileModel);
     }
 
-    public async uploadAvatar({
+    public async updateAvatar({
         id,
-        key,
+        key = null,
     }: {
         id: string;
-        key: string;
+        key?: string | null;
     }): Promise<void> {
         await this.model.query().findById(id).patch({ avatar: key });
-    }
-
-    public async deleteAvatar(id: string): Promise<void> {
-        await this.model.query().findById(id).patch({ avatar: null });
     }
 }
 
