@@ -39,6 +39,7 @@ class UserApi extends HttpApi {
                 method: 'DELETE',
                 contentType: ContentType.JSON,
                 hasAuth: true,
+                payload: JSON.stringify({}),
             },
         );
 

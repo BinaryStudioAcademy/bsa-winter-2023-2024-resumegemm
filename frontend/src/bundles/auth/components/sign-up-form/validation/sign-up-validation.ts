@@ -41,16 +41,28 @@ const userSignUpValidationFrontend = joi.object<
             return value;
         })
         .required()
+        .custom((value, helpers) => {
+            const domain = value.split('@')[1];
+
+            if (domain.length > UserValidationRule.EMAIL_MAX_DOMAIN_LENGTH) {
+                return helpers.error('domainLengthInvalid');
+            }
+
+            return value;
+        })
         .messages({
             'string.email': UserValidationMessage.EMAIL_WRONG,
             'string.empty': UserValidationMessage.EMAIL_REQUIRE,
+            'domainLengthInvalid': UserValidationMessage.EMAIL_INVALID,
             'string.emailInvalid': UserValidationMessage.EMAIL_INVALID,
         }),
     password: joi
         .string()
+        .regex(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~])(?=\S{8,64}$).*$/,
+        )
         .min(UserValidationRule.PASSWORD_MIN_LENGTH)
         .max(UserValidationRule.PASSWORD_MAX_LENGTH)
-        .regex(/^\S*$/)
         .required()
         .messages({
             'string.empty': UserValidationMessage.PASSWORD_REQUIRED,

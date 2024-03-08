@@ -8,6 +8,7 @@ import {
     Input,
     PasswordInput,
     RegularButton,
+    Spinner,
 } from '~/bundles/common/components/components.js';
 import {
     AppRoute,
@@ -15,7 +16,9 @@ import {
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DataStatus,
     DividerVariant,
+    SpinnerVariant,
 } from '~/bundles/common/enums/enums';
 import {
     useAppForm,
@@ -39,7 +42,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
             validationSchema: userSignInValidationSchema,
         });
 
-    useFormError({
+    const { dataStatus } = useFormError({
         setError,
     });
 
@@ -87,7 +90,10 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
-                    Log in
+                    {dataStatus === DataStatus.PENDING && (
+                        <Spinner variant={SpinnerVariant.SMALL} />
+                    )}
+                    Log In
                 </RegularButton>
                 <Divider variant={DividerVariant.SECONDARY} />
                 <SocialMediaLinks />
