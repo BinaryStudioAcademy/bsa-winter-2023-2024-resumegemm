@@ -6,7 +6,7 @@ import { type UserProfileResponce } from '../types/user-profile-responce';
 import { name as sliceName } from './slice.js';
 
 const updateUserAvatar = createAsyncThunk<
-    UserProfileResponce,
+    Pick<UserProfileResponce, 'avatar'>,
     FormData,
     AsyncThunkConfig
 >(`${sliceName}/update-user-avatar`, async (payload, { extra }) => {
@@ -15,4 +15,14 @@ const updateUserAvatar = createAsyncThunk<
     return await profileApi.updateUserAvatar(payload);
 });
 
-export { updateUserAvatar };
+const deleteUserAvatar = createAsyncThunk<
+    Pick<UserProfileResponce, 'avatar'>,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/delete-user-avatar`, async (_, { extra }) => {
+    const { profileApi } = extra;
+
+    return await profileApi.deleteUserAvatar();
+});
+
+export { deleteUserAvatar, updateUserAvatar };

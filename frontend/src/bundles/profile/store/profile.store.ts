@@ -1,8 +1,9 @@
-import { updateUserAvatar } from './actions.js';
+import { deleteUserAvatar, updateUserAvatar } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
+    deleteUserAvatar,
     updateUserAvatar,
 };
 

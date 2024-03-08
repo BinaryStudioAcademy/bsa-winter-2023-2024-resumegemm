@@ -1,13 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { type UserWithProfileRelation } from 'shared/build';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { type UserProfileResponce } from '../types/user-profile-responce';
-import { updateUserAvatar } from './actions';
-
 type State = {
-    profile: UserProfileResponce | null;
+    profile: UserWithProfileRelation['userProfile'] | null;
     dataStatus: ValueOf<typeof DataStatus>;
 };
 
@@ -20,12 +18,6 @@ const { reducer, actions, name } = createSlice({
     initialState,
     name: 'profile',
     reducers: {},
-    extraReducers(builder) {
-        builder.addCase(updateUserAvatar.fulfilled, (state, action) => {
-            state.profile = action.payload;
-            state.dataStatus = DataStatus.FULFILLED;
-        });
-    },
 });
 
 export { actions, name, reducer };
