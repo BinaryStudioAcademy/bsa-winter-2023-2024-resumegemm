@@ -1,7 +1,7 @@
 import { Guid as guid } from 'guid-typescript';
 
-import { RESUME_COUNT_INTERVAL } from './constants/resume-count-interval';
-import { type RecentlyViewedModel } from './recently-viewed.model';
+import { RESUME_COUNT_INTERVAL } from './constants/resume-count-interval.js';
+import { type RecentlyViewedModel } from './recently-viewed.model.js';
 import {
     type IRecentlyViewedRepository,
     type RecentlyViewedRequestDto,
