@@ -5,7 +5,7 @@ import {
     OpenAuthApiPath,
     PaymentApiPath,
     PDFApiPath,
-    RecentlyViewedApiPath,
+    ResumesApiPath,
     StripeEventsApiPath,
 } from 'shared/build/index.js';
 
@@ -16,6 +16,15 @@ const publicRoutes = {
     [`${AuthApiPath.SIGN_UP}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.SIGN_UP}`,
     [`${AuthApiPath.TOKEN}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.TOKEN}`,
     [`${ApiPath.INDUSTRIES}`]: `${API_PREFIX}${ApiPath.INDUSTRIES}${IndustriesApiPath.ROOT}`,
+    [`${ResumesApiPath.SHARE_ID()}`]: `${API_PREFIX}${
+        ApiPath.RESUMES
+    }${ResumesApiPath.SHARE_ID()}`,
+    [`${ResumesApiPath.ID_SHARE()}`]: `${API_PREFIX}${
+        ApiPath.RESUMES
+    }${ResumesApiPath.ID_SHARE()}`,
+    [`${ResumesApiPath.SHARE_ID_DETAILS()}`]: `${API_PREFIX}${
+        ApiPath.RESUMES
+    }${ResumesApiPath.SHARE_ID_DETAILS()}`,
     [`${OpenAuthApiPath.REDIRECT_CALLBACK}`]: `${OpenAuthApiPath.REDIRECT_CALLBACK}`,
     [`${OpenAuthApiPath.GITHUB}`]: `${OpenAuthApiPath.GITHUB}`,
     [`${OpenAuthApiPath.GOOGLE}`]: `${OpenAuthApiPath.GOOGLE}`,

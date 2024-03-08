@@ -1,6 +1,7 @@
 import {
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedResumesWithCount,
 } from './types';
 
 interface IRecentlyViewedRepository {
@@ -26,6 +27,10 @@ interface IRecentlyViewedRepository {
     update(id: string): Promise<RecentlyViewedResponseDto | null>;
 
     delete(id: string): Promise<boolean>;
+
+    findRecentlyViewedResumesWithCount(
+        interval: string,
+    ): Promise<RecentlyViewedResumesWithCount[]>;
 }
 
 export { type IRecentlyViewedRepository };

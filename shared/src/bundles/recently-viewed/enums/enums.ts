@@ -1,1 +1,1 @@
-export { RecentlyViewedApiPath } from './recently-viewed-api-path.enum';
+export { RecentlyViewedApiPath } from './recently-viewed-api-path.enum.js';

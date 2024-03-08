@@ -1,10 +1,14 @@
-import { type IdParameter, HTTPError, ResumesApiPath } from 'shared/build';
+import {
+    type IdParameter,
+    HTTPError,
+    ResumesApiPath,
+} from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    Controller,
 } from '~/common/controller/controller.js';
-import { Controller } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
