@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { userSignInValidationSchema } from 'shared/build';
+import { type ValueOf, userSignInValidationSchema } from 'shared/build';
 
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
@@ -8,6 +8,7 @@ import {
     Input,
     PasswordInput,
     RegularButton,
+    Spinner,
 } from '~/bundles/common/components/components.js';
 import {
     AppRoute,
@@ -15,7 +16,9 @@ import {
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DataStatus,
     DividerVariant,
+    SpinnerVariant,
 } from '~/bundles/common/enums/enums';
 import {
     useAppForm,
@@ -30,6 +33,7 @@ import styles from './styles.module.scss';
 
 type Properties = {
     onSubmit: (payload: UserSignInRequestDto) => void;
+    dataStatus: ValueOf<typeof DataStatus>;
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
@@ -39,7 +43,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
             validationSchema: userSignInValidationSchema,
         });
 
-    useFormError({
+    const { dataStatus } = useFormError({
         setError,
     });
 
@@ -87,7 +91,10 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
-                    Log in
+                    {dataStatus === DataStatus.PENDING && (
+                        <Spinner variant={SpinnerVariant.SMALL} />
+                    )}
+                    Log In
                 </RegularButton>
                 <Divider variant={DividerVariant.SECONDARY} />
                 <SocialMediaLinks />

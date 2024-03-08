@@ -1,5 +1,7 @@
 export {
     type AuthTokenResponse,
+    type OauthConnectionEntityFields,
+    type SocialMediaProfiles,
     type UserAuthResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
@@ -7,4 +9,5 @@ export {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserWithProfileRelation,
 } from 'shared/build/index.js';
