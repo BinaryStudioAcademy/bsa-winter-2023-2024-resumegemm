@@ -62,8 +62,7 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .query()
             .whereNotNull('templateId')
             .where('userId', userId)
-            .withGraphFetched('[templates]')
-            .withGraphFetched('[resumes]')
+            .withGraphFetched('[templates, resumes]')
             .orderBy('viewedAt', 'desc')
             .limit(limit)) as RecentlyViewedTemplatesQueryResult[];
 
