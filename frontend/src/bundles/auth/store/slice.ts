@@ -24,7 +24,12 @@ const initialState: State = {
 const { reducer, actions, name } = createSlice({
     initialState,
     name: 'auth',
-    reducers: {},
+    reducers: {
+        setUser: (state, action: PayloadAction<UserWithRelations | null>) => {
+            state.user = action.payload;
+            state.dataStatus = DataStatus.IDLE;
+        },
+    },
     extraReducers(builder) {
         builder.addCase(
             subscribe.fulfilled,

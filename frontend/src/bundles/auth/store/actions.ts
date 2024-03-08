@@ -5,6 +5,7 @@ import {
     type UserAuthResponse,
     type UserSignInRequestDto,
     type UserSignUpRequestDto,
+    type UserWithProfileRelation,
 } from '~/bundles/users/users.js';
 import { StorageKey } from '~/framework/storage/storage.js';
 
@@ -16,7 +17,8 @@ const signUp = createAsyncThunk<
     AsyncThunkConfig
 >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
     const { authApi } = extra;
-    return await authApi.signUp(registerPayload);
+    const { user } = await authApi.signUp(registerPayload);
+    return { user };
 });
 
 const signIn = createAsyncThunk<
@@ -37,7 +39,8 @@ const getUser = createAsyncThunk<UserAuthResponse, undefined, AsyncThunkConfig>(
     async (_, { extra }) => {
         const { authApi } = extra;
 
-        return await authApi.getUser();
+        const user = await authApi.getUser();
+        return { user };
     },
 );
 

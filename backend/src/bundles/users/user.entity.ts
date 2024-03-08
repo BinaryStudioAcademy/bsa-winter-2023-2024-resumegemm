@@ -11,9 +11,9 @@ class UserEntity implements IEntity {
 
     private 'emailSubscriptionId': string | null;
 
-    private 'passwordHash': string;
+    private 'passwordHash': string | null;
 
-    private 'passwordSalt': string;
+    private 'passwordSalt': string | null;
 
     private constructor({
         id,

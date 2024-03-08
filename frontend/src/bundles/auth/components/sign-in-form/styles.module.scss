@@ -1,6 +1,6 @@
 .login__title {
     width: 100%;
-    margin: 0;
+    margin: 10px 0;
     padding: 0;
     color: var(--color-text-blue);
     font-weight: var(--font-weight-title);
@@ -13,11 +13,12 @@
     margin: 0;
     padding: 0;
     font-weight: var(--font-weight-text);
-    font-size: var(--font-size-main-text);
+    font-size: var(--font-size-secondary-text);
     line-height: 19.5px;
 }
 
 .login__link {
+    padding-left: 4px;
     color: var(--color-accent-dark-yellow);
     font-family: var(--font-family-secondary);
 }
@@ -25,8 +26,9 @@
 .login__form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     width: 100%;
+    margin-top: 20px;
 }
 
 .login__button {
@@ -41,7 +43,7 @@
 
 .forgot__link {
     position: absolute;
-    top: 5%;
+    top: 10%;
     right: 0;
     align-self: flex-end;
     margin-left: auto;
@@ -55,5 +57,5 @@
 }
 
 .login__form__button {
-    margin-top: 10px;
+    margin-top: 20px;
 }

@@ -12,6 +12,8 @@ const userApi = new UserApi({
 
 export { userApi };
 export {
+    type OauthConnectionEntityFields,
+    type SocialMediaProfiles,
     type UserAuthResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
@@ -19,5 +21,7 @@ export {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserWithProfileRelation,
+    type UserWithRelations,
 } from './types/types.js';
 export { userSignUpValidationSchema } from './validation-schemas/validation-schemas.js';

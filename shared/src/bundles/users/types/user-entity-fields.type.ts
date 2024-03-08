@@ -1,8 +1,8 @@
 import { type User } from './user.type';
 
 type UserEntityFields = Omit<User, 'createdAt' | 'updatedAt'> & {
-    passwordHash: string;
-    passwordSalt: string;
+    passwordHash: string | null;
+    passwordSalt: string | null;
 };
 
 export { type UserEntityFields };

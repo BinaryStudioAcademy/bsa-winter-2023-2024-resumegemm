@@ -10,10 +10,9 @@ export {
     EmailSubscriptionsValidationMessage,
 } from './bundles/email-subscriptions/email-subscriptions.js';
 export {
-    type OauthUserEntityFields,
+    type OauthConnectionEntityFields,
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,
-    type OauthUserWithProfileRelation,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
@@ -39,6 +38,7 @@ export {
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedResumesWithCount,
     type RecentlyViewedTemplatesResponseDto,
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';
@@ -59,6 +59,17 @@ export {
     type ResumeGetAllResponseDto,
     type ResumeGetItemRequestDto,
     type ResumeGetItemResponseDto,
+    type ResumeShareAccessCreateRequestDto,
+    type ResumeShareAccessCreateResponseDto,
+    type ResumeShareAccessGetResponseDto,
+    type ResumeShareCreateRequestDto,
+    type ResumeShareCreateResponseDto,
+    type ResumeShareDeleteRequestDto,
+    type ResumeShareDeleteResponseDto,
+    type ResumeShareDetailsGetRequestDto,
+    type ResumeShareDetailsGetResponseDto,
+    type ResumeShareGetRequestDto,
+    type ResumeShareGetResponseDto,
     type ResumeUpdateItemRequestDto,
     type TechnicalSkill,
     LanguageLevels,
@@ -74,6 +85,7 @@ export {
     TemplatesApiPath,
 } from './bundles/templates/templates.js';
 export {
+    type SocialMediaProfiles,
     type User,
     type UserAuthResponse,
     type UserEntityFields,
@@ -93,6 +105,7 @@ export {
     ApiPath,
     AppEnvironment,
     ContentType,
+    CookieName,
     ExceptionMessage,
     ServerErrorType,
 } from './enums/enums.js';
@@ -111,7 +124,7 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type IStorage } from './framework/storage/storage.js';
-export { configureString } from './helpers/helpers.js';
+export { configureString, getCookie, setCookie } from './helpers/helpers.js';
 export {
     type IdParameter,
     type ServerCommonErrorResponse,

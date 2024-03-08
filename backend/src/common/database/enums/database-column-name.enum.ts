@@ -40,6 +40,9 @@ enum DatabaseColumnName {
     TEMPLATE_ID = 'template_id',
     TEMPLATE_SETTINGS = 'template_settings',
     EMAIL_SUBSCRIPTION_ID = 'email_subscription_id',
+    RESUME_SHARE_LINK_ID = 'resume_share_link_id',
+    RESUME_SHARE_ACCESS_TIME = 'resume_share_access_time',
+    RESUME_SHARE_ACCESS_IP = 'resume_share_access_ip',
     STRIPE_ID = 'stripe_id',
     STRIPE_PLAN_ID = 'stripe_plan_id',
     STRIPE_PRODUCT_ID = 'stripe_product_id',
@@ -62,6 +65,11 @@ enum DatabaseColumnName {
     LANGUAGE_LEVEL = 'language_level',
     ACTIVITY = 'activity',
     OWNER_ID = 'owner_id',
+    NEW_ID = 'new_id',
+    NEW_USER_ID = 'new_user_id',
+    NEW_PROFILE_ID = 'new_profile_id',
+    NEW_RESUME_ID = 'new_resume_id',
+    NEW_TEMPLATE_ID = 'new_template_id',
     DESCRIPTION = 'description',
 }
 

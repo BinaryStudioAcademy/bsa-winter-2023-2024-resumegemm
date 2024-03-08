@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { actions } from '~/bundles/auth/store/slice';
 import { Modal, RegularButton } from '~/bundles/common/components/components';
 import {
     AppRoute,
@@ -27,8 +28,9 @@ const DeleteAccount: React.FC = () => {
 
     const handleDeleteAccount = useCallback(() => {
         void dispatch(userActions.deleteProfile());
+        dispatch(actions.setUser(null));
         setIsModalOpen(false);
-        navigate(AppRoute.LOG_IN);
+        navigate(AppRoute.SIGN_UP);
     }, [dispatch, navigate]);
 
     return (
