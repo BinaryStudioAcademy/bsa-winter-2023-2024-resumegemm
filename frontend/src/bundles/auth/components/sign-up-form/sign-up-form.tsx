@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { type ValueOf } from 'shared/build';
 
@@ -59,7 +60,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
                         to={AppRoute.LOG_IN}
                         className={styles.registration__link}
                     >
-                        Log in
+                        Log In
                     </Link>
                 </p>
             </div>
@@ -125,7 +126,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
                     {dataStatus === DataStatus.PENDING && (
                         <Spinner variant={SpinnerVariant.SMALL} />
                     )}
-                    Sign up
+                    Sign Up
                 </RegularButton>
                 <Divider variant={DividerVariant.PRIMARY} />
                 <SocialMediaLinks />
