@@ -2,8 +2,8 @@ import { authController } from '~/bundles/auth/auth.js';
 import { openAuthController } from '~/bundles/oauth/oauth.js';
 import { paymentController } from '~/bundles/payment/payment.js';
 import { pdfController } from '~/bundles/pdf/pdf.js';
+import { profileController } from '~/bundles/profile/profile.js';
 import { recentlyViewedController } from '~/bundles/recently-viewed/recently-viewed.js';
-import { resumeController } from '~/bundles/resumes/resumes.js';
 import { stripeEventsController } from '~/bundles/stripe-events/stripe-events.js';
 import { templateController } from '~/bundles/templates/templates.js';
 import { userController } from '~/bundles/users/users.js';
@@ -22,6 +22,7 @@ const apiV1 = new ServerAppApi(
     ...authController.routes,
     ...userController.routes,
     ...paymentController.routes,
+    ...profileController.routes,
     ...recentlyViewedController.routes,
     ...templateController.routes,
     ...stripeEventsController.routes,
