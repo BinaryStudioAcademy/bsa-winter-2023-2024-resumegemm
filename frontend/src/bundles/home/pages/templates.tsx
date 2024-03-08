@@ -17,6 +17,7 @@ import {
     ResumeCard,
     TemplateSection,
 } from '~/bundles/home/components/components';
+import { TemplateErrorMessage } from '~/bundles/templates-page/enums/enums';
 import { type TemplateDto } from '~/bundles/templates-page/types/types';
 
 import styles from './styles.module.scss';
@@ -33,7 +34,7 @@ const Templates: React.FC = () => {
                 navigate(`${AppRoute.TEMPLATE_EDITOR}/${newTemplate.id}`);
             })
             .catch(() => {
-                toast.error('Failed to create template');
+                toast.error(TemplateErrorMessage.TEMPLATE_NOT_CREATED);
             });
     }, [dispatch, navigate]);
 

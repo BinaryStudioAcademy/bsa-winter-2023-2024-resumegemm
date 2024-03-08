@@ -71,6 +71,7 @@ export {
     type TemplateGetAllResponseDto,
     type TemplateSettings,
     type TemplateUpdateItemRequestDto,
+    TemplateErrorMessage,
     TemplatesApiPath,
 } from './bundles/templates/templates.js';
 export {

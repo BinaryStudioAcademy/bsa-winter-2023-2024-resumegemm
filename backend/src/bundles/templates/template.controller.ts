@@ -15,7 +15,7 @@ import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { type User } from '../users/types/types.js';
-import { TemplatesApiPath } from './enums/enums.js';
+import { TemplateErrorMessage, TemplatesApiPath } from './enums/enums.js';
 import { type ITemplateService, type Template } from './types/types.js';
 
 class TemplateController extends Controller {
@@ -93,7 +93,7 @@ class TemplateController extends Controller {
         if (!template) {
             throw new HTTPError({
                 status: HttpCode.BAD_REQUEST,
-                message: 'Template with this id not found',
+                message: TemplateErrorMessage.TEMPLATE_NOT_FOUND,
             });
         }
         return {

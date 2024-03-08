@@ -1,4 +1,8 @@
-export { TemplateBlockTitles, TemplatesApiPath } from './enums/enums.js';
+export {
+    TemplateBlockTitles,
+    TemplateErrorMessage,
+    TemplatesApiPath,
+} from './enums/enums.js';
 export {
     type Block,
     type Container,

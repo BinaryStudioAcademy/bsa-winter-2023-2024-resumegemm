@@ -1,1 +1,1 @@
-export { TemplatesApiPath } from 'shared/build';
+export { TemplateErrorMessage, TemplatesApiPath } from 'shared/build';
