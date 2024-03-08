@@ -60,8 +60,8 @@ async function up(knex: Knex): Promise<void> {
 }
 
 async function down(knex: Knex): Promise<void> {
-    await knex.schema.dropTableIfExists(DatabaseTableName.RESUME_SHARE_LINK);
     await knex.schema.dropTableIfExists(DatabaseTableName.RESUME_SHARE_ACCESS);
+    await knex.schema.dropTableIfExists(DatabaseTableName.RESUME_SHARE_LINK);
 }
 
 export { down, up };
