@@ -17,7 +17,7 @@ const emailValidationSchema = joi.object<UserForgotPasswordRequestDto, true>({
         })
         .required()
         .custom((value, helpers) => {
-            const [localPart, domain] = value.split('@')[0];
+            const [localPart, domain] = value.split('@');
 
             if (localPart.length <= 1) {
                 return helpers.error('string.emailInvalid');
