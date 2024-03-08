@@ -5,7 +5,7 @@ import {
     type UpdateUserProfileAndEmailRequestDto,
 } from 'shared/build';
 
-import { actions } from '~/bundles/auth/store/slice.js';
+import { actions as authActions } from '~/bundles/auth/store/slice.js';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
 import {
@@ -66,7 +66,7 @@ const updateProfileAndEmail = createAsyncThunk<
             id,
             payload,
         );
-        dispatch(actions.setUser(updatedUserWithProfile));
+        dispatch(authActions.setUser(updatedUserWithProfile));
         return updatedUserWithProfile.userProfile;
     },
 );
