@@ -114,6 +114,7 @@ class Controller implements IController {
             user,
             headers,
             cookies,
+            socket,
             fileBuffer,
         } = request;
         const unsignCookie = request.unsignCookie.bind(request);
@@ -127,6 +128,7 @@ class Controller implements IController {
             cookies,
             fileBuffer,
             unsignCookie,
+            socket,
         };
     }
 }
