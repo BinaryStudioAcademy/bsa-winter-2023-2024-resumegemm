@@ -58,9 +58,11 @@ const userSignUpValidationFrontend = joi.object<
         }),
     password: joi
         .string()
+        .regex(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~])(?=\S{8,64}$).*$/,
+        )
         .min(UserValidationRule.PASSWORD_MIN_LENGTH)
         .max(UserValidationRule.PASSWORD_MAX_LENGTH)
-        .regex(/^\S*$/)
         .required()
         .messages({
             'string.empty': UserValidationMessage.PASSWORD_REQUIRED,
