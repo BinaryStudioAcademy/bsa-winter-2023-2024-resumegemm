@@ -138,6 +138,7 @@ class UserService
 
         return deletedUser;
     }
+
     public async addStripeId(
         stripeId: string,
         email: string,
