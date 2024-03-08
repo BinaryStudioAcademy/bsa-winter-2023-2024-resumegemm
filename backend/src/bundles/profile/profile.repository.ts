@@ -12,6 +12,20 @@ class ProfileRepository extends AbstractRepository<
     }: Record<'profileModel', typeof ProfileModel>) {
         super(profileModel);
     }
+
+    public async uploadAvatar({
+        id,
+        key,
+    }: {
+        id: string;
+        key: string;
+    }): Promise<void> {
+        await this.model.query().findById(id).patch({ avatar: key });
+    }
+
+    public async deleteAvatar(id: string): Promise<void> {
+        await this.model.query().findById(id).patch({ avatar: null });
+    }
 }
 
 export { ProfileRepository };
