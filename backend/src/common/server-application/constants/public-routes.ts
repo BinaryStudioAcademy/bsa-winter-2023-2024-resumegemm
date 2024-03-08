@@ -4,7 +4,6 @@ import {
     OpenAuthApiPath,
     PaymentApiPath,
     PDFApiPath,
-    RecentlyViewedApiPath,
     StripeEventsApiPath,
 } from 'shared/build/index.js';
 

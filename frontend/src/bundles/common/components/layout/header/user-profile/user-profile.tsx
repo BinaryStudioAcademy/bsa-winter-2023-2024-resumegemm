@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { actions } from '~/bundles/auth/store/slice';
+import { useAppDispatch } from '~/bundles/common/hooks/hooks';
 import { storage, StorageKey } from '~/framework/storage/storage';
 
 import { Menu } from './menu/menu';
@@ -12,6 +14,7 @@ type Properties = {
 };
 
 const UserProfile: React.FC<Properties> = ({ image }) => {
+    const dispatch = useAppDispatch();
     const menuReference = useRef<HTMLMenuElement>(null);
 
     const [active, setActive] = useState(false);
@@ -27,7 +30,8 @@ const UserProfile: React.FC<Properties> = ({ image }) => {
 
     const handleLogout = useCallback(() => {
         void storage.drop(StorageKey.ACCESS_TOKEN);
-    }, []);
+        dispatch(actions.setUser(null));
+    }, [dispatch]);
 
     useEffect(() => {
         const handleOutsideClick = (event_: MouseEvent): void => {

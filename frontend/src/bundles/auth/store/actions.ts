@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type UserWithProfileRelation } from 'shared/build/bundles/users/types/user-with-profile-nested-relation.type.js';
 import {
     type UserResetPasswordRequestDto,
     type UserVerifyResetPasswordTokenRequestDto,
@@ -13,13 +12,14 @@ import {
     type UserForgotPasswordResponse,
     type UserSignInRequestDto,
     type UserSignUpRequestDto,
+    type UserWithProfileRelation,
 } from '~/bundles/users/users.js';
 import { StorageKey } from '~/framework/storage/storage.js';
 
 import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
-    UserAuthResponse,
+    UserAuthResponse['user'],
     UserSignUpRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
@@ -42,14 +42,15 @@ const signIn = createAsyncThunk<
     return user;
 });
 
-const getUser = createAsyncThunk<UserAuthResponse, undefined, AsyncThunkConfig>(
-    `${sliceName}/get-user`,
-    async (_, { extra }) => {
-        const { authApi } = extra;
+const getUser = createAsyncThunk<
+    UserWithProfileRelation,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/get-user`, async (_, { extra }) => {
+    const { authApi } = extra;
 
-        return await authApi.getUser();
-    },
-);
+    return await authApi.getUser();
+});
 
 const forgotPassword = createAsyncThunk<
     UserForgotPasswordResponse,

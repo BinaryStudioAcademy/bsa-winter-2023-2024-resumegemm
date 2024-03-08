@@ -24,6 +24,7 @@ export { Switch } from './switch/switch.js';
 export { NavTabs } from './tabs/nav-tab.js';
 export { TextArea } from './text-area/text-area.js';
 export { Tooltip } from './tooltip/tooltip.js';
+export { Auth } from '~/bundles/auth/pages/auth.js';
 export { GuestRoute } from '~/bundles/common/components/guest-route/guest-route.js';
 export { PrivateRoute } from '~/bundles/common/components/private-route/private-route.js';
 export { Provider as StoreProvider } from 'react-redux';

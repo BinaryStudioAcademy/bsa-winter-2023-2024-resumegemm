@@ -50,7 +50,7 @@ class AuthService implements TAuthService {
         const passwordSalt = await this.generateSalt();
 
         const passwordHash = await this.encrypt(
-            userRequestDto.password,
+            String(userRequestDto.password),
             passwordSalt,
         );
 
@@ -105,7 +105,7 @@ class AuthService implements TAuthService {
     public async getUserWithProfile(
         id: string,
     ): ReturnType<TAuthService['getUserWithProfile']> {
-        return await this.userService.getUserWithProfile(id);
+        return await this.userService.getUserWithProfileAndOauthConnections(id);
     }
 
     public encrypt(data: string, salt: string): Promise<string> {
@@ -117,6 +117,9 @@ class AuthService implements TAuthService {
         passwordSalt,
         passwordHash,
     }: EncryptionDataPayload): Promise<boolean> {
+        if (!passwordSalt) {
+            return false;
+        }
         const dataHash = await this.encrypt(plaintTextPassword, passwordSalt);
         return dataHash === passwordHash;
     }
@@ -173,9 +176,7 @@ class AuthService implements TAuthService {
 
         const passwordHash = await this.encrypt(password, passwordSalt);
 
-        const userWithProfile = await this.userService.getUserWithProfile(
-            user.id,
-        );
+        const userWithProfile = await this.getUserWithProfile(user.id);
 
         await this.userService.changePassword({
             id: user.id,

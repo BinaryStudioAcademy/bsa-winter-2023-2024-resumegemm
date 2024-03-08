@@ -1,6 +1,5 @@
-import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { userSignInValidationSchema } from 'shared/build';
+import { type ValueOf, userSignInValidationSchema } from 'shared/build';
 
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
@@ -9,6 +8,7 @@ import {
     Input,
     PasswordInput,
     RegularButton,
+    Spinner,
 } from '~/bundles/common/components/components.js';
 import {
     AppRoute,
@@ -16,9 +16,11 @@ import {
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DataStatus,
     DividerVariant,
+    SpinnerVariant,
 } from '~/bundles/common/enums/enums';
-import { useAppForm } from '~/bundles/common/hooks/hooks';
+import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
 import { type UserSignInRequestDto } from '~/bundles/users/users';
 
@@ -27,9 +29,10 @@ import styles from './styles.module.scss';
 
 type Properties = {
     onSubmit: (payload: UserSignInRequestDto) => void;
+    dataStatus: ValueOf<typeof DataStatus>;
 };
 
-const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
+const SignInForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
     const { control, errors, handleSubmit } = useAppForm<UserSignInRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
         validationSchema: userSignInValidationSchema,
@@ -82,6 +85,9 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
+                    {dataStatus === DataStatus.PENDING && (
+                        <Spinner variant={SpinnerVariant.SMALL} />
+                    )}
                     Log in
                 </RegularButton>
                 <Divider variant={DividerVariant.SECONDARY} />

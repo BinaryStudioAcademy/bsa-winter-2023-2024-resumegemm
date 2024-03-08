@@ -9,11 +9,11 @@ import {
     App,
     ErrorFallback,
     GuestRoute,
+    PrivateRoute,
     RouterProvider,
     StoreProvider,
     StripeProvider,
 } from '~/bundles/common/components/components';
-import { PrivateRoute } from '~/bundles/common/components/private-route/private-route';
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
