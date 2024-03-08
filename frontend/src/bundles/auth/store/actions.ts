@@ -42,6 +42,15 @@ const signIn = createAsyncThunk<
     return user;
 });
 
+const getUser = createAsyncThunk<UserAuthResponse, undefined, AsyncThunkConfig>(
+    `${sliceName}/get-user`,
+    async (_, { extra }) => {
+        const { authApi } = extra;
+
+        return await authApi.getUser();
+    },
+);
+
 const forgotPassword = createAsyncThunk<
     UserForgotPasswordResponse,
     UserForgotPasswordRequestDto,
@@ -82,15 +91,6 @@ const resetPassword = createAsyncThunk<
 
     return user;
 });
-
-const getUser = createAsyncThunk<UserAuthResponse, undefined, AsyncThunkConfig>(
-    `${sliceName}/get-user`,
-    async (_, { extra }) => {
-        const { authApi } = extra;
-
-        return await authApi.getUser();
-    },
-);
 
 export {
     forgotPassword,
