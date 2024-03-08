@@ -11,6 +11,7 @@ import { ToastContext } from '~/bundles/toast/context/toast-context';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 
 import {
+    Auth,
     Calendar,
     Checkbox,
     ColumnChart,
@@ -25,6 +26,7 @@ import {
     Tooltip,
 } from '../../bundles/common/components/components.js';
 import { authApi } from '../auth/auth.js';
+import { Auth } from '../auth/pages/auth.js';
 import { UserProfile } from '../common/components/layout/header/user-profile/user-profile.js';
 import { Stepper } from '../common/components/stepper/stepper.js';
 import { CalendarTypes } from '../common/enums/calendar/calendar-types.enum';

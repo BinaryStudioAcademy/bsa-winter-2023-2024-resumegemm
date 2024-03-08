@@ -1,6 +1,7 @@
 import { type FC, type ReactNode } from 'react';
 
 import { Spinner } from '~/bundles/common/components/components';
+import { SpinnerVariant } from '~/bundles/common/enums/spinner/spinner-variant.enum';
 import { type DataWrapperProperties } from '~/bundles/common/types/data-wrapper/data-wrapper-properties.type';
 
 import styles from './styles.module.scss';
@@ -21,7 +22,9 @@ const DataWrapper: FC<DataWrapperProperties> = ({
     if (isLoading) {
         return (
             <div className={styles.data_wrapper__container}>
-                {CustomSpinnerComponent ?? <Spinner />}
+                {CustomSpinnerComponent ?? (
+                    <Spinner variant={SpinnerVariant.MEDIUM} />
+                )}
             </div>
         );
     }

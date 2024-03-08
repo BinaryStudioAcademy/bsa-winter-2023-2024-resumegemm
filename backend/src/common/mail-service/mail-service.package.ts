@@ -7,7 +7,7 @@ class MailService implements IMailService {
     private static instance: MailService;
     private transporter: Transporter;
 
-    private constructor() {
+    public constructor() {
         const transportOptions: Options = {
             host: process.env.SMTP_HOST,
             port: Number(process.env.SMTP_PORT),
