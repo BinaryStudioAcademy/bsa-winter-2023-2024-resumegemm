@@ -7,6 +7,7 @@ const AppRoute = {
     PROFILE: '/profile',
     HOME: '/home',
     TEMPLATES: '/templates',
+    TEMPLATE_EDITOR: '/template-editor',
 } as const;
 
 export { AppRoute };
