@@ -1,3 +1,5 @@
+import { type UpdateUserProfileAndEmailRequestDto } from 'shared/build';
+
 import { PageTitle } from '~/bundles/common/components/page-title/page-title';
 import {
     useAppDispatch,
@@ -5,6 +7,7 @@ import {
     useEffect,
 } from '~/bundles/common/hooks/hooks';
 import { useAppSelector } from '~/bundles/common/hooks/use-app-selector/use-app-selector.hook';
+import { updateProfileAndEmail } from '~/bundles/profile/store/actions';
 import { actions as profileActions } from '~/bundles/profile/store/profile.store';
 
 import { DeleteAccount } from '../components/delete-account/delete-account';
@@ -14,10 +17,6 @@ import { ProfileInfo } from '../components/profile-info/profile-info';
 import { Socials } from '../components/socials/socials';
 import { Subscriptions } from '../components/subscription/subscriptions';
 import styles from './style.module.scss';
-
-const handleFormSubmit = (): void => {
-    throw new Error('not implemented');
-};
 
 const Profile: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -33,13 +32,21 @@ const Profile: React.FC = () => {
         [dispatch],
     );
 
-    const { profile, firstName, lastName, email } = useAppSelector(
+    const { profile, id, firstName, lastName, email } = useAppSelector(
         ({ auth, profile }) => ({
             profile,
             firstName: auth.user?.userProfile.firstName as string,
             lastName: auth.user?.userProfile.lastName ?? '',
             email: auth.user?.email as string,
+            id: auth.user?.id as string,
         }),
+    );
+
+    const handleFormSubmit = useCallback(
+        (payload: UpdateUserProfileAndEmailRequestDto) => {
+            void dispatch(updateProfileAndEmail({ id, payload }));
+        },
+        [dispatch, id],
     );
 
     return (
