@@ -5,9 +5,7 @@
 }
 
 .error {
-    position: absolute;
-    right: 0;
-    bottom: -18px;
+    margin-top: 2px;
     color: var(--color-error-red);
     font-size: var(--font-size-secondary-text);
     text-align: right;

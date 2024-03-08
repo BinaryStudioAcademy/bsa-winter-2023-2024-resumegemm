@@ -58,29 +58,25 @@ class UserRepository
     }
 
     public async delete(id: string): Promise<UserEntityFields> {
-        const user = await this.model
+        return await this.model
             .query()
             .findOne({ id })
             .whereNull('deletedAt')
             .patch({ deletedAt: new Date().toISOString() })
             .returning(['id', 'email', 'deleted_at', 'profile_id'])
             .castTo<UserEntityFields>();
-
-        return user ?? null;
     }
 
     public async addStripeId(
         userUpdate: Pick<UserModel, 'email' | 'stripeId'>,
     ): ReturnType<IUserRepo['addStripeId']> {
         const { email, stripeId } = userUpdate;
-        const user = await this.model
+        return await this.model
             .query()
             .findOne({ email })
             .patch({ stripeId: stripeId })
             .returning(['id', 'email', 'stripe_id', 'profile_id'])
             .castTo<UserEntityFields>();
-
-        return user ?? null;
     }
 }
 

@@ -3,18 +3,18 @@ import {
     type AuthApiPath,
     type HTTPError,
     AuthException,
+    HttpCode,
 } from 'shared/build/index.js';
 
 import { type AuthService } from '~/bundles/auth/auth.service.js';
 import { getToken } from '~/bundles/auth/helpers/helpers.js';
-import { openAuthService } from '~/bundles/oauth/oauth.js';
 import { config } from '~/common/config/config.js';
 import { ControllerHook } from '~/common/controller/enums/enums.js';
 import { type IService } from '~/common/interfaces/service.interface.js';
 
 type AuthorizationPluginPayload = {
     publicRoutes: Partial<Record<AuthApiPath, string>>;
-    userService: Omit<IService, 'getById'>;
+    userService: Pick<IService, 'getUserWithProfile'>;
     authService: AuthService;
 };
 
@@ -47,15 +47,10 @@ const authorization = fp<AuthorizationPluginPayload>(
                 );
                 const currentUser = await userService.getUserWithProfile(id);
 
-                if (!currentUser) {
-                    const oauthUser = await openAuthService.getById(id);
-                    request.user = oauthUser;
-                    return;
-                }
-
                 request.user = currentUser;
             } catch (error) {
-                const { status, message } = error as HTTPError;
+                const { status = HttpCode.INTERNAL_SERVER_ERROR, message } =
+                    error as HTTPError;
                 void reply.code(status).send({ status, message });
             }
         });

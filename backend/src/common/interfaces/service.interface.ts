@@ -7,9 +7,18 @@ interface IService<T = unknown> {
         items: T[];
     }>;
 
+    deleteById(id: string): Promise<boolean>;
+
     getById(id: string): Promise<T>;
 
     findByEmail(email: string): Promise<T>;
+
+    findByOauthIdAndCreate(data: T): Promise<void>;
+
+    findByIdOrEmail(
+        userId: string,
+        email: string,
+    ): Promise<UserEntityFields | null>;
 
     getUserWithProfile(id: string): Promise<T>;
 

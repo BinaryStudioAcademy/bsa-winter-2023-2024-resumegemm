@@ -7,6 +7,7 @@ type DefaultApiHandlerOptions = {
     headers?: unknown;
     cookies?: unknown;
     unsignCookie?: unknown;
+    socket?: unknown;
     fileBuffer?: unknown;
 };
 
@@ -21,6 +22,7 @@ type ApiHandlerOptions<
     headers: T['headers'];
     cookies: T['cookies'];
     unsignCookie: T['unsignCookie'];
+    socket: T['socket'];
     fileBuffer: T['fileBuffer'];
 };
 

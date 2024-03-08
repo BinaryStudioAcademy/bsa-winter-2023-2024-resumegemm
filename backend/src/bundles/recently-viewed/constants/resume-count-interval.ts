@@ -1,0 +1,3 @@
+const RESUME_COUNT_INTERVAL = '1 day';
+
+export { RESUME_COUNT_INTERVAL };
