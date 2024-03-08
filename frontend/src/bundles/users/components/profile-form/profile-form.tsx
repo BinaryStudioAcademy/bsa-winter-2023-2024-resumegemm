@@ -60,7 +60,7 @@ const ProfileForm: React.FC<Properties> = ({ onSubmit, user }) => {
                         />
                     </FormGroup>
                     <p>
-                        Use this email to log in to your Resume.io account and
+                        Use this email to log in to your ResumeGemm account and
                         receive notifications.
                     </p>
                 </div>
