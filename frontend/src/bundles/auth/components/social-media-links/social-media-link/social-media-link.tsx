@@ -1,7 +1,8 @@
+import { OpenAuthApiPath } from 'shared/build';
+
 import { RegularButton } from '~/bundles/common/components/components';
 import { ButtonVariant } from '~/bundles/common/enums/components/button-variant.enum';
-import { useCallback } from '~/bundles/common/hooks/hooks';
-import { config } from '~/framework/config/config';
+import { useRedirect } from '~/bundles/common/hooks/hooks';
 
 import styles from './styles.module.scss';
 
@@ -11,9 +12,10 @@ type SocialMediaLinkPayload = {
 };
 
 const SocialMediaLink: React.FC<SocialMediaLinkPayload> = ({ route, icon }) => {
-    const handleRedirect = useCallback(() => {
-        window.open(`${config.ENV.APP.DOMAIN_URL}${route}`, '_self');
-    }, [route]);
+    const { handleRedirect } = useRedirect({
+        redirectPath: OpenAuthApiPath.ROOT,
+        subPath: route,
+    });
 
     return (
         <RegularButton
