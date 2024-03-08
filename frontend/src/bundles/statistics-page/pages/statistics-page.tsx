@@ -96,14 +96,34 @@ const StatisticsPage = (): JSX.Element => {
                         ></div>
 
                         <div className={styles.statistics__resumes_container}>
-                            {/* <StatisticResumeCard
+                            <StatisticResumeCard
                                 label="PHP"
                                 src={templateThirdImage}
                             />
                             <StatisticResumeCard
                                 label="PHP"
                                 src={templateThirdImage}
-                            /> */}
+                            />
+                            <StatisticResumeCard
+                                label="PHP"
+                                src={templateThirdImage}
+                            />
+                            <StatisticResumeCard
+                                label="PHP"
+                                src={templateThirdImage}
+                            />
+                            <StatisticResumeCard
+                                label="PHP"
+                                src={templateThirdImage}
+                            />
+                            <StatisticResumeCard
+                                label="PHP"
+                                src={templateThirdImage}
+                            />
+                            <StatisticResumeCard
+                                label="PHP"
+                                src={templateThirdImage}
+                            />
                         </div>
 
                         <div className={styles.statistics__select_arrow}></div>

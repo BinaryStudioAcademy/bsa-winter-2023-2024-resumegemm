@@ -35,10 +35,11 @@
 
 .statistics__select_container {
     width: 90%;
+    background-color: var(--color-accent-light-yellow);
 }
 
 :is(.statistics__select_arrow, .statistics__select_reverse_arrow) {
-    width: 100%;
+    width: 5%;
     min-width: 30px;
     height: 100%;
     min-height: 30px;
@@ -61,8 +62,8 @@
 
 .statistics__select_resume {
     display: flex;
-    height: 30vh;
-    background-color: var(--color-accent-light-yellow);
+    height: 45vh;
+    padding: 30px;
 }
 
 .statistics__resumes_container {
@@ -71,5 +72,5 @@
     align-items: center;
     gap: 20px;
     width: 90%;
-    height: 80%;
+    height: 100%;
 }
