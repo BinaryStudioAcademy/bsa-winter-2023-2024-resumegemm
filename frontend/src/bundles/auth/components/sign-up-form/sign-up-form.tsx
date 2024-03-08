@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { type ValueOf } from 'shared/build';
 
