@@ -1,4 +1,5 @@
 import { PageTitle } from '~/bundles/common/components/page-title/page-title';
+import { UserPhotoWrapper } from '~/bundles/common/components/user-photo-uploader/user-photo-wrapper';
 
 import { DeleteAccount } from '../components/delete-account/delete-account';
 import { ProfileCard } from '../components/profile-card/profile-card';
@@ -29,6 +30,9 @@ const Profile: React.FC = () => {
                 </ProfileCard>
                 <ProfileCard title="Account">
                     <ProfileForm onSubmit={handleFormSubmit} />
+                </ProfileCard>
+                <ProfileCard title="Avatar">
+                    <UserPhotoWrapper />
                 </ProfileCard>
                 <ProfileCard title="Social profile">
                     <Socials />
