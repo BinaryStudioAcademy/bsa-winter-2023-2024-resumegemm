@@ -1,15 +1,16 @@
 import React from 'react';
 
 import {
-    useAppDispatch,
-    useAppSelector,
-} from '~/bundles/common/hooks/hooks.js';
-import {
     deleteUserAvatar,
     updateUserAvatar,
 } from '~/bundles/profile/store/actions';
 
-import { useCallback, useState } from '../../hooks/hooks';
+import {
+    useAppDispatch,
+    useAppSelector,
+    useCallback,
+    useState,
+} from '../../hooks/hooks';
 import styles from './styles.module.scss';
 import { type ImageBlob } from './types/image-blob.type';
 import { UserPhotoMockup } from './user-photo-mockup';
