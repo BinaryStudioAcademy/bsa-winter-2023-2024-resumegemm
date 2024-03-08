@@ -1,18 +1,18 @@
-import { type OauthUserLoginResponseDto } from 'shared/build/index.js';
+import { type OauthUserLoginResponseDto } from 'shared/build/bundles/open-auth/types/oauth-user-login-response-dto.type';
 
 import { type OauthModel } from '~/bundles/oauth/oauth.model.js';
 import { AbstractRepository } from '~/common/database/abstract.repository.js';
 
-import { type OauthUserEntityFields } from './types/types.js';
+import { type OauthConnectionEntityFields } from './types/types.js';
 
 interface IOauthRepository {
-    findByOauthId(oauthId: string): Promise<OauthUserEntityFields | null>;
+    findByOauthId(oauthId: string): Promise<OauthConnectionEntityFields | null>;
 }
 
 class OauthRepository
     extends AbstractRepository<
         typeof OauthModel,
-        OauthUserLoginResponseDto | OauthUserEntityFields
+        OauthUserLoginResponseDto | OauthConnectionEntityFields
     >
     implements IOauthRepository
 {

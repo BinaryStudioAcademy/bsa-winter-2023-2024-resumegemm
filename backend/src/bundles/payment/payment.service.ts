@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
 
+import { type UserService } from '../users/user.service.js';
 import { PaymentErrorMessage } from './enums/error-message.js';
 import { mapPrices } from './helpers/price-mapper.js';
 import {
@@ -16,10 +17,12 @@ import {
 class PaymentService implements IPaymentService {
     private appConfig: IConfig;
     private stripe: Stripe;
+    private userService: UserService;
 
-    public constructor(config: IConfig) {
+    public constructor(config: IConfig, userService: UserService) {
         this.appConfig = config;
         this.stripe = new Stripe(this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY);
+        this.userService = userService;
     }
 
     public getPublishableKey(): GetPublishableKeyResponseDto {
@@ -55,7 +58,7 @@ class PaymentService implements IPaymentService {
         paymentMethod: string,
     ): Promise<Stripe.Customer> {
         try {
-            return await this.stripe.customers.create({
+            const customer = await this.stripe.customers.create({
                 name: name,
                 email: email,
                 payment_method: paymentMethod,
@@ -63,6 +66,9 @@ class PaymentService implements IPaymentService {
                     default_payment_method: paymentMethod,
                 },
             });
+            const { id: stripeId } = customer;
+            await this.userService.addStripeId(stripeId, email);
+            return customer;
         } catch {
             throw new HTTPError({
                 message: PaymentErrorMessage.STRIPE_USER_CREATE_ERROR,

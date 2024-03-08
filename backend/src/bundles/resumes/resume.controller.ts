@@ -1,4 +1,8 @@
-import { type IdParameter, HTTPError, ResumesApiPath } from 'shared/build';
+import {
+    type IdParameter,
+    HTTPError,
+    ResumesApiPath,
+} from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
