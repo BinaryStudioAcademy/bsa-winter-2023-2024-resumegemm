@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
+    useAppSelector,
     useCallback,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
@@ -17,8 +18,10 @@ import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { showToast } = useContext(ToastContext);
 
+    const { dataStatus } = useAppSelector((state) => state.auth);
+
+    const { showToast } = useContext(ToastContext);
     const { pathname } = useLocation();
 
     const handleSignInSubmit = useCallback(
@@ -43,10 +46,20 @@ const Auth: React.FC = () => {
     const getScreen = (screen: string): React.ReactNode => {
         switch (screen) {
             case AppRoute.LOG_IN: {
-                return <SignInForm onSubmit={handleSignInSubmit} />;
+                return (
+                    <SignInForm
+                        onSubmit={handleSignInSubmit}
+                        dataStatus={dataStatus}
+                    />
+                );
             }
             case AppRoute.SIGN_UP: {
-                return <SignUpForm onSubmit={handleSignUpSubmit} />;
+                return (
+                    <SignUpForm
+                        onSubmit={handleSignUpSubmit}
+                        dataStatus={dataStatus}
+                    />
+                );
             }
         }
 

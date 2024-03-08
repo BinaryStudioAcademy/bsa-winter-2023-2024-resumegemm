@@ -1,11 +1,13 @@
 import { type Profile } from '~/bundles/profile/types/profile-type.js';
 
-import { type OauthUserEntityFields } from './oauth-user-entity-fields.type.js';
+import { type OauthConnectionEntityFields } from './oauth-connection-entity-fields.type';
 
 type OauthUserLoginRequestDto = Pick<
     Profile,
     'firstName' | 'avatar' | 'lastName'
 > &
-    Pick<OauthUserEntityFields, 'oauthId' | 'oauthStrategy' | 'email'>;
+    Pick<OauthConnectionEntityFields, 'oauthId' | 'oauthStrategy' | 'email'> & {
+        userId: string;
+    };
 
 export { type OauthUserLoginRequestDto };

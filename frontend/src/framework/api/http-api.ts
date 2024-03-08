@@ -1,3 +1,5 @@
+import { getCookie } from 'shared/build';
+
 import {
     type ContentType,
     ServerErrorType,
@@ -6,6 +8,8 @@ import {
     type ServerErrorResponse,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
+import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
+import { showToast } from '~/bundles/toast/helpers/show-toast.js';
 import {
     type HttpCode,
     type IHttp,
@@ -89,11 +93,15 @@ class HTTPApi implements IHttpApi {
         headers.append(HttpHeader.CONTENT_TYPE, contentType);
 
         if (hasAuth) {
-            const token = await this.storage.get<string>(
+            const tokenFromLocalStorage = await this.storage.get<string>(
                 StorageKey.ACCESS_TOKEN,
             );
 
-            headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token ?? ''}`);
+            const tokenFromCookie = getCookie(StorageKey.ACCESS_TOKEN);
+
+            const token = tokenFromLocalStorage ?? tokenFromCookie;
+
+            headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
         }
 
         return headers;
@@ -116,6 +124,11 @@ class HTTPApi implements IHttpApi {
         )) as ServerErrorResponse;
 
         const isCustomException = Boolean(parsedException.errorType);
+        if (response.status >= 400 && response.status < 600) {
+            showToast(parsedException.message, ToastType.ERROR, {
+                theme: 'dark',
+            });
+        }
 
         throw new HTTPError({
             status: response.status as ValueOf<typeof HttpCode>,

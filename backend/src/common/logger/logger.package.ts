@@ -6,10 +6,21 @@ import { type ILogger } from './interfaces/interfaces.js';
 class Logger implements ILogger {
     private logger: TLogger;
 
+    private errorLogger: TLogger;
+
     public constructor() {
         this.logger = pino(pretty());
 
-        this.logger.info('Logger is created…');
+        this.errorLogger = pino(
+            pretty({
+                levelLabel: 'error',
+                destination: 2,
+            }),
+        );
+
+        this.logger.info('Logger is created...');
+
+        this.errorLogger.info('Error logger is created...');
     }
 
     public debug(
@@ -23,7 +34,7 @@ class Logger implements ILogger {
         message: string,
         parameters: Record<string, unknown> = {},
     ): ReturnType<ILogger['error']> {
-        this.logger.error(parameters, message);
+        this.errorLogger.error(parameters, message);
     }
 
     public info(

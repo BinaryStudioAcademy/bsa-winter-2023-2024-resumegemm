@@ -1,12 +1,14 @@
 type Titles = Record<string, string>;
 
 const titles: Titles = {
-    '/': 'Resume Gemm',
-    '/log-in': 'Log In | Resume Gemm',
-    '/sign-up': 'Sign Up | Resume Gemm',
-    '/preview': 'Preview | Resume Gemm',
-    '/payment': 'Payment | Resume Gemm',
-    '/profile': 'Profile | Resume Gemm',
+    '/': 'ResumeGemm',
+    '/log-in': 'Log In | ResumeGemm',
+    '/sign-up': 'Sign Up | ResumeGemm',
+    '/preview': 'Preview | ResumeGemm',
+    '/payment': 'Payment | ResumeGemm',
+    '/profile': 'Profile | ResumeGemm',
+    '/home': 'Home | ResumeGemm',
+    '/templates': 'Templates | ResumeGemm',
 };
 
 export { titles };
