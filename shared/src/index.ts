@@ -33,6 +33,7 @@ export {
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedResumesWithCount,
     type RecentlyViewedTemplatesResponseDto,
     RecentlyViewedApiPath,
 } from './bundles/recently-viewed/recently-viewed.js';

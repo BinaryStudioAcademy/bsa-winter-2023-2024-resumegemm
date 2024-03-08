@@ -4,6 +4,7 @@ import {
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesResponseDto,
+    type RecentlyViewedResumesWithCount,
     type RecentlyViewedTemplatesResponseDto,
 } from './types/types';
 
@@ -63,6 +64,12 @@ class RecentlyViewedService implements IRecentlyViewedService {
         }
 
         return await this.recentlyViewedRepository.delete(id);
+    }
+
+    public async findRecentlyViewedResumesWithCount(): Promise<
+        RecentlyViewedResumesWithCount[]
+    > {
+        return await this.recentlyViewedRepository.findRecentlyViewedResumesWithCount();
     }
 }
 
