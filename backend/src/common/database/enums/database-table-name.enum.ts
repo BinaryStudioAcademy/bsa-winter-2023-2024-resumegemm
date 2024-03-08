@@ -1,6 +1,7 @@
 enum DatabaseTableName {
     MIGRATIONS = 'migrations',
     USERS = 'users',
+    OAUTH_CONNECTIONS = 'oauth_connections',
     OAUTH_USERS = 'oauth_users',
     PROFILE = 'user_profile',
     PERSONAL_INFORMATION = 'personal_information',
@@ -13,6 +14,10 @@ enum DatabaseTableName {
     USER_TEMPLATES = 'user_templates',
     REVIEWS = 'reviews',
     RECENTLY_VIEWED = 'recently_viewed',
+    SUBSCRIPTION_PLANS = 'subscription_plans',
+    CERTIFICATION = 'certification',
+    LANGUAGES = 'languages',
+    CUSTOM_SECTIONS = 'custom_sections',
 }
 
 export { DatabaseTableName };

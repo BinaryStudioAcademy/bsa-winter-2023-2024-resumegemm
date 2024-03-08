@@ -3,11 +3,19 @@ import { type Transaction } from 'objection';
 interface IRepository<T = unknown> {
     getById(id: string): Promise<T | null>;
 
+    create(data: T): Promise<T>;
+
     createWithTransaction(
-        data: Omit<T, 'id' | 'createdAt' | 'updatedAt'>,
+        data: Omit<T, 'id' | 'createdAt' | 'updatedAt' | 'email' | 'profileId'>,
         transaction: Transaction,
     ): Promise<T>;
-    getUserWithProfile(id: string, modification?: string): Promise<T>;
+
+    deleteById(id: string): Promise<number>;
+
+    getUserWithProfileAndOauthConnections(
+        id: string,
+        modification?: string,
+    ): Promise<T>;
 }
 
 export { type IRepository };

@@ -1,9 +1,9 @@
 import { type FastifyReply } from 'fastify';
-import { OpenAuthApiPath } from 'shared/build/index.js';
 
 import { config } from '~/common/config/config.js';
 import { CookieName } from '~/common/controller/enums/enums.js';
 import { type ILogger } from '~/common/logger/logger.js';
+import { cookieOptions } from '~/common/server-application/constants/constants.js';
 import { type ServerAppRouteParameters } from '~/common/server-application/server-application.js';
 
 import { type IController } from './interfaces/interface.js';
@@ -42,27 +42,36 @@ class Controller implements IController {
         reply,
         accessToken,
         refreshToken,
+        redirectSubPathCookie,
     }: {
         reply: FastifyReply;
         accessToken?: string;
         refreshToken?: string;
+        redirectSubPathCookie?: string;
     }): Promise<void> {
+        const { path, maxAge } = cookieOptions;
         if (accessToken) {
             return reply
                 .clearCookie(CookieName.OAUTH_TOKEN)
                 .setCookie(CookieName.ACCESS_TOKEN, accessToken, {
-                    path: OpenAuthApiPath.ROOT,
-                    httpOnly: true,
-                    maxAge: config.ENV.COOKIE.EXPIRES_IN,
+                    path,
+                    maxAge,
                 })
-                .redirect(config.ENV.APP.ORIGIN_URL);
+                .setCookie(
+                    CookieName.REFRESH_TOKEN,
+                    refreshToken as string,
+                    cookieOptions,
+                )
+                .redirect(
+                    `${config.ENV.APP.ORIGIN_URL}${redirectSubPathCookie}`,
+                );
         }
         if (refreshToken) {
-            void reply.setCookie(CookieName.REFRESH_TOKEN, refreshToken, {
-                httpOnly: true,
-                maxAge: config.ENV.COOKIE.EXPIRES_IN,
-                signed: true,
-            });
+            void reply.setCookie(
+                CookieName.REFRESH_TOKEN,
+                refreshToken,
+                cookieOptions,
+            );
         }
     }
 
@@ -75,10 +84,18 @@ class Controller implements IController {
 
         const requestHandlerOptions = this.handleRequestOptions(request);
 
+        const redirectSubPathCookie =
+            request.cookies[CookieName.REDIRECT_PATH] ?? '';
+
         const { status, payload, refreshToken, accessToken, contentType } =
             await apiHandler(requestHandlerOptions);
 
-        await this.setTokenInCookies({ reply, accessToken, refreshToken });
+        await this.setTokenInCookies({
+            reply,
+            accessToken,
+            refreshToken,
+            redirectSubPathCookie,
+        });
 
         if (contentType) {
             void reply.header('Content-Type', contentType);
@@ -89,15 +106,26 @@ class Controller implements IController {
     private handleRequestOptions(
         request: Parameters<ServerAppRouteParameters['handler']>[0],
     ): ApiHandlerOptions {
-        const { body, query, params, user, headers, cookies } = request;
-        const unsignCookie = request.unsignCookie.bind(request);
-        return {
+        const {
             body,
+            rawBody,
             query,
             params,
             user,
             headers,
             cookies,
+            fileBuffer,
+        } = request;
+        const unsignCookie = request.unsignCookie.bind(request);
+        return {
+            body,
+            rawBody,
+            query,
+            params,
+            user,
+            headers,
+            cookies,
+            fileBuffer,
             unsignCookie,
         };
     }

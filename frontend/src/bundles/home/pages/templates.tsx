@@ -3,12 +3,7 @@ import clsx from 'clsx';
 import { Icon, Input } from '~/bundles/common/components/components';
 import { IconInput } from '~/bundles/common/components/icon-input/icon-input';
 import { IconName, IconSize } from '~/bundles/common/enums/enums';
-import {
-    useAppDispatch,
-    useAppSelector,
-    useEffect,
-} from '~/bundles/common/hooks/hooks';
-import { loadAllTemplates } from '~/bundles/edit-temlate/store/actions';
+import { useLoadTemplates } from '~/bundles/common/hooks/use-load-templates/use-load-templates.hook';
 import {
     HomeTopSection,
     ResumeCard,
@@ -18,14 +13,7 @@ import {
 import styles from './styles.module.scss';
 
 const Templates: React.FC = () => {
-    const dispatch = useAppDispatch();
-    const { templates } = useAppSelector((state) => state.templates);
-
-    useEffect(() => {
-        if (templates.length === 0) {
-            void dispatch(loadAllTemplates());
-        }
-    }, [dispatch, templates]);
+    const { templates } = useLoadTemplates();
 
     return (
         <div className={clsx(styles.layout, styles.templates_layout)}>
@@ -38,6 +26,7 @@ const Templates: React.FC = () => {
                         <Input
                             width="100%"
                             className={styles.template_icon_input}
+                            placeholder="Search"
                         />
                     }
                     className={styles.icon_input_wrapper}

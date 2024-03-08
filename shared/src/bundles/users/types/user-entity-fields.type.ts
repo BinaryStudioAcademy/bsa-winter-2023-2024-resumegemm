@@ -4,8 +4,8 @@ type UserEntityFields = Omit<
     UserAuthResponse['user'],
     'createdAt' | 'updatedAt'
 > & {
-    passwordHash: string;
-    passwordSalt: string;
+    passwordHash: string | null;
+    passwordSalt: string | null;
 };
 
 export { type UserEntityFields };

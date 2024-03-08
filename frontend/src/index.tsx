@@ -8,6 +8,8 @@ import { Auth } from '~/bundles/auth/pages/auth';
 import {
     App,
     ErrorFallback,
+    GuestRoute,
+    PrivateRoute,
     RouterProvider,
     StoreProvider,
     StripeProvider,
@@ -16,9 +18,6 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
-import { NoAuthRoute } from './bundles/common/components/no-auth-route/no-auth-route';
-import { PrivateRoute } from './bundles/common/components/private-route/private-route';
-import { Home } from './bundles/home/pages/home';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
@@ -45,11 +44,17 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             children: [
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <LandingPage />,
+                                    element: <GuestRoute />,
+                                    children: [
+                                        {
+                                            path: AppRoute.ROOT,
+                                            element: <LandingPage />,
+                                        },
+                                    ],
                                 },
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <NoAuthRoute />,
+                                    element: <GuestRoute />,
                                     children: [
                                         {
                                             path: AppRoute.LOG_IN,
@@ -65,10 +70,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     path: AppRoute.ROOT,
                                     element: <PrivateRoute />,
                                     children: [
-                                        {
-                                            path: AppRoute.HOME,
-                                            element: <Home />,
-                                        },
                                         {
                                             path: AppRoute.PROFILE,
                                             element: <Profile />,

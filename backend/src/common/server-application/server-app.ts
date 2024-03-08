@@ -1,9 +1,11 @@
 import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
+import fastifyMultipart from '@fastify/multipart';
 import oauthPlugin from '@fastify/oauth2';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
+import { FileUploadValidationRule } from 'shared/build/bundles/files/enums/file-upload.validation-rule.js';
 import { OpenAuthApiPath } from 'shared/build/index.js';
 
 import { authService } from '~/bundles/auth/auth.js';
@@ -14,19 +16,24 @@ import { ControllerHook } from '~/common/controller/enums/enums.js';
 import { type IDatabase } from '~/common/database/database.js';
 import { ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
-import { HttpCode, HttpError } from '~/common/http/http.js';
+import { HttpCode, HTTPError } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 import {
     authorizationPlugin,
     oauthCallbackHandler,
+    preParsingPlugin,
 } from '~/common/plugins/plugins.js';
-import { publicRoutes } from '~/common/server-application/constants/constants.js';
+import {
+    preParsingRoutes,
+    publicRoutes,
+} from '~/common/server-application/constants/constants.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
     type ValidationSchema,
 } from '~/common/types/types.js';
 
+import { fileUpload as fileUploadPlugin } from '../plugins/file-upload/file-upload-plugin.js';
 import {
     type IServerApp,
     type IServerAppApi,
@@ -92,6 +99,10 @@ class ServerApp implements IServerApp {
                 this.logger.info(
                     `Generate swagger documentation for API ${it.version}`,
                 );
+
+                await this.app.register(preParsingPlugin, {
+                    preParsingRoutes,
+                });
                 await this.app.register(authorizationPlugin, {
                     publicRoutes,
                     userService,
@@ -123,6 +134,19 @@ class ServerApp implements IServerApp {
                     });
                 }
                 await this.app.register(oauthCallbackHandler);
+                await this.app.register(fastifyMultipart, {
+                    limits: {
+                        fileSize: FileUploadValidationRule.MAXIMUM_FILE_SIZE,
+                    },
+                    attachFieldsToBody: true,
+                    throwFileSizeLimit: false,
+                });
+
+                await this.app.register(fileUploadPlugin, {
+                    extensions:
+                        FileUploadValidationRule.UPLOAD_FILE_CONTENT_TYPES as unknown as string[],
+                });
+
                 await this.app.register(swagger, {
                     mode: 'static',
                     specification: {
@@ -174,7 +198,7 @@ class ServerApp implements IServerApp {
                         .send(response);
                 }
 
-                if (error instanceof HttpError) {
+                if (error instanceof HTTPError) {
                     this.logger.error(
                         `[Http Error]: ${error.status.toString()} – ${
                             error.message

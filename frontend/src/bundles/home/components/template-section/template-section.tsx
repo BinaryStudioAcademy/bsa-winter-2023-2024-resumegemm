@@ -20,7 +20,7 @@ const TemplateSection: React.FC<Properties> = ({
         <PanelContainer
             hasIconInput={hasIconInput}
             name={name}
-            classname={styles.template_section}
+            className={styles.template_section}
         >
             <div className={clsx(styles.template_section__cards, cardLayout)}>
                 {children}
