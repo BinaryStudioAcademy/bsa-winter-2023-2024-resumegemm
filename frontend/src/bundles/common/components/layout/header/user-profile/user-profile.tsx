@@ -1,7 +1,9 @@
 import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { actions } from '~/bundles/auth/store/slice';
+import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { useAppDispatch } from '~/bundles/common/hooks/hooks';
 import { storage, StorageKey } from '~/framework/storage/storage';
 
@@ -14,6 +16,7 @@ type Properties = {
 };
 
 const UserProfile: React.FC<Properties> = ({ image }) => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const menuReference = useRef<HTMLMenuElement>(null);
 
@@ -29,9 +32,12 @@ const UserProfile: React.FC<Properties> = ({ image }) => {
     );
 
     const handleLogout = useCallback(() => {
-        void storage.drop(StorageKey.ACCESS_TOKEN);
+        void storage.drop(StorageKey.ACCESS_TOKEN).then(() => {
+            navigate(AppRoute.LOG_IN);
+        });
+
         dispatch(actions.setUser(null));
-    }, [dispatch]);
+    }, [dispatch, navigate]);
 
     useEffect(() => {
         const handleOutsideClick = (event_: MouseEvent): void => {
