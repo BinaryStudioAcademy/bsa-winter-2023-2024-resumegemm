@@ -41,8 +41,9 @@ const oauthConfigurations = {
             },
             auth: oauthPlugin.LINKEDIN_CONFIGURATION,
             options: {
-                bodyFormat: 'form' as const,
-                authorizationMethod: 'body' as const,
+                bodyFormat: config.ENV.OAUTH.LINKEDIN.OPTIONS.bodyFormat,
+                authorizationMethod:
+                    config.ENV.OAUTH.LINKEDIN.OPTIONS.authorizationMethod,
             },
         },
         scope: ['profile', 'email', 'openid'],
