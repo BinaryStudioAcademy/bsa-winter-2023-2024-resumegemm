@@ -17,7 +17,7 @@ const getUniqueTemplatesViewedByUser = (
                 id: item.id,
                 userId: item.userId,
                 resumeId: item.resumeId,
-                resumeTitle: item.resumes.resumeTitle,
+                resumeTitle: item.resumes.title,
                 templateId: item.templateId,
                 template: item.templates,
                 viewedAt: item.viewedAt,
