@@ -1,31 +1,52 @@
-import { HttpCode, HTTPError } from 'shared/build/index.js';
+import { ExceptionMessage, HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { type OauthRepository } from '~/bundles/oauth/oauth.repository';
-import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
+import { type UserService } from '~/bundles/users/user.service.js';
 import { type IService } from '~/common/interfaces/service.interface';
 
 import {
-    type OauthUserEntityFields,
+    type OauthConnectionEntityFields,
     type OauthUserLoginRequestDto,
-    type OauthUserLoginResponseDto,
+    type UserEntityFields,
+    type UserSignUpRequestDto,
 } from './types/types.js';
 
-class OauthService implements Pick<IService, 'create' | 'getById'> {
+class OauthService
+    implements
+        Pick<IService, 'create' | 'findByOauthIdAndCreate' | 'deleteById'>
+{
     private oauthRepository: OauthRepository;
-    private profileRepository: ProfileRepository;
+    private userService: UserService;
 
     public constructor(
         userRepository: OauthRepository,
-        profileRepository: ProfileRepository,
+        userService: UserService,
     ) {
         this.oauthRepository = userRepository;
-        this.profileRepository = profileRepository;
+        this.userService = userService;
     }
 
-    public async getById(id: string): Promise<OauthUserLoginResponseDto> {
-        return this.oauthRepository.getUserWithProfile(
-            id,
-        ) as Promise<OauthUserLoginResponseDto>;
+    public async deleteById(id: string): Promise<boolean> {
+        const foundRecord = await this.oauthRepository.getById(id);
+        if (!foundRecord) {
+            throw new HTTPError({
+                status: HttpCode.BAD_REQUEST,
+                message: ExceptionMessage.INVALID_OAUTH_ID,
+            });
+        }
+        return !!(await this.oauthRepository.deleteById(id));
+    }
+
+    public async findByOauthIdAndCreate(
+        oauthPayload: Omit<OauthConnectionEntityFields, 'id'>,
+    ): Promise<void> {
+        const foundConnection = await this.oauthRepository.findByOauthId(
+            oauthPayload.oauthId,
+        );
+        if (foundConnection) {
+            return;
+        }
+        await this.oauthRepository.create(oauthPayload);
     }
 
     public async create({
@@ -35,42 +56,43 @@ class OauthService implements Pick<IService, 'create' | 'getById'> {
         oauthId,
         lastName,
         oauthStrategy,
-    }: OauthUserLoginRequestDto): Promise<OauthUserEntityFields> {
-        const foundUserByOauthId = await this.oauthRepository.findByOauthId(
+        userId,
+    }: OauthUserLoginRequestDto): Promise<UserEntityFields> {
+        const foundUser = await this.userService.findByIdOrEmail(userId, email);
+
+        if (foundUser) {
+            await this.findByOauthIdAndCreate({
+                oauthId,
+                email,
+                oauthStrategy,
+                userId,
+            });
+            return foundUser;
+        }
+        const foundConnection = await this.oauthRepository.findByOauthId(
             oauthId,
         );
-        if (foundUserByOauthId) {
-            return foundUserByOauthId;
-        }
-
-        const transaction = await this.oauthRepository.model.startTransaction();
-        try {
-            const { id } = await this.profileRepository.createWithTransaction(
-                {
-                    firstName,
-                    avatar,
-                    lastName,
-                },
-                transaction,
+        if (foundConnection) {
+            const foundUser = await this.userService.getById(
+                foundConnection.userId,
             );
-            const user = await this.oauthRepository.createWithTransaction(
-                {
-                    email,
-                    oauthId,
-                    oauthStrategy,
-                    profileId: id,
-                },
-                transaction,
-            );
-            await transaction.commit();
-            return user;
-        } catch (error: unknown) {
-            const { message } = error as HTTPError;
-            throw new HTTPError({
-                message,
-                status: HttpCode.INTERNAL_SERVER_ERROR,
-            });
+            if (foundUser) {
+                return foundUser;
+            }
         }
+        const user = await this.userService.create({
+            email,
+            lastName,
+            avatar,
+            firstName,
+        } as UserSignUpRequestDto & { avatar: string });
+        await this.findByOauthIdAndCreate({
+            oauthId,
+            email,
+            oauthStrategy,
+            userId: user.id,
+        });
+        return user as UserEntityFields;
     }
 }
 

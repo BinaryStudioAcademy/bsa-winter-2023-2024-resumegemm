@@ -1,3 +1,6 @@
+import { DataStatus } from '~/bundles/common/enums/enums';
+import { SpinnerVariant } from '~/bundles/common/enums/spinner/spinner-variant.enum';
+
 import { Header, NavTabs, Spinner } from '../common/components/components';
 import { UserProfile } from '../common/components/layout/header/user-profile/user-profile';
 import { AppRoute } from '../common/enums/app-route.enum';
@@ -16,9 +19,9 @@ const MainPage = (): JSX.Element => {
 
     return (
         <>
-            {dataStatus === 'pending' && (
+            {dataStatus === DataStatus.PENDING && (
                 <div className={styles.spinner_wrapper}>
-                    <Spinner />
+                    <Spinner variant={SpinnerVariant.MEDIUM} />
                 </div>
             )}
             <Header>
