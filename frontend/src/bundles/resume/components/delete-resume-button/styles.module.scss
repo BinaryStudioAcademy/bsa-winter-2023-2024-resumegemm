@@ -1,0 +1,29 @@
+.delete__button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.delete__button__text {
+    color: var(--color-text-black);
+    font-weight: var(--font-weight-text);
+    font-size: 19px;
+    font-family: var(--font-family-resume-button);
+    transition: color 0.15s ease 0s;
+}
+
+.delete__button__text:hover {
+    color: var(--color-button-blue);
+    transition: color 0.15s ease 0s;
+}
+
+.mask {
+    width: 24px;
+    height: 24px;
+    mask-size: cover;
+    mask-position: center;
+}
+
+.colored {
+    background-color: var(--color-button-blue);
+}

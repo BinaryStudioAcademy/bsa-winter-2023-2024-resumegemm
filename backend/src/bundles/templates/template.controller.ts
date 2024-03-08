@@ -3,7 +3,7 @@ import {
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
 } from 'shared/build/bundles/templates/templates.js';
-import { HttpError } from 'shared/build/index.js';
+import { type IdParameter, HTTPError } from 'shared/build/index.js';
 
 import {
     type ApiHandlerOptions,
@@ -41,7 +41,7 @@ class TemplateController extends Controller {
             method: 'GET',
             handler: (options) =>
                 this.findById(
-                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
         this.addRoute({
@@ -54,7 +54,7 @@ class TemplateController extends Controller {
             method: 'DELETE',
             handler: (options) =>
                 this.delete(
-                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                    options as ApiHandlerOptions<{ params: IdParameter }>,
                 ),
         });
         this.addRoute({
@@ -87,11 +87,11 @@ class TemplateController extends Controller {
     }
 
     private async findById(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<Template>> {
         const template = await this.templateService.find(options.params.id);
         if (!template) {
-            throw new HttpError({
+            throw new HTTPError({
                 status: HttpCode.BAD_REQUEST,
                 message: 'Template with this id not found',
             });
@@ -113,7 +113,7 @@ class TemplateController extends Controller {
     }
 
     private async delete(
-        options: ApiHandlerOptions<{ params: { id: string } }>,
+        options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<boolean>> {
         const isDeleted = await this.templateService.delete(options.params.id);
         return {
@@ -137,7 +137,7 @@ class TemplateController extends Controller {
                 payload: {},
             };
         } catch (error: unknown) {
-            const { message, status } = error as HttpError;
+            const { message, status } = error as HTTPError;
             return {
                 status,
                 payload: {

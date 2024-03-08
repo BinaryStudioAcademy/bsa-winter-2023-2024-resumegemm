@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { userSignInValidationSchema } from 'shared/build';
 
 import { Divider } from '~/bundles/auth/components/divider/divider';
@@ -10,6 +11,7 @@ import {
     RegularButton,
 } from '~/bundles/common/components/components.js';
 import {
+    AppRoute,
     ButtonSize,
     ButtonType,
     ButtonVariant,
@@ -24,7 +26,7 @@ import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
 
 type Properties = {
-    onSubmit: (paload: UserSignInRequestDto) => void;
+    onSubmit: (payload: UserSignInRequestDto) => void;
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
@@ -46,7 +48,9 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                 <h1 className={styles.login__title}>Log In</h1>
                 <p className={styles.login__message}>
                     No account? Go to
-                    <span className={styles.login__link}> Sign Up</span>
+                    <Link to={AppRoute.SIGN_UP} className={styles.login__link}>
+                        Sign Up
+                    </Link>
                 </p>
             </div>
             <form onSubmit={handleFormSubmit} className={styles.login__form}>
@@ -62,7 +66,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                         Forgot Password?
                     </span>
                     <PasswordInput
-                        label="Passwod"
+                        label="Password"
                         error={errors.password}
                         placeholder="Your password"
                         {...useFormFieldCreator({ name: 'password', control })}
@@ -75,7 +79,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
-                    Sign up
+                    Log in
                 </RegularButton>
                 <Divider variant={DividerVariant.SECONDARY} />
                 <SocialMediaLinks />

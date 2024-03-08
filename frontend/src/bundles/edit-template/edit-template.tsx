@@ -10,7 +10,7 @@ import styles from '../resume-preview/components/resume-preview/styles.module.sc
 import { TemplateBlockTitles } from '../templates-page/types/types';
 import { TemplateEditor } from './components/template-editor/template-editor';
 import { editTemplate, getTemplateById } from './store/actions';
-import { actions as editTemplateActions } from './store/index.js';
+import { actions as editTemplateActions } from './store/edit-template.store';
 import templateStyles from './styles.module.scss';
 
 const EditTemplatePage: React.FC = () => {

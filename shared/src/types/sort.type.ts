@@ -1,3 +1,3 @@
-type SortType = 'asc' | 'desc' | null;
+type SortDirection = 'asc' | 'desc' | null;
 
-export { type SortType };
+export { type SortDirection };

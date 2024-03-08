@@ -11,7 +11,7 @@ import { IconInput } from '~/bundles/common/components/icon-input/icon-input';
 import { AppRoute, IconName, IconSize } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks';
 import { useLoadTemplates } from '~/bundles/common/hooks/use-load-templates/use-load-templates.hook';
-import { createTemplate } from '~/bundles/edit-temlate/store/actions';
+import { createTemplate } from '~/bundles/edit-template/store/actions';
 import {
     HomeTopSection,
     ResumeCard,
@@ -48,6 +48,7 @@ const Templates: React.FC = () => {
                         <Input
                             width="100%"
                             className={styles.template_icon_input}
+                            placeholder="Search"
                         />
                     }
                     className={styles.icon_input_wrapper}
