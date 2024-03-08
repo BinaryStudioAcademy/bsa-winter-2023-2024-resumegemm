@@ -7,7 +7,7 @@ const updatePageTab = (): void => {
         return;
     }
 
-    document.title = 'Resume Gemm';
+    document.title = 'ResumeGemm';
 };
 
 export { updatePageTab };

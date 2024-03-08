@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { type ValueOf } from 'shared/build';
 
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
@@ -7,6 +8,7 @@ import {
     Input,
     PasswordInput,
     RegularButton,
+    Spinner,
 } from '~/bundles/common/components/components';
 import {
     AppRoute,
@@ -14,7 +16,9 @@ import {
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DataStatus,
     DividerVariant,
+    SpinnerVariant,
 } from '~/bundles/common/enums/enums';
 import {
     useAppForm,
@@ -41,7 +45,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
             validationSchema: userSignUpValidationFrontend,
         });
 
-    useFormError({
+    const { dataStatus } = useFormError({
         setError,
     });
 
@@ -62,7 +66,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                         to={AppRoute.LOG_IN}
                         className={styles.registration__link}
                     >
-                        Log in
+                        Log In
                     </Link>
                 </p>
             </div>
@@ -125,7 +129,10 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
-                    Sign up
+                    {dataStatus === DataStatus.PENDING && (
+                        <Spinner variant={SpinnerVariant.SMALL} />
+                    )}
+                    Sign Up
                 </RegularButton>
                 <Divider variant={DividerVariant.PRIMARY} />
                 <SocialMediaLinks />
