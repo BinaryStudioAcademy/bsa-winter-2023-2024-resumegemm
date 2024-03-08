@@ -5,10 +5,7 @@ import { type IStripeEventsService } from '~/bundles/stripe-events/interfaces/st
 import { type SubscriptionPlanRepository } from '~/bundles/stripe-events/repositories/subscription-plan.repository.js';
 import { type IConfig } from '~/common/config/interfaces/config.interface.js';
 
-import {
-    type StripeEventsResponseDto,
-    type SubscriptionPlan,
-} from './types/types.js';
+import { type StripeEventsResponseDto } from './types/types.js';
 
 class StripeEventsService implements IStripeEventsService {
     private appConfig: IConfig;
