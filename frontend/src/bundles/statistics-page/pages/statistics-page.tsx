@@ -4,6 +4,7 @@ import templateThirdImage from '~/assets/img/5297769.png';
 import {
     ColumnChart,
     Dropdown,
+    Footer,
     Header,
     NavTabs,
 } from '~/bundles/common/components/components';
@@ -86,9 +87,11 @@ const StatisticsPage = (): JSX.Element => {
                 </section>
 
                 <section className={styles.statistics__select_container}>
-                    <h1>My Resume</h1>
+                    <h1 className={styles.statistics__select_title}>
+                        My Resume
+                    </h1>
 
-                    <hr />
+                    <hr className={styles.statistics__select_hr} />
 
                     <div className={styles.statistics__select_resume}>
                         <div
@@ -130,6 +133,8 @@ const StatisticsPage = (): JSX.Element => {
                     </div>
                 </section>
             </div>
+
+            <Footer></Footer>
         </>
     );
 };

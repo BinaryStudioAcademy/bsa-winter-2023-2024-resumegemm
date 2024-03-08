@@ -3,7 +3,9 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    gap: 100px;
     min-height: 100vh;
+    padding: 5% 0;
     background-color: var(--color-input-field-gray);
 }
 
@@ -13,7 +15,6 @@
     grid-template-columns: 3fr 1fr;
     row-gap: 30px;
     width: 90%;
-    margin-top: 5%;
     padding: 30px;
     background-color: var(--color-white);
     border-radius: 50px;
@@ -36,6 +37,17 @@
 .statistics__select_container {
     width: 90%;
     background-color: var(--color-accent-light-yellow);
+    border-radius: 50px;
+}
+
+.statistics__select_title {
+    padding: 15px 0 10px 50px;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.statistics__select_hr {
+    border: 3px white solid;
 }
 
 :is(.statistics__select_arrow, .statistics__select_reverse_arrow) {
