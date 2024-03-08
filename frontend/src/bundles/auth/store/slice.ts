@@ -1,3 +1,4 @@
+import { type PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { type UserWithProfileRelation } from 'shared/build/index.js';
 
@@ -20,7 +21,15 @@ const initialState: State = {
 const { reducer, actions, name } = createSlice({
     initialState,
     name: 'auth',
-    reducers: {},
+    reducers: {
+        setUser: (
+            state,
+            action: PayloadAction<UserWithProfileRelation | null>,
+        ) => {
+            state.user = action.payload;
+            state.dataStatus = DataStatus.IDLE;
+        },
+    },
     extraReducers(builder) {
         builder.addCase(profileActions.updateUserAvatar.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;

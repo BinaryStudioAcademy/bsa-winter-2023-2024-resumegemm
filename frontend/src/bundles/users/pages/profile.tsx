@@ -1,5 +1,12 @@
 import { PageTitle } from '~/bundles/common/components/page-title/page-title';
 import { UserPhotoWrapper } from '~/bundles/common/components/user-photo-uploader/user-photo-wrapper';
+import {
+    useAppDispatch,
+    useCallback,
+    useEffect,
+} from '~/bundles/common/hooks/hooks';
+import { useAppSelector } from '~/bundles/common/hooks/use-app-selector/use-app-selector.hook';
+import { actions as profileActions } from '~/bundles/profile/store/profile.store';
 
 import { DeleteAccount } from '../components/delete-account/delete-account';
 import { ProfileCard } from '../components/profile-card/profile-card';
@@ -9,18 +16,33 @@ import { Socials } from '../components/socials/socials';
 import { Subscriptions } from '../components/subscription/subscriptions';
 import styles from './style.module.scss';
 
-type User = {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-};
-
-const handleFormSubmit = (payload: User): void => {
-    // Handle form submission logic here
-    payload;
+const handleFormSubmit = (): void => {
+    throw new Error('not implemented');
 };
 
 const Profile: React.FC = () => {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        void dispatch(profileActions.getUserProfileAndSocials());
+    }, [dispatch]);
+
+    const handleSocialMediaDisconnect = useCallback(
+        (id: string) => {
+            void dispatch(profileActions.disconnectSocialMedia(id));
+        },
+        [dispatch],
+    );
+
+    const { profile, firstName, lastName, email } = useAppSelector(
+        ({ auth, profile }) => ({
+            profile,
+            firstName: auth.user?.userProfile.firstName as string,
+            lastName: auth.user?.userProfile.lastName ?? '',
+            email: auth.user?.email as string,
+        }),
+    );
+
     return (
         <div className={styles.profile}>
             <div className={styles.profile__container}>
@@ -29,13 +51,23 @@ const Profile: React.FC = () => {
                     <ProfileInfo />
                 </ProfileCard>
                 <ProfileCard title="Account">
-                    <ProfileForm onSubmit={handleFormSubmit} />
+                    <ProfileForm
+                        onSubmit={handleFormSubmit}
+                        user={{ email, firstName, lastName }}
+                    />
+                </ProfileCard>
+                <ProfileCard title="Avatar">
+                    <UserPhotoWrapper />
                 </ProfileCard>
                 <ProfileCard title="Avatar">
                     <UserPhotoWrapper />
                 </ProfileCard>
                 <ProfileCard title="Social profile">
-                    <Socials />
+                    <Socials
+                        socialMediaConnections={profile.socialMediaProfiles}
+                        dataStatus={profile.dataStatus}
+                        onSocialDisconnect={handleSocialMediaDisconnect}
+                    />
                 </ProfileCard>
                 <ProfileCard title="Email notifications">
                     <Subscriptions />

@@ -40,9 +40,9 @@ class ProfileService implements IProfileService {
     public async deleteAvatar(id: string): Promise<void> {
         const userProfile = await this.profileRepository.getById(id);
 
-        const { avatar, id: profileId } = userProfile;
+        if (userProfile?.avatar) {
+            const { avatar, id: profileId } = userProfile;
 
-        if (avatar) {
             await this.profileRepository.deleteAvatar(profileId);
             await this.fileService.delete(avatar);
         }

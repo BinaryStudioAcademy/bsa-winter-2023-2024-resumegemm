@@ -11,10 +11,13 @@ const variants: Record<DividerVariant, string> = {
 
 type DividerPayload = {
     variant: DividerVariant;
+    className?: string;
 };
 
-const Divider: React.FC<DividerPayload> = ({ variant }) => {
-    return <div className={clsx(styles.divider, variants[variant])} />;
+const Divider: React.FC<DividerPayload> = ({ variant, className = '' }) => {
+    return (
+        <div className={clsx(styles.divider, variants[variant], className)} />
+    );
 };
 
 export { Divider };

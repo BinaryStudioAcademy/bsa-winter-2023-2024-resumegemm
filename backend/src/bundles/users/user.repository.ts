@@ -51,13 +51,13 @@ class UserRepository
             .patch({ deletedAt: new Date().toISOString() })
             .returning(['id', 'email', 'deleted_at', 'profile_id'])
             .castTo<UserEntityFields>();
-        
+
         return user ?? null;
     }
 
     public async addStripeId(
         userUpdate: Pick<UserModel, 'email' | 'stripeId'>,
-    ): ReturnType<TUserRepo['addStripeId']> {
+    ): ReturnType<IUserRepo['addStripeId']> {
         const { email, stripeId } = userUpdate;
         const user = await this.model
             .query()
