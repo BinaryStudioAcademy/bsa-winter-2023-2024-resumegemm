@@ -1,54 +1,65 @@
 import clsx from 'clsx';
-import React, { type ChangeEvent, useCallback, useState } from 'react';
+import React, { type ChangeEvent, useCallback, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { Checkbox, RegularButton } from '../common/components/components';
 import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
-import { EditableTemplate } from './components/editable-templte';
-import { transformTemplateSettings } from './helpers/get-initial-template-state.helper';
-import { actions as templateActions } from './store';
+import { TemplateBlockTitles } from '../templates-page/types/types';
+import { TemplateEditor } from './components/template-editor/template-editor';
+import { editTemplate, getTemplateById } from './store/actions';
+import { actions as editTemplateActions } from './store/index.js';
 import templateStyles from './styles.module.scss';
-import { TemplateBlockTitles } from './types/types';
-
-type SelectedBlocks = Record<string, boolean>;
 
 const EditTemplatePage: React.FC = () => {
     const dispatch = useAppDispatch();
-    const templates = useAppSelector((state) => state.templates.templates);
-    const currentTemplate = templates.find((template) => template.id === '1');
+    const template = useAppSelector((state) => state.editTemplate.template);
+    const parameters = useParams<{ id: string }>();
 
-    const initialBlockSettings = transformTemplateSettings(
-        currentTemplate?.templateSettings ?? {},
+    useEffect(() => {
+        if (!parameters.id) {
+            return;
+        }
+
+        if (!template.id || template.id !== parameters.id) {
+            void dispatch(getTemplateById(parameters.id));
+        }
+    }, [parameters.id, template.id, dispatch]);
+
+    const templateSettings = useAppSelector(
+        (state) => state.editTemplate.template.templateSettings,
     );
 
-    const [selectedBlocks, setSelectedBlocks] =
-        useState<SelectedBlocks>(initialBlockSettings);
-
+    const isBlockEnabled = useCallback(
+        (blockName: string): boolean => {
+            return templateSettings.containers.some((container) =>
+                container.blocks.some(
+                    (block) => block.name === blockName && block.enabled,
+                ),
+            );
+        },
+        [templateSettings.containers],
+    );
     const templateBlockTitles = Object.keys(TemplateBlockTitles);
 
     const handleCheckboxChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>): void => {
-            setSelectedBlocks((previousBlocks) => ({
-                ...previousBlocks,
-                [event.target.name]: event.target.checked,
-            }));
+            const { name, checked } = event.target;
+            dispatch(
+                editTemplateActions.setBlockEnabled({
+                    blockName: name,
+                    enabled: checked,
+                }),
+            );
         },
-        [],
+        [dispatch],
     );
 
     const handleSaveTemplate = useCallback(() => {
-        const save = async (): Promise<void> => {
-            const editedTemplate = {
-                id: '1',
-                isOwner: true,
-                templateSettings: selectedBlocks,
-            };
-            await dispatch(templateActions.editTemplate(editedTemplate));
-        };
-        void save();
-    }, [dispatch, selectedBlocks]);
+        void dispatch(editTemplate());
+    }, [dispatch]);
 
     return (
         <section
@@ -71,7 +82,7 @@ const EditTemplatePage: React.FC = () => {
                             className={editorStyles.editor_sidebar__item}
                         >
                             <Checkbox
-                                checked={selectedBlocks[block]}
+                                checked={isBlockEnabled(block)}
                                 label=""
                                 onChange={handleCheckboxChange}
                                 name={block}
@@ -92,7 +103,7 @@ const EditTemplatePage: React.FC = () => {
                     </RegularButton>
                 </div>
             </nav>
-            <EditableTemplate selectedBlocks={selectedBlocks} />
+            <TemplateEditor settings={templateSettings} />
         </section>
     );
 };
