@@ -8,8 +8,8 @@ import { type IStripeEventsService } from '~/bundles/stripe-events/interfaces/st
 import { type SubscriptionPlanRepository } from '~/bundles/stripe-events/repositories/subscription-plan.repository.js';
 import { type IConfig } from '~/common/config/interfaces/config.interface.js';
 import { MailService } from '~/common/mail-service/mail-service.package.js';
-import { generateSubscriptionEmailPayload } from './helpers/subscription-email-generator.js';
 
+import { generateSubscriptionEmailPayload } from './helpers/subscription-email-generator.js';
 import {
     type StripeCustomer,
     type StripeEventsResponseDto,
