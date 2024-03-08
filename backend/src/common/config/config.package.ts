@@ -124,6 +124,10 @@ class Config implements IConfig {
                         env: 'CLIENT_LINKEDIN_SECRET',
                         default: null,
                     },
+                    OPTIONS: {
+                        bodyFormat: 'form',
+                        authorizationMethod: 'body',
+                    },
                 },
                 BASE_CALLBACK_URI: {
                     doc: 'Secret key for callback url',
