@@ -4,7 +4,7 @@ import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { type TemplateDto } from '../types/types.js';
-import { editTemplate, loadAllTemplates } from './actions.js';
+import { loadAllTemplates } from './actions.js';
 
 type State = {
     templates: TemplateDto[];
@@ -24,20 +24,14 @@ const { reducer, actions, name } = createSlice({
         builder.addCase(loadAllTemplates.fulfilled, (state, action) => {
             state.templates = action.payload;
         });
-        builder.addMatcher(
-            isAnyOf(editTemplate.pending, loadAllTemplates.pending),
-            (state) => {
-                state.dataStatus = DataStatus.PENDING;
-            },
-        );
+        builder.addMatcher(isAnyOf(loadAllTemplates.pending), (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
 
-        builder.addMatcher(
-            isAnyOf(editTemplate.rejected, loadAllTemplates.rejected),
-            (state) => {
-                state.dataStatus = DataStatus.REJECTED;
-                state.templates = [];
-            },
-        );
+        builder.addMatcher(isAnyOf(loadAllTemplates.rejected), (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+            state.templates = [];
+        });
     },
 });
 

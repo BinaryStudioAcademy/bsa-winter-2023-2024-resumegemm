@@ -1,9 +1,9 @@
-import { editTemplate } from './actions';
+import { loadAllTemplates } from './actions';
 import { actions } from './slice';
 
 const allActions = {
+    loadAllTemplates,
     ...actions,
-    editTemplate,
 };
 
 export { allActions as actions };
