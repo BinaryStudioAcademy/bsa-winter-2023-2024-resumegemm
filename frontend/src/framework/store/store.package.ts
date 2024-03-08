@@ -8,6 +8,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
+import { reducer as editTemplateReducer } from '~/bundles/edit-temlate/store';
 import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store';
 import { profileApi } from '~/bundles/profile/profile';
@@ -26,6 +27,7 @@ type RootReducer = {
     payment: ReturnType<typeof paymentReducer>;
     templates: ReturnType<typeof templatesReducer>;
     profile: ReturnType<typeof profileReducer>;
+    editTemplate: ReturnType<typeof editTemplateReducer>;
 };
 
 type ExtraArguments = {
@@ -57,6 +59,7 @@ class Store {
                 payment: paymentReducer,
                 templates: templatesReducer,
                 profile: profileReducer,
+                editTemplate: editTemplateReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
