@@ -50,17 +50,6 @@ async function up(knex: Knex): Promise<void> {
             .onUpdate(RelationRule.CASCADE)
             .onDelete(RelationRule.SET_NULL);
     });
-    await knex.schema.alterTable(
-        DatabaseTableName.OAUTH_CONNECTIONS,
-        (table) => {
-            table
-                .uuid(DatabaseColumnName.NEW_USER_ID)
-                .references(DatabaseColumnName.NEW_ID)
-                .inTable(DatabaseTableName.USERS)
-                .onUpdate(RelationRule.CASCADE)
-                .onDelete(RelationRule.SET_NULL);
-        },
-    );
 
     await knex.schema.alterTable(DatabaseTableName.RESUMES, (table) => {
         table.dropForeign([DatabaseColumnName.USER_ID]);
@@ -92,22 +81,6 @@ async function up(knex: Knex): Promise<void> {
             DatabaseColumnName.USER_ID,
         );
     });
-    await knex.schema.alterTable(
-        DatabaseTableName.OAUTH_CONNECTIONS,
-        (table) => {
-            table.dropForeign([DatabaseColumnName.USER_ID]);
-        },
-    );
-    await knex.schema.alterTable(
-        DatabaseTableName.OAUTH_CONNECTIONS,
-        (table) => {
-            table.dropColumn(DatabaseColumnName.USER_ID);
-            table.renameColumn(
-                DatabaseColumnName.NEW_USER_ID,
-                DatabaseColumnName.USER_ID,
-            );
-        },
-    );
 
     await knex.schema.alterTable(DatabaseTableName.USERS, (table) => {
         table.dropPrimary();
@@ -1011,25 +984,6 @@ async function down(knex: Knex): Promise<void> {
     );
     await knex.schema.alterTable(
         DatabaseTableName.RESUME_SHARE_LINK,
-        (table) => {
-            table.primary([DatabaseColumnName.ID]);
-        },
-    );
-
-    await knex.schema.alterTable(
-        DatabaseTableName.OAUTH_CONNECTIONS,
-        (table) => {
-            table.dropPrimary();
-        },
-    );
-    await knex.schema.alterTable(
-        DatabaseTableName.OAUTH_CONNECTIONS,
-        (table) => {
-            table.uuid(DatabaseColumnName.ID).notNullable().alter();
-        },
-    );
-    await knex.schema.alterTable(
-        DatabaseTableName.OAUTH_CONNECTIONS,
         (table) => {
             table.primary([DatabaseColumnName.ID]);
         },
