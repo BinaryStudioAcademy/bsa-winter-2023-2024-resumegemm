@@ -40,8 +40,12 @@ const oauthConfigurations = {
                 secret: config.ENV.OAUTH.LINKEDIN.CLIENT_LINKEDIN_SECRET,
             },
             auth: oauthPlugin.LINKEDIN_CONFIGURATION,
+            options: {
+                bodyFormat: 'form' as const,
+                authorizationMethod: 'body' as const,
+            },
         },
-        scope: ['profile', 'email'],
+        scope: ['profile', 'email', 'openid'],
     },
 };
 
