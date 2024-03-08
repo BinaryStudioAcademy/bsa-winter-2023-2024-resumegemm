@@ -5,7 +5,6 @@ import {
     type UserAuthResponse,
     type UserSignInRequestDto,
     type UserSignUpRequestDto,
-    type UserWithProfileRelation,
 } from '~/bundles/users/users.js';
 import { StorageKey } from '~/framework/storage/storage.js';
 

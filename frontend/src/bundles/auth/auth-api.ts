@@ -4,7 +4,6 @@ import {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-    type UserWithProfileRelation,
     type UserWithRelations,
 } from '~/bundles/users/users.js';
 import { HttpApi } from '~/framework/api/api.js';
