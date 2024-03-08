@@ -1,7 +1,4 @@
-import {
-    type ContentType,
-    ServerErrorType,
-} from '~/bundles/common/enums/enums.js';
+import { ContentType, ServerErrorType } from '~/bundles/common/enums/enums.js';
 import {
     type ServerErrorResponse,
     type ValueOf,
@@ -86,7 +83,9 @@ class HTTPApi implements IHttpApi {
     ): Promise<Headers> {
         const headers = new Headers();
 
-        headers.append(HttpHeader.CONTENT_TYPE, contentType);
+        if (contentType !== ContentType.FORM_DATA) {
+            headers.append(HttpHeader.CONTENT_TYPE, contentType);
+        }
 
         if (hasAuth) {
             const token = await this.storage.get<string>(
