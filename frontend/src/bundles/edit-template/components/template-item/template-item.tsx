@@ -1,26 +1,27 @@
 import { useCallback } from 'react';
 
-import { type Item } from '~/bundles/templates-page/types/types';
+import { TemplateItemTags } from '~/bundles/templates-page/enums/enums';
+import { type LayoutItem } from '~/bundles/templates-page/types/types';
 
-type Properties = Item;
+type Properties = LayoutItem;
 
 const TemplateItem: React.FC<Properties> = ({
     id,
     name,
-    type,
+    tagName,
     content,
     styles,
 }) => {
     const handleType = useCallback(
-        (type: string) => {
-            switch (type) {
-                case 'h1': {
+        (tagName: string) => {
+            switch (tagName) {
+                case TemplateItemTags.HEADING: {
                     return <h1>{content}</h1>;
                 }
-                case 'p': {
+                case TemplateItemTags.PARAGRAPH: {
                     return <p>{content}</p>;
                 }
-                case 'img': {
+                case TemplateItemTags.IMAGE: {
                     return <img src={content} alt={name} />;
                 }
                 default: {
@@ -33,7 +34,7 @@ const TemplateItem: React.FC<Properties> = ({
 
     return (
         <div key={id} style={styles}>
-            {handleType(type)}
+            {handleType(tagName)}
         </div>
     );
 };

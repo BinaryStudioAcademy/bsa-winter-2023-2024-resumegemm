@@ -1,1 +1,5 @@
-export { TemplateErrorMessage, TemplatesApiPath } from 'shared/build';
+export {
+    TemplateErrorMessage,
+    TemplateItemTags,
+    TemplatesApiPath,
+} from 'shared/build/index.js';
