@@ -6,6 +6,7 @@ import { HttpCode, HTTPError } from 'shared/build/index.js';
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
+import { type FileService } from '~/common/files/file.service.js';
 import { type IService } from '~/common/interfaces/interfaces.js';
 
 import { decodeToken, getToken } from '../auth/helpers/helpers.js';
@@ -19,13 +20,16 @@ import {
 class UserService implements Omit<IService, 'getById'> {
     private userRepository: UserRepository;
     private profileRepository: ProfileRepository;
+    private fileService: FileService;
 
     public constructor(
         userRepository: UserRepository,
         profileRepository: ProfileRepository,
+        fileService: FileService,
     ) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
+        this.fileService = fileService;
     }
 
     public async findByEmail(email: string): Promise<UserEntityFields | null> {
@@ -85,10 +89,22 @@ class UserService implements Omit<IService, 'getById'> {
     public async getUserWithProfile(
         id: string,
     ): Promise<UserWithProfileRelation> {
-        return this.userRepository.getUserWithProfile(
+        const user = (await this.userRepository.getUserWithProfile(
             id,
             'withoutHashPasswords',
-        ) as Promise<UserWithProfileRelation>;
+        )) as UserWithProfileRelation;
+
+        const { userProfile } = user;
+
+        if (userProfile.avatar) {
+            const generatedAvatarUrl = await this.fileService.getFileUrl(
+                userProfile.avatar,
+            );
+
+            userProfile.avatar = generatedAvatarUrl;
+        }
+
+        return user;
     }
 
     public async delete(
@@ -115,12 +131,12 @@ class UserService implements Omit<IService, 'getById'> {
 
         return deletedUser;
     }
-    
+
     public async addStripeId(
         stripeId: string,
         email: string,
     ): Promise<UserEntityFields | null> {
-        return this.userRepository.addStripeId({
+        return await this.userRepository.addStripeId({
             stripeId,
             email,
         });
