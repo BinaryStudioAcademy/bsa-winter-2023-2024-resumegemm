@@ -1,9 +1,9 @@
 import { type CSSProperties } from 'react';
 
-import { type Container } from './container.type';
+import { type LayoutContainer } from './layout-container.type';
 
 type TemplateSettings = {
-    containers: Container[];
+    containers: LayoutContainer[];
     styles: Partial<CSSProperties>;
 };
 

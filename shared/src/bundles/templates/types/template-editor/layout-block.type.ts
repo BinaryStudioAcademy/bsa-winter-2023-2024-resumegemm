@@ -1,13 +1,13 @@
 import { type TemplateBlockTitles } from '../../templates';
 import { type CSSProperties } from './css-properties.type';
-import { type Item } from './item.type';
+import { type LayoutItem } from './layout-item.type';
 
-type Block = {
+type LayoutBlock = {
     id: string;
     name: TemplateBlockTitles;
-    items: Item[];
+    items: LayoutItem[];
     styles: Partial<CSSProperties>;
     enabled?: boolean;
 };
 
-export { type Block };
+export { type LayoutBlock };

@@ -73,16 +73,18 @@ export {
 } from './bundles/resumes/resumes.js';
 export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
 export {
-    type Block,
-    type Container,
     type CSSProperties,
-    type Item,
+    type LayoutBlock,
+    type LayoutContainer,
+    type LayoutItem,
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateSettings,
     type TemplateUpdateItemRequestDto,
+    TemplateBlockTitles,
     TemplateErrorMessage,
+    TemplateItemTags,
     TemplatesApiPath,
 } from './bundles/templates/templates.js';
 export {

@@ -1,13 +1,14 @@
 export {
     TemplateBlockTitles,
     TemplateErrorMessage,
+    TemplateItemTags,
     TemplatesApiPath,
 } from './enums/enums.js';
 export {
-    type Block,
-    type Container,
     type CSSProperties,
-    type Item,
+    type LayoutBlock,
+    type LayoutContainer,
+    type LayoutItem,
     type TemplateBlockSettings,
     type TemplateCreateItemRequestDto,
     type TemplateDto,

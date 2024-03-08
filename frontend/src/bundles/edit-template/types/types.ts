@@ -1,9 +1,9 @@
 export { TemplateBlockTitles } from 'shared/build/bundles/templates/enums/enums.js';
 export {
-    type Block,
-    type Container,
     type CSSProperties,
-    type Item,
+    type LayoutBlock,
+    type LayoutContainer,
+    type LayoutItem,
     type TemplateBlockSettings,
     type TemplateDto,
     type TemplateGetAllResponseDto,

@@ -1,8 +1,8 @@
-import { type Block } from '~/bundles/templates-page/types/types';
+import { type LayoutBlock } from '~/bundles/templates-page/types/types';
 
 import { TemplateItem } from '../template-item/template-item';
 
-type Properties = Block;
+type Properties = LayoutBlock;
 
 const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
     return (
