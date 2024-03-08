@@ -245,22 +245,20 @@ class OpenAuthController extends Controller {
         ) as string;
 
         const {
-            id,
-            localizedLastName,
-            localizedFirstName,
-            profilePicture: {
-                displayImage: { identifiers },
-            },
-            emailAddress,
+            sub: id,
+            email,
+            picture: avatar,
+            given_name: firstName,
+            family_name: lastName,
         }: UserLinkedInDataResponseDto = await this.requestOAuthProviderUserData(
             OpenAuthApiGetUserUrl.LINKEDIN,
             oauthToken,
         );
-        const avatar = identifiers[0].identifier;
+
         return await this.createUser({
-            email: emailAddress,
-            firstName: localizedFirstName,
-            lastName: localizedLastName,
+            email,
+            firstName,
+            lastName,
             avatar,
             oauthId: id,
             oauthStrategy: OauthStrategy.LINKEDIN,
