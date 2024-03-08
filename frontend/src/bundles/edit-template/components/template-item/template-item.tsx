@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { type Item } from '~/bundles/templates-page/types/types';
 
 type Properties = Item;
@@ -9,11 +11,29 @@ const TemplateItem: React.FC<Properties> = ({
     content,
     styles,
 }) => {
+    const handleType = useCallback(
+        (type: string) => {
+            switch (type) {
+                case 'h1': {
+                    return <h1>{content}</h1>;
+                }
+                case 'p': {
+                    return <p>{content}</p>;
+                }
+                case 'img': {
+                    return <img src={content} alt={name} />;
+                }
+                default: {
+                    return null;
+                }
+            }
+        },
+        [content, name],
+    );
+
     return (
         <div key={id} style={styles}>
-            {type === 'h1' && <h1>{content}</h1>}
-            {type === 'p' && <p>{content}</p>}
-            {type === 'img' && <img src={content} alt={name} />}
+            {handleType(type)}
         </div>
     );
 };
