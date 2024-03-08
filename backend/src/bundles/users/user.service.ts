@@ -1,6 +1,7 @@
 import { type IncomingHttpHeaders } from 'node:http';
 
 import { type JwtPayload } from 'jsonwebtoken';
+import { type UpdateUserProfileAndEmailRequestDto } from 'shared/build/index.js';
 import { HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
@@ -103,6 +104,23 @@ class UserService
                 message: (error as HTTPError).message,
             });
         }
+    }
+
+    public async updateUserProfileAndEmail(
+        id: string,
+        { firstName, lastName, email }: UpdateUserProfileAndEmailRequestDto,
+    ): Promise<UserWithProfileRelation> {
+        const userWithNewEmail = await this.userRepository.updateById(id, {
+            email,
+        });
+        await this.profileRepository.updateById(userWithNewEmail.profileId, {
+            firstName,
+            lastName,
+        });
+        return this.userRepository.getUserWithProfileAndOauthConnections(
+            id,
+            'withoutHashPasswords',
+        ) as Promise<UserWithProfileRelation>;
     }
 
     public async getUserWithProfileAndOauthConnections(
