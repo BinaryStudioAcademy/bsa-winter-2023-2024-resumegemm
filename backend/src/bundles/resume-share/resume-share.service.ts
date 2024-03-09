@@ -20,7 +20,7 @@ class ResumeShareService implements IResumeShareService {
         this.resumeShareAccessService = resumeShareAccessService;
     }
 
-    public async CreateShareLink(
+    public async createShareLink(
         id: string,
     ): Promise<ResumeShareCreateResponseDto | unknown> {
         const shareLink =
@@ -33,7 +33,7 @@ class ResumeShareService implements IResumeShareService {
         return await this.resumeShareRepository.createResumeShareLink(id);
     }
 
-    public async GetShareLink(
+    public async getShareLink(
         id: string,
         ip: string,
     ): Promise<ResumeShareGetResponseDto | unknown> {
@@ -41,7 +41,7 @@ class ResumeShareService implements IResumeShareService {
         return await this.resumeShareRepository.getResumeShareLink(id);
     }
 
-    public async GetShareLinkDetails(
+    public async getShareLinkDetails(
         id: string,
     ): Promise<ResumeShareDetailsGetResponseDto | unknown> {
         const sharerLink = await this.resumeShareRepository.getResumeShareLink(
@@ -54,7 +54,7 @@ class ResumeShareService implements IResumeShareService {
         };
     }
 
-    public async DeleteShareLink(
+    public async deleteShareLink(
         id: string,
     ): Promise<ResumeShareDeleteResponseDto | unknown> {
         return await this.resumeShareRepository.DeleteById(id);

@@ -13,9 +13,10 @@ import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { StatisticsPeriods } from '~/bundles/common/enums/enums';
 
 import { StatisticResumeCard } from '../components/resume-card/resume-card';
+import { type StatisticsRecord } from '../types/types';
 import styles from './styles.module.scss';
 
-const ColumnChartData: [string, number][] = [
+const ColumnChartData: StatisticsRecord[] = [
     ['Monday', 23],
     ['Tuesday', 34],
     ['Wednesday', 5],

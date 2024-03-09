@@ -236,7 +236,7 @@ class ResumeShareController extends Controller {
 
             return {
                 status: HttpCode.CREATED,
-                payload: await this.resumeShareService.CreateShareLink(id),
+                payload: await this.resumeShareService.createShareLink(id),
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;
@@ -259,7 +259,7 @@ class ResumeShareController extends Controller {
 
             return {
                 status: HttpCode.OK,
-                payload: await this.resumeShareService.GetShareLink(id, ip),
+                payload: await this.resumeShareService.getShareLink(id, ip),
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;
@@ -281,7 +281,7 @@ class ResumeShareController extends Controller {
 
             return {
                 status: HttpCode.OK,
-                payload: await this.resumeShareService.GetShareLinkDetails(id),
+                payload: await this.resumeShareService.getShareLinkDetails(id),
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;
@@ -303,7 +303,7 @@ class ResumeShareController extends Controller {
 
             return {
                 status: HttpCode.OK,
-                payload: await this.resumeShareService.DeleteShareLink(id),
+                payload: await this.resumeShareService.deleteShareLink(id),
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;

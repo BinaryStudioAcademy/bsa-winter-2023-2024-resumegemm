@@ -71,6 +71,11 @@ export {
     ResumesApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';
+export {
+    type GetStatisticsRequestDto,
+    type GetStatisticsResponseDto,
+    type StatisticsRecord,
+} from './bundles/statistics/statistics.js';
 export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
 export {
     type TemplateCreateItemRequestDto,
