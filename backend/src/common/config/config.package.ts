@@ -65,8 +65,15 @@ class Config implements IConfig {
                     env: 'REFRESH_TOKEN_SECRET',
                     default: null,
                 },
+                EMAIL_CONFIRM_TOKEN_SECRET: {
+                    doc: 'Secret key for email confirm token generation',
+                    format: String,
+                    env: 'EMAIL_CONFIRM_TOKEN_SECRET',
+                    default: null,
+                },
                 ACCESS_TOKEN_EXPIRES_IN: '24h',
                 REFRESH_TOKEN_EXPIRES_IN: '30d',
+                EMAIL_CONFIRM_TOKEN_EXPIRES_IN: '8m',
             },
             EMAIL: {
                 SMTP_HOST: {
