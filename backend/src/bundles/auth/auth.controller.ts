@@ -1,8 +1,9 @@
 import { type FastifyRequest } from 'fastify';
-import jwt from 'jsonwebtoken';
 import {
     type HTTPError,
     type UserAuthResponse,
+    type UserConfirmEmailRequestDto,
+    type UserConfirmEmailResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserWithProfileRelation,
@@ -13,7 +14,6 @@ import {
     generateRefreshToken,
     generateToken,
 } from '~/bundles/auth/helpers/helpers.js';
-import { userService } from '~/bundles/users/users.js';
 import {
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
@@ -32,8 +32,7 @@ import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
-import { userMessages } from './enums/message.enum.js';
-import { type JwtPayload } from './types/types.js';
+import { EmailConfirmMessages } from './enums/message.enum.js';
 
 class AuthController extends Controller {
     private authService: AuthService;
@@ -93,11 +92,11 @@ class AuthController extends Controller {
         });
         this.addRoute({
             path: AuthApiPath.CONFIRM_EMAIL,
-            method: 'GET',
+            method: 'POST',
             handler: (options) =>
                 this.confirmEmail(
                     options as ApiHandlerOptions<{
-                        query: { token: string };
+                        body: UserConfirmEmailRequestDto;
                     }>,
                 ),
         });
@@ -332,19 +331,32 @@ class AuthController extends Controller {
     }
 
     private async confirmEmail(
-        options: ApiHandlerOptions<{ query: { token: string } }>,
-    ): Promise<ApiHandlerResponse<{ message: string }>> {
+        options: ApiHandlerOptions<{ body: UserConfirmEmailRequestDto }>,
+    ): Promise<ApiHandlerResponse<UserConfirmEmailResponse>> {
         try {
-            const { token } = options.query;
-            const decodedToken = jwt.verify(
-                token,
-                config.ENV.JWT.ACCESS_TOKEN_SECRET,
-            ) as JwtPayload;
-            await userService.confirmUserEmail(decodedToken);
+            const { emailConfirmToken } = options.body;
+
+            if (!emailConfirmToken) {
+                return {
+                    status: HttpCode.BAD_REQUEST,
+                    payload: {
+                        message: 'Email confirm token not found',
+                        status: HttpCode.BAD_REQUEST,
+                    },
+                };
+            }
+            const user = await this.authService.confirmUserEmail({
+                emailConfirmToken,
+            });
 
             return {
                 status: HttpCode.OK,
-                payload: { message: userMessages.EMAIL_CONFIRMED },
+                payload: {
+                    ...user,
+                    message:
+                        EmailConfirmMessages.EMAIL_CONFIRM_TOKEN_IS_CORRECT,
+                    status: HttpCode.OK,
+                },
             };
         } catch (error: unknown) {
             const { status } = error as HTTPError;
