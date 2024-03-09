@@ -62,6 +62,7 @@ enum DatabaseColumnName {
     ACTIVITY = 'activity',
     OWNER_ID = 'owner_id',
     DESCRIPTION = 'description',
+    EMAIL_CONFIRMED = 'email_confirmed',
 }
 
 export { DatabaseColumnName };
