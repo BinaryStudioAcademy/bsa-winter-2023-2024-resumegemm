@@ -65,6 +65,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             path: AppRoute.SIGN_UP,
                                             element: <Auth />,
                                         },
+                                        {
+                                            path: AppRoute.EMAIL_CONFIRMED,
+                                            element: <EmailConfirmedPage />,
+                                        },
                                     ],
                                 },
                                 {
@@ -82,10 +86,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: AppRoute.TEMPLATES,
                                             element: <TemplatePage />,
-                                        },
-                                        {
-                                            path: AppRoute.EMAIL_CONFIRMED,
-                                            element: <EmailConfirmedPage />,
                                         },
                                     ],
                                 },
