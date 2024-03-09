@@ -7,6 +7,7 @@ const titles: Titles = {
     '/preview': 'Preview | Resume Gemm',
     '/payment': 'Payment | Resume Gemm',
     '/profile': 'Profile | Resume Gemm',
+    '/confirm-email': 'Confirm Email | Resume Gemm',
 };
 
 export { titles };
