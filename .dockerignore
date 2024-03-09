@@ -1,0 +1,13 @@
+node_modules
+
+shared/node_modules
+shared/build
+
+frontend/node_modules
+frontend/build
+
+backend/node_modules
+backend/build
+
+.git
+.idea
