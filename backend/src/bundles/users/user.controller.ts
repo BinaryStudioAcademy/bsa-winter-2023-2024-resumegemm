@@ -3,6 +3,7 @@ import {
     type UpdateUserProfileAndEmailRequestDto,
     type UserEntityFields,
     type UserWithProfileRelation,
+    ExceptionMessage,
     HTTPError,
 } from 'shared/build/index.js';
 
@@ -169,13 +170,25 @@ class UserController extends Controller {
             };
         }>,
     ): Promise<ApiHandlerResponse<UserWithProfileRelation>> {
-        return {
-            status: HttpCode.OK,
-            payload: await this.userService.updateUserProfileAndEmail(
+        try {
+            const user = await this.userService.updateUserProfileAndEmail(
                 options.params.id,
                 options.body,
-            ),
-        };
+            );
+            return {
+                status: HttpCode.OK,
+                payload: user,
+            };
+        } catch (error: unknown) {
+            const { status } = error as HTTPError;
+            return {
+                status,
+                payload: {
+                    message: ExceptionMessage.INVALID_REFRESH_TOKEN,
+                    status,
+                },
+            };
+        }
     }
 }
 

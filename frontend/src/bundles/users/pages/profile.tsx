@@ -7,7 +7,6 @@ import {
     useEffect,
 } from '~/bundles/common/hooks/hooks';
 import { useAppSelector } from '~/bundles/common/hooks/use-app-selector/use-app-selector.hook';
-import { updateProfileAndEmail } from '~/bundles/profile/store/actions';
 import { actions as profileActions } from '~/bundles/profile/store/profile.store';
 
 import { DeleteAccount } from '../components/delete-account/delete-account';
@@ -44,7 +43,9 @@ const Profile: React.FC = () => {
 
     const handleFormSubmit = useCallback(
         (payload: UpdateUserProfileAndEmailRequestDto) => {
-            void dispatch(updateProfileAndEmail({ id, payload }));
+            void dispatch(
+                profileActions.updateProfileAndEmail({ id, payload }),
+            );
         },
         [dispatch, id],
     );

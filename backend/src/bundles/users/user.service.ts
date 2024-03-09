@@ -118,10 +118,7 @@ class UserService
             lastName,
         });
 
-        return this.userRepository.getUserWithProfileAndOauthConnections(
-            id,
-            'withoutHashPasswords',
-        ) as Promise<UserWithProfileRelation>;
+        return this.getUserWithProfileAndOauthConnections(id);
     }
 
     public async getUserWithProfileAndOauthConnections(
