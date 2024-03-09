@@ -9,11 +9,11 @@ import {
     App,
     ErrorFallback,
     GuestRoute,
+    PrivateRoute,
     RouterProvider,
     StoreProvider,
     StripeProvider,
 } from '~/bundles/common/components/components';
-import { PrivateRoute } from '~/bundles/common/components/private-route/private-route';
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
@@ -23,6 +23,7 @@ import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-payment';
 import { PreviewPage } from './bundles/preview/preview';
+import { ResumeAccess } from './bundles/resume-access/pages/resume-access';
 import { StatisticsPage } from './bundles/statistics-page/pages/statistics-page';
 import { TemplatePage } from './bundles/templates-page/templates-page';
 import { Profile } from './bundles/users/pages/profile';
@@ -100,6 +101,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 {
                                     path: AppRoute.PREVIEW,
                                     element: <PreviewPage />,
+                                },
+                                {
+                                    path: AppRoute.RESUME_ACCESS,
+                                    element: <ResumeAccess />,
                                 },
                             ],
                         },

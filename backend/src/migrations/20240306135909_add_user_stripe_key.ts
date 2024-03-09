@@ -5,7 +5,7 @@ import { DatabaseColumnName } from '~/common/database/enums/database-column-name
 
 async function up(knex: Knex): Promise<void> {
     await knex.schema.alterTable(DatabaseTableName.USERS, (table) => {
-        table.dateTime(DatabaseColumnName.STRIPE_ID);
+        table.text(DatabaseColumnName.STRIPE_ID);
     });
 }
 
