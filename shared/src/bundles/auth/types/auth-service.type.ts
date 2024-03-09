@@ -1,4 +1,6 @@
 import {
+    type UserConfirmEmailRequestDto,
+    type UserConfirmEmailResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
@@ -22,6 +24,9 @@ type AuthService = {
     compare(encryptionData: EncryptionDataPayload): Promise<boolean>;
     getUserWithProfile(id: string): Promise<UserWithProfileRelation>;
     verifyToken<T>(token: string, tokenSecret: string): T;
+    confirmUserEmail(
+        payload: UserConfirmEmailRequestDto,
+    ): Promise<Omit<UserConfirmEmailResponse, 'message'>>;
 };
 
 export { type AuthService };
