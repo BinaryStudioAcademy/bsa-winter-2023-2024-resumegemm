@@ -1,5 +1,7 @@
 import clsx from 'clsx';
 
+import { Checkbox } from '~/bundles/common/components/components';
+
 import styles from './styles.module.scss';
 
 type Properties = {
@@ -22,6 +24,12 @@ const StatisticResumeCard: React.FC<Properties> = ({
             <div className={styles.resume_card__text_container}>
                 <p className={styles.resume_card__text}>{label}</p>
             </div>
+
+            <Checkbox
+                className={styles.resume_card__checkbox}
+                label=""
+                name="resume select"
+            />
         </div>
     );
 };
