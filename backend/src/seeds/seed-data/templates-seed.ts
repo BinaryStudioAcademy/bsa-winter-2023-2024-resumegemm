@@ -31,8 +31,14 @@ const templatesSeed = [
             [TemplateBlockTitles.Socials]: { enabled: true },
         },
     },
-    { is_owner: false },
-    { is_owner: false },
+    {
+        is_owner: false,
+        template_settings: {},
+    },
+    {
+        is_owner: false,
+        template_settings: {},
+    },
 ];
 
 export { templatesSeed };
