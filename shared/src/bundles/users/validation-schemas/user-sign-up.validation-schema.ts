@@ -24,7 +24,6 @@ const userSignUp = joi.object<UserSignUpRequestDto, true>({
             'string.empty': UserValidationMessage.EMAIL_REQUIRE,
         }),
     password: joi.string().trim().required(),
-    confirmPassword: joi.string().trim().required(),
     emailConfirmed: joi.boolean(),
 });
 

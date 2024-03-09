@@ -3,7 +3,6 @@ type UserSignUpRequestDto = {
     lastName: string;
     email: string;
     password: string;
-    confirmPassword?: string;
     emailConfirmed?: boolean;
 };
 
