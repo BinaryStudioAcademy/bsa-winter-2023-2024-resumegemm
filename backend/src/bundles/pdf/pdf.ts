@@ -5,7 +5,10 @@ import { logger } from '~/common/logger/logger.js';
 import { PDFController } from './pdf.controller.js';
 import { PDFService } from './pdf.service.js';
 
-const browser = await puppeteer.launch({ headless: true });
+const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+});
 const pdfService = new PDFService(browser);
 const pdfController = new PDFController(logger, pdfService);
 
