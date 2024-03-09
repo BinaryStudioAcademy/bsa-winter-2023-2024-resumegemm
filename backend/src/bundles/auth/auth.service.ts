@@ -194,7 +194,7 @@ class AuthService implements TAuthService {
                 status: HttpCode.BAD_REQUEST,
             });
         }
-
+        await this.userService.confirmEmail(user.id);
         const userWithProfile = await this.getUserWithProfile(user.id);
 
         return {
