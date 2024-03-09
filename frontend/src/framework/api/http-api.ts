@@ -1,3 +1,5 @@
+import { getCookie } from 'shared/build';
+
 import {
     type ContentType,
     ServerErrorType,
@@ -91,11 +93,15 @@ class HTTPApi implements IHttpApi {
         headers.append(HttpHeader.CONTENT_TYPE, contentType);
 
         if (hasAuth) {
-            const token = await this.storage.get<string>(
+            const tokenFromLocalStorage = await this.storage.get<string>(
                 StorageKey.ACCESS_TOKEN,
             );
 
-            headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token ?? ''}`);
+            const tokenFromCookie = getCookie(StorageKey.ACCESS_TOKEN);
+
+            const token = tokenFromLocalStorage ?? tokenFromCookie;
+
+            headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
         }
 
         return headers;
