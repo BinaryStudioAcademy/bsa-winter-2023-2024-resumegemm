@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Divider } from '~/bundles/auth/components/divider/divider';
@@ -19,11 +18,8 @@ import {
 } from '~/bundles/common/enums/enums';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
-import { ToastContext } from '~/bundles/toast/context/toast-context';
-import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
-import { UserRegistrationMessage } from './enums/user-registration-message.enum';
 import styles from './styles.module.scss';
 import {
     type UserSignUpRequestDtoFrontend,
@@ -35,8 +31,6 @@ type Properties = {
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
-    const { showToast } = useContext(ToastContext);
-
     const { control, errors, handleSubmit } =
         useAppForm<UserSignUpRequestDtoFrontend>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
@@ -46,9 +40,8 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit(onSubmit)(event_);
-            showToast(UserRegistrationMessage.CONFIRM_EMAIL, ToastType.SUCCESS);
         },
-        [handleSubmit, onSubmit, showToast],
+        [handleSubmit, onSubmit],
     );
 
     return (
