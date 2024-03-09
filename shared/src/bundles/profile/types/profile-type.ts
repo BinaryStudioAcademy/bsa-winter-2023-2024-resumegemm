@@ -1,8 +1,8 @@
 type Profile = {
     id: string;
     firstName: string;
-    lastName?: string;
-    avatar?: string | null;
+    lastName: string | null;
+    avatar?: string;
     createdAt: string;
     updatedAt: string;
 };

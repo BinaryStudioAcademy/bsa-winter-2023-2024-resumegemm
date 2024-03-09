@@ -9,11 +9,11 @@ class UserEntity implements IEntity {
 
     private 'profileId': string;
 
-    private 'passwordHash': string;
+    private 'passwordHash': string | null;
 
-    private 'passwordSalt': string;
+    private 'passwordSalt': string | null;
 
-    private 'emailConfirmed': boolean | undefined;
+    public 'emailConfirmed': boolean | undefined;
 
     private constructor({
         id,

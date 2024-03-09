@@ -62,7 +62,6 @@ class UserRepository
             .returning(['id', 'email', 'deleted_at', 'profile_id'])
             .castTo<UserEntityFields>();
     }
-
     public async confirmEmail(id: string): Promise<void> {
         await this.model
             .query()

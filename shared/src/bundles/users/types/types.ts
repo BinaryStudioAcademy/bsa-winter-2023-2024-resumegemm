@@ -1,3 +1,4 @@
+export { type SocialMediaProfiles } from './social-media-profiles.type.js';
 export { type User } from './user.type.js';
 export { type UserAuthResponse } from './user-auth-response.type.js';
 export { type UserConfirmEmailRequestDto } from './user-confirm-email-request-dto.type.js';
@@ -9,4 +10,4 @@ export { type UserSignInRequestDto } from './user-sign-in-request-dto.type.js';
 export { type UserSignInResponseDto } from './user-sign-in-response-dto.type.js';
 export { type UserSignUpRequestDto } from './user-sign-up-request-dto.type.js';
 export { type UserSignUpResponseDto } from './user-sign-up-response-dto.type.js';
-export { type UserWithProfileRelation } from './user-with-profile-nested-relation.type.js';
+export { type UserWithProfileRelation } from './user-with-profile-relation.type.js';

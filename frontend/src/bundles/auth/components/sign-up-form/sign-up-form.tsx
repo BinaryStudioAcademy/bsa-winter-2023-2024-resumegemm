@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { type ValueOf } from 'shared/build';
 
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
@@ -7,6 +8,7 @@ import {
     Input,
     PasswordInput,
     RegularButton,
+    Spinner,
 } from '~/bundles/common/components/components';
 import {
     AppRoute,
@@ -14,7 +16,9 @@ import {
     ButtonType,
     ButtonVariant,
     ButtonWidth,
+    DataStatus,
     DividerVariant,
+    SpinnerVariant,
 } from '~/bundles/common/enums/enums';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
@@ -28,9 +32,10 @@ import {
 
 type Properties = {
     onSubmit: (payload: UserSignUpRequestDtoFrontend) => void;
+    dataStatus: ValueOf<typeof DataStatus>;
 };
 
-const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
+const SignUpForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
     const { control, errors, handleSubmit } =
         useAppForm<UserSignUpRequestDtoFrontend>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
@@ -54,7 +59,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                         to={AppRoute.LOG_IN}
                         className={styles.registration__link}
                     >
-                        Log in
+                        Log In
                     </Link>
                 </p>
             </div>
@@ -117,7 +122,10 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     variant={ButtonVariant.PRIMARY}
                     type={ButtonType.SUBMIT}
                 >
-                    Sign up
+                    {dataStatus === DataStatus.PENDING && (
+                        <Spinner variant={SpinnerVariant.SMALL} />
+                    )}
+                    Sign Up
                 </RegularButton>
                 <Divider variant={DividerVariant.PRIMARY} />
                 <SocialMediaLinks />

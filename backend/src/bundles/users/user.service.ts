@@ -16,7 +16,9 @@ import {
     type UserWithProfileRelation,
 } from './types/types.js';
 
-class UserService implements Omit<IService, 'getById'> {
+class UserService
+    implements Omit<IService, 'findByOauthIdAndCreate' | 'deleteById'>
+{
     private userRepository: UserRepository;
     private profileRepository: ProfileRepository;
 
@@ -29,7 +31,26 @@ class UserService implements Omit<IService, 'getById'> {
     }
 
     public async findByEmail(email: string): Promise<UserEntityFields | null> {
+        if (!email) {
+            return null;
+        }
         return await this.userRepository.findOneByEmail(email);
+    }
+
+    public async findByIdOrEmail(
+        userId: string,
+        email: string,
+    ): ReturnType<IService['findByIdOrEmail']> {
+        const [userById, userByEmail] = await Promise.all([
+            this.getById(userId),
+            this.findByEmail(email),
+        ]);
+
+        return userById ?? userByEmail ?? null;
+    }
+
+    public async getById(id: string): Promise<UserEntityFields | null> {
+        return this.userRepository.getById(id) as Promise<UserEntityFields>;
     }
 
     public async findAll(): Promise<UserGetAllResponseDto> {
@@ -44,12 +65,14 @@ class UserService implements Omit<IService, 'getById'> {
         email,
         firstName,
         lastName,
+        avatar,
         passwordSalt,
         passwordHash,
         emailConfirmed,
     }: UserSignUpRequestDto & {
-        passwordSalt: string;
-        passwordHash: string;
+        passwordSalt?: string;
+        passwordHash?: string;
+        avatar?: string;
     }): Promise<Pick<UserEntityFields, 'id' | 'email'>> {
         const transaction = await this.userRepository.model.startTransaction();
         try {
@@ -57,15 +80,15 @@ class UserService implements Omit<IService, 'getById'> {
                 {
                     firstName,
                     lastName,
-                    avatar: 'avatar', //TODO: remove, when fixed!!!
+                    avatar,
                 },
                 transaction,
             );
             const item = (await this.userRepository.createWithTransaction(
                 UserEntity.initializeNew({
                     email,
-                    passwordSalt,
-                    passwordHash,
+                    passwordSalt: passwordSalt ?? null,
+                    passwordHash: passwordHash ?? null,
                     profileId: id,
                     emailConfirmed,
                 }),
@@ -84,10 +107,10 @@ class UserService implements Omit<IService, 'getById'> {
         }
     }
 
-    public async getUserWithProfile(
+    public async getUserWithProfileAndOauthConnections(
         id: string,
     ): Promise<UserWithProfileRelation> {
-        return this.userRepository.getUserWithProfile(
+        return this.userRepository.getUserWithProfileAndOauthConnections(
             id,
             'withoutHashPasswords',
         ) as Promise<UserWithProfileRelation>;
@@ -117,7 +140,7 @@ class UserService implements Omit<IService, 'getById'> {
         stripeId: string,
         email: string,
     ): Promise<UserEntityFields | null> {
-        return this.userRepository.addStripeId({
+        return await this.userRepository.addStripeId({
             stripeId,
             email,
         });

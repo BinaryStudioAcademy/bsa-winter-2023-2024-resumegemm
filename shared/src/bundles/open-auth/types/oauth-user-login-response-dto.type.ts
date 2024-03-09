@@ -1,5 +1,9 @@
-import { type OauthUserWithProfileRelation } from './oauth-user-with-profile-relation.type.js';
+import { type Profile } from '~/bundles/profile/types/profile-type';
 
-type OauthUserLoginResponseDto = OauthUserWithProfileRelation;
+import { type OauthConnectionEntityFields } from './oauth-connection-entity-fields.type.js';
+
+type OauthUserLoginResponseDto = OauthConnectionEntityFields & {
+    userProfile: Profile;
+};
 
 export { type OauthUserLoginResponseDto };

@@ -38,6 +38,7 @@
         "@fastify/oauth2": "7.8.0",
         "@fastify/swagger": "8.3.1",
         "@fastify/swagger-ui": "1.4.0",
+        "@types/node-cron": "3.0.11",
         "axios": "1.6.7",
         "bcrypt": "5.1.1",
         "convict": "6.2.4",
@@ -47,15 +48,16 @@
         "guid-typescript": "1.0.9",
         "jsonwebtoken": "9.0.2",
         "knex": "2.4.2",
+        "node-cron": "3.0.3",
         "nodemailer": "6.9.9",
         "objection": "3.0.1",
         "openai": "4.28.0",
         "pg": "8.9.0",
         "pino": "8.8.0",
         "pino-pretty": "9.1.1",
-        "stripe": "14.17.0",
         "puppeteer": "22.1.0",
         "pug": "3.0.2",
+        "stripe": "14.17.0",
         "swagger-jsdoc": "6.2.8"
     }
 }
