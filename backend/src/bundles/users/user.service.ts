@@ -93,12 +93,8 @@ class UserService implements Omit<IService, 'getById'> {
         ) as Promise<UserWithProfileRelation>;
     }
 
-    public async confirmUserEmail(decodedToken: JwtPayload): Promise<void> {
-        const { id } = decodedToken;
-
-        await this.userRepository.updateById(id, {
-            email_confirmed: true,
-        });
+    public async confirmEmail(id: string): Promise<void> {
+        return await this.userRepository.confirmEmail(id);
     }
 
     public async delete(
