@@ -12,6 +12,7 @@ import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
 import { type UserSignUpRequestDtoFrontend } from '../components/sign-up-form/validation/sign-up-validation.js';
+import { UserRegistrationMessage } from '../enums/enums';
 import { actions as authActions } from '../store/auth.store.js';
 import styles from './styles.module.scss';
 
@@ -32,6 +33,12 @@ const Auth: React.FC = () => {
             delete payload.confirmPassword;
             void dispatch(authActions.signUp(payload))
                 .unwrap()
+                .then(() => {
+                    showToast(
+                        UserRegistrationMessage.CONFIRM_EMAIL,
+                        ToastType.SUCCESS,
+                    );
+                })
                 .catch((error: Error) => {
                     showToast(error.message, ToastType.ERROR);
                 });
