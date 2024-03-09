@@ -4,29 +4,23 @@ import { type UserWithProfileRelation } from 'shared/build/bundles/users/types/u
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
     type UserAuthResponse,
+    type UserConfirmEmailRequestDto,
     type UserSignInRequestDto,
     type UserSignUpRequestDto,
 } from '~/bundles/users/users.js';
 import { StorageKey } from '~/framework/storage/storage.js';
 
-import { actions as userActions } from '../../users/store/user.store';
 import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
-    UserAuthResponse,
+    UserWithProfileRelation | null,
     UserSignUpRequestDto,
     AsyncThunkConfig
->(`${sliceName}/sign-up`, async (registerPayload, { extra, dispatch }) => {
-    const { authApi, storageApi } = extra;
+>(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
+    const { authApi } = extra;
+    const { user } = await authApi.signUp(registerPayload);
 
-    const { token } = await authApi.signUp(registerPayload);
-
-    void storageApi.set(StorageKey.ACCESS_TOKEN, token);
-
-    const response = await authApi.signUp(registerPayload);
-
-    await dispatch(userActions.loadUser());
-    return response.user;
+    return user;
 });
 
 const signIn = createAsyncThunk<
@@ -36,6 +30,18 @@ const signIn = createAsyncThunk<
 >(`${sliceName}/sign-in`, async (signInPayload, { extra }) => {
     const { authApi, storageApi } = extra;
     const { user, accessToken } = await authApi.signIn(signInPayload);
+    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+    return user;
+});
+
+const confirmEmail = createAsyncThunk<
+    UserWithProfileRelation,
+    UserConfirmEmailRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/confirm-email`, async (payload, { extra }) => {
+    const { authApi, storageApi } = extra;
+    const { user, accessToken } = await authApi.confirmEmail(payload);
 
     await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
 
@@ -51,4 +57,4 @@ const getUser = createAsyncThunk<UserAuthResponse, undefined, AsyncThunkConfig>(
     },
 );
 
-export { getUser, signIn, signUp };
+export { confirmEmail, getUser, signIn, signUp };
