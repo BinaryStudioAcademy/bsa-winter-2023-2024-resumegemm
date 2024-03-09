@@ -1,5 +1,7 @@
 export { type User } from './user.type.js';
 export { type UserAuthResponse } from './user-auth-response.type.js';
+export { type UserConfirmEmailRequestDto } from './user-confirm-email-request-dto.type.js';
+export { type UserConfirmEmailResponse } from './user-confirm-email-response.type.js';
 export { type UserEntityFields } from './user-entity-fields.type.js';
 export { type UserGetAllItemResponseDto } from './user-get-all-item-response-dto.type.js';
 export { type UserGetAllResponseDto } from './user-get-all-response-dto.type.js';
