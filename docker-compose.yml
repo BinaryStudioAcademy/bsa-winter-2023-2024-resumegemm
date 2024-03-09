@@ -1,11 +1,38 @@
 version: '3'
 
 services:
-    postgres:
-        image: 'postgres:15.2'
-        environment:
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_USER: postgres
-            POSTGRES_DB: postgres
+    frontend:
+        build:
+            context: ./
+            dockerfile: ./frontend/Dockerfile
+        env_file:
+            - ./frontend/.env
+        depends_on:
+            - backend
         ports:
-            - 5434:5432
+            - '3000:3000'
+
+    backend:
+        build:
+            context: ./
+            dockerfile: ./backend/Dockerfile
+        environment:
+            - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+            - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+        env_file:
+            - ./backend/.env
+        ports:
+            - '3001:3001'
+        cap_add:
+            - SYS_ADMIN
+        depends_on:
+            - postgres
+
+    postgres:
+        image: postgres:15.2
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        ports:
+            - '5432:5432'
