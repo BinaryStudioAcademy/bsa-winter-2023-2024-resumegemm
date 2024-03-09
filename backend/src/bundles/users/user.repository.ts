@@ -63,6 +63,14 @@ class UserRepository
             .castTo<UserEntityFields>();
     }
 
+    public async confirmEmail(id: string): Promise<void> {
+        await this.model
+            .query()
+            .update({ emailConfirmed: true })
+            .where('id', id)
+            .execute();
+    }
+
     public async addStripeId(
         userUpdate: Pick<UserModel, 'email' | 'stripeId'>,
     ): ReturnType<IUserRepo['addStripeId']> {
