@@ -11,6 +11,7 @@ import { ToastContext } from '~/bundles/toast/context/toast-context';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 
 import {
+    Auth,
     Calendar,
     Checkbox,
     ColumnChart,

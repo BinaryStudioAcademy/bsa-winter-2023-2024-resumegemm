@@ -17,12 +17,12 @@ class AbstractRepository<T extends typeof AbstractModel, K>
         return this.modelInstance;
     }
 
-    public getById(id: string): Promise<K> {
+    public getById(id: string): Promise<K | null> {
         return this.modelInstance.query().findById(id).castTo<K>().execute();
     }
 
     public createWithTransaction(
-        data: Omit<K, 'id' | 'createdAt' | 'updatedAt'>,
+        data: Omit<K, 'id' | 'createdAt' | 'updatedAt' | 'email' | 'profileId'>,
         transaction: Transaction,
     ): Promise<K> {
         return this.modelInstance
@@ -37,11 +37,30 @@ class AbstractRepository<T extends typeof AbstractModel, K>
             .execute();
     }
 
-    public getUserWithProfile(id: string, modification?: string): Promise<K> {
+    public create(data: Omit<K, 'id'>): Promise<K> {
+        return this.modelInstance
+            .query()
+            .insert({
+                ...data,
+                id: guid.raw(),
+            })
+            .returning('*')
+            .castTo<K>()
+            .execute();
+    }
+
+    public deleteById(id: string): Promise<number> {
+        return this.modelInstance.query().deleteById(id).execute();
+    }
+
+    public getUserWithProfileAndOauthConnections(
+        id: string,
+        modification?: string,
+    ): Promise<K> {
         let query = this.modelInstance
             .query()
             .findById(id)
-            .withGraphFetched('[userProfile]');
+            .withGraphFetched('[userProfile, oauth_connections]');
         if (modification) {
             query = query.modify(modification);
         }

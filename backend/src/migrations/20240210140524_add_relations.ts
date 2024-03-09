@@ -110,7 +110,6 @@ async function down(knex: Knex): Promise<void> {
     });
     await knex.schema.alterTable(DatabaseTableName.RESUMES, (table) => {
         table.dropColumn(DatabaseColumnName.USER_ID);
-        table.dropColumn(DatabaseColumnName.TEMPLATE_ID);
     });
     await knex.schema.alterTable(DatabaseTableName.TEMPLATES, (table) => {
         table.dropColumn(DatabaseColumnName.USER_ID);

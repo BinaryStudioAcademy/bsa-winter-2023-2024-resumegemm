@@ -1,10 +1,10 @@
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import {
-    type UserAuthResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserWithProfileRelation,
 } from '~/bundles/users/users.js';
 import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
@@ -55,7 +55,7 @@ class AuthApi extends HttpApi {
         return await response.json<UserSignInResponseDto>();
     }
 
-    public async getUser(): Promise<UserAuthResponse> {
+    public async getUser(): Promise<UserWithProfileRelation> {
         const response = await this.load(
             this.getFullEndpoint(AuthApiPath.USER, {}),
             {
@@ -65,7 +65,7 @@ class AuthApi extends HttpApi {
             },
         );
 
-        return await response.json<UserAuthResponse>();
+        return await response.json<UserWithProfileRelation>();
     }
 
     public async updateRefreshToken(): Promise<{ accessToken: string }> {
