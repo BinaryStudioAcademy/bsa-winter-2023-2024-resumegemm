@@ -70,6 +70,7 @@ enum DatabaseColumnName {
     NEW_RESUME_ID = 'new_resume_id',
     NEW_TEMPLATE_ID = 'new_template_id',
     DESCRIPTION = 'description',
+    NEW_RESUME_SHARE_LINK_ID = 'new_resume_share_link_id',
     EMAIL_CONFIRMED = 'email_confirmed',
 }
 
