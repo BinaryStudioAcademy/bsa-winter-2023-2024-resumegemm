@@ -9,7 +9,6 @@ export {
     IndustriesApiPath,
 } from './bundles/industries/industries.js';
 export {
-    type OauthUserEntityFields,
     type OauthConnectionEntityFields,
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,
