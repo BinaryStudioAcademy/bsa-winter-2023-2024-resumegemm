@@ -1,4 +1,6 @@
-import { type SkillLevel } from '~/common/enums/enums.js';
+import { type OauthStrategy } from 'shared/build/index.js';
+
+import { type LanguageLevels, type SkillLevel } from '~/common/enums/enums.js';
 import { type TemplateBlockSettings } from '~/common/types/types.js';
 
 type User = {
@@ -8,6 +10,8 @@ type User = {
     password_salt: string;
     created_at: Date;
     updated_at: Date;
+    deleted_at: Date;
+    stripe_id: string;
 };
 
 type Profile = {
@@ -26,6 +30,8 @@ type Resume = {
     created_at: Date;
     updated_at: Date;
     deleted_at: Date;
+    user_id: string;
+    template_id: string;
 };
 
 type Template = {
@@ -36,6 +42,7 @@ type Template = {
     created_at: Date;
     updated_at: Date;
     deleted_at: Date;
+    user_id: string;
 };
 
 type Review = {
@@ -44,6 +51,7 @@ type Review = {
     score: number;
     created_at: Date;
     updated_at: Date;
+    resume_id: string;
 };
 
 type Education = {
@@ -58,6 +66,7 @@ type Education = {
     end_date: Date;
     created_at: Date;
     updated_at: Date;
+    resume_id: string;
 };
 
 type ContactDetails = {
@@ -67,6 +76,7 @@ type ContactDetails = {
     link: string;
     created_at: string;
     updated_at: string;
+    resume_id: string;
 };
 
 type Experience = {
@@ -82,6 +92,7 @@ type Experience = {
     currently_working: boolean;
     created_at: Date;
     updated_at: Date;
+    resume_id: string;
 };
 
 type TechnicalSkill = {
@@ -90,6 +101,7 @@ type TechnicalSkill = {
     skill_level: SkillLevel;
     created_at: Date;
     updated_at: Date;
+    resume_id: string;
 };
 
 type PersonalInformation = {
@@ -103,6 +115,7 @@ type PersonalInformation = {
     city: string;
     created_at: Date;
     updated_at: Date;
+    resume_id: string;
 };
 
 type Certification = {
@@ -115,6 +128,7 @@ type Certification = {
     description: string;
     created_at: Date;
     updated_at: Date;
+    resume_id: string;
 };
 
 type CustomSection = {
@@ -126,6 +140,54 @@ type CustomSection = {
     description: string;
     created_at: Date;
     updated_at: Date;
+    resume_id: string;
+};
+
+type Language = {
+    id: string;
+    language: string;
+    language_level: LanguageLevels;
+    created_at: Date;
+    updated_at: Date;
+    resume_id: string;
+};
+
+type OauthConnection = {
+    id: string;
+    user_id: string;
+    email: string;
+    oauth_strategy: OauthStrategy;
+    oauth_id: string;
+    created_at: Date;
+    updated_at: Date;
+};
+
+type OauthUser = {
+    id: string;
+    email: string;
+    oauth_strategy: OauthStrategy;
+    oauth_id: string;
+    created_at: Date;
+    updated_at: Date;
+    profile_id: string;
+};
+
+type ResumeSharedAccess = {
+    id: string;
+    resume_shared_link_id: string;
+    resume_shared_access_ip: string;
+    resume_shared_access_time: Date;
+    created_at: Date;
+    updated_at: Date;
+};
+
+type SubscriptionPlan = {
+    id: string;
+    stripe_plan_id: string;
+    stripe_product_id: string;
+    is_active: boolean;
+    created_at: Date;
+    updated_at: Date;
 };
 
 export {
@@ -134,10 +196,15 @@ export {
     type CustomSection,
     type Education,
     type Experience,
+    type Language,
+    type OauthConnection,
+    type OauthUser,
     type PersonalInformation,
     type Profile,
     type Resume,
+    type ResumeSharedAccess,
     type Review,
+    type SubscriptionPlan,
     type TechnicalSkill,
     type Template,
     type User,
