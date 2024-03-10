@@ -15,7 +15,7 @@ class EmailSubscriptionRepository implements IEmailSubscriptionRepository {
     }
 
     public async create(transaction: Transaction): Promise<EmailSubscription> {
-        return await this.emailSubscriptionModel
+        return this.emailSubscriptionModel
             .query()
             .insert({
                 id: guid.raw(),

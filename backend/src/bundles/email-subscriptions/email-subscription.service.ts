@@ -29,11 +29,11 @@ class EmailSubscriptionService implements IEmailSubscriptionService {
             const subscription = await this.emailSubscriptionRepository.create(
                 transaction,
             );
-            void (await this.userRepository.updateEmailSubscriptionId(
+            await this.userRepository.updateEmailSubscriptionId(
                 user.id,
                 subscription.id,
                 transaction,
-            ));
+            );
 
             await transaction.commit();
             return subscription;
