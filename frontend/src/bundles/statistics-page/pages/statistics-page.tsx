@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import templateThirdImage from '~/assets/img/5297769.png';
 import {
@@ -11,20 +11,12 @@ import {
 import { UserProfile } from '~/bundles/common/components/layout/header/user-profile/user-profile';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { StatisticsPeriods } from '~/bundles/common/enums/enums';
+import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 
 import { StatisticResumeCard } from '../components/resume-card/resume-card';
+import { actions } from '../store/statistics.store';
 import { type StatisticsRecord } from '../types/types';
 import styles from './styles.module.scss';
-
-const ColumnChartData: StatisticsRecord[] = [
-    ['Monday', 23],
-    ['Tuesday', 34],
-    ['Wednesday', 5],
-    ['Thursday', 70],
-    ['Friday', 100],
-    ['Saturday', 110],
-    ['Sunday', 160],
-];
 
 const headerItems = [
     { label: 'Home', path: AppRoute.ROOT },
@@ -38,11 +30,17 @@ const dropdownOptions = [
 ];
 
 const StatisticsPage = (): JSX.Element => {
+    const dispatch = useAppDispatch();
+
     const [viewsPeriod, setViewsPeriod] = useState<string>(
         StatisticsPeriods.WEEKLY.value,
     );
 
     const [views, setViews] = useState(0);
+
+    const statisticsRecords = useAppSelector(
+        ({ statistics }) => statistics.statisticsRecords,
+    );
 
     const handleDropdownChange = useCallback((value: string | undefined) => {
         if (!value) {
@@ -55,6 +53,15 @@ const StatisticsPage = (): JSX.Element => {
     const handleTitle = useCallback((value: string | undefined) => {
         return dropdownOptions.find((period) => period.value === value)?.label;
     }, []);
+
+    useEffect(() => {
+        void dispatch(
+            actions.getStatistics({
+                resumeIds: ['0196a978-e5fc-ae7e-924d-95317038f4df'],
+                type: viewsPeriod,
+            }),
+        );
+    }, [dispatch, viewsPeriod]);
 
     return (
         <>
@@ -81,7 +88,7 @@ const StatisticsPage = (): JSX.Element => {
                     <ColumnChart
                         className={styles.statistics__column_chart}
                         measure="Views"
-                        data={ColumnChartData}
+                        data={statisticsRecords}
                     />
 
                     <p>Views: {views}</p>

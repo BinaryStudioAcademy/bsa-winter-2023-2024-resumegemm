@@ -1,1 +1,4 @@
-export { type StatisticsRecord } from 'shared/build/index';
+export {
+    type GetStatisticsResponseDto,
+    type StatisticsRecord,
+} from 'shared/build/index';
