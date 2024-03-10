@@ -1,53 +1,19 @@
 import { Modal, RegularButton } from '~/bundles/common/components/components';
 import { ButtonVariant, ModalVariant } from '~/bundles/common/enums/enums';
-import {
-    useAppSelector,
-    useCallback,
-    useState,
-} from '~/bundles/common/hooks/hooks';
-import { useEmailSubscriptions } from '~/bundles/common/hooks/use-email-subscriptions/use-email-subscriptions.hook';
+import { useEmailSubscriptions } from '~/bundles/common/hooks/hooks';
 
 import styles from './style.module.scss';
 import { SubscriptionItem } from './subscription-item';
 import { SubscriptionToggleItem } from './subscription-toggle-item';
 
 const Subscriptions: React.FC = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const emailSubscription = useAppSelector(
-        (state) => state.auth.user?.emailSubscription,
-    );
-
-    const { handleSubscribe, handleUnsubscribe, isEmailSubscriptionLoading } =
-        useEmailSubscriptions();
-
-    const handleModalOpen = useCallback(() => {
-        setIsModalOpen(true);
-    }, []);
-
-    const handleModalClose = useCallback(() => {
-        setIsModalOpen(false);
-    }, []);
-
-    const handleUnsubscribeAndCloseModal = useCallback(() => {
-        handleUnsubscribe();
-        setIsModalOpen(false);
-    }, [handleUnsubscribe]);
-
-    const toggleItemProperties = emailSubscription
-        ? {
-              title: 'Email notifications',
-              info: 'Unsubscribe from email notifications.',
-              onClick: handleModalOpen,
-              isLoading: isEmailSubscriptionLoading,
-              buttonText: 'Unsubscribe',
-          }
-        : {
-              title: 'Email notifications',
-              info: 'Subscribe to email notifications.',
-              onClick: handleSubscribe,
-              isLoading: isEmailSubscriptionLoading,
-              buttonText: 'Subscribe',
-          };
+    const {
+        handleUnsubscribe,
+        isEmailSubscriptionLoading,
+        toggleItemProperties,
+        handleModalClose,
+        isModalOpen,
+    } = useEmailSubscriptions();
 
     return (
         <div className={styles.subscription}>
@@ -84,7 +50,7 @@ const Subscriptions: React.FC = () => {
                             Cancel
                         </RegularButton>
                         <RegularButton
-                            onClick={handleUnsubscribeAndCloseModal}
+                            onClick={handleUnsubscribe}
                             variant={ButtonVariant.PRIMARY}
                         >
                             {isEmailSubscriptionLoading

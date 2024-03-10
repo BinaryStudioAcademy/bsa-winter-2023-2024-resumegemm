@@ -1,5 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
+import { DataStatus } from '~/bundles/common/enums/enums';
 import {
     subscribe,
     unsubscribe,
@@ -7,13 +8,22 @@ import {
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
 
-import { DataStatus } from '../../enums/data-status.enum';
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 type ReturnValue = {
     handleSubscribe: () => void;
     handleUnsubscribe: () => void;
     isEmailSubscriptionLoading: boolean;
+    handleModalOpen: () => void;
+    handleModalClose: () => void;
+    isModalOpen: boolean;
+    toggleItemProperties: {
+        title: string;
+        info: string;
+        onClick: () => void;
+        isLoading: boolean;
+        buttonText: string;
+    };
 };
 
 const useEmailSubscriptions = (): ReturnValue => {
@@ -23,29 +33,65 @@ const useEmailSubscriptions = (): ReturnValue => {
         (state) => state.emailSubscription.dataStatus === DataStatus.PENDING,
     );
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleModalOpen = useCallback(() => {
+        setIsModalOpen(true);
+    }, []);
+
+    const handleModalClose = useCallback(() => {
+        setIsModalOpen(false);
+    }, []);
+
     const handleSubscribe = useCallback(() => {
-        void dispatch(subscribe()).then(() => {
-            showToast('Subscribed to email notifications', ToastType.SUCCESS);
-        });
+        void dispatch(subscribe())
+            .unwrap()
+            .then(() => {
+                showToast(
+                    'Subscribed to email notifications',
+                    ToastType.SUCCESS,
+                );
+            });
     }, [dispatch]);
 
     const handleUnsubscribe = useCallback(() => {
         if (user?.emailSubscription) {
-            void dispatch(unsubscribe({ id: user.emailSubscription.id })).then(
-                () => {
+            void dispatch(unsubscribe({ id: user.emailSubscription.id }))
+                .unwrap()
+                .then(() => {
                     showToast(
                         'Unsubscribed from email notifications',
                         ToastType.SUCCESS,
                     );
-                },
-            );
+                    handleModalClose();
+                });
         }
-    }, [dispatch, user]);
+    }, [dispatch, handleModalClose, user]);
+
+    const toggleItemProperties = user?.emailSubscription
+        ? {
+              title: 'Email notifications',
+              info: 'Unsubscribe from email notifications.',
+              onClick: handleModalOpen,
+              isLoading: isEmailSubscriptionLoading,
+              buttonText: 'Unsubscribe',
+          }
+        : {
+              title: 'Email notifications',
+              info: 'Subscribe to email notifications.',
+              onClick: handleSubscribe,
+              isLoading: isEmailSubscriptionLoading,
+              buttonText: 'Subscribe',
+          };
 
     return {
         handleSubscribe,
         handleUnsubscribe,
         isEmailSubscriptionLoading,
+        handleModalOpen,
+        handleModalClose,
+        isModalOpen,
+        toggleItemProperties,
     };
 };
 
