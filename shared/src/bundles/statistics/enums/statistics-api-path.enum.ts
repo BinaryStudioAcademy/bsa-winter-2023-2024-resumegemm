@@ -1,6 +1,6 @@
 enum StatisticsApiPath {
     ROOT = '/',
-    QUERY = 'query',
+    QUERY = '/query',
 }
 
 export { StatisticsApiPath };

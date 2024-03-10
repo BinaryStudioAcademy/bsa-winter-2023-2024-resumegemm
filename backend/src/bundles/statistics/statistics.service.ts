@@ -1,4 +1,7 @@
-import { type StatisticsRecord } from 'shared/build/index.js';
+import {
+    type StatisticsRecord,
+    compareDatesWithoutTime,
+} from 'shared/build/index.js';
 
 import { type ResumeShareService } from '../resume-share/resume-share.service.js';
 import {
@@ -19,10 +22,28 @@ class StatisticsService {
         const statistics: StatisticsRecord[] = [];
 
         const dateWeekAgo = new Date();
-        dateWeekAgo.setDate(dateWeekAgo.getDate() + 7);
+        dateWeekAgo.setDate(dateWeekAgo.getDate() - 7);
 
-        // for (const day = dateWeekAgo; day <= new Date(); day.setDate(day.getDate() + 1)) {
-        // }
+        for (const resume of data) {
+            for (
+                const day = dateWeekAgo;
+                day <= new Date();
+                day.setDate(day.getDate() + 1)
+            ) {
+                statistics.push([
+                    day.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                    }),
+                    resume.accesses.filter((access) => {
+                        return compareDatesWithoutTime(
+                            new Date(access.resumeShareAccessTime),
+                            day,
+                        );
+                    }).length,
+                ]);
+            }
+        }
 
         return {
             data: statistics,
