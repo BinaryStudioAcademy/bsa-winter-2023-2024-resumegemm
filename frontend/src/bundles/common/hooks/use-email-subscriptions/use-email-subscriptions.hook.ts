@@ -7,20 +7,20 @@ import {
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
 
-import { type DataStatus } from '../../enums/data-status.enum';
+import { DataStatus } from '../../enums/data-status.enum';
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 type ReturnValue = {
     handleSubscribe: () => void;
     handleUnsubscribe: () => void;
-    isEmailSubscriptionLoading: DataStatus;
+    isEmailSubscriptionLoading: boolean;
 };
 
 const useEmailSubscriptions = (): ReturnValue => {
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.auth.user);
     const isEmailSubscriptionLoading = useAppSelector(
-        (state) => state.emailSubscription.dataStatus,
+        (state) => state.emailSubscription.dataStatus === DataStatus.PENDING,
     );
 
     const handleSubscribe = useCallback(() => {

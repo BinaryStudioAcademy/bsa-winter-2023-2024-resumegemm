@@ -1,5 +1,4 @@
 import { Modal, RegularButton } from '~/bundles/common/components/components';
-import { DataStatus } from '~/bundles/common/enums/data-status.enum';
 import { ButtonVariant, ModalVariant } from '~/bundles/common/enums/enums';
 import {
     useAppSelector,
@@ -14,7 +13,9 @@ import { SubscriptionToggleItem } from './subscription-toggle-item';
 
 const Subscriptions: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const user = useAppSelector((state) => state.auth.user);
+    const emailSubscription = useAppSelector(
+        (state) => state.auth.user?.emailSubscription,
+    );
 
     const { handleSubscribe, handleUnsubscribe, isEmailSubscriptionLoading } =
         useEmailSubscriptions();
@@ -32,17 +33,21 @@ const Subscriptions: React.FC = () => {
         setIsModalOpen(false);
     }, [handleUnsubscribe]);
 
-    const toggleItemProperties = {
-        title: 'Email notifications',
-        info: user?.emailSubscription
-            ? 'Unsubscribe from email notifications.'
-            : 'Subscribe to email notifications.',
-        onClick: user?.emailSubscription ? handleModalOpen : handleSubscribe,
-        isLoading: user?.emailSubscription
-            ? false
-            : isEmailSubscriptionLoading === DataStatus.PENDING,
-        buttonText: user?.emailSubscription ? 'Unsubscribe' : 'Subscribe',
-    };
+    const toggleItemProperties = emailSubscription
+        ? {
+              title: 'Email notifications',
+              info: 'Unsubscribe from email notifications.',
+              onClick: handleModalOpen,
+              isLoading: isEmailSubscriptionLoading,
+              buttonText: 'Unsubscribe',
+          }
+        : {
+              title: 'Email notifications',
+              info: 'Subscribe to email notifications.',
+              onClick: handleSubscribe,
+              isLoading: isEmailSubscriptionLoading,
+              buttonText: 'Subscribe',
+          };
 
     return (
         <div className={styles.subscription}>
@@ -82,7 +87,7 @@ const Subscriptions: React.FC = () => {
                             onClick={handleUnsubscribeAndCloseModal}
                             variant={ButtonVariant.PRIMARY}
                         >
-                            {isEmailSubscriptionLoading === DataStatus.PENDING
+                            {isEmailSubscriptionLoading
                                 ? 'Loading...'
                                 : 'Unsubscribe'}
                         </RegularButton>
