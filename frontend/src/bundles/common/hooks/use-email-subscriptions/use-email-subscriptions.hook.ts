@@ -1,5 +1,3 @@
-import { useCallback, useState } from 'react';
-
 import { DataStatus } from '~/bundles/common/enums/enums';
 import {
     subscribe,
@@ -8,7 +6,12 @@ import {
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
 
-import { useAppDispatch, useAppSelector } from '../hooks';
+import {
+    useAppDispatch,
+    useAppSelector,
+    useCallback,
+    useState,
+} from '../hooks';
 
 type ReturnValue = {
     handleSubscribe: () => void;
