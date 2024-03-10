@@ -12,7 +12,7 @@ import {
 } from './constants/constants';
 import styles from './styles.module.scss';
 
-const EmailConfirmedPage = (): JSX.Element => {
+const ConfirmedEmailPage = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -97,4 +97,4 @@ const EmailConfirmedPage = (): JSX.Element => {
     );
 };
 
-export { EmailConfirmedPage };
+export { ConfirmedEmailPage };
