@@ -9,10 +9,7 @@ import { type SubscriptionPlanRepository } from '~/bundles/stripe-events/reposit
 import { type IConfig } from '~/common/config/interfaces/config.interface.js';
 
 import { type PaymentMethodRepository } from './repositories/payment-method.repository.js';
-import {
-    type StripeEventsResponseDto,
-    type SubscriptionPlan,
-} from './types/types.js';
+import { type StripeEventsResponseDto } from './types/types.js';
 
 class StripeEventsService implements IStripeEventsService {
     private appConfig: IConfig;
@@ -74,14 +71,9 @@ class StripeEventsService implements IStripeEventsService {
     ): Promise<void> {
         const plan: Stripe.Plan = data.object;
 
-        const existingPlan: SubscriptionPlan | undefined =
-            await this.subscriptionPlanRepository.find({
-                stripePlanId: plan.id,
-            });
-
-        if (existingPlan) {
-            await this.subscriptionPlanRepository.delete(existingPlan.id);
-        }
+        await this.subscriptionPlanRepository.delete({
+            stripePlanId: plan.id,
+        });
     }
 
     private async handlePaymentMethodCreate(

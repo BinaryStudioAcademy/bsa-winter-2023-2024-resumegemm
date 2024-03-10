@@ -5,6 +5,7 @@ import {
     Model,
 } from 'objection';
 
+import { OauthModel } from '~/bundles/oauth/oauth.model.js';
 import { ProfileModel } from '~/bundles/profile/profile.model.js';
 import { TemplateModel } from '~/bundles/templates/templates.js';
 import {
@@ -21,6 +22,10 @@ class UserModel extends AbstractModel {
 
     public 'passwordSalt': string;
 
+    public deletedAt!: string | null;
+
+    public 'stripeId': string;
+
     public static override get tableName(): typeof DatabaseTableName.USERS {
         return DatabaseTableName.USERS;
     }
@@ -34,6 +39,8 @@ class UserModel extends AbstractModel {
                     'profileId',
                     'createdAt',
                     'updatedAt',
+                    'deletedAt',
+                    'stripeId',
                 );
             },
         };
@@ -41,12 +48,20 @@ class UserModel extends AbstractModel {
 
     public static getRelationMappings(): RelationMappings {
         return {
-            user_profile: {
+            userProfile: {
                 relation: Model.HasOneRelation,
                 modelClass: ProfileModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.profileId`,
                     to: `${DatabaseTableName.PROFILE}.id`,
+                },
+            },
+            oauth_connections: {
+                relation: Model.HasManyRelation,
+                modelClass: OauthModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.id`,
+                    to: `${DatabaseTableName.OAUTH_CONNECTIONS}.userId`,
                 },
             },
             templates: {

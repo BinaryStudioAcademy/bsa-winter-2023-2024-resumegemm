@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { type OAuth2Namespace } from '@fastify/oauth2';
 import {
     type FastifyInstance,
@@ -7,8 +8,8 @@ import {
 import fp from 'fastify-plugin';
 import { type ValueOf, OpenAuthApiPath } from 'shared/build/index.js';
 
-import { config } from '~/common/config/config.js';
 import { CookieName } from '~/common/controller/enums/enums.js';
+import { cookieOptions } from '~/common/server-application/constants/constants.js';
 
 const oauthCallbackHandler = fp<FastifyPluginOptions>(
     async (fastify: FastifyInstance): Promise<void> => {
@@ -31,12 +32,14 @@ const oauthCallbackHandler = fp<FastifyPluginOptions>(
 
                     const getOauthRouteHandlerDependingOnProvider = `/api/v1/oauth/${oauthCurrentProvider}`;
 
+                    const { signed, ...restCookieOptions } = cookieOptions;
+
                     return reply
-                        .setCookie(CookieName.OAUTH_TOKEN, access_token, {
-                            path: OpenAuthApiPath.ROOT,
-                            httpOnly: true,
-                            maxAge: config.ENV.COOKIE.EXPIRES_IN,
-                        })
+                        .setCookie(
+                            CookieName.OAUTH_TOKEN,
+                            access_token,
+                            restCookieOptions,
+                        )
                         .redirect(getOauthRouteHandlerDependingOnProvider);
                 }
             },

@@ -5,7 +5,7 @@ import {
     AuthException,
     ExceptionMessage,
     HttpCode,
-    HttpError,
+    HTTPError,
 } from 'shared/build/index.js';
 
 import {
@@ -33,7 +33,7 @@ class AuthService implements TAuthService {
             userRequestDto.email,
         );
         if (foundUserByEmail) {
-            throw new HttpError({
+            throw new HTTPError({
                 message: ExceptionMessage.EMAIL_TAKEN,
                 status: HttpCode.BAD_REQUEST,
             });
@@ -42,7 +42,7 @@ class AuthService implements TAuthService {
         const passwordSalt = await this.generateSalt();
 
         const passwordHash = await this.encrypt(
-            userRequestDto.password,
+            String(userRequestDto.password),
             passwordSalt,
         );
 
@@ -52,8 +52,8 @@ class AuthService implements TAuthService {
             passwordHash,
         });
 
-        const token = generateToken({ id });
         const user = await this.getUserWithProfile(id);
+        const token = generateToken({ id });
 
         return {
             user,
@@ -68,7 +68,7 @@ class AuthService implements TAuthService {
         const foundUserByEmail = await this.userService.findByEmail(email);
 
         if (!foundUserByEmail) {
-            throw new HttpError({
+            throw new HTTPError({
                 message: ExceptionMessage.USER_NOT_FOUND,
                 status: HttpCode.BAD_REQUEST,
             });
@@ -81,7 +81,7 @@ class AuthService implements TAuthService {
         });
 
         if (!isEqualPassword) {
-            throw new HttpError({
+            throw new HTTPError({
                 message: ExceptionMessage.INVALID_PASSWORD,
                 status: HttpCode.UNAUTHORIZED,
             });
@@ -97,7 +97,7 @@ class AuthService implements TAuthService {
     public async getUserWithProfile(
         id: string,
     ): ReturnType<TAuthService['getUserWithProfile']> {
-        return await this.userService.getUserWithProfile(id);
+        return await this.userService.getUserWithProfileAndOauthConnections(id);
     }
 
     public encrypt(data: string, salt: string): Promise<string> {
@@ -109,6 +109,9 @@ class AuthService implements TAuthService {
         passwordSalt,
         passwordHash,
     }: EncryptionDataPayload): Promise<boolean> {
+        if (!passwordSalt) {
+            return false;
+        }
         const dataHash = await this.encrypt(plaintTextPassword, passwordSalt);
         return dataHash === passwordHash;
     }

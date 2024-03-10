@@ -11,6 +11,7 @@ export {
 } from './content/content.js';
 export { ResumesApiPath } from './enums/enums.js';
 export {
+    type IResumeService,
     type Resume,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
@@ -20,5 +21,16 @@ export {
     type ResumeGetAllResponseDto,
     type ResumeGetItemRequestDto,
     type ResumeGetItemResponseDto,
+    type ResumeShareAccessCreateRequestDto,
+    type ResumeShareAccessCreateResponseDto,
+    type ResumeShareAccessGetResponseDto,
+    type ResumeShareCreateRequestDto,
+    type ResumeShareCreateResponseDto,
+    type ResumeShareDeleteRequestDto,
+    type ResumeShareDeleteResponseDto,
+    type ResumeShareDetailsGetRequestDto,
+    type ResumeShareDetailsGetResponseDto,
+    type ResumeShareGetRequestDto,
+    type ResumeShareGetResponseDto,
     type ResumeUpdateItemRequestDto,
 } from './types/types.js';

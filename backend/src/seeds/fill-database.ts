@@ -11,10 +11,15 @@ import {
     type CustomSection,
     type Education,
     type Experience,
+    type Language,
+    type OauthConnection,
+    type OauthUser,
     type PersonalInformation,
     type Profile,
     type Resume,
+    type ResumeSharedAccess,
     type Review,
+    type SubscriptionPlan,
     type TechnicalSkill,
     type Template,
     type User,
@@ -27,10 +32,15 @@ import {
     educationSeed,
     experienceSeed,
     imagesSeed,
+    languageSeed,
+    oauthConnectionSeed,
+    oauthUserSeed,
     personalInformationSeed,
-    profileSeeds,
+    profileSeed,
+    resumeSharedAccessSeed,
     resumesSeed,
     reviewsSeed,
+    subscriptionPlan,
     technicalSkillsSeed,
     templatesSeed,
     usersSeed,
@@ -50,23 +60,32 @@ const deleteFromTables = async (
 async function seed(knex: Knex): Promise<void> {
     await knex.transaction(async (trx) => {
         const tableNames = [
-            DatabaseTableName.USERS,
-            DatabaseTableName.TEMPLATES,
-            DatabaseTableName.USER_TEMPLATES,
-            DatabaseTableName.RESUMES,
-            DatabaseTableName.REVIEWS,
+            DatabaseTableName.CERTIFICATION,
             DatabaseTableName.CONTACT_DETAILS,
+            DatabaseTableName.CUSTOM_SECTIONS,
             DatabaseTableName.EDUCATION,
             DatabaseTableName.EXPERIENCE,
+            DatabaseTableName.LANGUAGES,
+            DatabaseTableName.OAUTH_CONNECTIONS,
+            DatabaseTableName.OAUTH_USERS,
             DatabaseTableName.PERSONAL_INFORMATION,
-            DatabaseTableName.TECHNICAL_SKILLS,
             DatabaseTableName.RECENTLY_VIEWED,
+            DatabaseTableName.RESUME_SHARE_ACCESS,
+            DatabaseTableName.RESUME_SHARE_LINK,
+            DatabaseTableName.RESUMES,
+            DatabaseTableName.REVIEWS,
+            DatabaseTableName.SUBSCRIPTION_PLANS,
+            DatabaseTableName.TECHNICAL_SKILLS,
+            DatabaseTableName.TEMPLATES,
+            DatabaseTableName.PROFILE,
+            DatabaseTableName.USER_TEMPLATES,
+            DatabaseTableName.USERS,
         ];
         await deleteFromTables(trx, tableNames);
 
         // PROFILE
 
-        const profileMappedSeed = profileSeeds.map((profile, index) => ({
+        const profileMappedSeed = profileSeed.map((profile, index) => ({
             ...profile,
             [DatabaseColumnName.ID]: guid.raw(),
             [DatabaseColumnName.AVATAR]: imagesSeed[index].image,
@@ -87,18 +106,6 @@ async function seed(knex: Knex): Promise<void> {
             .insert(usersMappedSeed)
             .returning('*');
 
-        // RESUMES
-        const resumesMappedSeed = resumesSeed.map((resume, index) => ({
-            ...resume,
-            [DatabaseColumnName.ID]: guid.raw(),
-            [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
-            [DatabaseColumnName.IMAGE]: imagesSeed[index].image,
-        }));
-
-        const insertedResumes = await trx<Resume>(DatabaseTableName.RESUMES)
-            .insert(resumesMappedSeed)
-            .returning('*');
-
         // TEMPLATES
         const templatesMappedSeed = templatesSeed.map((template, index) => ({
             ...template,
@@ -113,6 +120,43 @@ async function seed(knex: Knex): Promise<void> {
             .insert(templatesMappedSeed)
             .returning('*');
 
+        // OAUTH_CONNECTIONS
+        const oauthConnectionsMappedSeed = oauthConnectionSeed.map(
+            (oauth, index) => ({
+                ...oauth,
+                [DatabaseColumnName.ID]: guid.raw(),
+                [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
+            }),
+        );
+
+        await trx<OauthConnection>(DatabaseTableName.OAUTH_CONNECTIONS)
+            .insert(oauthConnectionsMappedSeed)
+            .returning('*');
+
+        // OAUTH_USERS
+        const oauthUsersMappedSeed = oauthUserSeed.map((oauth, index) => ({
+            ...oauth,
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.PROFILE_ID]: createdProfile[index].id,
+        }));
+
+        await trx<OauthUser>(DatabaseTableName.OAUTH_USERS)
+            .insert(oauthUsersMappedSeed)
+            .returning('*');
+
+        // RESUMES
+        const resumesMappedSeed = resumesSeed.map((resume, index) => ({
+            ...resume,
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
+            [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
+            [DatabaseColumnName.IMAGE]: imagesSeed[index].image,
+        }));
+
+        const insertedResumes = await trx<Resume>(DatabaseTableName.RESUMES)
+            .insert(resumesMappedSeed)
+            .returning('*');
+
         // Resume content
 
         const mapResumeContent = <T>(it: T[]): T[] =>
@@ -122,6 +166,7 @@ async function seed(knex: Knex): Promise<void> {
                 [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
             }));
 
+        // REVIEWS
         await trx<Review>(DatabaseTableName.REVIEWS)
             .insert(mapResumeContent(reviewsSeed))
             .returning('*');
@@ -144,7 +189,7 @@ async function seed(knex: Knex): Promise<void> {
             .insert(mapResumeContent(experienceSeed))
             .returning('*');
 
-        // // TECHNICAL_SKILLS
+        // TECHNICAL_SKILLS
 
         await trx<TechnicalSkill>(DatabaseTableName.TECHNICAL_SKILLS)
             .insert(mapResumeContent(technicalSkillsSeed))
@@ -166,6 +211,12 @@ async function seed(knex: Knex): Promise<void> {
 
         await trx<CustomSection>(DatabaseTableName.CUSTOM_SECTIONS)
             .insert(mapResumeContent(customSectionSeed))
+            .returning('*');
+
+        // LANGUAGE
+
+        await trx<Language>(DatabaseTableName.LANGUAGES)
+            .insert(mapResumeContent(languageSeed))
             .returning('*');
 
         // USER_TEMPLATES junction table
@@ -195,6 +246,44 @@ async function seed(knex: Knex): Promise<void> {
 
         await trx(DatabaseTableName.RECENTLY_VIEWED)
             .insert(recentlyViewedSeed)
+            .returning('*');
+
+        // RESUME_SHARE_LINK
+        const resumeSharedLinkSeed = Array.from({ length: NUMBER_OF_ROWS }).map(
+            (_, index) => ({
+                [DatabaseColumnName.ID]: guid.raw(),
+                [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
+            }),
+        );
+
+        const insertedResumeSharedLInk = await trx(
+            DatabaseTableName.RESUME_SHARE_LINK,
+        )
+            .insert(resumeSharedLinkSeed)
+            .returning('*');
+
+        // RESUME_SHARE_ACCESS
+        const resumeSharedAccessMappedSeed = resumeSharedAccessSeed.map(
+            (resumeSharedAccess, index) => ({
+                ...resumeSharedAccess,
+                [DatabaseColumnName.ID]: guid.raw(),
+                [DatabaseColumnName.RESUME_SHARE_LINK_ID]:
+                    insertedResumeSharedLInk[index].id,
+            }),
+        );
+
+        await trx<ResumeSharedAccess>(DatabaseTableName.RESUME_SHARE_ACCESS)
+            .insert(resumeSharedAccessMappedSeed)
+            .returning('*');
+
+        // SUBSCRIPTION_PLANS
+        const subscriptionPlansMappedSeed = subscriptionPlan.map((plan) => ({
+            ...plan,
+            [DatabaseColumnName.ID]: guid.raw(),
+        }));
+
+        await trx<SubscriptionPlan>(DatabaseTableName.SUBSCRIPTION_PLANS)
+            .insert(subscriptionPlansMappedSeed)
             .returning('*');
     });
 }
