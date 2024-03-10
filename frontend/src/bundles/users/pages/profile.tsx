@@ -59,9 +59,6 @@ const Profile: React.FC = () => {
                 <ProfileCard title="Avatar">
                     <UserPhotoWrapper />
                 </ProfileCard>
-                <ProfileCard title="Avatar">
-                    <UserPhotoWrapper />
-                </ProfileCard>
                 <ProfileCard title="Social profile">
                     <Socials
                         socialMediaConnections={profile.socialMediaProfiles}
