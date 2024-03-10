@@ -7,9 +7,9 @@ import { name as sliceName } from './slice.js';
 
 const getTemplateById = createAsyncThunk<TemplateDto, string, AsyncThunkConfig>(
     `${sliceName}/get-by-id`,
-    async (id, { extra }) => {
+    (id, { extra }) => {
         const { templateApi } = extra;
-        return await templateApi.getTemplateById(id);
+        return templateApi.getTemplateById(id);
     },
 );
 
@@ -17,18 +17,18 @@ const createTemplate = createAsyncThunk<
     TemplateDto,
     undefined,
     AsyncThunkConfig
->(`${sliceName}/create`, async (_, { extra }) => {
+>(`${sliceName}/create`, (_, { extra }) => {
     const { templateApi } = extra;
-    return await templateApi.createTemplate();
+    return templateApi.createTemplate();
 });
 
 const editTemplate = createAsyncThunk<TemplateDto, undefined, AsyncThunkConfig>(
     `${sliceName}/edit`,
-    async (request, { extra, getState }) => {
+    (request, { extra, getState }) => {
         const { templateApi } = extra;
         const { id, templateSettings } = getState().editTemplate.template;
 
-        return await templateApi.editTemplate(id, { templateSettings });
+        return templateApi.editTemplate(id, { templateSettings });
     },
 );
 
