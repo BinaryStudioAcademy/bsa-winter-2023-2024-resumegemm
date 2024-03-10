@@ -1,0 +1,28 @@
+.edit__section_wrapper {
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.editor_sidebar__nav {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.output__button {
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    color: var(--color-white);
+    border: 1px solid var(--color-white);
+    transition: all 0.3s ease;
+}
+
+.output__button:hover {
+    color: var(--color-white);
+    background-color: var(--color-accent-dark-yellow);
+}

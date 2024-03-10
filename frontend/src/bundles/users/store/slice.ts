@@ -4,7 +4,7 @@ import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type UserGetAllItemResponseDto } from '~/bundles/users/users.js';
 
-import { loadAll } from './actions.js';
+import { deleteProfile, loadAll } from './actions.js';
 
 type State = {
     users: UserGetAllItemResponseDto[];
@@ -29,6 +29,16 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(loadAll.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(deleteProfile.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(deleteProfile.fulfilled, (state, action) => {
+            state.users = action.payload.items;
+            state.dataStatus = DataStatus.FULFILLED;
+        });
+        builder.addCase(deleteProfile.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
     },

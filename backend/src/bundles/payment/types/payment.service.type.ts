@@ -5,7 +5,7 @@ import {
     type GetPublishableKeyResponseDto,
 } from './types.js';
 
-type IPaymentService = {
+interface IPaymentService {
     getPublishableKey(): GetPublishableKeyResponseDto;
 
     getPrices(): Promise<GetPricesResponseDto>;
@@ -13,6 +13,6 @@ type IPaymentService = {
     createSubscription(
         data: CreateSubscriptionRequestDto,
     ): Promise<CreateSubscriptionResponseDto>;
-};
+}
 
 export { type IPaymentService };

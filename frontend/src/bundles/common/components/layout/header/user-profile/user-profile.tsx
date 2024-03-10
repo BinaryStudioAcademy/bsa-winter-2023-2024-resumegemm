@@ -1,6 +1,10 @@
 import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { actions } from '~/bundles/auth/store/slice';
+import { AppRoute } from '~/bundles/common/enums/app-route.enum';
+import { useAppDispatch } from '~/bundles/common/hooks/hooks';
 import { storage, StorageKey } from '~/framework/storage/storage';
 
 import { Menu } from './menu/menu';
@@ -12,11 +16,13 @@ type Properties = {
 };
 
 const UserProfile: React.FC<Properties> = ({ image }) => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const menuReference = useRef<HTMLMenuElement>(null);
 
     const [active, setActive] = useState(false);
 
-    const buttonClickHandler = useCallback(
+    const handleButtonClick = useCallback(
         (event: React.MouseEvent) => {
             event.stopPropagation();
 
@@ -25,21 +31,25 @@ const UserProfile: React.FC<Properties> = ({ image }) => {
         [setActive],
     );
 
-    const logoutHandler = useCallback(() => {
-        void storage.drop(StorageKey.ACCESS_TOKEN);
-    }, []);
+    const handleLogout = useCallback(() => {
+        void storage.drop(StorageKey.ACCESS_TOKEN).then(() => {
+            navigate(AppRoute.LOG_IN);
+        });
+
+        dispatch(actions.setUser(null));
+    }, [dispatch, navigate]);
 
     useEffect(() => {
-        const outsideClickHandler = (event_: MouseEvent): void => {
+        const handleOutsideClick = (event_: MouseEvent): void => {
             if (active && event_.target !== menuReference.current) {
                 setActive(false);
             }
         };
 
-        document.body.addEventListener('click', outsideClickHandler);
+        document.body.addEventListener('click', handleOutsideClick);
 
         return () => {
-            document.body.removeEventListener('click', outsideClickHandler);
+            document.body.removeEventListener('click', handleOutsideClick);
         };
     }, [active]);
 
@@ -50,7 +60,7 @@ const UserProfile: React.FC<Properties> = ({ image }) => {
                     styles.profile__button,
                     active && styles.active,
                 )}
-                onClick={buttonClickHandler}
+                onClick={handleButtonClick}
             >
                 <img
                     className={styles.profile__image}
@@ -58,7 +68,7 @@ const UserProfile: React.FC<Properties> = ({ image }) => {
                     alt="User profile"
                 />
             </button>
-            {active && <Menu ref={menuReference} onLogout={logoutHandler} />}
+            {active && <Menu ref={menuReference} onLogout={handleLogout} />}
         </div>
     );
 };

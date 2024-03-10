@@ -7,17 +7,20 @@ import {
     type UserWithProfileRelation,
 } from './types/types.js';
 
-type TUserRepo = {
+interface IUserRepo {
     findOneByEmail(email: string): Promise<UserEntityFields | null>;
+    addStripeId(
+        userUpdate: Partial<UserModel>,
+    ): Promise<UserEntityFields | null>;
     findAll(): Promise<UserEntity[]>;
-};
+}
 
 class UserRepository
     extends AbstractRepository<
         typeof UserModel,
         UserWithProfileRelation | UserEntityFields
     >
-    implements TUserRepo
+    implements IUserRepo
 {
     public constructor({ userModel }: Record<'userModel', typeof UserModel>) {
         super(userModel);
@@ -25,15 +28,41 @@ class UserRepository
 
     public async findOneByEmail(
         email: string,
-    ): ReturnType<TUserRepo['findOneByEmail']> {
-        const user = await this.model.query().findOne({ email });
+    ): ReturnType<IUserRepo['findOneByEmail']> {
+        const user = await this.model
+            .query()
+            .findOne({ email })
+            .whereNull('deletedAt');
+
         return user ?? null;
     }
 
-    public async findAll(): ReturnType<TUserRepo['findAll']> {
-        const users = await this.model.query().execute();
+    public async findAll(): ReturnType<IUserRepo['findAll']> {
+        const users = await this.model.query().whereNull('deletedAt').execute();
 
         return users.map((it) => UserEntity.initialize(it));
+    }
+
+    public async delete(id: string): Promise<UserEntityFields> {
+        return await this.model
+            .query()
+            .findOne({ id })
+            .whereNull('deletedAt')
+            .patch({ deletedAt: new Date().toISOString() })
+            .returning(['id', 'email', 'deleted_at', 'profile_id'])
+            .castTo<UserEntityFields>();
+    }
+
+    public async addStripeId(
+        userUpdate: Pick<UserModel, 'email' | 'stripeId'>,
+    ): ReturnType<IUserRepo['addStripeId']> {
+        const { email, stripeId } = userUpdate;
+        return await this.model
+            .query()
+            .findOne({ email })
+            .patch({ stripeId: stripeId })
+            .returning(['id', 'email', 'stripe_id', 'profile_id'])
+            .castTo<UserEntityFields>();
     }
 }
 

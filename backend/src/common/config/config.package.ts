@@ -45,7 +45,10 @@ class Config implements IConfig {
                 ORIGIN_URL: {
                     doc: 'Http origin for development',
                     format: String,
-                    env: 'CLIENT_DEVELOPMENT_SERVER_URL',
+                    env:
+                        process.env.NODE_ENV === AppEnvironment.PRODUCTION
+                            ? 'PRODUCTION_ORIGIN_URL'
+                            : 'CLIENT_DEVELOPMENT_SERVER_URL',
                     default: null,
                 },
             },
@@ -163,12 +166,44 @@ class Config implements IConfig {
                     env: 'STRIPE_PUBLISHABLE_KEY',
                     default: null,
                 },
+                STRIPE_WEBHOOK_SECRET: {
+                    doc: 'Stripe webhook secret',
+                    format: String,
+                    env: 'STRIPE_WEBHOOK_SECRET',
+                    default: null,
+                },
             },
             OPEN_AI: {
                 API_KEY: {
                     doc: 'OpenAI API key',
                     format: String,
                     env: 'OPEN_AI_API_KEY',
+                    default: null,
+                },
+            },
+            AWS: {
+                REGION: {
+                    doc: 'AWS region string',
+                    format: String,
+                    env: 'AWS_REGION',
+                    default: null,
+                },
+                SECRET_ACCESS_KEY: {
+                    doc: 'AWS secret key string',
+                    format: String,
+                    env: 'AWS_SECRET_ACCESS_KEY',
+                    default: null,
+                },
+                ACCESS_KEY: {
+                    doc: 'AWS access key string',
+                    format: String,
+                    env: 'AWS_ACCESS_KEY',
+                    default: null,
+                },
+                BUCKET_NAME: {
+                    doc: 'AWS bucket name string',
+                    format: String,
+                    env: 'AWS_BUCKET_NAME',
                     default: null,
                 },
             },

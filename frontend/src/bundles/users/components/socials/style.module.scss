@@ -1,5 +1,5 @@
 $layout-breakpoint-small: 768px;
-$border-color: #ccd7dc;
+$border-color: var(--color-disabled-gray);
 
 .socials {
     width: 100%;
@@ -29,4 +29,10 @@ $border-color: #ccd7dc;
 
 .socials__item__name p {
     margin-left: 5px;
+}
+
+.flex__button {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }

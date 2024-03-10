@@ -2,6 +2,7 @@ enum IconName {
     PLUS = 'plus',
     CHEVRON_DOWN = 'chevron_down',
     GOOGLE = 'google',
+    GITHUB = 'github',
     FACEBOOK = 'facebook',
     LINKEDIN = 'linkedin',
     EYE_OPEN = 'eye_open',

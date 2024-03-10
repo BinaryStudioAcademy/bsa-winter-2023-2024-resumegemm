@@ -1,7 +1,9 @@
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { IconContext } from 'react-icons';
 import { GrGallery } from 'react-icons/gr';
+
+import { ToastContext } from '~/bundles/toast/context/toast-context';
+import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 
 import styles from './styles.module.scss';
 
@@ -12,6 +14,8 @@ interface UploadProperties {
 }
 
 const UserPhotoUploader: React.FC<UploadProperties> = ({ onImageUpload }) => {
+    const { showToast } = useContext(ToastContext);
+
     const handleFile = useCallback(
         (file: File) => {
             const reader = new FileReader();
@@ -35,23 +39,31 @@ const UserPhotoUploader: React.FC<UploadProperties> = ({ onImageUpload }) => {
                     'image/svg+xml',
                 ];
                 if (!allowedFormats.includes(file.type)) {
-                    Notify.failure(
+                    showToast(
                         'Invalid file format. Please upload a JPEG, PNG, or SVG file.',
+                        ToastType.ERROR,
+                        {
+                            theme: 'dark',
+                        },
                     );
                     return;
                 }
                 const maxSizeInBytes = 10 * 1024 * 1024;
                 if (file.size > maxSizeInBytes) {
-                    Notify.failure(
+                    showToast(
                         'File size exceeds the limit of 10MB. Please upload a smaller file.',
+                        ToastType.ERROR,
+                        {
+                            theme: 'dark',
+                        },
                     );
                     return;
                 }
                 handleFile(file);
-                Notify.success('File is successfully added.');
+                showToast('File is successfully added!', ToastType.SUCCESS);
             }
         },
-        [handleFile],
+        [handleFile, showToast],
     );
 
     const handleDragOver = useCallback(

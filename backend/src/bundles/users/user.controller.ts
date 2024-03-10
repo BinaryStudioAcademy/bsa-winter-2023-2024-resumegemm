@@ -1,5 +1,9 @@
+import { type FastifyRequest } from 'fastify';
+import { type UserEntityFields, HTTPError } from 'shared/build/index.js';
+
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
+    type ApiHandlerOptions,
     type ApiHandlerResponse,
     Controller,
 } from '~/common/controller/controller.js';
@@ -38,6 +42,17 @@ class UserController extends Controller {
             method: 'GET',
             handler: () => this.findAll(),
         });
+
+        this.addRoute({
+            path: UsersApiPath.ROOT,
+            method: 'DELETE',
+            handler: (options) =>
+                this.delete(
+                    options as ApiHandlerOptions<{
+                        headers: FastifyRequest['headers'];
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -62,6 +77,69 @@ class UserController extends Controller {
             status: HttpCode.OK,
             payload: await this.userService.findAll(),
         };
+    }
+
+    /**
+     * @swagger
+     * /users/$id:
+     *   delete:
+     *     description: Delete current user
+     *     responses:
+     *       200:
+     *         description: Successful operation
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/UserEntityFields'
+     *       400:
+     *         description: Bad request
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *               example:
+     *                 message: User's id is invalid.
+     *       404:
+     *         description: User not found
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *               example:
+     *                 message: User not found.
+     */
+    private async delete({
+        headers,
+    }: ApiHandlerOptions<{
+        headers: FastifyRequest['headers'];
+    }>): Promise<ApiHandlerResponse<UserEntityFields>> {
+        try {
+            const payload = await this.userService.delete(headers);
+            return {
+                status: HttpCode.OK,
+                payload,
+            };
+        } catch (error: unknown) {
+            return error instanceof HTTPError
+                ? {
+                      status: error.status,
+                      payload: {
+                          message: error.message,
+                      },
+                  }
+                : {
+                      status: HttpCode.INTERNAL_SERVER_ERROR,
+                      payload: {
+                          message: 'Internal server error.',
+                      },
+                  };
+        }
     }
 }
 
