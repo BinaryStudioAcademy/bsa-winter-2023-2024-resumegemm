@@ -2,17 +2,11 @@ import { Modal, RegularButton } from '~/bundles/common/components/components';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum';
 import { ButtonVariant, ModalVariant } from '~/bundles/common/enums/enums';
 import {
-    useAppDispatch,
     useAppSelector,
     useCallback,
     useState,
 } from '~/bundles/common/hooks/hooks';
-import {
-    subscribe,
-    unsubscribe,
-} from '~/bundles/email-subscription/store/actions';
-import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
-import { showToast } from '~/bundles/toast/helpers/show-toast';
+import { useEmailSubscriptions } from '~/bundles/common/hooks/use-email-subscriptions/use-email-subscriptions.hook';
 
 import styles from './style.module.scss';
 import { SubscriptionItem } from './subscription-item';
@@ -20,33 +14,10 @@ import { SubscriptionToggleItem } from './subscription-toggle-item';
 
 const Subscriptions: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const user = useAppSelector((state) => state.auth.user);
-    const isEmailSubscriptionLoading = useAppSelector(
-        (state) => state.emailSubscription.dataStatus,
-    );
 
-    const dispatch = useAppDispatch();
-
-    const handleSubscribe = useCallback(() => {
-        void dispatch(subscribe()).then(() => {
-            showToast('Subscribed to email notifications', ToastType.SUCCESS);
-        });
-    }, [dispatch]);
-
-    const handleUnsubscribe = useCallback(() => {
-        if (user?.emailSubscription) {
-            void dispatch(unsubscribe({ id: user.emailSubscription.id })).then(
-                () => {
-                    setIsModalOpen(false);
-                    showToast(
-                        'Unsubscribed from email notifications',
-                        ToastType.SUCCESS,
-                    );
-                },
-            );
-        }
-    }, [dispatch, user]);
+    const { handleSubscribe, handleUnsubscribe, isEmailSubscriptionLoading } =
+        useEmailSubscriptions();
 
     const handleModalOpen = useCallback(() => {
         setIsModalOpen(true);
@@ -55,6 +26,11 @@ const Subscriptions: React.FC = () => {
     const handleModalClose = useCallback(() => {
         setIsModalOpen(false);
     }, []);
+
+    const handleUnsubscribeAndCloseModal = useCallback(() => {
+        handleUnsubscribe();
+        setIsModalOpen(false);
+    }, [handleUnsubscribe]);
 
     const toggleItemProperties = {
         title: 'Email notifications',
@@ -103,7 +79,7 @@ const Subscriptions: React.FC = () => {
                             Cancel
                         </RegularButton>
                         <RegularButton
-                            onClick={handleUnsubscribe}
+                            onClick={handleUnsubscribeAndCloseModal}
                             variant={ButtonVariant.PRIMARY}
                         >
                             {isEmailSubscriptionLoading === DataStatus.PENDING
