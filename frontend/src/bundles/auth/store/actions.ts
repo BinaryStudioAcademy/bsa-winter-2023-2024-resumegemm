@@ -38,8 +38,7 @@ const getUser = createAsyncThunk<UserAuthResponse, undefined, AsyncThunkConfig>(
     async (_, { extra }) => {
         const { authApi } = extra;
 
-        const user = await authApi.getUser();
-        return { user };
+        return authApi.getUser();
     },
 );
 
