@@ -10,7 +10,7 @@ import { ResumeShareModel } from './resume-share.model.js';
 class ResumeShareAccessModel extends AbstractModel {
     public 'resumeShareLinkId': string;
 
-    public 'resumeShareAccessTime': Date;
+    public 'resumeShareAccessTime': string;
 
     public 'resumeShareAccessIp': string;
 

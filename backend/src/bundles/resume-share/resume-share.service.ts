@@ -1,3 +1,7 @@
+import { HTTPError } from 'shared/build/index.js';
+
+import { HttpCode } from '../oauth/enums/enums.js';
+import { ResumeShareErrorMessage } from './enums/error-messages.js';
 import { type ResumeShareRepository } from './resume-share.repository.js';
 import { type ResumeShareAccessService } from './resume-share-access.service.js';
 import { type IResumeShareService } from './types/resume-share.service.type.js';
@@ -22,7 +26,7 @@ class ResumeShareService implements IResumeShareService {
 
     public async createShareLink(
         id: string,
-    ): Promise<ResumeShareCreateResponseDto | unknown> {
+    ): Promise<ResumeShareCreateResponseDto> {
         const shareLink =
             await this.resumeShareRepository.getResumeShareLinkByResumeId(id);
 
@@ -30,7 +34,17 @@ class ResumeShareService implements IResumeShareService {
             return shareLink;
         }
 
-        return await this.resumeShareRepository.createResumeShareLink(id);
+        const createdAccess =
+            await this.resumeShareRepository.createResumeShareLink(id);
+
+        if (!createdAccess) {
+            throw new HTTPError({
+                message: ResumeShareErrorMessage.RESUME_SHARE_CREATE_ERROR,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        return createdAccess;
     }
 
     public async getShareLink(
@@ -43,10 +57,17 @@ class ResumeShareService implements IResumeShareService {
 
     public async getShareLinkDetails(
         id: string,
-    ): Promise<ResumeShareDetailsGetResponseDto | unknown> {
+    ): Promise<ResumeShareDetailsGetResponseDto> {
         const sharerLink = await this.resumeShareRepository.getResumeShareLink(
             id,
         );
+
+        if (!sharerLink) {
+            throw new HTTPError({
+                message: ResumeShareErrorMessage.RESUME_SHARE_NOT_FOUND_ERROR,
+                status: HttpCode.NOT_FOUND,
+            });
+        }
 
         return {
             ...sharerLink,

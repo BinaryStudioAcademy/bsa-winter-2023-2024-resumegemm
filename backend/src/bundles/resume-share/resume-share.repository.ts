@@ -57,7 +57,7 @@ class ResumeShareRepository {
 
     public async createResumeShareLink(
         resumeId: string,
-    ): Promise<ResumeShareCreateResponseDto | unknown> {
+    ): Promise<ResumeShareCreateResponseDto | undefined> {
         try {
             const resumeShareModel = {
                 resumeId: resumeId,

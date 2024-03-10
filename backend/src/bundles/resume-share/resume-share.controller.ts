@@ -90,7 +90,7 @@ class ResumeShareController extends Controller {
             method: 'POST',
             validation: {},
             handler: (options) =>
-                this.CreateShareLink(
+                this.createShareLink(
                     options as ApiHandlerOptions<ResumeShareCreateRequestDto>,
                 ),
         });
@@ -100,7 +100,7 @@ class ResumeShareController extends Controller {
             method: 'GET',
             validation: {},
             handler: (options) =>
-                this.GetShareLink(
+                this.getShareLink(
                     options as ApiHandlerOptions<ResumeShareGetRequestDto>,
                 ),
         });
@@ -110,7 +110,7 @@ class ResumeShareController extends Controller {
             method: 'DELETE',
             validation: {},
             handler: (options) =>
-                this.DeleteShareLink(
+                this.deleteShareLink(
                     options as ApiHandlerOptions<ResumeShareDeleteRequestDto>,
                 ),
         });
@@ -120,7 +120,7 @@ class ResumeShareController extends Controller {
             method: 'GET',
             validation: {},
             handler: (options) =>
-                this.GetShareLinkDetails(
+                this.getShareLinkDetails(
                     options as ApiHandlerOptions<ResumeShareDetailsGetRequestDto>,
                 ),
         });
@@ -228,7 +228,7 @@ class ResumeShareController extends Controller {
      *          description: Bad request
      *
      */
-    private async CreateShareLink(
+    private async createShareLink(
         options: ApiHandlerOptions<ResumeShareCreateRequestDto>,
     ): Promise<ApiHandlerResponse<ResumeShareCreateResponseDto | unknown>> {
         try {
@@ -250,7 +250,7 @@ class ResumeShareController extends Controller {
         }
     }
 
-    private async GetShareLink(
+    private async getShareLink(
         options: ApiHandlerOptions<ResumeShareGetRequestDto>,
     ): Promise<ApiHandlerResponse<ResumeShareGetResponseDto | unknown>> {
         try {
@@ -273,7 +273,7 @@ class ResumeShareController extends Controller {
         }
     }
 
-    private async GetShareLinkDetails(
+    private async getShareLinkDetails(
         options: ApiHandlerOptions<ResumeShareDetailsGetRequestDto>,
     ): Promise<ApiHandlerResponse<ResumeShareDetailsGetResponseDto | unknown>> {
         try {
@@ -295,7 +295,7 @@ class ResumeShareController extends Controller {
         }
     }
 
-    private async DeleteShareLink(
+    private async deleteShareLink(
         options: ApiHandlerOptions<ResumeShareDeleteRequestDto>,
     ): Promise<ApiHandlerResponse<ResumeShareDeleteResponseDto | unknown>> {
         try {

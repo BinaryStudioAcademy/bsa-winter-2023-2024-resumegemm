@@ -1,7 +1,5 @@
 type StatisticsRequestDto = {
-    params: {
-        id: string;
-    };
+    resumeIds: string[];
 };
 
 export { type StatisticsRequestDto };
