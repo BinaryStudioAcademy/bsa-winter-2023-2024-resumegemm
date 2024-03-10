@@ -12,7 +12,7 @@ const subscribe = createAsyncThunk<
 >(`${sliceName}/subscribe`, async (_, { extra }) => {
     const { emailSubscriptionsApi } = extra;
 
-    return await emailSubscriptionsApi.subscribe();
+    return emailSubscriptionsApi.subscribe();
 });
 
 const unsubscribe = createAsyncThunk<
@@ -22,7 +22,7 @@ const unsubscribe = createAsyncThunk<
 >(`${sliceName}/unsubscribe`, async (payload, { extra }) => {
     const { emailSubscriptionsApi } = extra;
 
-    return await emailSubscriptionsApi.unsubscribe(payload.id);
+    return emailSubscriptionsApi.unsubscribe(payload.id);
 });
 
 export { subscribe, unsubscribe };
