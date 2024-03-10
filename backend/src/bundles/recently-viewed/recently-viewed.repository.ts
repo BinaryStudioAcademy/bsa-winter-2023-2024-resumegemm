@@ -1,13 +1,17 @@
 import { Guid as guid } from 'guid-typescript';
 
+import { RESUME_COUNT_INTERVAL } from './constants/resume-count-interval.js';
 import { getUniqueTemplatesViewedByUser } from './helpers/get-unique-templates-viewed-by-user.js';
 import { type RecentlyViewedModel } from './recently-viewed.model';
+
 import {
     type IRecentlyViewedRepository,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
+    type RecentlyViewedResumesQueryResult,
     type RecentlyViewedResumesResponseDto,
     type RecentlyViewedTemplatesQueryResult,
+    type RecentlyViewedResumesWithCount,
     type RecentlyViewedTemplatesResponseDto,
 } from './types/types';
 
@@ -98,6 +102,27 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .deleteById(id);
 
         return Boolean(deletedItem);
+    }
+
+    public async findRecentlyViewedResumesWithCount(
+        interval = RESUME_COUNT_INTERVAL,
+    ): Promise<RecentlyViewedResumesWithCount[]> {
+        const result = (await this.recentlyViewedModel
+            .query()
+            .select('resume_id', 'viewed_at')
+            .count('resume_id as count')
+            .groupBy('resume_id', 'viewed_at')
+            .whereNotNull('resume_id')
+            .withGraphFetched('resumes')
+            .whereRaw(
+                `viewed_at >= CURRENT_TIMESTAMP - interval '${interval}' AND viewed_at <= CURRENT_TIMESTAMP`,
+            )) as RecentlyViewedResumesQueryResult[];
+
+        return result.map((item) => ({
+            resumeId: item.resumes.id,
+            userId: item.resumes.userId,
+            count: +item.count,
+        }));
     }
 }
 
