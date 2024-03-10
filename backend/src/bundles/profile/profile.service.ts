@@ -37,7 +37,9 @@ class ProfileService implements IProfileService {
         return avatar ? await this.fileService.getFileUrl(avatar) : null;
     }
 
-    public async deleteAvatar(id: string): Promise<void> {
+    public async deleteAvatar(
+        id: string,
+    ): ReturnType<IProfileService['deleteAvatar']> {
         const userProfile = await this.profileRepository.getById(id);
 
         if (userProfile?.avatar) {
