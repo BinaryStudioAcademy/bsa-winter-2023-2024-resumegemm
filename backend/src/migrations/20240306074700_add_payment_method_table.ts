@@ -16,8 +16,9 @@ async function up(knex: Knex): Promise<void> {
             .unique()
             .primary()
             .defaultTo(knex.raw(UUID_GENERATION_FUNCTION));
-        table.string(DatabaseColumnName.CUSTOMER_ID).notNullable();
         table.string(DatabaseColumnName.PAYMENT_METHOD_ID).notNullable();
+        table.string(DatabaseColumnName.CARD).notNullable();
+        table.dateTime(DatabaseColumnName.CARD_TERM).notNullable();
         table.string(DatabaseColumnName.TYPE).notNullable();
         table
             .dateTime(DatabaseColumnName.CREATED_AT)

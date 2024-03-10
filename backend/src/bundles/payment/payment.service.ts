@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
 
+import { type SubscriptionService } from '../subscription/subscription.service.js';
 import { type UserService } from '../users/user.service.js';
 import { PaymentErrorMessage } from './enums/error-message.js';
 import { mapPrices } from './helpers/price-mapper.js';
@@ -18,11 +19,17 @@ class PaymentService implements IPaymentService {
     private appConfig: IConfig;
     private stripe: Stripe;
     private userService: UserService;
+    private subscriptionService: SubscriptionService;
 
-    public constructor(config: IConfig, userService: UserService) {
+    public constructor(
+        config: IConfig,
+        userService: UserService,
+        subscriptionService: SubscriptionService,
+    ) {
         this.appConfig = config;
         this.stripe = new Stripe(this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY);
         this.userService = userService;
+        this.subscriptionService = subscriptionService;
     }
 
     public getPublishableKey(): GetPublishableKeyResponseDto {
@@ -131,6 +138,23 @@ class PaymentService implements IPaymentService {
         const { client_secret } =
             latest_invoice.payment_intent as Stripe.PaymentIntent;
 
+        // const { id: stripeId } = customer;
+        // const user = await this.userService.addStripeId(stripeId, email);
+
+        // const payment_method = payment_settings?.payment_method_options?.card;
+
+        // const newPaymentMethod = {
+        //     paymentMethodId: '',
+        //     userId: user?.id,
+        //     type:''
+        // }
+        // const newSubscription = {
+        //     subscriptionId: id,
+        //     subscriptionPlanId: ,
+        //     userId: user?.id,
+        //     status: subscription.status,
+
+        // }
         return {
             clientSecret: client_secret,
             subscriptionId: id,

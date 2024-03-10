@@ -74,6 +74,11 @@ enum DatabaseColumnName {
     NEW_TEMPLATE_ID = 'new_template_id',
     DESCRIPTION = 'description',
     NEW_RESUME_SHARE_LINK_ID = 'new_resume_share_link_id',
+    CARD = 'card',
+    CARD_TERM = 'card_term',
+    STATUS = 'status',
+    SUBSCRIPTION_PLAN_ID = 'subscription_plan_id',
+    SUBSCRIPTION_ID = 'subscription_id',
 }
 
 export { DatabaseColumnName };
