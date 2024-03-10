@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import {
     Icon,
@@ -19,6 +18,8 @@ import {
 } from '~/bundles/home/components/components';
 import { TemplateErrorMessage } from '~/bundles/templates-page/enums/enums';
 import { type TemplateDto } from '~/bundles/templates-page/types/types';
+import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
+import { showToast } from '~/bundles/toast/helpers/show-toast';
 
 import styles from './styles.module.scss';
 
@@ -34,7 +35,10 @@ const Templates: React.FC = () => {
                 navigate(`${AppRoute.TEMPLATE_EDITOR}/${newTemplate.id}`);
             })
             .catch(() => {
-                toast.error(TemplateErrorMessage.TEMPLATE_NOT_CREATED);
+                showToast(
+                    TemplateErrorMessage.TEMPLATE_NOT_CREATED,
+                    ToastType.ERROR,
+                );
             });
     }, [dispatch, navigate]);
 
