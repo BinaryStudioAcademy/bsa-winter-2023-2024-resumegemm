@@ -35,4 +35,6 @@ RUN npm run build
 #
 #RUN npm run seed:run
 
+EXPOSE 3001
+
 CMD ["node", "build/src/index.js"]
