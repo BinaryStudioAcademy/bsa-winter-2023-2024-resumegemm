@@ -15,6 +15,7 @@
         "build:shared": "npm run build -w shared",
         "build:frontend": "npm run build -w frontend",
         "build:backend": "npm run build -w backend",
+        "docker:build": "docker-compose up --build",
         "lint:editor": "editorconfig-checker",
         "lint:fs": "ls-lint",
         "lint:type": "npm run lint:type --workspaces --if-present",
