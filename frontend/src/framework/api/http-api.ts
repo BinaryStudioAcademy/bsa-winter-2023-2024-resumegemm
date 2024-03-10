@@ -1,4 +1,4 @@
-import { getCookie } from 'shared/build';
+import Cookies from 'js-cookie';
 
 import {
     type ContentType,
@@ -17,7 +17,7 @@ import {
     HttpHeader,
 } from '~/framework/http/http.js';
 import { type IStorage, StorageKey } from '~/framework/storage/storage.js';
-import { configureString } from '~/helpers/helpers.js';
+import { configureString, CookieName } from '~/helpers/helpers.js';
 
 import { type IHttpApi } from './interfaces/interfaces.js';
 import { type HttpApiOptions, type HttpApiResponse } from './types/types.js';
@@ -97,7 +97,7 @@ class HTTPApi implements IHttpApi {
                 StorageKey.ACCESS_TOKEN,
             );
 
-            const tokenFromCookie = getCookie(StorageKey.ACCESS_TOKEN);
+            const tokenFromCookie = Cookies.get(CookieName.ACCESS_TOKEN);
 
             const token = tokenFromLocalStorage ?? tokenFromCookie;
 
