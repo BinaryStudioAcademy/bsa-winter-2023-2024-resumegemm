@@ -9,6 +9,7 @@ enum AppRoute {
     HOME = '/home',
     TEMPLATES = '/templates',
     EMAIL_SUBSCRIPTION = '/email-subscription/unsubscribe/:id',
+    TEMPLATE_EDITOR = '/template-editor',
 }
 
 export { AppRoute };
