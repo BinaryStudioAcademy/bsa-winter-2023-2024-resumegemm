@@ -71,26 +71,28 @@ class HTTPApi implements IHttpApi {
         });
 
         if (response.status === HttpCode.EXPIRED_TOKEN) {
-            response = await this.http
-                .load(this.getFullEndpoint(AuthApiPath.TOKEN, {}), {
+            const tokenResponse = await this.http.load(
+                this.getFullEndpoint(AuthApiPath.TOKEN, {}),
+                {
                     method,
                     headers,
                     payload,
                     withCredentials,
-                })
-                .then((response) => response.json())
-                .then(({ accessToken }: AuthTokenResponse) =>
-                    this.storage.set(StorageKey.ACCESS_TOKEN, accessToken),
-                )
-                .then(() => this.getHeaders(contentType, hasAuth))
-                .then((headers) =>
-                    this.http.load(path, {
-                        method,
-                        headers,
-                        payload,
-                        withCredentials,
-                    }),
-                );
+                },
+            );
+
+            const { accessToken } =
+                (await tokenResponse.json()) as AuthTokenResponse;
+            await this.storage.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+            const newHeaders = await this.getHeaders(contentType, hasAuth);
+
+            response = await this.http.load(path, {
+                method,
+                headers: newHeaders,
+                payload,
+                withCredentials,
+            });
         }
 
         return (await this.checkResponse(response)) as HttpApiResponse;
