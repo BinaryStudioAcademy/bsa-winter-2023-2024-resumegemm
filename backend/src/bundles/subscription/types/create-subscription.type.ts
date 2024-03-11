@@ -1,8 +1,8 @@
 type CreateSubscription = {
     status: string;
     subscriptionId: string;
-    subscriptionPlanId: string;
     userId: string;
+    subscriptionPlanId: string;
 };
 
 export { type CreateSubscription };

@@ -26,6 +26,7 @@ export {
     PaymentApiPath,
     paymentCreateSubscriptionValidationSchema,
 } from './bundles/payment/payment.js';
+export { type PaymentMethod } from './bundles/payment-method/types/types.js';
 export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
 export { type Profile } from './bundles/profile/profile.js';
 export {
@@ -72,6 +73,7 @@ export {
     SkillLevel,
 } from './bundles/resumes/resumes.js';
 export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
+export { type Subscription } from './bundles/subscription/types/types.js';
 export {
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
