@@ -28,7 +28,8 @@ h6 {
     flex-direction: column;
     box-sizing: border-box;
     width: 100%;
-    max-width: 491px;
+    width: 500px;
+    aspect-ratio: 1 / 1.41;
     margin: 0 auto;
     padding: 29.71px 40.85px;
     color: var(--color-text-dark-blue);
