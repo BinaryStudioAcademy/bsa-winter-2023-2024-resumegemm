@@ -8,6 +8,7 @@ enum AppRoute {
     RESUME_ACCESS = '/resumes/share/:id',
     HOME = '/home',
     TEMPLATES = '/templates',
+    TEMPLATE_EDITOR = '/template-editor',
 }
 
 export { AppRoute };

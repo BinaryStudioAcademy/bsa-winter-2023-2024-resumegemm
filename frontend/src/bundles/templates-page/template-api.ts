@@ -3,7 +3,7 @@ import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
-import { TemplatesApiPath } from '../templates-page/enums/enums';
+import { TemplatesApiPath } from './enums/enums';
 import {
     type TemplateDto,
     type TemplateUpdateItemRequestDto,

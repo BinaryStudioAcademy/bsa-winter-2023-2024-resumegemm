@@ -1,10 +1,9 @@
-import { createTemplate, getTemplateById } from './actions';
+import { loadAllTemplates } from './actions';
 import { actions } from './slice';
 
 const allActions = {
+    loadAllTemplates,
     ...actions,
-    createTemplate,
-    getTemplateById,
 };
 
 export { allActions as actions };

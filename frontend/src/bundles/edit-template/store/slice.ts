@@ -1,46 +1,78 @@
+import { type PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { type ValueOf } from 'shared/build';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { type TemplateDto } from '../types/types.js';
-import { editTemplate, loadAllTemplates } from './actions.js';
+import { type TemplateDto } from '../../templates-page/types/types.js';
+import { createTemplate, editTemplate, getTemplateById } from './actions.js';
 
 type State = {
-    templates: TemplateDto[];
+    template: Pick<
+        TemplateDto,
+        'id' | 'isOwner' | 'image' | 'templateSettings'
+    >;
     dataStatus: ValueOf<typeof DataStatus>;
 };
 
 const initialState: State = {
-    templates: [],
+    template: {
+        id: '',
+        isOwner: false,
+        image: '',
+        templateSettings: {
+            containers: [],
+            styles: {},
+        },
+    },
     dataStatus: DataStatus.IDLE,
 };
 
 const { reducer, actions, name } = createSlice({
     initialState,
-    name: 'templates',
-    reducers: {},
+    name: 'editTemplate',
+    reducers: {
+        setBlockEnabled: (
+            state,
+            action: PayloadAction<{ blockName: string; enabled: boolean }>,
+        ) => {
+            const { blockName, enabled } = action.payload;
+            const { templateSettings } = state.template;
+            const newTemplateSettings = {
+                ...templateSettings,
+                containers: templateSettings.containers.map((container) => ({
+                    ...container,
+                    blocks: container.blocks.map((block) => {
+                        if (block.name === blockName) {
+                            return {
+                                ...block,
+                                enabled,
+                            };
+                        }
+                        return block;
+                    }),
+                })),
+            };
+            state.template.templateSettings = newTemplateSettings;
+        },
+    },
     extraReducers(builder) {
-        builder.addCase(loadAllTemplates.fulfilled, (state, action) => {
-            state.templates = action.payload;
-        });
         builder.addMatcher(
-            isAnyOf(editTemplate.pending, loadAllTemplates.pending),
+            isAnyOf(
+                getTemplateById.pending,
+                createTemplate.pending,
+                editTemplate.pending,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
             },
         );
 
-        builder.addMatcher(isAnyOf(editTemplate.fulfilled), (state, action) => {
-            state.dataStatus = DataStatus.FULFILLED;
-            state.templates.push(action.payload);
-        });
-
         builder.addMatcher(
-            isAnyOf(editTemplate.rejected, loadAllTemplates.rejected),
-            (state) => {
-                state.dataStatus = DataStatus.REJECTED;
-                state.templates = [];
+            isAnyOf(getTemplateById.fulfilled, createTemplate.fulfilled),
+            (state, action) => {
+                state.template = action.payload;
+                state.dataStatus = DataStatus.FULFILLED;
             },
         );
     },
