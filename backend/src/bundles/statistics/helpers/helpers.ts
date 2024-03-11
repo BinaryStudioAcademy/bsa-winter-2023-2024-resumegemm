@@ -1,1 +1,4 @@
-export { compareDatesWithoutTime } from 'shared/build';
+export {
+    compareDateInDiapasonWithoutTime,
+    compareDatesWithoutTime,
+} from 'shared/build';

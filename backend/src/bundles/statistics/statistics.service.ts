@@ -1,5 +1,6 @@
 import {
     type StatisticsRecord,
+    compareDateInDiapasonWithoutTime,
     compareDatesWithoutTime,
     StatisticsPeriods,
 } from 'shared/build/index.js';
@@ -56,6 +57,57 @@ class StatisticsService {
         };
     }
 
+    private getStatisticsHandleMonth(
+        data: ResumeShareDetailsGetResponseDto[],
+    ): GetStatisticsResponseDto {
+        const statistics: StatisticsRecord[] = [];
+
+        const dateMonthAgo = new Date();
+        dateMonthAgo.setMonth(dateMonthAgo.getMonth() - StatisticsDays.MONTH);
+
+        for (const resume of data) {
+            for (
+                const day = dateMonthAgo;
+                day <= new Date();
+                day.setDate(day.getDate() + StatisticsDays.WEEK)
+            ) {
+                const dayInWeek = new Date(day);
+                dayInWeek.setDate(
+                    dayInWeek.getDate() + StatisticsDays.WEEK - 1,
+                );
+
+                const dayLimit = new Date(
+                    Math.min(dayInWeek.getTime(), Date.now()),
+                );
+
+                statistics.push([
+                    `${day.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                    })} - ${dayLimit.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                    })}`,
+                    resume.accesses.filter((access) => {
+                        return compareDateInDiapasonWithoutTime(
+                            new Date(access.resumeShareAccessTime),
+                            day,
+                            dayLimit,
+                        );
+                    }).length,
+                ]);
+            }
+        }
+
+        return {
+            data: statistics,
+            sum: statistics.reduce(
+                (accumulator, currentValue) => accumulator + currentValue[1],
+                0,
+            ),
+        };
+    }
+
     public async getStatistics(
         resumeId: string[],
         period: string,
@@ -72,10 +124,7 @@ class StatisticsService {
                 return this.getStatisticsHandleWeek(details);
             }
             case StatisticsPeriods.MONTHLY: {
-                return {
-                    data: [['Month', 1000]],
-                    sum: 1000,
-                };
+                return this.getStatisticsHandleMonth(details);
             }
             case StatisticsPeriods.TOTAL: {
                 return {
