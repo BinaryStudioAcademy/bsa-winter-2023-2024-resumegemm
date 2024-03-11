@@ -13,7 +13,6 @@ async function up(knex: Knex): Promise<void> {
         table.string(DatabaseColumnName.EMAIL).unique().notNullable();
         table.text(DatabaseColumnName.PASSWORD_HASH).notNullable();
         table.text(DatabaseColumnName.PASSWORD_SALT).notNullable();
-        table.text(DatabaseColumnName.STRIPE_ID);
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()

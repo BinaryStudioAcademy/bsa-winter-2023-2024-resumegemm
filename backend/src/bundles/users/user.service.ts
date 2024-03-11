@@ -143,7 +143,7 @@ class UserService
         stripeId: string,
         email: string,
     ): Promise<UserEntityFields | null> {
-        return this.userRepository.addStripeId({
+        return await this.userRepository.addStripeId({
             stripeId,
             email,
         });
