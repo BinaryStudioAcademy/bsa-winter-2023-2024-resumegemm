@@ -50,7 +50,7 @@ const updateAccessToken = createAsyncThunk<void, undefined, AsyncThunkConfig>(
     async (_, { extra }) => {
         const { authApi, storageApi } = extra;
 
-        const { accessToken } = await authApi.updateRefreshToken();
+        const { accessToken } = await authApi.updateAccessToken();
         await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
     },
 );
