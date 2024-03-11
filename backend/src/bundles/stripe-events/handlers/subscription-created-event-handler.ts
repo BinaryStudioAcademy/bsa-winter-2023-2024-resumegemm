@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { type IConfig } from '~/common/config/interfaces/config.interface.js';
 import { MailService } from '~/common/mail-service/mail-service.package.js';
 
+import { EmailSubject } from '../enums/email-subject.enum.js';
 import { generateSubscriptionEmailPayload } from '../helpers/subscription-email-generator.js';
 import { type IEventHandler } from '../interfaces/interfaces';
 import { type StripeCustomer } from '../types/types';
@@ -34,10 +35,10 @@ class SubscriptionCreatedEventHandler
         const { name, email } = customer;
         const emailPayload = generateSubscriptionEmailPayload({
             email,
-            subject: 'Subscription',
+            subject: EmailSubject.SUBSCRIPTION,
             name,
-            current_period_start,
-            current_period_end,
+            currentPeriodStart: current_period_start,
+            currentPeriodEnd: current_period_end,
         });
         void this.mailService.sendMail(emailPayload);
     }

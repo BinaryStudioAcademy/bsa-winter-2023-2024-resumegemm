@@ -2,8 +2,8 @@ type SubscriptionDetails = {
     email: string;
     subject: string;
     name: string;
-    current_period_start: number;
-    current_period_end: number;
+    currentPeriodStart: number;
+    currentPeriodEnd: number;
     description?: string | null;
 };
 

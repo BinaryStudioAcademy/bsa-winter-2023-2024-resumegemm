@@ -3,37 +3,26 @@ import { type SendMailOptions } from 'nodemailer';
 import { EmailPayload } from '../constants/email-payload.js';
 import { EmailSubject } from '../enums/email-subject.enum.js';
 import { type SubscriptionDetails } from '../types/types';
-
-const MILLIS_TO_SECOND = 1000;
+import { formatDate } from './format-date.js';
 
 const loadAndReplaceTemplate = (variables: Record<string, string>): string => {
     let htmlContent = EmailPayload.HTML;
-    for (const key of Object.keys(variables)) {
-        const regex = new RegExp(`{${key}}`, 'g');
-        htmlContent = htmlContent.replace(regex, variables[key]);
+    for (const [key, value] of Object.entries(variables)) {
+        htmlContent = htmlContent.split(`{${key}}`).join(value);
     }
 
     return htmlContent;
-};
-
-const formatDate = (timeStamp: number): string => {
-    const date = new Date(timeStamp * MILLIS_TO_SECOND);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-
-    return `${day}/${month}/${year}`;
 };
 
 const generateSubscriptionEmailPayload = ({
     email,
     subject = EmailSubject.SUBSCRIPTION,
     name,
-    current_period_start,
-    current_period_end,
+    currentPeriodStart,
+    currentPeriodEnd,
 }: SubscriptionDetails): SendMailOptions => {
-    const startDate = formatDate(current_period_start);
-    const endDate = formatDate(current_period_end);
+    const startDate = formatDate(currentPeriodStart);
+    const endDate = formatDate(currentPeriodEnd);
 
     const textContent = `Congratulations ${name} on successful subscription. Your subscription details are:
         Start Date: ${startDate}
