@@ -55,14 +55,13 @@ const ResumeAccess: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const { resumeIdSelector, details } = useAppSelector(
-        ({ resumeAccess }) => ({
+    const { resumeIdSelector, details, user } = useAppSelector(
+        ({ resumeAccess, auth }) => ({
             resumeIdSelector: resumeAccess.resumeId,
             details: resumeAccess.details,
+            user: auth.user,
         }),
     );
-
-    const user = useAppSelector((state) => state.auth.user);
 
     const deleteResumeAccess = useCallback(() => {
         if (!id) {
