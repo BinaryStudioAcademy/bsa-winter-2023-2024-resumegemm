@@ -60,7 +60,7 @@ class PaymentService implements IPaymentService {
         paymentMethod: string,
     ): Promise<Stripe.Customer> {
         try {
-            const customer = await this.stripe.customers.create({
+            return await this.stripe.customers.create({
                 name: name,
                 email: email,
                 payment_method: paymentMethod,
@@ -68,9 +68,6 @@ class PaymentService implements IPaymentService {
                     default_payment_method: paymentMethod,
                 },
             });
-            const { id: stripeId } = customer;
-            await this.userService.addStripeId(stripeId, email);
-            return customer;
         } catch {
             throw new HTTPError({
                 message: PaymentErrorMessage.STRIPE_USER_CREATE_ERROR,
