@@ -22,6 +22,15 @@ class SubscriptionRepository implements ISubscriptionRepository {
         return await this.subscriptionModel.query().insert(data).returning('*');
     }
 
+    public async update(
+        id: string,
+        data: Partial<Subscription>,
+    ): Promise<Subscription> {
+        return await this.subscriptionModel
+            .query()
+            .updateAndFetchById(id, data);
+    }
+
     public async delete(id: string): Promise<boolean> {
         const response = await this.subscriptionModel.query().deleteById(id);
 

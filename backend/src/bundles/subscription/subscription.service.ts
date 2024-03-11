@@ -20,6 +20,13 @@ class SubscriptionService implements ISubscriptionService {
         return await this.subscriptionRepository.create(data);
     }
 
+    public async update(
+        id: string,
+        data: Partial<Subscription>,
+    ): Promise<Subscription> {
+        return await this.subscriptionRepository.update(id, data);
+    }
+
     public async delete(id: string): Promise<boolean> {
         return await this.subscriptionRepository.delete(id);
     }
