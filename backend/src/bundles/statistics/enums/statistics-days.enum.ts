@@ -1,6 +1,6 @@
 enum StatisticsDays {
     WEEK = 7,
-    MONTH = 30,
+    MONTH = 1,
 }
 
 export { StatisticsDays };

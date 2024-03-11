@@ -10,10 +10,10 @@ import {
 } from '~/bundles/common/components/components';
 import { UserProfile } from '~/bundles/common/components/layout/header/user-profile/user-profile';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
-import { StatisticsPeriods } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 
 import { StatisticResumeCard } from '../components/resume-card/resume-card';
+import { StatisticsPeriodsLabels } from '../enums/periods.enum';
 import { actions } from '../store/statistics.store';
 import styles from './styles.module.scss';
 
@@ -21,18 +21,17 @@ const headerItems = [
     { label: 'Home', path: AppRoute.ROOT },
     { label: 'Templates', path: AppRoute.TEMPLATES },
 ];
-
 const dropdownOptions = [
-    StatisticsPeriods.WEEKLY,
-    StatisticsPeriods.MONTHLY,
-    StatisticsPeriods.TOTAL,
+    StatisticsPeriodsLabels.WEEKLY,
+    StatisticsPeriodsLabels.MONTHLY,
+    StatisticsPeriodsLabels.TOTAL,
 ];
 
 const StatisticsPage = (): JSX.Element => {
     const dispatch = useAppDispatch();
 
     const [viewsPeriod, setViewsPeriod] = useState<string>(
-        StatisticsPeriods.WEEKLY.value,
+        StatisticsPeriodsLabels.WEEKLY.value,
     );
 
     const statisticsRecords = useAppSelector(
@@ -57,7 +56,7 @@ const StatisticsPage = (): JSX.Element => {
         void dispatch(
             actions.getStatistics({
                 resumeIds: ['0196a978-e5fc-ae7e-924d-95317038f4df'],
-                type: viewsPeriod,
+                period: viewsPeriod,
             }),
         );
     }, [dispatch, viewsPeriod]);

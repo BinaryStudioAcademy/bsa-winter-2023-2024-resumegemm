@@ -76,6 +76,7 @@ export {
     type GetStatisticsResponseDto,
     type StatisticsRecord,
     StatisticsApiPath,
+    StatisticsPeriods,
 } from './bundles/statistics/statistics.js';
 export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
 export {

@@ -18,8 +18,8 @@ class StatisticsApi extends HttpApi {
     }
 
     public async getStatistics(
-        resumesId: string[],
-        type: string,
+        resumesIds: string[],
+        period: string,
     ): Promise<GetStatisticsResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(StatisticsApiPath.QUERY, {}),
@@ -27,8 +27,8 @@ class StatisticsApi extends HttpApi {
                 method: 'POST',
                 contentType: ContentType.JSON,
                 payload: JSON.stringify({
-                    resumeIds: resumesId,
-                    type: type,
+                    resumeIds: resumesIds,
+                    period: period,
                 }),
                 hasAuth: true,
             },

@@ -7,12 +7,12 @@ import { name as sliceName } from './slice.js';
 
 const getStatistics = createAsyncThunk<
     GetStatisticsResponseDto,
-    { resumeIds: string[]; type: string },
+    { resumeIds: string[]; period: string },
     AsyncThunkConfig
 >(`${sliceName}/getStatistics`, (request, { extra }) => {
     const { statisticsApi } = extra;
 
-    return statisticsApi.getStatistics(request.resumeIds, request.type);
+    return statisticsApi.getStatistics(request.resumeIds, request.period);
 });
 
 export { getStatistics };

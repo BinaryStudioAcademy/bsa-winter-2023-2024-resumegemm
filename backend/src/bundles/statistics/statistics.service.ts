@@ -1,6 +1,7 @@
 import {
     type StatisticsRecord,
     compareDatesWithoutTime,
+    StatisticsPeriods,
 } from 'shared/build/index.js';
 
 import { type ResumeShareService } from '../resume-share/resume-share.service.js';
@@ -57,6 +58,7 @@ class StatisticsService {
 
     public async getStatistics(
         resumeId: string[],
+        period: string,
     ): Promise<GetStatisticsResponseDto | undefined> {
         const details = await Promise.all(
             resumeId.map(
@@ -65,7 +67,23 @@ class StatisticsService {
             ),
         );
 
-        return this.getStatisticsHandleWeek(details);
+        switch (period) {
+            case StatisticsPeriods.WEEKLY: {
+                return this.getStatisticsHandleWeek(details);
+            }
+            case StatisticsPeriods.MONTHLY: {
+                return {
+                    data: [['Month', 1000]],
+                    sum: 1000,
+                };
+            }
+            case StatisticsPeriods.TOTAL: {
+                return {
+                    data: [['Total', 100]],
+                    sum: 100,
+                };
+            }
+        }
     }
 }
 

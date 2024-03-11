@@ -39,9 +39,12 @@ class StatisticsController extends Controller {
             body: GetStatisticsRequestDto;
         }>,
     ): Promise<ApiHandlerResponse<GetStatisticsResponseDto | undefined>> {
-        const ids = options.body.resumeIds;
+        const { resumeIds, period } = options.body;
 
-        const data = await this.statisticsService.getStatistics(ids);
+        const data = await this.statisticsService.getStatistics(
+            resumeIds,
+            period,
+        );
 
         return {
             status: HttpCode.CREATED,

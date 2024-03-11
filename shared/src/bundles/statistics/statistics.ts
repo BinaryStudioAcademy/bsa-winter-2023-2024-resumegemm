@@ -1,4 +1,4 @@
-export { StatisticsApiPath } from './enums/enums.js';
+export { StatisticsApiPath, StatisticsPeriods } from './enums/enums.js';
 export {
     type GetStatisticsRequestDto,
     type GetStatisticsResponseDto,
