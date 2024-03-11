@@ -5,7 +5,7 @@ import { type UserWithProfileRelation } from 'shared/build/index.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { getUser, signIn, signUp, updateAccessToken } from './actions.js';
+import { getUser, requestNewAccessToken, signIn, signUp } from './actions.js';
 
 type State = {
     user: UserWithProfileRelation | null;
@@ -30,7 +30,7 @@ const { reducer, actions, name } = createSlice({
         },
     },
     extraReducers(builder) {
-        builder.addCase(updateAccessToken.fulfilled, (state) => {
+        builder.addCase(requestNewAccessToken.fulfilled, (state) => {
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addMatcher(
@@ -38,7 +38,7 @@ const { reducer, actions, name } = createSlice({
                 signUp.pending,
                 signIn.pending,
                 getUser.pending,
-                updateAccessToken.pending,
+                requestNewAccessToken.pending,
             ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
@@ -58,7 +58,7 @@ const { reducer, actions, name } = createSlice({
                 signUp.rejected,
                 signIn.rejected,
                 getUser.rejected,
-                updateAccessToken.rejected,
+                requestNewAccessToken.rejected,
             ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
