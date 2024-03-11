@@ -126,7 +126,7 @@ class PaymentService implements IPaymentService {
         const subscription: Stripe.Subscription =
             await this.createStripeSubscription(customer.id, priceId);
 
-        const { latest_invoice, id } = subscription;
+        const { latest_invoice, id, status } = subscription;
 
         if (!latest_invoice || typeof latest_invoice === 'string') {
             return {
@@ -138,23 +138,18 @@ class PaymentService implements IPaymentService {
         const { client_secret } =
             latest_invoice.payment_intent as Stripe.PaymentIntent;
 
-        // const { id: stripeId } = customer;
-        // const user = await this.userService.addStripeId(stripeId, email);
+        const { id: stripeId } = customer;
+        const user = await this.userService.findByStripeId(stripeId);
 
-        // const payment_method = payment_settings?.payment_method_options?.card;
+        if (user) {
+            const newSubscription = {
+                subscriptionId: id,
+                userId: user.id,
+                status: status,
+            };
+            await this.subscriptionService.create(newSubscription);
+        }
 
-        // const newPaymentMethod = {
-        //     paymentMethodId: '',
-        //     userId: user?.id,
-        //     type:''
-        // }
-        // const newSubscription = {
-        //     subscriptionId: id,
-        //     subscriptionPlanId: ,
-        //     userId: user?.id,
-        //     status: subscription.status,
-
-        // }
         return {
             clientSecret: client_secret,
             subscriptionId: id,
