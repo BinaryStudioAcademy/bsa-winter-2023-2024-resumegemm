@@ -1,16 +1,16 @@
-import { type TemplateSettings } from '~/bundles/templates-page/types/types';
+import { useAppSelector } from '~/bundles/common/hooks/hooks';
 
 import { TemplateContainer } from '../template-container/template-container';
 import styles from './styles.module.scss';
 
-type Properties = {
-    settings: TemplateSettings;
-};
+const TemplateEditor: React.FC = () => {
+    const templateSettings = useAppSelector(
+        (state) => state.editTemplate.template.templateSettings,
+    );
 
-const TemplateEditor: React.FC<Properties> = ({ settings }) => {
     return (
-        <div style={settings.styles} className={styles.template_editor}>
-            {settings.containers.map((container) => (
+        <div style={templateSettings.styles} className={styles.template_editor}>
+            {templateSettings.containers.map((container) => (
                 <TemplateContainer key={container.id} {...container} />
             ))}
         </div>

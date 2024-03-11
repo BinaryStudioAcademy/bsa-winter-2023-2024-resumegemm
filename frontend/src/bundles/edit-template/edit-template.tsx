@@ -103,7 +103,7 @@ const EditTemplatePage: React.FC = () => {
                     </RegularButton>
                 </div>
             </nav>
-            <TemplateEditor settings={templateSettings} />
+            <TemplateEditor />
         </section>
     );
 };
