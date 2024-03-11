@@ -4,6 +4,7 @@ import {
 } from 'shared/build/index.js';
 
 import { type ResumeShareService } from '../resume-share/resume-share.service.js';
+import { StatisticsDays } from './enums/statistics-days.enum.js';
 import {
     type GetStatisticsResponseDto,
     type ResumeShareDetailsGetResponseDto,
@@ -22,7 +23,7 @@ class StatisticsService {
         const statistics: StatisticsRecord[] = [];
 
         const dateWeekAgo = new Date();
-        dateWeekAgo.setDate(dateWeekAgo.getDate() - 7);
+        dateWeekAgo.setDate(dateWeekAgo.getDate() - StatisticsDays.WEEK);
 
         for (const resume of data) {
             for (
