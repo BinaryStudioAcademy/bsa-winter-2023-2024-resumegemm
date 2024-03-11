@@ -1,9 +1,5 @@
-import { type TemplateBlockTitles } from '../enums/enums.js';
+import { type TemplateSettings } from './template-editor/template-settings.type.js';
 
-type TemplateBlockSettings = {
-    [key in TemplateBlockTitles]?: {
-        enabled: boolean;
-    };
-};
+type TemplateBlockSettings = TemplateSettings;
 
 export { type TemplateBlockSettings };
