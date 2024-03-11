@@ -1,10 +1,12 @@
 import { type UserWithProfileRelation } from 'shared/build';
 
+import defaultAvatar from '~/assets/img/default-avatar-icon.png';
+
 const getUserAvatar = (user: UserWithProfileRelation | null): string => {
     if (user?.userProfile.avatar) {
         return user.userProfile.avatar;
     }
-    return '/src/assets/img/mock-avatar.png';
+    return defaultAvatar;
 };
 
 export { getUserAvatar };

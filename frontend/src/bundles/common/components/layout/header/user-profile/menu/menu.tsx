@@ -2,6 +2,8 @@ import { forwardRef, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ApiPath } from 'shared/build';
 
+import { AppRoute } from '~/bundles/common/enums/app-route.enum';
+
 import styles from './styles.module.scss';
 
 type Properties = {
@@ -16,7 +18,7 @@ const Menu = forwardRef<HTMLMenuElement, Properties>(function Menu(
 
     const handleLogout = useCallback(() => {
         onLogout();
-        navigate('/');
+        navigate(AppRoute.SIGN_UP);
     }, [navigate, onLogout]);
 
     return (

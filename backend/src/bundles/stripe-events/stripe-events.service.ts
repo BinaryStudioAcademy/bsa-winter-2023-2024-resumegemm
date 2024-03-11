@@ -13,7 +13,6 @@ import { generateSubscriptionEmailPayload } from './helpers/subscription-email-g
 import {
     type StripeCustomer,
     type StripeEventsResponseDto,
-    type SubscriptionPlan,
 } from './types/types.js';
 
 class StripeEventsService implements IStripeEventsService {

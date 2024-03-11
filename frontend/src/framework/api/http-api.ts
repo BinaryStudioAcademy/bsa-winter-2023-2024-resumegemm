@@ -6,6 +6,8 @@ import {
     type ServerErrorResponse,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
+import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
+import { showToast } from '~/bundles/toast/helpers/show-toast.js';
 import {
     type HttpCode,
     type IHttp,
@@ -13,7 +15,11 @@ import {
     HttpHeader,
 } from '~/framework/http/http.js';
 import { type IStorage, StorageKey } from '~/framework/storage/storage.js';
-import { configureString } from '~/helpers/helpers.js';
+import {
+    configureString,
+    getCookie,
+    isServerErrorRange,
+} from '~/helpers/helpers.js';
 
 import { type IHttpApi } from './interfaces/interfaces.js';
 import { type HttpApiOptions, type HttpApiResponse } from './types/types.js';
@@ -89,11 +95,15 @@ class HTTPApi implements IHttpApi {
         headers.append(HttpHeader.CONTENT_TYPE, contentType);
 
         if (hasAuth) {
-            const token = await this.storage.get<string>(
+            const tokenFromLocalStorage = await this.storage.get<string>(
                 StorageKey.ACCESS_TOKEN,
             );
 
-            headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token ?? ''}`);
+            const tokenFromCookie = getCookie(StorageKey.ACCESS_TOKEN);
+
+            const token = tokenFromLocalStorage ?? tokenFromCookie;
+
+            headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
         }
 
         return headers;
@@ -116,6 +126,13 @@ class HTTPApi implements IHttpApi {
         )) as ServerErrorResponse;
 
         const isCustomException = Boolean(parsedException.errorType);
+
+        if (isServerErrorRange(response.status)) {
+            showToast(parsedException.message, ToastType.ERROR, {
+                theme: 'dark',
+                position: 'top-right',
+            });
+        }
 
         throw new HTTPError({
             status: response.status as ValueOf<typeof HttpCode>,

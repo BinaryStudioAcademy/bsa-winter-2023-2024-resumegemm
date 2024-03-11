@@ -1,39 +1,35 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type TemplateGetAllItemResponseDto } from 'shared/build/index.js';
 
-import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
+import { type AsyncThunkConfig } from '~/bundles/common/types/async-thunk-config.type';
 
-import {
-    type TemplateUpdateItemRequestDto,
-    type TemplateUpdateItemResponseDto,
-} from '../types/types.js';
+import { type TemplateDto } from '../../templates-page/types/types';
 import { name as sliceName } from './slice.js';
 
-type EditTemplayePayload = Partial<TemplateUpdateItemRequestDto> & {
-    id: string;
-};
+const getTemplateById = createAsyncThunk<TemplateDto, string, AsyncThunkConfig>(
+    `${sliceName}/get-by-id`,
+    (id, { extra }) => {
+        const { templateApi } = extra;
+        return templateApi.getTemplateById(id);
+    },
+);
 
-const editTemplate = createAsyncThunk<
-    TemplateUpdateItemResponseDto,
-    EditTemplayePayload,
-    AsyncThunkConfig
->(`${sliceName}/edit`, (request, { extra }) => {
-    const { templateApi } = extra;
-
-    return templateApi.editTemplate(
-        request.id,
-        request.templateSettings as TemplateUpdateItemRequestDto,
-    );
-});
-
-const loadAllTemplates = createAsyncThunk<
-    TemplateGetAllItemResponseDto[],
+const createTemplate = createAsyncThunk<
+    TemplateDto,
     undefined,
     AsyncThunkConfig
->('templates2/load-all', async (_, { extra }) => {
+>(`${sliceName}/create`, (_, { extra }) => {
     const { templateApi } = extra;
-    const { items } = await templateApi.getAll();
-    return items;
+    return templateApi.createTemplate();
 });
 
-export { editTemplate, loadAllTemplates };
+const editTemplate = createAsyncThunk<TemplateDto, undefined, AsyncThunkConfig>(
+    `${sliceName}/edit`,
+    (request, { extra, getState }) => {
+        const { templateApi } = extra;
+        const { id, templateSettings } = getState().editTemplate.template;
+
+        return templateApi.editTemplate(id, { templateSettings });
+    },
+);
+
+export { createTemplate, editTemplate, getTemplateById };
