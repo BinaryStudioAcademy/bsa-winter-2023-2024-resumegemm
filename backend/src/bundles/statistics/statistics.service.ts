@@ -108,6 +108,62 @@ class StatisticsService {
         };
     }
 
+    private getStatisticsHandleYear(
+        data: ResumeShareDetailsGetResponseDto[],
+    ): GetStatisticsResponseDto {
+        const statistics: StatisticsRecord[] = [];
+
+        for (const resume of data) {
+            for (
+                const day = new Date(
+                    Math.min(
+                        ...resume.accesses.map((access) =>
+                            new Date(access.resumeShareAccessTime).getTime(),
+                        ),
+                    ),
+                );
+                day <= new Date();
+                day.setMonth(day.getMonth() + StatisticsDays.MONTH)
+            ) {
+                const dayInMonth = new Date(day);
+                dayInMonth.setMonth(
+                    dayInMonth.getMonth() + StatisticsDays.MONTH,
+                );
+
+                dayInMonth.setDate(dayInMonth.getDate() - 1);
+
+                const dayLimit = new Date(
+                    Math.min(dayInMonth.getTime(), Date.now()),
+                );
+
+                statistics.push([
+                    `${day.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                    })} - ${dayLimit.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                    })}`,
+                    resume.accesses.filter((access) => {
+                        return compareDateInDiapasonWithoutTime(
+                            new Date(access.resumeShareAccessTime),
+                            day,
+                            dayLimit,
+                        );
+                    }).length,
+                ]);
+            }
+        }
+
+        return {
+            data: statistics,
+            sum: statistics.reduce(
+                (accumulator, currentValue) => accumulator + currentValue[1],
+                0,
+            ),
+        };
+    }
+
     public async getStatistics(
         resumeId: string[],
         period: string,
@@ -127,10 +183,7 @@ class StatisticsService {
                 return this.getStatisticsHandleMonth(details);
             }
             case StatisticsPeriods.TOTAL: {
-                return {
-                    data: [['Total', 100]],
-                    sum: 100,
-                };
+                return this.getStatisticsHandleYear(details);
             }
         }
     }
