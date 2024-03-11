@@ -13,6 +13,7 @@ import {
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
+    type UserLinkedInDataResponseDto,
     type ValueOf,
 } from '~/bundles/oauth/types/types.js';
 import { type HttpApi } from '~/common/api/types/http-api.type.js';
@@ -74,6 +75,16 @@ class OpenAuthController extends Controller {
             method: 'GET',
             handler: (options) =>
                 this.handleFacebookAuth(
+                    options as ApiHandlerOptions<{
+                        cookies: FastifyRequest['cookies'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: OpenAuthApiPath.LINKEDIN,
+            method: 'GET',
+            handler: (options) =>
+                this.handleLinkedInAuth(
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
                     }>,
@@ -217,6 +228,40 @@ class OpenAuthController extends Controller {
             avatar: picture,
             oauthId: id,
             oauthStrategy: OauthStrategy.GOOGLE,
+            userId,
+        });
+    }
+
+    private async handleLinkedInAuth({
+        cookies,
+    }: ApiHandlerOptions<{
+        cookies: FastifyRequest['cookies'];
+    }>): Promise<ApiHandlerResponse<null>> {
+        const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
+        const accessToken = cookies[CookieName.ACCESS_TOKEN];
+
+        const userId = this.verifyTokenAndGetUserId(
+            accessToken as string,
+        ) as string;
+
+        const {
+            sub: id,
+            email,
+            picture: avatar,
+            given_name: firstName,
+            family_name: lastName,
+        }: UserLinkedInDataResponseDto = await this.requestOAuthProviderUserData(
+            OpenAuthApiGetUserUrl.LINKEDIN,
+            oauthToken,
+        );
+
+        return await this.createUser({
+            email,
+            firstName,
+            lastName,
+            avatar,
+            oauthId: id,
+            oauthStrategy: OauthStrategy.LINKEDIN,
             userId,
         });
     }
