@@ -3,7 +3,8 @@ import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
 
-import { type SubscriptionService } from '../subscription/subscription.service.js';
+import { paymentMethodService } from '../payment-method/payment-method.js';
+import { subscriptionService } from '../subscription/subscription.js';
 import { type UserService } from '../users/user.service.js';
 import { PaymentErrorMessage } from './enums/error-message.js';
 import { mapPrices } from './helpers/price-mapper.js';
@@ -19,17 +20,11 @@ class PaymentService implements IPaymentService {
     private appConfig: IConfig;
     private stripe: Stripe;
     private userService: UserService;
-    private subscriptionService: SubscriptionService;
 
-    public constructor(
-        config: IConfig,
-        userService: UserService,
-        subscriptionService: SubscriptionService,
-    ) {
+    public constructor(config: IConfig, userService: UserService) {
         this.appConfig = config;
         this.stripe = new Stripe(this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY);
         this.userService = userService;
-        this.subscriptionService = subscriptionService;
     }
 
     public getPublishableKey(): GetPublishableKeyResponseDto {
@@ -135,19 +130,46 @@ class PaymentService implements IPaymentService {
             };
         }
 
-        const { client_secret } =
+        const { client_secret, payment_method } =
             latest_invoice.payment_intent as Stripe.PaymentIntent;
 
-        const { id: stripeId } = customer;
-        const user = await this.userService.findByStripeId(stripeId);
+        const retrievedSubscription = await this.stripe.subscriptions.retrieve(
+            id,
+        );
+        const { id: stripePlanId } = retrievedSubscription.items.data[0].plan;
+
+        const customerId = customer.id.toString();
+        const user = await this.userService.addStripeId(customerId, email);
+
+        const paymentMethodId = payment_method?.toString();
+
+        if (paymentMethodId) {
+            const { card } = await this.stripe.paymentMethods.retrieve(
+                paymentMethodId,
+            );
+
+            if (card && user) {
+                const { last4, exp_month, exp_year } = card;
+                const cardExpireDate = new Date(exp_year, exp_month - 1);
+
+                const newPaymentMethod = {
+                    paymentMethodId,
+                    card: last4,
+                    cardExpireDate,
+                    userId: user.id,
+                };
+                await paymentMethodService.create(newPaymentMethod);
+            }
+        }
 
         if (user) {
             const newSubscription = {
                 subscriptionId: id,
                 userId: user.id,
                 status: status,
+                subscriptionPlanId: stripePlanId,
             };
-            await this.subscriptionService.create(newSubscription);
+            await subscriptionService.create(newSubscription);
         }
 
         return {
