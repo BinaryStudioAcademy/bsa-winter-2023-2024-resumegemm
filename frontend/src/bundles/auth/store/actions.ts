@@ -19,9 +19,13 @@ const signUp = createAsyncThunk<
 >(
     `${sliceName}/sign-up`,
     async (registerPayload, { extra, rejectWithValue }) => {
+        const { authApi, storageApi } = extra;
         try {
-            const { authApi } = extra;
-            const { user } = await authApi.signUp(registerPayload);
+            const { user, token: accessToken } = await authApi.signUp(
+                registerPayload,
+            );
+
+            await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
 
             return user;
         } catch (error: unknown) {
