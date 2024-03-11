@@ -75,7 +75,7 @@ enum DatabaseColumnName {
     DESCRIPTION = 'description',
     NEW_RESUME_SHARE_LINK_ID = 'new_resume_share_link_id',
     CARD = 'card',
-    CARD_TERM = 'card_term',
+    CARD_EXPIRE_DATE = 'card_expire_date',
     STATUS = 'status',
     SUBSCRIPTION_PLAN_ID = 'subscription_plan_id',
     SUBSCRIPTION_ID = 'subscription_id',
