@@ -2,8 +2,8 @@ import { type PaymentMethodRepository } from './payment-method.repository';
 import {
     type IPaymentMethodService,
     type PaymentMethod,
-    type PaymentMethodCreateDto,
-} from './types/types';
+    type PaymentMethodCreate,
+} from './types/types.js';
 
 class PaymentMethodService implements IPaymentMethodService {
     private paymentMethodRepository: PaymentMethodRepository;
@@ -18,7 +18,7 @@ class PaymentMethodService implements IPaymentMethodService {
         return paymentMethod ?? null;
     }
 
-    public async create(data: PaymentMethodCreateDto): Promise<PaymentMethod> {
+    public async create(data: PaymentMethodCreate): Promise<PaymentMethod> {
         return await this.paymentMethodRepository.create(data);
     }
 

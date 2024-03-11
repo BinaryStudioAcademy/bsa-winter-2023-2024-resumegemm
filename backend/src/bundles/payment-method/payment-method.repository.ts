@@ -1,9 +1,6 @@
 import { type IPaymentMethodRepository } from '../stripe-events/interfaces/interfaces';
 import { type PaymentMethodModel } from './payment-method.model.js';
-import {
-    type PaymentMethod,
-    type PaymentMethodCreateDto,
-} from './types/types.js';
+import { type PaymentMethod, type PaymentMethodCreate } from './types/types.js';
 
 class PaymentMethodRepository implements IPaymentMethodRepository {
     private paymentMethodModel: typeof PaymentMethodModel;
@@ -16,7 +13,7 @@ class PaymentMethodRepository implements IPaymentMethodRepository {
         return await this.paymentMethodModel.query().findById(id);
     }
 
-    public async create(data: PaymentMethodCreateDto): Promise<PaymentMethod> {
+    public async create(data: PaymentMethodCreate): Promise<PaymentMethod> {
         return await this.paymentMethodModel
             .query()
             .insert(data)
