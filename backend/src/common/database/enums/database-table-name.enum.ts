@@ -20,6 +20,7 @@ enum DatabaseTableName {
     CERTIFICATION = 'certification',
     LANGUAGES = 'languages',
     CUSTOM_SECTIONS = 'custom_sections',
+    CURRENT_SUBSCRIPTIONS = 'current_subscriptions',
 }
 
 export { DatabaseTableName };
