@@ -1,30 +1,23 @@
 import Stripe from 'stripe';
 
-import {
-    StripePaymentMethodEvents,
-    StripePlanEvents,
-} from '~/bundles/stripe-events/enums/enums.js';
+import { StripePlanEvents } from '~/bundles/stripe-events/enums/enums.js';
 import { type IStripeEventsService } from '~/bundles/stripe-events/interfaces/stripe-events-service.interface.js';
 import { type SubscriptionPlanRepository } from '~/bundles/stripe-events/repositories/subscription-plan.repository.js';
 import { type IConfig } from '~/common/config/interfaces/config.interface.js';
 
-import { type PaymentMethodRepository } from './repositories/payment-method.repository.js';
 import { type StripeEventsResponseDto } from './types/types.js';
 
 class StripeEventsService implements IStripeEventsService {
     private appConfig: IConfig;
     private subscriptionPlanRepository: SubscriptionPlanRepository;
-    private paymentMethodRepository: PaymentMethodRepository;
     private stripe: Stripe;
 
     public constructor(
         config: IConfig,
         subscriptionPlanRepository: SubscriptionPlanRepository,
-        paymentMethodRepository: PaymentMethodRepository,
     ) {
         this.appConfig = config;
         this.subscriptionPlanRepository = subscriptionPlanRepository;
-        this.paymentMethodRepository = paymentMethodRepository;
         this.stripe = new Stripe(this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY);
     }
 
@@ -45,10 +38,6 @@ class StripeEventsService implements IStripeEventsService {
             }
             case StripePlanEvents.PLAN_DELETED: {
                 await this.handlePlanDeleted(event.data);
-                break;
-            }
-            case StripePaymentMethodEvents.PAYMENT_METHOD_ATTACHED: {
-                await this.handlePaymentMethodCreate(event.data);
                 break;
             }
         }
@@ -74,20 +63,6 @@ class StripeEventsService implements IStripeEventsService {
         await this.subscriptionPlanRepository.delete({
             stripePlanId: plan.id,
         });
-    }
-
-    private async handlePaymentMethodCreate(
-        data: Stripe.PaymentMethodAttachedEvent.Data,
-    ): Promise<void> {
-        const paymentMethod: Stripe.PaymentMethod = data.object;
-
-        if (paymentMethod.customer) {
-            await this.paymentMethodRepository.create({
-                customerId: paymentMethod.customer.toString(),
-                paymentMethodId: paymentMethod.id,
-                type: paymentMethod.type,
-            });
-        }
     }
 }
 
