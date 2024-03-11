@@ -5,6 +5,11 @@ import {
     DatabaseTableName,
 } from '~/common/database/enums/enums.js';
 
+const RelationRule = {
+    CASCADE: 'CASCADE',
+    SET_NULL: 'SET NULL',
+};
+
 const UUID_GENERATION_FUNCTION = 'uuid_generate_v4()';
 
 async function up(knex: Knex): Promise<void> {
@@ -16,6 +21,13 @@ async function up(knex: Knex): Promise<void> {
             .unique()
             .primary()
             .defaultTo(knex.raw(UUID_GENERATION_FUNCTION));
+        table
+            .uuid(DatabaseColumnName.USER_ID)
+            .notNullable()
+            .references(DatabaseColumnName.ID)
+            .inTable(DatabaseTableName.USERS)
+            .onUpdate(RelationRule.CASCADE)
+            .onDelete(RelationRule.SET_NULL);
         table.string(DatabaseColumnName.PAYMENT_METHOD_ID).notNullable();
         table.string(DatabaseColumnName.CARD).notNullable();
         table.date(DatabaseColumnName.CARD_EXPIRE_DATE).notNullable();
