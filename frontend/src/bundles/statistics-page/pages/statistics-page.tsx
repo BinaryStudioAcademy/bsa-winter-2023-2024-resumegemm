@@ -15,7 +15,6 @@ import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 
 import { StatisticResumeCard } from '../components/resume-card/resume-card';
 import { actions } from '../store/statistics.store';
-import { type StatisticsRecord } from '../types/types';
 import styles from './styles.module.scss';
 
 const headerItems = [
@@ -36,11 +35,11 @@ const StatisticsPage = (): JSX.Element => {
         StatisticsPeriods.WEEKLY.value,
     );
 
-    const [views, setViews] = useState(0);
-
     const statisticsRecords = useAppSelector(
         ({ statistics }) => statistics.statisticsRecords,
     );
+
+    const views = useAppSelector(({ statistics }) => statistics.views);
 
     const handleDropdownChange = useCallback((value: string | undefined) => {
         if (!value) {

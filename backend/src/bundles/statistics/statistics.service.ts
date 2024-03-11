@@ -47,6 +47,10 @@ class StatisticsService {
 
         return {
             data: statistics,
+            sum: statistics.reduce(
+                (accumulator, currentValue) => accumulator + currentValue[1],
+                0,
+            ),
         };
     }
 
