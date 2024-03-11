@@ -172,6 +172,7 @@ const LandingPage = (): JSX.Element => {
                                 variant={ButtonVariant.PRIMARY}
                                 size={ButtonSize.MEDIUM}
                                 className={styles.get_started_section__button}
+                                onClick={handleGetStarted}
                             >
                                 <p>Create Resume for free</p>
                             </RegularButton>
