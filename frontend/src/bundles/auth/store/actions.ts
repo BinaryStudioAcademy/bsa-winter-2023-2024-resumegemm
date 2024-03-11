@@ -46,4 +46,15 @@ const getUser = createAsyncThunk<
     return await authApi.getUser();
 });
 
-export { getUser, signIn, signUp };
+const requestNewAccessToken = createAsyncThunk<
+    void,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/update-access-token`, async (_, { extra }) => {
+    const { authApi, storageApi } = extra;
+
+    const { accessToken } = await authApi.requestNewAccessToken();
+    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+});
+
+export { getUser, requestNewAccessToken, signIn, signUp };
