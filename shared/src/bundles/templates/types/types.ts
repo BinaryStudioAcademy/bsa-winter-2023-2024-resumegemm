@@ -1,6 +1,11 @@
 export { type TemplateBlockSettings } from './template-block-settings.type.js';
 export { type TemplateCreateItemRequestDto } from './template-create-item-request-dto.type.js';
 export { type TemplateDto } from './template-dto.type.js';
+export { type CSSProperties } from './template-editor/css-properties.type.js';
+export { type LayoutBlock } from './template-editor/layout-block.type.js';
+export { type LayoutContainer } from './template-editor/layout-container.type.js';
+export { type LayoutItem } from './template-editor/layout-item.type.js';
+export { type TemplateSettings } from './template-editor/template-settings.type.js';
 export { type TemplateEntityFields } from './template-entity-fields.type.js';
 export { type TemplateGetAllItemResponseDto } from './template-get-all-item-response-dto.type.js';
 export { type TemplateGetAllResponseDto } from './template-get-all-response-dto.type.js';

@@ -14,7 +14,7 @@ import {
     TechStack,
 } from '../../resume-preview/components/components';
 import styles from '../../resume-preview/components/resume-preview/styles.module.scss';
-import { TemplateBlockTitles } from '../types/types';
+import { TemplateBlockTitles } from '../../templates-page/types/types';
 import templateStyles from './styles.module.scss';
 
 type SelectedBlocks = {
