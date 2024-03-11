@@ -1,5 +1,4 @@
 import { type AuthTokenResponse, AuthApiPath } from 'shared/build';
-import { getCookie } from 'shared/build';
 
 import {
     type ContentType,
@@ -18,7 +17,11 @@ import {
     HttpHeader,
 } from '~/framework/http/http.js';
 import { type IStorage, StorageKey } from '~/framework/storage/storage.js';
-import { configureString } from '~/helpers/helpers.js';
+import {
+    configureString,
+    getCookie,
+    isServerErrorRange,
+} from '~/helpers/helpers.js';
 
 import { type IHttpApi } from './interfaces/interfaces.js';
 import { type HttpApiOptions, type HttpApiResponse } from './types/types.js';
@@ -147,9 +150,11 @@ class HTTPApi implements IHttpApi {
         )) as ServerErrorResponse;
 
         const isCustomException = Boolean(parsedException.errorType);
-        if (response.status >= 400 && response.status < 600) {
+
+        if (isServerErrorRange(response.status)) {
             showToast(parsedException.message, ToastType.ERROR, {
                 theme: 'dark',
+                position: 'top-right',
             });
         }
 
