@@ -9,6 +9,7 @@ export {
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
     type TemplateResponseDto,
+    type TemplateSettings,
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
 } from 'shared/build/bundles/templates/templates.js';

@@ -60,3 +60,8 @@ fieldset {
     padding: 0;
     border-width: 0;
 }
+
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
