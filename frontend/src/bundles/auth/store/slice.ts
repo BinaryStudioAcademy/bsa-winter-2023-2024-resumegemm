@@ -26,7 +26,6 @@ const { reducer, actions, name } = createSlice({
             action: PayloadAction<UserWithProfileRelation | null>,
         ) => {
             state.user = action.payload;
-            state.dataStatus = DataStatus.IDLE;
         },
     },
     extraReducers(builder) {
