@@ -65,7 +65,7 @@ class OauthService
                 oauthId,
                 email,
                 oauthStrategy,
-                userId,
+                userId: foundUser.id,
             });
             return foundUser;
         }
