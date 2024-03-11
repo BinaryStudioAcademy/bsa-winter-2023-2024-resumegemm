@@ -1,10 +1,12 @@
 import { genSalt, hash } from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import {
     type AuthService as TAuthService,
     type EncryptionDataPayload,
     AuthException,
     ExceptionMessage,
     HttpCode,
+    HTTPError,
     ServerErrorType,
 } from 'shared/build/index.js';
 
@@ -127,7 +129,13 @@ class AuthService implements TAuthService {
     public verifyToken<T>(token: string, tokenSecret: string): T {
         try {
             return verifyToken(token, tokenSecret) as T;
-        } catch {
+        } catch (error) {
+            if (error instanceof jwt.TokenExpiredError) {
+                throw new HTTPError({
+                    message: ExceptionMessage.TOKEN_EXPIRED,
+                    status: HttpCode.EXPIRED_TOKEN,
+                });
+            }
             throw new AuthException();
         }
     }
