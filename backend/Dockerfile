@@ -32,7 +32,7 @@ RUN npm install
 RUN npm run build
 
 #RUN npm run migrate:dev
-#
+
 #RUN npm run seed:run
 
 EXPOSE 3001
