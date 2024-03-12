@@ -1,12 +1,18 @@
 import { type FastifyRequest } from 'fastify';
-import { type UserEntityFields, HTTPError } from 'shared/build/index.js';
+import {
+    type UpdateUserProfileAndEmailRequestDto,
+    type UserEntityFields,
+    type UserWithProfileRelation,
+    ExceptionMessage,
+    HTTPError,
+} from 'shared/build/index.js';
 
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
-    Controller,
 } from '~/common/controller/controller.js';
+import { Controller } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
@@ -50,6 +56,20 @@ class UserController extends Controller {
                 this.delete(
                     options as ApiHandlerOptions<{
                         headers: FastifyRequest['headers'];
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.ID,
+            method: 'PUT',
+            handler: (options) =>
+                this.updateUserProfileAndEmail(
+                    options as ApiHandlerOptions<{
+                        body: UpdateUserProfileAndEmailRequestDto;
+                        params: {
+                            id: string;
+                        };
                     }>,
                 ),
         });
@@ -139,6 +159,35 @@ class UserController extends Controller {
                           message: 'Internal server error.',
                       },
                   };
+        }
+    }
+
+    private async updateUserProfileAndEmail(
+        options: ApiHandlerOptions<{
+            body: UpdateUserProfileAndEmailRequestDto;
+            params: {
+                id: string;
+            };
+        }>,
+    ): Promise<ApiHandlerResponse<UserWithProfileRelation>> {
+        try {
+            const user = await this.userService.updateUserProfileAndEmail(
+                options.params.id,
+                options.body,
+            );
+            return {
+                status: HttpCode.OK,
+                payload: user,
+            };
+        } catch (error: unknown) {
+            const { status } = error as HTTPError;
+            return {
+                status,
+                payload: {
+                    message: ExceptionMessage.INVALID_REFRESH_TOKEN,
+                    status,
+                },
+            };
         }
     }
 }
