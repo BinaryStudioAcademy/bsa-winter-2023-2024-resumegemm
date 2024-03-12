@@ -115,7 +115,7 @@ const EditTemplatePage: React.FC = () => {
                         onClick={handleSaveTemplate}
                         className={clsx(templateStyles.output__button)}
                     >
-                        Save Tempalte
+                        Save Template
                     </RegularButton>
                 </div>
             </nav>
