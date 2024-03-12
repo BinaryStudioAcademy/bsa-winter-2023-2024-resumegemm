@@ -22,13 +22,12 @@
 .registration__link {
     padding-left: 4px;
     color: var(--color-accent-dark-yellow);
-    font-family: var(--font-family-secondary);
 }
 
 .registration__form {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 30px;
     width: 100%;
     margin-top: 5px;
 }
