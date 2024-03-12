@@ -43,6 +43,7 @@ export {
     type CustomSection,
     type Education,
     type Experience,
+    type GetUserResumeSharesResponse,
     type IResumeService,
     type PersonalInformation,
     type Resume,

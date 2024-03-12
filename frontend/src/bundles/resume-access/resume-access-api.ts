@@ -52,6 +52,19 @@ class ResumeAccessApi extends HttpApi {
         return await response.json();
     }
 
+    public async getUserResumesWithLinks(): Promise<ResumeShareDetailsGetResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(ResumesApiPath.SHARE, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: false,
+            },
+        );
+
+        return await response.json();
+    }
+
     public async deleteResumeAccess(
         resumeId: string,
     ): Promise<ResumeShareDeleteResponseDto> {

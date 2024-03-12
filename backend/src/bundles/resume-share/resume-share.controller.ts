@@ -7,9 +7,11 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { type HTTPError, HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
+import { type User } from '../users/types/types.js';
 import { ResumesApiPath } from './enums/enums.js';
 import { type ResumeShareService } from './resume-share.service.js';
 import {
+    type GetUserResumeSharesResponse,
     type ResumeShareCreateRequestDto,
     type ResumeShareCreateResponseDto,
     type ResumeShareDeleteRequestDto,
@@ -112,6 +114,18 @@ class ResumeShareController extends Controller {
             handler: (options) =>
                 this.deleteShareLink(
                     options as ApiHandlerOptions<ResumeShareDeleteRequestDto>,
+                ),
+        });
+
+        this.addRoute({
+            path: ResumesApiPath.SHARE,
+            method: 'GET',
+            validation: {},
+            handler: (options) =>
+                this.getUserShareLinksWithResumes(
+                    options as ApiHandlerOptions<{
+                        user: User;
+                    }>,
                 ),
         });
 
@@ -260,6 +274,33 @@ class ResumeShareController extends Controller {
             return {
                 status: HttpCode.OK,
                 payload: await this.resumeShareService.getShareLink(id, ip),
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HTTPError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async getUserShareLinksWithResumes(
+        options: ApiHandlerOptions<{
+            user: User;
+        }>,
+    ): Promise<ApiHandlerResponse<GetUserResumeSharesResponse>> {
+        try {
+            const id = options.user.id;
+
+            return {
+                status: HttpCode.OK,
+                payload:
+                    await this.resumeShareService.getUserShareLinksWithResumes(
+                        id,
+                    ),
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;

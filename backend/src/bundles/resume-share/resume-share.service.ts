@@ -1,6 +1,10 @@
-import { HTTPError } from 'shared/build/index.js';
+import {
+    type GetUserResumeSharesResponse,
+    HTTPError,
+} from 'shared/build/index.js';
 
 import { HttpCode } from '../oauth/enums/enums.js';
+import { type ResumeService } from '../resumes/resume.service.js';
 import { ResumeShareErrorMessage } from './enums/error-messages.js';
 import { type ResumeShareRepository } from './resume-share.repository.js';
 import { type ResumeShareAccessService } from './resume-share-access.service.js';
@@ -14,13 +18,16 @@ import {
 
 class ResumeShareService implements IResumeShareService {
     private resumeShareRepository: ResumeShareRepository;
+    private resumeService: ResumeService;
     private resumeShareAccessService: ResumeShareAccessService;
 
     public constructor(
         resumeShareRepository: ResumeShareRepository,
+        resumeService: ResumeService,
         resumeShareAccessService: ResumeShareAccessService,
     ) {
         this.resumeShareRepository = resumeShareRepository;
+        this.resumeService = resumeService;
         this.resumeShareAccessService = resumeShareAccessService;
     }
 
@@ -53,6 +60,35 @@ class ResumeShareService implements IResumeShareService {
     ): Promise<ResumeShareGetResponseDto | unknown> {
         await this.resumeShareAccessService.createShareAccess(id, ip);
         return await this.resumeShareRepository.getResumeShareLink(id);
+    }
+
+    public async getUserShareLinksWithResumes(
+        id: string,
+    ): Promise<GetUserResumeSharesResponse> {
+        try {
+            const { resumes: resumesWithInfo } =
+                await this.resumeService.findAllByUserId(id);
+
+            if (resumesWithInfo.length === 0) {
+                return {
+                    resumes: [],
+                };
+            }
+
+            const resumesIds = resumesWithInfo.map(({ resume }) => resume.id);
+
+            const resumesWithLink =
+                await this.resumeShareRepository.getShareLinksByIds(resumesIds);
+
+            return {
+                resumes: resumesWithLink,
+            };
+        } catch {
+            throw new HTTPError({
+                message: ResumeShareErrorMessage.RESUME_SHARES_NOT_FOUND_ERROR,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
     }
 
     public async getShareLinkDetails(
