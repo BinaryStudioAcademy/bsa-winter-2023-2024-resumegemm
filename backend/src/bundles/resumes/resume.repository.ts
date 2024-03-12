@@ -75,23 +75,23 @@ class ResumeRepository implements IResumeRepository {
         return resume ?? null;
     }
 
-    public async findAll(): Promise<ResumeGetAllResponseDto> {
+    public async findAll(): Promise<ResumeGetAllResponseDto[]> {
         return this.resumeModel
             .query()
             .withGraphFetched(resumeGraphFetchRelations)
             .returning('*')
-            .castTo<ResumeGetAllResponseDto>();
+            .castTo<ResumeGetAllResponseDto[]>();
     }
 
     public async findAllByUserId(
         userId: string,
-    ): Promise<ResumeGetAllResponseDto> {
+    ): Promise<ResumeGetAllResponseDto[]> {
         return this.resumeModel
             .query()
             .where('user_id', userId)
             .withGraphFetched(resumeGraphFetchRelations)
             .returning('*')
-            .castTo<ResumeGetAllResponseDto>();
+            .castTo<ResumeGetAllResponseDto[]>();
     }
 
     public async create(
@@ -196,7 +196,7 @@ class ResumeRepository implements IResumeRepository {
             await transaction.commit();
 
             return {
-                resume,
+                ...resume,
                 education,
                 experience,
                 technicalSkills,
@@ -319,7 +319,7 @@ class ResumeRepository implements IResumeRepository {
             await transaction.commit();
 
             return {
-                resume,
+                ...resume,
                 education,
                 experience,
                 technicalSkills,

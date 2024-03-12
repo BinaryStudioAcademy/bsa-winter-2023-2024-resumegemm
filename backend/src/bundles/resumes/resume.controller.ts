@@ -113,7 +113,7 @@ class ResumeController extends Controller {
     }
 
     private async findAll(): Promise<
-        ApiHandlerResponse<ResumeGetAllResponseDto>
+        ApiHandlerResponse<ResumeGetAllResponseDto[]>
     > {
         const resumes = await this.resumeService.findAll();
 
@@ -180,7 +180,7 @@ class ResumeController extends Controller {
 
     private async findAllByUserId(
         options: ApiHandlerOptions<{ user: UserAuthResponse['user'] }>,
-    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto>> {
+    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto[]>> {
         const { id } = options.user;
 
         const resumes = await this.resumeService.findAllByUserId(id);

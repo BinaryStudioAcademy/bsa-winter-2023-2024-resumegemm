@@ -12,9 +12,9 @@ interface IResumeService {
 
     findById(id: string): Promise<ResumeGetItemResponseDto | null>;
 
-    findAll(): Promise<ResumeGetItemResponseDto>;
+    findAll(): Promise<ResumeGetItemResponseDto[]>;
 
-    findAllByUserId(userId: string): Promise<ResumeGetItemResponseDto>;
+    findAllByUserId(userId: string): Promise<ResumeGetItemResponseDto[]>;
 
     create(
         payload: ResumeCreateItemRequestDto,

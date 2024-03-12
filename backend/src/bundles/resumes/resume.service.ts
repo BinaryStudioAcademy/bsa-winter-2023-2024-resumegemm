@@ -37,11 +37,11 @@ class ResumeService implements IResumeService {
         return this.resumeRepository.findById(id);
     }
 
-    public async findAll(): Promise<ResumeGetAllResponseDto> {
+    public async findAll(): Promise<ResumeGetAllResponseDto[]> {
         return this.resumeRepository.findAll();
     }
 
-    public findAllByUserId(userId: string): Promise<ResumeGetAllResponseDto> {
+    public findAllByUserId(userId: string): Promise<ResumeGetAllResponseDto[]> {
         return this.resumeRepository.findAllByUserId(userId);
     }
 

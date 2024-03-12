@@ -11,9 +11,9 @@ interface IResumeRepository {
 
     findById(id: string): Promise<ResumeGetItemResponseDto | null>;
 
-    findAll(): Promise<ResumeGetAllResponseDto>;
+    findAll(): Promise<ResumeGetAllResponseDto[]>;
 
-    findAllByUserId(userId: string): Promise<ResumeGetAllResponseDto>;
+    findAllByUserId(userId: string): Promise<ResumeGetAllResponseDto[]>;
 
     create(
         payload: ResumeCreateItemRequestDto,
