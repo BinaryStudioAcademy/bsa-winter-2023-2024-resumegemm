@@ -1,12 +1,10 @@
-import {
-    type TemplateCreateItemRequestDto,
-    type TemplateGetAllItemResponseDto,
-} from 'shared/build';
+import { type TemplateGetAllItemResponseDto } from 'shared/build';
 import {
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
 } from 'shared/build/bundles/templates/templates.js';
 
+import { testTemplate } from './constants/test-template.js';
 import { type Template } from './types/template.type';
 import {
     type ITemplateRepository,
@@ -27,10 +25,13 @@ class TemplateService implements ITemplateService {
     }> {
         return await this.templateRepository.findAll();
     }
-    public async create(
-        payload: TemplateCreateItemRequestDto,
-    ): Promise<Template> {
-        return await this.templateRepository.create(payload);
+    public async create(payload: { userId: string }): Promise<Template> {
+        return await this.templateRepository.create({
+            isOwner: true,
+            templateSettings: testTemplate,
+            image: 'https://s3-alpha.figma.com/hub/file/1849672021/64b2b02b-08cd-4afd-9f93-e05858d2fffd-cover.png',
+            userId: payload.userId,
+        });
     }
     public async update(
         templateId: string,
