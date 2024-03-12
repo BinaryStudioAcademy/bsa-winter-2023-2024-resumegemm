@@ -6,6 +6,7 @@ const socialMediaLinksWithIcons = [
     [OpenAuthApiPath.GITHUB, socialMediaSvg.Github],
     [OpenAuthApiPath.GOOGLE, socialMediaSvg.Google],
     [OpenAuthApiPath.FACEBOOK, socialMediaSvg.Facebook],
+    [OpenAuthApiPath.LINKEDIN, socialMediaSvg.LinkedIn],
 ];
 
 export { socialMediaLinksWithIcons };
