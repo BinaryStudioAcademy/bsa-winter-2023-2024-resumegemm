@@ -23,7 +23,13 @@ async function up(knex: Knex): Promise<void> {
             .defaultTo(knex.raw(UUID_GENERATION_FUNCTION));
         table.string(DatabaseColumnName.STATUS).notNullable();
         table.string(DatabaseColumnName.SUBSCRIPTION_ID).notNullable();
-        table.string(DatabaseColumnName.SUBSCRIPTION_PLAN_ID).notNullable();
+        table
+            .uuid(DatabaseColumnName.SUBSCRIPTION_PLAN_ID)
+            .notNullable()
+            .references(DatabaseColumnName.ID)
+            .inTable(DatabaseTableName.SUBSCRIPTION_PLANS)
+            .onUpdate(RelationRule.CASCADE)
+            .onDelete(RelationRule.SET_NULL);
         table
             .uuid(DatabaseColumnName.USER_ID)
             .notNullable()
