@@ -1,18 +1,23 @@
 import { type FastifyRequest } from 'fastify';
 
-import { generateToken } from '~/bundles/auth/helpers/helpers.js';
+import {
+    generateRefreshToken,
+    generateToken,
+    verifyToken,
+} from '~/bundles/auth/helpers/helpers.js';
 import { type OauthService } from '~/bundles/oauth/oauth.service.js';
 import {
     type HTTPError,
-    type OauthUserEntityFields,
+    type OauthConnectionEntityFields,
     type OauthUserLoginRequestDto,
-    type OauthUserLoginResponseDto,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
+    type UserLinkedInDataResponseDto,
     type ValueOf,
 } from '~/bundles/oauth/types/types.js';
 import { type HttpApi } from '~/common/api/types/http-api.type.js';
+import { config } from '~/common/config/config.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -29,15 +34,17 @@ import {
     OpenAuthApiPath,
 } from './enums/enums.js';
 
+type Constructor = {
+    logger: ILogger;
+    oauthService: OauthService;
+    httpService: HttpApi;
+};
+
 class OpenAuthController extends Controller {
     private oauthService: OauthService;
     private httpService: HttpApi;
 
-    public constructor(
-        logger: ILogger,
-        oauthService: OauthService,
-        httpService: HttpApi,
-    ) {
+    public constructor({ logger, oauthService, httpService }: Constructor) {
         super(logger, ApiPath.OPEN_AUTH);
 
         this.oauthService = oauthService;
@@ -74,12 +81,22 @@ class OpenAuthController extends Controller {
                 ),
         });
         this.addRoute({
-            path: OpenAuthApiPath.USER,
+            path: OpenAuthApiPath.LINKEDIN,
             method: 'GET',
             handler: (options) =>
-                this.getUser(
+                this.handleLinkedInAuth(
                     options as ApiHandlerOptions<{
-                        user: FastifyRequest['user'];
+                        cookies: FastifyRequest['cookies'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: OpenAuthApiPath.ID,
+            method: 'DELETE',
+            handler: (options) =>
+                this.deleteById(
+                    options as ApiHandlerOptions<{
+                        params: FastifyRequest['params'];
                     }>,
                 ),
         });
@@ -123,6 +140,12 @@ class OpenAuthController extends Controller {
     }>): Promise<ApiHandlerResponse<unknown>> {
         const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
 
+        const accessToken = cookies[CookieName.ACCESS_TOKEN];
+
+        const userId = this.verifyTokenAndGetUserId(
+            accessToken as string,
+        ) as string;
+
         const {
             email,
             id,
@@ -142,6 +165,7 @@ class OpenAuthController extends Controller {
             oauthId: id,
             lastName: last_name,
             oauthStrategy: OauthStrategy.FACEBOOK,
+            userId,
         });
     }
 
@@ -151,17 +175,27 @@ class OpenAuthController extends Controller {
         cookies: FastifyRequest['cookies'];
     }>): Promise<ApiHandlerResponse<unknown>> {
         const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
+
+        const accessToken = cookies[CookieName.ACCESS_TOKEN];
+
+        const userId = this.verifyTokenAndGetUserId(
+            accessToken as string,
+        ) as string;
+
         const { email, id, name, avatar_url }: UserGithubDataResponseDto =
             await this.requestOAuthProviderUserData(
                 OpenAuthApiGetUserUrl.GITHUB,
                 oauthToken,
             );
+
         return await this.createUser({
             email,
             firstName: name,
+            lastName: null,
             avatar: avatar_url,
             oauthId: String(id),
             oauthStrategy: OauthStrategy.GITHUB,
+            userId,
         });
     }
 
@@ -171,6 +205,12 @@ class OpenAuthController extends Controller {
         cookies: FastifyRequest['cookies'];
     }>): Promise<ApiHandlerResponse<null>> {
         const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
+        const accessToken = cookies[CookieName.ACCESS_TOKEN];
+
+        const userId = this.verifyTokenAndGetUserId(
+            accessToken as string,
+        ) as string;
+
         const {
             id,
             email,
@@ -188,6 +228,41 @@ class OpenAuthController extends Controller {
             avatar: picture,
             oauthId: id,
             oauthStrategy: OauthStrategy.GOOGLE,
+            userId,
+        });
+    }
+
+    private async handleLinkedInAuth({
+        cookies,
+    }: ApiHandlerOptions<{
+        cookies: FastifyRequest['cookies'];
+    }>): Promise<ApiHandlerResponse<null>> {
+        const oauthToken = cookies[CookieName.OAUTH_TOKEN] as string;
+        const accessToken = cookies[CookieName.ACCESS_TOKEN];
+
+        const userId = this.verifyTokenAndGetUserId(
+            accessToken as string,
+        ) as string;
+
+        const {
+            sub: id,
+            email,
+            picture: avatar,
+            given_name: firstName,
+            family_name: lastName,
+        }: UserLinkedInDataResponseDto = await this.requestOAuthProviderUserData(
+            OpenAuthApiGetUserUrl.LINKEDIN,
+            oauthToken,
+        );
+
+        return await this.createUser({
+            email,
+            firstName,
+            lastName,
+            avatar,
+            oauthId: id,
+            oauthStrategy: OauthStrategy.LINKEDIN,
+            userId,
         });
     }
 
@@ -198,19 +273,32 @@ class OpenAuthController extends Controller {
             const user = await this.oauthService.create(userPayload);
             return {
                 accessToken: generateToken({ id: user.id }),
+                refreshToken: generateRefreshToken({ id: user.id }),
                 status: HttpCode.OK,
                 payload: null,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HTTPError;
+            const { message, status = HttpCode.INTERNAL_SERVER_ERROR } =
+                error as HTTPError;
             return {
                 status,
                 payload: {
                     message,
-                    status: HttpCode.INTERNAL_SERVER_ERROR,
+                    status,
                 },
             };
         }
+    }
+
+    private verifyTokenAndGetUserId(token: string): string | null {
+        return token
+            ? (
+                  verifyToken(
+                      token,
+                      config.ENV.JWT.ACCESS_TOKEN_SECRET,
+                  ) as Record<'id', string>
+              ).id
+            : null;
     }
 
     private async requestOAuthProviderUserData<T>(
@@ -222,17 +310,17 @@ class OpenAuthController extends Controller {
         })) as T;
     }
 
-    private async getUser(
-        options: ApiHandlerOptions<{
-            user: FastifyRequest['user'];
-        }>,
-    ): Promise<ApiHandlerResponse<OauthUserLoginResponseDto>> {
+    private async deleteById({
+        params,
+    }: ApiHandlerOptions<{
+        params: FastifyRequest['params'];
+    }>): Promise<ApiHandlerResponse<boolean>> {
         try {
-            const userId = (options.user as OauthUserEntityFields).id;
-            const user = await this.oauthService.getById(userId);
+            const id = (params as OauthConnectionEntityFields).id;
+            const hasConnectionRemoved = await this.oauthService.deleteById(id);
             return {
                 status: HttpCode.OK,
-                payload: user,
+                payload: hasConnectionRemoved,
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;
@@ -240,7 +328,7 @@ class OpenAuthController extends Controller {
                 status,
                 payload: {
                     message,
-                    status,
+                    status: HttpCode.INTERNAL_SERVER_ERROR,
                 },
             };
         }

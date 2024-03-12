@@ -1,9 +1,17 @@
-import { updateUserAvatar } from './actions.js';
+import {
+    disconnectSocialMedia,
+    getUserProfileAndSocials,
+    updateProfileAndEmail,
+    updateUserAvatar,
+} from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     updateUserAvatar,
+    getUserProfileAndSocials,
+    disconnectSocialMedia,
+    updateProfileAndEmail,
 };
 
 export { allActions as actions };

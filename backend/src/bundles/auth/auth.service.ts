@@ -1,4 +1,5 @@
 import { genSalt, hash } from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import {
     type AuthService as TAuthService,
     type EncryptionDataPayload,
@@ -42,7 +43,7 @@ class AuthService implements TAuthService {
         const passwordSalt = await this.generateSalt();
 
         const passwordHash = await this.encrypt(
-            userRequestDto.password,
+            String(userRequestDto.password),
             passwordSalt,
         );
 
@@ -97,7 +98,7 @@ class AuthService implements TAuthService {
     public async getUserWithProfile(
         id: string,
     ): ReturnType<TAuthService['getUserWithProfile']> {
-        return await this.userService.getUserWithProfile(id);
+        return await this.userService.getUserWithProfileAndOauthConnections(id);
     }
 
     public encrypt(data: string, salt: string): Promise<string> {
@@ -109,6 +110,9 @@ class AuthService implements TAuthService {
         passwordSalt,
         passwordHash,
     }: EncryptionDataPayload): Promise<boolean> {
+        if (!passwordSalt) {
+            return false;
+        }
         const dataHash = await this.encrypt(plaintTextPassword, passwordSalt);
         return dataHash === passwordHash;
     }
@@ -121,7 +125,13 @@ class AuthService implements TAuthService {
     public verifyToken<T>(token: string, tokenSecret: string): T {
         try {
             return verifyToken(token, tokenSecret) as T;
-        } catch {
+        } catch (error) {
+            if (error instanceof jwt.TokenExpiredError) {
+                throw new HTTPError({
+                    message: ExceptionMessage.TOKEN_EXPIRED,
+                    status: HttpCode.EXPIRED_TOKEN,
+                });
+            }
             throw new AuthException();
         }
     }

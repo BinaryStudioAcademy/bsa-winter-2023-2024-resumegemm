@@ -1,10 +1,11 @@
+import { type PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { type UserWithProfileRelation } from 'shared/build/index.js';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { getUser, signIn, signUp } from './actions.js';
+import { getUser, requestNewAccessToken, signIn, signUp } from './actions.js';
 
 type State = {
     user: UserWithProfileRelation | null;
@@ -19,10 +20,25 @@ const initialState: State = {
 const { reducer, actions, name } = createSlice({
     initialState,
     name: 'auth',
-    reducers: {},
+    reducers: {
+        setUser: (
+            state,
+            action: PayloadAction<UserWithProfileRelation | null>,
+        ) => {
+            state.user = action.payload;
+        },
+    },
     extraReducers(builder) {
+        builder.addCase(requestNewAccessToken.fulfilled, (state) => {
+            state.dataStatus = DataStatus.FULFILLED;
+        });
         builder.addMatcher(
-            isAnyOf(signUp.pending, signIn.pending, getUser.pending),
+            isAnyOf(
+                signUp.pending,
+                signIn.pending,
+                getUser.pending,
+                requestNewAccessToken.pending,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
             },
@@ -37,7 +53,12 @@ const { reducer, actions, name } = createSlice({
         );
 
         builder.addMatcher(
-            isAnyOf(signUp.rejected, signIn.rejected, getUser.rejected),
+            isAnyOf(
+                signUp.rejected,
+                signIn.rejected,
+                getUser.rejected,
+                requestNewAccessToken.rejected,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
                 state.user = null;
