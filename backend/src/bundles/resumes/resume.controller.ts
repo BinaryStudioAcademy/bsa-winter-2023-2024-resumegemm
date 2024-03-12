@@ -1,5 +1,6 @@
 import {
     type IdParameter,
+    type UserAuthResponse,
     HTTPError,
     ResumesApiPath,
 } from 'shared/build/index.js';
@@ -81,7 +82,7 @@ class ResumeController extends Controller {
             handler: (options) =>
                 this.findAllByUserId(
                     options as ApiHandlerOptions<{
-                        params: { userId: string };
+                        user: UserAuthResponse['user'];
                     }>,
                 ),
         });
@@ -125,9 +126,7 @@ class ResumeController extends Controller {
     private async findByIdWithRelations(
         options: ApiHandlerOptions<{ params: IdParameter }>,
     ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
-        const resume = await this.resumeService.findWithRelations(
-            options.params.id,
-        );
+        const resume = await this.resumeService.findById(options.params.id);
 
         if (!resume) {
             throw new HTTPError({
@@ -180,11 +179,11 @@ class ResumeController extends Controller {
     }
 
     private async findAllByUserId(
-        options: ApiHandlerOptions<{ params: { userId: string } }>,
+        options: ApiHandlerOptions<{ user: UserAuthResponse['user'] }>,
     ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto>> {
-        const resumes = await this.resumeService.findAllByUserId(
-            options.params.userId,
-        );
+        const { id } = options.user;
+
+        const resumes = await this.resumeService.findAllByUserId(id);
 
         return {
             status: HttpCode.OK,

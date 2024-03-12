@@ -10,17 +10,11 @@ import {
 interface IResumeService {
     find(id: string): Promise<Resume | undefined>;
 
-    findWithRelations(
-        id: string,
-    ): Promise<ResumeGetItemResponseDto | undefined>;
+    findById(id: string): Promise<ResumeGetItemResponseDto | null>;
 
-    findAll(): Promise<{
-        resumes: ResumeGetItemResponseDto[];
-    }>;
+    findAll(): Promise<ResumeGetItemResponseDto>;
 
-    findAllByUserId(userId: string): Promise<{
-        resumes: ResumeGetItemResponseDto[];
-    }>;
+    findAllByUserId(userId: string): Promise<ResumeGetItemResponseDto>;
 
     create(
         payload: ResumeCreateItemRequestDto,

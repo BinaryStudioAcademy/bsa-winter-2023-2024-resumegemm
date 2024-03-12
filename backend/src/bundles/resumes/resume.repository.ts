@@ -59,119 +59,39 @@ class ResumeRepository implements IResumeRepository {
     }
 
     public async find(id: string): Promise<Resume | undefined> {
-        return await this.resumeModel.query().findById(id);
+        return this.resumeModel.query().findById(id);
     }
 
-    public async findWithRelations(
+    public async findById(
         id: string,
-    ): Promise<ResumeGetItemResponseDto | undefined> {
+    ): Promise<ResumeGetItemResponseDto | null> {
         const resume = await this.resumeModel
             .query()
             .findById(id)
-            .withGraphFetched(resumeGraphFetchRelations);
+            .withGraphFetched(resumeGraphFetchRelations)
+            .returning('*')
+            .castTo<ResumeGetAllResponseDto>();
 
-        if (!resume) {
-            return undefined;
-        }
-
-        const {
-            education,
-            experience,
-            technicalSkills,
-            contacts,
-            personalInformation,
-            certification,
-            languages,
-            customSections,
-            ...resumeData
-        } = resume;
-
-        return {
-            resume: resumeData,
-            education: education ?? [],
-            experience: experience ?? [],
-            technicalSkills: technicalSkills ?? [],
-            contacts: contacts ?? null,
-            personalInformation: personalInformation ?? null,
-            certification: certification ?? [],
-            languages: languages ?? [],
-            customSections: customSections ?? [],
-        };
+        return resume ?? null;
     }
 
     public async findAll(): Promise<ResumeGetAllResponseDto> {
-        const resumes = await this.resumeModel
+        return this.resumeModel
             .query()
-            .withGraphFetched(resumeGraphFetchRelations);
-
-        const response: ResumeGetItemResponseDto[] = resumes.map((resume) => {
-            const {
-                education,
-                experience,
-                technicalSkills,
-                contacts,
-                personalInformation,
-                certification,
-                languages,
-                customSections,
-                ...resumeData
-            } = resume;
-
-            return {
-                resume: resumeData,
-                education: education ?? [],
-                experience: experience ?? [],
-                technicalSkills: technicalSkills ?? [],
-                contacts: contacts ?? null,
-                personalInformation: personalInformation ?? null,
-                certification: certification ?? [],
-                languages: languages ?? [],
-                customSections: customSections ?? [],
-            };
-        });
-
-        return {
-            resumes: response,
-        };
+            .withGraphFetched(resumeGraphFetchRelations)
+            .returning('*')
+            .castTo<ResumeGetAllResponseDto>();
     }
 
     public async findAllByUserId(
         userId: string,
     ): Promise<ResumeGetAllResponseDto> {
-        const resumes = await this.resumeModel
+        return this.resumeModel
             .query()
             .where('user_id', userId)
-            .withGraphFetched(resumeGraphFetchRelations);
-
-        const response: ResumeGetItemResponseDto[] = resumes.map((resume) => {
-            const {
-                education,
-                experience,
-                technicalSkills,
-                contacts,
-                personalInformation,
-                certification,
-                languages,
-                customSections,
-                ...resumeData
-            } = resume;
-
-            return {
-                contacts: contacts ?? null,
-                personalInformation: personalInformation ?? null,
-                resume: resumeData,
-                education: education ?? [],
-                experience: experience ?? [],
-                technicalSkills: technicalSkills ?? [],
-                certification: certification ?? [],
-                languages: languages ?? [],
-                customSections: customSections ?? [],
-            };
-        });
-
-        return {
-            resumes: response,
-        };
+            .withGraphFetched(resumeGraphFetchRelations)
+            .returning('*')
+            .castTo<ResumeGetAllResponseDto>();
     }
 
     public async create(

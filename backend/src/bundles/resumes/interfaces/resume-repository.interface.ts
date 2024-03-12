@@ -9,9 +9,7 @@ import {
 interface IResumeRepository {
     find(id: string): Promise<Resume | undefined>;
 
-    findWithRelations(
-        id: string,
-    ): Promise<ResumeGetItemResponseDto | undefined>;
+    findById(id: string): Promise<ResumeGetItemResponseDto | null>;
 
     findAll(): Promise<ResumeGetAllResponseDto>;
 

@@ -31,20 +31,18 @@ class ResumeService implements IResumeService {
         return await this.resumeRepository.find(id);
     }
 
-    public async findWithRelations(
+    public async findById(
         id: string,
-    ): Promise<ResumeGetItemResponseDto | undefined> {
-        return await this.resumeRepository.findWithRelations(id);
+    ): Promise<ResumeGetItemResponseDto | null> {
+        return this.resumeRepository.findById(id);
     }
 
     public async findAll(): Promise<ResumeGetAllResponseDto> {
-        return await this.resumeRepository.findAll();
+        return this.resumeRepository.findAll();
     }
 
-    public async findAllByUserId(
-        userId: string,
-    ): Promise<ResumeGetAllResponseDto> {
-        return await this.resumeRepository.findAllByUserId(userId);
+    public findAllByUserId(userId: string): Promise<ResumeGetAllResponseDto> {
+        return this.resumeRepository.findAllByUserId(userId);
     }
 
     public async create(
