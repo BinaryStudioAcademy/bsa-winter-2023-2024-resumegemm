@@ -341,19 +341,19 @@ class AuthController extends Controller {
                 return {
                     status: HttpCode.BAD_REQUEST,
                     payload: {
-                        message: 'Email confirm token not found',
+                        message: ExceptionMessage.EMAIL_CONFIRM_TOKEN_NOT_FOUND,
                         status: HttpCode.BAD_REQUEST,
                     },
                 };
             }
-            const user = await this.authService.confirmUserEmail({
+            const userData = await this.authService.confirmUserEmail({
                 emailConfirmToken,
             });
 
             return {
                 status: HttpCode.OK,
                 payload: {
-                    ...user,
+                    ...userData,
                     message:
                         EmailConfirmMessages.EMAIL_CONFIRM_TOKEN_IS_CORRECT,
                     status: HttpCode.OK,
