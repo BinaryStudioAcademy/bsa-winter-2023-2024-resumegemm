@@ -1,38 +1,62 @@
 version: '3'
 
+networks:
+    node_network:
+        driver: bridge
+
 services:
-    frontend:
+    web:
+        container_name: 'web'
         build:
             context: ./
             dockerfile: ./frontend/Dockerfile
+        environment:
+            - VITE_APP_NODE_ENV=production
+            - VITE_APP_API_ORIGIN_URL=http://localhost:3001/api/v1
+            - VITE_APP_DOMAIN_URL=http://localhost:3000
         env_file:
             - ./frontend/.env
-        depends_on:
-            - backend
+        networks:
+            - node_network
         ports:
             - '3000:3000'
+        depends_on:
+            - api
 
-    backend:
+    api:
+        container_name: 'api'
         build:
             context: ./
             dockerfile: ./backend/Dockerfile
+        restart: unless-stopped
         environment:
+            - NODE_ENV=production
+            - PORT=3001
+            - HOST=0.0.0.0
+            - PRODUCTION_ORIGIN_URL=http://localhost:3000
+            - DB_CONNECTION_STRING=pg://postgres_user:postgres_password@db:5432/postgres_db
             - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
             - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
         env_file:
             - ./backend/.env
+        networks:
+            - node_network
         ports:
             - '3001:3001'
         cap_add:
             - SYS_ADMIN
         depends_on:
-            - postgres
+            - db
 
-    postgres:
+    db:
+        container_name: 'db'
         image: postgres:15.2
+        restart: always
         environment:
-            - POSTGRES_DB=postgres
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=postgres_db
+            - POSTGRES_USER=postgres_user
+            - POSTGRES_PASSWORD=postgres_password
+        networks:
+            - node_network
         ports:
             - '5432:5432'
