@@ -5,6 +5,10 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
+    ExceptionMessage,
+    HttpCode,
+    HTTPError,
 } from 'shared/build/index.js';
 
 import { PROMPTS } from '../open-ai/open-ai.js';
@@ -35,6 +39,21 @@ class ResumeService implements IResumeService {
         id: string,
     ): Promise<ResumeGetItemResponseDto | null> {
         return this.resumeRepository.findById(id);
+    }
+    public async getByUserIdTemplateId(
+        resumeId: string,
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto> {
+        const resume = await this.findById(resumeId);
+        if (!resume) {
+            throw new HTTPError({
+                message: ExceptionMessage.RESUME_NOT_FOUND,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+        return this.resumeRepository.getByUserIdTemplateId(
+            resume.userId,
+            resume.templateId,
+        );
     }
 
     public async findAll(): Promise<ResumeGetAllResponseDto[]> {

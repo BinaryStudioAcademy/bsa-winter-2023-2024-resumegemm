@@ -1,6 +1,9 @@
 import { Guid as guid } from 'guid-typescript';
 
-import { resumeGraphFetchRelations } from './constants/constants.js';
+import {
+    resumeGraphFetchRelations,
+    resumeGraphFetchWithTemplates,
+} from './constants/constants.js';
 import {
     type CertificationRepository,
     type ContactsRepository,
@@ -19,6 +22,7 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
 } from './types/types.js';
 
 interface ResumeRepositoryConfiguration {
@@ -73,6 +77,17 @@ class ResumeRepository implements IResumeRepository {
             .castTo<ResumeGetAllResponseDto>();
 
         return resume ?? null;
+    }
+
+    public async getByUserIdTemplateId(
+        userId: string,
+        templateId: string,
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto> {
+        return this.resumeModel
+            .query()
+            .findOne({ userId, templateId })
+            .withGraphFetched(resumeGraphFetchWithTemplates)
+            .castTo<ResumeWithRelationsAndTemplateResponseDto>();
     }
 
     public async findAll(): Promise<ResumeGetAllResponseDto[]> {

@@ -22,6 +22,7 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
 } from './types/types.js';
 
 class ResumeController extends Controller {
@@ -125,20 +126,26 @@ class ResumeController extends Controller {
 
     private async findByIdWithRelations(
         options: ApiHandlerOptions<{ params: IdParameter }>,
-    ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
-        const resume = await this.resumeService.findById(options.params.id);
-
-        if (!resume) {
-            throw new HTTPError({
-                status: HttpCode.BAD_REQUEST,
-                message: `Resume with id ${options.params.id} not found`,
-            });
+    ): Promise<ApiHandlerResponse<ResumeWithRelationsAndTemplateResponseDto>> {
+        try {
+            const resume = await this.resumeService.getByUserIdTemplateId(
+                options.params.id,
+            );
+            return {
+                status: HttpCode.OK,
+                payload: resume,
+            };
+        } catch (error: unknown) {
+            const { status = HttpCode.INTERNAL_SERVER_ERROR, message } =
+                error as HTTPError;
+            return {
+                status,
+                payload: {
+                    status,
+                    message,
+                },
+            };
         }
-
-        return {
-            status: HttpCode.OK,
-            payload: resume,
-        };
     }
 
     private async delete(
