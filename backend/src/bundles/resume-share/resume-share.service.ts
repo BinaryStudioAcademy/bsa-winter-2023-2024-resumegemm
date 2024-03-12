@@ -59,6 +59,14 @@ class ResumeShareService implements IResumeShareService {
     ): Promise<ResumeShareDeleteResponseDto | unknown> {
         return await this.resumeShareRepository.DeleteById(id);
     }
+
+    public async getResumeShareRecordByResumeId(
+        resumeId: string,
+    ): Promise<ResumeShareCreateResponseDto | unknown> {
+        return await this.resumeShareRepository.getResumeShareLinkByResumeId(
+            resumeId,
+        );
+    }
 }
 
 export { ResumeShareService };
