@@ -67,7 +67,6 @@ const EditTemplatePage: React.FC = () => {
         takeScreenshot({
             ref: templateEditorReference,
             convertOptions: { quality: 1, type: 'image/jpeg' },
-            options: { backgroundColor: null },
         })
             .then((screenshot) => {
                 if (screenshot) {
