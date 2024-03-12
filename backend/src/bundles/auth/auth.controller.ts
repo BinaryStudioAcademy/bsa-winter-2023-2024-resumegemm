@@ -221,11 +221,11 @@ class AuthController extends Controller {
         }>,
     ): Promise<ApiHandlerResponse<UserSignUpResponseDto>> {
         try {
-            const token = await this.authService.signUp(options.body);
+            const userData = await this.authService.signUp(options.body);
 
             return {
                 status: HttpCode.CREATED,
-                payload: token,
+                payload: userData,
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;
