@@ -42,6 +42,8 @@ const useTakeScreenShot = (): ReturnValue => {
             const canvas = await html2canvas(ref.current, options);
             const data = canvas.toDataURL(type, quality);
             setScreenshot(data);
+
+            return data;
         } catch (error) {
             setError((error as Error).message);
         } finally {
