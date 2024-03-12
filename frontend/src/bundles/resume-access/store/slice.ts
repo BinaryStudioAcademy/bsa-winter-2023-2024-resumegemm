@@ -5,6 +5,7 @@ import {
     accessResume,
     accessResumeDetails,
     deleteAccessResume,
+    getResumeAccessByResumeId,
 } from './actions.js';
 
 type State = {
@@ -29,6 +30,12 @@ const { reducer, actions, name } = createSlice({
         builder.addCase(accessResumeDetails.fulfilled, (state, action) => {
             state.details = action.payload.accesses;
         });
+        builder.addCase(
+            getResumeAccessByResumeId.fulfilled,
+            (state, action) => {
+                state.resumeId = action.payload.resumeId;
+            },
+        );
 
         builder.addMatcher(
             isAnyOf(
