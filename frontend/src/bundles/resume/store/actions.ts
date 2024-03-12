@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
     type AsyncThunkConfig,
     type ResumeGetAllResponseDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
 } from '../types/types';
 import { name as sliceName } from './slice.js';
 
@@ -15,4 +16,13 @@ const getAllResumes = createAsyncThunk<
     return resumeApi.getAllResumes();
 });
 
-export { getAllResumes };
+const getCurrentResumeWithTemplate = createAsyncThunk<
+    ResumeWithRelationsAndTemplateResponseDto,
+    string,
+    AsyncThunkConfig
+>(`${sliceName}/get-current-resume`, (resumeId, { extra }) => {
+    const { resumeApi } = extra;
+    return resumeApi.getOneWithTemplate(resumeId);
+});
+
+export { getAllResumes, getCurrentResumeWithTemplate };

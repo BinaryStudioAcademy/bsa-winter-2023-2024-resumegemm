@@ -5,6 +5,7 @@ import {
     type IHttp,
     type IStorage,
     type ResumeGetAllResponseDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
 } from './types/types';
 
 type Constructor = {
@@ -28,6 +29,19 @@ class ResumeApi extends HttpApi {
             },
         );
         return await response.json<ResumeGetAllResponseDto[]>();
+    }
+    public async getOneWithTemplate(
+        resumeId: string,
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}${resumeId}`, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<ResumeWithRelationsAndTemplateResponseDto>();
     }
 }
 
