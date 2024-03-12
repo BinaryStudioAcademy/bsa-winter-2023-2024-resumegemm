@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
 import { Navigate, useSearchParams } from 'react-router-dom';
 
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
-import { useAppDispatch } from '~/bundles/common/hooks/hooks';
+import {
+    useAppDispatch,
+    useCallback,
+    useEffect,
+    useState,
+} from '~/bundles/common/hooks/hooks';
 
 import { actions as authActionCreator } from '../../store/auth.store';
 
