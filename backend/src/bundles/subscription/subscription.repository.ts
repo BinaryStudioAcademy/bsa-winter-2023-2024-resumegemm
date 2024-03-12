@@ -22,13 +22,13 @@ class SubscriptionRepository implements ISubscriptionRepository {
         return await this.subscriptionModel.query().insert(data).returning('*');
     }
 
-    public async update(
+    public async updateStatus(
         id: string,
-        data: Partial<Subscription>,
+        status: string,
     ): Promise<Subscription> {
         return await this.subscriptionModel
             .query()
-            .updateAndFetchById(id, data);
+            .updateAndFetchById(id, { status });
     }
 
     public async delete(id: string): Promise<boolean> {

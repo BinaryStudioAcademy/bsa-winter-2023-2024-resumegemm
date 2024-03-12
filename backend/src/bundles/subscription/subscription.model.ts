@@ -5,6 +5,7 @@ import {
     DatabaseTableName,
 } from '~/common/database/database.js';
 
+import { SubscriptionPlanModel } from '../stripe-events/models/subscription-plan.model.js';
 import { UserModel } from '../users/user.model.js';
 
 class SubscriptionModel extends AbstractModel {
@@ -28,6 +29,14 @@ class SubscriptionModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.SUBSCRIPTION}.userId`,
                     to: `${DatabaseTableName.USERS}.id`,
+                },
+            },
+            subscriptionPlan: {
+                relation: Model.HasOneRelation,
+                modelClass: SubscriptionPlanModel,
+                join: {
+                    from: `${DatabaseTableName.SUBSCRIPTION}.subscriptionPlanId`,
+                    to: `${DatabaseTableName.SUBSCRIPTION_PLANS}.id`,
                 },
             },
         };
