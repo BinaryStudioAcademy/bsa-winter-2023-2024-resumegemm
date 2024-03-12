@@ -162,7 +162,7 @@ class AuthService implements TAuthService {
         if (user?.email !== tokenPayload.email) {
             throw new HTTPError({
                 message: ExceptionMessage.INVALID_RESET_TOKEN,
-                status: HttpCode.BAD_REQUEST,
+                status: HttpCode.NOT_FOUND,
             });
         }
 
@@ -207,7 +207,7 @@ class AuthService implements TAuthService {
 
         if (!user) {
             throw new HTTPError({
-                status: HttpCode.BAD_REQUEST,
+                status: HttpCode.NOT_FOUND,
                 message: ExceptionMessage.USER_NOT_FOUND,
             });
         }
