@@ -23,6 +23,8 @@
 }
 
 .resume_card__content_title {
+    display: flex;
+    justify-content: space-between;
     margin: 0;
     font-weight: var(--font-weight-logo);
     font-size: var(--font-size-main-text);
@@ -34,4 +36,17 @@
     color: var(--color-text-light-gray);
     font-size: var(--font-size-secondary-text);
     line-height: 1.5;
+}
+
+.resume_card__resume_views_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-text-light-gray);
+    font-weight: 400;
+}
+
+.resume_card__resume_views_number {
+    margin-left: 5px;
+    font-size: var(--font-size-secondary-text);
 }
