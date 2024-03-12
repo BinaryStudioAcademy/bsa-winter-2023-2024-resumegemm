@@ -1,6 +1,7 @@
 import {
     disconnectSocialMedia,
     getUserProfileAndSocials,
+    updateProfileAndEmail,
     updateUserAvatar,
 } from './actions.js';
 import { actions } from './slice.js';
@@ -10,6 +11,7 @@ const allActions = {
     updateUserAvatar,
     getUserProfileAndSocials,
     disconnectSocialMedia,
+    updateProfileAndEmail,
 };
 
 export { allActions as actions };

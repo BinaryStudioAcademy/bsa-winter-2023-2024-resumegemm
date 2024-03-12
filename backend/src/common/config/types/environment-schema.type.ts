@@ -26,6 +26,14 @@ type EnvironmentSchema = {
             CLIENT_FACEBOOK_ID: string;
             CLIENT_FACEBOOK_SECRET: string;
         };
+        LINKEDIN: {
+            CLIENT_LINKEDIN_ID: string;
+            CLIENT_LINKEDIN_SECRET: string;
+            OPTIONS: {
+                bodyFormat: 'form';
+                authorizationMethod: 'body';
+            };
+        };
         BASE_CALLBACK_URI: string;
     };
     COOKIE: {
