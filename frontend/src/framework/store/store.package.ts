@@ -14,6 +14,8 @@ import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store/payment.store';
 import { profileApi } from '~/bundles/profile/profile';
 import { reducer as profileReducer } from '~/bundles/profile/store/profile.store';
+import { resumeApi } from '~/bundles/resume/resume.js';
+import { reducer as resumeReducer } from '~/bundles/resume/store/index.js';
 import { resumeAccessApi } from '~/bundles/resume-access/resume-access';
 import { reducer as resumeAccessReducer } from '~/bundles/resume-access/store/';
 import { reducer as templatesReducer } from '~/bundles/templates-page/store';
@@ -29,6 +31,7 @@ type RootReducer = {
     users: ReturnType<typeof usersReducer>;
     payment: ReturnType<typeof paymentReducer>;
     templates: ReturnType<typeof templatesReducer>;
+    resumes: ReturnType<typeof resumeReducer>;
     resumeAccess: ReturnType<typeof resumeAccessReducer>;
     profile: ReturnType<typeof profileReducer>;
     editTemplate: ReturnType<typeof editTemplateReducer>;
@@ -41,6 +44,7 @@ type ExtraArguments = {
     paymentApi: typeof paymentApi;
     storageApi: typeof storage;
     templateApi: typeof templateApi;
+    resumeApi: typeof resumeApi;
     resumeAccessApi: typeof resumeAccessApi;
     profileApi: typeof profileApi;
 };
@@ -64,6 +68,7 @@ class Store {
                 users: usersReducer,
                 payment: paymentReducer,
                 templates: templatesReducer,
+                resumes: resumeReducer,
                 resumeAccess: resumeAccessReducer,
                 profile: profileReducer,
                 editTemplate: editTemplateReducer,
@@ -85,6 +90,7 @@ class Store {
             paymentApi,
             storageApi: storage,
             templateApi,
+            resumeApi,
             resumeAccessApi,
             openAuthApi,
             profileApi,
