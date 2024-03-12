@@ -4,8 +4,6 @@ import { type UserWithProfileRelation } from 'shared/build/index.js';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
-import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
-import { showToast } from '~/bundles/toast/helpers/show-toast.js';
 
 import {
     forgotPassword,
@@ -72,26 +70,9 @@ const { reducer, actions, name } = createSlice({
             isAnyOf(
                 verifyResetPasswordToken.fulfilled,
                 forgotPassword.fulfilled,
-                resetPassword.fulfilled,
             ),
             (state) => {
                 state.dataStatus = DataStatus.FULFILLED;
-            },
-        );
-
-        builder.addMatcher(
-            isAnyOf(
-                verifyResetPasswordToken.rejected,
-                forgotPassword.rejected,
-                resetPassword.rejected,
-            ),
-            (state, action) => {
-                state.dataStatus = DataStatus.REJECTED;
-
-                showToast(
-                    JSON.stringify(action.error.message),
-                    ToastType.ERROR,
-                );
             },
         );
 
@@ -101,6 +82,9 @@ const { reducer, actions, name } = createSlice({
                 signIn.rejected,
                 getUser.rejected,
                 requestNewAccessToken.rejected,
+                verifyResetPasswordToken.rejected,
+                forgotPassword.rejected,
+                resetPassword.rejected,
             ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
