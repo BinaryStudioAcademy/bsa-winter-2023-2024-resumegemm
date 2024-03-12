@@ -63,7 +63,8 @@ const { reducer, actions, name } = createSlice({
             ),
             (state, action) => {
                 state.dataStatus = DataStatus.FULFILLED;
-                state.user = action.payload as UserWithProfileRelation;
+                state.user =
+                    action.payload as unknown as UserWithProfileRelation;
             },
         );
 
