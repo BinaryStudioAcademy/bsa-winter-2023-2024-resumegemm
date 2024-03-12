@@ -81,17 +81,6 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(
             isAnyOf(
-                verifyResetPasswordToken.fulfilled,
-                forgotPassword.fulfilled,
-                resetPassword.fulfilled,
-            ),
-            (state) => {
-                state.dataStatus = DataStatus.FULFILLED;
-            },
-        );
-
-        builder.addMatcher(
-            isAnyOf(
                 verifyResetPasswordToken.rejected,
                 forgotPassword.rejected,
                 resetPassword.rejected,
@@ -105,6 +94,7 @@ const { reducer, actions, name } = createSlice({
                 );
             },
         );
+
         builder.addMatcher(
             isAnyOf(
                 signUp.rejected,
