@@ -13,6 +13,13 @@ class ProfileRepository extends AbstractRepository<
         super(profileModel);
     }
 
+    public async updateById(
+        id: string,
+        data: Partial<Omit<ProfileModel, 'id' | 'createdAt' | 'updatedAt'>>,
+    ): Promise<ProfileModel> {
+        return await this.model.query().updateAndFetchById(id, data);
+    }
+
     public async updateAvatar({
         id,
         key = null,

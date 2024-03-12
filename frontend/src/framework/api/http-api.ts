@@ -1,3 +1,5 @@
+import { type AuthTokenResponse, AuthApiPath } from 'shared/build';
+
 import { ContentType, ServerErrorType } from '~/bundles/common/enums/enums.js';
 import {
     type ServerErrorResponse,
@@ -6,8 +8,8 @@ import {
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
 import { showToast } from '~/bundles/toast/helpers/show-toast.js';
 import {
-    type HttpCode,
     type IHttp,
+    HttpCode,
     HTTPError,
     HttpHeader,
 } from '~/framework/http/http.js';
@@ -58,12 +60,37 @@ class HTTPApi implements IHttpApi {
 
         const headers = await this.getHeaders(contentType, hasAuth);
 
-        const response = await this.http.load(path, {
+        let response = await this.http.load(path, {
             method,
             headers,
             payload,
             withCredentials,
         });
+
+        if (response.status === HttpCode.EXPIRED_TOKEN) {
+            const tokenResponse = await this.http.load(
+                this.getFullEndpoint(AuthApiPath.TOKEN, {}),
+                {
+                    method,
+                    headers,
+                    payload,
+                    withCredentials,
+                },
+            );
+
+            const { accessToken } =
+                (await tokenResponse.json()) as AuthTokenResponse;
+            await this.storage.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+            const newHeaders = await this.getHeaders(contentType, hasAuth);
+
+            response = await this.http.load(path, {
+                method,
+                headers: newHeaders,
+                payload,
+                withCredentials,
+            });
+        }
 
         return (await this.checkResponse(response)) as HttpApiResponse;
     }
@@ -101,7 +128,6 @@ class HTTPApi implements IHttpApi {
             const tokenFromCookie = getCookie(StorageKey.ACCESS_TOKEN);
 
             const token = tokenFromLocalStorage ?? tokenFromCookie;
-
             headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
         }
 

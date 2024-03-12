@@ -6,13 +6,24 @@ import templateSecondImage from '~/assets/img/6450724.png';
 import GettingStarted from '~/assets/img/get-started.png';
 import OnlineEditorFeatureImage from '~/assets/img/mock-resume-designer.png';
 import templateFirstImage from '~/assets/img/resume-template.png';
-import { ButtonSize, ButtonVariant } from '~/bundles/common/enums/enums';
+import {
+    AppRoute,
+    ButtonSize,
+    ButtonVariant,
+} from '~/bundles/common/enums/enums';
 
 import { Header, RegularButton } from '../common/components/components';
+import { useCallback, useNavigate } from '../common/hooks/hooks';
 import { FeatureImage } from './components/feature-image';
 import styles from './styles.module.scss';
 
 const LandingPage = (): JSX.Element => {
+    const navigate = useNavigate();
+
+    const handleGetStarted = useCallback(() => {
+        navigate(AppRoute.LOG_IN);
+    }, [navigate]);
+
     return (
         <>
             <Header>
@@ -20,6 +31,7 @@ const LandingPage = (): JSX.Element => {
                     variant={ButtonVariant.PRIMARY}
                     size={ButtonSize.MEDIUM}
                     className={styles.landing_page__header__button}
+                    onClick={handleGetStarted}
                 >
                     <p>Get Started</p>
                 </RegularButton>
@@ -55,6 +67,7 @@ const LandingPage = (): JSX.Element => {
                                 variant={ButtonVariant.PRIMARY}
                                 size={ButtonSize.MEDIUM}
                                 className={styles.intro__button}
+                                onClick={handleGetStarted}
                             >
                                 <p>Create Resume for free</p>
                             </RegularButton>
@@ -159,6 +172,7 @@ const LandingPage = (): JSX.Element => {
                                 variant={ButtonVariant.PRIMARY}
                                 size={ButtonSize.MEDIUM}
                                 className={styles.get_started_section__button}
+                                onClick={handleGetStarted}
                             >
                                 <p>Create Resume for free</p>
                             </RegularButton>
