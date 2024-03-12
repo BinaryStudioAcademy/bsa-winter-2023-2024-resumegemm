@@ -1,3 +1,4 @@
+export { type FindByEmailRequestDto } from './find-by-email-request-dto.js';
 export { type SocialMediaProfiles } from './social-media-profiles.type.js';
 export { type User } from './user.type.js';
 export { type UserAuthResponse } from './user-auth-response.type.js';
