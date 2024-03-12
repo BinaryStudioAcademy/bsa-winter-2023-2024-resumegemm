@@ -30,9 +30,17 @@ class AuthService implements TAuthService {
     public async signUp(
         userRequestDto: UserSignUpRequestDto,
     ): ReturnType<TAuthService['signUp']> {
-        const foundUserByEmail = await this.userService.findByEmail(
-            userRequestDto.email,
-        );
+        const { email, password } = userRequestDto;
+        const foundUserByEmail = await this.userService.findByEmail({
+            email,
+            withDeleted: true,
+        });
+        if (foundUserByEmail?.deletedAt) {
+            throw new HTTPError({
+                message: ExceptionMessage.EMAIL_TAKEN,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
         if (foundUserByEmail) {
             throw new HTTPError({
                 message: ExceptionMessage.EMAIL_TAKEN,
@@ -42,10 +50,7 @@ class AuthService implements TAuthService {
 
         const passwordSalt = await this.generateSalt();
 
-        const passwordHash = await this.encrypt(
-            String(userRequestDto.password),
-            passwordSalt,
-        );
+        const passwordHash = await this.encrypt(String(password), passwordSalt);
 
         const { id } = await this.userService.create({
             ...userRequestDto,
@@ -66,7 +71,17 @@ class AuthService implements TAuthService {
         email,
         password,
     }: UserSignInRequestDto): ReturnType<TAuthService['login']> {
-        const foundUserByEmail = await this.userService.findByEmail(email);
+        const foundUserByEmail = await this.userService.findByEmail({
+            email,
+            withDeleted: true,
+        });
+
+        if (foundUserByEmail?.deletedAt) {
+            throw new HTTPError({
+                message: ExceptionMessage.NO_ACTIVE_ACCOUNT,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
 
         if (!foundUserByEmail) {
             throw new HTTPError({
