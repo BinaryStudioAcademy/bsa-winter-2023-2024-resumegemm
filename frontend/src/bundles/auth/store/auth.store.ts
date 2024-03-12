@@ -1,6 +1,7 @@
 import {
     forgotPassword,
     getUser,
+    requestNewAccessToken,
     resetPassword,
     signIn,
     signUp,
@@ -16,6 +17,7 @@ const allActions = {
     forgotPassword,
     verifyResetPasswordToken,
     resetPassword,
+    requestNewAccessToken,
 };
 
 export { allActions as actions };

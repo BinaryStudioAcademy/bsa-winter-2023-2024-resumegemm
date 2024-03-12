@@ -40,7 +40,6 @@ const signIn = createAsyncThunk<
     const { user, accessToken } = await authApi.signIn(signInPayload);
 
     await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
-
     return user;
 });
 
@@ -52,6 +51,17 @@ const getUser = createAsyncThunk<
     const { authApi } = extra;
 
     return await authApi.getUser();
+});
+
+const requestNewAccessToken = createAsyncThunk<
+    void,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/update-access-token`, async (_, { extra }) => {
+    const { authApi, storageApi } = extra;
+
+    const { accessToken } = await authApi.requestNewAccessToken();
+    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
 });
 
 const forgotPassword = createAsyncThunk<
@@ -98,6 +108,7 @@ const resetPassword = createAsyncThunk<
 export {
     forgotPassword,
     getUser,
+    requestNewAccessToken,
     resetPassword,
     signIn,
     signUp,

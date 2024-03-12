@@ -37,6 +37,13 @@ class UserRepository
         return user ?? null;
     }
 
+    public async updateById(
+        id: string,
+        data: Partial<Omit<UserModel, 'createdAt' | 'updatedAt'>>,
+    ): Promise<UserModel> {
+        return await this.model.query().updateAndFetchById(id, data);
+    }
+
     public async changePassword({
         id,
         passwordHash,

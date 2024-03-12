@@ -11,6 +11,7 @@ export {
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
+    type UserLinkedInDataResponseDto,
     OauthStrategy,
     OpenAuthApiGetUserUrl,
     OpenAuthApiPath,
@@ -89,6 +90,7 @@ export {
 } from './bundles/templates/templates.js';
 export {
     type SocialMediaProfiles,
+    type UpdateUserProfileAndEmailRequestDto,
     type User,
     type UserAuthResponse,
     type UserEntityFields,

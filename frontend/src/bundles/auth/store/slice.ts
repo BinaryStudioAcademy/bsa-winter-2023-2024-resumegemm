@@ -10,6 +10,7 @@ import { showToast } from '~/bundles/toast/helpers/show-toast.js';
 import {
     forgotPassword,
     getUser,
+    requestNewAccessToken,
     resetPassword,
     signIn,
     signUp,
@@ -35,12 +36,19 @@ const { reducer, actions, name } = createSlice({
             action: PayloadAction<UserWithProfileRelation | null>,
         ) => {
             state.user = action.payload;
-            state.dataStatus = DataStatus.IDLE;
         },
     },
     extraReducers(builder) {
+        builder.addCase(requestNewAccessToken.fulfilled, (state) => {
+            state.dataStatus = DataStatus.FULFILLED;
+        });
         builder.addMatcher(
-            isAnyOf(signUp.pending, signIn.pending, getUser.pending),
+            isAnyOf(
+                signUp.pending,
+                signIn.pending,
+                getUser.pending,
+                requestNewAccessToken.pending,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
             },
@@ -72,6 +80,17 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(
             isAnyOf(
+                verifyResetPasswordToken.fulfilled,
+                forgotPassword.fulfilled,
+                resetPassword.fulfilled,
+            ),
+            (state) => {
+                state.dataStatus = DataStatus.FULFILLED;
+            },
+        );
+
+        builder.addMatcher(
+            isAnyOf(
                 verifyResetPasswordToken.rejected,
                 forgotPassword.rejected,
                 resetPassword.rejected,
@@ -86,7 +105,12 @@ const { reducer, actions, name } = createSlice({
             },
         );
         builder.addMatcher(
-            isAnyOf(signUp.rejected, signIn.rejected, getUser.rejected),
+            isAnyOf(
+                signUp.rejected,
+                signIn.rejected,
+                getUser.rejected,
+                requestNewAccessToken.rejected,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
                 state.user = null;
