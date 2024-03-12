@@ -10,7 +10,7 @@ type Convert = {
 type Parameters = {
     ref: MutableRefObject<HTMLElement | null>;
     convertOptions: Convert;
-    options: Partial<Options>;
+    options?: Partial<Options>;
 };
 
 type ReturnValue = {
