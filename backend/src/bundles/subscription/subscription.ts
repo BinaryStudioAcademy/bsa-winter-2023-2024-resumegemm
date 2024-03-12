@@ -6,4 +6,4 @@ const subscriptionRepository = new SubscriptionRepository(SubscriptionModel);
 
 const subscriptionService = new SubscriptionService(subscriptionRepository);
 
-export { subscriptionService };
+export { subscriptionRepository, subscriptionService };
