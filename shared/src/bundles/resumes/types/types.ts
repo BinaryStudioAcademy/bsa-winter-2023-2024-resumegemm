@@ -19,4 +19,5 @@ export { type ResumeShareDetailsGetRequestDto } from './resume-share-details-get
 export { type ResumeShareDetailsGetResponseDto } from './resume-share-details-get-response-dto.type';
 export { type ResumeShareGetRequestDto } from './resume-share-get-request-dto.type';
 export { type ResumeShareGetResponseDto } from './resume-share-get-response-dto.type';
+export { type ResumeShareResponseDto } from './resume-share-response-dto.type';
 export { type ResumeUpdateItemRequestDto } from './resume-update-item-request-dto.type.js';

@@ -65,6 +65,7 @@ export {
     type ResumeShareDetailsGetResponseDto,
     type ResumeShareGetRequestDto,
     type ResumeShareGetResponseDto,
+    type ResumeShareResponseDto,
     type ResumeUpdateItemRequestDto,
     type TechnicalSkill,
     LanguageLevels,
