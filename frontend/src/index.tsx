@@ -18,6 +18,8 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
+import { ConfirmedEmailFail } from './bundles/auth/components/confirmed-email-page/confirm-email-fail';
+import { ConfirmedEmailSuccess } from './bundles/auth/components/confirmed-email-page/confirm-email-success';
 import { ConfirmedEmailPage } from './bundles/auth/components/confirmed-email-page/confirmed-email-page';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
@@ -66,10 +68,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             path: AppRoute.SIGN_UP,
                                             element: <Auth />,
                                         },
-                                        {
-                                            path: AppRoute.CONFIRM_EMAIL,
-                                            element: <ConfirmedEmailPage />,
-                                        },
                                     ],
                                 },
                                 {
@@ -105,6 +103,18 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 {
                                     path: AppRoute.RESUME_ACCESS,
                                     element: <ResumeAccess />,
+                                },
+                                {
+                                    path: AppRoute.CONFIRM_EMAIL,
+                                    element: <ConfirmedEmailPage />,
+                                },
+                                {
+                                    path: AppRoute.CONFIRM_EMAIL_SUCCESS,
+                                    element: <ConfirmedEmailSuccess />,
+                                },
+                                {
+                                    path: AppRoute.CONFIRM_EMAIL_FAIL,
+                                    element: <ConfirmedEmailFail />,
                                 },
                             ],
                         },
