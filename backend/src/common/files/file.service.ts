@@ -14,12 +14,17 @@ class FileService {
     public async create(
         fileBuffer: FileUploadRequestDto,
     ): Promise<FileUploadResponseDto> {
-        const uploadedFileUrl = await this.fileUploadClient.upload(
-            fileBuffer.buffer,
-            fileBuffer.contentType,
-        );
+        const { buffer, contentType, contentEncoding } = fileBuffer;
 
-        return { url: uploadedFileUrl };
+        return await this.fileUploadClient.upload({
+            buffer,
+            contentType,
+            contentEncoding,
+        });
+    }
+
+    public async getFileUrl(key: string): Promise<string> {
+        return await this.fileUploadClient.getFileUrl(key);
     }
 }
 
