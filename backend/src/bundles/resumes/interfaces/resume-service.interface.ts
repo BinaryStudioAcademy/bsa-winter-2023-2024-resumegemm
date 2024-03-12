@@ -5,6 +5,7 @@ import {
     type ResumeCreateItemRequestDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
 } from 'shared/build/index.js';
 
 interface IResumeService {
@@ -15,6 +16,10 @@ interface IResumeService {
     findAll(): Promise<ResumeGetItemResponseDto[]>;
 
     findAllByUserId(userId: string): Promise<ResumeGetItemResponseDto[]>;
+
+    getByUserIdTemplateId(
+        resumeId: string,
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto>;
 
     create(
         payload: ResumeCreateItemRequestDto,

@@ -4,6 +4,7 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
 } from 'shared/build';
 
 interface IResumeRepository {
@@ -14,6 +15,11 @@ interface IResumeRepository {
     findAll(): Promise<ResumeGetAllResponseDto[]>;
 
     findAllByUserId(userId: string): Promise<ResumeGetAllResponseDto[]>;
+
+    getByUserIdTemplateId(
+        userId: string,
+        templateId: string,
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto>;
 
     create(
         payload: ResumeCreateItemRequestDto,
