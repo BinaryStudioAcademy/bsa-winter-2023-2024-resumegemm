@@ -9,6 +9,8 @@ enum AppRoute {
     HOME = '/home',
     TEMPLATES = '/templates',
     TEMPLATE_EDITOR = '/template-editor',
+    QA = '/qa',
+    STATISTICS = '/statistics',
 }
 
 export { AppRoute };
