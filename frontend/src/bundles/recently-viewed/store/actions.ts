@@ -9,10 +9,10 @@ const getRecentlyViewedTemplates = createAsyncThunk<
     RecentlyViewedTemplatesResponseDto[],
     undefined,
     AsyncThunkConfig
->(`${sliceName}/templates`, async (_, { extra }) => {
+>(`${sliceName}/templates`, (_, { extra }) => {
     const { recentlyViewedApi } = extra;
 
-    return await recentlyViewedApi.getRecentlyViewedTemplates();
+    return recentlyViewedApi.getRecentlyViewedTemplates();
 });
 
 export { getRecentlyViewedTemplates };
