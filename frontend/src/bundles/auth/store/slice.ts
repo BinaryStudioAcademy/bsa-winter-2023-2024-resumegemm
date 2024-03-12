@@ -5,7 +5,7 @@ import { type UserWithProfileRelation } from 'shared/build/index.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { confirmEmail, signIn, signUp } from './actions.js';
+import { confirmEmail, getUser, signIn, signUp } from './actions.js';
 
 type State = {
     user: UserWithProfileRelation | null;
@@ -31,23 +31,36 @@ const { reducer, actions, name } = createSlice({
     },
     extraReducers(builder) {
         builder.addMatcher(
-            isAnyOf(signIn.fulfilled, confirmEmail.fulfilled),
+            isAnyOf(signIn.fulfilled, getUser.fulfilled),
             (state, action) => {
                 state.dataStatus = DataStatus.FULFILLED;
                 state.user = action.payload;
             },
         );
-        builder.addMatcher(isAnyOf(signUp.fulfilled), (state) => {
-            state.dataStatus = DataStatus.FULFILLED;
-        });
         builder.addMatcher(
-            isAnyOf(signUp.rejected, signIn.rejected, confirmEmail.rejected),
+            isAnyOf(signUp.fulfilled, confirmEmail.fulfilled),
+            (state) => {
+                state.dataStatus = DataStatus.FULFILLED;
+            },
+        );
+        builder.addMatcher(
+            isAnyOf(
+                signUp.rejected,
+                signIn.rejected,
+                confirmEmail.rejected,
+                getUser.rejected,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
             },
         );
         builder.addMatcher(
-            isAnyOf(signUp.pending, signIn.pending, confirmEmail.pending),
+            isAnyOf(
+                signUp.pending,
+                signIn.pending,
+                confirmEmail.pending,
+                getUser.pending,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
             },
