@@ -4,9 +4,15 @@ import { fileURLToPath } from 'node:url';
 
 import * as Pug from 'pug';
 
+type Context = {
+    title: 'ResumeGemm';
+    dashboardLink: string;
+    logoLink: string;
+};
+
 type Properties = {
     name: string;
-    context: object;
+    context: Context;
 };
 
 const getTemplate = ({ name, context }: Properties): string => {
