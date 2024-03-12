@@ -15,6 +15,7 @@ export {
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
+    type UserLinkedInDataResponseDto,
     OauthStrategy,
     OpenAuthApiGetUserUrl,
     OpenAuthApiPath,
@@ -77,14 +78,23 @@ export {
 } from './bundles/resumes/resumes.js';
 export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
 export {
+    type CSSProperties,
+    type LayoutBlock,
+    type LayoutContainer,
+    type LayoutItem,
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
+    type TemplateSettings,
     type TemplateUpdateItemRequestDto,
+    TemplateBlockTitles,
+    TemplateErrorMessage,
+    TemplateItemTags,
     TemplatesApiPath,
 } from './bundles/templates/templates.js';
 export {
     type SocialMediaProfiles,
+    type UpdateUserProfileAndEmailRequestDto,
     type User,
     type UserAuthResponse,
     type UserEntityFields,
