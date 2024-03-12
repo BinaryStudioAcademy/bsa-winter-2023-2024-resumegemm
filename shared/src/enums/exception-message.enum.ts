@@ -7,6 +7,7 @@ enum ExceptionMessage {
     AUTH_FAILED = 'Authorization failed, please sign in again.',
     INVALID_REFRESH_TOKEN = 'Refresh token has expired or invalid.',
     INVALID_OAUTH_ID = 'Oauth provider was not found.',
+    RESUME_NOT_FOUND = 'Resume not found',
 }
 
 export { ExceptionMessage };
