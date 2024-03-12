@@ -22,13 +22,16 @@ const createTemplate = createAsyncThunk<
     return templateApi.createTemplate();
 });
 
-const editTemplate = createAsyncThunk<TemplateDto, undefined, AsyncThunkConfig>(
+const editTemplate = createAsyncThunk<TemplateDto, string, AsyncThunkConfig>(
     `${sliceName}/edit`,
-    (request, { extra, getState }) => {
+    (image, { extra, getState }) => {
         const { templateApi } = extra;
         const { id, templateSettings } = getState().editTemplate.template;
 
-        return templateApi.editTemplate(id, { templateSettings });
+        return templateApi.editTemplate(id, {
+            templateSettings,
+            image,
+        });
     },
 );
 

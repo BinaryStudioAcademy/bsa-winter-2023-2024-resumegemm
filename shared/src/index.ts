@@ -106,6 +106,7 @@ export {
 export {
     ApiPath,
     AppEnvironment,
+    ContentEncoding,
     ContentType,
     CookieName,
     ExceptionMessage,
@@ -126,7 +127,12 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type IStorage } from './framework/storage/storage.js';
-export { configureString, getCookie, setCookie } from './helpers/helpers.js';
+export {
+    configureString,
+    getCookie,
+    setCookie,
+    validateUrl,
+} from './helpers/helpers.js';
 export {
     type IdParameter,
     type ServerCommonErrorResponse,

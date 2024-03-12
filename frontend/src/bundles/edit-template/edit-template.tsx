@@ -1,22 +1,28 @@
 import clsx from 'clsx';
-import React, { type ChangeEvent, useCallback, useEffect } from 'react';
+import React, { type ChangeEvent, useCallback, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Checkbox, RegularButton } from '../common/components/components';
 import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
+import { useTakeScreenShot } from '../common/hooks/use-take-screenshot/use-take-screenshot.hook';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
 import { TemplateBlockTitles } from '../templates-page/types/types';
+import { ToastType } from '../toast/enums/show-toast-types.enum';
+import { showToast } from '../toast/helpers/show-toast';
 import { TemplateEditor } from './components/template-editor/template-editor';
 import { editTemplate, getTemplateById } from './store/actions';
 import { actions as editTemplateActions } from './store/edit-template.store';
 import templateStyles from './styles.module.scss';
 
 const EditTemplatePage: React.FC = () => {
+    const { takeScreenshot } = useTakeScreenShot();
+
     const dispatch = useAppDispatch();
     const template = useAppSelector((state) => state.editTemplate.template);
     const parameters = useParams<{ id: string }>();
+    const templateEditorReference = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!parameters.id) {
@@ -26,7 +32,7 @@ const EditTemplatePage: React.FC = () => {
         if (!template.id || template.id !== parameters.id) {
             void dispatch(getTemplateById(parameters.id));
         }
-    }, [parameters.id, template.id, dispatch]);
+    }, [parameters.id, template.id, dispatch, takeScreenshot]);
 
     const templateSettings = useAppSelector(
         (state) => state.editTemplate.template.templateSettings,
@@ -57,9 +63,19 @@ const EditTemplatePage: React.FC = () => {
         [dispatch],
     );
 
-    const handleSaveTemplate = useCallback(() => {
-        void dispatch(editTemplate());
-    }, [dispatch]);
+    const handleSaveTemplate = useCallback((): void => {
+        takeScreenshot({
+            ref: templateEditorReference,
+            convertOptions: { quality: 1, type: 'image/jpeg' },
+            options: { backgroundColor: null },
+        })
+            .then((screenshot) => {
+                if (screenshot) {
+                    void dispatch(editTemplate(screenshot));
+                }
+            })
+            .catch((error) => showToast(error, ToastType.ERROR));
+    }, [dispatch, takeScreenshot]);
 
     return (
         <section
@@ -103,7 +119,10 @@ const EditTemplatePage: React.FC = () => {
                     </RegularButton>
                 </div>
             </nav>
-            <TemplateEditor settings={templateSettings} />
+            <TemplateEditor
+                ref={templateEditorReference}
+                settings={templateSettings}
+            />
         </section>
     );
 };
