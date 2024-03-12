@@ -133,7 +133,7 @@ class UserService
     }
 
     public async confirmEmail(id: string): Promise<void> {
-        return await this.userRepository.confirmEmail(id);
+        return this.userRepository.confirmEmail(id);
     }
 
     public async delete(
