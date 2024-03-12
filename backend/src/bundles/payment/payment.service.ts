@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 import { type IConfig } from '~/common/config/config';
 
 import { paymentMethodService } from '../payment-method/payment-method.js';
+import { subscriptionPlanRepository } from '../stripe-events/repositories/subscription-plan.repository.js';
 import { subscriptionService } from '../subscription/subscription.js';
 import { type UserService } from '../users/user.service.js';
 import { PaymentErrorMessage } from './enums/error-message.js';
@@ -126,14 +127,16 @@ class PaymentService implements IPaymentService {
                 subscriptionId: id,
             };
         }
-
         const { client_secret, payment_method } =
             latest_invoice.payment_intent as Stripe.PaymentIntent;
 
         const retrievedSubscription = await this.stripe.subscriptions.retrieve(
             id,
         );
+
         const { id: stripePlanId } = retrievedSubscription.items.data[0].plan;
+        const subscriptionPlan =
+            await subscriptionPlanRepository.findByStripePlanId(stripePlanId);
 
         const customerId = customer.id.toString();
         const user = await this.userService.addStripeId(customerId, email);
@@ -159,12 +162,12 @@ class PaymentService implements IPaymentService {
             }
         }
 
-        if (user) {
+        if (user && subscriptionPlan) {
             const newSubscription = {
                 subscriptionId: id,
                 userId: user.id,
                 status: status,
-                subscriptionPlanId: stripePlanId,
+                subscriptionPlanId: subscriptionPlan.id,
             };
             await subscriptionService.create(newSubscription);
         }
