@@ -42,6 +42,12 @@ class Config implements IConfig {
                     env: 'PORT',
                     default: null,
                 },
+                HOST: {
+                    doc: 'Host for incoming connections',
+                    format: String,
+                    env: 'HOST',
+                    default: 'localhost',
+                },
                 ORIGIN_URL: {
                     doc: 'Http origin for development',
                     format: String,
