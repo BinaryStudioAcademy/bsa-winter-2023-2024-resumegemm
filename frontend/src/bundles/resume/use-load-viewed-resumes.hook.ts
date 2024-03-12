@@ -21,17 +21,22 @@ import { getAllResumesByUserId } from './store/actions';
 type State = {
     resumeId: string | null;
     details: ResumeShareAccessGetResponseDto[];
+    resumeViewHistory: Record<string, ResumeShareAccessGetResponseDto[]>;
 };
 
 type ReturnValue = {
     viewedResume: State;
+    resumeViewHistory: Record<string, ResumeShareAccessGetResponseDto[]>;
 };
 
 const useLoadViewedResumes = (): ReturnValue => {
     const dispatch = useAppDispatch();
-    const resumes = useAppSelector(({ resumes }) => resumes.resumes);
     const authUser = useAppSelector(({ auth }) => auth.user);
+    const resumes = useAppSelector(({ resumes }) => resumes.resumes);
     const viewedResume = useAppSelector(({ resumeAccess }) => resumeAccess);
+    const resumeViewHistory = useAppSelector(
+        ({ resumeAccess }) => resumeAccess.resumeViewHistory,
+    );
 
     const { showToast } = useContext(ToastContext);
 
@@ -43,8 +48,8 @@ const useLoadViewedResumes = (): ReturnValue => {
             if (authUser && !dataLoaded) {
                 await dispatch(
                     getAllResumesByUserId({
-                        // userId: authUser.id, // TODO: uncomment this line when the backend is ready
-                        userId: '99afd243-a8eb-7323-2e81-de07d700cd53', //! mock user id for testing purposes
+                        userId: authUser.id, // TODO: uncomment this line when the backend is ready
+                        // userId: '99afd243-a8eb-7323-2e81-de07d700cd53', //! mock user id for testing purposes
                     }),
                 );
 
@@ -98,6 +103,7 @@ const useLoadViewedResumes = (): ReturnValue => {
 
     return {
         viewedResume,
+        resumeViewHistory,
     };
 };
 
