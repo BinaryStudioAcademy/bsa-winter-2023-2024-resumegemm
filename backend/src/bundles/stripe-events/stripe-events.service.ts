@@ -5,6 +5,8 @@ import { type IStripeEventsService } from '~/bundles/stripe-events/interfaces/st
 import { type SubscriptionPlanRepository } from '~/bundles/stripe-events/repositories/subscription-plan.repository.js';
 import { type IConfig } from '~/common/config/interfaces/config.interface.js';
 
+import { subscriptionRepository } from '../subscription/subscription.js';
+import { StripeSubscriptionEvents } from './enums/stripe-subscription-events.enum.js';
 import { type StripeEventsResponseDto } from './types/types.js';
 
 class StripeEventsService implements IStripeEventsService {
@@ -40,6 +42,10 @@ class StripeEventsService implements IStripeEventsService {
                 await this.handlePlanDeleted(event.data);
                 break;
             }
+            case StripeSubscriptionEvents.SUBSCRIPTION_STATUS_UPDATED: {
+                await this.handleUpdateSubscriptionStatus(event.data);
+                break;
+            }
         }
 
         return { resolved: true };
@@ -63,6 +69,14 @@ class StripeEventsService implements IStripeEventsService {
         await this.subscriptionPlanRepository.delete({
             stripePlanId: plan.id,
         });
+    }
+
+    private async handleUpdateSubscriptionStatus(
+        data: Stripe.CustomerSubscriptionUpdatedEvent.Data,
+    ): Promise<void> {
+        const subscription: Stripe.Subscription = data.object;
+        const { id, status } = subscription;
+        await subscriptionRepository.updateStatus(id, status);
     }
 }
 
