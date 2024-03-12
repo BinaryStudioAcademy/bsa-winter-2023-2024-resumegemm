@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useCallback } from 'react';
 
 import { Checkbox } from '~/bundles/common/components/components';
 
@@ -8,13 +9,19 @@ type Properties = {
     src: string;
     label: string;
     className?: string;
+    onCheck: () => void;
 };
 
 const StatisticResumeCard: React.FC<Properties> = ({
     src,
     label,
     className = '',
+    onCheck,
 }) => {
+    const handleCheck = useCallback(() => {
+        onCheck();
+    }, [onCheck]);
+
     return (
         <div className={clsx(styles.resume_card__container, className)}>
             <div className={styles.resume_card__image_container}>
@@ -29,6 +36,7 @@ const StatisticResumeCard: React.FC<Properties> = ({
                 className={styles.resume_card__checkbox}
                 label=""
                 name="resume select"
+                onChange={handleCheck}
             />
         </div>
     );

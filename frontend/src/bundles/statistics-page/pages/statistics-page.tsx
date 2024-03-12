@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
+import { type ResumeWithShare } from 'shared/build/bundles/resumes/types/resume-with-share.type';
 
-import templateThirdImage from '~/assets/img/5297769.png';
 import {
     ColumnChart,
     Dropdown,
@@ -12,9 +12,11 @@ import { UserProfile } from '~/bundles/common/components/layout/header/user-prof
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 
+import { getUserResumesWithLinks } from '../../resume-access/store/actions';
 import { StatisticResumeCard } from '../components/resume-card/resume-card';
 import { StatisticsPeriodsLabels } from '../enums/periods.enum';
 import { actions } from '../store/statistics.store';
+import { type StatisticsRecord } from '../types/types';
 import styles from './styles.module.scss';
 
 const headerItems = [
@@ -27,6 +29,8 @@ const dropdownOptions = [
     StatisticsPeriodsLabels.TOTAL,
 ];
 
+const defaultData = [['today', 0]];
+
 const StatisticsPage = (): JSX.Element => {
     const dispatch = useAppDispatch();
 
@@ -34,9 +38,13 @@ const StatisticsPage = (): JSX.Element => {
         StatisticsPeriodsLabels.WEEKLY.value,
     );
 
+    const [statisticsIds, setStatisticsIds] = useState<string[]>([]);
+
     const statisticsRecords = useAppSelector(
         ({ statistics }) => statistics.statisticsRecords,
     );
+
+    const resumes = useAppSelector(({ resumeAccess }) => resumeAccess.resumes);
 
     const views = useAppSelector(({ statistics }) => statistics.views);
 
@@ -48,6 +56,53 @@ const StatisticsPage = (): JSX.Element => {
         setViewsPeriod(value);
     }, []);
 
+    const handleData = useCallback(
+        (statisticsRecords: StatisticsRecord[]): StatisticsRecord[] => {
+            return statisticsRecords.length === 0
+                ? (defaultData as StatisticsRecord[])
+                : statisticsRecords;
+        },
+        [],
+    );
+
+    const handleCheck = useCallback(
+        (id: string) => {
+            return function () {
+                if (statisticsIds.includes(id)) {
+                    setStatisticsIds(
+                        statisticsIds.filter((item) => item !== id),
+                    );
+                    return;
+                }
+
+                setStatisticsIds([...statisticsIds, id]);
+            };
+        },
+        [statisticsIds],
+    );
+
+    const mapResumeCards = useCallback(
+        (resumesWithShare: ResumeWithShare[]) => {
+            return resumesWithShare.map((resumeWithShare) => {
+                const { resume, shareId } = resumeWithShare;
+
+                if (!resume?.resumeTitle) {
+                    return;
+                }
+
+                return (
+                    <StatisticResumeCard
+                        onCheck={handleCheck(shareId)}
+                        key={resume.id}
+                        label={resume.resumeTitle}
+                        src={resume.image}
+                    />
+                );
+            });
+        },
+        [handleCheck],
+    );
+
     const handleTitle = useCallback((value: string | undefined) => {
         return dropdownOptions.find((period) => period.value === value)?.label;
     }, []);
@@ -55,11 +110,15 @@ const StatisticsPage = (): JSX.Element => {
     useEffect(() => {
         void dispatch(
             actions.getStatistics({
-                resumeIds: ['0196a978-e5fc-ae7e-924d-95317038f4df'],
+                resumeIds: statisticsIds,
                 period: viewsPeriod,
             }),
         );
-    }, [dispatch, viewsPeriod]);
+    }, [dispatch, viewsPeriod, statisticsIds]);
+
+    useEffect(() => {
+        void dispatch(getUserResumesWithLinks());
+    }, [dispatch]);
 
     return (
         <>
@@ -86,7 +145,7 @@ const StatisticsPage = (): JSX.Element => {
                     <ColumnChart
                         className={styles.statistics__column_chart}
                         measure="Views"
-                        data={statisticsRecords}
+                        data={handleData(statisticsRecords)}
                     />
 
                     <p>Views: {views}</p>
@@ -105,34 +164,7 @@ const StatisticsPage = (): JSX.Element => {
                         ></div>
 
                         <div className={styles.statistics__resumes_container}>
-                            <StatisticResumeCard
-                                label="PHP"
-                                src={templateThirdImage}
-                            />
-                            <StatisticResumeCard
-                                label="PHP"
-                                src={templateThirdImage}
-                            />
-                            <StatisticResumeCard
-                                label="PHP"
-                                src={templateThirdImage}
-                            />
-                            <StatisticResumeCard
-                                label="PHP"
-                                src={templateThirdImage}
-                            />
-                            <StatisticResumeCard
-                                label="PHP"
-                                src={templateThirdImage}
-                            />
-                            <StatisticResumeCard
-                                label="PHP"
-                                src={templateThirdImage}
-                            />
-                            <StatisticResumeCard
-                                label="PHP"
-                                src={templateThirdImage}
-                            />
+                            {mapResumeCards(resumes)}
                         </div>
 
                         <div className={styles.statistics__select_arrow}></div>
