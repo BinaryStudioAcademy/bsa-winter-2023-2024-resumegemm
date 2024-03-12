@@ -100,6 +100,11 @@ class ServerApp implements IServerApp {
                     `Generate swagger documentation for API ${it.version}`,
                 );
 
+                await this.app.register(cors, {
+                    origin: config.ENV.APP.ORIGIN_URL,
+                    methods: '*',
+                    credentials: true,
+                });
                 await this.app.register(preParsingPlugin, {
                     preParsingRoutes,
                 });
@@ -107,11 +112,6 @@ class ServerApp implements IServerApp {
                     publicRoutes,
                     userService,
                     authService,
-                });
-                await this.app.register(cors, {
-                    origin: config.ENV.APP.ORIGIN_URL,
-                    methods: '*',
-                    credentials: true,
                 });
                 await this.app.register(fastifyCookie, {
                     secret: config.ENV.COOKIE.COOKIE_SECRET,
@@ -242,6 +242,7 @@ class ServerApp implements IServerApp {
 
         await this.app
             .listen({
+                host: this.config.ENV.APP.HOST,
                 port: this.config.ENV.APP.PORT,
             })
             .catch((error: Error) => {
