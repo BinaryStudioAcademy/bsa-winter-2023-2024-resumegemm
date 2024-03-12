@@ -42,7 +42,6 @@ const confirmEmail = createAsyncThunk<
 >(`${sliceName}/confirm-email`, async (payload, { extra }) => {
     const { authApi, storageApi } = extra;
     const { user, accessToken } = await authApi.confirmEmail(payload);
-
     await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
 
     return user;
