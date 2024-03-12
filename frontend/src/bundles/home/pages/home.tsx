@@ -51,6 +51,47 @@ const Home: React.FC = () => {
         return resumeViewHistory[resumeId]?.length || 0;
     };
 
+    const renderResumes = (): JSX.Element[] | null => {
+        if (resumes.length === 0) {
+            return null;
+        }
+
+        return resumes.map((resume) => {
+            const adaptedResume = adaptResume(resume.resume);
+            const { id, image, title, updatedAt } = adaptedResume;
+            const viewedResumeCount = getViewedResumeCount(id);
+            let formattedDate = '';
+            if (updatedAt) {
+                formattedDate = formatDate(updatedAt);
+            }
+            return (
+                <ResumeCard
+                    key={id}
+                    title={title}
+                    image={image}
+                    subtitle={`Updated - ${formattedDate}`}
+                    viewedResume={viewedResumeCount}
+                />
+            );
+        });
+    };
+
+    const renderTemplates = (): JSX.Element[] | null => {
+        if (templates.length === 0) {
+            return null;
+        }
+
+        return templates.map((template) => {
+            return (
+                <ResumeCard
+                    key={template.id}
+                    title="My Resume"
+                    image={template.image}
+                />
+            );
+        });
+    };
+
     return (
         <div className={styles.layout}>
             <HomeTopSection>
@@ -66,37 +107,10 @@ const Home: React.FC = () => {
                 <CreateNewCard />
             </ResumeSection>
             <ResumeSection name="Users' resume">
-                {resumes.length > 0 &&
-                    resumes.map((resume) => {
-                        const adaptedResume = adaptResume(resume.resume);
-                        const { id, image, title, updatedAt } = adaptedResume;
-                        const viewedResumeCount = getViewedResumeCount(id);
-                        let formattedDate = '';
-                        if (updatedAt) {
-                            formattedDate = formatDate(updatedAt);
-                        }
-                        return (
-                            <ResumeCard
-                                key={id}
-                                title={title}
-                                image={image}
-                                subtitle={`Updated - ${formattedDate}`}
-                                viewedResume={viewedResumeCount}
-                            />
-                        );
-                    })}
+                {renderResumes()}
             </ResumeSection>
             <TemplateSection name="Templates">
-                {templates.length > 0 &&
-                    templates.map((template) => {
-                        return (
-                            <ResumeCard
-                                key={template.id}
-                                title="My Resume"
-                                image={template.image}
-                            />
-                        );
-                    })}
+                {renderTemplates()}
             </TemplateSection>
         </div>
     );
