@@ -11,11 +11,13 @@ import {
 type State = {
     resumeId: string | null;
     details: ResumeShareAccessGetResponseDto[];
+    resumeViewHistory: Record<string, ResumeShareAccessGetResponseDto[]>;
 };
 
 const initialState: State = {
     resumeId: null,
     details: [],
+    resumeViewHistory: {},
 };
 
 const { reducer, actions, name } = createSlice({
@@ -28,7 +30,8 @@ const { reducer, actions, name } = createSlice({
         });
 
         builder.addCase(accessResumeDetails.fulfilled, (state, action) => {
-            state.details = action.payload.accesses;
+            state.resumeViewHistory[action.payload.resumeId] =
+                action.payload.accesses;
         });
         builder.addCase(
             getResumeAccessByResumeId.fulfilled,
