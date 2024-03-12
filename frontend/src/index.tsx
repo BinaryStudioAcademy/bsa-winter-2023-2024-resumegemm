@@ -15,6 +15,7 @@ import {
     StripeProvider,
 } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/enums';
+import { ResumePage } from '~/bundles/resume/pages/resume-page';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
@@ -75,6 +76,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: AppRoute.PROFILE,
                                             element: <Profile />,
+                                        },
+                                        {
+                                            path: AppRoute.RESUME,
+                                            element: <ResumePage />,
                                         },
                                         {
                                             path: AppRoute.HOME,
