@@ -117,7 +117,7 @@ async function seed(knex: Knex): Promise<void> {
         const insertedTemplates = await trx<Template>(
             DatabaseTableName.TEMPLATES,
         )
-            .insert(templatesMappedSeed)
+            // .insert(templatesMappedSeed)
             .returning('*');
 
         // OAUTH_CONNECTIONS

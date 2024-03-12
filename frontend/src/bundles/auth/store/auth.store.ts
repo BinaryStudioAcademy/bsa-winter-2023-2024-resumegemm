@@ -1,4 +1,10 @@
-import { confirmEmail, getUser, signIn, signUp } from './actions.js';
+import {
+    confirmEmail,
+    getUser,
+    requestNewAccessToken,
+    signIn,
+    signUp,
+} from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
@@ -7,6 +13,7 @@ const allActions = {
     signUp,
     signIn,
     getUser,
+    requestNewAccessToken,
 };
 
 export { allActions as actions };

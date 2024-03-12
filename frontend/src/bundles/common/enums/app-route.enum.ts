@@ -5,12 +5,13 @@ enum AppRoute {
     PREVIEW = '/preview',
     PAYMENT = '/payment',
     PROFILE = '/profile',
-    RESUME_ACCESS = '/resumes/share/ =id',
+    RESUME_ACCESS = '/resumes/share/:id',
     HOME = '/home',
     TEMPLATES = '/templates',
     CONFIRM_EMAIL = '/confirm-email',
     CONFIRM_EMAIL_SUCCESS = '/confirm-email-success',
     CONFIRM_EMAIL_FAIL = '/confirm-email-fail',
+    TEMPLATE_EDITOR = '/template-editor',
 }
 
 export { AppRoute };

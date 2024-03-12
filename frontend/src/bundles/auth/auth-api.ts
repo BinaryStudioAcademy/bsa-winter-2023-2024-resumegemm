@@ -12,6 +12,7 @@ import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
+import { type AuthTokenResponse } from '../users/types/types.js';
 import { AuthApiPath } from './enums/enums.js';
 
 type Constructor = {
@@ -82,6 +83,18 @@ class AuthApi extends HttpApi {
         );
 
         return await response.json<UserWithProfileRelation>();
+    }
+
+    public async requestNewAccessToken(): Promise<AuthTokenResponse> {
+        const response = await this.load(
+            this.getFullEndpoint(AuthApiPath.TOKEN, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<AuthTokenResponse>();
     }
 }
 

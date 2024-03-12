@@ -21,6 +21,7 @@ import { store } from '~/framework/store/store';
 import { ConfirmedEmailFail } from './bundles/auth/components/confirmed-email-page/confirm-email-fail';
 import { ConfirmedEmailSuccess } from './bundles/auth/components/confirmed-email-page/confirm-email-success';
 import { ConfirmedEmailPage } from './bundles/auth/components/confirmed-email-page/confirmed-email-page';
+import { EditTemplatePage } from './bundles/edit-template/edit-template';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
@@ -85,6 +86,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: AppRoute.TEMPLATES,
                                             element: <TemplatePage />,
+                                        },
+                                        {
+                                            path: `${AppRoute.TEMPLATE_EDITOR}/:id`,
+                                            element: <EditTemplatePage />,
                                         },
                                     ],
                                 },

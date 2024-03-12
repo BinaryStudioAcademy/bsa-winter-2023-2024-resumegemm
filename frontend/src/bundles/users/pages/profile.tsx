@@ -1,3 +1,5 @@
+import { type UpdateUserProfileAndEmailRequestDto } from 'shared/build';
+
 import { PageTitle } from '~/bundles/common/components/page-title/page-title';
 import {
     useAppDispatch,
@@ -15,10 +17,6 @@ import { Socials } from '../components/socials/socials';
 import { Subscriptions } from '../components/subscription/subscriptions';
 import styles from './style.module.scss';
 
-const handleFormSubmit = (): void => {
-    throw new Error('not implemented');
-};
-
 const Profile: React.FC = () => {
     const dispatch = useAppDispatch();
 
@@ -33,13 +31,23 @@ const Profile: React.FC = () => {
         [dispatch],
     );
 
-    const { profile, firstName, lastName, email } = useAppSelector(
+    const { profile, id, firstName, lastName, email } = useAppSelector(
         ({ auth, profile }) => ({
             profile,
             firstName: auth.user?.userProfile.firstName as string,
             lastName: auth.user?.userProfile.lastName ?? '',
             email: auth.user?.email as string,
+            id: auth.user?.id as string,
         }),
+    );
+
+    const handleFormSubmit = useCallback(
+        (payload: UpdateUserProfileAndEmailRequestDto) => {
+            void dispatch(
+                profileActions.updateProfileAndEmail({ id, payload }),
+            );
+        },
+        [dispatch, id],
     );
 
     return (

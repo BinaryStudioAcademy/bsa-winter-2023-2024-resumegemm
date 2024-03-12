@@ -5,7 +5,13 @@ import { type UserWithProfileRelation } from 'shared/build/index.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { confirmEmail, getUser, signIn, signUp } from './actions.js';
+import {
+    confirmEmail,
+    getUser,
+    requestNewAccessToken,
+    signIn,
+    signUp,
+} from './actions.js';
 
 type State = {
     user: UserWithProfileRelation | null;
@@ -26,32 +32,42 @@ const { reducer, actions, name } = createSlice({
             action: PayloadAction<UserWithProfileRelation | null>,
         ) => {
             state.user = action.payload;
-            state.dataStatus = DataStatus.IDLE;
         },
     },
     extraReducers(builder) {
+        builder.addCase(requestNewAccessToken.fulfilled, (state) => {
+            state.dataStatus = DataStatus.FULFILLED;
+        });
         builder.addMatcher(
-            isAnyOf(signIn.fulfilled, getUser.fulfilled),
-            (state, action) => {
-                state.dataStatus = DataStatus.FULFILLED;
-                state.user = action.payload;
+            isAnyOf(
+                confirmEmail.pending,
+                signUp.pending,
+                signIn.pending,
+                getUser.pending,
+                requestNewAccessToken.pending,
+            ),
+            (state) => {
+                state.dataStatus = DataStatus.PENDING;
             },
         );
         builder.addMatcher(
-            isAnyOf(signUp.fulfilled, confirmEmail.fulfilled),
-            (state) => {
+            isAnyOf(signUp.fulfilled, signIn.fulfilled, getUser.fulfilled),
+            (state, action) => {
                 state.dataStatus = DataStatus.FULFILLED;
+                state.user = action.payload as UserWithProfileRelation;
             },
         );
         builder.addMatcher(
             isAnyOf(
+                confirmEmail.rejected,
                 signUp.rejected,
                 signIn.rejected,
-                confirmEmail.rejected,
                 getUser.rejected,
+                requestNewAccessToken.rejected,
             ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
+                state.user = null;
             },
         );
         builder.addMatcher(

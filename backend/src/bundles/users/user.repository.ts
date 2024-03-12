@@ -37,20 +37,17 @@ class UserRepository
         return user ?? null;
     }
 
+    public async updateById(
+        id: string,
+        data: Partial<Omit<UserModel, 'createdAt' | 'updatedAt'>>,
+    ): Promise<UserModel> {
+        return await this.model.query().updateAndFetchById(id, data);
+    }
+
     public async findAll(): ReturnType<IUserRepo['findAll']> {
         const users = await this.model.query().whereNull('deletedAt').execute();
 
         return users.map((it) => UserEntity.initialize(it));
-    }
-
-    public async updateById(
-        id: string,
-        data: object,
-    ): Promise<UserEntity | null> {
-        await this.model.query().update(data).where('id', id).execute();
-
-        const user = await this.model.query().findOne({ id });
-        return user ? UserEntity.initialize(user) : null;
     }
 
     public async delete(id: string): Promise<UserEntityFields> {
