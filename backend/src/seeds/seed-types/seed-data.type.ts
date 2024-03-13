@@ -128,12 +128,18 @@ type CustomSection = {
     updated_at: Date;
 };
 
+type Industry = {
+    id: string;
+    industry: string;
+};
+
 export {
     type Certification,
     type ContactDetails,
     type CustomSection,
     type Education,
     type Experience,
+    type Industry,
     type PersonalInformation,
     type Profile,
     type Resume,

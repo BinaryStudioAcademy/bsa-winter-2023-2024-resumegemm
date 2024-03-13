@@ -1,4 +1,4 @@
-const experienceSeed = [
+const experiencesSeed = [
     {
         job_title: 'Junior Developer',
         company_name: 'Google',
@@ -41,4 +41,4 @@ const experienceSeed = [
     },
 ];
 
-export { experienceSeed };
+export { experiencesSeed };

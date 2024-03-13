@@ -1,19 +1,19 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { type SocialMediaProfiles } from 'shared/build';
+import { type Profile, type SocialMediaProfiles } from 'shared/build';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { socialMediaProfiles } from '../helpers/helpers.js';
-import { type UserProfileResponce } from '../types/user-profile-responce';
 import {
     disconnectSocialMedia,
     getUserProfileAndSocials,
+    updateProfileAndEmail,
     updateUserAvatar,
 } from './actions';
 
 type State = {
-    profile: UserProfileResponce | null;
+    profile: Profile | null;
     dataStatus: ValueOf<typeof DataStatus>;
     socialMediaProfiles: SocialMediaProfiles[];
 };
@@ -29,13 +29,27 @@ const { reducer, actions, name } = createSlice({
     name: 'profile',
     reducers: {},
     extraReducers(builder) {
-        builder.addCase(updateUserAvatar.fulfilled, (state, action) => {
-            state.profile = action.payload;
-            state.dataStatus = DataStatus.FULFILLED;
-        });
-        builder.addMatcher(isAnyOf(disconnectSocialMedia.pending), (state) => {
-            state.dataStatus = DataStatus.PENDING;
-        });
+        builder.addMatcher(
+            isAnyOf(
+                updateUserAvatar.fulfilled,
+                updateProfileAndEmail.fulfilled,
+            ),
+            (state, action) => {
+                state.profile = action.payload;
+                state.dataStatus = DataStatus.FULFILLED;
+            },
+        );
+        builder.addMatcher(
+            isAnyOf(
+                disconnectSocialMedia.pending,
+                updateProfileAndEmail.pending,
+                getUserProfileAndSocials.pending,
+                updateUserAvatar.pending,
+            ),
+            (state) => {
+                state.dataStatus = DataStatus.PENDING;
+            },
+        );
 
         builder.addMatcher(
             isAnyOf(
@@ -52,6 +66,8 @@ const { reducer, actions, name } = createSlice({
             isAnyOf(
                 disconnectSocialMedia.rejected,
                 getUserProfileAndSocials.rejected,
+                updateProfileAndEmail.rejected,
+                updateUserAvatar.rejected,
             ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;

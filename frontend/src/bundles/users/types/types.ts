@@ -3,6 +3,8 @@ export {
     type OauthConnectionEntityFields,
     type SocialMediaProfiles,
     type UserAuthResponse,
+    type UserForgotPasswordRequestDto,
+    type UserForgotPasswordResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserSignInRequestDto,
