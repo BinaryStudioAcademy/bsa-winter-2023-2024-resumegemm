@@ -56,15 +56,6 @@ const StatisticsPage = (): JSX.Element => {
         setViewsPeriod(value);
     }, []);
 
-    const handleData = useCallback(
-        (statisticsRecords: StatisticsRecord[]): StatisticsRecord[] => {
-            return statisticsRecords.length === 0
-                ? (defaultData as StatisticsRecord[])
-                : statisticsRecords;
-        },
-        [],
-    );
-
     const handleCheck = useCallback(
         (id: string) => {
             return function () {
@@ -142,11 +133,17 @@ const StatisticsPage = (): JSX.Element => {
 
                     <h2>Statistics</h2>
 
-                    <ColumnChart
-                        className={styles.statistics__column_chart}
-                        measure="Views"
-                        data={handleData(statisticsRecords)}
-                    />
+                    {statisticsIds.length === 0 ? (
+                        <div className={styles.statistics__message_container}>
+                            <h1>No resumes selected</h1>
+                        </div>
+                    ) : (
+                        <ColumnChart
+                            className={styles.statistics__column_chart}
+                            measure="Views"
+                            data={statisticsRecords}
+                        />
+                    )}
 
                     <p>Views: {views}</p>
                 </section>

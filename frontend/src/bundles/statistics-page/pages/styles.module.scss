@@ -34,6 +34,14 @@
     height: 100%;
 }
 
+.statistics__message_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
 .statistics__select_container {
     width: 90%;
     background-color: var(--color-accent-light-yellow);
