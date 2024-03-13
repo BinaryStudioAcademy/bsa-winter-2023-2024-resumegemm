@@ -5,6 +5,7 @@ import {
     Model,
 } from 'objection';
 
+import { OauthModel } from '~/bundles/oauth/oauth.model.js';
 import { ProfileModel } from '~/bundles/profile/profile.model.js';
 import { TemplateModel } from '~/bundles/templates/templates.js';
 import {
@@ -23,6 +24,8 @@ class UserModel extends AbstractModel {
 
     public deletedAt!: string | null;
 
+    public 'stripeId': string;
+
     public static override get tableName(): typeof DatabaseTableName.USERS {
         return DatabaseTableName.USERS;
     }
@@ -37,6 +40,7 @@ class UserModel extends AbstractModel {
                     'createdAt',
                     'updatedAt',
                     'deletedAt',
+                    'stripeId',
                 );
             },
         };
@@ -50,6 +54,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.profileId`,
                     to: `${DatabaseTableName.PROFILE}.id`,
+                },
+            },
+            oauth_connections: {
+                relation: Model.HasManyRelation,
+                modelClass: OauthModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.id`,
+                    to: `${DatabaseTableName.OAUTH_CONNECTIONS}.userId`,
                 },
             },
             templates: {

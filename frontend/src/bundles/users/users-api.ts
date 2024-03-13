@@ -1,4 +1,7 @@
-import { type UserEntityFields } from 'shared/build/index.js';
+import {
+    type UpdateUserProfileAndEmailRequestDto,
+    type UserEntityFields,
+} from 'shared/build/index.js';
 
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
@@ -6,7 +9,10 @@ import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
 
 import { UsersApiPath } from './enums/enums.js';
-import { type UserGetAllResponseDto } from './types/types.js';
+import {
+    type UserGetAllResponseDto,
+    type UserWithProfileRelation,
+} from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -39,10 +45,28 @@ class UserApi extends HttpApi {
                 method: 'DELETE',
                 contentType: ContentType.JSON,
                 hasAuth: true,
+                payload: JSON.stringify({}),
             },
         );
 
         return await response.json<UserEntityFields>();
+    }
+
+    public async updateProfileAndEmail(
+        id: string,
+        payload: UpdateUserProfileAndEmailRequestDto,
+    ): Promise<UserWithProfileRelation> {
+        const response = await this.load(
+            this.getFullEndpoint(`${UsersApiPath.ROOT}${id}`, {}),
+            {
+                method: 'PUT',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify(payload),
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<UserWithProfileRelation>();
     }
 }
 

@@ -1,5 +1,5 @@
+import { type TemplateSettings } from '~/bundles/templates/types/types';
 import { type SkillLevel } from '~/common/enums/enums.js';
-import { type TemplateBlockSettings } from '~/common/types/types.js';
 
 type User = {
     id: string;
@@ -32,7 +32,7 @@ type Template = {
     id: string;
     image: string;
     is_owner: boolean;
-    template_settings: TemplateBlockSettings;
+    template_settings: TemplateSettings;
     created_at: Date;
     updated_at: Date;
     deleted_at: Date;
@@ -128,12 +128,18 @@ type CustomSection = {
     updated_at: Date;
 };
 
+type Industry = {
+    id: string;
+    industry: string;
+};
+
 export {
     type Certification,
     type ContactDetails,
     type CustomSection,
     type Education,
     type Experience,
+    type Industry,
     type PersonalInformation,
     type Profile,
     type Resume,

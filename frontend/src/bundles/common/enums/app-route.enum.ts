@@ -5,8 +5,13 @@ enum AppRoute {
     PREVIEW = '/preview',
     PAYMENT = '/payment',
     PROFILE = '/profile',
+    RESUME_ACCESS = '/resumes/share/:id',
     HOME = '/home',
     TEMPLATES = '/templates',
+    TEMPLATE_EDITOR = '/template-editor',
+    FORGOT_PASSWORD = '/forgot-password',
+    QA = '/qa',
+    STATISTICS = '/statistics',
 }
 
 export { AppRoute };

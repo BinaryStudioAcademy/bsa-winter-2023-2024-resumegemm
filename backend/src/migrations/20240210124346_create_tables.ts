@@ -155,7 +155,7 @@ async function up(knex: Knex): Promise<void> {
     );
     await knex.schema.createTable(DatabaseTableName.CERTIFICATION, (table) => {
         table.uuid(DatabaseColumnName.ID).primary();
-        table.string(DatabaseColumnName.CRTIFICATION_NAME).notNullable();
+        table.string(DatabaseColumnName.CERTIFICATION_NAME).notNullable();
         table.string(DatabaseColumnName.AUTHORITY).notNullable();
         table.date(DatabaseColumnName.START_DATE).notNullable();
         table.date(DatabaseColumnName.END_DATE);
