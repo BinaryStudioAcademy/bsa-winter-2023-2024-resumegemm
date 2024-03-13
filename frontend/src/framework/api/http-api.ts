@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { type AuthTokenResponse, AuthApiPath } from 'shared/build';
 
 import {
@@ -19,7 +20,7 @@ import {
 import { type IStorage, StorageKey } from '~/framework/storage/storage.js';
 import {
     configureString,
-    getCookie,
+    CookieName,
     isServerErrorRange,
 } from '~/helpers/helpers.js';
 
@@ -126,7 +127,7 @@ class HTTPApi implements IHttpApi {
                 StorageKey.ACCESS_TOKEN,
             );
 
-            const tokenFromCookie = getCookie(StorageKey.ACCESS_TOKEN);
+            const tokenFromCookie = Cookies.get(CookieName.ACCESS_TOKEN);
 
             const token = tokenFromLocalStorage ?? tokenFromCookie;
             headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
