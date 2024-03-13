@@ -22,28 +22,32 @@ const EmailConfirmationPage = (): JSX.Element => {
     const [searchParameters] = useSearchParams();
     const token = searchParameters.get('token');
 
-    const [isConfirmed, setIsConfirmed] = useState<boolean | undefined>();
+    const [isConfirmed, setIsConfirmed] = useState<boolean | null>(null);
 
-    const handleConfirmEmail = useCallback(async (): Promise<void> => {
+    const handleConfirmEmail = useCallback(async (): Promise<
+        string | undefined
+    > => {
         if (token) {
-            const response = await dispatch(
+            const { meta } = await dispatch(
                 authActionCreator.confirmEmail({
                     emailConfirmToken: token,
                 }),
             );
 
-            if (response.meta.requestStatus === DataStatus.FULFILLED) {
-                setIsConfirmed(true);
-            } else if (response.meta.requestStatus === DataStatus.REJECTED) {
-                setIsConfirmed(false);
-            }
+            return meta.requestStatus;
         }
     }, [dispatch, token]);
 
     useEffect(() => {
         handleConfirmEmail()
-            .then(() => setIsConfirmed(true))
-            .catch(() => setIsConfirmed(false));
+            .then((response) => {
+                if (response === DataStatus.FULFILLED) {
+                    setIsConfirmed(true);
+                } else if (response === DataStatus.REJECTED) {
+                    setIsConfirmed(false);
+                }
+            })
+            .catch(() => setIsConfirmed(null));
     }, [dispatch, token, handleConfirmEmail]);
 
     return (
