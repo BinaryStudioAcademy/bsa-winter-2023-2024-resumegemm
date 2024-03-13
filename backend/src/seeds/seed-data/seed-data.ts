@@ -7,6 +7,7 @@ export { imagesSeed } from './images-seed.js';
 export { languageSeed } from './language-seed.js';
 export { oauthConnectionSeed } from './oauth-connections-seed.js';
 export { oauthUserSeed } from './oauth-user-seed.js';
+export { industriesSeed } from './industries-seed.js';
 export { personalInformationSeed } from './personal-information-seed.js';
 export { profileSeed } from './profile-seed.js';
 export { resumeSharedAccessSeed } from './resume-shared-access-seed.js';

@@ -190,6 +190,11 @@ type SubscriptionPlan = {
     updated_at: Date;
 };
 
+type Industry = {
+    id: string;
+    industry: string;
+};
+
 export {
     type Certification,
     type ContactDetails,
@@ -199,6 +204,7 @@ export {
     type Language,
     type OauthConnection,
     type OauthUser,
+    type Industry,
     type PersonalInformation,
     type Profile,
     type Resume,
