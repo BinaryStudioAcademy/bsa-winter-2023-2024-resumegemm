@@ -12,6 +12,7 @@ const titles: Titles = {
     '/email-confirmation': 'Email Confirmation | ResumeGemm',
     '/email-confirmation-fail': 'Email Confirmation Fail | ResumeGemm',
     '/email-confirmation-success': 'Email Confirmation Success | ResumeGemm',
+    '/check-email': 'Check Email | ResumeGemm',
 };
 
 export { titles };
