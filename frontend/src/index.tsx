@@ -84,6 +84,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             path: AppRoute.TEMPLATES,
                                             element: <TemplatePage />,
                                         },
+                                        {
+                                            path: AppRoute.STATISTICS,
+                                            element: <StatisticsPage />,
+                                        },
                                     ],
                                 },
                                 {
@@ -93,10 +97,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             <SubscriptionPaymentPage />
                                         </StripeProvider>
                                     ),
-                                },
-                                {
-                                    path: AppRoute.STATISTICS,
-                                    element: <StatisticsPage />,
                                 },
                                 {
                                     path: AppRoute.PREVIEW,
