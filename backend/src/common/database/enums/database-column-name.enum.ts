@@ -52,7 +52,6 @@ enum DatabaseColumnName {
     IS_ACTIVE = 'is_active',
     INDUSTRY = 'industry',
     INDUSTRY_ID = 'industry_id',
-    TEMPLATE_SETTINGS = 'template_settings',
     INSTITUTION = 'institution',
     COUNTRY = 'country',
     CURRENTLY_STUDYING = 'currently_studying',
@@ -73,6 +72,7 @@ enum DatabaseColumnName {
     DESCRIPTION = 'description',
     NEW_RESUME_SHARE_LINK_ID = 'new_resume_share_link_id',
     EMAIL_CONFIRMED = 'email_confirmed',
+    TEMPLATE_SETTINGS = 'template_settings',
 }
 
 export { DatabaseColumnName };

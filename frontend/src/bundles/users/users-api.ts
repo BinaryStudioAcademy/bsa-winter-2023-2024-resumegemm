@@ -69,7 +69,7 @@ class UserApi extends HttpApi {
         payload: UpdateUserProfileAndEmailRequestDto,
     ): Promise<UserWithProfileRelation> {
         const response = await this.load(
-            this.getFullEndpoint(`${UsersApiPath.ROOT}/${id}`, {}),
+            this.getFullEndpoint(`${UsersApiPath.ROOT}${id}`, {}),
             {
                 method: 'PUT',
                 contentType: ContentType.JSON,

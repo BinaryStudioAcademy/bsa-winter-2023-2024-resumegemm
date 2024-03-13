@@ -26,7 +26,7 @@ import {
     type UserSignUpRequestDto,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
-import { type IConfig,config } from '~/common/config/config.js';
+import { type IConfig, config } from '~/common/config/config.js';
 import { mailService } from '~/common/mail-service/mail-service.js';
 
 import { EmailConfirmMessages } from './enums/message.enum.js';
@@ -50,10 +50,17 @@ class AuthService implements TAuthService {
     public async signUp(
         userRequestDto: UserSignUpRequestDto,
     ): ReturnType<TAuthService['signUp']> {
-        const foundUserByEmail = await this.userService.findByEmail(
-            userRequestDto.email,
-        );
-
+        const { email, password } = userRequestDto;
+        const foundUserByEmail = await this.userService.findByEmail({
+            email,
+            withDeleted: true,
+        });
+        if (foundUserByEmail?.deletedAt) {
+            throw new HTTPError({
+                message: ExceptionMessage.EMAIL_TAKEN,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
         if (foundUserByEmail) {
             throw new HTTPError({
                 message: ExceptionMessage.EMAIL_TAKEN,
@@ -63,12 +70,9 @@ class AuthService implements TAuthService {
 
         const passwordSalt = await this.generateSalt();
 
-        const passwordHash = await this.encrypt(
-            String(userRequestDto.password),
-            passwordSalt,
-        );
+        const passwordHash = await this.encrypt(String(password), passwordSalt);
 
-        const { id, email } = await this.userService.create({
+        const { id } = await this.userService.create({
             ...userRequestDto,
             passwordSalt,
             passwordHash,
@@ -113,7 +117,17 @@ class AuthService implements TAuthService {
         email,
         password,
     }: UserSignInRequestDto): ReturnType<TAuthService['login']> {
-        const foundUserByEmail = await this.userService.findByEmail(email);
+        const foundUserByEmail = await this.userService.findByEmail({
+            email,
+            withDeleted: true,
+        });
+
+        if (foundUserByEmail?.deletedAt) {
+            throw new HTTPError({
+                message: ExceptionMessage.NO_ACTIVE_ACCOUNT,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
 
         if (!foundUserByEmail) {
             throw new HTTPError({
@@ -202,7 +216,7 @@ class AuthService implements TAuthService {
                 EMAIL_CONFIRM_TOKEN_SECRET,
             );
             const email = tokenPayload.email;
-            const user = await this.userService.findByEmail(email);
+            const user = await this.userService.findByEmail({ email });
 
             if (user?.email !== email) {
                 throw new HTTPError({
@@ -235,7 +249,7 @@ class AuthService implements TAuthService {
     }: UserVerifyResetPasswordTokenRequestDto): ReturnType<
         TAuthService['tokenEqualsEmail']
     > {
-        const user = await this.userService.findByEmail(email);
+        const user = await this.userService.findByEmail({ email });
 
         const resetPasswordTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
 
@@ -288,7 +302,7 @@ class AuthService implements TAuthService {
     }: UserForgotPasswordRequestDto): ReturnType<
         TAuthService['createResetPasswordToken']
     > {
-        const user = await this.userService.findByEmail(email);
+        const user = await this.userService.findByEmail({ email });
 
         if (!user) {
             throw new HTTPError({
