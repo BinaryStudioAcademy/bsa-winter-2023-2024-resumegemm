@@ -15,7 +15,6 @@ import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
 import { PasswordRecovery } from '../components/password-recovery/password-recovery.js';
 import { type UserSignUpRequestDtoFrontend } from '../components/sign-up-form/validation/sign-up-validation.js';
-import { UserRegistrationMessage } from '../enums/enums';
 import { actions as authActions } from '../store/auth.store.js';
 import styles from './styles.module.scss';
 
@@ -47,7 +46,7 @@ const Auth: React.FC = () => {
                     showToast(error.message, ToastType.ERROR);
                 });
         },
-        [dispatch, showToast],
+        [dispatch, showToast, navigate],
     );
 
     const getScreen = (screen: string): React.ReactNode => {
