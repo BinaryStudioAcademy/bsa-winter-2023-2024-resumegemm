@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import {
+    CheckEmailPage,
     EmailConfirmationFailPage,
     EmailConfirmationPage,
     EmailConfirmationSuccessPage,
@@ -124,6 +125,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 {
                                     path: AppRoute.EMAIL_CONFIRMATION_FAIL,
                                     element: <EmailConfirmationFailPage />,
+                                },
+                                {
+                                    path: AppRoute.CHECK_EMAIL,
+                                    element: <CheckEmailPage />,
                                 },
                             ],
                         },
