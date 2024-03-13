@@ -17,10 +17,8 @@ const signUp = createAsyncThunk<
     UserSignUpRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
-    const { authApi, storageApi } = extra;
-    const { user, token: accessToken } = await authApi.signUp(registerPayload);
-
-    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+    const { authApi } = extra;
+    const { user } = await authApi.signUp(registerPayload);
 
     return user;
 });
@@ -44,7 +42,9 @@ const confirmEmail = createAsyncThunk<
 >(`${sliceName}/confirm-email`, async (payload, { extra }) => {
     const { authApi, storageApi } = extra;
     const { user, accessToken } = await authApi.confirmEmail(payload);
+
     await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+
     return user;
 });
 
