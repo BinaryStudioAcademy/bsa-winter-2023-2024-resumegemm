@@ -12,6 +12,7 @@ import { reducer as editTemplateReducer } from '~/bundles/edit-template/store/ed
 import { openAuthApi } from '~/bundles/open-auth/open-auth.js';
 import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store/payment.store';
+import { pdfApi } from '~/bundles/pdf/pdf.js';
 import { profileApi } from '~/bundles/profile/profile';
 import { reducer as profileReducer } from '~/bundles/profile/store/profile.store';
 import { resumeApi } from '~/bundles/resume/resume';
@@ -47,6 +48,7 @@ type ExtraArguments = {
     resumeAccessApi: typeof resumeAccessApi;
     profileApi: typeof profileApi;
     resumeApi: typeof resumeApi;
+    pdfApi: typeof pdfApi;
 };
 
 class Store {
@@ -94,6 +96,7 @@ class Store {
             openAuthApi,
             profileApi,
             resumeApi,
+            pdfApi,
         };
     }
 }
