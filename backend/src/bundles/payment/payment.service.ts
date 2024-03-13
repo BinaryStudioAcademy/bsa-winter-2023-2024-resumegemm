@@ -8,7 +8,7 @@ import { subscriptionPlanRepository } from '../stripe-events/repositories/subscr
 import { subscriptionService } from '../subscription/subscription.js';
 import { type UserService } from '../users/user.service.js';
 import { PaymentErrorMessage } from './enums/error-message.js';
-import { mapPrices } from './helpers/price-mapper.js';
+import { getCardExpireDate, mapPrices } from './helpers/helpers.js';
 import {
     type CreateSubscriptionRequestDto,
     type CreateSubscriptionResponseDto,
@@ -61,7 +61,7 @@ class PaymentService implements IPaymentService {
         paymentMethod: string,
     ): Promise<Stripe.Customer> {
         try {
-            return await this.stripe.customers.create({
+            return this.stripe.customers.create({
                 name: name,
                 email: email,
                 payment_method: paymentMethod,
@@ -138,7 +138,7 @@ class PaymentService implements IPaymentService {
         const subscriptionPlan =
             await subscriptionPlanRepository.findByStripePlanId(stripePlanId);
 
-        const customerId = customer.id.toString();
+        const customerId = customer.id;
         const user = await this.userService.addStripeId(customerId, email);
 
         const paymentMethodId = payment_method?.toString();
@@ -149,13 +149,13 @@ class PaymentService implements IPaymentService {
             );
 
             if (card && user) {
-                const { last4, exp_month, exp_year } = card;
-                const cardExpireDate = new Date(exp_year, exp_month - 1);
+                const { last4 } = card;
+                const expireDate = getCardExpireDate(card);
 
                 const newPaymentMethod = {
                     paymentMethodId,
                     card: last4,
-                    cardExpireDate,
+                    expireDate,
                     userId: user.id,
                 };
                 await paymentMethodService.create(newPaymentMethod);

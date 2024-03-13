@@ -12,7 +12,7 @@ class PaymentMethodModel extends AbstractModel {
 
     public 'card': string;
 
-    public 'cardExpireDate': Date;
+    public 'expireDate': Date;
 
     public static override get tableName(): typeof DatabaseTableName.PAYMENT_METHOD {
         return DatabaseTableName.PAYMENT_METHOD;

@@ -30,7 +30,7 @@ async function up(knex: Knex): Promise<void> {
             .onDelete(RelationRule.SET_NULL);
         table.string(DatabaseColumnName.PAYMENT_METHOD_ID).notNullable();
         table.string(DatabaseColumnName.CARD).notNullable();
-        table.date(DatabaseColumnName.CARD_EXPIRE_DATE).notNullable();
+        table.date(DatabaseColumnName.EXPIRE_DATE).notNullable();
         table
             .dateTime(DatabaseColumnName.CREATED_AT)
             .notNullable()

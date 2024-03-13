@@ -3,7 +3,7 @@ type PaymentMethod = {
     userId: string;
     paymentMethodId: string;
     card: string;
-    cardExpireDate: Date;
+    expireDate: Date;
     createdAt: string;
     updatedAt: string;
 };

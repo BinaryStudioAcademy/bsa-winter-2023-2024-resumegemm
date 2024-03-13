@@ -2,7 +2,7 @@ type PaymentMethodCreate = {
     userId: string;
     paymentMethodId: string;
     card: string;
-    cardExpireDate: Date;
+    expireDate: Date;
 };
 
 export { type PaymentMethodCreate };
