@@ -3,6 +3,22 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
+    max-width: 500px;
+    margin: 0 auto;
     margin-bottom: 10px;
+    padding: 0 20px;
     color: var(--color-text-light-gray);
+}
+
+.resume__title {
+    flex: 1;
+    color: var(--color-text-black);
+    text-align: center;
+}
+
+.resume__views_count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 }

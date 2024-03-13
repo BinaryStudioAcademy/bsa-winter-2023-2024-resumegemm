@@ -20,7 +20,7 @@ const Resume: React.FC = () => {
     const { resumeViewHistory } = useLoadViewedResumes();
 
     // TODO: remove this line when redirect from Home with parasm ID is ready
-    const id = resumes[0]?.resume?.id;
+    const id = resumes[0]?.resume.id;
 
     const getViewedResumeCount = (resumeId: string): number => {
         return resumeViewHistory[resumeId]?.length > 0
@@ -33,10 +33,13 @@ const Resume: React.FC = () => {
     return (
         <div>
             <div className={styles.resume__views_container}>
-                <Icon size={IconSize.MEDIUM} name={IconName.EYE_OPEN} />
-                <span className={styles.resume__views_number}>
-                    {viewedResumeCount}
-                </span>
+                <h3 className={styles.resume__title}>Product Designer</h3>
+                <div className={styles.resume__views_count}>
+                    <Icon size={IconSize.MEDIUM} name={IconName.EYE_OPEN} />
+                    <span className={styles.resume__views_number}>
+                        {viewedResumeCount}
+                    </span>
+                </div>
             </div>
             <ResumePreview />
         </div>
