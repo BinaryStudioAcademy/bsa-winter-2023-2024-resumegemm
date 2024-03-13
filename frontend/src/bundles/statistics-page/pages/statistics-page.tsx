@@ -10,6 +10,7 @@ import {
 } from '~/bundles/common/components/components';
 import { UserProfile } from '~/bundles/common/components/layout/header/user-profile/user-profile';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
+import { getUserAvatar } from '~/bundles/common/helpers/get-user-avatar';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 
 import { getUserResumesWithLinks } from '../../resume-access/store/actions';
@@ -40,6 +41,8 @@ const StatisticsPage = (): JSX.Element => {
     const statisticsRecords = useAppSelector(
         ({ statistics }) => statistics.statisticsRecords,
     );
+
+    const { user } = useAppSelector((state) => state.auth);
 
     const resumes = useAppSelector(({ resumeAccess }) => resumeAccess.resumes);
 
@@ -112,7 +115,7 @@ const StatisticsPage = (): JSX.Element => {
         <>
             <Header>
                 <NavTabs items={headerItems}></NavTabs>
-                <UserProfile image="https://avatars.githubusercontent.com/u/810438?v=4" />
+                <UserProfile image={getUserAvatar(user)} />
             </Header>
 
             <div className={styles.statistics__container}>
