@@ -12,6 +12,7 @@ import {
     type TemplateSettings,
 } from '~/bundles/resume/types/types';
 import { actions as resumeAccessActions } from '~/bundles/resume-access/store/index';
+import { copyLinkToClipboardAndShowToast } from '~/helpers/helpers';
 
 type UseResumesReturnValues = {
     userId: string | undefined;
@@ -36,7 +37,12 @@ const useResumes = (): UseResumesReturnValues => {
     const createResumeAccessLink = useCallback(() => {
         void dispatch(
             resumeAccessActions.createResumeAccess({ resumeId: id as string }),
-        );
+        )
+            .unwrap()
+            .then((payload) => {
+                const linkId = payload.id;
+                copyLinkToClipboardAndShowToast(linkId);
+            });
     }, [dispatch, id]);
 
     useEffect(() => {
