@@ -13,7 +13,6 @@ type User = {
     deleted_at: Date;
     stripe_id: string;
 };
-
 type Profile = {
     first_name: string;
     last_name: string;
