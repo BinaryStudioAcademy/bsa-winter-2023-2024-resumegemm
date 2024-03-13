@@ -12,7 +12,7 @@ import { AuthApiPath, OpenAuthApiPath } from 'shared/build/index.js';
 import { authService } from '~/bundles/auth/auth.js';
 import { oauthConfigurations } from '~/bundles/oauth/config/oauth-config.js';
 import { userService } from '~/bundles/users/users.js';
-import { type IConfig, config } from '~/common/config/config.js';
+import { config, type IConfig } from '~/common/config/config.js';
 import { ControllerHook } from '~/common/controller/enums/enums.js';
 import { type IDatabase } from '~/common/database/database.js';
 import { ServerErrorType } from '~/common/enums/enums.js';
