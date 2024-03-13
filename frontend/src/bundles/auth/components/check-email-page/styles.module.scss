@@ -1,12 +1,32 @@
 .check_email__container {
     display: flex;
     flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 85%;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+.check_email__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.check_email__home_link {
+    width: 150px;
+    font-weight: var(--font-weight-subtitle);
+    font-size: var(--font-size-title-h2);
 }
 
 .check_email__image {
     display: flex;
     justify-content: center;
-    width: 100%;
+    max-width: 350px;
+    max-height: 350px;
 }
 
 .check_email__image::after,
@@ -16,11 +36,23 @@
 
 .check_email__header {
     margin-bottom: 12px;
+    font-weight: var(--font-weight-subtitle);
     font-size: 47px;
+    font-family: var(--font-family-resume-buttons);
     line-height: 48px;
+    letter-spacing: 2px;
     text-align: center;
 }
 
+.check_email__text_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
 .check_email__text {
-    max-width: 600px;
+    font-size: var(--font-size-title-h4);
+    font-family: var(--font-family-resume-buttons);
+    line-height: 24px;
 }
