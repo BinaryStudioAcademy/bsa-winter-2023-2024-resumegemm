@@ -8,9 +8,9 @@ enum AppRoute {
     RESUME_ACCESS = '/resumes/share/:id',
     HOME = '/home',
     TEMPLATES = '/templates',
-    CONFIRM_EMAIL = '/confirm-email',
-    CONFIRM_EMAIL_SUCCESS = '/confirm-email-success',
-    CONFIRM_EMAIL_FAIL = '/confirm-email-fail',
+    EMAIL_CONFIRMATION = '/email-confirmation',
+    EMAIL_CONFIRMATION_SUCCESS = '/email-confirmation-success',
+    EMAIL_CONFIRMATION_FAIL = '/email-confirmation-fail',
     TEMPLATE_EDITOR = '/template-editor',
 }
 
