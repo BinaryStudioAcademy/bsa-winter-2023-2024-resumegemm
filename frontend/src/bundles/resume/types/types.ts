@@ -3,6 +3,8 @@ export { type ConvertResumeItemToStringPayload } from '~/bundles/common/types/ty
 export { type IHttp } from '~/framework/http/http.js';
 export { type IStorage } from '~/framework/storage/storage.js';
 export {
+    type GeneratePdfRequestDto,
+    type GeneratePdfResponseDto,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
     type ResumeGetAllResponseDto,

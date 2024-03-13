@@ -27,7 +27,12 @@ export {
     PaymentApiPath,
     paymentCreateSubscriptionValidationSchema,
 } from './bundles/payment/payment.js';
-export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
+export {
+    type GeneratePdfRequestDto,
+    type GeneratePdfResponseDto,
+    type TPDFService,
+    PDFApiPath,
+} from './bundles/pdf/pdf.js';
 export { type Profile } from './bundles/profile/profile.js';
 export {
     type RecentlyViewed,
