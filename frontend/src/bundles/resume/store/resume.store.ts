@@ -1,4 +1,5 @@
 import {
+    downloadPDFDocument,
     getAllResumes,
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
@@ -10,6 +11,7 @@ const allActions = {
     getAllResumes,
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
+    downloadPDFDocument,
 };
 
 export { allActions as actions };

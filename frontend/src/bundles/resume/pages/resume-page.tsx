@@ -1,7 +1,9 @@
+import { renderToString } from 'react-dom/server';
+
 import shareIcon from '~/assets/img/share-icon.svg';
 import { Header, RegularButton } from '~/bundles/common/components/components';
 import { ButtonVariant } from '~/bundles/common/enums/enums';
-import { useResumes } from '~/bundles/common/hooks/hooks';
+import { useCallback, useResumes } from '~/bundles/common/hooks/hooks';
 import { TemplateEditor } from '~/bundles/edit-template/components/template-editor/template-editor';
 import { ResumeAiReview } from '~/bundles/resume/components/components';
 
@@ -13,11 +15,18 @@ const ResumePage: React.FC = () => {
         createResumeAccessLink,
         resumeReview,
         requestResumeReviewFromAI,
+        downloadGeneratedFile,
         dataStatus,
     } = useResumes();
-    if (!templateSettings) {
-        return null;
-    }
+
+    const HTMLFromComponentOrEmptyString = templateSettings
+        ? renderToString(<TemplateEditor settings={templateSettings} />)
+        : '';
+
+    const handleDownloadClick = useCallback(() => {
+        downloadGeneratedFile(HTMLFromComponentOrEmptyString);
+    }, [downloadGeneratedFile, HTMLFromComponentOrEmptyString]);
+
     return (
         <div className={styles.resume__wrapper}>
             <Header>
@@ -36,13 +45,18 @@ const ResumePage: React.FC = () => {
                         dataStatus={dataStatus}
                         requestResumeReviewFromAI={requestResumeReviewFromAI}
                     />
-                    <RegularButton variant={ButtonVariant.PRIMARY}>
+                    <RegularButton
+                        onClick={handleDownloadClick}
+                        variant={ButtonVariant.PRIMARY}
+                    >
                         Download
                     </RegularButton>
                 </div>
             </Header>
             <div className={styles.resume__page}>
-                <TemplateEditor settings={templateSettings} />
+                {templateSettings && (
+                    <TemplateEditor settings={templateSettings} />
+                )}
             </div>
         </div>
     );

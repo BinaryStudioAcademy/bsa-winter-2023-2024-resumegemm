@@ -25,6 +25,7 @@ type UseResumesReturnValues = {
     templateSettings: TemplateSettings | undefined;
     createResumeAccessLink: () => void;
     requestResumeReviewFromAI: () => void;
+    downloadGeneratedFile: (html: string) => void;
     resumeReview: ResumeAiScoreResponseDto | null;
     dataStatus: DataStatus;
 };
@@ -58,6 +59,13 @@ const useResumes = (): UseResumesReturnValues => {
         }
     }, [dispatch, currentResume]);
 
+    const downloadGeneratedFile = useCallback(
+        (html: string) => {
+            void dispatch(resumeActions.downloadPDFDocument({ html }));
+        },
+        [dispatch],
+    );
+
     const createResumeAccessLink = useCallback(() => {
         void dispatch(
             resumeAccessActions.createResumeAccess({ resumeId: id as string }),
@@ -89,6 +97,7 @@ const useResumes = (): UseResumesReturnValues => {
         requestResumeReviewFromAI,
         resumeReview,
         dataStatus,
+        downloadGeneratedFile,
     };
 };
 

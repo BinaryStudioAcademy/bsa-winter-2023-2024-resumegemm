@@ -1,7 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import { openDownloadLinkForPDF } from '~/helpers/helpers.js';
+
 import {
     type AsyncThunkConfig,
+    type GeneratePdfRequestDto,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
     type ResumeGetAllResponseDto,
@@ -36,4 +39,19 @@ const getResumeReviewFromAI = createAsyncThunk<
     return resumeApi.requestResumeReviewFromAI(resume);
 });
 
-export { getAllResumes, getCurrentResumeWithTemplate, getResumeReviewFromAI };
+const downloadPDFDocument = createAsyncThunk<
+    unknown,
+    GeneratePdfRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/download-pdf-doc`, async (html, { extra }) => {
+    const { pdfApi } = extra;
+    const blob = await pdfApi.generatePDFFileFromHTMLString(html);
+    openDownloadLinkForPDF(blob);
+});
+
+export {
+    downloadPDFDocument,
+    getAllResumes,
+    getCurrentResumeWithTemplate,
+    getResumeReviewFromAI,
+};
