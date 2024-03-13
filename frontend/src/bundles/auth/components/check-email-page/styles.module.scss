@@ -1,0 +1,26 @@
+.check_email__container {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.check_email__image {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.check_email__image::after,
+.check_email__image::before {
+    background-repeat: no-repeat;
+}
+
+.check_email__header {
+    margin-bottom: 12px;
+    font-size: 47px;
+    line-height: 48px;
+    text-align: center;
+}
+
+.check_email__text {
+    max-width: 600px;
+}
