@@ -22,7 +22,6 @@ import {
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 import { type IConfig } from '~/common/config/config.js';
-import { type ApiHandlerResponse } from '~/common/controller/controller.js';
 import { mailService } from '~/common/mail-service/mail-service.js';
 
 import { EmailConfirmMessages } from './enums/message.enum.js';
@@ -86,7 +85,7 @@ class AuthService implements TAuthService {
         email: string,
         emailConfirmToken: string,
     ): Promise<void> {
-        const verificationLink = `${this.config.ENV.APP.ORIGIN_URL}/confirm-email?token=${emailConfirmToken}`;
+        const verificationLink = `${this.config.ENV.APP.ORIGIN_URL}/email-confirmation?token=${emailConfirmToken}`;
         const emailMockup = getTemplate({
             name: 'sign-up-email-template',
             context: {
@@ -190,28 +189,38 @@ class AuthService implements TAuthService {
     }: UserConfirmEmailRequestDto): ReturnType<
         TAuthService['confirmUserEmail']
     > {
-        const { EMAIL_CONFIRM_TOKEN_SECRET } = this.config.ENV.JWT;
-        const tokenPayload = this.verifyToken<{ email: string }>(
-            emailConfirmToken,
-            EMAIL_CONFIRM_TOKEN_SECRET,
-        );
-        const email = tokenPayload.email;
-        const user = await this.userService.findByEmail(email);
+        try {
+            const { EMAIL_CONFIRM_TOKEN_SECRET } = this.config.ENV.JWT;
+            const tokenPayload = this.verifyToken<{ email: string }>(
+                emailConfirmToken,
+                EMAIL_CONFIRM_TOKEN_SECRET,
+            );
+            const email = tokenPayload.email;
+            const user = await this.userService.findByEmail(email);
 
-        if (user?.email !== email) {
-            throw new HTTPError({
-                message: ExceptionMessage.INVALID_EMAIL_CONFIRM_TOKEN,
-                status: HttpCode.BAD_REQUEST,
-            });
+            if (user?.email !== email) {
+                throw new HTTPError({
+                    message: ExceptionMessage.INVALID_EMAIL_CONFIRM_TOKEN,
+                    status: HttpCode.BAD_REQUEST,
+                });
+            }
+            await this.userService.confirmEmail(user.id);
+            const userWithProfile = await this.getUserWithProfile(user.id);
+
+            return {
+                user: userWithProfile,
+                accessToken: generateToken({ id: user.id }),
+                refreshToken: generateRefreshToken({ id: user.id }),
+            };
+        } catch (error) {
+            if (error instanceof jwt.TokenExpiredError) {
+                throw new HTTPError({
+                    message: ExceptionMessage.TOKEN_EXPIRED,
+                    status: HttpCode.EXPIRED_TOKEN,
+                });
+            }
+            throw new AuthException();
         }
-        await this.userService.confirmEmail(user.id);
-        const userWithProfile = await this.getUserWithProfile(user.id);
-
-        return {
-            user: userWithProfile,
-            accessToken: generateToken({ id: user.id }),
-            refreshToken: generateRefreshToken({ id: user.id }),
-        };
     }
 }
 
