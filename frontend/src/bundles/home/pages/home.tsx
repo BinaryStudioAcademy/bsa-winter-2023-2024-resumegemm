@@ -1,6 +1,9 @@
 import mockResume from '~/assets/img/mock-resume.png';
-import { useAppSelector } from '~/bundles/common/hooks/hooks';
-import { useLoadTemplates } from '~/bundles/common/hooks/use-load-templates/use-load-templates.hook';
+import {
+    useAppSelector,
+    useLoadTemplates,
+    useLoadViewedResumes,
+} from '~/bundles/common/hooks/hooks';
 import {
     CreateNewCard,
     CreateResumeButton,
@@ -10,7 +13,6 @@ import {
     ResumeSection,
     TemplateSection,
 } from '~/bundles/home/components/components';
-import { useLoadViewedResumes } from '~/bundles/resume/use-load-viewed-resumes.hook';
 
 import styles from './styles.module.scss';
 
