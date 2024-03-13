@@ -58,7 +58,10 @@ const Templates: React.FC = () => {
                     }
                     className={styles.icon_input_wrapper}
                 />
-                <RegularButton onClick={handleCreateTemplate}>
+                <RegularButton
+                    onClick={handleCreateTemplate}
+                    className={styles.create_resume_button}
+                >
                     Create template
                 </RegularButton>
             </HomeTopSection>
