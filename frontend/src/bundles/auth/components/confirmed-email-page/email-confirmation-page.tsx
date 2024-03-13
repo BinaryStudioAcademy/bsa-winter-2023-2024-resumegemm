@@ -14,6 +14,7 @@ import {
 } from '~/bundles/common/hooks/hooks';
 
 import { actions as authActionCreator } from '../../store/auth.store';
+import styles from './styles.module.scss';
 
 const EmailConfirmationPage = (): JSX.Element => {
     const dispatch = useAppDispatch();
@@ -48,7 +49,9 @@ const EmailConfirmationPage = (): JSX.Element => {
     return (
         <>
             {isConfirmed === undefined && (
-                <Spinner variant={SpinnerVariant.MEDIUM} />
+                <div className={styles.email_confirmation_spinner}>
+                    <Spinner variant={SpinnerVariant.MEDIUM} />
+                </div>
             )}
             {isConfirmed === true && (
                 <Navigate to={AppRoute.EMAIL_CONFIRMATION_SUCCESS} />
