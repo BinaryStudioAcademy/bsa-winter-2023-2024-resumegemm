@@ -26,3 +26,11 @@
     color: var(--color-white);
     background-color: var(--color-accent-dark-yellow);
 }
+
+.editor_sidebar__checkbox {
+    color: white;
+}
+
+.editor_sidebar__checkbox:has(.checkbox:checked) > .text {
+    color: white;
+}

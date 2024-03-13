@@ -82,12 +82,14 @@ const EditTemplatePage: React.FC = () => {
                             className={editorStyles.editor_sidebar__item}
                         >
                             <Checkbox
+                                className={
+                                    templateStyles.editor_sidebar__checkbox
+                                }
                                 checked={isBlockEnabled(block)}
-                                label=""
+                                label={block}
                                 onChange={handleCheckboxChange}
                                 name={block}
                             />
-                            {block}
                         </li>
                     ))}
                 </ul>
@@ -99,7 +101,7 @@ const EditTemplatePage: React.FC = () => {
                         onClick={handleSaveTemplate}
                         className={clsx(templateStyles.output__button)}
                     >
-                        Save Tempalte
+                        Save Template
                     </RegularButton>
                 </div>
             </nav>
