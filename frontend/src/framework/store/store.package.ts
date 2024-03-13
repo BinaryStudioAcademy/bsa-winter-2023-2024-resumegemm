@@ -8,11 +8,9 @@ import {
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.store';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
-import { reducer as templatesReducer } from '~/bundles/edit-template/store/edit-template.store';
+import { reducer as editTemplateReducer } from '~/bundles/edit-template/store/edit-template.store';
 import { industriesApi } from '~/bundles/industries/industries';
 import { reducer as industriesReducer } from '~/bundles/industries/store/';
-import { templateApi } from '~/bundles/edit-template/templates.js';
-import { reducer as editTemplateReducer } from '~/bundles/edit-template/store/edit-template.store';
 import { openAuthApi } from '~/bundles/open-auth/open-auth.js';
 import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store/payment.store';
