@@ -5,6 +5,10 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
+    type Industry,
+    IndustriesApiPath,
+} from './bundles/industries/industries.js';
+export {
     type OauthConnectionEntityFields,
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,

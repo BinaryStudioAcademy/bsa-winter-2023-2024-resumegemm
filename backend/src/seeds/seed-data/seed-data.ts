@@ -4,6 +4,7 @@ export { customSectionSeed } from './custom-section-seed.js';
 export { educationSeed } from './education-seed.js';
 export { experienceSeed } from './experience-seed.js';
 export { imagesSeed } from './images-seed.js';
+export { industriesSeed } from './industries-seed.js';
 export { personalInformationSeed } from './personal-information-seed.js';
 export { profileSeed } from './profile-seed.js';
 export { resumesSeed } from './resumes-seed.js';

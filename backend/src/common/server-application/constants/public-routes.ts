@@ -1,10 +1,10 @@
 import {
     ApiPath,
     AuthApiPath,
+    IndustriesApiPath,
     OpenAuthApiPath,
     PaymentApiPath,
     PDFApiPath,
-    RecentlyViewedApiPath,
     ResumesApiPath,
     StripeEventsApiPath,
 } from 'shared/build/index.js';
@@ -15,8 +15,7 @@ const publicRoutes = {
     [`${AuthApiPath.SIGN_IN}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.SIGN_IN}`,
     [`${AuthApiPath.SIGN_UP}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.SIGN_UP}`,
     [`${AuthApiPath.TOKEN}`]: `${API_PREFIX}${ApiPath.AUTH}${AuthApiPath.TOKEN}`,
-    [`${RecentlyViewedApiPath.ID}`]: `${API_PREFIX}${ApiPath.RECENTLY_VIEWED}${RecentlyViewedApiPath.ID}`,
-    [`${RecentlyViewedApiPath.ROOT}`]: `${API_PREFIX}${ApiPath.RECENTLY_VIEWED}${RecentlyViewedApiPath.ROOT}`,
+    [`${ApiPath.INDUSTRIES}`]: `${API_PREFIX}${ApiPath.INDUSTRIES}${IndustriesApiPath.ROOT}`,
     [`${ResumesApiPath.SHARE_ID()}`]: `${API_PREFIX}${
         ApiPath.RESUMES
     }${ResumesApiPath.SHARE_ID()}`,

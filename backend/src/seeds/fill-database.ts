@@ -11,6 +11,7 @@ import {
     type CustomSection,
     type Education,
     type Experience,
+    type Industry,
     type PersonalInformation,
     type Profile,
     type Resume,
@@ -27,6 +28,7 @@ import {
     educationSeed,
     experienceSeed,
     imagesSeed,
+    industriesSeed,
     personalInformationSeed,
     profileSeed,
     resumesSeed,
@@ -61,6 +63,7 @@ async function seed(knex: Knex): Promise<void> {
             DatabaseTableName.PERSONAL_INFORMATION,
             DatabaseTableName.TECHNICAL_SKILLS,
             DatabaseTableName.RECENTLY_VIEWED,
+            DatabaseTableName.INDUSTRIES,
         ];
         await deleteFromTables(trx, tableNames);
 
@@ -195,6 +198,12 @@ async function seed(knex: Knex): Promise<void> {
 
         await trx(DatabaseTableName.RECENTLY_VIEWED)
             .insert(recentlyViewedSeed)
+            .returning('*');
+
+        // INDUSTRIES
+
+        await trx<Industry>(DatabaseTableName.INDUSTRIES)
+            .insert(industriesSeed)
             .returning('*');
     });
 }
