@@ -4,5 +4,6 @@ export { type IStorage } from '~/framework/storage/storage.js';
 export {
     type ResumeGetAllResponseDto,
     type ResumeWithRelationsAndTemplateResponseDto,
+    type TemplateSettings,
     type ValueOf,
 } from 'shared/build';
