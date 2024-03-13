@@ -51,12 +51,19 @@ const { reducer, actions, name } = createSlice({
             },
         );
         builder.addMatcher(
-            isAnyOf(signUp.fulfilled, signIn.fulfilled, getUser.fulfilled),
+            isAnyOf(
+                confirmEmail.fulfilled,
+                signIn.fulfilled,
+                getUser.fulfilled,
+            ),
             (state, action) => {
                 state.dataStatus = DataStatus.FULFILLED;
-                state.user = action.payload as UserWithProfileRelation;
+                state.user = action.payload;
             },
         );
+        builder.addMatcher(isAnyOf(signUp.fulfilled), (state) => {
+            state.dataStatus = DataStatus.FULFILLED;
+        });
         builder.addMatcher(
             isAnyOf(
                 confirmEmail.rejected,
@@ -68,17 +75,6 @@ const { reducer, actions, name } = createSlice({
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
                 state.user = null;
-            },
-        );
-        builder.addMatcher(
-            isAnyOf(
-                signUp.pending,
-                signIn.pending,
-                confirmEmail.pending,
-                getUser.pending,
-            ),
-            (state) => {
-                state.dataStatus = DataStatus.PENDING;
             },
         );
     },
