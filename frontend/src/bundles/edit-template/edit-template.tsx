@@ -3,7 +3,12 @@ import React, { type ChangeEvent, useCallback, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Checkbox, RegularButton } from '../common/components/components';
-import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
+import {
+    ButtonSize,
+    ButtonType,
+    ButtonVariant,
+    ContentType,
+} from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import { useTakeScreenShot } from '../common/hooks/use-take-screenshot/use-take-screenshot.hook';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
@@ -66,7 +71,7 @@ const EditTemplatePage: React.FC = () => {
     const handleSaveTemplate = useCallback((): void => {
         takeScreenshot({
             ref: templateEditorReference,
-            convertOptions: { quality: 1, type: 'image/jpeg' },
+            convertOptions: { quality: 1, type: ContentType.IMAGE_JPEG },
         })
             .then((screenshot) => {
                 if (screenshot) {
