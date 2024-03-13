@@ -30,7 +30,3 @@
 .editor_sidebar__checkbox {
     color: white;
 }
-
-.editor_sidebar__checkbox:has(.checkbox:checked) > .text {
-    color: white;
-}
