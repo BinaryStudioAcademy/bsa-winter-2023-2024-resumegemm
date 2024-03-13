@@ -4,6 +4,7 @@ export { customSectionSeed } from './custom-section-seed.js';
 export { educationSeed } from './education-seed.js';
 export { experienceSeed } from './experience-seed.js';
 export { imagesSeed } from './images-seed.js';
+export { industriesSeed } from './industries-seed.js';
 export { languageSeed } from './language-seed.js';
 export { oauthConnectionSeed } from './oauth-connections-seed.js';
 export { oauthUserSeed } from './oauth-user-seed.js';

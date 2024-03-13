@@ -1,7 +1,7 @@
 import { type OauthStrategy } from 'shared/build/index.js';
 
+import { type TemplateSettings } from '~/bundles/templates/types/types';
 import { type LanguageLevels, type SkillLevel } from '~/common/enums/enums.js';
-import { type TemplateBlockSettings } from '~/common/types/types.js';
 
 type User = {
     id: string;
@@ -38,7 +38,7 @@ type Template = {
     id: string;
     image: string;
     is_owner: boolean;
-    template_settings: TemplateBlockSettings;
+    template_settings: TemplateSettings;
     created_at: Date;
     updated_at: Date;
     deleted_at: Date;
@@ -190,12 +190,18 @@ type SubscriptionPlan = {
     updated_at: Date;
 };
 
+type Industry = {
+    id: string;
+    industry: string;
+};
+
 export {
     type Certification,
     type ContactDetails,
     type CustomSection,
     type Education,
     type Experience,
+    type Industry,
     type Language,
     type OauthConnection,
     type OauthUser,

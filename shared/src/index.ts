@@ -5,12 +5,17 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
+    type Industry,
+    IndustriesApiPath,
+} from './bundles/industries/industries.js';
+export {
     type OauthConnectionEntityFields,
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,
     type UserFacebookDataResponseDto,
     type UserGithubDataResponseDto,
     type UserGoogleDataResponseDto,
+    type UserLinkedInDataResponseDto,
     OauthStrategy,
     OpenAuthApiGetUserUrl,
     OpenAuthApiPath,
@@ -75,24 +80,43 @@ export {
 export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
 export { type Subscription } from './bundles/subscription/types/types.js';
 export {
+    type CSSProperties,
+    type LayoutBlock,
+    type LayoutContainer,
+    type LayoutItem,
     type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
     type TemplateGetAllResponseDto,
+    type TemplateSettings,
     type TemplateUpdateItemRequestDto,
+    TemplateBlockTitles,
+    TemplateErrorMessage,
+    TemplateItemTags,
     TemplatesApiPath,
 } from './bundles/templates/templates.js';
 export {
     type SocialMediaProfiles,
+    type UpdateUserProfileAndEmailRequestDto,
     type User,
     type UserAuthResponse,
     type UserEntityFields,
+    type UserForgotPasswordRequestDto,
+    type UserForgotPasswordResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserResetPassword,
+    type UserResetPasswordRequestDto,
+    type UserResetPasswordResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserVerifyResetPasswordTokenRequestDto,
+    type UserVerifyResetPasswordTokenResponse,
     type UserWithProfileRelation,
+    emailValidationSchema,
+    passwordValidationSchema,
+    recoveryCodeValidationSchema,
     UsersApiPath,
     userSignInValidationSchema,
     userSignUpValidationSchema,
@@ -120,7 +144,7 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type IStorage } from './framework/storage/storage.js';
-export { configureString, getCookie, setCookie } from './helpers/helpers.js';
+export { configureString } from './helpers/helpers.js';
 export {
     type IdParameter,
     type ServerCommonErrorResponse,

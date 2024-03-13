@@ -14,6 +14,8 @@ enum DatabaseTableName {
     USER_TEMPLATES = 'user_templates',
     REVIEWS = 'reviews',
     RECENTLY_VIEWED = 'recently_viewed',
+    INDUSTRIES = 'industries',
+    PROFESSIONS = 'professions',
     RESUME_SHARE_LINK = 'resume_share_link',
     RESUME_SHARE_ACCESS = 'resume_share_access',
     SUBSCRIPTION_PLANS = 'subscription_plans',

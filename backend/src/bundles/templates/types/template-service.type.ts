@@ -1,5 +1,4 @@
 import {
-    type TemplateCreateItemRequestDto,
     type TemplateGetAllItemResponseDto,
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
@@ -12,7 +11,7 @@ interface ITemplateService {
     findAll(): Promise<{
         items: TemplateGetAllItemResponseDto[];
     }>;
-    create(payload: TemplateCreateItemRequestDto): Promise<Template>;
+    create(payload: { userId: string }): Promise<Template>;
     update(
         id: string,
         data: TemplateUpdateItemRequestDto,

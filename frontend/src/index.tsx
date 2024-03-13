@@ -18,6 +18,7 @@ import { AppRoute } from '~/bundles/common/enums/enums';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
+import { EditTemplatePage } from './bundles/edit-template/edit-template';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
@@ -65,6 +66,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             path: AppRoute.SIGN_UP,
                                             element: <Auth />,
                                         },
+                                        {
+                                            path: AppRoute.FORGOT_PASSWORD,
+                                            element: <Auth />,
+                                        },
                                     ],
                                 },
                                 {
@@ -82,6 +87,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: AppRoute.TEMPLATES,
                                             element: <TemplatePage />,
+                                        },
+                                        {
+                                            path: `${AppRoute.TEMPLATE_EDITOR}/:id`,
+                                            element: <EditTemplatePage />,
                                         },
                                     ],
                                 },

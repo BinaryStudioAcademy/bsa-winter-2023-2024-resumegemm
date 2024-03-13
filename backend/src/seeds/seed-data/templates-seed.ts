@@ -1,43 +1,21 @@
-import { TemplateBlockTitles } from '~/common/enums/enums.js';
+import { testTemplate } from '~/bundles/templates/constants/test-template.js';
 
 const templatesSeed = [
     {
         is_owner: true,
-        template_settings: {
-            [TemplateBlockTitles.Contacts]: { enabled: true },
-            [TemplateBlockTitles.Summary]: { enabled: true },
-            [TemplateBlockTitles.Experience]: { enabled: true },
-            [TemplateBlockTitles.Recommendations]: { enabled: true },
-            [TemplateBlockTitles.Skills]: { enabled: true },
-            [TemplateBlockTitles.TechStack]: { enabled: true },
-            [TemplateBlockTitles.Portfolio]: { enabled: true },
-            [TemplateBlockTitles.Languages]: { enabled: true },
-            [TemplateBlockTitles.Education]: { enabled: true },
-            [TemplateBlockTitles.Socials]: { enabled: true },
-        },
+        template_settings: testTemplate,
     },
     {
         is_owner: true,
-        template_settings: {
-            [TemplateBlockTitles.Contacts]: { enabled: true },
-            [TemplateBlockTitles.Summary]: { enabled: true },
-            [TemplateBlockTitles.Experience]: { enabled: true },
-            [TemplateBlockTitles.Recommendations]: { enabled: true },
-            [TemplateBlockTitles.Skills]: { enabled: true },
-            [TemplateBlockTitles.TechStack]: { enabled: true },
-            [TemplateBlockTitles.Portfolio]: { enabled: true },
-            [TemplateBlockTitles.Languages]: { enabled: true },
-            [TemplateBlockTitles.Education]: { enabled: true },
-            [TemplateBlockTitles.Socials]: { enabled: true },
-        },
+        template_settings: testTemplate,
     },
     {
         is_owner: false,
-        template_settings: {},
+        template_settings: testTemplate,
     },
     {
         is_owner: false,
-        template_settings: {},
+        template_settings: testTemplate,
     },
 ];
 
