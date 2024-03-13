@@ -4,6 +4,7 @@ export {
     UserValidationRule,
 } from './enums/enums.js';
 export {
+    type FindByEmailRequestDto,
     type SocialMediaProfiles,
     type UpdateUserProfileAndEmailRequestDto,
     type User,
