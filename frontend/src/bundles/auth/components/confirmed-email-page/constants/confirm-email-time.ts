@@ -1,3 +1,3 @@
-const CONFIRM_EMAIL_TIME = 15;
+const CONFIRM_EMAIL_TIME = 10;
 
 export { CONFIRM_EMAIL_TIME };
