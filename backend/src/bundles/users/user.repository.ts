@@ -44,6 +44,20 @@ class UserRepository
         return await this.model.query().updateAndFetchById(id, data);
     }
 
+    public async changePassword({
+        id,
+        passwordHash,
+        passwordSalt,
+    }: {
+        id: string;
+        passwordHash: string;
+        passwordSalt: string;
+    }): Promise<void> {
+        await this.model
+            .query()
+            .patchAndFetchById(id, { passwordHash, passwordSalt });
+    }
+
     public async findAll(): ReturnType<IUserRepo['findAll']> {
         const users = await this.model.query().whereNull('deletedAt').execute();
 

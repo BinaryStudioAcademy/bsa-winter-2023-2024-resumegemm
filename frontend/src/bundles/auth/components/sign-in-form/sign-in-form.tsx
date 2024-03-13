@@ -65,9 +65,12 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
                     />
                 </FormGroup>
                 <div className={styles.login__form_password}>
-                    <span className={styles.forgot__link}>
+                    <Link
+                        to={AppRoute.FORGOT_PASSWORD}
+                        className={styles.forgot__link}
+                    >
                         Forgot Password?
-                    </span>
+                    </Link>
                     <PasswordInput
                         label="Password"
                         error={errors.password}

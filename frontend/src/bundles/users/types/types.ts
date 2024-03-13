@@ -6,6 +6,8 @@ export {
     type UserAuthResponse,
     type UserConfirmEmailRequestDto,
     type UserConfirmEmailResponse,
+    type UserForgotPasswordRequestDto,
+    type UserForgotPasswordResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserSignInRequestDto,

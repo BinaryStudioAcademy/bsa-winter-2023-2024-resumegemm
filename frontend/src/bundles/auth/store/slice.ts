@@ -7,10 +7,13 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import {
     confirmEmail,
+    forgotPassword,
     getUser,
     requestNewAccessToken,
+    resetPassword,
     signIn,
     signUp,
+    verifyResetPasswordToken,
 } from './actions.js';
 
 type State = {
@@ -50,6 +53,31 @@ const { reducer, actions, name } = createSlice({
                 state.dataStatus = DataStatus.PENDING;
             },
         );
+
+        builder.addMatcher(
+            isAnyOf(
+                signUp.fulfilled,
+                signIn.fulfilled,
+                getUser.fulfilled,
+                resetPassword.fulfilled,
+            ),
+            (state, action) => {
+                state.dataStatus = DataStatus.FULFILLED;
+                state.user =
+                    action.payload as unknown as UserWithProfileRelation;
+            },
+        );
+
+        builder.addMatcher(
+            isAnyOf(
+                verifyResetPasswordToken.fulfilled,
+                forgotPassword.fulfilled,
+            ),
+            (state) => {
+                state.dataStatus = DataStatus.FULFILLED;
+            },
+        );
+
         builder.addMatcher(
             isAnyOf(
                 confirmEmail.fulfilled,
@@ -71,6 +99,9 @@ const { reducer, actions, name } = createSlice({
                 signIn.rejected,
                 getUser.rejected,
                 requestNewAccessToken.rejected,
+                verifyResetPasswordToken.rejected,
+                forgotPassword.rejected,
+                resetPassword.rejected,
             ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;

@@ -3,6 +3,11 @@ import jwt from 'jsonwebtoken';
 import {
     type AuthService as TAuthService,
     type EncryptionDataPayload,
+    type UserForgotPasswordRequestDto,
+    type UserResetPasswordRequestDto,
+    type UserVerifyResetPasswordTokenRequestDto,
+} from 'shared/build/index.js';
+import {
     AuthException,
     ExceptionMessage,
     HttpCode,
@@ -21,11 +26,12 @@ import {
     type UserSignUpRequestDto,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
-import { type IConfig } from '~/common/config/config.js';
+import { type IConfig,config } from '~/common/config/config.js';
 import { mailService } from '~/common/mail-service/mail-service.js';
 
 import { EmailConfirmMessages } from './enums/message.enum.js';
 import { generateEmailConfirmToken } from './helpers/token/email-confirm-token/email-confirm-token.js';
+import { generateResetPasswordToken } from './helpers/token/token.js';
 
 type ConstructorType = {
     userService: UserService;
@@ -221,6 +227,77 @@ class AuthService implements TAuthService {
             }
             throw new AuthException();
         }
+    }
+
+    public async tokenEqualsEmail({
+        email,
+        resetPasswordToken,
+    }: UserVerifyResetPasswordTokenRequestDto): ReturnType<
+        TAuthService['tokenEqualsEmail']
+    > {
+        const user = await this.userService.findByEmail(email);
+
+        const resetPasswordTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
+
+        const tokenPayload = this.verifyToken<{ email: string }>(
+            resetPasswordToken,
+            resetPasswordTokenSecret,
+        );
+
+        if (user?.email !== tokenPayload.email) {
+            throw new HTTPError({
+                message: ExceptionMessage.INVALID_RESET_TOKEN,
+                status: HttpCode.NOT_FOUND,
+            });
+        }
+
+        return user;
+    }
+
+    public async resetPassword({
+        email,
+        resetPasswordToken,
+        password,
+    }: UserResetPasswordRequestDto): ReturnType<TAuthService['resetPassword']> {
+        const user = await this.tokenEqualsEmail({
+            resetPasswordToken,
+            email,
+        });
+
+        const passwordSalt = await this.generateSalt();
+
+        const passwordHash = await this.encrypt(password, passwordSalt);
+
+        const userWithProfile = await this.getUserWithProfile(user.id);
+
+        await this.userService.changePassword({
+            id: user.id,
+            passwordHash,
+            passwordSalt,
+        });
+
+        return {
+            user: userWithProfile,
+            accessToken: generateToken({ id: user.id }),
+            refreshToken: generateRefreshToken({ id: user.id }),
+        };
+    }
+
+    public async createResetPasswordToken({
+        email,
+    }: UserForgotPasswordRequestDto): ReturnType<
+        TAuthService['createResetPasswordToken']
+    > {
+        const user = await this.userService.findByEmail(email);
+
+        if (!user) {
+            throw new HTTPError({
+                status: HttpCode.NOT_FOUND,
+                message: ExceptionMessage.USER_NOT_FOUND,
+            });
+        }
+
+        return generateResetPasswordToken({ email });
     }
 }
 

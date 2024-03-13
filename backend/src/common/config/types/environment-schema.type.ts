@@ -11,9 +11,11 @@ type EnvironmentSchema = {
         ACCESS_TOKEN_SECRET: string;
         REFRESH_TOKEN_SECRET: string;
         EMAIL_CONFIRM_TOKEN_SECRET: string;
+        EMAIL_CONFIRM_TOKEN_EXPIRES_IN: string;
+        RESET_TOKEN_SECRET: string;
         ACCESS_TOKEN_EXPIRES_IN: string;
         REFRESH_TOKEN_EXPIRES_IN: string;
-        EMAIL_CONFIRM_TOKEN_EXPIRES_IN: string;
+        RESET_TOKEN_EXPIRES_IN: string;
     };
     OAUTH: {
         GITHUB: {

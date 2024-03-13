@@ -76,6 +76,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             path: AppRoute.RESUME_ACCESS,
                                             element: <ResumeAccess />,
                                         },
+                                        {
+                                            path: AppRoute.FORGOT_PASSWORD,
+                                            element: <Auth />,
+                                        },
                                     ],
                                 },
                                 {

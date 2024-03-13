@@ -1,9 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import {
+    type UserResetPasswordRequestDto,
+    type UserVerifyResetPasswordTokenRequestDto,
+    type UserVerifyResetPasswordTokenResponse,
+} from 'shared/build/index.js';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
     type UserAuthResponse,
     type UserConfirmEmailRequestDto,
+    type UserForgotPasswordRequestDto,
+    type UserForgotPasswordResponse,
     type UserSignInRequestDto,
     type UserSignUpRequestDto,
     type UserWithProfileRelation,
@@ -69,4 +76,54 @@ const requestNewAccessToken = createAsyncThunk<
     await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
 });
 
-export { confirmEmail, getUser, requestNewAccessToken, signIn, signUp };
+const forgotPassword = createAsyncThunk<
+    UserForgotPasswordResponse,
+    UserForgotPasswordRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/forgot-password`, async (forgotPasswordPayload, { extra }) => {
+    const { authApi } = extra;
+
+    return await authApi.forgotPassword(forgotPasswordPayload);
+});
+
+const verifyResetPasswordToken = createAsyncThunk<
+    UserVerifyResetPasswordTokenResponse,
+    UserVerifyResetPasswordTokenRequestDto,
+    AsyncThunkConfig
+>(
+    `${sliceName}/verify-reset-token`,
+    async (verifyResetPasswordTokenPayload, { extra }) => {
+        const { authApi } = extra;
+
+        return await authApi.verifyResetPasswordToken(
+            verifyResetPasswordTokenPayload,
+        );
+    },
+);
+
+const resetPassword = createAsyncThunk<
+    UserWithProfileRelation,
+    UserResetPasswordRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/reset-password`, async (resetPasswordPayload, { extra }) => {
+    const { authApi, storageApi } = extra;
+
+    const { accessToken, user } = await authApi.resetPassword(
+        resetPasswordPayload,
+    );
+
+    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+    return user;
+});
+
+export {
+    confirmEmail,
+    forgotPassword,
+    getUser,
+    requestNewAccessToken,
+    resetPassword,
+    signIn,
+    signUp,
+    verifyResetPasswordToken,
+};

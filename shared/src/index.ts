@@ -5,6 +5,10 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
+    type Industry,
+    IndustriesApiPath,
+} from './bundles/industries/industries.js';
+export {
     type OauthConnectionEntityFields,
     type OauthUserLoginRequestDto,
     type OauthUserLoginResponseDto,
@@ -96,13 +100,23 @@ export {
     type UserConfirmEmailRequestDto,
     type UserConfirmEmailResponse,
     type UserEntityFields,
+    type UserForgotPasswordRequestDto,
+    type UserForgotPasswordResponse,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserResetPassword,
+    type UserResetPasswordRequestDto,
+    type UserResetPasswordResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserVerifyResetPasswordTokenRequestDto,
+    type UserVerifyResetPasswordTokenResponse,
     type UserWithProfileRelation,
+    emailValidationSchema,
+    passwordValidationSchema,
+    recoveryCodeValidationSchema,
     UsersApiPath,
     userSignInValidationSchema,
     userSignUpValidationSchema,
@@ -130,7 +144,7 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type IStorage } from './framework/storage/storage.js';
-export { configureString, getCookie, setCookie } from './helpers/helpers.js';
+export { configureString } from './helpers/helpers.js';
 export {
     type IdParameter,
     type ServerCommonErrorResponse,

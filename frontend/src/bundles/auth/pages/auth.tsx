@@ -13,6 +13,7 @@ import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
 import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
+import { PasswordRecovery } from '../components/password-recovery/password-recovery.js';
 import { type UserSignUpRequestDtoFrontend } from '../components/sign-up-form/validation/sign-up-validation.js';
 import { UserRegistrationMessage } from '../enums/enums';
 import { actions as authActions } from '../store/auth.store.js';
@@ -66,6 +67,9 @@ const Auth: React.FC = () => {
                         dataStatus={dataStatus}
                     />
                 );
+            }
+            case AppRoute.FORGOT_PASSWORD: {
+                return <PasswordRecovery />;
             }
         }
 
