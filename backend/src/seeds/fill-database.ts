@@ -11,6 +11,7 @@ import {
     type CustomSection,
     type Education,
     type Experience,
+    type Industry,
     type Language,
     type OauthConnection,
     type OauthUser,
@@ -32,6 +33,7 @@ import {
     educationSeed,
     experienceSeed,
     imagesSeed,
+    industriesSeed,
     languageSeed,
     oauthConnectionSeed,
     oauthUserSeed,
@@ -80,6 +82,7 @@ async function seed(knex: Knex): Promise<void> {
             DatabaseTableName.PROFILE,
             DatabaseTableName.USER_TEMPLATES,
             DatabaseTableName.USERS,
+            DatabaseTableName.INDUSTRIES,
         ];
         await deleteFromTables(trx, tableNames);
 
@@ -282,8 +285,13 @@ async function seed(knex: Knex): Promise<void> {
             [DatabaseColumnName.ID]: guid.raw(),
         }));
 
-        await trx<SubscriptionPlan>(DatabaseTableName.SUBSCRIPTION_PLANS)
-            .insert(subscriptionPlansMappedSeed)
+        await trx<SubscriptionPlan>(
+            DatabaseTableName.SUBSCRIPTION_PLANS,
+        ).insert(subscriptionPlansMappedSeed);
+        // INDUSTRIES
+
+        await trx<Industry>(DatabaseTableName.INDUSTRIES)
+            .insert(industriesSeed)
             .returning('*');
     });
 }

@@ -10,6 +10,7 @@ enum AppRoute {
     TEMPLATES = '/templates',
     STATISTICS = '/statistics',
     TEMPLATE_EDITOR = '/template-editor',
+    FORGOT_PASSWORD = '/forgot-password',
 }
 
 export { AppRoute };

@@ -1,4 +1,5 @@
 import { authController } from '~/bundles/auth/auth.js';
+import { industriesController } from '~/bundles/industries/industries.js';
 import { openAuthController } from '~/bundles/oauth/oauth.js';
 import { paymentController } from '~/bundles/payment/payment.js';
 import { pdfController } from '~/bundles/pdf/pdf.js';
@@ -23,6 +24,7 @@ const apiV1 = new ServerAppApi(
     ...pdfController.routes,
     ...authController.routes,
     ...userController.routes,
+    ...industriesController.routes,
     ...resumeController.routes,
     ...paymentController.routes,
     ...recentlyViewedController.routes,
