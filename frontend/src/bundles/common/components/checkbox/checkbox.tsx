@@ -12,7 +12,7 @@ type Properties = {
 
 const Checkbox: React.FC<Properties> = ({
     label,
-    checked = false,
+    checked,
     className,
     onChange,
     name,
@@ -23,7 +23,7 @@ const Checkbox: React.FC<Properties> = ({
                 <input
                     type="checkbox"
                     className={styles.checkbox}
-                    defaultChecked={checked}
+                    checked={checked}
                     onChange={onChange}
                     name={name}
                 />

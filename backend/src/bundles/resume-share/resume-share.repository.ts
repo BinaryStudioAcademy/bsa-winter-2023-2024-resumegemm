@@ -120,7 +120,7 @@ class ResumeShareRepository {
         } catch (error) {
             if (error instanceof Error) {
                 throw new HTTPError({
-                    message: ResumeShareErrorMessage.RESUME_SHARE_CREATE_ERROR,
+                    message: ResumeShareErrorMessage.RESUME_SHARE_DELETE_ERROR,
                     status: HttpCode.BAD_REQUEST,
                 });
             }

@@ -4,6 +4,7 @@ import { paymentController } from '~/bundles/payment/payment.js';
 import { pdfController } from '~/bundles/pdf/pdf.js';
 import { recentlyViewedController } from '~/bundles/recently-viewed/recently-viewed.js';
 import { resumeShareController } from '~/bundles/resume-share/resume-share.js';
+import { resumeController } from '~/bundles/resumes/resumes.js';
 import { statisticsController } from '~/bundles/statistics/statistics.js';
 import { stripeEventsController } from '~/bundles/stripe-events/stripe-events.js';
 import { templateController } from '~/bundles/templates/templates.js';
@@ -22,6 +23,7 @@ const apiV1 = new ServerAppApi(
     ...pdfController.routes,
     ...authController.routes,
     ...userController.routes,
+    ...resumeController.routes,
     ...paymentController.routes,
     ...recentlyViewedController.routes,
     ...templateController.routes,

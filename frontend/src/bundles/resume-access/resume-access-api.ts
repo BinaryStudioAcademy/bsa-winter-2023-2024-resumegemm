@@ -46,7 +46,7 @@ class ResumeAccessApi extends HttpApi {
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
-                hasAuth: false,
+                hasAuth: true,
             },
         );
 
@@ -75,7 +75,7 @@ class ResumeAccessApi extends HttpApi {
                 method: 'DELETE',
                 contentType: ContentType.JSON,
                 payload: JSON.stringify({}),
-                hasAuth: false,
+                hasAuth: true,
             },
         );
 
@@ -91,7 +91,7 @@ class ResumeAccessApi extends HttpApi {
                 method: 'POST',
                 contentType: ContentType.JSON,
                 payload: JSON.stringify({}),
-                hasAuth: false,
+                hasAuth: true,
             },
         );
 
