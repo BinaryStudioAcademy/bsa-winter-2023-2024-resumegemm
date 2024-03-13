@@ -1,6 +1,10 @@
 import { type UpdateUserProfileAndEmailRequestDto } from 'shared/build';
 
+import { Header, NavTabs } from '~/bundles/common/components/components';
+import { UserProfile } from '~/bundles/common/components/layout/header/user-profile/user-profile';
 import { PageTitle } from '~/bundles/common/components/page-title/page-title';
+import { AppRoute } from '~/bundles/common/enums/app-route.enum';
+import { getUserAvatar } from '~/bundles/common/helpers/get-user-avatar';
 import {
     useAppDispatch,
     useCallback,
@@ -17,8 +21,15 @@ import { Socials } from '../components/socials/socials';
 import { Subscriptions } from '../components/subscription/subscriptions';
 import styles from './style.module.scss';
 
+const headerItems = [
+    { label: 'Home', path: AppRoute.ROOT },
+    { label: 'Templates', path: AppRoute.TEMPLATES },
+];
+
 const Profile: React.FC = () => {
     const dispatch = useAppDispatch();
+
+    const { user } = useAppSelector((state) => state.auth);
 
     useEffect(() => {
         void dispatch(profileActions.getUserProfileAndSocials());
@@ -51,33 +62,39 @@ const Profile: React.FC = () => {
     );
 
     return (
-        <div className={styles.profile}>
-            <div className={styles.profile__container}>
-                <PageTitle title="Account settings" />
-                <ProfileCard title="Your plan">
-                    <ProfileInfo />
-                </ProfileCard>
-                <ProfileCard title="Account">
-                    <ProfileForm
-                        onSubmit={handleFormSubmit}
-                        user={{ email, firstName, lastName }}
-                    />
-                </ProfileCard>
-                <ProfileCard title="Social profile">
-                    <Socials
-                        socialMediaConnections={profile.socialMediaProfiles}
-                        dataStatus={profile.dataStatus}
-                        onSocialDisconnect={handleSocialMediaDisconnect}
-                    />
-                </ProfileCard>
-                <ProfileCard title="Email notifications">
-                    <Subscriptions />
-                </ProfileCard>
-                <ProfileCard title="Delete account">
-                    <DeleteAccount />
-                </ProfileCard>
+        <>
+            <Header>
+                <NavTabs items={headerItems}></NavTabs>
+                <UserProfile image={getUserAvatar(user)} />
+            </Header>
+            <div className={styles.profile}>
+                <div className={styles.profile__container}>
+                    <PageTitle title="Account settings" />
+                    <ProfileCard title="Your plan">
+                        <ProfileInfo />
+                    </ProfileCard>
+                    <ProfileCard title="Account">
+                        <ProfileForm
+                            onSubmit={handleFormSubmit}
+                            user={{ email, firstName, lastName }}
+                        />
+                    </ProfileCard>
+                    <ProfileCard title="Social profile">
+                        <Socials
+                            socialMediaConnections={profile.socialMediaProfiles}
+                            dataStatus={profile.dataStatus}
+                            onSocialDisconnect={handleSocialMediaDisconnect}
+                        />
+                    </ProfileCard>
+                    <ProfileCard title="Email notifications">
+                        <Subscriptions />
+                    </ProfileCard>
+                    <ProfileCard title="Delete account">
+                        <DeleteAccount />
+                    </ProfileCard>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
