@@ -6,6 +6,7 @@ import {
     useAppSelector,
     useCallback,
     useLocation,
+    useNavigate,
 } from '~/bundles/common/hooks/hooks.js';
 import { ToastContext } from '~/bundles/toast/context/toast-context.js';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
@@ -19,6 +20,7 @@ import styles from './styles.module.scss';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const { dataStatus } = useAppSelector((state) => state.auth);
 
@@ -38,10 +40,7 @@ const Auth: React.FC = () => {
             void dispatch(authActions.signUp(payload))
                 .unwrap()
                 .then(() => {
-                    showToast(
-                        UserRegistrationMessage.CONFIRM_EMAIL,
-                        ToastType.SUCCESS,
-                    );
+                    navigate(AppRoute.CHECK_EMAIL);
                 })
                 .catch((error: Error) => {
                     showToast(error.message, ToastType.ERROR);
