@@ -12,7 +12,7 @@ const CheckEmailPage = (): JSX.Element => {
     const navigate = useNavigate();
     const handleClose = useCallback(() => {
         navigate(AppRoute.ROOT);
-    }, []);
+    }, [navigate]);
 
     return (
         <div className={styles.check_email__container}>
