@@ -12,6 +12,7 @@ enum AppRoute {
     EMAIL_CONFIRMATION_SUCCESS = '/email-confirmation-success',
     EMAIL_CONFIRMATION_FAIL = '/email-confirmation-fail',
     TEMPLATE_EDITOR = '/template-editor',
+    CHECK_EMAIL = '/check-email',
 }
 
 export { AppRoute };
