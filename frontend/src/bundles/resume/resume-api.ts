@@ -4,6 +4,8 @@ import { ApiPath, ContentType, ResumesApiPath } from './enums/enums';
 import {
     type IHttp,
     type IStorage,
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
     type ResumeGetAllResponseDto,
     type ResumeWithRelationsAndTemplateResponseDto,
 } from './types/types';
@@ -30,6 +32,7 @@ class ResumeApi extends HttpApi {
         );
         return await response.json<ResumeGetAllResponseDto[]>();
     }
+
     public async getOneWithTemplate(
         resumeId: string,
     ): Promise<ResumeWithRelationsAndTemplateResponseDto> {
@@ -42,6 +45,21 @@ class ResumeApi extends HttpApi {
             },
         );
         return await response.json<ResumeWithRelationsAndTemplateResponseDto>();
+    }
+
+    public async requestResumeReviewFromAI(
+        resume: ResumeAiScoreRequestDto,
+    ): Promise<ResumeAiScoreResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(`${ResumesApiPath.SCORE}`, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify(resume),
+            },
+        );
+        return await response.json<ResumeAiScoreResponseDto>();
     }
 }
 

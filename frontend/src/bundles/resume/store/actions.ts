@@ -2,6 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
     type AsyncThunkConfig,
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
     type ResumeGetAllResponseDto,
     type ResumeWithRelationsAndTemplateResponseDto,
 } from '../types/types';
@@ -25,4 +27,13 @@ const getCurrentResumeWithTemplate = createAsyncThunk<
     return resumeApi.getOneWithTemplate(resumeId);
 });
 
-export { getAllResumes, getCurrentResumeWithTemplate };
+const getResumeReviewFromAI = createAsyncThunk<
+    ResumeAiScoreResponseDto,
+    ResumeAiScoreRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/get-resume-review`, (resume, { extra }) => {
+    const { resumeApi } = extra;
+    return resumeApi.requestResumeReviewFromAI(resume);
+});
+
+export { getAllResumes, getCurrentResumeWithTemplate, getResumeReviewFromAI };
