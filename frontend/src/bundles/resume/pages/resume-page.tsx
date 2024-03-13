@@ -3,11 +3,18 @@ import { Header, RegularButton } from '~/bundles/common/components/components';
 import { ButtonVariant } from '~/bundles/common/enums/enums';
 import { useResumes } from '~/bundles/common/hooks/hooks';
 import { TemplateEditor } from '~/bundles/edit-template/components/template-editor/template-editor';
+import { ResumeAiReview } from '~/bundles/resume/components/components';
 
 import styles from './styles.module.scss';
 
 const ResumePage: React.FC = () => {
-    const { templateSettings, createResumeAccessLink } = useResumes();
+    const {
+        templateSettings,
+        createResumeAccessLink,
+        resumeReview,
+        requestResumeReviewFromAI,
+        dataStatus,
+    } = useResumes();
     if (!templateSettings) {
         return null;
     }
@@ -24,9 +31,11 @@ const ResumePage: React.FC = () => {
                             style={{ maskImage: `url(${shareIcon})` }}
                         ></div>
                     </RegularButton>
-                    <RegularButton variant={ButtonVariant.DEFAULT}>
-                        View AI response
-                    </RegularButton>
+                    <ResumeAiReview
+                        resumeReview={resumeReview}
+                        dataStatus={dataStatus}
+                        requestResumeReviewFromAI={requestResumeReviewFromAI}
+                    />
                     <RegularButton variant={ButtonVariant.PRIMARY}>
                         Download
                     </RegularButton>
