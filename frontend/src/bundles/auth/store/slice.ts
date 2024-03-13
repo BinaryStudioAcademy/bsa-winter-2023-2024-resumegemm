@@ -56,7 +56,6 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(
             isAnyOf(
-                signUp.fulfilled,
                 signIn.fulfilled,
                 getUser.fulfilled,
                 resetPassword.fulfilled,
@@ -70,6 +69,7 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(
             isAnyOf(
+                signUp.fulfilled,
                 verifyResetPasswordToken.fulfilled,
                 forgotPassword.fulfilled,
             ),
@@ -89,9 +89,7 @@ const { reducer, actions, name } = createSlice({
                 state.user = action.payload;
             },
         );
-        builder.addMatcher(isAnyOf(signUp.fulfilled), (state) => {
-            state.dataStatus = DataStatus.FULFILLED;
-        });
+
         builder.addMatcher(
             isAnyOf(
                 confirmEmail.rejected,
