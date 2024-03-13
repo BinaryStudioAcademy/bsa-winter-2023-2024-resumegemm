@@ -7,6 +7,7 @@ import { IconInput } from '~/bundles/common/components/icon-input/icon-input';
 import { SortButton } from '~/bundles/common/components/sort-button/sort-button';
 import { IconName, IconSize } from '~/bundles/common/enums/enums';
 
+import { Filter } from '../components';
 import styles from './styles.module.scss';
 
 type Properties = {
@@ -50,6 +51,7 @@ const PanelContainer: React.FC<Properties> = ({
                     )}
 
                     <SortButton onSort={sortHandle}>Sort</SortButton>
+                    <Filter />
                 </div>
             </div>
             <div className={styles.panel_container__content}>{children}</div>

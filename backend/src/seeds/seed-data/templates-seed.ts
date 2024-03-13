@@ -11,11 +11,11 @@ const templatesSeed = [
     },
     {
         is_owner: false,
-        template_settings: {},
+        template_settings: testTemplate,
     },
     {
         is_owner: false,
-        template_settings: {},
+        template_settings: testTemplate,
     },
 ];
 
