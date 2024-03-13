@@ -37,6 +37,7 @@ import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import { QuestionAndAnswer } from '../question-and-answer/question-and-answer';
 import { DeleteResumeButton } from '../resume/components/delete-resume-button/delete-resume-button.js';
+import { Resume } from '../resume/pages/resumes.js';
 import styles from './styles.module.scss';
 
 const steps = [
@@ -276,6 +277,9 @@ const PreviewPage: React.FC = () => {
                 </li>
                 <li className={styles.item}>
                     <ColumnChart measure="Views" data={ColumnChartDate} />
+                </li>
+                <li className={styles.item}>
+                    <Resume />
                 </li>
             </ul>
         </div>
