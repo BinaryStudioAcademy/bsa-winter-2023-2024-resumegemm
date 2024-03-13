@@ -1,6 +1,11 @@
 import { Navigate, useSearchParams } from 'react-router-dom';
 
-import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
+import { Spinner } from '~/bundles/common/components/components';
+import {
+    AppRoute,
+    DataStatus,
+    SpinnerVariant,
+} from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useCallback,
@@ -42,7 +47,9 @@ const EmailConfirmationPage = (): JSX.Element => {
 
     return (
         <>
-            {isConfirmed === undefined && <div>Confirming...</div>}
+            {isConfirmed === undefined && (
+                <Spinner variant={SpinnerVariant.MEDIUM} />
+            )}
             {isConfirmed === true && (
                 <Navigate to={AppRoute.EMAIL_CONFIRMATION_SUCCESS} />
             )}
