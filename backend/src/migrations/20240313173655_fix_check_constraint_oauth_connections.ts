@@ -1,4 +1,5 @@
 import { type Knex } from 'knex';
+import { OauthStrategy } from 'shared/build/index.js';
 
 import { DatabaseTableName } from '~/common/database/database.package.js';
 import { DatabaseColumnName } from '~/common/database/enums/database-column-name.enum.js';
@@ -24,7 +25,12 @@ async function up(knex: Knex): Promise<void> {
         formatAlterTableEnumSql(
             DatabaseTableName.OAUTH_CONNECTIONS,
             DatabaseColumnName.OAUTH_STRATEGY,
-            ['github', 'google', 'facebook', 'linkedin'],
+            [
+                OauthStrategy.GITHUB,
+                OauthStrategy.GOOGLE,
+                OauthStrategy.FACEBOOK,
+                OauthStrategy.LINKEDIN,
+            ],
         ),
     );
 }
@@ -34,7 +40,11 @@ async function down(knex: Knex): Promise<void> {
         formatAlterTableEnumSql(
             DatabaseTableName.OAUTH_CONNECTIONS,
             DatabaseColumnName.OAUTH_STRATEGY,
-            ['github', 'google', 'facebook'],
+            [
+                OauthStrategy.GITHUB,
+                OauthStrategy.GOOGLE,
+                OauthStrategy.FACEBOOK,
+            ],
         ),
     );
 }
