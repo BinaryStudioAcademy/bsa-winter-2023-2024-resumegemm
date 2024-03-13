@@ -1,0 +1,17 @@
+.modal__cancel__button {
+    padding: 13px 24px 13px 20px;
+    color: var(--color-white);
+    font-weight: var(--font-weight-title);
+    font-size: 18px;
+    line-height: 22px;
+    background-color: var(--color-button-blue);
+    border-radius: 4px;
+}
+
+.modal__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+}
