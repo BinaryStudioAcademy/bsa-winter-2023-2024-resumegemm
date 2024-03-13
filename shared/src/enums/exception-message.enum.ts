@@ -8,6 +8,7 @@ enum ExceptionMessage {
     INVALID_REFRESH_TOKEN = 'Refresh token has expired or invalid.',
     INVALID_OAUTH_ID = 'Oauth provider was not found.',
     INVALID_RESET_TOKEN = 'Reset token has expired or invalid.',
+    NO_ACTIVE_ACCOUNT = 'No active account found with this email.',
 }
 
 export { ExceptionMessage };

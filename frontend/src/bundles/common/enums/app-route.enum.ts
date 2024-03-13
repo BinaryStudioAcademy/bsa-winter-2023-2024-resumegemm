@@ -11,6 +11,7 @@ enum AppRoute {
     STATISTICS = '/statistics',
     TEMPLATE_EDITOR = '/template-editor',
     FORGOT_PASSWORD = '/forgot-password',
+    QA = '/qa',
 }
 
 export { AppRoute };

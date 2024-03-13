@@ -1,4 +1,4 @@
-const personalInformationSeed = [
+const personalInformationsSeed = [
     {
         first_name: 'Stan',
         last_name: 'Gold',
@@ -37,4 +37,4 @@ const personalInformationSeed = [
     },
 ];
 
-export { personalInformationSeed };
+export { personalInformationsSeed };

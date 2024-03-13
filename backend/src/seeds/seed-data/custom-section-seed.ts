@@ -1,4 +1,4 @@
-const customSectionSeed = [
+const customSectionsSeed = [
     {
         activity: 'Volunteer Work',
         city: 'New York City',
@@ -17,4 +17,4 @@ const customSectionSeed = [
     },
 ];
 
-export { customSectionSeed };
+export { customSectionsSeed };

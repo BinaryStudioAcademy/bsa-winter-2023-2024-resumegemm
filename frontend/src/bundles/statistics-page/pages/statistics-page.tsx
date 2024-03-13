@@ -16,7 +16,6 @@ import { getUserResumesWithLinks } from '../../resume-access/store/actions';
 import { StatisticResumeCard } from '../components/resume-card/resume-card';
 import { StatisticsPeriodsLabels } from '../enums/periods.enum';
 import { actions } from '../store/statistics.store';
-import { type StatisticsRecord } from '../types/types';
 import styles from './styles.module.scss';
 
 const headerItems = [
@@ -28,8 +27,6 @@ const dropdownOptions = [
     StatisticsPeriodsLabels.MONTHLY,
     StatisticsPeriodsLabels.TOTAL,
 ];
-
-const defaultData = [['today', 0]];
 
 const StatisticsPage = (): JSX.Element => {
     const dispatch = useAppDispatch();
