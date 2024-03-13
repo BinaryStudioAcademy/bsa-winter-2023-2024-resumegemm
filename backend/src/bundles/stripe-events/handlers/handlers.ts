@@ -3,6 +3,8 @@ import { SubscriptionPlanRepository } from '~/bundles/stripe-events/repositories
 import { config } from '~/common/config/config.js';
 
 import { StripeEvents } from '../enums/stripe-events.enum.js';
+import { CurrentSubscriptionModel } from '../models/current-subscription.model.js';
+import { CurrentSubscriptionRepository } from '../repositories/current-subscription.repository.js';
 import { StripeEventDispatcher } from './stripe-event-dispatcher.js';
 import { SubscriptionCreatedEventHandler } from './subscription-created-event-handler.js';
 import { SubscriptionPlanCreatedEventHandler } from './subscription-plan-created-event-handler.js';
@@ -10,6 +12,10 @@ import { SubscriptionPlanDeletedEventHandler } from './subscription-plan-deleted
 
 const subscriptionPlanRepository = new SubscriptionPlanRepository(
     SubscriptionPlanModel,
+);
+
+const subscriptionRepository = new CurrentSubscriptionRepository(
+    CurrentSubscriptionModel,
 );
 
 const subscriptionPlanCreatedEventHandler =
@@ -20,6 +26,7 @@ const subscriptionPlanDeletedEventHandler =
 
 const subscriptionCreatedEventHandler = new SubscriptionCreatedEventHandler(
     config,
+    subscriptionRepository,
 );
 
 const stripeEventDispatcher = new StripeEventDispatcher();
