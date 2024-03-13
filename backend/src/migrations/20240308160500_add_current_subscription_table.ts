@@ -22,6 +22,8 @@ async function up(knex: Knex): Promise<void> {
             table.string(DatabaseColumnName.SUBSCRIPTION_ID).notNullable();
             table.dateTime(DatabaseColumnName.SUBSCRIPTION_START).notNullable();
             table.dateTime(DatabaseColumnName.SUBSCRIPTION_END).notNullable();
+            table.dateTime(DatabaseColumnName.CREATED_AT).notNullable();
+            table.dateTime(DatabaseColumnName.UPDATED_AT).notNullable();
             table.boolean(DatabaseColumnName.IS_ACTIVE).notNullable();
         },
     );
