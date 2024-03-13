@@ -7,7 +7,15 @@ import {
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { getUser, requestNewAccessToken, signIn, signUp } from './actions.js';
+import {
+    forgotPassword,
+    getUser,
+    requestNewAccessToken,
+    resetPassword,
+    signIn,
+    signUp,
+    verifyResetPasswordToken,
+} from './actions.js';
 
 type State = {
     user: UserWithProfileRelation | null;
@@ -49,10 +57,26 @@ const { reducer, actions, name } = createSlice({
         );
 
         builder.addMatcher(
-            isAnyOf(signUp.fulfilled, signIn.fulfilled, getUser.fulfilled),
+            isAnyOf(
+                signUp.fulfilled,
+                signIn.fulfilled,
+                getUser.fulfilled,
+                resetPassword.fulfilled,
+            ),
             (state, action) => {
                 state.dataStatus = DataStatus.FULFILLED;
-                state.user = action.payload as UserWithProfileRelation;
+                state.user =
+                    action.payload as unknown as UserWithProfileRelation;
+            },
+        );
+
+        builder.addMatcher(
+            isAnyOf(
+                verifyResetPasswordToken.fulfilled,
+                forgotPassword.fulfilled,
+            ),
+            (state) => {
+                state.dataStatus = DataStatus.FULFILLED;
             },
         );
 
@@ -62,6 +86,9 @@ const { reducer, actions, name } = createSlice({
                 signIn.rejected,
                 getUser.rejected,
                 requestNewAccessToken.rejected,
+                verifyResetPasswordToken.rejected,
+                forgotPassword.rejected,
+                resetPassword.rejected,
             ),
             (state, action) => {
                 state.dataStatus = DataStatus.REJECTED;

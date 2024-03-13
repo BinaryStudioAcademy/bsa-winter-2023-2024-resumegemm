@@ -7,6 +7,7 @@ import {
 import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
+import { PasswordRecovery } from '../components/password-recovery/password-recovery.js';
 import { type UserSignUpRequestDtoFrontend } from '../components/sign-up-form/validation/sign-up-validation.js';
 import { actions as authActions } from '../store/auth.store.js';
 import styles from './styles.module.scss';
@@ -38,6 +39,9 @@ const Auth: React.FC = () => {
             }
             case AppRoute.SIGN_UP: {
                 return <SignUpForm onSubmit={handleSignUpSubmit} />;
+            }
+            case AppRoute.FORGOT_PASSWORD: {
+                return <PasswordRecovery />;
             }
         }
 
