@@ -5,4 +5,6 @@ export {
     convertResumeItemFieldsToString,
     openDownloadLinkForPDF,
 } from './resume/resume.js';
+export { updateKeyInArray } from './update-key-in-array.helper.js';
+export { updateKeyInObject } from './update-key-in-object.helper.js';
 export { configureString, getCookie } from 'shared/build/index.js';

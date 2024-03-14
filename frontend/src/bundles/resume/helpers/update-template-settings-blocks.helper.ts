@@ -1,33 +1,30 @@
-import {
-    type LayoutItem,
-    type ResumeWithRelationsAndTemplateResponseDto,
-    type TemplateSettings,
-} from '../types/types';
+import { type LayoutItem, type TemplateSettings } from '../types/types';
 
 type Containers = TemplateSettings['containers'];
-type PersonalInfo =
-    ResumeWithRelationsAndTemplateResponseDto['personalInformation'];
 
 const updateItemsWithResumeFields = (
     items: LayoutItem[],
-    personalInfo: PersonalInfo,
+    resumePayload: object,
 ): LayoutItem[] =>
-    items.map((item) =>
-        item.name === 'firstName'
-            ? { ...item, content: personalInfo?.firstName as string }
-            : item,
-    );
+    items.map((item) => {
+        const updatedContentWithResumeValue =
+            resumePayload[item.id as keyof typeof resumePayload];
+        if (updatedContentWithResumeValue) {
+            return { ...item, content: updatedContentWithResumeValue };
+        }
+        return item;
+    });
 
 const updateTemplateSettingsBlocks = (
     containers: Containers,
-    personalInfo: PersonalInfo,
+    resumePayload: object,
 ): Containers =>
     containers.map((container) => ({
         ...container,
         blocks: container.blocks.map((block) => ({
             ...block,
             enabled: true,
-            items: updateItemsWithResumeFields(block.items, personalInfo),
+            items: updateItemsWithResumeFields(block.items, resumePayload),
         })),
     }));
 
