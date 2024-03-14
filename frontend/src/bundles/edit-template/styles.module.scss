@@ -55,7 +55,36 @@
     content: "";
 }
 
+.editor_sidebar__customize_list_item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 .editor_sidebar__color_picker {
+    width: 10px;
     height: 20%;
-    padding: 5px;
+    height: 10px;
+    background-color: black;
+    mask-image: url("../../assets/img/color-select-svgrepo-com.svg");
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+.editor_sidebar__color_font_icon {
+    width: 15px;
+    height: 15px;
+    mask-image: url("../../assets/img/font-svgrepo-com.svg");
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    background-color: black;
+}
+
+.editor_sidebar__modal_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 30vh;
 }

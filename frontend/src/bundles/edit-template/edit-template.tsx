@@ -269,7 +269,11 @@ const EditTemplatePage: React.FC = () => {
                                         }
                                     >
                                         {hasHeader(block, templateSettings) && (
-                                            <li>
+                                            <li
+                                                className={
+                                                    templateStyles.editor_sidebar__customize_list_item
+                                                }
+                                            >
                                                 Header{' '}
                                                 <Input
                                                     name={block}
@@ -282,16 +286,21 @@ const EditTemplatePage: React.FC = () => {
                                                     type="color"
                                                 />
                                                 <IconButton
+                                                    className={
+                                                        templateStyles.editor_sidebar__color_font_icon
+                                                    }
                                                     onClick={handleFontChangeModal(
                                                         block,
                                                         TemplateItemTags.HEADING,
                                                     )}
-                                                >
-                                                    12
-                                                </IconButton>
+                                                ></IconButton>
                                             </li>
                                         )}
-                                        <li>
+                                        <li
+                                            className={
+                                                templateStyles.editor_sidebar__customize_list_item
+                                            }
+                                        >
                                             Text{' '}
                                             <Input
                                                 name={block}
@@ -302,15 +311,20 @@ const EditTemplatePage: React.FC = () => {
                                                 type="color"
                                             />
                                             <IconButton
+                                                className={
+                                                    templateStyles.editor_sidebar__color_font_icon
+                                                }
                                                 onClick={handleFontChangeModal(
                                                     block,
                                                     TemplateItemTags.PARAGRAPH,
                                                 )}
-                                            >
-                                                12
-                                            </IconButton>
+                                            ></IconButton>
                                         </li>
-                                        <li>
+                                        <li
+                                            className={
+                                                templateStyles.editor_sidebar__customize_list_item
+                                            }
+                                        >
                                             Background{' '}
                                             <Input
                                                 name={block}
@@ -350,22 +364,26 @@ const EditTemplatePage: React.FC = () => {
                 onClose={closeModal}
                 variant={ModalVariant.CONFIRM}
             >
-                <Input
-                    value={fontFamily}
-                    onChange={handleFontFamilyChange}
-                    placeholder="font family"
-                ></Input>
-                <Input
-                    value={fontSize}
-                    onChange={handleFontSizeChange}
-                    placeholder="font size"
-                ></Input>
-                <Dropdown
-                    name="font-style"
-                    onChange={handleDropdownChange}
-                    options={dropdownOptions}
-                />
-                <RegularButton onClick={handleModalSubmit}>12</RegularButton>
+                <div className={templateStyles.editor_sidebar__modal_container}>
+                    <Dropdown
+                        name="font-style"
+                        onChange={handleDropdownChange}
+                        options={dropdownOptions}
+                    />
+                    <Input
+                        value={fontFamily}
+                        onChange={handleFontFamilyChange}
+                        placeholder="font family"
+                    ></Input>
+                    <Input
+                        value={fontSize}
+                        onChange={handleFontSizeChange}
+                        placeholder="font size"
+                    ></Input>
+                    <RegularButton onClick={handleModalSubmit}>
+                        Confirm
+                    </RegularButton>
+                </div>
             </Modal>
         </section>
     );
