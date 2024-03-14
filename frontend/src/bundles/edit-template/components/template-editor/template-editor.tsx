@@ -2,12 +2,11 @@ import {
     type Active,
     type DragOverEvent,
     type DragStartEvent,
-    DndContext,
-    DragOverlay,
     MouseSensor,
     TouchSensor,
     useSensor,
 } from '@dnd-kit/core';
+import { closestCorners, DndContext, DragOverlay } from '@dnd-kit/core';
 
 import { useCallback, useState } from '~/bundles/common/hooks/hooks';
 
@@ -85,6 +84,7 @@ const TemplateEditor: React.FC<Properties> = ({
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
                 onDragOver={handleDragOver}
+                collisionDetection={closestCorners}
                 sensors={[mouseSensor, touchSensor]}
             >
                 <div
