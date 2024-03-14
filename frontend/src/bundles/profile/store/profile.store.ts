@@ -1,4 +1,5 @@
 import {
+    deleteUserAvatar,
     disconnectSocialMedia,
     getUserProfileAndSocials,
     updateProfileAndEmail,
@@ -8,6 +9,7 @@ import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
+    deleteUserAvatar,
     updateUserAvatar,
     getUserProfileAndSocials,
     disconnectSocialMedia,

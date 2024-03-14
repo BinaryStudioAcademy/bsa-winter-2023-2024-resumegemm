@@ -11,43 +11,42 @@ import { GrZoomIn, GrZoomOut } from 'react-icons/gr';
 import { ButtonSize, ButtonVariant } from '../../enums/enums';
 import { IconButton, RegularButton } from '../components';
 import styles from './styles.module.scss';
+import { type Image, type ImageBlob } from './types/types';
 
 interface UploadCropperProperties {
-    image: string;
-    onImageUpload: React.Dispatch<
-        React.SetStateAction<string | ArrayBuffer | null>
-    >;
-    onComplete: React.Dispatch<React.SetStateAction<boolean>>;
-    onHandleCurrentPhoto: React.Dispatch<React.SetStateAction<string>>;
+    image: Image;
+    onImageUpload: React.Dispatch<React.SetStateAction<ImageBlob | null>>;
+    onComplete: ({ src, blob }: ImageBlob) => void;
 }
 
 const UserPhotoCropper: React.FC<UploadCropperProperties> = ({
     image,
     onImageUpload,
     onComplete,
-    onHandleCurrentPhoto,
 }) => {
-    const [croppedImage, setCroppedImage] = useState<string | null>(null);
+    const [croppedImage, setCroppedImage] = useState<ImageBlob | null>(null);
+
     const cropperReference = useRef<ReactCropperElement>(null);
 
     const handleCrop = useCallback(() => {
         const croppedCanvas =
             cropperReference.current?.cropper.getCroppedCanvas();
         const croppedImageUrl = croppedCanvas?.toDataURL('image/jpeg');
-        if (croppedImageUrl) {
-            setCroppedImage(croppedImageUrl);
-        }
+        croppedCanvas?.toBlob((blob) => {
+            if (croppedImageUrl && blob) {
+                setCroppedImage({ src: croppedImageUrl, blob });
+            }
+        });
     }, [setCroppedImage]);
 
     const handleSave = useCallback(() => {
         if (croppedImage) {
-            onHandleCurrentPhoto(croppedImage);
+            onComplete(croppedImage);
         }
-        onComplete(false);
-    }, [croppedImage, onComplete, onHandleCurrentPhoto]);
+    }, [onComplete, croppedImage]);
 
     const handleNewPhotoClick = useCallback(() => {
-        onImageUpload('');
+        onImageUpload(null);
     }, [onImageUpload]);
 
     const handleRotate = useCallback(() => {
@@ -72,7 +71,7 @@ const UserPhotoCropper: React.FC<UploadCropperProperties> = ({
         <div className={styles.uploader_cropper__wrapper}>
             <Cropper
                 ref={cropperReference}
-                src={image}
+                src={String(image)}
                 className={styles.uploader_cropper}
                 aspectRatio={1}
                 guides
