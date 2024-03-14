@@ -3,6 +3,7 @@ import {
     getAllResumes,
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
+    updateCurrentResume,
 } from './actions.js';
 import { actions } from './slice.js';
 
@@ -12,6 +13,7 @@ const allActions = {
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
     downloadPDFDocument,
+    updateCurrentResume,
 };
 
 export { allActions as actions };

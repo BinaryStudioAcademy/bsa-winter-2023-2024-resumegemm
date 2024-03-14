@@ -1,13 +1,11 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
-import {
-    updateTemplateSettings,
-    updateTemplateSettingsBlocks,
-} from '~/bundles/resume/helpers/helpers';
+import { updateTemplateSettings } from '~/bundles/resume/helpers/helpers';
 import {
     getAllResumes,
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
+    updateCurrentResume,
 } from '~/bundles/resume/store/actions';
 
 import { DataStatus } from '../enums/enums';
@@ -57,23 +55,20 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.FULFILLED;
             state.resumeReview = action.payload;
         });
+        builder.addCase(updateCurrentResume.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+            state.currentResume = action.payload;
+        });
         builder.addCase(
             getCurrentResumeWithTemplate.fulfilled,
             (state, action) => {
                 const {
-                    personalInformation,
-                    templates: { templateSettings },
+                    templateSettingsWithUpdatedUserData,
+                    resumeWithTemplate,
                 } = action.payload;
                 state.dataStatus = DataStatus.FULFILLED;
-                state.currentResume = action.payload;
-
-                state.templateSettings = {
-                    ...templateSettings,
-                    containers: updateTemplateSettingsBlocks(
-                        templateSettings.containers,
-                        personalInformation,
-                    ),
-                };
+                state.currentResume = resumeWithTemplate;
+                state.templateSettings = templateSettingsWithUpdatedUserData;
             },
         );
         builder.addMatcher(

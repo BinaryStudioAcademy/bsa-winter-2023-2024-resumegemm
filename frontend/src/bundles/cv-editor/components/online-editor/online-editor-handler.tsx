@@ -18,7 +18,7 @@ import {
 } from '~/bundles/common/hooks/hooks';
 import { EditorTabs } from '~/bundles/cv-editor/components/editor-tabs/editor-tabs';
 import { updateSettingsBlocksFromInputs } from '~/bundles/resume/helpers/helpers';
-import { actions as resumeActions } from '~/bundles/resume/store/slice';
+import { actions as resumeActions } from '~/bundles/resume/store/resume.store';
 import { type TemplateSettings } from '~/bundles/resume/types/types';
 
 import styles from './online-editor-handler.module.scss';
@@ -52,10 +52,9 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs }) => {
         );
     }, [setActiveTabIndex, mergedTemplateSettingsProperties]);
 
-    const handleChange = useCallback(
+    const handleInputResumeFieldChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
-            const { name, value } = event.target;
-
+            const { name, value, id } = event.target;
             const updatedTemplateSettingsBlocks =
                 updateSettingsBlocksFromInputs(tabs, name, value);
 
@@ -63,6 +62,9 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs }) => {
                 resumeActions.setNewTemplateSettings(
                     updatedTemplateSettingsBlocks,
                 ),
+            );
+            void dispatch(
+                resumeActions.updateCurrentResume({ itemId: id, value }),
             );
         },
         [dispatch, tabs],
@@ -88,10 +90,11 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs }) => {
                     {templateSettingsContainerItems.map((item) => (
                         <FormGroup key={item.id} label={item.name}>
                             <Input
+                                id={item.id}
                                 type="text"
                                 name={item.name}
                                 value={item.content}
-                                onChange={handleChange}
+                                onChange={handleInputResumeFieldChange}
                             />
                         </FormGroup>
                     ))}

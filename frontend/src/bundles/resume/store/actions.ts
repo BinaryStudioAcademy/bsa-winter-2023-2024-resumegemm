@@ -1,5 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import {
+    updateResumeKeysFromInputs,
+    updateTemplateSettingsBlocks,
+} from '~/bundles/resume/helpers/helpers';
 import { openDownloadLinkForPDF } from '~/helpers/helpers.js';
 
 import {
@@ -9,6 +13,8 @@ import {
     type ResumeAiScoreResponseDto,
     type ResumeGetAllResponseDto,
     type ResumeWithRelationsAndTemplateResponseDto,
+    type TemplateSettings,
+    type UserWithProfileRelation,
 } from '../types/types';
 import { name as sliceName } from './slice.js';
 
@@ -22,12 +28,63 @@ const getAllResumes = createAsyncThunk<
 });
 
 const getCurrentResumeWithTemplate = createAsyncThunk<
-    ResumeWithRelationsAndTemplateResponseDto,
+    {
+        resumeWithTemplate: ResumeWithRelationsAndTemplateResponseDto;
+        templateSettingsWithUpdatedUserData: TemplateSettings;
+    },
     string,
     AsyncThunkConfig
->(`${sliceName}/get-current-resume`, (resumeId, { extra }) => {
+>(`${sliceName}/get-current-resume`, async (resumeId, { extra, getState }) => {
     const { resumeApi } = extra;
-    return resumeApi.getOneWithTemplate(resumeId);
+    const {
+        email,
+        userProfile: { avatar, firstName },
+    } = getState().auth.user as UserWithProfileRelation;
+
+    const resumeWithTemplate = await resumeApi.getOneWithTemplate(resumeId);
+    const {
+        templates: { templateSettings },
+        personalInformation,
+        technicalSkills,
+        customSections,
+        certification,
+        contacts,
+        experience,
+        education,
+    } = resumeWithTemplate;
+
+    const mergedResumeSections = [
+        ...customSections,
+        ...certification,
+        ...experience,
+        ...education,
+        ...technicalSkills,
+    ];
+    const mergedResumeSectionsToObject = Object.assign(
+        {},
+        ...mergedResumeSections,
+    );
+
+    const resumePayload = {
+        email,
+        avatar,
+        firstName,
+        ...personalInformation,
+        ...contacts,
+        ...mergedResumeSectionsToObject,
+    };
+
+    const templateSettingsWithUpdatedUserData = {
+        ...templateSettings,
+        containers: updateTemplateSettingsBlocks(
+            templateSettings.containers,
+            resumePayload,
+        ),
+    };
+    return {
+        resumeWithTemplate,
+        templateSettingsWithUpdatedUserData,
+    };
 });
 
 const getResumeReviewFromAI = createAsyncThunk<
@@ -38,6 +95,29 @@ const getResumeReviewFromAI = createAsyncThunk<
     const { resumeApi } = extra;
     return resumeApi.requestResumeReviewFromAI(resume);
 });
+
+const updateCurrentResume = createAsyncThunk<
+    ResumeWithRelationsAndTemplateResponseDto,
+    { itemId: string; value: string },
+    AsyncThunkConfig
+>(
+    `${sliceName}/update-current-resume`,
+    ({ itemId, value }, { extra, getState }) => {
+        const { resumeApi } = extra;
+        const { templates, ...restResumeProperties } = getState().resumes
+            .currentResume as ResumeWithRelationsAndTemplateResponseDto;
+        const updatedResumeData = updateResumeKeysFromInputs(
+            restResumeProperties,
+            itemId,
+            value,
+        );
+
+        return resumeApi.updateResume(
+            { ...updatedResumeData, resume: {} },
+            restResumeProperties.id,
+        );
+    },
+);
 
 const downloadPDFDocument = createAsyncThunk<
     unknown,
@@ -54,4 +134,5 @@ export {
     getAllResumes,
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
+    updateCurrentResume,
 };
