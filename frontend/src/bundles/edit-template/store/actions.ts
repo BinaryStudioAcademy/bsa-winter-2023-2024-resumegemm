@@ -26,9 +26,9 @@ const editTemplate = createAsyncThunk<TemplateDto, undefined, AsyncThunkConfig>(
     `${sliceName}/edit`,
     (request, { extra, getState }) => {
         const { templateApi } = extra;
-        const { id, templateSettings } = getState().editTemplate.template;
+        const { id, name, templateSettings } = getState().editTemplate.template;
 
-        return templateApi.editTemplate(id, { templateSettings });
+        return templateApi.editTemplate(id, { name, templateSettings });
     },
 );
 

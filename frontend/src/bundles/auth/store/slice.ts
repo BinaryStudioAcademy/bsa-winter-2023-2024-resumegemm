@@ -1,5 +1,8 @@
 import { type PayloadAction, createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { type UserWithRelations } from 'shared/build/index.js';
+import {
+    type AuthException as AuthExceptionError,
+    type UserWithRelations,
+} from 'shared/build/index.js';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
@@ -22,11 +25,13 @@ import {
 type State = {
     user: UserWithRelations | null;
     dataStatus: ValueOf<typeof DataStatus>;
+    error: null | AuthExceptionError;
 };
 
 const initialState: State = {
     user: null,
     dataStatus: DataStatus.IDLE,
+    error: null,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -101,8 +106,9 @@ const { reducer, actions, name } = createSlice({
                 forgotPassword.rejected,
                 resetPassword.rejected,
             ),
-            (state) => {
+            (state, action) => {
                 state.dataStatus = DataStatus.REJECTED;
+                state.error = action.payload as AuthExceptionError;
                 state.user = null;
             },
         );

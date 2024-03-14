@@ -72,7 +72,7 @@ const Templates: React.FC = () => {
                         return (
                             <ResumeCard
                                 key={template.id}
-                                title="My Resume"
+                                title={template.name}
                                 image={template.image}
                             />
                         );
