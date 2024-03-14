@@ -62,14 +62,13 @@
 }
 
 .editor_sidebar__color_picker {
-    width: 10px;
-    height: 20%;
-    height: 10px;
-    background-color: black;
+    width: 15px;
+    height: 15px;
     mask-image: url("../../assets/img/color-select-svgrepo-com.svg");
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
     mask-position: center;
+    background-color: black;
 }
 
 .editor_sidebar__color_font_icon {

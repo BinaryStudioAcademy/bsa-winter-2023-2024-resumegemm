@@ -28,6 +28,7 @@ import { TemplateItemTags } from '../templates-page/enums/enums';
 import { type TemplateSettings } from '../templates-page/types/types';
 import { TemplateBlockTitles } from '../templates-page/types/types';
 import { TemplateEditor } from './components/template-editor/template-editor';
+import { EditorStyles } from './enums/editor-styles.enum';
 import { FontStyles } from './enums/font-styles';
 import {
     changeBlockEnabling,
@@ -123,7 +124,7 @@ const EditTemplatePage: React.FC = () => {
                 return changeBlockStyle({
                     blockName: name,
                     value: value,
-                    style: 'background',
+                    style: EditorStyles.BackgroundColor,
                     templateSettings: previous,
                 });
             });
@@ -139,7 +140,7 @@ const EditTemplatePage: React.FC = () => {
                     tagName: TemplateItemTags.HEADING,
                     blockName: name,
                     value: value,
-                    style: 'color',
+                    style: EditorStyles.Color,
                     templateSettings: previous,
                 });
             });
@@ -168,7 +169,7 @@ const EditTemplatePage: React.FC = () => {
                     tagName: TemplateItemTags.PARAGRAPH,
                     blockName: name,
                     value: value,
-                    style: 'color',
+                    style: EditorStyles.Color,
                     templateSettings: previous,
                 });
             });
