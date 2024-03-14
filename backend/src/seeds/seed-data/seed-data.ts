@@ -1,8 +1,8 @@
 export { certificationsSeed } from './certifications-seed.js';
 export { contactsSeed } from './contacts-seed.js';
-export { customSectionSeed } from './custom-section-seed.js';
-export { educationSeed } from './education-seed.js';
-export { experienceSeed } from './experience-seed.js';
+export { customSectionsSeed } from './custom-section-seed.js';
+export { educationsSeed } from './education-seed.js';
+export { experiencesSeed } from './experience-seed.js';
 export { imagesSeed } from './images-seed.js';
 export { languageSeed } from './language-seed.js';
 export { oauthConnectionSeed } from './oauth-connections-seed.js';

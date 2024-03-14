@@ -94,6 +94,7 @@ export {
     TemplatesApiPath,
 } from './bundles/templates/templates.js';
 export {
+    type FindByEmailRequestDto,
     type SocialMediaProfiles,
     type UpdateUserProfileAndEmailRequestDto,
     type User,
