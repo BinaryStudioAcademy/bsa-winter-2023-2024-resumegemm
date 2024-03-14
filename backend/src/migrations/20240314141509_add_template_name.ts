@@ -5,13 +5,13 @@ import { DatabaseColumnName } from '~/common/database/enums/database-column-name
 
 async function up(knex: Knex): Promise<void> {
     await knex.schema.alterTable(DatabaseTableName.TEMPLATES, (table) => {
-        table.string(DatabaseColumnName.TEMPLATE_NAME);
+        table.string(DatabaseColumnName.NAME);
     });
 }
 
 async function down(knex: Knex): Promise<void> {
     await knex.schema.alterTable(DatabaseTableName.TEMPLATES, (table) => {
-        table.dropColumn(DatabaseColumnName.TEMPLATE_NAME);
+        table.dropColumn(DatabaseColumnName.NAME);
     });
 }
 
