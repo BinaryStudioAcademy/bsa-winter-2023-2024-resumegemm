@@ -9,10 +9,18 @@ import { useParams } from 'react-router-dom';
 
 import {
     Checkbox,
+    Dropdown,
+    IconButton,
     Input,
+    Modal,
     RegularButton,
 } from '../common/components/components';
-import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
+import {
+    ButtonSize,
+    ButtonType,
+    ButtonVariant,
+    ModalVariant,
+} from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
@@ -20,19 +28,50 @@ import { TemplateItemTags } from '../templates-page/enums/enums';
 import { type TemplateSettings } from '../templates-page/types/types';
 import { TemplateBlockTitles } from '../templates-page/types/types';
 import { TemplateEditor } from './components/template-editor/template-editor';
+import { FontStyles } from './enums/font-styles';
 import {
     changeBlockEnabling,
-    changeBlockItemsStyle,
-    changeBlockStyle,
     isBlockEnabled as isBlockEnabledByName,
 } from './helpers/block-enabling.helper';
+import {
+    changeBlockItemsStyle,
+    changeBlockStyle,
+    changeFontStyle,
+} from './helpers/block-styles.helper';
 import { editTemplate, getTemplateById } from './store/actions';
 import templateStyles from './styles.module.scss';
+
+const dropdownOptions = [
+    {
+        label: FontStyles.Regular,
+        value: FontStyles.Regular,
+    },
+    {
+        label: FontStyles.Bold,
+        value: FontStyles.Bold,
+    },
+    {
+        label: FontStyles.Italic,
+        value: FontStyles.Italic,
+    },
+    {
+        label: FontStyles.BoldItalic,
+        value: FontStyles.BoldItalic,
+    },
+];
 
 const EditTemplatePage: React.FC = () => {
     const dispatch = useAppDispatch();
     const template = useAppSelector((state) => state.editTemplate.template);
     const parameters = useParams<{ id: string }>();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [fontStyle, setFontStyle] = useState(FontStyles.Regular);
+    const [fontSize, setFontSize] = useState('');
+    const [fontFamily, setFontFamily] = useState('');
+    const [blockName, setBlockName] = useState('');
+    const [tagName, setTagName] = useState(TemplateItemTags.HEADING);
 
     const [templateSettings, setTemplateSettings] = useState<TemplateSettings>({
         containers: [],
@@ -107,7 +146,20 @@ const EditTemplatePage: React.FC = () => {
         [],
     );
 
-    const handleTextStyleChange = useCallback(
+    const handleFontStyleChange = useCallback(() => {
+        setTemplateSettings((previous) => {
+            return changeFontStyle({
+                tagName: tagName,
+                blockName,
+                templateSettings: previous,
+                fontFamily,
+                fontSize,
+                fontStyle,
+            });
+        });
+    }, [blockName, fontFamily, fontSize, fontStyle, tagName]);
+
+    const handleTextColorChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
             const { name, value } = event.target;
             setTemplateSettings((previous) => {
@@ -121,6 +173,52 @@ const EditTemplatePage: React.FC = () => {
             });
         },
         [],
+    );
+
+    const handleFontFamilyChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            setFontFamily(event.currentTarget.value);
+        },
+        [],
+    );
+
+    const handleFontSizeChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            setFontSize(event.currentTarget.value);
+        },
+        [],
+    );
+
+    const closeModal = useCallback(() => {
+        setIsModalOpen(false);
+    }, []);
+
+    const showModal = useCallback(() => {
+        setIsModalOpen(true);
+    }, []);
+
+    const handleDropdownChange = useCallback((value: string | undefined) => {
+        if (!value) {
+            return;
+        }
+
+        setFontStyle(value as FontStyles);
+    }, []);
+
+    const handleModalSubmit = useCallback(() => {
+        setIsModalOpen(false);
+        handleFontStyleChange();
+    }, [handleFontStyleChange]);
+
+    const handleFontChangeModal = useCallback(
+        (blockName: string, tagName: TemplateItemTags) => {
+            return function () {
+                setBlockName(blockName);
+                setTagName(tagName);
+                showModal();
+            };
+        },
+        [showModal],
     );
 
     return (
@@ -181,17 +279,33 @@ const EditTemplatePage: React.FC = () => {
                                                 }
                                                 type="color"
                                             />
+                                            <IconButton
+                                                onClick={handleFontChangeModal(
+                                                    block,
+                                                    TemplateItemTags.HEADING,
+                                                )}
+                                            >
+                                                12
+                                            </IconButton>
                                         </li>
                                         <li>
                                             Text{' '}
                                             <Input
                                                 name={block}
-                                                onChange={handleTextStyleChange}
+                                                onChange={handleTextColorChange}
                                                 className={
                                                     templateStyles.editor_sidebar__color_picker
                                                 }
                                                 type="color"
                                             />
+                                            <IconButton
+                                                onClick={handleFontChangeModal(
+                                                    block,
+                                                    TemplateItemTags.PARAGRAPH,
+                                                )}
+                                            >
+                                                12
+                                            </IconButton>
                                         </li>
                                         <li>
                                             Background{' '}
@@ -228,6 +342,28 @@ const EditTemplatePage: React.FC = () => {
                 templateSettings={templateSettings}
                 setTemplateSettings={setTemplateSettings}
             />
+            <Modal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                variant={ModalVariant.CONFIRM}
+            >
+                <Input
+                    value={fontFamily}
+                    onChange={handleFontFamilyChange}
+                    placeholder="font family"
+                ></Input>
+                <Input
+                    value={fontSize}
+                    onChange={handleFontSizeChange}
+                    placeholder="font size"
+                ></Input>
+                <Dropdown
+                    name="font-style"
+                    onChange={handleDropdownChange}
+                    options={dropdownOptions}
+                />
+                <RegularButton onClick={handleModalSubmit}>12</RegularButton>
+            </Modal>
         </section>
     );
 };
