@@ -33,6 +33,7 @@ import {
     changeBlockEnabling,
     isBlockEnabled as isBlockEnabledByName,
 } from './helpers/block-enabling.helper';
+import { hasHeader } from './helpers/block-header.helper';
 import {
     changeBlockItemsStyle,
     changeBlockStyle,
@@ -267,27 +268,29 @@ const EditTemplatePage: React.FC = () => {
                                             templateStyles.editor_sidebar__customize_list
                                         }
                                     >
-                                        <li>
-                                            Header{' '}
-                                            <Input
-                                                name={block}
-                                                onChange={
-                                                    handleHeadingStyleChange
-                                                }
-                                                className={
-                                                    templateStyles.editor_sidebar__color_picker
-                                                }
-                                                type="color"
-                                            />
-                                            <IconButton
-                                                onClick={handleFontChangeModal(
-                                                    block,
-                                                    TemplateItemTags.HEADING,
-                                                )}
-                                            >
-                                                12
-                                            </IconButton>
-                                        </li>
+                                        {hasHeader(block, templateSettings) && (
+                                            <li>
+                                                Header{' '}
+                                                <Input
+                                                    name={block}
+                                                    onChange={
+                                                        handleHeadingStyleChange
+                                                    }
+                                                    className={
+                                                        templateStyles.editor_sidebar__color_picker
+                                                    }
+                                                    type="color"
+                                                />
+                                                <IconButton
+                                                    onClick={handleFontChangeModal(
+                                                        block,
+                                                        TemplateItemTags.HEADING,
+                                                    )}
+                                                >
+                                                    12
+                                                </IconButton>
+                                            </li>
+                                        )}
                                         <li>
                                             Text{' '}
                                             <Input
