@@ -12,6 +12,8 @@ import {
     useCallback,
     useState,
 } from '../hooks';
+import { DefaultToggleItemProperties } from './constants/default-toggle-item-properties';
+import { type ToggleItemProperties } from './types/types';
 
 type ReturnValue = {
     handleSubscribe: () => void;
@@ -20,13 +22,7 @@ type ReturnValue = {
     handleModalOpen: () => void;
     handleModalClose: () => void;
     isModalOpen: boolean;
-    toggleItemProperties: {
-        title: string;
-        info: string;
-        onClick: () => void;
-        isLoading: boolean;
-        buttonText: string;
-    };
+    toggleItemProperties: ToggleItemProperties;
 };
 
 const useEmailSubscriptions = (): ReturnValue => {
@@ -73,18 +69,18 @@ const useEmailSubscriptions = (): ReturnValue => {
 
     const toggleItemProperties = user?.emailSubscription
         ? {
-              title: 'Email notifications',
-              info: 'Unsubscribe from email notifications.',
+              title: DefaultToggleItemProperties.Title,
+              info: DefaultToggleItemProperties.UnsubscribeInfo,
               onClick: handleModalOpen,
               isLoading: isEmailSubscriptionLoading,
-              buttonText: 'Unsubscribe',
+              buttonText: DefaultToggleItemProperties.UnsubscribeButtonText,
           }
         : {
-              title: 'Email notifications',
-              info: 'Subscribe to email notifications.',
+              title: DefaultToggleItemProperties.Title,
+              info: DefaultToggleItemProperties.SubscribeInfo,
               onClick: handleSubscribe,
               isLoading: isEmailSubscriptionLoading,
-              buttonText: 'Subscribe',
+              buttonText: DefaultToggleItemProperties.SubscribeButtonText,
           };
 
     return {
