@@ -370,6 +370,7 @@ const EditTemplatePage: React.FC = () => {
                         name="font-style"
                         onChange={handleDropdownChange}
                         options={dropdownOptions}
+                        placeholder="font style"
                     />
                     <Input
                         value={fontFamily}
