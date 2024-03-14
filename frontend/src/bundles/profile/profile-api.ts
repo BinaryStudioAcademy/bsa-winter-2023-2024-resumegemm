@@ -1,4 +1,4 @@
-import { type Profile } from 'shared/build';
+import { type Profile, ProfileApiPath } from 'shared/build/index.js';
 
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
@@ -16,18 +16,33 @@ class ProfileApi extends HttpApi {
         super({ path: ApiPath.PROFILE, baseUrl, http, storage });
     }
 
-    public async updateUserAvatar(payload: FormData): Promise<Profile> {
+    public async updateUserAvatar(
+        payload: FormData,
+    ): Promise<Pick<Profile, 'avatar'>> {
         const response = await this.load(
-            this.getFullEndpoint(ApiPath.AVATAR, {}),
+            this.getFullEndpoint(ProfileApiPath.UPLOAD_AVATAR, {}),
             {
-                method: 'PUT',
+                method: 'POST',
                 contentType: ContentType.FORM_DATA,
                 hasAuth: true,
                 payload,
             },
         );
 
-        return await response.json<Profile>();
+        return await response.json<Pick<Profile, 'avatar'>>();
+    }
+
+    public async deleteUserAvatar(): Promise<Pick<Profile, 'avatar'>> {
+        const response = await this.load(
+            this.getFullEndpoint(ProfileApiPath.DELETE_AVATAR, {}),
+            {
+                method: 'DELETE',
+                contentType: ContentType.TEXT_PLAIN,
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<Pick<Profile, 'avatar'>>();
     }
 }
 
