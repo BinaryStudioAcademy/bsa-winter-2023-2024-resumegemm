@@ -11,7 +11,7 @@ import {
 } from '@dnd-kit/sortable';
 import { useCallback, useContext } from 'react';
 
-import { useState } from '~/bundles/common/hooks/hooks';
+import { useState, useTemplateSensors } from '~/bundles/common/hooks/hooks';
 import { type LayoutBlock } from '~/bundles/templates-page/types/types';
 
 import { TemplateContext } from '../../context/template-context';
@@ -30,6 +30,8 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
             type: 'block',
         },
     });
+
+    const sensors = useTemplateSensors();
 
     const { templateSettings, setTemplateSettings } =
         useContext(TemplateContext);
@@ -98,6 +100,7 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
                 onDragOver={handleDragOver}
                 onDragEnd={handleDragEnd}
                 collisionDetection={closestCorners}
+                sensors={sensors}
             >
                 <SortableContext
                     items={items.map((item) => item.id)}

@@ -2,13 +2,14 @@ import {
     type Active,
     type DragOverEvent,
     type DragStartEvent,
-    MouseSensor,
-    TouchSensor,
-    useSensor,
 } from '@dnd-kit/core';
 import { closestCorners, DndContext, DragOverlay } from '@dnd-kit/core';
 
-import { useCallback, useState } from '~/bundles/common/hooks/hooks';
+import {
+    useCallback,
+    useState,
+    useTemplateSensors,
+} from '~/bundles/common/hooks/hooks';
 
 import { TemplateContext } from '../../context/template-context';
 import { findBlockById, moveBlock } from '../../helpers/sorting.helper';
@@ -28,18 +29,7 @@ const TemplateEditor: React.FC<Properties> = ({
 }) => {
     const [active, setActive] = useState<Active | null>(null);
 
-    const mouseSensor = useSensor(MouseSensor, {
-        activationConstraint: {
-            distance: 5,
-        },
-    });
-
-    const touchSensor = useSensor(TouchSensor, {
-        activationConstraint: {
-            delay: 250,
-            tolerance: 5,
-        },
-    });
+    const sensors = useTemplateSensors();
 
     const handleDragStart = useCallback((event: DragStartEvent) => {
         setActive(event.active);
@@ -85,7 +75,7 @@ const TemplateEditor: React.FC<Properties> = ({
                 onDragEnd={handleDragEnd}
                 onDragOver={handleDragOver}
                 collisionDetection={closestCorners}
-                sensors={[mouseSensor, touchSensor]}
+                sensors={sensors}
             >
                 <div
                     style={templateSettings.styles}
