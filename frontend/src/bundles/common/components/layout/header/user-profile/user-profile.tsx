@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Cookies from 'js-cookie';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,6 +7,7 @@ import { actions } from '~/bundles/auth/store/slice';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { useAppDispatch } from '~/bundles/common/hooks/hooks';
 import { storage, StorageKey } from '~/framework/storage/storage';
+import { CookieName } from '~/helpers/helpers';
 
 import { Menu } from './menu/menu';
 import styles from './styles.module.scss';
@@ -32,6 +34,7 @@ const UserProfile: React.FC<Properties> = ({ image }) => {
     );
 
     const handleLogout = useCallback(() => {
+        Cookies.remove(CookieName.ACCESS_TOKEN);
         void storage.drop(StorageKey.ACCESS_TOKEN).then(() => {
             navigate(AppRoute.LOG_IN);
         });

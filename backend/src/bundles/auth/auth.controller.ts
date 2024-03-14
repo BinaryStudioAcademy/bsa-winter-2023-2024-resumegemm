@@ -2,12 +2,17 @@ import { type FastifyRequest } from 'fastify';
 import {
     type HTTPError,
     type UserAuthResponse,
+    type UserForgotPasswordRequestDto,
+    type UserResetPasswordRequestDto,
+    type UserResetPasswordResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpResponseDto,
-    AuthApiPath,
-    ExceptionMessage,
+    type UserVerifyResetPasswordTokenRequestDto,
+    type UserWithProfileRelation,
+    emailValidationSchema,
 } from 'shared/build/index.js';
+import { AuthApiPath, ExceptionMessage } from 'shared/build/index.js';
 
 import {
     generateRefreshToken,
@@ -28,16 +33,28 @@ import { CookieName } from '~/common/controller/enums/enums.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
+import { type IMailService } from '~/common/mail-service/mail-service.js';
 
+import { resetPasswordValidatioSchema } from '../users/validation-schemas/reset-password.validation-schema.js';
+import { resetPasswordTokenValidationSchema } from '../users/validation-schemas/reset-token.validation-schema.js';
 import { type AuthService } from './auth.service.js';
+import { AuthMail } from './enums/auth-mail.js';
+import { AuthMessage } from './enums/auth-message.js';
 
 class AuthController extends Controller {
     private authService: AuthService;
+    private mailService: IMailService;
 
-    public constructor(logger: ILogger, authService: AuthService) {
+    public constructor(
+        logger: ILogger,
+        authService: AuthService,
+        mailService: IMailService,
+    ) {
         super(logger, ApiPath.AUTH);
 
         this.authService = authService;
+
+        this.mailService = mailService;
 
         this.addRoute({
             path: AuthApiPath.SIGN_UP,
@@ -83,6 +100,45 @@ class AuthController extends Controller {
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
                         unsignCookie: FastifyRequest['unsignCookie'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.FORGOT_PASSWORD,
+            method: 'POST',
+            validation: {
+                body: emailValidationSchema,
+            },
+            handler: (options) =>
+                this.forgotPassword(
+                    options as ApiHandlerOptions<{
+                        body: UserForgotPasswordRequestDto;
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.VERIFY_RESET_TOKEN,
+            validation: {
+                body: resetPasswordTokenValidationSchema,
+            },
+            method: 'POST',
+            handler: (options) =>
+                this.verifyResetPasswordToken(
+                    options as ApiHandlerOptions<{
+                        body: UserVerifyResetPasswordTokenRequestDto;
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.RESET_PASSWORD,
+            validation: {
+                body: resetPasswordValidatioSchema,
+            },
+            method: 'POST',
+            handler: (options) =>
+                this.resetPassword(
+                    options as ApiHandlerOptions<{
+                        body: UserResetPasswordRequestDto;
                     }>,
                 ),
         });
@@ -317,6 +373,76 @@ class AuthController extends Controller {
                 },
             };
         }
+    }
+
+    private async forgotPassword(
+        options: ApiHandlerOptions<{ body: UserForgotPasswordRequestDto }>,
+    ): Promise<
+        ApiHandlerResponse<{ message: string; resetPasswordToken: string }>
+    > {
+        const resetPasswordToken =
+            await this.authService.createResetPasswordToken(options.body);
+
+        await this.mailService.sendMail({
+            to: options.body.email,
+            subject: AuthMail.RESET_PASSWORD.subject,
+            text: `${AuthMail.RESET_PASSWORD.text} ${resetPasswordToken}`,
+        });
+
+        return {
+            status: HttpCode.OK,
+            payload: {
+                message: AuthMessage.RESET_TOKEN_SENT,
+            },
+        };
+    }
+
+    private async verifyResetPasswordToken(
+        options: ApiHandlerOptions<{
+            body: UserVerifyResetPasswordTokenRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse<{ isTokenValid: boolean }>> {
+        const {
+            body: { resetPasswordToken, email },
+        } = options;
+
+        await this.authService.tokenEqualsEmail({
+            email,
+            resetPasswordToken,
+        });
+
+        return {
+            status: HttpCode.OK,
+            payload: {
+                status: HttpCode.OK,
+                message: AuthMessage.RESET_TOKEN_CORRECT,
+            },
+        };
+    }
+
+    private async resetPassword(
+        options: ApiHandlerOptions<{
+            body: UserResetPasswordRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse<UserResetPasswordResponse>> {
+        const { resetPasswordToken, password, email } = options.body;
+
+        const { refreshToken, ...userData } =
+            await this.authService.resetPassword({
+                resetPasswordToken,
+                password,
+                email,
+            });
+
+        return {
+            status: HttpCode.OK,
+            refreshToken,
+            payload: {
+                ...userData,
+                status: HttpCode.OK,
+                message: AuthMessage.PASSWORD_RESET,
+            },
+        };
     }
 }
 

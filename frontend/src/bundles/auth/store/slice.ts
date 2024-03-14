@@ -9,7 +9,15 @@ import {
 } from '~/bundles/email-subscription/store/actions.js';
 import { type EmailSubscription } from '~/bundles/email-subscription/types/types.js';
 
-import { getUser, signIn, signUp } from './actions.js';
+import {
+    forgotPassword,
+    getUser,
+    requestNewAccessToken,
+    resetPassword,
+    signIn,
+    signUp,
+    verifyResetPasswordToken,
+} from './actions.js';
 
 type State = {
     user: UserWithRelations | null;
@@ -27,7 +35,6 @@ const { reducer, actions, name } = createSlice({
     reducers: {
         setUser: (state, action: PayloadAction<UserWithRelations | null>) => {
             state.user = action.payload;
-            state.dataStatus = DataStatus.IDLE;
         },
     },
     extraReducers(builder) {
@@ -46,15 +53,28 @@ const { reducer, actions, name } = createSlice({
             }
         });
 
+        builder.addCase(requestNewAccessToken.fulfilled, (state) => {
+            state.dataStatus = DataStatus.FULFILLED;
+        });
         builder.addMatcher(
-            isAnyOf(signUp.pending, signIn.pending, getUser.pending),
+            isAnyOf(
+                signUp.pending,
+                signIn.pending,
+                getUser.pending,
+                requestNewAccessToken.pending,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
             },
         );
 
         builder.addMatcher(
-            isAnyOf(signUp.fulfilled, signIn.fulfilled, getUser.fulfilled),
+            isAnyOf(
+                signUp.fulfilled,
+                signIn.fulfilled,
+                getUser.fulfilled,
+                resetPassword.fulfilled,
+            ),
             (state, action) => {
                 state.dataStatus = DataStatus.FULFILLED;
                 state.user = action.payload.user;
@@ -62,7 +82,25 @@ const { reducer, actions, name } = createSlice({
         );
 
         builder.addMatcher(
-            isAnyOf(signUp.rejected, signIn.rejected, getUser.rejected),
+            isAnyOf(
+                verifyResetPasswordToken.fulfilled,
+                forgotPassword.fulfilled,
+            ),
+            (state) => {
+                state.dataStatus = DataStatus.FULFILLED;
+            },
+        );
+
+        builder.addMatcher(
+            isAnyOf(
+                signUp.rejected,
+                signIn.rejected,
+                getUser.rejected,
+                requestNewAccessToken.rejected,
+                verifyResetPasswordToken.rejected,
+                forgotPassword.rejected,
+                resetPassword.rejected,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
                 state.user = null;

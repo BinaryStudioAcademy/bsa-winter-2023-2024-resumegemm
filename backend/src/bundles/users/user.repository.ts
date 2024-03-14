@@ -1,4 +1,5 @@
 import { type Transaction } from 'objection';
+import { type FindByEmailRequestDto } from 'shared/build/index.js';
 
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
@@ -10,7 +11,7 @@ import {
 } from './types/types.js';
 
 interface IUserRepo {
-    findOneByEmail(email: string): Promise<UserEntityFields | null>;
+    findOneByEmail(data: FindByEmailRequestDto): Promise<UserModel | null>;
     addStripeId(
         userUpdate: Partial<UserModel>,
     ): Promise<UserEntityFields | null>;
@@ -28,15 +29,37 @@ class UserRepository
         super(userModel);
     }
 
-    public async findOneByEmail(
-        email: string,
-    ): ReturnType<IUserRepo['findOneByEmail']> {
-        const user = await this.model
-            .query()
-            .findOne({ email })
-            .whereNull('deletedAt');
-
+    public async findOneByEmail({
+        email,
+        withDeleted,
+    }: FindByEmailRequestDto): ReturnType<IUserRepo['findOneByEmail']> {
+        const query = this.model.query().findOne({ email });
+        if (!withDeleted) {
+            void query.whereNull('deletedAt');
+        }
+        const user = await query;
         return user ?? null;
+    }
+
+    public async updateById(
+        id: string,
+        data: Partial<Omit<UserModel, 'createdAt' | 'updatedAt'>>,
+    ): Promise<UserModel> {
+        return await this.model.query().updateAndFetchById(id, data);
+    }
+
+    public async changePassword({
+        id,
+        passwordHash,
+        passwordSalt,
+    }: {
+        id: string;
+        passwordHash: string;
+        passwordSalt: string;
+    }): Promise<void> {
+        await this.model
+            .query()
+            .patchAndFetchById(id, { passwordHash, passwordSalt });
     }
 
     public async findAll(): ReturnType<IUserRepo['findAll']> {
