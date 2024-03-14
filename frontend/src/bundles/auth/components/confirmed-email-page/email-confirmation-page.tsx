@@ -1,11 +1,7 @@
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { Spinner } from '~/bundles/common/components/components';
-import {
-    AppRoute,
-    DataStatus,
-    SpinnerVariant,
-} from '~/bundles/common/enums/enums.js';
+import { DataStatus, SpinnerVariant } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useCallback,
@@ -14,6 +10,10 @@ import {
 } from '~/bundles/common/hooks/hooks';
 
 import { actions as authActionCreator } from '../../store/auth.store';
+import {
+    EmailConfirmationFailPage,
+    EmailConfirmationSuccessPage,
+} from '../components';
 import styles from './styles.module.scss';
 
 const EmailConfirmationPage = (): JSX.Element => {
@@ -57,12 +57,8 @@ const EmailConfirmationPage = (): JSX.Element => {
                     <Spinner variant={SpinnerVariant.MEDIUM} />
                 </div>
             )}
-            {isConfirmed === true && (
-                <Navigate to={AppRoute.EMAIL_CONFIRMATION_SUCCESS} />
-            )}
-            {isConfirmed === false && (
-                <Navigate to={AppRoute.EMAIL_CONFIRMATION_FAIL} />
-            )}
+            {isConfirmed === true && <EmailConfirmationSuccessPage />}
+            {isConfirmed === false && <EmailConfirmationFailPage />}
         </>
     );
 };
