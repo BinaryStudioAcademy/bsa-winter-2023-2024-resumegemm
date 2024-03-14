@@ -1,2 +1,2 @@
 export { UserRegistrationMessage } from './user-registration-message.enum';
-export { AuthApiPath } from 'shared/build/index.js';
+export { AuthApiPath, ExceptionMessage } from 'shared/build/index.js';
