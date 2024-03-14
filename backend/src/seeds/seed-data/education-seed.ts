@@ -1,4 +1,4 @@
-const educationSeed = [
+const educationsSeed = [
     {
         institution: 'University of California, Los Angeles',
         degree: 'Bachelor of Science',
@@ -41,4 +41,4 @@ const educationSeed = [
     },
 ];
 
-export { educationSeed };
+export { educationsSeed };

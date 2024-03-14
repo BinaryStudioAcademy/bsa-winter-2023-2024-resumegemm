@@ -1,8 +1,13 @@
 import {
+    type UserEntityFields,
+    type UserForgotPasswordRequestDto,
+    type UserResetPasswordRequestDto,
+    type UserResetPasswordResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserVerifyResetPasswordTokenRequestDto,
     type UserWithProfileRelation,
 } from '../../users/users.js';
 import { type EncryptionDataPayload } from './encryption-data-payload.type.js';
@@ -22,6 +27,15 @@ type AuthService = {
     compare(encryptionData: EncryptionDataPayload): Promise<boolean>;
     getUserWithProfile(id: string): Promise<UserWithProfileRelation>;
     verifyToken<T>(token: string, tokenSecret: string): T;
+    tokenEqualsEmail(
+        payload: UserVerifyResetPasswordTokenRequestDto,
+    ): Promise<UserEntityFields>;
+    createResetPasswordToken(
+        email: UserForgotPasswordRequestDto,
+    ): Promise<string>;
+    resetPassword(
+        payload: UserResetPasswordRequestDto,
+    ): Promise<Omit<UserResetPasswordResponse, 'message'>>;
 };
 
 export { type AuthService };
