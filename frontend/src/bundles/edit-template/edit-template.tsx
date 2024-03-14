@@ -7,7 +7,12 @@ import React, {
 } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Checkbox, RegularButton } from '../common/components/components';
+import {
+    Checkbox,
+    FormGroup,
+    Input,
+    RegularButton,
+} from '../common/components/components';
 import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
@@ -20,6 +25,7 @@ import {
     isBlockEnabled as isBlockEnabledByName,
 } from './helpers/block-enabling.helper';
 import { editTemplate, getTemplateById } from './store/actions';
+import { actions as editTemplateActions } from './store/slice';
 import templateStyles from './styles.module.scss';
 
 const EditTemplatePage: React.FC = () => {
@@ -65,6 +71,18 @@ const EditTemplatePage: React.FC = () => {
         [],
     );
 
+    const handleInputChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>): void => {
+            const name = event.target.value;
+            dispatch(
+                editTemplateActions.setName({
+                    name,
+                }),
+            );
+        },
+        [dispatch],
+    );
+
     const handleSaveTemplate = useCallback(() => {
         void dispatch(editTemplate(templateSettings));
     }, [dispatch, templateSettings]);
@@ -82,6 +100,13 @@ const EditTemplatePage: React.FC = () => {
                     templateStyles.editor_sidebar__nav,
                 )}
             >
+                <FormGroup label="Template name">
+                    <Input
+                        title="Enter template name"
+                        onInput={handleInputChange}
+                    />
+                </FormGroup>
+
                 <ul className={editorStyles.editor_sidebar__list}>
                     {templateBlockTitles.map((block) => (
                         <li
