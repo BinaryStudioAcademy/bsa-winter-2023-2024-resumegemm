@@ -112,7 +112,9 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
                     ))}
                 </SortableContext>
                 <DragOverlay>{active && handleDragOverlay(active)}</DragOverlay>
-                {isOverlayShown && <ElementOverlay {...listeners} />}
+                {isOverlayShown && !isDragging && (
+                    <ElementOverlay {...listeners} />
+                )}
             </DndContext>
         </div>
     );

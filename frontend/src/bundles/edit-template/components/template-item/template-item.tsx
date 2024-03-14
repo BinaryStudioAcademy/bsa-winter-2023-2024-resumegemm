@@ -56,7 +56,7 @@ const TemplateItem: React.FC<Properties> = ({
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
         >
-            {isOverlayShown && (
+            {isOverlayShown && !isDragging && (
                 <ElementOverlay
                     {...listeners}
                     onOverlayClick={onOverlayClick}
