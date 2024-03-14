@@ -2,7 +2,12 @@ import clsx from 'clsx';
 import React, { type ChangeEvent, useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Checkbox, RegularButton } from '../common/components/components';
+import {
+    Checkbox,
+    FormGroup,
+    Input,
+    RegularButton,
+} from '../common/components/components';
 import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
@@ -57,6 +62,18 @@ const EditTemplatePage: React.FC = () => {
         [dispatch],
     );
 
+    const handleInputChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>): void => {
+            const name = event.target.value;
+            dispatch(
+                editTemplateActions.setName({
+                    name,
+                }),
+            );
+        },
+        [dispatch],
+    );
+
     const handleSaveTemplate = useCallback(() => {
         void dispatch(editTemplate());
     }, [dispatch]);
@@ -74,6 +91,13 @@ const EditTemplatePage: React.FC = () => {
                     templateStyles.editor_sidebar__nav,
                 )}
             >
+                <FormGroup label="Template name">
+                    <Input
+                        title="Enter template name"
+                        onInput={handleInputChange}
+                    />
+                </FormGroup>
+
                 <ul className={editorStyles.editor_sidebar__list}>
                     {templateBlockTitles.map((block) => (
                         <li
