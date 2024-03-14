@@ -1,6 +1,10 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import {
+    updateTemplateSettings,
+    updateTemplateSettingsBlocks,
+} from '~/bundles/resume/helpers/helpers';
+import {
     getAllResumes,
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
@@ -11,6 +15,7 @@ import {
     type ResumeAiScoreResponseDto,
     type ResumeGetAllResponseDto,
     type ResumeWithRelationsAndTemplateResponseDto,
+    type TemplateSettings,
     type ValueOf,
 } from '../types/types';
 
@@ -19,6 +24,7 @@ type State = {
     currentResume: ResumeWithRelationsAndTemplateResponseDto | null;
     dataStatus: ValueOf<typeof DataStatus>;
     resumeReview: ResumeAiScoreResponseDto | null;
+    templateSettings: TemplateSettings | null;
 };
 
 const initialState: State = {
@@ -26,12 +32,22 @@ const initialState: State = {
     currentResume: null,
     dataStatus: DataStatus.IDLE,
     resumeReview: null,
+    templateSettings: null,
 };
 
 const { reducer, actions, name } = createSlice({
     initialState,
     name: 'resumes',
-    reducers: {},
+    reducers: {
+        setNewTemplateSettings: (state, action) => {
+            if (state.templateSettings) {
+                state.templateSettings.containers = updateTemplateSettings(
+                    state.templateSettings.containers,
+                    action.payload,
+                );
+            }
+        },
+    },
     extraReducers(builder) {
         builder.addCase(getAllResumes.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
@@ -44,8 +60,20 @@ const { reducer, actions, name } = createSlice({
         builder.addCase(
             getCurrentResumeWithTemplate.fulfilled,
             (state, action) => {
+                const {
+                    personalInformation,
+                    templates: { templateSettings },
+                } = action.payload;
                 state.dataStatus = DataStatus.FULFILLED;
                 state.currentResume = action.payload;
+
+                state.templateSettings = {
+                    ...templateSettings,
+                    containers: updateTemplateSettingsBlocks(
+                        templateSettings.containers,
+                        personalInformation,
+                    ),
+                };
             },
         );
         builder.addMatcher(
@@ -68,6 +96,7 @@ const { reducer, actions, name } = createSlice({
                 state.resumes = [];
                 state.currentResume = null;
                 state.resumeReview = null;
+                state.templateSettings = null;
             },
         );
     },

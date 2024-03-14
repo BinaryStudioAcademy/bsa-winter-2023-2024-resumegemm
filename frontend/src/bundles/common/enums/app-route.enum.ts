@@ -6,6 +6,7 @@ enum AppRoute {
     PAYMENT = '/payment',
     PROFILE = '/profile',
     RESUME = '/resumes/:id',
+    RESUME_EDIT = '/resumes/edit',
     RESUME_ACCESS = '/resumes/share/:id',
     HOME = '/home',
     TEMPLATES = '/templates',
