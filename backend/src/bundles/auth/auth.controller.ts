@@ -1,5 +1,6 @@
 import { type FastifyRequest } from 'fastify';
 import {
+    type AuthException,
     type HTTPError,
     type UserAuthResponse,
     type UserConfirmEmailRequestDto,
@@ -312,12 +313,13 @@ class AuthController extends Controller {
                 payload: userData,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HTTPError;
+            const { message, status, errorType } = error as AuthException;
             return {
                 status,
                 payload: {
                     message,
                     status,
+                    errorType,
                 },
             };
         }

@@ -2,6 +2,7 @@ enum ExceptionMessage {
     EMAIL_TAKEN = 'Email is already taken.',
     EMAIL_CONFIRM = 'Please, confirm email.',
     EMAIL_CONFIRM_TOKEN_NOT_FOUND = 'Email confirm token not found',
+    INVALID_EMAIL = 'Invalid email. Please check and try again.',
     USER_EXISTS = 'Such a user exists.',
     USER_NOT_FOUND = 'User was not found.',
     TOKEN_EXPIRED = 'Token expired.',

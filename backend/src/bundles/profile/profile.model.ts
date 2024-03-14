@@ -6,7 +6,7 @@ import {
 class ProfileModel extends AbstractModel {
     public 'firstName': string;
     public 'lastName': string;
-    public 'avatar': string | null = '';
+    public 'avatar': string | null;
 
     public static override get tableName(): typeof DatabaseTableName.PROFILE {
         return DatabaseTableName.PROFILE;

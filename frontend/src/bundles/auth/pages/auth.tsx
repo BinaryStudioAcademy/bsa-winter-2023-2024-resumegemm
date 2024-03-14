@@ -53,7 +53,9 @@ const Auth: React.FC = () => {
                     navigate(AppRoute.CHECK_EMAIL);
                 })
                 .catch((error: Error) => {
-                    showToast(error.message, ToastType.ERROR);
+                    showToast(error.message, ToastType.ERROR, {
+                        position: 'top-right',
+                    });
                 });
         },
         [dispatch, showToast, navigate],
