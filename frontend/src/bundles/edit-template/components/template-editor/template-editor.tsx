@@ -27,12 +27,12 @@ const TemplateEditor: React.FC<Properties> = ({
     templateSettings,
     setTemplateSettings,
 }) => {
-    const [active, setActive] = useState<Active | null>(null);
+    const [activeDraggable, setActiveDraggable] = useState<Active | null>(null);
 
     const sensors = useTemplateSensors();
 
     const handleDragStart = useCallback((event: DragStartEvent) => {
-        setActive(event.active);
+        setActiveDraggable(event.active);
     }, []);
 
     const handleDragOver = useCallback(
@@ -53,7 +53,7 @@ const TemplateEditor: React.FC<Properties> = ({
     );
 
     const handleDragEnd = useCallback(() => {
-        setActive(null);
+        setActiveDraggable(null);
     }, []);
 
     const handleDragOverlay = useCallback(
@@ -85,7 +85,7 @@ const TemplateEditor: React.FC<Properties> = ({
                         <TemplateContainer key={container.id} {...container} />
                     ))}
                     <DragOverlay>
-                        {active && handleDragOverlay(active)}
+                        {activeDraggable && handleDragOverlay(activeDraggable)}
                     </DragOverlay>
                 </div>
             </DndContext>

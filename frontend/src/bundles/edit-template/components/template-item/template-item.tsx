@@ -1,4 +1,5 @@
 import { useSortable } from '@dnd-kit/sortable';
+import clsx from 'clsx';
 
 import { useCallback, useState } from '~/bundles/common/hooks/hooks';
 import { type LayoutItem } from '~/bundles/templates-page/types/types';
@@ -45,12 +46,11 @@ const TemplateItem: React.FC<Properties> = ({
 
     return (
         <div
-            className={templateItemStyles.template_item}
+            className={clsx(
+                templateItemStyles.template_item,
+                isDragging && templateItemStyles.dragging,
+            )}
             key={id}
-            style={{
-                zIndex: isDragging ? 1000 : 0,
-                opacity: isDragging ? 0.5 : 1,
-            }}
             ref={setNodeRef}
             {...attributes}
             onFocus={handleOnFocus}
