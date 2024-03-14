@@ -1,11 +1,12 @@
 export { certificationsSeed } from './certifications-seed.js';
 export { contactsSeed } from './contacts-seed.js';
-export { customSectionSeed } from './custom-section-seed.js';
-export { educationSeed } from './education-seed.js';
-export { experienceSeed } from './experience-seed.js';
+export { customSectionsSeed } from './custom-section-seed.js';
+export { educationsSeed } from './education-seed.js';
+export { experiencesSeed } from './experience-seed.js';
 export { imagesSeed } from './images-seed.js';
-export { personalInformationSeed } from './personal-information-seed.js';
-export { profileSeed } from './profile-seed.js';
+export { industriesSeed } from './industries-seed.js';
+export { personalInformationsSeed } from './personal-information-seed.js';
+export { profilesSeed } from './profile-seed.js';
 export { resumesSeed } from './resumes-seed.js';
 export { reviewsSeed } from './reviews-seed.js';
 export { technicalSkillsSeed } from './technical-skills-seed.js';

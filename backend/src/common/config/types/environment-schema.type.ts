@@ -10,8 +10,10 @@ type EnvironmentSchema = {
     JWT: {
         ACCESS_TOKEN_SECRET: string;
         REFRESH_TOKEN_SECRET: string;
+        RESET_TOKEN_SECRET: string;
         ACCESS_TOKEN_EXPIRES_IN: string;
         REFRESH_TOKEN_EXPIRES_IN: string;
+        RESET_TOKEN_EXPIRES_IN: string;
     };
     OAUTH: {
         GITHUB: {
@@ -25,6 +27,14 @@ type EnvironmentSchema = {
         FACEBOOK: {
             CLIENT_FACEBOOK_ID: string;
             CLIENT_FACEBOOK_SECRET: string;
+        };
+        LINKEDIN: {
+            CLIENT_LINKEDIN_ID: string;
+            CLIENT_LINKEDIN_SECRET: string;
+            OPTIONS: {
+                bodyFormat: 'form';
+                authorizationMethod: 'body';
+            };
         };
         BASE_CALLBACK_URI: string;
     };

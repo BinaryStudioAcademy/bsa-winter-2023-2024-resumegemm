@@ -1,6 +1,10 @@
 import { type IncomingHttpHeaders } from 'node:http';
 
 import { type JwtPayload } from 'jsonwebtoken';
+import {
+    type FindByEmailRequestDto,
+    type UpdateUserProfileAndEmailRequestDto,
+} from 'shared/build/index.js';
 import { HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
@@ -15,6 +19,7 @@ import {
     type UserSignUpRequestDto,
     type UserWithProfileRelation,
 } from './types/types.js';
+import { type UserModel } from './user.model.js';
 
 class UserService
     implements Omit<IService, 'findByOauthIdAndCreate' | 'deleteById'>
@@ -30,11 +35,14 @@ class UserService
         this.profileRepository = profileRepository;
     }
 
-    public async findByEmail(email: string): Promise<UserEntityFields | null> {
+    public async findByEmail({
+        email,
+        withDeleted = false,
+    }: FindByEmailRequestDto): Promise<UserModel | null> {
         if (!email) {
             return null;
         }
-        return await this.userRepository.findOneByEmail(email);
+        return await this.userRepository.findOneByEmail({ email, withDeleted });
     }
 
     public async findByIdOrEmail(
@@ -43,7 +51,7 @@ class UserService
     ): ReturnType<IService['findByIdOrEmail']> {
         const [userById, userByEmail] = await Promise.all([
             this.getById(userId),
-            this.findByEmail(email),
+            this.findByEmail({ email }),
         ]);
 
         return userById ?? userByEmail ?? null;
@@ -105,6 +113,21 @@ class UserService
         }
     }
 
+    public async updateUserProfileAndEmail(
+        id: string,
+        { firstName, lastName, email }: UpdateUserProfileAndEmailRequestDto,
+    ): Promise<UserWithProfileRelation> {
+        const { profileId } = await this.userRepository.updateById(id, {
+            email,
+        });
+        await this.profileRepository.updateById(profileId, {
+            firstName,
+            lastName,
+        });
+
+        return this.getUserWithProfileAndOauthConnections(id);
+    }
+
     public async getUserWithProfileAndOauthConnections(
         id: string,
     ): Promise<UserWithProfileRelation> {
@@ -146,6 +169,22 @@ class UserService
         return await this.userRepository.addStripeId({
             stripeId,
             email,
+        });
+    }
+
+    public async changePassword({
+        id,
+        passwordHash,
+        passwordSalt,
+    }: {
+        id: string;
+        passwordHash: string;
+        passwordSalt: string;
+    }): Promise<void> {
+        await this.userRepository.changePassword({
+            id,
+            passwordHash,
+            passwordSalt,
         });
     }
 }
