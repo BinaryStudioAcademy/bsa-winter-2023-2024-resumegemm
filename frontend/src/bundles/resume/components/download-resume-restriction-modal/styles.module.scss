@@ -1,0 +1,52 @@
+.preview {
+    display: flex;
+    flex-direction: column;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.example {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: var(--color-background-light-purple);
+}
+
+.tooltip_small_example_container {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-error-red-bright);
+}
+
+.tooltip_big_example_container {
+    width: 100px;
+    height: 100px;
+    background-color: var(--color-tooltip-blue);
+}
+
+.auth {
+    height: 100vh;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 200px;
+}
+
+.footer__actions {
+    display: flex;
+    gap: 10px;
+}
+
+.dropdown {
+    max-width: 250px;
+}
