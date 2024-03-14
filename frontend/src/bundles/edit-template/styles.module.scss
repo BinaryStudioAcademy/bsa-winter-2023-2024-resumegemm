@@ -30,3 +30,32 @@
 .editor_sidebar__checkbox {
     color: var(--color-white);
 }
+
+.editor_sidebar__item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.editor_sidebar__item_customize {
+    margin-left: 30px;
+    text-align: left;
+}
+
+.editor_sidebar__customize_list_container {
+    display: flex;
+}
+
+.editor_sidebar__customize_list_container::before {
+    display: inline-block;
+    width: 5px;
+    margin-right: 10px;
+    background-color: var(--color-accent-dark-yellow);
+    border-radius: 50px;
+    content: "";
+}
+
+.editor_sidebar__color_picker {
+    height: 20%;
+    padding: 5px;
+}

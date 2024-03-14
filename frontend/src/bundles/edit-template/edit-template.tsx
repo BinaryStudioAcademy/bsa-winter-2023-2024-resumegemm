@@ -7,16 +7,23 @@ import React, {
 } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Checkbox, RegularButton } from '../common/components/components';
+import {
+    Checkbox,
+    Input,
+    RegularButton,
+} from '../common/components/components';
 import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
+import { TemplateItemTags } from '../templates-page/enums/enums';
 import { type TemplateSettings } from '../templates-page/types/types';
 import { TemplateBlockTitles } from '../templates-page/types/types';
 import { TemplateEditor } from './components/template-editor/template-editor';
 import {
     changeBlockEnabling,
+    changeBlockItemsStyle,
+    changeBlockStyle,
     isBlockEnabled as isBlockEnabledByName,
 } from './helpers/block-enabling.helper';
 import { editTemplate, getTemplateById } from './store/actions';
@@ -69,6 +76,53 @@ const EditTemplatePage: React.FC = () => {
         void dispatch(editTemplate(templateSettings));
     }, [dispatch, templateSettings]);
 
+    const handleBackgroundStyleChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            const { name, value } = event.target;
+            setTemplateSettings((previous) => {
+                return changeBlockStyle({
+                    blockName: name,
+                    value: value,
+                    style: 'background',
+                    templateSettings: previous,
+                });
+            });
+        },
+        [],
+    );
+
+    const handleHeadingStyleChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            const { name, value } = event.target;
+            setTemplateSettings((previous) => {
+                return changeBlockItemsStyle({
+                    tagName: TemplateItemTags.HEADING,
+                    blockName: name,
+                    value: value,
+                    style: 'color',
+                    templateSettings: previous,
+                });
+            });
+        },
+        [],
+    );
+
+    const handleTextStyleChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            const { name, value } = event.target;
+            setTemplateSettings((previous) => {
+                return changeBlockItemsStyle({
+                    tagName: TemplateItemTags.PARAGRAPH,
+                    blockName: name,
+                    value: value,
+                    style: 'color',
+                    templateSettings: previous,
+                });
+            });
+        },
+        [],
+    );
+
     return (
         <section
             className={clsx(
@@ -86,8 +140,10 @@ const EditTemplatePage: React.FC = () => {
                     {templateBlockTitles.map((block) => (
                         <li
                             key={block}
-                            style={{ 'display': 'flex' }}
-                            className={editorStyles.editor_sidebar__item}
+                            className={clsx(
+                                editorStyles.editor_sidebar__item,
+                                templateStyles.editor_sidebar__item,
+                            )}
                         >
                             <Checkbox
                                 className={
@@ -98,6 +154,61 @@ const EditTemplatePage: React.FC = () => {
                                 onChange={handleCheckboxChange}
                                 name={block}
                             />
+                            <div
+                                className={
+                                    templateStyles.editor_sidebar__item_customize
+                                }
+                            >
+                                <div
+                                    className={
+                                        templateStyles.editor_sidebar__customize_list_container
+                                    }
+                                >
+                                    <ul
+                                        className={
+                                            templateStyles.editor_sidebar__customize_list
+                                        }
+                                    >
+                                        <li>
+                                            Header{' '}
+                                            <Input
+                                                name={block}
+                                                onChange={
+                                                    handleHeadingStyleChange
+                                                }
+                                                className={
+                                                    templateStyles.editor_sidebar__color_picker
+                                                }
+                                                type="color"
+                                            />
+                                        </li>
+                                        <li>
+                                            Text{' '}
+                                            <Input
+                                                name={block}
+                                                onChange={handleTextStyleChange}
+                                                className={
+                                                    templateStyles.editor_sidebar__color_picker
+                                                }
+                                                type="color"
+                                            />
+                                        </li>
+                                        <li>
+                                            Background{' '}
+                                            <Input
+                                                name={block}
+                                                onChange={
+                                                    handleBackgroundStyleChange
+                                                }
+                                                className={
+                                                    templateStyles.editor_sidebar__color_picker
+                                                }
+                                                type="color"
+                                            />
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </li>
                     ))}
                 </ul>
