@@ -11,5 +11,6 @@ export {
     type ResumeGetAllResponseDto,
     type ResumeWithRelationsAndTemplateResponseDto,
     type TemplateSettings,
+    type UserWithProfileRelation,
     type ValueOf,
 } from 'shared/build';

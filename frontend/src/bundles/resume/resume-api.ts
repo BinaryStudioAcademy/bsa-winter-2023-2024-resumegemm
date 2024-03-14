@@ -47,6 +47,25 @@ class ResumeApi extends HttpApi {
         return await response.json<ResumeWithRelationsAndTemplateResponseDto>();
     }
 
+    public async updateResume(
+        payload: Omit<
+            ResumeWithRelationsAndTemplateResponseDto,
+            'templates'
+        > & { resume: object },
+        resumeId: string,
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}/${resumeId}`, {}),
+            {
+                method: 'PUT',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify(payload),
+            },
+        );
+        return await response.json<ResumeWithRelationsAndTemplateResponseDto>();
+    }
+
     public async requestResumeReviewFromAI(
         resume: ResumeAiScoreRequestDto,
     ): Promise<ResumeAiScoreResponseDto> {
