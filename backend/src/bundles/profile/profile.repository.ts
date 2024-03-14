@@ -19,6 +19,16 @@ class ProfileRepository extends AbstractRepository<
     ): Promise<ProfileModel> {
         return await this.model.query().updateAndFetchById(id, data);
     }
+
+    public async updateAvatar({
+        id,
+        key = null,
+    }: {
+        id: string;
+        key?: string | null;
+    }): Promise<void> {
+        await this.model.query().findById(id).patch({ avatar: key });
+    }
 }
 
 export { ProfileRepository };

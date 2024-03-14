@@ -1,6 +1,7 @@
 import { type UpdateUserProfileAndEmailRequestDto } from 'shared/build';
 
 import { PageTitle } from '~/bundles/common/components/page-title/page-title';
+import { UserPhotoWrapper } from '~/bundles/common/components/user-photo-uploader/user-photo-wrapper';
 import {
     useAppDispatch,
     useCallback,
@@ -62,6 +63,9 @@ const Profile: React.FC = () => {
                         onSubmit={handleFormSubmit}
                         user={{ email, firstName, lastName }}
                     />
+                </ProfileCard>
+                <ProfileCard title="Avatar">
+                    <UserPhotoWrapper />
                 </ProfileCard>
                 <ProfileCard title="Social profile">
                     <Socials

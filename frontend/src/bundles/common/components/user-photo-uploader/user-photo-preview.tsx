@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 interface UserPhotoProperties {
     onToggleModal: React.Dispatch<React.SetStateAction<boolean>>;
     currentPhoto: string;
-    onHandleCurrentPhoto: React.Dispatch<React.SetStateAction<string>>;
+    onHandleCurrentPhoto: React.Dispatch<null>;
 }
 
 const UserPhotoPreview: React.FC<UserPhotoProperties> = ({
@@ -19,7 +19,7 @@ const UserPhotoPreview: React.FC<UserPhotoProperties> = ({
     }, [onToggleModal]);
 
     const handleDeleteClick = useCallback(() => {
-        onHandleCurrentPhoto('');
+        onHandleCurrentPhoto(null);
     }, [onHandleCurrentPhoto]);
 
     return (
