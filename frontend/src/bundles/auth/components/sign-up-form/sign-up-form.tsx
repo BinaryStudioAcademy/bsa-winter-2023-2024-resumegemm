@@ -9,7 +9,9 @@ import {
     PasswordInput,
     RegularButton,
     Spinner,
+    Tooltip,
 } from '~/bundles/common/components/components';
+import { Hint } from '~/bundles/common/components/hint/hint';
 import {
     AppRoute,
     ButtonSize,
@@ -34,6 +36,18 @@ type Properties = {
     onSubmit: (payload: UserSignUpRequestDtoFrontend) => void;
     dataStatus: ValueOf<typeof DataStatus>;
 };
+
+import { type HintRow } from '~/bundles/common/types/hint/hint-row.type';
+
+const hintRows: HintRow[] = [
+    { text: 'Use 8 to 64 characters.' },
+    { text: 'Mix in upper and lower case letters.' },
+    { text: 'Include numbers.' },
+    { text: 'Add special characters like !, @, #.' },
+    { text: 'Avoid using common words and phrases.' },
+    { text: 'No white spaces allowed.' },
+    { text: 'Make it unique.' },
+];
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
     const { control, errors, handleSubmit } =
@@ -101,6 +115,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
                     />
                 </FormGroup>
                 <PasswordInput
+                    hint={<Hint rows={hintRows} />}
                     label="Your Password"
                     placeholder="Your password"
                     error={errors.password}
