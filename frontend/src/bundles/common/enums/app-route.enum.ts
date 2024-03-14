@@ -12,6 +12,7 @@ enum AppRoute {
     FORGOT_PASSWORD = '/forgot-password',
     QA = '/qa',
     STATISTICS = '/statistics',
+    BILLING = '/billing',
 }
 
 export { AppRoute };

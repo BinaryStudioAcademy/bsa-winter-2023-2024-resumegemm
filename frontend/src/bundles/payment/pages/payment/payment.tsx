@@ -1,28 +1,45 @@
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { useElements, useStripe } from '@stripe/react-stripe-js';
+import { type ChangeEvent, type FormEvent } from 'react';
+import { Link } from 'react-router-dom';
+
+import logo from '~/assets/img/logo.svg';
 import {
-    type ChangeEvent,
-    type FormEvent,
+    Icon,
+    IconButton,
+    Stepper,
+} from '~/bundles/common/components/components';
+import { AppRoute, IconName, IconSize } from '~/bundles/common/enums/enums';
+import {
+    useAppDispatch,
+    useAppSelector,
     useCallback,
     useEffect,
+    useNavigate,
     useState,
-} from 'react';
-
-import { Input, RegularButton } from '~/bundles/common/components/components';
-import { ButtonWidth } from '~/bundles/common/enums/components/button-width.enum';
-import { ButtonType, ButtonVariant } from '~/bundles/common/enums/enums';
-import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
+} from '~/bundles/common/hooks/hooks';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
 
-import { SubscriptionCard } from '../components/subscription-card';
-import { COINS_IN_BANKNOTE } from '../constants/payment.constant';
-import { PaymentMessage } from '../enums/messages';
-import { createSubscription, getPrices } from '../store/actions';
-import { type CreateSubscriptionResponseDto } from '../types/types';
-import { paymentCreateSubscriptionValidationSchema } from '../validation-schemas/validation-schemas';
+import { PaymentMessage } from '../../enums/messages';
+import { steps } from '../../steps/steps';
+import { createSubscription, getPrices } from '../../store/actions';
+import {
+    type CreateSubscriptionResponseDto,
+    type GetPriceResponseDto,
+} from '../../types/types';
+import { paymentCreateSubscriptionValidationSchema } from '../../validation-schemas/validation-schemas';
+import { SubscriptionPaymentPage } from '../subscription-payment/subscription-payment';
+import { SubscriptionPlans } from '../subscription-plans/subscription-plans';
 import styles from './styles.module.scss';
 
-const SubscriptionPaymentPage: React.FC = () => {
+const Payment: React.FC = () => {
+    const navigate = useNavigate();
+    const [activeStep, setActiveStep] = useState(1);
+
+    const handleClose = useCallback(() => {
+        navigate(AppRoute.HOME);
+    }, [navigate]);
+
     const elements = useElements();
     const stripe = useStripe();
     const dispatch = useAppDispatch();
@@ -31,11 +48,14 @@ const SubscriptionPaymentPage: React.FC = () => {
         prices: payment.prices,
     }));
 
+    useEffect(() => {
+        void dispatch(getPrices({}));
+    }, [dispatch]);
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [priceId, setPriceId] = useState('');
-
-    const [modalIsHidden, setModalIsHidden] = useState(true);
+    const [priceId] = useState('');
+    const [selectedPrice] = useState<GetPriceResponseDto>();
 
     const [processing, setProcessing] = useState(false);
 
@@ -53,16 +73,14 @@ const SubscriptionPaymentPage: React.FC = () => {
         [],
     );
 
-    const handlePriceChange = useCallback((id: string) => {
-        return function () {
-            setPriceId(id);
-            setModalIsHidden(false);
-        };
+    const handleChangeActiveStep = useCallback(() => {
+        setActiveStep((activeStep) => activeStep + 1);
     }, []);
 
-    const closeModal = useCallback(() => {
-        setModalIsHidden(true);
-    }, []);
+    const handleSelectPrice = useCallback(() => {
+        // setPriceId(priceId);
+        handleChangeActiveStep();
+    }, [handleChangeActiveStep]);
 
     const handleSubmit = useCallback(
         (event: FormEvent<HTMLFormElement>): void => {
@@ -150,74 +168,75 @@ const SubscriptionPaymentPage: React.FC = () => {
             }
 
             void handleSubmitAsync();
+            handleChangeActiveStep();
         },
-        [elements, stripe, dispatch, name, email, priceId],
+        [
+            elements,
+            stripe,
+            dispatch,
+            name,
+            email,
+            priceId,
+            handleChangeActiveStep,
+        ],
     );
 
-    useEffect(() => {
-        void dispatch(getPrices({}));
-    }, [dispatch]);
-
     return (
-        <div className={styles.payment__container}>
-            <form className={styles.payment__form} onSubmit={handleSubmit}>
-                <div className={styles.payment__prices_container}>
-                    {prices.map((price) => (
-                        <SubscriptionCard
-                            image={price.product.images}
-                            onClick={handlePriceChange(price.id)}
-                            key={price.id}
-                            price={
-                                price.unit_amount &&
-                                price.unit_amount / COINS_IN_BANKNOTE
-                            }
-                            currency={price.currency}
-                            duration={`${price.recurring.interval_count} ${price.recurring.interval}`}
-                            title={price.product.name}
-                            description={price.product.description}
-                            selected={priceId === price.id}
-                        />
-                    ))}
+        <div className={styles.billing_page}>
+            <div className={styles.billing_page__head}>
+                <div className={styles.billing_page__logo}>
+                    <Link to={AppRoute.HOME}>
+                        <img src={logo} alt="logo" />
+                    </Link>
                 </div>
+                <Stepper
+                    className={styles.billing_page__stepper}
+                    steps={steps}
+                    activeStep={activeStep}
+                />
+                <div className={styles.billing_page__cross_button}>
+                    <IconButton onClick={handleClose}>
+                        <Icon
+                            size={IconSize.LARGE}
+                            name={IconName.CLOSE_CROSS}
+                        />
+                    </IconButton>
+                </div>
+            </div>
 
-                {!modalIsHidden && (
-                    <div className={styles.payment__modal_container}>
-                        <div className={styles.payment__modal_input_container}>
-                            <button
-                                onClick={closeModal}
-                                className={styles.payment__modal_close_button}
-                            ></button>
-
-                            <Input
-                                width="100%"
-                                placeholder="Name"
-                                onChange={handleNameChange}
-                            />
-                            <Input
-                                width="100%"
-                                placeholder="email"
-                                onChange={handleEmailChange}
-                            />
-
-                            <CardElement
-                                className={styles.payment__modal_input_card}
-                            />
-
-                            <RegularButton
-                                className={styles.payment__modal_input_button}
-                                type={ButtonType.SUBMIT}
-                                width={ButtonWidth.FULL}
-                                isDisabled={processing}
-                                variant={ButtonVariant.PRIMARY}
-                            >
-                                Confirm payment
-                            </RegularButton>
-                        </div>
+            <div className={styles.billing_page__content}>
+                <div className={styles.billing_page__text_content}>
+                    <div className={styles.billing_page__title}>
+                        {' '}
+                        Download Your Attention-Grabbing Resume Now!
                     </div>
+                    <div className={styles.billing_page__text}>
+                        {' '}
+                        To download your resume simply sign up for your Premium
+                        Membership. As an added bonus, you’ll gain instant
+                        access to our Premium Templates and Color Palette.
+                    </div>
+                </div>
+                {activeStep === 1 && (
+                    <SubscriptionPlans
+                        priceId={priceId}
+                        prices={prices}
+                        onSelectPrice={handleSelectPrice}
+                    />
                 )}
-            </form>
+
+                {activeStep === 2 && (
+                    <SubscriptionPaymentPage
+                        price={selectedPrice}
+                        onPaymentSubmit={handleSubmit}
+                        onChangeEmail={handleEmailChange}
+                        onChangeName={handleNameChange}
+                        processing={processing}
+                    />
+                )}
+            </div>
         </div>
     );
 };
 
-export { SubscriptionPaymentPage };
+export { Payment };

@@ -22,7 +22,7 @@ import { EditTemplatePage } from './bundles/edit-template/edit-template';
 import { LandingPage } from './bundles/landing-page/landing-page';
 import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
-import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-payment';
+import { Payment } from './bundles/payment/pages/payment/payment';
 import { PreviewPage } from './bundles/preview/preview';
 import { ResumeAccess } from './bundles/resume-access/pages/resume-access';
 import { TemplatePage } from './bundles/templates-page/templates-page';
@@ -98,7 +98,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     path: AppRoute.PAYMENT,
                                     element: (
                                         <StripeProvider>
-                                            <SubscriptionPaymentPage />
+                                            <Payment />
                                         </StripeProvider>
                                     ),
                                 },
