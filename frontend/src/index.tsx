@@ -80,6 +80,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             path: AppRoute.FORGOT_PASSWORD,
                                             element: <Auth />,
                                         },
+                                        {
+                                            path: AppRoute.CHECK_EMAIL,
+                                            element: <CheckEmailPage />,
+                                        },
                                     ],
                                 },
                                 {
@@ -101,12 +105,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: `${AppRoute.TEMPLATE_EDITOR}/:id`,
                                             element: <EditTemplatePage />,
-                                        },
-                                        {
-                                            path: AppRoute.EMAIL_CONFIRMATION_SUCCESS,
-                                            element: (
-                                                <EmailConfirmationSuccessPage />
-                                            ),
                                         },
                                     ],
                                 },
@@ -131,8 +129,8 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     element: <EmailConfirmationFailPage />,
                                 },
                                 {
-                                    path: AppRoute.CHECK_EMAIL,
-                                    element: <CheckEmailPage />,
+                                    path: AppRoute.EMAIL_CONFIRMATION_SUCCESS,
+                                    element: <EmailConfirmationSuccessPage />,
                                 },
                             ],
                         },
