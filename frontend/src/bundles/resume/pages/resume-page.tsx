@@ -1,8 +1,9 @@
 import { renderToString } from 'react-dom/server';
+import { NavLink } from 'react-router-dom';
 
 import shareIcon from '~/assets/img/share-icon.svg';
 import { Header, RegularButton } from '~/bundles/common/components/components';
-import { ButtonVariant } from '~/bundles/common/enums/enums';
+import { AppRoute, ButtonVariant } from '~/bundles/common/enums/enums';
 import { useCallback, useResumes } from '~/bundles/common/hooks/hooks';
 import { TemplateEditor } from '~/bundles/edit-template/components/template-editor/template-editor';
 import { ResumeAiReview } from '~/bundles/resume/components/components';
@@ -17,6 +18,7 @@ const ResumePage: React.FC = () => {
         requestResumeReviewFromAI,
         downloadGeneratedFile,
         dataStatus,
+        id,
     } = useResumes();
 
     const HTMLFromComponentOrEmptyString = templateSettings
@@ -57,6 +59,13 @@ const ResumePage: React.FC = () => {
                 {templateSettings && (
                     <TemplateEditor settings={templateSettings} />
                 )}
+            </div>
+            <div className={styles.resume__wrapper_footer}>
+                <NavLink to={`${AppRoute.RESUME_EDIT}/${id}`}>
+                    <RegularButton variant={ButtonVariant.DEFAULT}>
+                        Edit Resume
+                    </RegularButton>
+                </NavLink>
             </div>
         </div>
     );

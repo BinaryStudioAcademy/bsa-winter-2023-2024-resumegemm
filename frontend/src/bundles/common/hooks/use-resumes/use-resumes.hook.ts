@@ -22,12 +22,13 @@ import {
 type UseResumesReturnValues = {
     userId: string | undefined;
     resumes: ResumeGetAllResponseDto[];
-    templateSettings: TemplateSettings | undefined;
+    templateSettings: TemplateSettings | null;
     createResumeAccessLink: () => void;
     requestResumeReviewFromAI: () => void;
     downloadGeneratedFile: (html: string) => void;
     resumeReview: ResumeAiScoreResponseDto | null;
     dataStatus: DataStatus;
+    id?: string;
 };
 
 const useResumes = (): UseResumesReturnValues => {
@@ -46,7 +47,7 @@ const useResumes = (): UseResumesReturnValues => {
         resumes: resumes.resumes,
         currentResume: resumes.currentResume,
         dataStatus: resumes.dataStatus,
-        templateSettings: resumes.currentResume?.templates.templateSettings,
+        templateSettings: resumes.templateSettings,
         resumeReview: resumes.resumeReview,
     }));
 
@@ -98,6 +99,7 @@ const useResumes = (): UseResumesReturnValues => {
         resumeReview,
         dataStatus,
         downloadGeneratedFile,
+        id,
     };
 };
 
