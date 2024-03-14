@@ -15,14 +15,12 @@ const EmailPayload = {
                 max-width: 600px;
                 margin: 0 auto;
             }
-            
             .content {
                 background-color: #FDF3D3;
                 padding: 10px 40px;
                 border-radius: 40px;
                 text-align: justify;
             }
-            
             img {
                 margin-bottom: 20px;
             }
@@ -50,7 +48,6 @@ const EmailPayload = {
                 <p>Thank you for choosing ResumeGemm!</p>
             </div>
         </div>
-        
     </body>
 </html>
 `,
