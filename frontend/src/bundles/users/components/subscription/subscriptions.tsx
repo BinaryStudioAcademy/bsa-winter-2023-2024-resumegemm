@@ -1,5 +1,13 @@
-import { Modal, RegularButton } from '~/bundles/common/components/components';
-import { ButtonVariant, ModalVariant } from '~/bundles/common/enums/enums';
+import {
+    Modal,
+    RegularButton,
+    Spinner,
+} from '~/bundles/common/components/components';
+import {
+    ButtonVariant,
+    ModalVariant,
+    SpinnerVariant,
+} from '~/bundles/common/enums/enums';
 import { useEmailSubscriptions } from '~/bundles/common/hooks/hooks';
 
 import styles from './style.module.scss';
@@ -53,9 +61,11 @@ const Subscriptions: React.FC = () => {
                             onClick={handleUnsubscribe}
                             variant={ButtonVariant.PRIMARY}
                         >
-                            {isEmailSubscriptionLoading
-                                ? 'Loading...'
-                                : 'Unsubscribe'}
+                            {isEmailSubscriptionLoading ? (
+                                <Spinner variant={SpinnerVariant.SMALL} />
+                            ) : (
+                                'Unsubscribe'
+                            )}
                         </RegularButton>
                     </div>
                 </div>

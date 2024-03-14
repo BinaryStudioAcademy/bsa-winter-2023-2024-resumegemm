@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 
+import { Spinner } from '~/bundles/common/components/components';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum';
+import { SpinnerVariant } from '~/bundles/common/enums/enums';
 import {
     useAppDispatch,
     useAppSelector,
@@ -26,7 +28,7 @@ const EmailSubscriptionPage: React.FC = () => {
     return (
         <div className={styles.email_subscription}>
             {isEmailSubscriptionLoading === DataStatus.PENDING ? (
-                <p>Wait...</p>
+                <Spinner variant={SpinnerVariant.SMALL} />
             ) : (
                 <p>You have been unsubscribed from email notifications.</p>
             )}
