@@ -1,3 +1,5 @@
+import { type DeleteObjectCommandOutput } from '@aws-sdk/client-s3';
+
 import { type IFileUploadClient } from './interfaces/file-upload-client.interface.js';
 import {
     type FileUploadRequestDto,
@@ -25,6 +27,10 @@ class FileService {
 
     public async getFileUrl(key: string): Promise<string> {
         return await this.fileUploadClient.getFileUrl(key);
+    }
+
+    public async delete(key: string): Promise<DeleteObjectCommandOutput> {
+        return await this.fileUploadClient.delete(key);
     }
 }
 

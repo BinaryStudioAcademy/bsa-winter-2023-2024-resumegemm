@@ -92,7 +92,7 @@ class OauthService
             oauthStrategy,
             userId: user.id,
         });
-        return user as UserEntityFields;
+        return user as unknown as UserEntityFields;
     }
 }
 
