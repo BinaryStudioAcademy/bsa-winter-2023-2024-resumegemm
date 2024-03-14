@@ -15,6 +15,7 @@ import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
 import { PasswordRecovery } from '../components/password-recovery/password-recovery.js';
 import { type UserSignUpRequestDtoFrontend } from '../components/sign-up-form/validation/sign-up-validation.js';
+import { ExceptionMessage } from '../enums/enums.js';
 import { actions as authActions } from '../store/auth.store.js';
 import styles from './styles.module.scss';
 
@@ -29,7 +30,16 @@ const Auth: React.FC = () => {
 
     const handleSignInSubmit = useCallback(
         (payload: UserSignInRequestDto): void => {
-            void dispatch(authActions.signIn(payload));
+            void dispatch(authActions.signIn(payload))
+                .unwrap()
+                .then()
+                .catch((error: Error) => {
+                    if (error.message === ExceptionMessage.EMAIL_CONFIRM) {
+                        navigate(AppRoute.CHECK_EMAIL);
+                    } else {
+                        showToast(error.message, ToastType.ERROR);
+                    }
+                });
         },
         [dispatch],
     );
