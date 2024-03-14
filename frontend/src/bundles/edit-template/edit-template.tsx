@@ -2,7 +2,12 @@ import clsx from 'clsx';
 import React, { type ChangeEvent, useCallback, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Checkbox, RegularButton } from '../common/components/components';
+import {
+    Checkbox,
+    FormGroup,
+    Input,
+    RegularButton,
+} from '../common/components/components';
 import {
     ButtonSize,
     ButtonType,
@@ -68,6 +73,18 @@ const EditTemplatePage: React.FC = () => {
         [dispatch],
     );
 
+    const handleInputChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>): void => {
+            const name = event.target.value;
+            dispatch(
+                editTemplateActions.setName({
+                    name,
+                }),
+            );
+        },
+        [dispatch],
+    );
+
     const handleSaveTemplate = useCallback((): void => {
         takeScreenshot({
             ref: templateEditorReference,
@@ -94,6 +111,13 @@ const EditTemplatePage: React.FC = () => {
                     templateStyles.editor_sidebar__nav,
                 )}
             >
+                <FormGroup label="Template name">
+                    <Input
+                        title="Enter template name"
+                        onInput={handleInputChange}
+                    />
+                </FormGroup>
+
                 <ul className={editorStyles.editor_sidebar__list}>
                     {templateBlockTitles.map((block) => (
                         <li
@@ -102,12 +126,14 @@ const EditTemplatePage: React.FC = () => {
                             className={editorStyles.editor_sidebar__item}
                         >
                             <Checkbox
+                                className={
+                                    templateStyles.editor_sidebar__checkbox
+                                }
                                 checked={isBlockEnabled(block)}
-                                label=""
+                                label={block}
                                 onChange={handleCheckboxChange}
                                 name={block}
                             />
-                            {block}
                         </li>
                     ))}
                 </ul>
