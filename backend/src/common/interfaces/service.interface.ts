@@ -1,6 +1,9 @@
 import { type IncomingHttpHeaders } from 'node:http';
 
-import { type UserEntityFields } from 'shared/build/index.js';
+import {
+    type FindByEmailRequestDto,
+    type UserEntityFields,
+} from 'shared/build/index.js';
 
 interface IService<T = unknown> {
     findAll(): Promise<{
@@ -11,7 +14,7 @@ interface IService<T = unknown> {
 
     getById(id: string): Promise<T>;
 
-    findByEmail(email: string): Promise<T>;
+    findByEmail(data: FindByEmailRequestDto): Promise<T>;
 
     findByOauthIdAndCreate(data: T): Promise<void>;
 

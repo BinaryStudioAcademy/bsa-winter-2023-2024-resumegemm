@@ -29,16 +29,16 @@ import {
 import {
     certificationsSeed,
     contactsSeed,
-    customSectionSeed,
-    educationSeed,
-    experienceSeed,
+    customSectionsSeed,
+    educationsSeed,
+    experiencesSeed,
     imagesSeed,
     industriesSeed,
     languageSeed,
     oauthConnectionSeed,
     oauthUserSeed,
-    personalInformationSeed,
-    profileSeed,
+    personalInformationsSeed,
+    profilesSeed,
     resumeSharedAccessSeed,
     resumesSeed,
     reviewsSeed,
@@ -88,7 +88,7 @@ async function seed(knex: Knex): Promise<void> {
 
         // PROFILE
 
-        const profileMappedSeed = profileSeed.map((profile, index) => ({
+        const profileMappedSeed = profilesSeed.map((profile, index) => ({
             ...profile,
             [DatabaseColumnName.ID]: guid.raw(),
             [DatabaseColumnName.AVATAR]: imagesSeed[index].image,
@@ -177,7 +177,7 @@ async function seed(knex: Knex): Promise<void> {
         // EDUCATION
 
         await trx<Education>(DatabaseTableName.EDUCATION)
-            .insert(mapResumeContent(educationSeed))
+            .insert(mapResumeContent(educationsSeed))
             .returning('*');
 
         // CONTACT_DETAILS
@@ -189,7 +189,7 @@ async function seed(knex: Knex): Promise<void> {
         // EXPERIENCE
 
         await trx<Experience>(DatabaseTableName.EXPERIENCE)
-            .insert(mapResumeContent(experienceSeed))
+            .insert(mapResumeContent(experiencesSeed))
             .returning('*');
 
         // TECHNICAL_SKILLS
@@ -201,7 +201,7 @@ async function seed(knex: Knex): Promise<void> {
         // PERSONAL_INFORMATION
 
         await trx<PersonalInformation>(DatabaseTableName.PERSONAL_INFORMATION)
-            .insert(mapResumeContent(personalInformationSeed))
+            .insert(mapResumeContent(personalInformationsSeed))
             .returning('*');
 
         // CERTIFICATION
@@ -213,7 +213,7 @@ async function seed(knex: Knex): Promise<void> {
         // CUSTOM_SECTION
 
         await trx<CustomSection>(DatabaseTableName.CUSTOM_SECTIONS)
-            .insert(mapResumeContent(customSectionSeed))
+            .insert(mapResumeContent(customSectionsSeed))
             .returning('*');
 
         // LANGUAGE

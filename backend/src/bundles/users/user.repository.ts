@@ -1,3 +1,5 @@
+import { type FindByEmailRequestDto } from 'shared/build/index.js';
+
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { AbstractRepository } from '~/common/database/abstract.repository.js';
@@ -8,7 +10,7 @@ import {
 } from './types/types.js';
 
 interface IUserRepo {
-    findOneByEmail(email: string): Promise<UserEntityFields | null>;
+    findOneByEmail(data: FindByEmailRequestDto): Promise<UserModel | null>;
     addStripeId(
         userUpdate: Partial<UserModel>,
     ): Promise<UserEntityFields | null>;
@@ -26,14 +28,15 @@ class UserRepository
         super(userModel);
     }
 
-    public async findOneByEmail(
-        email: string,
-    ): ReturnType<IUserRepo['findOneByEmail']> {
-        const user = await this.model
-            .query()
-            .findOne({ email })
-            .whereNull('deletedAt');
-
+    public async findOneByEmail({
+        email,
+        withDeleted,
+    }: FindByEmailRequestDto): ReturnType<IUserRepo['findOneByEmail']> {
+        const query = this.model.query().findOne({ email });
+        if (!withDeleted) {
+            void query.whereNull('deletedAt');
+        }
+        const user = await query;
         return user ?? null;
     }
 
