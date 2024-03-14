@@ -91,6 +91,7 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
             {...attributes}
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
+            id={id}
         >
             <DndContext
                 onDragStart={handleDragStart}
@@ -104,7 +105,7 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
                     strategy={rectSortingStrategy}
                 >
                     {items.map((item) => (
-                        <TemplateItem key={item.id} {...item} />
+                        <TemplateItem key={item.id} {...item} blockId={id} />
                     ))}
                 </SortableContext>
                 <DragOverlay>{active && handleDragOverlay(active)}</DragOverlay>

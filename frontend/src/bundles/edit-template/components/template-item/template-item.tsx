@@ -7,13 +7,16 @@ import { ElementOverlay } from '../element-overlay/element-overlay';
 import { ItemTag } from './item-tag';
 import templateItemStyles from './styles.module.scss';
 
-type Properties = LayoutItem;
+type Properties = LayoutItem & {
+    blockId: string;
+};
 const TemplateItem: React.FC<Properties> = ({
     id,
     name,
     tagName,
     content,
     styles,
+    blockId,
 }) => {
     const { attributes, listeners, setNodeRef, isDragging } = useSortable({
         id: id,
@@ -36,6 +39,10 @@ const TemplateItem: React.FC<Properties> = ({
         setIsOverlayShown(false);
     }, []);
 
+    const onOverlayClick = useCallback(() => {
+        document.querySelector<HTMLDivElement>(`#${blockId}`)?.focus();
+    }, [blockId]);
+
     return (
         <div
             className={templateItemStyles.template_item}
@@ -49,7 +56,12 @@ const TemplateItem: React.FC<Properties> = ({
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
         >
-            {isOverlayShown && <ElementOverlay {...listeners} />}
+            {isOverlayShown && (
+                <ElementOverlay
+                    {...listeners}
+                    onOverlayClick={onOverlayClick}
+                />
+            )}
             <ItemTag
                 name={name}
                 tagName={tagName}
