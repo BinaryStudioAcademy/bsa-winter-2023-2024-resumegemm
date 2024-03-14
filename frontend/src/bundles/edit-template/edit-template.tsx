@@ -93,8 +93,10 @@ const EditTemplatePage: React.FC = () => {
                         {templateBlockTitles.map((block) => (
                             <li
                                 key={block}
-                                style={{ 'display': 'flex' }}
-                                className={editorStyles.editor_sidebar__item}
+                                className={clsx(
+                                    editorStyles.editor_sidebar__item,
+                                    styles.editor_sidebar_flex,
+                                )}
                             >
                                 <Checkbox
                                     checked={isBlockEnabled(block)}
