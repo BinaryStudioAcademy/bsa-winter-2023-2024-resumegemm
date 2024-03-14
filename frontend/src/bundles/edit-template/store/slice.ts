@@ -1,5 +1,4 @@
-import { type PayloadAction } from '@reduxjs/toolkit';
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { type PayloadAction, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { type ValueOf } from 'shared/build';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
@@ -10,7 +9,7 @@ import { createTemplate, editTemplate, getTemplateById } from './actions.js';
 type State = {
     template: Pick<
         TemplateDto,
-        'id' | 'isOwner' | 'image' | 'templateSettings'
+        'id' | 'name' | 'isOwner' | 'image' | 'templateSettings'
     >;
     dataStatus: ValueOf<typeof DataStatus>;
 };
@@ -18,6 +17,7 @@ type State = {
 const initialState: State = {
     template: {
         id: '',
+        name: '',
         isOwner: false,
         image: '',
         templateSettings: {
@@ -54,6 +54,15 @@ const { reducer, actions, name } = createSlice({
                 })),
             };
             state.template.templateSettings = newTemplateSettings;
+        },
+        setName: (state, action: PayloadAction<{ name: string }>) => {
+            const { name } = action.payload;
+            const defaultName = 'My template';
+            if (!name) {
+                state.template.name = defaultName;
+                return;
+            }
+            state.template.name = name;
         },
     },
     extraReducers(builder) {
