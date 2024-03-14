@@ -4,6 +4,7 @@ import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import { type LayoutContainer } from '~/bundles/templates-page/types/types';
 
 import { TemplateBlock } from '../template-block/template-block';
+import containerStyles from './styles.module.scss';
 
 type Properties = LayoutContainer;
 const TemplateContainer: React.FC<Properties> = ({ id, blocks, styles }) => {
@@ -20,6 +21,7 @@ const TemplateContainer: React.FC<Properties> = ({ id, blocks, styles }) => {
                 ...styles,
             }}
             ref={setNodeRef}
+            className={containerStyles.container}
         >
             <SortableContext
                 items={blocks.map((block) => block.id)}
