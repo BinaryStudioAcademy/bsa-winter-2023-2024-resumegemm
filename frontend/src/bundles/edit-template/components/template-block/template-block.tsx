@@ -9,9 +9,10 @@ import {
     SortableContext,
     useSortable,
 } from '@dnd-kit/sortable';
+import clsx from 'clsx';
 import { useCallback, useContext } from 'react';
 
-import { useState } from '~/bundles/common/hooks/hooks';
+import { useState, useTemplateSensors } from '~/bundles/common/hooks/hooks';
 import { type LayoutBlock } from '~/bundles/templates-page/types/types';
 
 import { TemplateContext } from '../../context/template-context';
@@ -31,14 +32,16 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
         },
     });
 
+    const sensors = useTemplateSensors();
+
     const { templateSettings, setTemplateSettings } =
         useContext(TemplateContext);
 
-    const [active, setActive] = useState<Active | null>(null);
+    const [activeDraggable, setActiveDraggable] = useState<Active | null>(null);
     const [isOverlayShown, setIsOverlayShown] = useState(false);
 
     const handleDragStart = useCallback((event: DragStartEvent): void => {
-        setActive(event.active);
+        setActiveDraggable(event.active);
     }, []);
 
     const handleDragOver = useCallback(
@@ -59,7 +62,7 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
     );
 
     const handleDragEnd = useCallback((): void => {
-        setActive(null);
+        setActiveDraggable(null);
     }, []);
 
     const handleDragOverlay = useCallback(
@@ -83,11 +86,11 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
     return (
         <div
             ref={setNodeRef}
-            style={{
-                opacity: isDragging ? 0.5 : 1,
-                ...styles,
-            }}
-            className={templateBlockStyles.template_block}
+            style={styles}
+            className={clsx(
+                templateBlockStyles.template_block,
+                isDragging && templateBlockStyles.dragging,
+            )}
             {...attributes}
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
@@ -98,6 +101,7 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
                 onDragOver={handleDragOver}
                 onDragEnd={handleDragEnd}
                 collisionDetection={closestCorners}
+                sensors={sensors}
             >
                 <SortableContext
                     items={items.map((item) => item.id)}
@@ -108,8 +112,12 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
                         <TemplateItem key={item.id} {...item} blockId={id} />
                     ))}
                 </SortableContext>
-                <DragOverlay>{active && handleDragOverlay(active)}</DragOverlay>
-                {isOverlayShown && <ElementOverlay {...listeners} />}
+                <DragOverlay>
+                    {activeDraggable && handleDragOverlay(activeDraggable)}
+                </DragOverlay>
+                {isOverlayShown && !isDragging && (
+                    <ElementOverlay {...listeners} />
+                )}
             </DndContext>
         </div>
     );

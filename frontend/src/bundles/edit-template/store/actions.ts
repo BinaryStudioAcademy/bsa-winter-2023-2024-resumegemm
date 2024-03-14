@@ -31,9 +31,9 @@ const editTemplate = createAsyncThunk<
     AsyncThunkConfig
 >(`${sliceName}/edit`, (templateSettings, { extra, getState }) => {
     const { templateApi } = extra;
-    const { id } = getState().editTemplate.template;
+    const { id, name } = getState().editTemplate.template;
 
-    return templateApi.editTemplate(id, { templateSettings });
+    return templateApi.editTemplate(id, { name, templateSettings });
 });
 
 export { createTemplate, editTemplate, getTemplateById };

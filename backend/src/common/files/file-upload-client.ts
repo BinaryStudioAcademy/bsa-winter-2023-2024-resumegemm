@@ -1,8 +1,19 @@
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import crypto from 'node:crypto';
+
+import {
+    type DeleteObjectCommandOutput,
+    DeleteObjectCommand,
+    GetObjectCommand,
+    PutObjectCommand,
+    S3Client,
+} from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { type IConfig } from 'shared/build';
 
 import { type EnvironmentSchema } from '../config/types/environment-schema.type.js';
 import { type IFileUploadClient } from './interfaces/interfaces.js';
+import { type FileUploadRequestDto } from './types/file-upload-request-dto.type.js';
+import { type FileUploadResponseDto } from './types/file-upload-response-dto-type.js';
 
 class FileUploadClient implements IFileUploadClient {
     private config: IConfig<EnvironmentSchema>;
@@ -22,35 +33,56 @@ class FileUploadClient implements IFileUploadClient {
         });
     }
 
-    private getFileUrl(key: string): string {
-        const { AWS } = this.config.ENV;
+    public async getFileUrl(key: string): Promise<string> {
+        const {
+            AWS: { BUCKET_NAME },
+        } = this.config.ENV;
 
-        return `https://${AWS.BUCKET_NAME}.s3.${AWS.REGION}.amazonaws.com/${key}`;
+        const command = new GetObjectCommand({
+            Bucket: BUCKET_NAME,
+            Key: key,
+        });
+
+        return await getSignedUrl(this.s3Client, command);
     }
 
-    private generateFileKey(extension: string): string {
+    private generateFileKey(): string {
         const uuid = crypto.randomUUID();
 
-        return `file_${uuid}.${extension}`;
+        return `file_${uuid}`;
     }
 
-    public async upload(
-        fileBuffer: Buffer,
-        extension: string,
-    ): Promise<string> {
+    public async upload({
+        buffer,
+        contentType,
+    }: FileUploadRequestDto): Promise<FileUploadResponseDto> {
         const { AWS } = this.config.ENV;
 
-        const fileKey = this.generateFileKey(extension);
+        const key = this.generateFileKey();
 
         const putObjectCommand = new PutObjectCommand({
             Bucket: AWS.BUCKET_NAME,
-            Key: fileKey,
-            Body: fileBuffer,
+            Key: key,
+            Body: buffer,
+            ContentType: contentType,
         });
 
         await this.s3Client.send(putObjectCommand);
 
-        return this.getFileUrl(fileKey);
+        const url = await this.getFileUrl(key);
+
+        return { key, url };
+    }
+
+    public async delete(key: string): Promise<DeleteObjectCommandOutput> {
+        const { AWS } = this.config.ENV;
+
+        const deleteObjectCommand = new DeleteObjectCommand({
+            Key: key,
+            Bucket: AWS.BUCKET_NAME,
+        });
+
+        return await this.s3Client.send(deleteObjectCommand);
     }
 }
 

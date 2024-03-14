@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import {
     Checkbox,
     Dropdown,
+    FormGroup,
     IconButton,
     Input,
     Modal,
@@ -41,6 +42,7 @@ import {
     changeFontStyle,
 } from './helpers/block-styles.helper';
 import { editTemplate, getTemplateById } from './store/actions';
+import { actions as editTemplateActions } from './store/slice';
 import templateStyles from './styles.module.scss';
 
 const dropdownOptions = [
@@ -111,6 +113,18 @@ const EditTemplatePage: React.FC = () => {
             });
         },
         [],
+    );
+
+    const handleInputChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>): void => {
+            const name = event.target.value;
+            dispatch(
+                editTemplateActions.setName({
+                    name,
+                }),
+            );
+        },
+        [dispatch],
     );
 
     const handleSaveTemplate = useCallback(() => {
@@ -236,6 +250,13 @@ const EditTemplatePage: React.FC = () => {
                     templateStyles.editor_sidebar__nav,
                 )}
             >
+                <FormGroup label="Template name">
+                    <Input
+                        title="Enter template name"
+                        onInput={handleInputChange}
+                    />
+                </FormGroup>
+
                 <ul className={editorStyles.editor_sidebar__list}>
                     {templateBlockTitles.map((block) => (
                         <li
