@@ -8,7 +8,6 @@ import {
     useEffect,
     useState,
 } from '../common/hooks/hooks';
-import { TemplateEditor } from '../edit-template/components/template-editor/template-editor';
 import { actions as templateActions } from '../edit-template/store/edit-template.store';
 import { type TemplateDto } from '../templates-page/types/types';
 import { ToastType } from '../toast/enums/show-toast-types.enum';
@@ -44,7 +43,11 @@ const ViewTemplatePage: React.FC = () => {
             <Header />
             <section className={styles.template_section}>
                 {template && (
-                    <TemplateEditor settings={template.templateSettings} />
+                    <img
+                        className={styles.template__image}
+                        src={template.image}
+                        alt="Template"
+                    />
                 )}
             </section>
             <Footer>

@@ -1,6 +1,12 @@
 .template_section {
     padding-block: 20px;
+    flex: 1;
     background-color: var(--color-input-field-gray);
+}
+
+.template__image {
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .footer__controls {
