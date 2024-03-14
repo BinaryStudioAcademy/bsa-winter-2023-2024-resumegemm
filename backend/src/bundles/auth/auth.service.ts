@@ -24,6 +24,7 @@ import {
     type UserConfirmEmailRequestDto,
     type UserSignInRequestDto,
     type UserSignUpRequestDto,
+    type UserSignUpResponseDto,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 import { type IConfig, config } from '~/common/config/config.js';
@@ -55,21 +56,19 @@ class AuthService implements TAuthService {
             email,
             withDeleted: true,
         });
-        if (foundUserByEmail?.deletedAt) {
+
+        if (foundUserByEmail?.emailConfirmed || foundUserByEmail?.deletedAt) {
             throw new HTTPError({
                 message: ExceptionMessage.EMAIL_TAKEN,
                 status: HttpCode.BAD_REQUEST,
             });
         }
-        if (foundUserByEmail) {
-            throw new HTTPError({
-                message: ExceptionMessage.EMAIL_TAKEN,
-                status: HttpCode.BAD_REQUEST,
-            });
+
+        if (foundUserByEmail && !foundUserByEmail.emailConfirmed) {
+            return await this.getUserAfterSendEmail(email, foundUserByEmail.id);
         }
 
         const passwordSalt = await this.generateSalt();
-
         const passwordHash = await this.encrypt(String(password), passwordSalt);
 
         const { id } = await this.userService.create({
@@ -78,12 +77,18 @@ class AuthService implements TAuthService {
             passwordHash,
         });
 
-        const token = generateToken({ id });
-        const emailConfirmToken = generateEmailConfirmToken({ email });
+        return await this.getUserAfterSendEmail(email, id);
+    }
 
+    private async getUserAfterSendEmail(
+        email: string,
+        id: string,
+    ): Promise<UserSignUpResponseDto> {
+        const emailConfirmToken = generateEmailConfirmToken({ email });
         await this.sendAfterSignUpEmail(email, emailConfirmToken);
 
         const user = await this.getUserWithProfile(id);
+        const token = generateToken({ id });
 
         return {
             user,
@@ -135,6 +140,7 @@ class AuthService implements TAuthService {
                 status: HttpCode.BAD_REQUEST,
             });
         }
+
         const { passwordHash, passwordSalt, id, emailConfirmed } =
             foundUserByEmail;
         const isEqualPassword = await this.compare({
@@ -150,11 +156,15 @@ class AuthService implements TAuthService {
             });
         }
         if (!emailConfirmed) {
+            const emailConfirmToken = generateEmailConfirmToken({ email });
+            await this.sendAfterSignUpEmail(email, emailConfirmToken);
+
             throw new HTTPError({
                 message: ExceptionMessage.EMAIL_CONFIRM,
                 status: HttpCode.UNAUTHORIZED,
             });
         }
+
         const user = await this.getUserWithProfile(id);
         return {
             user,
