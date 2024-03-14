@@ -1,51 +1,101 @@
-import clsx from 'clsx';
-import React, { useCallback, useState } from 'react';
+import { type ChangeEvent } from 'react';
 
-import { RegularButton } from '~/bundles/common/components/components';
+import {
+    FormGroup,
+    Input,
+    RegularButton,
+} from '~/bundles/common/components/components';
 import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
 } from '~/bundles/common/enums/enums';
+import {
+    useAppDispatch,
+    useCallback,
+    useMemo,
+    useState,
+} from '~/bundles/common/hooks/hooks';
+import { EditorTabs } from '~/bundles/cv-editor/components/editor-tabs/editor-tabs';
+import { updateSettingsBlocksFromInputs } from '~/bundles/resume/helpers/helpers';
+import { actions as resumeActions } from '~/bundles/resume/store/slice';
+import { type TemplateSettings } from '~/bundles/resume/types/types';
 
-import { type TabsProps as TabsProperties } from '../../types/interface';
 import styles from './online-editor-handler.module.scss';
 
-const OnlineEditorTabsHandler: React.FC<TabsProperties> = ({ tabs }) => {
-    const [activeTabIndex, setActiveTabIndex] = useState(0);
+type TabsPayload = {
+    tabs: TemplateSettings['containers'];
+};
 
-    const handleTabClick = (tabIndex: number) => (event_: React.MouseEvent) => {
-        event_.preventDefault();
-        setActiveTabIndex(tabIndex);
-    };
+const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs }) => {
+    const [activeTabIndex, setActiveTabIndex] = useState(0);
+    const dispatch = useAppDispatch();
+    const [
+        { blocks: firstBlocks },
+        { blocks: secondBlock },
+        { blocks: thirdBlock },
+    ] = tabs;
+
+    const mergedTemplateSettingsProperties = useMemo(
+        () => [...firstBlocks, ...secondBlock, ...thirdBlock],
+        [firstBlocks, secondBlock, thirdBlock],
+    );
+
+    const templateSettingsContainerItems =
+        mergedTemplateSettingsProperties[activeTabIndex].items;
 
     const onNextClick = useCallback(() => {
         setActiveTabIndex(
-            (previousTabIndex) => (previousTabIndex + 1) % tabs.length,
+            (previousTabIndex) =>
+                (previousTabIndex + 1) %
+                mergedTemplateSettingsProperties.length,
         );
-    }, [setActiveTabIndex, tabs]);
+    }, [setActiveTabIndex, mergedTemplateSettingsProperties]);
+
+    const handleChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            const { name, value } = event.target;
+
+            const updatedTemplateSettingsBlocks =
+                updateSettingsBlocksFromInputs(tabs, name, value);
+
+            void dispatch(
+                resumeActions.setNewTemplateSettings(
+                    updatedTemplateSettingsBlocks,
+                ),
+            );
+        },
+        [dispatch, tabs],
+    );
 
     return (
         <section className={styles.editor__section}>
             <nav className={styles.editor_sidebar__nav}>
                 <ul className={styles.editor_sidebar__list}>
-                    {tabs.map((tab, index) => (
-                        <li key={tab.label}>
-                            <button
-                                className={clsx(styles.editor_sidebar__item, {
-                                    [styles.editor_sidebar__item__active]:
-                                        activeTabIndex === index,
-                                })}
-                                onClick={handleTabClick(index)}
-                            >
-                                {tab.label}
-                            </button>
-                        </li>
+                    {mergedTemplateSettingsProperties.map((tab, index) => (
+                        <EditorTabs
+                            key={tab.id}
+                            tabName={tab.name}
+                            index={index}
+                            activeTabIndex={activeTabIndex}
+                            setActiveTabIndex={setActiveTabIndex}
+                        />
                     ))}
                 </ul>
             </nav>
             <div className={styles.editor_output__block}>
-                <div>{tabs[activeTabIndex].content}</div>
+                <div>
+                    {templateSettingsContainerItems.map((item) => (
+                        <FormGroup key={item.id} label={item.name}>
+                            <Input
+                                type="text"
+                                name={item.name}
+                                value={item.content}
+                                onChange={handleChange}
+                            />
+                        </FormGroup>
+                    ))}
+                </div>
                 <RegularButton
                     type={ButtonType.SUBMIT}
                     size={ButtonSize.MEDIUM}
