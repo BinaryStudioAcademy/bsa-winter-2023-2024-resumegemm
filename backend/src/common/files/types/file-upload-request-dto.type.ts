@@ -1,8 +1,6 @@
-import {
-    type ContentEncoding,
-    type ContentType,
-    type ValueOf,
-} from 'shared/build/index.js';
+import { type ContentEncoding } from 'shared/src/enums/content-encoding.enum';
+import { type ContentType } from 'shared/src/enums/content-type.enum';
+import { type ValueOf } from 'shared/src/types/value-of.type';
 
 type FileUploadRequestDto = {
     buffer: Buffer | string;
