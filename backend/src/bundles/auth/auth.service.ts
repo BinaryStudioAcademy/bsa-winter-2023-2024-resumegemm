@@ -12,6 +12,7 @@ import {
     ExceptionMessage,
     HttpCode,
     HTTPError,
+    ServerErrorType,
 } from 'shared/build/index.js';
 
 import {
@@ -92,9 +93,10 @@ class AuthService implements TAuthService {
         }
 
         if (!foundUserByEmail) {
-            throw new HTTPError({
-                message: ExceptionMessage.USER_NOT_FOUND,
+            throw new AuthException({
+                message: ExceptionMessage.INVALID_EMAIL,
                 status: HttpCode.BAD_REQUEST,
+                errorType: ServerErrorType.EMAIL,
             });
         }
         const { passwordHash, passwordSalt, id } = foundUserByEmail;
@@ -105,9 +107,10 @@ class AuthService implements TAuthService {
         });
 
         if (!isEqualPassword) {
-            throw new HTTPError({
+            throw new AuthException({
                 message: ExceptionMessage.INVALID_PASSWORD,
                 status: HttpCode.UNAUTHORIZED,
+                errorType: ServerErrorType.PASSWORD,
             });
         }
         const user = await this.getUserWithProfile(id);

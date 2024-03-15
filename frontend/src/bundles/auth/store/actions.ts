@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type AuthException } from 'shared/build';
 import {
     type UserResetPasswordRequestDto,
     type UserVerifyResetPasswordTokenRequestDto,
@@ -35,12 +36,18 @@ const signIn = createAsyncThunk<
     UserWithProfileRelation,
     UserSignInRequestDto,
     AsyncThunkConfig
->(`${sliceName}/sign-in`, async (signInPayload, { extra }) => {
-    const { authApi, storageApi } = extra;
-    const { user, accessToken } = await authApi.signIn(signInPayload);
+>(`${sliceName}/sign-in`, async (signInPayload, { extra, rejectWithValue }) => {
+    try {
+        const { authApi, storageApi } = extra;
+        const { user, accessToken } = await authApi.signIn(signInPayload);
 
-    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
-    return user;
+        await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+        return user;
+    } catch (error: unknown) {
+        const { message, errorType } = error as AuthException;
+        return rejectWithValue({ message, errorType });
+    }
 });
 
 const getUser = createAsyncThunk<

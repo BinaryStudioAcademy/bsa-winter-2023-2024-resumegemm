@@ -14,14 +14,15 @@ import {
 } from '../helpers/helpers.js';
 import { name as sliceName } from './slice.js';
 
-const updateUserAvatar = createAsyncThunk<Profile, FormData, AsyncThunkConfig>(
-    `${sliceName}/update-user-avatar`,
-    async (payload, { extra }) => {
-        const { profileApi } = extra;
+const updateUserAvatar = createAsyncThunk<
+    Pick<Profile, 'avatar'>,
+    FormData,
+    AsyncThunkConfig
+>(`${sliceName}/update-user-avatar`, async (payload, { extra }) => {
+    const { profileApi } = extra;
 
-        return await profileApi.updateUserAvatar(payload);
-    },
-);
+    return await profileApi.updateUserAvatar(payload);
+});
 
 const getUserProfileAndSocials = createAsyncThunk<
     SocialMediaProfiles[],
@@ -71,7 +72,18 @@ const updateProfileAndEmail = createAsyncThunk<
     },
 );
 
+const deleteUserAvatar = createAsyncThunk<
+    Pick<Profile, 'avatar'>,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/delete-user-avatar`, async (_, { extra }) => {
+    const { profileApi } = extra;
+
+    return await profileApi.deleteUserAvatar();
+});
+
 export {
+    deleteUserAvatar,
     disconnectSocialMedia,
     getUserProfileAndSocials,
     updateProfileAndEmail,

@@ -3,6 +3,7 @@ import { type UpdateUserProfileAndEmailRequestDto } from 'shared/build';
 import { Header, NavTabs } from '~/bundles/common/components/components';
 import { UserProfile } from '~/bundles/common/components/layout/header/user-profile/user-profile';
 import { PageTitle } from '~/bundles/common/components/page-title/page-title';
+import { UserPhotoWrapper } from '~/bundles/common/components/user-photo-uploader/user-photo-wrapper';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { getUserAvatar } from '~/bundles/common/helpers/get-user-avatar';
 import {
@@ -78,6 +79,9 @@ const Profile: React.FC = () => {
                             onSubmit={handleFormSubmit}
                             user={{ email, firstName, lastName }}
                         />
+                    </ProfileCard>
+                    <ProfileCard title="Avatar">
+                        <UserPhotoWrapper />
                     </ProfileCard>
                     <ProfileCard title="Social profile">
                         <Socials
