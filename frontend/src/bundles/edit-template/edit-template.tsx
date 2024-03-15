@@ -29,6 +29,7 @@ import { TemplateItemTags } from '../templates-page/enums/enums';
 import { type TemplateSettings } from '../templates-page/types/types';
 import { TemplateBlockTitles } from '../templates-page/types/types';
 import { TemplateEditor } from './components/template-editor/template-editor';
+import { dropdownOptions } from './constants/constants';
 import { EditorStyles } from './enums/editor-styles.enum';
 import { FontStyles } from './enums/font-styles';
 import {
@@ -44,25 +45,6 @@ import {
 import { editTemplate, getTemplateById } from './store/actions';
 import { actions as editTemplateActions } from './store/slice';
 import templateStyles from './styles.module.scss';
-
-const dropdownOptions = [
-    {
-        label: FontStyles.Regular,
-        value: FontStyles.Regular,
-    },
-    {
-        label: FontStyles.Bold,
-        value: FontStyles.Bold,
-    },
-    {
-        label: FontStyles.Italic,
-        value: FontStyles.Italic,
-    },
-    {
-        label: FontStyles.BoldItalic,
-        value: FontStyles.BoldItalic,
-    },
-];
 
 const EditTemplatePage: React.FC = () => {
     const dispatch = useAppDispatch();
