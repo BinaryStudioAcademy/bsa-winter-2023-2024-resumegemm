@@ -216,7 +216,17 @@ class ResumeController extends Controller {
 
     private async getResumeViews(
         options: ApiHandlerOptions<{ params: { userId: string } }>,
-    ): Promise<ApiHandlerResponse<{ resumeId: string; views: number }[]>> {
+    ): Promise<
+        ApiHandlerResponse<
+            {
+                resumeId: string;
+                views: number;
+                title: string;
+                image: string;
+                updatedAt: string | undefined;
+            }[]
+        >
+    > {
         const views = await this.resumeService.getResumeViews(
             options.params.userId,
         );

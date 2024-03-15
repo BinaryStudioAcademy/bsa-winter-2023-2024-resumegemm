@@ -39,7 +39,15 @@ interface IResumeService {
 
     getResumeViews(
         userId: string,
-    ): Promise<{ resumeId: string; views: number }[]>;
+    ): Promise<
+        {
+            resumeId: string;
+            views: number;
+            title: string;
+            image: string;
+            updatedAt: string | undefined;
+        }[]
+    >;
 }
 
 export { type IResumeService };

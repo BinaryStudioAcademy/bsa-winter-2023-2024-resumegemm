@@ -11,6 +11,7 @@ import { PROMPTS } from '../open-ai/open-ai.js';
 import { type OpenAIService } from '../open-ai/open-ai.service.js';
 import { type ResumeShareService } from '../resume-share/resume-share.service.js';
 import { type ResumeShareAccessService } from '../resume-share/resume-share-access.service.js';
+import { formatDate } from './helpers/format-date.helper.js';
 import {
     type IResumeRepository,
     type IResumeService,
@@ -88,9 +89,15 @@ class ResumeService implements IResumeService {
         );
     }
 
-    public async getResumeViews(
-        userId: string,
-    ): Promise<{ resumeId: string; views: number }[]> {
+    public async getResumeViews(userId: string): Promise<
+        {
+            resumeId: string;
+            views: number;
+            title: string;
+            image: string;
+            updatedAt: string | undefined;
+        }[]
+    > {
         const resumes =
             await this.resumeRepository.findAllByUserIdWithoutRelations(userId);
 
@@ -106,9 +113,17 @@ class ResumeService implements IResumeService {
                         shareLink.id,
                     );
 
+                let formattedDate;
+                if (resume.updatedAt) {
+                    formattedDate = formatDate(resume.updatedAt);
+                }
+
                 viewCounts.push({
                     resumeId: resume.id,
                     views: viewCount,
+                    title: resume.resumeTitle,
+                    image: resume.image,
+                    updatedAt: formattedDate,
                 });
             }
         }
