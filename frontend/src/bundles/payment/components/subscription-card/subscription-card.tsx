@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 
 import { RegularButton } from '~/bundles/common/components/components';
-import { ButtonVariant } from '~/bundles/common/enums/enums';
+import { ButtonSize, ButtonVariant } from '~/bundles/common/enums/enums';
+import { useCallback } from '~/bundles/common/hooks/hooks';
 
 import styles from './styles.module.scss';
 
@@ -11,9 +12,10 @@ type Properties = {
     duration?: string;
     description: string | null;
     price: number | null;
-    onClick: () => void;
+    onClick: (priceId: string) => void;
     selected: boolean;
     image: string[];
+    priceId: string;
 };
 
 const SubscriptionCard: React.FC<Properties> = ({
@@ -25,7 +27,12 @@ const SubscriptionCard: React.FC<Properties> = ({
     onClick,
     selected,
     image,
+    priceId,
 }) => {
+    const handleSelectPrice = useCallback(() => {
+        onClick(priceId);
+    }, [onClick, priceId]);
+
     return (
         <div
             className={clsx(
@@ -47,11 +54,16 @@ const SubscriptionCard: React.FC<Properties> = ({
             <div className={styles.subscription_card__info_container}>
                 {price && (
                     <h3 className={styles.subscription_card__info}>
-                        {price.toFixed(2)} {currency}
+                        <span className={styles.subscription_card__price}>
+                            {price.toFixed(2)}
+                        </span>{' '}
+                        <span className={styles.subscription_card__currency}>
+                            {currency}
+                        </span>
                     </h3>
                 )}
                 {duration && (
-                    <h3 className={styles.subscription_card__info}>
+                    <h3 className={styles.subscription_card__duration}>
                         {duration}
                     </h3>
                 )}
@@ -65,8 +77,9 @@ const SubscriptionCard: React.FC<Properties> = ({
 
             <RegularButton
                 className={styles.subscription_card__button}
-                onClick={onClick}
+                onClick={handleSelectPrice}
                 variant={ButtonVariant.SQUARE_ORANGE}
+                size={ButtonSize.MEDIUM}
             >
                 Select
             </RegularButton>

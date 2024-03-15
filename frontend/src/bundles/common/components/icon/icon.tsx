@@ -8,6 +8,7 @@ import {
 import {
     faArrowDownLong,
     faArrowUpLong,
+    faCheck,
     faChevronDown,
     faClose,
     faCreditCard,
@@ -35,6 +36,7 @@ const iconNameToSvgIcon = {
     [IconName.ARROW_UP]: faArrowUpLong,
     [IconName.CLOSE_CROSS]: faClose,
     [IconName.CREDIT_CARD]: faCreditCard,
+    [IconName.CHECK]: faCheck,
 };
 
 type IconProperties = {

@@ -2,7 +2,7 @@ const steps = [
     { label: 'Create resume' },
     { label: 'Choose plan' },
     { label: 'Payment details' },
-    { label: 'Download resume' },
+    { label: 'Congratulations' },
 ];
 
 export { steps };

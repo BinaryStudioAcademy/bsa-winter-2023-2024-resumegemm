@@ -20,6 +20,7 @@ import {
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
 
+import { PaymentSuccess } from '../../components/payment-success/payment-success';
 import { PaymentMessage } from '../../enums/messages';
 import { steps } from '../../steps/steps';
 import { createSubscription, getPrices } from '../../store/actions';
@@ -48,16 +49,12 @@ const Payment: React.FC = () => {
         prices: payment.prices,
     }));
 
-    useEffect(() => {
-        void dispatch(getPrices({}));
-    }, [dispatch]);
-
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [priceId] = useState('');
-    const [selectedPrice] = useState<GetPriceResponseDto>();
-
+    const [priceId, setPriceId] = useState('');
     const [processing, setProcessing] = useState(false);
+
+    const [selectedPrice, setSelectedPrice] = useState<GetPriceResponseDto>();
 
     const handleNameChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
@@ -77,13 +74,22 @@ const Payment: React.FC = () => {
         setActiveStep((activeStep) => activeStep + 1);
     }, []);
 
-    const handleSelectPrice = useCallback(() => {
-        // setPriceId(priceId);
-        handleChangeActiveStep();
-    }, [handleChangeActiveStep]);
+    const handlePriceChange = useCallback(
+        (id: string) => {
+            const price = prices.find((price) => price.id === id);
+            setPriceId(id);
+            setSelectedPrice(price);
+            handleChangeActiveStep();
+        },
+        [prices, handleChangeActiveStep],
+    );
+
+    useEffect(() => {
+        void dispatch(getPrices({}));
+    }, [dispatch]);
 
     const handleSubmit = useCallback(
-        (event: FormEvent<HTMLFormElement>): void => {
+        async (event: FormEvent<HTMLFormElement>): Promise<void> => {
             async function handleSubmitAsync(): Promise<void> {
                 try {
                     setProcessing(true);
@@ -166,8 +172,7 @@ const Payment: React.FC = () => {
                     setProcessing(false);
                 }
             }
-
-            void handleSubmitAsync();
+            await handleSubmitAsync();
             handleChangeActiveStep();
         },
         [
@@ -182,19 +187,19 @@ const Payment: React.FC = () => {
     );
 
     return (
-        <div className={styles.billing_page}>
-            <div className={styles.billing_page__head}>
-                <div className={styles.billing_page__logo}>
+        <div className={styles.payment_page}>
+            <div className={styles.payment_page__head}>
+                <div className={styles.payment_page__logo}>
                     <Link to={AppRoute.HOME}>
                         <img src={logo} alt="logo" />
                     </Link>
                 </div>
                 <Stepper
-                    className={styles.billing_page__stepper}
+                    className={styles.payment_page__stepper}
                     steps={steps}
                     activeStep={activeStep}
                 />
-                <div className={styles.billing_page__cross_button}>
+                <div className={styles.payment_page__cross_button}>
                     <IconButton onClick={handleClose}>
                         <Icon
                             size={IconSize.LARGE}
@@ -204,37 +209,39 @@ const Payment: React.FC = () => {
                 </div>
             </div>
 
-            <div className={styles.billing_page__content}>
-                <div className={styles.billing_page__text_content}>
-                    <div className={styles.billing_page__title}>
-                        {' '}
-                        Download Your Attention-Grabbing Resume Now!
-                    </div>
-                    <div className={styles.billing_page__text}>
-                        {' '}
-                        To download your resume simply sign up for your Premium
-                        Membership. As an added bonus, you’ll gain instant
-                        access to our Premium Templates and Color Palette.
+            {activeStep === 1 && (
+                <div className={styles.payment_page__content}>
+                    <div className={styles.payment_page__text_content}>
+                        <div className={styles.payment_page__title}>
+                            Download Your Attention-Grabbing Resume Now!
+                        </div>
+                        <div className={styles.payment_page__text}>
+                            To download your resume simply sign up for your
+                            Premium Membership. As an added bonus, you’ll gain
+                            instant access to our Premium Templates and Color
+                            Palette.
+                        </div>
+                        <SubscriptionPlans
+                            priceId={priceId}
+                            prices={prices}
+                            onSelectPrice={handlePriceChange}
+                        />
                     </div>
                 </div>
-                {activeStep === 1 && (
-                    <SubscriptionPlans
-                        priceId={priceId}
-                        prices={prices}
-                        onSelectPrice={handleSelectPrice}
-                    />
-                )}
+            )}
 
-                {activeStep === 2 && (
-                    <SubscriptionPaymentPage
-                        price={selectedPrice}
-                        onPaymentSubmit={handleSubmit}
-                        onChangeEmail={handleEmailChange}
-                        onChangeName={handleNameChange}
-                        processing={processing}
-                    />
-                )}
-            </div>
+            {activeStep === 2 && (
+                <SubscriptionPaymentPage
+                    price={selectedPrice}
+                    onPaymentSubmit={handleSubmit}
+                    onChangeEmail={handleEmailChange}
+                    onChangeName={handleNameChange}
+                    processing={processing}
+                    onChangeActiveStep={handleChangeActiveStep}
+                />
+            )}
+
+            {activeStep === 3 && <PaymentSuccess />}
         </div>
     );
 };

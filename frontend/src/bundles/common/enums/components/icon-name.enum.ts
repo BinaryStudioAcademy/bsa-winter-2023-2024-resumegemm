@@ -12,6 +12,7 @@ enum IconName {
     ARROW_DOWN = 'arrow_down',
     CLOSE_CROSS = 'close_button',
     CREDIT_CARD = 'credit_card',
+    CHECK = 'check',
 }
 
 export { IconName };
