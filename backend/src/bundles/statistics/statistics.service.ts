@@ -1,12 +1,21 @@
 import {
+    addDays,
+    addMonths,
+    addWeeks,
+    format,
+    isSameDay,
+    min,
+    subDays,
+    subMonths,
+    subWeeks,
+} from 'date-fns';
+import {
     type StatisticsRecord,
     compareDateInDiapasonWithoutTime,
-    compareDatesWithoutTime,
     StatisticsPeriods,
 } from 'shared/build/index.js';
 
 import { type ResumeShareService } from '../resume-share/resume-share.service.js';
-import { StatisticsDays } from './enums/statistics-days.enum.js';
 import {
     type GetStatisticsResponseDto,
     type ResumeShareDetailsGetResponseDto,
@@ -24,23 +33,17 @@ class StatisticsService {
     ): GetStatisticsResponseDto {
         const statistics: StatisticsRecord[] = [];
 
-        const dateWeekAgo = new Date();
-        dateWeekAgo.setDate(dateWeekAgo.getDate() - StatisticsDays.WEEK);
+        const dateWeekAgo = subWeeks(new Date(), 1);
 
         const accesses = data.flatMap((resume) => resume.accesses);
 
-        for (
-            const day = dateWeekAgo;
-            day <= new Date();
-            day.setDate(day.getDate() + 1)
-        ) {
+        const currentDate = new Date();
+
+        for (let day = dateWeekAgo; day <= currentDate; day = addDays(day, 1)) {
             statistics.push([
-                day.toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                }),
+                format(day, 'MMM d'),
                 accesses.filter((access) => {
-                    return compareDatesWithoutTime(
+                    return isSameDay(
                         new Date(access.resumeShareAccessTime),
                         day,
                     );
@@ -62,30 +65,25 @@ class StatisticsService {
     ): GetStatisticsResponseDto {
         const statistics: StatisticsRecord[] = [];
 
-        const dateMonthAgo = new Date();
-        dateMonthAgo.setMonth(dateMonthAgo.getMonth() - StatisticsDays.MONTH);
+        const dateMonthAgo = subMonths(new Date(), 1);
 
         const accesses = data.flatMap((resume) => resume.accesses);
 
+        const currentDate = new Date();
+
         for (
-            const day = dateMonthAgo;
-            day <= new Date();
-            day.setDate(day.getDate() + StatisticsDays.WEEK)
+            let day = dateMonthAgo;
+            day <= currentDate;
+            day = addWeeks(day, 1)
         ) {
-            const dayInWeek = new Date(day);
-            dayInWeek.setDate(dayInWeek.getDate() + StatisticsDays.WEEK - 1);
+            const dayInAWeek = subDays(addWeeks(day, 1), 1);
 
-            const dayLimit = new Date(
-                Math.min(dayInWeek.getTime(), Date.now()),
-            );
+            const dayLimit = min([dayInAWeek, new Date()]);
 
-            const stringDate = `${day.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-            })} - ${dayLimit.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-            })}`;
+            const stringDate = `${format(day, 'MMM d')} - ${format(
+                dayLimit,
+                'MMM d',
+            )}`;
 
             statistics.push([
                 stringDate,
@@ -115,34 +113,24 @@ class StatisticsService {
 
         const accesses = data.flatMap((resume) => resume.accesses);
 
-        for (
-            const day = new Date(
-                Math.min(
-                    ...accesses.map((access) =>
-                        new Date(access.resumeShareAccessTime).getTime(),
-                    ),
-                ),
-            );
-            day <= new Date();
-            day.setMonth(day.getMonth() + StatisticsDays.MONTH)
-        ) {
-            const dayInMonth = new Date(day);
-            dayInMonth.setMonth(dayInMonth.getMonth() + StatisticsDays.MONTH);
+        const minDate = min(
+            accesses.map((access) => new Date(access.resumeShareAccessTime)),
+        );
 
-            dayInMonth.setDate(dayInMonth.getDate() - 1);
+        const currentDate = new Date();
 
-            const dayLimit = new Date(
-                Math.min(dayInMonth.getTime(), Date.now()),
-            );
+        for (let day = minDate; day <= currentDate; day = addMonths(day, 1)) {
+            const dayInMonth = subDays(addMonths(day, 1), 1);
+
+            const dayLimit = min([dayInMonth, new Date()]);
+
+            const stringDate = `${format(day, 'MMM d')} - ${format(
+                dayLimit,
+                'MMM d',
+            )}`;
 
             statistics.push([
-                `${day.toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                })} - ${dayLimit.toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                })}`,
+                stringDate,
                 accesses.filter((access) => {
                     return compareDateInDiapasonWithoutTime(
                         new Date(access.resumeShareAccessTime),

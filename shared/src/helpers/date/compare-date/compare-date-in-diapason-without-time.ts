@@ -1,4 +1,4 @@
-import { compareDatesWithoutTime } from './compare-date-without-time.js';
+import { isAfter, isBefore, isSameDay } from 'date-fns';
 
 function compareDateInDiapasonWithoutTime(
     compareDate: Date,
@@ -6,9 +6,9 @@ function compareDateInDiapasonWithoutTime(
     dateEnd: Date,
 ): boolean {
     return (
-        compareDatesWithoutTime(compareDate, dateStart) ||
-        (dateStart < compareDate && compareDate < dateEnd) ||
-        compareDatesWithoutTime(compareDate, dateEnd)
+        isSameDay(compareDate, dateStart) ||
+        (isAfter(compareDate, dateStart) && isBefore(compareDate, dateEnd)) ||
+        isSameDay(compareDate, dateEnd)
     );
 }
 

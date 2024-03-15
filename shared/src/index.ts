@@ -157,7 +157,6 @@ export {
 export { type IStorage } from './framework/storage/storage.js';
 export {
     compareDateInDiapasonWithoutTime,
-    compareDatesWithoutTime,
     configureString,
 } from './helpers/helpers.js';
 export {
