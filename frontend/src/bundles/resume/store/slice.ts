@@ -2,9 +2,11 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { updateTemplateSettings } from '~/bundles/resume/helpers/helpers';
 import {
+    createResume,
     getAllResumes,
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
+    setTemplateSettingsOnResumeCreate,
     updateCurrentResume,
 } from '~/bundles/resume/store/actions';
 
@@ -23,6 +25,7 @@ type State = {
     dataStatus: ValueOf<typeof DataStatus>;
     resumeReview: ResumeAiScoreResponseDto | null;
     templateSettings: TemplateSettings | null;
+    currentTemplateId: string | null;
 };
 
 const initialState: State = {
@@ -31,6 +34,7 @@ const initialState: State = {
     dataStatus: DataStatus.IDLE,
     resumeReview: null,
     templateSettings: null,
+    currentTemplateId: null,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -45,11 +49,18 @@ const { reducer, actions, name } = createSlice({
                 );
             }
         },
+        setCurrentTemplateId: (state, action) => {
+            state.currentTemplateId = action.payload;
+        },
     },
     extraReducers(builder) {
         builder.addCase(getAllResumes.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
             state.resumes = action.payload;
+        });
+        builder.addCase(createResume.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+            state.resumes = [...state.resumes, action.payload];
         });
         builder.addCase(getResumeReviewFromAI.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
@@ -59,6 +70,12 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.FULFILLED;
             state.currentResume = action.payload;
         });
+        builder.addCase(
+            setTemplateSettingsOnResumeCreate.fulfilled,
+            (state, action) => {
+                state.templateSettings = action.payload;
+            },
+        );
         builder.addCase(
             getCurrentResumeWithTemplate.fulfilled,
             (state, action) => {

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
+    createResumeFromTemplateSettings,
     updateResumeKeysFromInputs,
     updateTemplateSettingsBlocks,
 } from '~/bundles/resume/helpers/helpers';
@@ -25,6 +26,30 @@ const getAllResumes = createAsyncThunk<
 >(`${sliceName}/get-all-resumes`, (_, { extra }) => {
     const { resumeApi } = extra;
     return resumeApi.getAllResumes();
+});
+
+const createResume = createAsyncThunk<
+    ResumeGetAllResponseDto,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/create-resume`, (_, { extra, getState }) => {
+    const state = getState();
+    const { resumeApi } = extra;
+    const {
+        userProfile: { avatar, firstName },
+        email,
+    } = state.auth.user as UserWithProfileRelation;
+    const templateSettings = state.resumes.templateSettings as TemplateSettings;
+
+    const resume = createResumeFromTemplateSettings({
+        firstName,
+        email,
+        templateSettings,
+        avatar,
+    });
+
+    const templateId = state.resumes.currentTemplateId;
+    return resumeApi.createResume(resume, templateId as string);
 });
 
 const getCurrentResumeWithTemplate = createAsyncThunk<
@@ -87,6 +112,31 @@ const getCurrentResumeWithTemplate = createAsyncThunk<
     };
 });
 
+const setTemplateSettingsOnResumeCreate = createAsyncThunk<
+    TemplateSettings,
+    TemplateSettings,
+    AsyncThunkConfig
+>(`${sliceName}/set-template-settings`, (templateSettings, { getState }) => {
+    const {
+        email,
+        userProfile: { avatar, firstName },
+    } = getState().auth.user as UserWithProfileRelation;
+
+    const authUserPayload = {
+        email,
+        avatar,
+        firstName,
+    };
+
+    return {
+        ...templateSettings,
+        containers: updateTemplateSettingsBlocks(
+            templateSettings.containers,
+            authUserPayload,
+        ),
+    };
+});
+
 const getResumeReviewFromAI = createAsyncThunk<
     ResumeAiScoreResponseDto,
     ResumeAiScoreRequestDto,
@@ -130,9 +180,11 @@ const downloadPDFDocument = createAsyncThunk<
 });
 
 export {
+    createResume,
     downloadPDFDocument,
     getAllResumes,
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
+    setTemplateSettingsOnResumeCreate,
     updateCurrentResume,
 };
