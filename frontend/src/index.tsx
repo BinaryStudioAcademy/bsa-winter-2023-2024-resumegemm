@@ -83,6 +83,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     element: <PrivateRoute />,
                                     children: [
                                         {
+                                            path: AppRoute.QA,
+                                            element: <QuestionAndAnswerPage />,
+                                        },
+                                        {
                                             path: AppRoute.PROFILE,
                                             element: <Profile />,
                                         },
