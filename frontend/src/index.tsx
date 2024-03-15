@@ -47,6 +47,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             ),
                             children: [
                                 {
+                                    path: AppRoute.QA,
+                                    element: <QuestionAndAnswerPage />,
+                                },
+                                {
                                     path: AppRoute.ROOT,
                                     element: <GuestRoute />,
                                     children: [
@@ -71,10 +75,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: AppRoute.FORGOT_PASSWORD,
                                             element: <Auth />,
-                                        },
-                                        {
-                                            path: AppRoute.QA,
-                                            element: <QuestionAndAnswerPage />,
                                         },
                                     ],
                                 },
