@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
+import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { ResumeCard } from '~/bundles/home/components/components';
 
 type Template = {
@@ -20,13 +22,15 @@ const TemplateList: React.FC<ResumeCardsProperties> = ({ templates }) => {
 
     return (
         <>
-            {templates.map((template) => (
-                <ResumeCard
-                    key={template.id}
-                    title="My Resume"
-                    image={template.image}
-                />
-            ))}
+            {templates.length > 0 &&
+                templates.map((template) => (
+                    <Link
+                        to={`${AppRoute.TEMPLATE}/${template.id}`}
+                        key={template.id}
+                    >
+                        <ResumeCard title="My Resume" image={template.image} />
+                    </Link>
+                ))}
         </>
     );
 };
