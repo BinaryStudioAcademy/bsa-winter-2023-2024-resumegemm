@@ -9,6 +9,7 @@ enum AppRoute {
     HOME = '/home',
     TEMPLATES = '/templates',
     STATISTICS = '/statistics',
+    TEMPLATE = '/template',
     TEMPLATE_EDITOR = '/template-editor',
     FORGOT_PASSWORD = '/forgot-password',
     QA = '/qa',
