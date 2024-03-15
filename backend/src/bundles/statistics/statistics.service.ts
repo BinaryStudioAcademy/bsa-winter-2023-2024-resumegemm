@@ -33,7 +33,7 @@ class StatisticsService {
     ): GetStatisticsResponseDto {
         const statistics: StatisticsRecord[] = [];
 
-        const dateWeekAgo = subWeeks(new Date(), 1);
+        const dateWeekAgo = addDays(subWeeks(new Date(), 1), 1);
 
         const accesses = data.flatMap((resume) => resume.accesses);
 
@@ -106,7 +106,7 @@ class StatisticsService {
         };
     }
 
-    private getStatisticsHandleYear(
+    private getStatisticsHandleTotal(
         data: ResumeShareDetailsGetResponseDto[],
     ): GetStatisticsResponseDto {
         const statistics: StatisticsRecord[] = [];
@@ -169,7 +169,7 @@ class StatisticsService {
                 return this.getStatisticsHandleMonth(details);
             }
             case StatisticsPeriods.TOTAL: {
-                return this.getStatisticsHandleYear(details);
+                return this.getStatisticsHandleTotal(details);
             }
         }
     }
