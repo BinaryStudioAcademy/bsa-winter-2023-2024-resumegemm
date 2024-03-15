@@ -14,3 +14,4 @@ export {
     type UserWithProfileRelation,
     type ValueOf,
 } from 'shared/build';
+export { type TemplateDto } from 'shared/build/bundles/templates/types/template-dto.type';
