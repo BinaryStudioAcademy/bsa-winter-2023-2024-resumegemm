@@ -1,16 +1,12 @@
 import mockResume from '~/assets/img/mock-resume.png';
-import {
-    useAppSelector,
-    useLoadTemplates,
-    useLoadViewedResumes,
-} from '~/bundles/common/hooks/hooks';
+import { useLoadTemplates } from '~/bundles/common/hooks/hooks';
 import {
     CreateNewCard,
     CreateResumeButton,
     Greeting,
     HomeTopSection,
     ResumeCard,
-    ResumeList,
+    ResumeListPreview,
     ResumeSection,
     TemplateList,
     TemplateSection,
@@ -19,9 +15,7 @@ import {
 import styles from './styles.module.scss';
 
 const Home: React.FC = () => {
-    const { resumes } = useAppSelector((state) => state.resumes);
     const { templates } = useLoadTemplates();
-    const { resumeViewHistory } = useLoadViewedResumes();
 
     return (
         <div className={styles.layout}>
@@ -38,10 +32,7 @@ const Home: React.FC = () => {
                 <CreateNewCard />
             </ResumeSection>
             <ResumeSection name="Users' resume">
-                <ResumeList
-                    resumes={resumes}
-                    resumeViewHistory={resumeViewHistory}
-                />
+                <ResumeListPreview />
             </ResumeSection>
             <TemplateSection name="Templates">
                 <TemplateList templates={templates} />
