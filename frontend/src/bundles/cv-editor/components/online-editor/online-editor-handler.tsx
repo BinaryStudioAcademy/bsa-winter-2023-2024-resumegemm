@@ -25,9 +25,10 @@ import styles from './online-editor-handler.module.scss';
 
 type TabsPayload = {
     tabs: TemplateSettings['containers'];
+    isCreate?: boolean;
 };
 
-const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs }) => {
+const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const dispatch = useAppDispatch();
     const [
@@ -63,11 +64,14 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs }) => {
                     updatedTemplateSettingsBlocks,
                 ),
             );
+            if (isCreate) {
+                return;
+            }
             void dispatch(
                 resumeActions.updateCurrentResume({ itemId: id, value }),
             );
         },
-        [dispatch, tabs],
+        [dispatch, tabs, isCreate],
     );
 
     return (

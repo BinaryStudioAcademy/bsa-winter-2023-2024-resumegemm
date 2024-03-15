@@ -1,9 +1,10 @@
-import { DataStatus } from '~/bundles/common/enums/enums';
+import { AppRoute, DataStatus, ToastType } from '~/bundles/common/enums/enums';
 import {
     useAppDispatch,
     useAppSelector,
     useCallback,
     useEffect,
+    useNavigate,
     useParams,
 } from '~/bundles/common/hooks/hooks';
 import { actions as resumeActions } from '~/bundles/resume/store/resume.store';
@@ -11,9 +12,12 @@ import {
     type ConvertResumeItemToStringPayload,
     type ResumeAiScoreResponseDto,
     type ResumeGetAllResponseDto,
+    type TemplateDto,
     type TemplateSettings,
 } from '~/bundles/resume/types/types';
 import { actions as resumeAccessActions } from '~/bundles/resume-access/store/index';
+import { actions as templateActions } from '~/bundles/templates-page/store/index';
+import { showToast } from '~/bundles/toast/helpers/show-toast';
 import {
     convertResumeItemFieldsToString,
     copyLinkToClipboardAndShowToast,
@@ -25,14 +29,21 @@ type UseResumesReturnValues = {
     templateSettings: TemplateSettings | null;
     createResumeAccessLink: () => void;
     requestResumeReviewFromAI: () => void;
+    createResume: () => void;
     downloadGeneratedFile: (html: string) => void;
     resumeReview: ResumeAiScoreResponseDto | null;
     dataStatus: DataStatus;
     id?: string;
 };
 
+const getRandomItem = (template: TemplateDto[]): TemplateDto | null => {
+    const randomIndex = Math.floor(Math.random() * template.length);
+    return template[randomIndex];
+};
+
 const useResumes = (): UseResumesReturnValues => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
 
     const {
@@ -42,13 +53,17 @@ const useResumes = (): UseResumesReturnValues => {
         templateSettings,
         currentResume,
         resumeReview,
-    } = useAppSelector(({ auth, resumes }) => ({
+        templates,
+        isTemplatesLoading,
+    } = useAppSelector(({ auth, resumes, templates }) => ({
         userId: auth.user?.id,
         resumes: resumes.resumes,
         currentResume: resumes.currentResume,
         dataStatus: resumes.dataStatus,
         templateSettings: resumes.templateSettings,
         resumeReview: resumes.resumeReview,
+        templates: templates.templates,
+        isTemplatesLoading: templates.dataStatus,
     }));
 
     const requestResumeReviewFromAI = useCallback(() => {
@@ -66,6 +81,17 @@ const useResumes = (): UseResumesReturnValues => {
         },
         [dispatch],
     );
+
+    const createResume = useCallback(() => {
+        void dispatch(resumeActions.createResume())
+            .unwrap()
+            .then(() => {
+                showToast('Resume created!', ToastType.SUCCESS, {
+                    position: 'top-right',
+                });
+                navigate(AppRoute.HOME);
+            });
+    }, [navigate, dispatch]);
 
     const createResumeAccessLink = useCallback(() => {
         void dispatch(
@@ -85,6 +111,27 @@ const useResumes = (): UseResumesReturnValues => {
     }, [id, dispatch]);
 
     useEffect(() => {
+        if (currentResume) {
+            return;
+        }
+        if (isTemplatesLoading === DataStatus.IDLE && templates.length === 0) {
+            void dispatch(templateActions.loadAllTemplates())
+                .unwrap()
+                .then((templates) => {
+                    const template = getRandomItem(templates);
+                    void dispatch(
+                        resumeActions.setTemplateSettingsOnResumeCreate(
+                            template?.templateSettings as TemplateSettings,
+                        ),
+                    );
+                    void dispatch(
+                        resumeActions.setCurrentTemplateId(template?.id),
+                    );
+                });
+        }
+    }, [currentResume, isTemplatesLoading, dispatch, templates.length]);
+
+    useEffect(() => {
         if (dataStatus === DataStatus.IDLE) {
             void dispatch(resumeActions.getAllResumes());
         }
@@ -100,6 +147,7 @@ const useResumes = (): UseResumesReturnValues => {
         dataStatus,
         downloadGeneratedFile,
         id,
+        createResume,
     };
 };
 
