@@ -1,7 +1,8 @@
 import { Guid as guid } from 'guid-typescript';
 
 import { RESUME_COUNT_INTERVAL } from './constants/resume-count-interval.js';
-import { type RecentlyViewedModel } from './recently-viewed.model.js';
+import { getUniqueTemplatesViewedByUser } from './helpers/get-unique-templates-viewed-by-user.js';
+import { type RecentlyViewedModel } from './recently-viewed.model';
 import {
     type IRecentlyViewedRepository,
     type RecentlyViewedRequestDto,
@@ -9,6 +10,7 @@ import {
     type RecentlyViewedResumesQueryResult,
     type RecentlyViewedResumesResponseDto,
     type RecentlyViewedResumesWithCount,
+    type RecentlyViewedTemplatesQueryResult,
     type RecentlyViewedTemplatesResponseDto,
 } from './types/types';
 
@@ -61,13 +63,15 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
     }): Promise<RecentlyViewedTemplatesResponseDto[]> {
         const { limit, userId } = data;
 
-        return await this.recentlyViewedModel
+        const result = (await this.recentlyViewedModel
             .query()
             .whereNotNull('templateId')
             .where('userId', userId)
             .withGraphFetched('[templates]')
             .orderBy('viewedAt', 'desc')
-            .limit(limit);
+            .limit(limit)) as RecentlyViewedTemplatesQueryResult[];
+
+        return getUniqueTemplatesViewedByUser(result);
     }
 
     public async create(

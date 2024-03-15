@@ -2,6 +2,7 @@ import {
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesWithCount,
+    type RecentlyViewedTemplatesResponseDto,
 } from './types';
 
 interface IRecentlyViewedRepository {
@@ -17,7 +18,7 @@ interface IRecentlyViewedRepository {
     findRecentlyViewedTemplatesByUser(data: {
         userId: string;
         limit: number;
-    }): Promise<RecentlyViewedResponseDto[]>;
+    }): Promise<RecentlyViewedTemplatesResponseDto[]>;
 
     create(
         userId: string,

@@ -10,12 +10,12 @@ interface IRecentlyViewedService {
     findRecentlyViewedTemplatesByUser(data: {
         userId: string;
         limit: number;
-    }): Promise<RecentlyViewedResponseDto[] | null>;
+    }): Promise<RecentlyViewedResponseDto[]>;
 
     findRecentlyViewedResumesByUser(data: {
         userId: string;
         limit: number;
-    }): Promise<RecentlyViewedResponseDto[] | null>;
+    }): Promise<RecentlyViewedResponseDto[]>;
 
     create(
         userId: string,
