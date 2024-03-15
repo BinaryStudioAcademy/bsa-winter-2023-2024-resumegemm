@@ -14,12 +14,10 @@ const AvatarHeader: React.FC = () => {
     const { user } = useAppSelector((state) => state.auth);
 
     return (
-        <>
-            <Header>
-                <NavTabs items={navbarItems} />
-                <UserProfile image={getUserAvatar(user)} />
-            </Header>
-        </>
+        <Header>
+            <NavTabs items={navbarItems} />
+            <UserProfile image={getUserAvatar(user)} />
+        </Header>
     );
 };
 
