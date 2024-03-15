@@ -19,6 +19,12 @@ const socialMediaProfiles = [
         connected: false,
         redirect: OpenAuthApiPath.GOOGLE,
     },
+    {
+        id: null,
+        provider: OauthStrategy.LINKEDIN,
+        connected: false,
+        redirect: OpenAuthApiPath.LINKEDIN,
+    },
 ];
 
 export { socialMediaProfiles };

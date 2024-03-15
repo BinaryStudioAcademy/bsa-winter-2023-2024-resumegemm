@@ -1,12 +1,16 @@
 import { type UseFormSetError } from 'react-hook-form';
-import { type UserSignInRequestDto } from 'shared/build';
 
-import { DataStatus } from '~/bundles/common/enums/data-status.enum';
+import { type DataStatus } from '~/bundles/common/enums/data-status.enum';
 import { useEffect } from '~/bundles/common/hooks/hooks';
 import { useAppSelector } from '~/bundles/common/hooks/use-app-selector/use-app-selector.hook';
 
+type ErrorFieldValues = {
+    email: string;
+    password: string;
+};
+
 type UseFormErrorPayload = {
-    setError: UseFormSetError<UserSignInRequestDto>;
+    setError: UseFormSetError<ErrorFieldValues>;
 };
 
 type ReturnValue = {
@@ -17,14 +21,14 @@ const useFormError = ({ setError }: UseFormErrorPayload): ReturnValue => {
     const { error, dataStatus } = useAppSelector((state) => state.auth);
 
     useEffect(() => {
-        if (error && dataStatus === DataStatus.REJECTED) {
+        if (error) {
             const { errorType, message } = error;
-            const fieldName = errorType as keyof UserSignInRequestDto;
+            const fieldName = errorType as keyof ErrorFieldValues;
             setError(fieldName, {
                 message,
             });
         }
-    }, [dataStatus, setError, error]);
+    }, [setError, error]);
 
     return {
         dataStatus,
