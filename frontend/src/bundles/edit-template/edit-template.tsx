@@ -239,7 +239,12 @@ const EditTemplatePage: React.FC = () => {
                     />
                 </FormGroup>
 
-                <ul className={editorStyles.editor_sidebar__list}>
+                <ul
+                    className={clsx(
+                        editorStyles.editor_sidebar__list,
+                        templateStyles.editor_sidebar__list,
+                    )}
+                >
                     {templateBlockTitles.map((block) => (
                         <li
                             key={block}

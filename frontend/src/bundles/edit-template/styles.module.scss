@@ -9,6 +9,7 @@
 .editor_sidebar__nav {
     width: 100%;
     max-width: 400px;
+    height: 100vh;
     padding: 20px;
     border-radius: 15px;
 }
@@ -25,6 +26,11 @@
 .output__button:hover {
     color: var(--color-white);
     background-color: var(--color-accent-dark-yellow);
+}
+
+.editor_sidebar__list {
+    margin: 25px 0;
+    overflow-y: scroll;
 }
 
 .editor_sidebar__checkbox {
