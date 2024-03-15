@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 import mockResume from '~/assets/img/mock-resume.png';
 import {
     CreateNewCard,
