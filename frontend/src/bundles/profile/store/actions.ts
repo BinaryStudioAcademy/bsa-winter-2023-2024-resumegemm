@@ -1,17 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type SocialMediaProfiles } from 'shared/build';
+import {
+    type Profile,
+    type SocialMediaProfiles,
+    type UpdateUserProfileAndEmailRequestDto,
+} from 'shared/build';
 
+import { actions as authActions } from '~/bundles/auth/store/slice.js';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
 import {
     getCurrentlyConnectedSocialMedias,
     updatedSocialMediaProfiles,
 } from '../helpers/helpers.js';
-import { type UserProfileResponce } from '../types/user-profile-responce';
 import { name as sliceName } from './slice.js';
 
 const updateUserAvatar = createAsyncThunk<
-    UserProfileResponce,
+    Pick<Profile, 'avatar'>,
     FormData,
     AsyncThunkConfig
 >(`${sliceName}/update-user-avatar`, async (payload, { extra }) => {
@@ -51,4 +55,37 @@ const disconnectSocialMedia = createAsyncThunk<
     return socialMediaProfiles;
 });
 
-export { disconnectSocialMedia, getUserProfileAndSocials, updateUserAvatar };
+const updateProfileAndEmail = createAsyncThunk<
+    Profile,
+    { id: string; payload: UpdateUserProfileAndEmailRequestDto },
+    AsyncThunkConfig
+>(
+    `${sliceName}/update-profile-and-email`,
+    async ({ id, payload }, { extra, dispatch }) => {
+        const { userApi } = extra;
+        const updatedUserWithProfile = await userApi.updateProfileAndEmail(
+            id,
+            payload,
+        );
+        dispatch(authActions.setUser(updatedUserWithProfile));
+        return updatedUserWithProfile.userProfile;
+    },
+);
+
+const deleteUserAvatar = createAsyncThunk<
+    Pick<Profile, 'avatar'>,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/delete-user-avatar`, async (_, { extra }) => {
+    const { profileApi } = extra;
+
+    return await profileApi.deleteUserAvatar();
+});
+
+export {
+    deleteUserAvatar,
+    disconnectSocialMedia,
+    getUserProfileAndSocials,
+    updateProfileAndEmail,
+    updateUserAvatar,
+};

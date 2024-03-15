@@ -27,6 +27,7 @@ import { PreviewPage } from './bundles/preview/preview';
 import { ResumeAccess } from './bundles/resume-access/pages/resume-access';
 import { TemplatePage } from './bundles/templates-page/templates-page';
 import { Profile } from './bundles/users/pages/profile';
+import { ViewTemplatePage } from './bundles/view-template-page/view-template-page';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
@@ -66,6 +67,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             path: AppRoute.SIGN_UP,
                                             element: <Auth />,
                                         },
+                                        {
+                                            path: AppRoute.FORGOT_PASSWORD,
+                                            element: <Auth />,
+                                        },
                                     ],
                                 },
                                 {
@@ -83,6 +88,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: AppRoute.TEMPLATES,
                                             element: <TemplatePage />,
+                                        },
+                                        {
+                                            path: `${AppRoute.TEMPLATE}/:id`,
+                                            element: <ViewTemplatePage />,
                                         },
                                         {
                                             path: `${AppRoute.TEMPLATE_EDITOR}/:id`,

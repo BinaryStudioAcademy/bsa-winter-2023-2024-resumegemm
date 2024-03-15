@@ -1,9 +1,9 @@
+import { type Profile, ProfileApiPath } from 'shared/build/index.js';
+
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
 import { type IStorage } from '~/framework/storage/storage.js';
-
-import { type UserProfileResponce } from './types/user-profile-responce';
 
 type Constructor = {
     baseUrl: string;
@@ -18,18 +18,31 @@ class ProfileApi extends HttpApi {
 
     public async updateUserAvatar(
         payload: FormData,
-    ): Promise<UserProfileResponce> {
+    ): Promise<Pick<Profile, 'avatar'>> {
         const response = await this.load(
-            this.getFullEndpoint(ApiPath.AVATAR, {}),
+            this.getFullEndpoint(ProfileApiPath.UPLOAD_AVATAR, {}),
             {
-                method: 'PUT',
+                method: 'POST',
                 contentType: ContentType.FORM_DATA,
                 hasAuth: true,
                 payload,
             },
         );
 
-        return await response.json<UserProfileResponce>();
+        return await response.json<Pick<Profile, 'avatar'>>();
+    }
+
+    public async deleteUserAvatar(): Promise<Pick<Profile, 'avatar'>> {
+        const response = await this.load(
+            this.getFullEndpoint(ProfileApiPath.DELETE_AVATAR, {}),
+            {
+                method: 'DELETE',
+                contentType: ContentType.TEXT_PLAIN,
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<Pick<Profile, 'avatar'>>();
     }
 }
 

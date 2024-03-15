@@ -12,6 +12,23 @@ class ProfileRepository extends AbstractRepository<
     }: Record<'profileModel', typeof ProfileModel>) {
         super(profileModel);
     }
+
+    public async updateById(
+        id: string,
+        data: Partial<Omit<ProfileModel, 'id' | 'createdAt' | 'updatedAt'>>,
+    ): Promise<ProfileModel> {
+        return await this.model.query().updateAndFetchById(id, data);
+    }
+
+    public async updateAvatar({
+        id,
+        key = null,
+    }: {
+        id: string;
+        key?: string | null;
+    }): Promise<void> {
+        await this.model.query().findById(id).patch({ avatar: key });
+    }
 }
 
 export { ProfileRepository };
