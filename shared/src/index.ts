@@ -71,6 +71,7 @@ export {
     type ResumeShareGetRequestDto,
     type ResumeShareGetResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeViewsCountResponseDto,
     type TechnicalSkill,
     LanguageLevels,
     ResumesApiPath,

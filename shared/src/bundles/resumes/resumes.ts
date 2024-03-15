@@ -33,4 +33,5 @@ export {
     type ResumeShareGetRequestDto,
     type ResumeShareGetResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeViewsCountResponseDto,
 } from './types/types.js';
