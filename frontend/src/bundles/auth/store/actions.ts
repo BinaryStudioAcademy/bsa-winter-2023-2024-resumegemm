@@ -1,8 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type AuthException } from 'shared/build';
+import {
+    type UserResetPasswordRequestDto,
+    type UserVerifyResetPasswordTokenRequestDto,
+    type UserVerifyResetPasswordTokenResponse,
+} from 'shared/build/index.js';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
     type UserAuthResponse,
+    type UserForgotPasswordRequestDto,
+    type UserForgotPasswordResponse,
     type UserSignInRequestDto,
     type UserSignUpRequestDto,
     type UserWithProfileRelation,
@@ -28,12 +36,18 @@ const signIn = createAsyncThunk<
     UserWithProfileRelation,
     UserSignInRequestDto,
     AsyncThunkConfig
->(`${sliceName}/sign-in`, async (signInPayload, { extra }) => {
-    const { authApi, storageApi } = extra;
-    const { user, accessToken } = await authApi.signIn(signInPayload);
+>(`${sliceName}/sign-in`, async (signInPayload, { extra, rejectWithValue }) => {
+    try {
+        const { authApi, storageApi } = extra;
+        const { user, accessToken } = await authApi.signIn(signInPayload);
 
-    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
-    return user;
+        await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+        return user;
+    } catch (error: unknown) {
+        const { message, errorType } = error as AuthException;
+        return rejectWithValue({ message, errorType });
+    }
 });
 
 const getUser = createAsyncThunk<
@@ -57,4 +71,53 @@ const requestNewAccessToken = createAsyncThunk<
     await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
 });
 
-export { getUser, requestNewAccessToken, signIn, signUp };
+const forgotPassword = createAsyncThunk<
+    UserForgotPasswordResponse,
+    UserForgotPasswordRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/forgot-password`, async (forgotPasswordPayload, { extra }) => {
+    const { authApi } = extra;
+
+    return await authApi.forgotPassword(forgotPasswordPayload);
+});
+
+const verifyResetPasswordToken = createAsyncThunk<
+    UserVerifyResetPasswordTokenResponse,
+    UserVerifyResetPasswordTokenRequestDto,
+    AsyncThunkConfig
+>(
+    `${sliceName}/verify-reset-token`,
+    async (verifyResetPasswordTokenPayload, { extra }) => {
+        const { authApi } = extra;
+
+        return await authApi.verifyResetPasswordToken(
+            verifyResetPasswordTokenPayload,
+        );
+    },
+);
+
+const resetPassword = createAsyncThunk<
+    UserWithProfileRelation,
+    UserResetPasswordRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/reset-password`, async (resetPasswordPayload, { extra }) => {
+    const { authApi, storageApi } = extra;
+
+    const { accessToken, user } = await authApi.resetPassword(
+        resetPasswordPayload,
+    );
+
+    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+    return user;
+});
+
+export {
+    forgotPassword,
+    getUser,
+    requestNewAccessToken,
+    resetPassword,
+    signIn,
+    signUp,
+    verifyResetPasswordToken,
+};

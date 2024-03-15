@@ -32,10 +32,13 @@
     },
     "dependencies": {
         "@aws-sdk/client-s3": "3.525.0",
+        "@aws-sdk/s3-request-presigner": "3.525.0",
         "@fastify/multipart": "8.1.0",
         "@fastify/cookie": "9.3.1",
         "@fastify/oauth2": "7.8.0",
         "@fastify/swagger": "8.3.1",
+        "@fastify/express": "2.3.0",
+        "express-rate-limit": "7.2.0",
         "@fastify/swagger-ui": "1.4.0",
         "@types/node-cron": "3.0.11",
         "axios": "1.6.7",

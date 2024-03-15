@@ -47,6 +47,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 10;
     width: 100%;
     height: 100%;
     background-color: var(--color-background-blue);
@@ -54,12 +55,13 @@
 
 .uploader_modal__overlay {
     position: fixed;
-    top: calc(50% - 400px);
-    left: calc(50% - 400px);
-    width: 800px;
-    height: 800px;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 80%;
     padding: 40px;
     background-color: var(--color-text-blue);
+    transform: translate(-50%, -50%);
 }
 
 .uploader_modal__button__close {

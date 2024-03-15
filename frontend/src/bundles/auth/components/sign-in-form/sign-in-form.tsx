@@ -20,7 +20,11 @@ import {
     DividerVariant,
     SpinnerVariant,
 } from '~/bundles/common/enums/enums';
-import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
+import {
+    useAppForm,
+    useCallback,
+    useFormError,
+} from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
 import { type UserSignInRequestDto } from '~/bundles/users/users';
 
@@ -32,10 +36,15 @@ type Properties = {
     dataStatus: ValueOf<typeof DataStatus>;
 };
 
-const SignInForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
-    const { control, errors, handleSubmit } = useAppForm<UserSignInRequestDto>({
-        defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
-        validationSchema: userSignInValidationSchema,
+const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
+    const { control, errors, handleSubmit, setError } =
+        useAppForm<UserSignInRequestDto>({
+            defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
+            validationSchema: userSignInValidationSchema,
+        });
+
+    const { dataStatus } = useFormError({
+        setError,
     });
 
     const handleFormSubmit = useCallback(
@@ -65,9 +74,12 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
                     />
                 </FormGroup>
                 <div className={styles.login__form_password}>
-                    <span className={styles.forgot__link}>
+                    <Link
+                        to={AppRoute.FORGOT_PASSWORD}
+                        className={styles.forgot__link}
+                    >
                         Forgot Password?
-                    </span>
+                    </Link>
                     <PasswordInput
                         label="Password"
                         error={errors.password}
