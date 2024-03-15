@@ -21,3 +21,4 @@ export { type ResumeShareGetRequestDto } from './resume-share-get-request-dto.ty
 export { type ResumeShareGetResponseDto } from './resume-share-get-response-dto.type';
 export { type ResumeShareResponseDto } from './resume-share-response-dto.type';
 export { type ResumeUpdateItemRequestDto } from './resume-update-item-request-dto.type.js';
+export { type ResumeViewsCountResponseDto } from './resume-views-count-response-dto.type.js';
