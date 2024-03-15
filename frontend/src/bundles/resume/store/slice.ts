@@ -1,16 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { type ResumeGetItemResponseDto } from '../types/types.js';
-import { getAllResumesByUserId } from './actions.js';
+import {
+    type ResumeGetItemResponseDto,
+    type ResumeViewsCountResponseDto,
+} from '../types/types.js';
+import { getAllResumesByUserId, getViewsCountByUserId } from './actions.js';
 
 type State = {
     resumeId: string;
     resumes: ResumeGetItemResponseDto[];
+    resumeViews: ResumeViewsCountResponseDto[];
 };
 
 const initialState: State = {
     resumeId: '',
     resumes: [],
+    resumeViews: [],
 };
 
 const { reducer, actions, name } = createSlice({
@@ -20,6 +25,9 @@ const { reducer, actions, name } = createSlice({
     extraReducers(builder) {
         builder.addCase(getAllResumesByUserId.fulfilled, (state, action) => {
             state.resumes = action.payload.resumes;
+        });
+        builder.addCase(getViewsCountByUserId.fulfilled, (state, action) => {
+            state.resumeViews = action.payload;
         });
     },
 });

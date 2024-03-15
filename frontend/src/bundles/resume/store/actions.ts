@@ -2,7 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
-import { type ResumeGetAllResponseDto } from '../types/types.js';
+import {
+    type ResumeGetAllResponseDto,
+    type ResumeViewsCountResponseDto,
+} from '../types/types.js';
 import { name as sliceName } from './slice.js';
 
 const getAllResumesByUserId = createAsyncThunk<
@@ -15,4 +18,14 @@ const getAllResumesByUserId = createAsyncThunk<
     return resumeApi.getAllByUserId(request);
 });
 
-export { getAllResumesByUserId };
+const getViewsCountByUserId = createAsyncThunk<
+    ResumeViewsCountResponseDto[],
+    { userId: string },
+    AsyncThunkConfig
+>(`${sliceName}/getViewsCountByUserId`, (request, { extra }) => {
+    const { resumeApi } = extra;
+
+    return resumeApi.getViewsCount(request.userId);
+});
+
+export { getAllResumesByUserId, getViewsCountByUserId };

@@ -7,6 +7,7 @@ import { ResumesApiPath } from './enums/enums.js';
 import {
     type ResumeGetAllRequestDto,
     type ResumeGetAllResponseDto,
+    type ResumeViewsCountResponseDto,
 } from './types/types.js';
 
 type ResumeApiConfig = {
@@ -29,6 +30,21 @@ class ResumeApi extends HttpApi {
         );
         const response = await this.load(
             this.getFullEndpoint(`${userIdPath}`, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+
+        return await response.json();
+    }
+
+    public async getViewsCount(
+        userId: string,
+    ): Promise<ResumeViewsCountResponseDto[]> {
+        const response = await this.load(
+            this.getFullEndpoint(ResumesApiPath.USER_ID_VIEWS(userId), {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
