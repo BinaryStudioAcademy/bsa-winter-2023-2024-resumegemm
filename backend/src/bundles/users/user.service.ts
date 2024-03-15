@@ -136,10 +136,10 @@ class UserService
         id: string,
     ): Promise<UserWithProfileRelation> {
         const user =
-            await this.userRepository.getUserWithProfileAndOauthConnections(
+            (await this.userRepository.getUserWithProfileAndOauthConnections(
                 id,
                 'withoutHashPasswords',
-            );
+            )) as UserWithProfileRelation;
 
         const { userProfile } = user;
 

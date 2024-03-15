@@ -2,7 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/async-thunk-config.type';
 
-import { type TemplateDto } from '../../templates-page/types/types';
+import {
+    type TemplateDto,
+    type TemplateSettings,
+} from '../../templates-page/types/types';
 import { name as sliceName } from './slice.js';
 
 const getTemplateById = createAsyncThunk<TemplateDto, string, AsyncThunkConfig>(
@@ -22,14 +25,15 @@ const createTemplate = createAsyncThunk<
     return templateApi.createTemplate();
 });
 
-const editTemplate = createAsyncThunk<TemplateDto, string, AsyncThunkConfig>(
-    `${sliceName}/edit`,
-    (image, { extra, getState }) => {
-        const { templateApi } = extra;
-        const { id, name, templateSettings } = getState().editTemplate.template;
+const editTemplate = createAsyncThunk<
+    TemplateDto,
+    { templateSettings: TemplateSettings; image: string },
+    AsyncThunkConfig
+>(`${sliceName}/edit`, ({ templateSettings, image }, { extra, getState }) => {
+    const { templateApi } = extra;
+    const { id, name } = getState().editTemplate.template;
 
-        return templateApi.editTemplate(id, { name, templateSettings, image });
-    },
-);
+    return templateApi.editTemplate(id, { name, templateSettings, image });
+});
 
 export { createTemplate, editTemplate, getTemplateById };
