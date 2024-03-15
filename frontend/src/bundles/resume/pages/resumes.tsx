@@ -2,33 +2,23 @@ import { useParams } from 'react-router-dom';
 
 import { Icon } from '~/bundles/common/components/components';
 import { IconName, IconSize } from '~/bundles/common/enums/enums';
-import {
-    useAppSelector,
-    useLoadViewedResumes,
-} from '~/bundles/common/hooks/hooks';
+import { useAppSelector } from '~/bundles/common/hooks/hooks';
 import { ResumePreview } from '~/bundles/resume-preview/components/components';
 
 import styles from './styles.module.scss';
 
 const Resume: React.FC = () => {
-    // TODO: uncomment this line when redirect from Home with parasm ID is ready
+    const resumeViews = useAppSelector(({ resumes }) => resumes.resumeViews);
+
+    // TODO: uncomment these lines when redirect from Home with parasm ID is ready
     // const { id } = useParams();
+    // const currentResume = resumeViews.filter(
+    //     (resume) => resume.resumeId === id,
+    // );
+    // const currentResumeViews = currentResume.views;
 
     // TODO: remove this line when redirect from Home with parasm ID is ready
-    const { resumes } = useAppSelector((state) => state.resumes);
-
-    const { resumeViewHistory } = useLoadViewedResumes();
-
-    // TODO: remove this line when redirect from Home with parasm ID is ready
-    const id = resumes[0]?.resume.id;
-
-    const getViewedResumeCount = (resumeId: string): number => {
-        return resumeViewHistory[resumeId]?.length > 0
-            ? resumeViewHistory[resumeId].length
-            : 0;
-    };
-
-    const viewedResumeCount = getViewedResumeCount(id);
+    const currentResumeViews = resumeViews[0]?.views;
 
     return (
         <div>
@@ -37,7 +27,7 @@ const Resume: React.FC = () => {
                 <div className={styles.resume__views_count}>
                     <Icon size={IconSize.MEDIUM} name={IconName.EYE_OPEN} />
                     <span className={styles.resume__views_number}>
-                        {viewedResumeCount}
+                        {currentResumeViews}
                     </span>
                 </div>
             </div>
