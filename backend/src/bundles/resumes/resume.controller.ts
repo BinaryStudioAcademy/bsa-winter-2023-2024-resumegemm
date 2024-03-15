@@ -34,12 +34,14 @@ class ResumeController extends Controller {
         this.resumeService = resumeService;
 
         this.addRoute({
-            path: ResumesApiPath.ROOT,
+            path: ResumesApiPath.ID,
             method: 'POST',
             handler: (options) =>
                 this.create(
                     options as ApiHandlerOptions<{
                         body: ResumeCreateItemRequestDto;
+                        user: UserAuthResponse['user'];
+                        params: IdParameter;
                     }>,
                 ),
         });
@@ -103,9 +105,17 @@ class ResumeController extends Controller {
     private async create(
         options: ApiHandlerOptions<{
             body: ResumeCreateItemRequestDto;
+            user: UserAuthResponse['user'];
+            params: IdParameter;
         }>,
     ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
-        const resume = await this.resumeService.create(options.body);
+        const { id: userId } = options.user;
+        const { id: templateId } = options.params;
+        const resume = await this.resumeService.create(
+            options.body,
+            userId,
+            templateId,
+        );
 
         return {
             status: HttpCode.CREATED,

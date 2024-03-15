@@ -111,6 +111,8 @@ class ResumeRepository implements IResumeRepository {
 
     public async create(
         payload: ResumeCreateItemRequestDto,
+        userId: string,
+        templateId: string,
     ): Promise<ResumeGetItemResponseDto> {
         const transaction = await this.resumeModel.startTransaction();
 
@@ -119,6 +121,8 @@ class ResumeRepository implements IResumeRepository {
                 .query(transaction)
                 .insert({
                     ...payload.resume,
+                    templateId: templateId,
+                    userId,
                     id: guid.raw(),
                 })
                 .returning('*');

@@ -64,10 +64,12 @@ class ResumeService implements IResumeService {
         return this.resumeRepository.findAllByUserId(userId);
     }
 
-    public async create(
+    public create(
         payload: ResumeCreateItemRequestDto,
+        userId: string,
+        templateId: string,
     ): Promise<ResumeGetItemResponseDto> {
-        return await this.resumeRepository.create(payload);
+        return this.resumeRepository.create(payload, userId, templateId);
     }
 
     public async update(

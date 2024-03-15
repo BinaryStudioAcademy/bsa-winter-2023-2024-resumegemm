@@ -23,6 +23,8 @@ interface IResumeService {
 
     create(
         payload: ResumeCreateItemRequestDto,
+        userId: string,
+        templateId: string,
     ): Promise<ResumeGetItemResponseDto>;
 
     update(
