@@ -17,12 +17,18 @@ const ResumePage: React.FC = () => {
         resumeReview,
         requestResumeReviewFromAI,
         downloadGeneratedFile,
+        setTemplateSettingsMockData,
         dataStatus,
         id,
     } = useResumes();
 
     const HTMLFromComponentOrEmptyString = templateSettings
-        ? renderToString(<TemplateEditor settings={templateSettings} />)
+        ? renderToString(
+              <TemplateEditor
+                  templateSettings={templateSettings}
+                  setTemplateSettings={setTemplateSettingsMockData}
+              />,
+          )
         : '';
 
     const handleDownloadClick = useCallback(() => {
@@ -57,7 +63,10 @@ const ResumePage: React.FC = () => {
             </Header>
             <div className={styles.resume__page}>
                 {templateSettings && (
-                    <TemplateEditor settings={templateSettings} />
+                    <TemplateEditor
+                        templateSettings={templateSettings}
+                        setTemplateSettings={setTemplateSettingsMockData}
+                    />
                 )}
             </div>
             <div className={styles.resume__wrapper_footer}>

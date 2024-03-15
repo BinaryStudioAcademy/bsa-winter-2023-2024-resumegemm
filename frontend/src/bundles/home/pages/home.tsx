@@ -1,6 +1,7 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import mockResume from '~/assets/img/mock-resume.png';
+import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { useLoadTemplates, useResumes } from '~/bundles/common/hooks/hooks';
 import {
     CreateNewCard,
@@ -45,13 +46,19 @@ const Home: React.FC = () => {
             </ResumeSection>
             <TemplateSection name="Templates">
                 {templates.length > 0 &&
-                    templates.map((template) => (
-                        <ResumeCard
-                            key={template.id}
-                            title="My Resume"
-                            image={template.image}
-                        />
-                    ))}
+                    templates.map((template) => {
+                        return (
+                            <Link
+                                to={`${AppRoute.TEMPLATE}/${template.id}`}
+                                key={template.id}
+                            >
+                                <ResumeCard
+                                    title="My Resume"
+                                    image={template.image}
+                                />
+                            </Link>
+                        );
+                    })}
             </TemplateSection>
         </div>
     );

@@ -7,7 +7,8 @@ import { TemplateEditor } from '~/bundles/edit-template/components/template-edit
 import styles from './styles.module.scss';
 
 const CreateResume: React.FC = () => {
-    const { templateSettings, createResume } = useResumes();
+    const { templateSettings, createResume, setTemplateSettingsMockData } =
+        useResumes();
 
     return (
         <>
@@ -19,7 +20,10 @@ const CreateResume: React.FC = () => {
                             tabs={templateSettings.containers}
                             isCreate
                         />
-                        <TemplateEditor settings={templateSettings} />
+                        <TemplateEditor
+                            templateSettings={templateSettings}
+                            setTemplateSettings={setTemplateSettingsMockData}
+                        />
                     </>
                 )}
                 <RegularButton

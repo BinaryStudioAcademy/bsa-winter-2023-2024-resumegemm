@@ -6,11 +6,10 @@ import { ToastContext } from '~/bundles/toast/context/toast-context';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 
 import styles from './styles.module.scss';
+import { type ImageBlob } from './types/image-blob.type';
 
 interface UploadProperties {
-    onImageUpload: React.Dispatch<
-        React.SetStateAction<string | ArrayBuffer | null>
-    >;
+    onImageUpload: React.Dispatch<React.SetStateAction<ImageBlob | null>>;
 }
 
 const UserPhotoUploader: React.FC<UploadProperties> = ({ onImageUpload }) => {
@@ -21,7 +20,7 @@ const UserPhotoUploader: React.FC<UploadProperties> = ({ onImageUpload }) => {
             const reader = new FileReader();
             reader.addEventListener('load', () => {
                 if (reader.readyState === FileReader.DONE) {
-                    onImageUpload(reader.result);
+                    onImageUpload({ src: reader.result, blob: file });
                 }
             });
             reader.readAsDataURL(file);

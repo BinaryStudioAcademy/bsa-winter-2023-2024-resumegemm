@@ -45,7 +45,7 @@ const createResume = createAsyncThunk<
         firstName,
         email,
         templateSettings,
-        avatar,
+        avatar: avatar ?? '',
     });
 
     const templateId = state.resumes.currentTemplateId;

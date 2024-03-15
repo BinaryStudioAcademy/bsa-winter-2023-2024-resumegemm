@@ -5,7 +5,7 @@ import { TemplateEditor } from '~/bundles/edit-template/components/template-edit
 import styles from './styles.module.scss';
 
 const EditResume: React.FC = () => {
-    const { templateSettings } = useResumes();
+    const { templateSettings, setTemplateSettingsMockData } = useResumes();
     return (
         <div className={styles.edit__resume}>
             {templateSettings && (
@@ -13,7 +13,10 @@ const EditResume: React.FC = () => {
                     <OnlineEditorTabsHandler
                         tabs={templateSettings.containers}
                     />
-                    <TemplateEditor settings={templateSettings} />
+                    <TemplateEditor
+                        templateSettings={templateSettings}
+                        setTemplateSettings={setTemplateSettingsMockData}
+                    />
                 </>
             )}
         </div>

@@ -1,9 +1,7 @@
+import Cookies from 'js-cookie';
 import { type AuthTokenResponse, AuthApiPath } from 'shared/build';
 
-import {
-    type ContentType,
-    ServerErrorType,
-} from '~/bundles/common/enums/enums.js';
+import { ContentType, ServerErrorType } from '~/bundles/common/enums/enums.js';
 import {
     type ServerErrorResponse,
     type ValueOf,
@@ -19,7 +17,7 @@ import {
 import { type IStorage, StorageKey } from '~/framework/storage/storage.js';
 import {
     configureString,
-    getCookie,
+    CookieName,
     isServerErrorRange,
 } from '~/helpers/helpers.js';
 
@@ -119,14 +117,16 @@ class HTTPApi implements IHttpApi {
     ): Promise<Headers> {
         const headers = new Headers();
 
-        headers.append(HttpHeader.CONTENT_TYPE, contentType);
+        if (contentType !== ContentType.FORM_DATA) {
+            headers.append(HttpHeader.CONTENT_TYPE, contentType);
+        }
 
         if (hasAuth) {
             const tokenFromLocalStorage = await this.storage.get<string>(
                 StorageKey.ACCESS_TOKEN,
             );
 
-            const tokenFromCookie = getCookie(StorageKey.ACCESS_TOKEN);
+            const tokenFromCookie = Cookies.get(CookieName.ACCESS_TOKEN);
 
             const token = tokenFromLocalStorage ?? tokenFromCookie;
             headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
