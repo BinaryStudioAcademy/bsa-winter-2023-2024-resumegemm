@@ -2,13 +2,12 @@ import { Header, RegularButton } from '~/bundles/common/components/components';
 import { ButtonVariant } from '~/bundles/common/enums/enums';
 import { useResumes } from '~/bundles/common/hooks/hooks';
 import { OnlineEditorTabsHandler } from '~/bundles/cv-editor/components/components';
-import { TemplateEditor } from '~/bundles/edit-template/components/template-editor/template-editor';
+import { ResumeEditor } from '~/bundles/resume/components/resume-editor/resume-editor';
 
 import styles from './styles.module.scss';
 
 const CreateResume: React.FC = () => {
-    const { templateSettings, createResume, setTemplateSettingsMockData } =
-        useResumes();
+    const { templateSettings, createResume } = useResumes();
 
     return (
         <>
@@ -20,10 +19,7 @@ const CreateResume: React.FC = () => {
                             tabs={templateSettings.containers}
                             isCreate
                         />
-                        <TemplateEditor
-                            templateSettings={templateSettings}
-                            setTemplateSettings={setTemplateSettingsMockData}
-                        />
+                        <ResumeEditor templateSettings={templateSettings} />
                     </>
                 )}
                 <RegularButton

@@ -23,10 +23,6 @@ import {
     copyLinkToClipboardAndShowToast,
 } from '~/helpers/helpers';
 
-type SetTemplateSettingsMockPayload = React.Dispatch<
-    React.SetStateAction<TemplateSettings>
->;
-
 type UseResumesReturnValues = {
     userId: string | undefined;
     resumes: ResumeGetAllResponseDto[];
@@ -38,7 +34,6 @@ type UseResumesReturnValues = {
     resumeReview: ResumeAiScoreResponseDto | null;
     dataStatus: DataStatus;
     id?: string;
-    setTemplateSettingsMockData: SetTemplateSettingsMockPayload;
 };
 
 const getRandomItem = (template: TemplateDto[]): TemplateDto | null => {
@@ -153,8 +148,6 @@ const useResumes = (): UseResumesReturnValues => {
         downloadGeneratedFile,
         id,
         createResume,
-        setTemplateSettingsMockData:
-            null as unknown as SetTemplateSettingsMockPayload,
     };
 };
 

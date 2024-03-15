@@ -5,8 +5,8 @@ import shareIcon from '~/assets/img/share-icon.svg';
 import { Header, RegularButton } from '~/bundles/common/components/components';
 import { AppRoute, ButtonVariant } from '~/bundles/common/enums/enums';
 import { useCallback, useResumes } from '~/bundles/common/hooks/hooks';
-import { TemplateEditor } from '~/bundles/edit-template/components/template-editor/template-editor';
 import { ResumeAiReview } from '~/bundles/resume/components/components';
+import { ResumeEditor } from '~/bundles/resume/components/resume-editor/resume-editor';
 
 import styles from './styles.module.scss';
 
@@ -17,18 +17,12 @@ const ResumePage: React.FC = () => {
         resumeReview,
         requestResumeReviewFromAI,
         downloadGeneratedFile,
-        setTemplateSettingsMockData,
         dataStatus,
         id,
     } = useResumes();
 
     const HTMLFromComponentOrEmptyString = templateSettings
-        ? renderToString(
-              <TemplateEditor
-                  templateSettings={templateSettings}
-                  setTemplateSettings={setTemplateSettingsMockData}
-              />,
-          )
+        ? renderToString(<ResumeEditor templateSettings={templateSettings} />)
         : '';
 
     const handleDownloadClick = useCallback(() => {
@@ -63,10 +57,7 @@ const ResumePage: React.FC = () => {
             </Header>
             <div className={styles.resume__page}>
                 {templateSettings && (
-                    <TemplateEditor
-                        templateSettings={templateSettings}
-                        setTemplateSettings={setTemplateSettingsMockData}
-                    />
+                    <ResumeEditor templateSettings={templateSettings} />
                 )}
             </div>
             <div className={styles.resume__wrapper_footer}>

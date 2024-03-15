@@ -5,6 +5,8 @@ export { type IStorage } from '~/framework/storage/storage.js';
 export {
     type GeneratePdfRequestDto,
     type GeneratePdfResponseDto,
+    type LayoutBlock,
+    type LayoutContainer,
     type LayoutItem,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,

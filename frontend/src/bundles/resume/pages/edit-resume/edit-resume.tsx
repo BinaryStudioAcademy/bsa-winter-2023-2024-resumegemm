@@ -1,11 +1,11 @@
 import { useResumes } from '~/bundles/common/hooks/hooks';
 import { OnlineEditorTabsHandler } from '~/bundles/cv-editor/components/components';
-import { TemplateEditor } from '~/bundles/edit-template/components/template-editor/template-editor';
+import { ResumeEditor } from '~/bundles/resume/components/resume-editor/resume-editor';
 
 import styles from './styles.module.scss';
 
 const EditResume: React.FC = () => {
-    const { templateSettings, setTemplateSettingsMockData } = useResumes();
+    const { templateSettings } = useResumes();
     return (
         <div className={styles.edit__resume}>
             {templateSettings && (
@@ -13,10 +13,7 @@ const EditResume: React.FC = () => {
                     <OnlineEditorTabsHandler
                         tabs={templateSettings.containers}
                     />
-                    <TemplateEditor
-                        templateSettings={templateSettings}
-                        setTemplateSettings={setTemplateSettingsMockData}
-                    />
+                    <ResumeEditor templateSettings={templateSettings} />
                 </>
             )}
         </div>
