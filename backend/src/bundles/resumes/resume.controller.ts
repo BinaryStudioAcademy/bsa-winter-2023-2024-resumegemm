@@ -96,6 +96,16 @@ class ResumeController extends Controller {
                     }>,
                 ),
         });
+        this.addRoute({
+            path: ResumesApiPath.USER_ID_VIEWS(),
+            method: 'GET',
+            handler: (options) =>
+                this.getResumeViews(
+                    options as ApiHandlerOptions<{
+                        params: { userId: string };
+                    }>,
+                ),
+        });
     }
 
     private async create(
@@ -201,6 +211,18 @@ class ResumeController extends Controller {
         return {
             status: HttpCode.OK,
             payload: score,
+        };
+    }
+
+    private async getResumeViews(
+        options: ApiHandlerOptions<{ params: { userId: string } }>,
+    ): Promise<ApiHandlerResponse<{ resumeId: string; views: number }[]>> {
+        const views = await this.resumeService.getResumeViews(
+            options.params.userId,
+        );
+        return {
+            status: HttpCode.OK,
+            payload: views,
         };
     }
 }

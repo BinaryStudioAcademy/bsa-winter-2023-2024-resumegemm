@@ -437,6 +437,12 @@ class ResumeRepository implements IResumeRepository {
             throw error;
         }
     }
+
+    public async findAllByUserIdWithoutRelations(
+        userId: string,
+    ): Promise<Resume[]> {
+        return await this.resumeModel.query().where('user_id', userId);
+    }
 }
 
 export { ResumeRepository };
