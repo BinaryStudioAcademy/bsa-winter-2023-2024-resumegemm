@@ -1,6 +1,5 @@
+import { RegularBlock } from '~/bundles/edit-template/components/template-block/regular-block';
 import { type LayoutContainer } from '~/bundles/resume/types/types';
-
-import { ResumeEditorBlock } from '../resume-editor-block/resume-editor.block';
 
 const ResumeEditorContainer: React.FC<LayoutContainer> = ({
     blocks,
@@ -8,7 +7,7 @@ const ResumeEditorContainer: React.FC<LayoutContainer> = ({
 }) => (
     <div style={styles}>
         {blocks.map((block) => (
-            <ResumeEditorBlock key={block.id} {...block} />
+            <RegularBlock key={block.id} {...block} />
         ))}
     </div>
 );
