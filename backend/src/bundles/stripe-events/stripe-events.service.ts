@@ -33,9 +33,7 @@ class StripeEventsService implements IStripeEventsService {
         );
         await this.eventDispatcher.dispatch(event.type, event.data);
 
-        return {
-            resolved: true,
-        };
+        return { resolved: true };
     }
 }
 
