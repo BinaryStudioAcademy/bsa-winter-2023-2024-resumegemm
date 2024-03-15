@@ -1,0 +1,14 @@
+.create__resume {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 45px 80px 80px;
+    background-color: var(--color-input-field-gray);
+    place-items: center;
+}
+
+.create__resume__button {
+    position: absolute;
+    bottom: 30px;
+    margin-left: 50px;
+}

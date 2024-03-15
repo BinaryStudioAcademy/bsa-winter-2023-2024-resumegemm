@@ -15,6 +15,7 @@ import {
     StripeProvider,
 } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/enums';
+import { CreateResume } from '~/bundles/resume/pages/create-resume/create-resume';
 import { EditResume } from '~/bundles/resume/pages/edit-resume/edit-resume';
 import { ResumePage } from '~/bundles/resume/pages/resume-page';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
@@ -85,6 +86,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: `${AppRoute.RESUME_EDIT}/:id`,
                                             element: <EditResume />,
+                                        },
+                                        {
+                                            path: AppRoute.RESUME_CREATE,
+                                            element: <CreateResume />,
                                         },
                                         {
                                             path: AppRoute.HOME,
