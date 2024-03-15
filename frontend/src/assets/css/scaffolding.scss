@@ -11,6 +11,9 @@ body {
     font-size: 14px;
     font-family: Poppins, sans-serif;
     line-height: 1.5;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-background-dark-blue)
+        var(--color-background-gray);
 }
 
 ::-webkit-scrollbar {
