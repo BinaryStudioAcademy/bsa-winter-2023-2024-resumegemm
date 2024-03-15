@@ -97,6 +97,7 @@ class UserService
                     passwordSalt: passwordSalt ?? null,
                     passwordHash: passwordHash ?? null,
                     profileId: id,
+                    stripeId: null,
                 }),
                 transaction,
             )) as UserEntityFields;

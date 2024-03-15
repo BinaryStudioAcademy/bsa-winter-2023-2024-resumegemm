@@ -22,7 +22,15 @@ class AbstractRepository<T extends typeof AbstractModel, K>
     }
 
     public createWithTransaction(
-        data: Omit<K, 'id' | 'createdAt' | 'updatedAt' | 'email' | 'profileId'>,
+        data: Omit<
+            K,
+            | 'id'
+            | 'createdAt'
+            | 'updatedAt'
+            | 'email'
+            | 'profileId'
+            | 'stripeId'
+        >,
         transaction: Transaction,
     ): Promise<K> {
         return this.modelInstance

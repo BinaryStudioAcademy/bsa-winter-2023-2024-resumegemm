@@ -6,7 +6,15 @@ interface IRepository<T = unknown> {
     create(data: T): Promise<T>;
 
     createWithTransaction(
-        data: Omit<T, 'id' | 'createdAt' | 'updatedAt' | 'email' | 'profileId'>,
+        data: Omit<
+            T,
+            | 'id'
+            | 'createdAt'
+            | 'updatedAt'
+            | 'email'
+            | 'profileId'
+            | 'stripeId'
+        >,
         transaction: Transaction,
     ): Promise<T>;
 
