@@ -36,6 +36,10 @@ interface IResumeService {
     giveResumeScore: (
         resumeAiScoreRequestDto: ResumeAiScoreRequestDto,
     ) => Promise<ResumeAiScoreResponseDto>;
+
+    getResumeViews(
+        userId: string,
+    ): Promise<{ resumeId: string; views: number }[]>;
 }
 
 export { type IResumeService };

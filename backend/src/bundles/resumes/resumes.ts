@@ -1,6 +1,12 @@
 import { logger } from '~/common/logger/logger.js';
 
 import { openAIService } from '../open-ai/open-ai.js';
+import { ResumeShareModel } from '../resume-share/resume-share.model.js';
+import { ResumeShareRepository } from '../resume-share/resume-share.repository.js';
+import { ResumeShareService } from '../resume-share/resume-share.service.js';
+import { ResumeShareAccessModel } from '../resume-share/resume-share-access.model.js';
+import { ResumeShareAccessRepository } from '../resume-share/resume-share-access.repository.js';
+import { ResumeShareAccessService } from '../resume-share/resume-share-access.service.js';
 import {
     CertificationModel,
     CertificationRepository,
@@ -37,6 +43,18 @@ const certificationRepository = new CertificationRepository(CertificationModel);
 const languageRepository = new LanguageRepository(LanguageModel);
 const customSectionRepository = new CustomSectionRepository(CustomSectionModel);
 
+const resumeShareAccessRepository = new ResumeShareAccessRepository(
+    ResumeShareAccessModel,
+);
+const resumeShareRepository = new ResumeShareRepository(ResumeShareModel);
+const resumeShareAccessService = new ResumeShareAccessService(
+    resumeShareAccessRepository,
+);
+const resumeShareService = new ResumeShareService(
+    resumeShareRepository,
+    resumeShareAccessService,
+);
+
 const resumeRepository = new ResumeRepository({
     resumeModel: ResumeModel,
     contactsRepository,
@@ -49,7 +67,12 @@ const resumeRepository = new ResumeRepository({
     customSectionRepository,
 });
 
-const resumeService = new ResumeService(resumeRepository, openAIService);
+const resumeService = new ResumeService({
+    resumeRepository,
+    openAIService,
+    resumeShareService,
+    resumeShareAccessService,
+});
 
 const resumeController = new ResumeController(logger, resumeService);
 

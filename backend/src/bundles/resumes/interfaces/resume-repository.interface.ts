@@ -27,6 +27,8 @@ interface IResumeRepository {
     ): Promise<ResumeGetItemResponseDto>;
 
     delete(id: string): Promise<boolean>;
+
+    findAllByUserIdWithoutRelations(userId: string): Promise<Resume[]>;
 }
 
 export { type IResumeRepository };
