@@ -12,7 +12,7 @@ import {
     ButtonVariant,
 } from '~/bundles/common/enums/enums';
 
-import { Header, RegularButton } from '../common/components/components';
+import { RegularButton } from '../common/components/components';
 import { useCallback, useNavigate } from '../common/hooks/hooks';
 import { FeatureImage } from './components/feature-image';
 import styles from './styles.module.scss';
@@ -26,16 +26,6 @@ const LandingPage = (): JSX.Element => {
 
     return (
         <>
-            <Header>
-                <RegularButton
-                    variant={ButtonVariant.PRIMARY}
-                    size={ButtonSize.MEDIUM}
-                    className={styles.landing_page__header__button}
-                    onClick={handleGetStarted}
-                >
-                    <p>Get Started</p>
-                </RegularButton>
-            </Header>
             <div className={styles.landing_page__container}>
                 <section className={styles.landing_page__intro}>
                     <div

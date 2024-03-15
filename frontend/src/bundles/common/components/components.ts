@@ -8,6 +8,7 @@ export { DataWrapper } from './data-wrapper/data-wrapper';
 export { Dropdown } from './dropdown/dropdown.js';
 export { ErrorFallback } from './error-fallback/error-fallback.js';
 export { FormGroup } from './form-group/form-group.js';
+export { HeaderWrapper } from './header-wrapper/header-wrapper.js';
 export { Icon } from './icon/icon.js';
 export { IconButton } from './icon-button/icon-button.js';
 export { Input } from './input/input.js';
