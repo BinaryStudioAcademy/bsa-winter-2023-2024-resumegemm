@@ -1,5 +1,6 @@
-import { BaseButton, Input } from '~/bundles/common/components/components';
+import { Input, RegularButton } from '~/bundles/common/components/components';
 import { FormGroup } from '~/bundles/common/components/form-group/form-group';
+import { ButtonVariant } from '~/bundles/common/enums/enums';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
 
@@ -65,8 +66,13 @@ const ProfileForm: React.FC<Properties> = ({ onSubmit, user }) => {
                     </p>
                 </div>
             </div>
-            <div>
-                <BaseButton onClick={handleFormSubmit}>Save</BaseButton>
+            <div className={styles.profile__button_wrapper}>
+                <RegularButton
+                    variant={ButtonVariant.PRIMARY}
+                    onClick={handleFormSubmit}
+                >
+                    Save
+                </RegularButton>
             </div>
         </form>
     );
