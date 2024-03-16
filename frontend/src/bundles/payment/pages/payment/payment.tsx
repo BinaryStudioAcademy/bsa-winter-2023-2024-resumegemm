@@ -2,7 +2,7 @@ import { useElements, useStripe } from '@stripe/react-stripe-js';
 import { type ChangeEvent, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 
-import logo from '~/assets/img/logo.svg';
+import Logo from '~/assets/img/logo.svg?react';
 import {
     Icon,
     IconButton,
@@ -17,6 +17,7 @@ import {
     useNavigate,
     useState,
 } from '~/bundles/common/hooks/hooks';
+import { actions as SubscriptionActionCreator } from '~/bundles/subscription/store';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
 
@@ -34,27 +35,39 @@ import { SubscriptionPlans } from '../subscription-plans/subscription-plans';
 import styles from './styles.module.scss';
 
 const Payment: React.FC = () => {
-    const navigate = useNavigate();
-    const [activeStep, setActiveStep] = useState(1);
-
-    const handleClose = useCallback(() => {
-        navigate(AppRoute.HOME);
-    }, [navigate]);
-
+    const dispatch = useAppDispatch();
     const elements = useElements();
     const stripe = useStripe();
-    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const { prices } = useAppSelector(({ payment }) => ({
         prices: payment.prices,
     }));
 
+    const { startDate, endDate } = useAppSelector(({ subscription }) => ({
+        startDate: subscription.subscription?.startDate,
+        endDate: subscription.subscription?.endDate,
+    }));
+
+    const [activeStep, setActiveStep] = useState(steps[0].order);
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [priceId, setPriceId] = useState('');
+    const [selectedPrice, setSelectedPrice] = useState<GetPriceResponseDto>();
+
     const [processing, setProcessing] = useState(false);
 
-    const [selectedPrice, setSelectedPrice] = useState<GetPriceResponseDto>();
+    const loadSubscription = useCallback(
+        (subscriptionId: string) => {
+            void dispatch(SubscriptionActionCreator.getById(subscriptionId));
+        },
+        [dispatch],
+    );
+
+    const handleClose = useCallback(() => {
+        navigate(AppRoute.HOME);
+    }, [navigate]);
 
     const handleNameChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
@@ -90,90 +103,83 @@ const Payment: React.FC = () => {
 
     const handleSubmit = useCallback(
         async (event: FormEvent<HTMLFormElement>): Promise<void> => {
-            async function handleSubmitAsync(): Promise<void> {
-                try {
-                    setProcessing(true);
+            try {
+                setProcessing(true);
 
-                    event.preventDefault();
+                event.preventDefault();
 
-                    if (!stripe || !elements) {
-                        return;
-                    }
-
-                    const paymentMethod = await stripe.createPaymentMethod({
-                        elements,
-                        params: {
-                            type: 'card',
-                            billing_details: {
-                                name,
-                                email,
-                            },
-                        },
-                    });
-
-                    if (paymentMethod.error?.message) {
-                        showToast(paymentMethod.error.message, ToastType.ERROR);
-                        return;
-                    }
-
-                    if (!paymentMethod.paymentMethod) {
-                        showToast(
-                            PaymentMessage.PAYMENT_METHOD_ERROR,
-                            ToastType.ERROR,
-                        );
-                        return;
-                    }
-
-                    const request = {
-                        name,
-                        email,
-                        priceId,
-                        paymentMethod: paymentMethod.paymentMethod.id,
-                    };
-
-                    const { error } =
-                        paymentCreateSubscriptionValidationSchema.validate(
-                            request,
-                        );
-
-                    if (error) {
-                        showToast(error.message, ToastType.ERROR);
-                        return;
-                    }
-
-                    const { payload } = (await dispatch(
-                        createSubscription(request),
-                    )) as { payload: CreateSubscriptionResponseDto | null };
-
-                    if (!payload?.clientSecret) {
-                        showToast(
-                            PaymentMessage.BLANK_SECRET_KEY,
-                            ToastType.ERROR,
-                        );
-                        return;
-                    }
-
-                    const confirmPayment = await stripe.confirmCardPayment(
-                        payload.clientSecret,
-                    );
-
-                    if (confirmPayment.error?.message) {
-                        showToast(
-                            confirmPayment.error.message,
-                            ToastType.ERROR,
-                        );
-                        return;
-                    }
-
-                    showToast(PaymentMessage.SUCCESS, ToastType.SUCCESS);
-                } catch {
-                    showToast(PaymentMessage.DEFAULT_MESSAGE, ToastType.ERROR);
-                } finally {
-                    setProcessing(false);
+                if (!stripe || !elements) {
+                    return;
                 }
+
+                const paymentMethod = await stripe.createPaymentMethod({
+                    elements,
+                    params: {
+                        type: 'card',
+                        billing_details: {
+                            name,
+                            email,
+                        },
+                    },
+                });
+
+                if (paymentMethod.error?.message) {
+                    showToast(paymentMethod.error.message, ToastType.ERROR);
+                    return;
+                }
+
+                if (!paymentMethod.paymentMethod) {
+                    showToast(
+                        PaymentMessage.PAYMENT_METHOD_ERROR,
+                        ToastType.ERROR,
+                    );
+                    return;
+                }
+
+                const request = {
+                    name,
+                    email,
+                    priceId,
+                    paymentMethod: paymentMethod.paymentMethod.id,
+                };
+
+                const { error } =
+                    paymentCreateSubscriptionValidationSchema.validate(request);
+
+                if (error) {
+                    showToast(error.message, ToastType.ERROR);
+                    return;
+                }
+
+                const { payload } = (await dispatch(
+                    createSubscription(request),
+                )) as { payload: CreateSubscriptionResponseDto | null };
+
+                if (payload) {
+                    loadSubscription(payload.subscriptionId);
+                }
+
+                if (!payload?.clientSecret) {
+                    showToast(PaymentMessage.BLANK_SECRET_KEY, ToastType.ERROR);
+                    return;
+                }
+
+                const confirmPayment = await stripe.confirmCardPayment(
+                    payload.clientSecret,
+                );
+
+                if (confirmPayment.error?.message) {
+                    showToast(confirmPayment.error.message, ToastType.ERROR);
+                    return;
+                }
+
+                showToast(PaymentMessage.SUCCESS, ToastType.SUCCESS);
+                handleChangeActiveStep();
+            } catch {
+                showToast(PaymentMessage.DEFAULT_MESSAGE, ToastType.ERROR);
+            } finally {
+                setProcessing(false);
             }
-            await handleSubmitAsync();
-            handleChangeActiveStep();
         },
         [
             elements,
@@ -183,15 +189,15 @@ const Payment: React.FC = () => {
             email,
             priceId,
             handleChangeActiveStep,
+            loadSubscription,
         ],
     );
-
     return (
         <div className={styles.payment_page}>
             <div className={styles.payment_page__head}>
                 <div className={styles.payment_page__logo}>
                     <Link to={AppRoute.HOME}>
-                        <img src={logo} alt="logo" />
+                        <Logo />
                     </Link>
                 </div>
                 <Stepper
@@ -209,7 +215,7 @@ const Payment: React.FC = () => {
                 </div>
             </div>
 
-            {activeStep === 1 && (
+            {activeStep === steps[0].order && (
                 <div className={styles.payment_page__content}>
                     <div className={styles.payment_page__text_content}>
                         <div className={styles.payment_page__title}>
@@ -230,18 +236,23 @@ const Payment: React.FC = () => {
                 </div>
             )}
 
-            {activeStep === 2 && (
+            {activeStep === steps[1].order && (
                 <SubscriptionPaymentPage
                     price={selectedPrice}
                     onPaymentSubmit={handleSubmit}
                     onChangeEmail={handleEmailChange}
                     onChangeName={handleNameChange}
                     processing={processing}
-                    onChangeActiveStep={handleChangeActiveStep}
                 />
             )}
 
-            {activeStep === 3 && <PaymentSuccess />}
+            {activeStep === steps[2].order && (
+                <PaymentSuccess
+                    userName={name}
+                    startDate={startDate}
+                    endDate={endDate}
+                />
+            )}
         </div>
     );
 };
