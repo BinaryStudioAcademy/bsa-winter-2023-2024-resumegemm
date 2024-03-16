@@ -14,20 +14,25 @@ import styles from './styles.module.scss';
 
 const CreateResumeButton: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
-    const { user } = useAppSelector((state) => state.auth);
-    const { resumeViews } = useAppSelector((state) => state.resumes);
+
+    const { userStripeId, resumeViews } = useAppSelector(
+        ({ auth, resumes }) => ({
+            userStripeId: auth.user?.stripeId,
+            resumeViews: resumes.resumeViews?.length,
+        }),
+    );
 
     const navigate = useNavigate();
 
     const handleClickCreateResume = useCallback((): void => {
-        if (user?.stripeId === null && resumeViews?.length > 0) {
+        if (userStripeId === null && resumeViews > 0) {
             setShowModal(true);
         } else {
             navigate({ pathname: AppRoute.RESUME_CREATE });
         }
-    }, [user?.stripeId, resumeViews?.length, navigate]);
+    }, [userStripeId, resumeViews, navigate]);
 
-    const handleClickClose = useCallback((): void => {
+    const handleCloseClick = useCallback((): void => {
         setShowModal(false);
     }, []);
 
@@ -58,7 +63,7 @@ const CreateResumeButton: React.FC = () => {
             {showModal && (
                 <CreateResumeLimitModal
                     isOpen={showModal}
-                    onClose={handleClickClose}
+                    onClose={handleCloseClick}
                 />
             )}
         </>
