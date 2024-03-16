@@ -1,4 +1,5 @@
 import { profileRepository } from '~/bundles/profile/profile.js';
+import { fileService } from '~/common/files/files.js';
 import { logger } from '~/common/logger/logger.js';
 
 import { UserController } from './user.controller.js';
@@ -9,7 +10,12 @@ import { UserService } from './user.service.js';
 const userRepository = new UserRepository({
     userModel: UserModel,
 });
-const userService = new UserService(userRepository, profileRepository);
+
+const userService = new UserService(
+    userRepository,
+    profileRepository,
+    fileService,
+);
 const userController = new UserController(logger, userService);
 
 export { userController, userService };

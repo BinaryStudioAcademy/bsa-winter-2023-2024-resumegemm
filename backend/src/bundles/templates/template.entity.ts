@@ -6,6 +6,8 @@ import {
 class TemplateEntity {
     private 'id': string;
 
+    private 'name': string;
+
     private 'isOwner': boolean;
 
     private 'userId': string;
@@ -19,9 +21,11 @@ class TemplateEntity {
         isOwner,
         userId,
         image,
+        name,
         templateSettings,
     }: TemplateEntityFields) {
         this.id = id;
+        this.name = name;
         this.isOwner = isOwner;
         this.userId = userId;
         this.image = image;
@@ -30,6 +34,7 @@ class TemplateEntity {
 
     public static initialize({
         id,
+        name,
         isOwner,
         userId,
         image,
@@ -37,6 +42,7 @@ class TemplateEntity {
     }: TemplateEntityFields): TemplateEntity {
         return new TemplateEntity({
             id,
+            name,
             isOwner,
             userId,
             image,

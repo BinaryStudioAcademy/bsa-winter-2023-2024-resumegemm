@@ -13,6 +13,7 @@ class TemplateModel extends AbstractModel {
     public 'userId': string;
     public 'deletedAt': string | null;
     public 'image': string;
+    public 'name': string;
     public 'templateSettings': TemplateBlockSettings;
 
     public static override get tableName(): typeof DatabaseTableName.TEMPLATES {
