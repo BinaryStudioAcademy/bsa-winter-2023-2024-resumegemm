@@ -2,13 +2,12 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import resume from '~/assets/img/resume.svg';
-import { Icon, RegularButton } from '~/bundles/common/components/components';
+import { RegularButton } from '~/bundles/common/components/components';
 import { Modal } from '~/bundles/common/components/modal/modal';
 import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
-    IconName,
     ModalVariant,
 } from '~/bundles/common/enums/enums';
 
@@ -37,11 +36,6 @@ const CreateResumeLimitModal: React.FC<CreateResumeLimitModalProperties> = ({
             onClose={onClose}
         >
             <div className={styles.modal__content_wrapper}>
-                <Icon
-                    name={IconName.CLOSE_CROSS}
-                    color="grey"
-                    className={styles.modal__icon_close}
-                />
                 <div className={styles.modal__content_image}>
                     <img src={resume} alt="Resume" />
                 </div>
