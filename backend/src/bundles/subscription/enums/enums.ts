@@ -1,1 +1,4 @@
-export { SubscriptionApiPath } from 'shared/build/index.js';
+export {
+    SubscriptionApiPath,
+    SubscriptionErrorMessage,
+} from 'shared/build/index.js';
