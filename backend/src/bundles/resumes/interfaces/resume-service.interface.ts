@@ -5,6 +5,7 @@ import {
     type ResumeCreateItemRequestDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeViewsCountResponseDto,
 } from 'shared/build/index.js';
 
 interface IResumeService {
@@ -37,17 +38,7 @@ interface IResumeService {
         resumeAiScoreRequestDto: ResumeAiScoreRequestDto,
     ) => Promise<ResumeAiScoreResponseDto>;
 
-    getResumeViews(
-        userId: string,
-    ): Promise<
-        {
-            resumeId: string;
-            views: number;
-            title: string;
-            image: string;
-            updatedAt: string | undefined;
-        }[]
-    >;
+    getResumeViews(userId: string): Promise<ResumeViewsCountResponseDto[]>;
 }
 
 export { type IResumeService };

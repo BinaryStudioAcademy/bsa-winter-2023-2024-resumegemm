@@ -5,6 +5,7 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeViewsCountResponseDto,
 } from 'shared/build/index.js';
 
 import { PROMPTS } from '../open-ai/open-ai.js';
@@ -89,15 +90,9 @@ class ResumeService implements IResumeService {
         );
     }
 
-    public async getResumeViews(userId: string): Promise<
-        {
-            resumeId: string;
-            views: number;
-            title: string;
-            image: string;
-            updatedAt: string | undefined;
-        }[]
-    > {
+    public async getResumeViews(
+        userId: string,
+    ): Promise<ResumeViewsCountResponseDto[]> {
         const resumes =
             await this.resumeRepository.findAllByUserIdWithoutRelations(userId);
 
@@ -107,25 +102,25 @@ class ResumeService implements IResumeService {
             const shareLink =
                 await this.resumeShareService.getShareLinkByResumeId(resume.id);
 
-            if (shareLink) {
-                const viewCount =
-                    await this.resumeShareAccessService.getAccessCount(
-                        shareLink.id,
-                    );
-
-                let formattedDate;
-                if (resume.updatedAt) {
-                    formattedDate = formatDate(resume.updatedAt);
-                }
-
-                viewCounts.push({
-                    resumeId: resume.id,
-                    views: viewCount,
-                    title: resume.resumeTitle,
-                    image: resume.image,
-                    updatedAt: formattedDate,
-                });
+            let viewCount = 0;
+            let formattedDate;
+            if (resume.updatedAt) {
+                formattedDate = formatDate(resume.updatedAt);
             }
+
+            if (shareLink) {
+                viewCount = await this.resumeShareAccessService.getAccessCount(
+                    shareLink.id,
+                );
+            }
+
+            viewCounts.push({
+                resumeId: resume.id,
+                views: viewCount,
+                title: resume.resumeTitle,
+                image: resume.image,
+                updatedAt: formattedDate,
+            });
         }
 
         return viewCounts;
