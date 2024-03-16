@@ -133,8 +133,13 @@ class PaymentService implements IPaymentService {
         const retrievedSubscription = await this.stripe.subscriptions.retrieve(
             id,
         );
+        const { current_period_start, current_period_end, items } =
+            retrievedSubscription;
 
-        const { id: stripePlanId } = retrievedSubscription.items.data[0].plan;
+        const startDate = new Date(current_period_start * 1000);
+        const endDate = new Date(current_period_end * 1000);
+
+        const { id: stripePlanId } = items.data[0].plan;
         const subscriptionPlan =
             await subscriptionPlanRepository.findByStripePlanId(stripePlanId);
 
@@ -168,6 +173,8 @@ class PaymentService implements IPaymentService {
                 userId: user.id,
                 status: status,
                 subscriptionPlanId: subscriptionPlan.id,
+                startDate,
+                endDate,
             };
             await subscriptionService.create(newSubscription);
         }
