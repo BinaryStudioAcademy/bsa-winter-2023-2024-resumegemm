@@ -43,7 +43,7 @@ $text-color: var(--color-text-profile);
     font-weight: var(--font-weight-text);
     font-size: var(--font-size-main-text);
     font-family: var(--font-family-main);
-    line-height: 20px;
+    line-height: 24px;
 }
 
 .main__bold {
@@ -51,5 +51,13 @@ $text-color: var(--color-text-profile);
     font-weight: var(--font-weight-title);
     font-size: var(--font-size-subtitle);
     font-family: var(--font-family-main);
-    line-height: 20px;
+    line-height: 26px;
+}
+
+.upgrade__button:hover {
+    color: var(--color-button-blue);
+}
+
+.cancel__button {
+    color: var(--color-error-red);
 }
