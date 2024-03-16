@@ -7,12 +7,12 @@ import { name as sliceName } from './slice.js';
 
 const getById = createAsyncThunk<
     SubscriptionResponseDto,
-    string,
+    undefined,
     AsyncThunkConfig
->(`${sliceName}/subscription`, async (id, { extra }) => {
+>(`${sliceName}/subscription`, async (_, { extra }) => {
     const { subscriptionApi } = extra;
 
-    return await subscriptionApi.getById(id);
+    return await subscriptionApi.getById();
 });
 
 export { getById };

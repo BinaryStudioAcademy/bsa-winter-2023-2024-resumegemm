@@ -58,12 +58,9 @@ const Payment: React.FC = () => {
 
     const [processing, setProcessing] = useState(false);
 
-    const loadSubscription = useCallback(
-        (subscriptionId: string) => {
-            void dispatch(SubscriptionActionCreator.getById(subscriptionId));
-        },
-        [dispatch],
-    );
+    const loadSubscription = useCallback(() => {
+        void dispatch(SubscriptionActionCreator.getById());
+    }, [dispatch]);
 
     const handleClose = useCallback(() => {
         navigate(AppRoute.HOME);
@@ -156,7 +153,7 @@ const Payment: React.FC = () => {
                 )) as { payload: CreateSubscriptionResponseDto | null };
 
                 if (payload) {
-                    loadSubscription(payload.subscriptionId);
+                    loadSubscription();
                 }
 
                 if (!payload?.clientSecret) {

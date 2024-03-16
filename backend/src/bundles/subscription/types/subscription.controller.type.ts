@@ -1,10 +1,12 @@
+import { type User } from 'shared/build/index.js';
+
 import { type ApiHandlerResponse } from '~/common/controller/controller';
 
 import { type SubscriptionResponseDto } from './types';
 
 interface ISubscriptionController {
     find(options: {
-        params: { id: string };
+        user: User;
     }): Promise<ApiHandlerResponse<SubscriptionResponseDto>>;
 }
 

@@ -17,9 +17,9 @@ class SubscriptionApi extends HttpApi {
         super({ path: ApiPath.SUBSCRIPTION, baseUrl, http, storage });
     }
 
-    public async getById(id: string): Promise<SubscriptionResponseDto> {
+    public async getById(): Promise<SubscriptionResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(`${SubscriptionApiPath.ROOT}${id}`, {}),
+            this.getFullEndpoint(`${SubscriptionApiPath.ROOT}`, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
