@@ -86,7 +86,6 @@ const EditTemplatePage: React.FC = () => {
     const handleSaveTemplate = useCallback(() => {
         void dispatch(editTemplate(templateSettings));
     }, [dispatch, templateSettings]);
-
     return (
         <section
             className={clsx(
@@ -100,7 +99,10 @@ const EditTemplatePage: React.FC = () => {
                     templateStyles.editor_sidebar__nav,
                 )}
             >
-                <FormGroup label="Template name">
+                <FormGroup
+                    label="Template name"
+                    className={templateStyles.template__name_label}
+                >
                     <Input
                         title="Enter template name"
                         onInput={handleInputChange}
