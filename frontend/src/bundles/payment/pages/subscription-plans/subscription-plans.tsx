@@ -1,3 +1,5 @@
+import { getCurrencySymbol } from '~/bundles/common/helpers/helpers.js';
+
 import { SubscriptionCard } from '../../components/subscription-card/subscription-card';
 import { COINS_IN_BANKNOTE } from '../../constants/payment.constant';
 import { type GetPriceResponseDto } from '../../types/types';
@@ -21,12 +23,12 @@ const SubscriptionPlans: React.FC<SubscriptionPlansProperties> = ({
                         image={price.product.images}
                         onClick={onSelectPrice}
                         key={price.id}
+                        currency={getCurrencySymbol(price.currency)}
                         price={
                             price.unit_amount &&
                             price.unit_amount / COINS_IN_BANKNOTE
                         }
                         priceId={price.id}
-                        currency={price.currency}
                         duration={`${price.recurring.interval_count} ${price.recurring.interval}`}
                         title={price.product.name}
                         description={price.product.description}

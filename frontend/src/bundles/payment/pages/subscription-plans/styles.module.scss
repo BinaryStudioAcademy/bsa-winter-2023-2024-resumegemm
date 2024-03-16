@@ -6,7 +6,8 @@
 
 .payment_plans__cards {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 50px;
     min-height: 100%;
     padding: 25px;
