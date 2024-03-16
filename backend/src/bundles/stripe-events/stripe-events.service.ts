@@ -17,9 +17,7 @@ class StripeEventsService implements IStripeEventsService {
     ) {
         this.eventDispatcher = eventDispatcher;
         this.appConfig = config;
-        this.stripe = new Stripe(
-            this.appConfig.ENV.STRIPE.STRIPE_WEBHOOK_SECRET,
-        );
+        this.stripe = new Stripe(this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY);
     }
 
     public async handleEvent(
@@ -29,10 +27,9 @@ class StripeEventsService implements IStripeEventsService {
         const event: Stripe.Event = this.stripe.webhooks.constructEvent(
             rawBody,
             signature,
-            this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY,
+            this.appConfig.ENV.STRIPE.STRIPE_WEBHOOK_SECRET,
         );
         await this.eventDispatcher.dispatch(event.type, event.data);
-
         return { resolved: true };
     }
 }
