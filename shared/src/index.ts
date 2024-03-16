@@ -82,7 +82,11 @@ export {
     SkillLevel,
 } from './bundles/resumes/resumes.js';
 export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
-export { type Subscription } from './bundles/subscription/types/types.js';
+export {
+    type Subscription,
+    type SubscriptionResponseDto,
+    SubscriptionApiPath,
+} from './bundles/subscription/subscription.js';
 export {
     type CSSProperties,
     type LayoutBlock,
@@ -149,7 +153,7 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type IStorage } from './framework/storage/storage.js';
-export { configureString } from './helpers/helpers.js';
+export { configureString, formatDate } from './helpers/helpers.js';
 export {
     type IdParameter,
     type ServerCommonErrorResponse,
