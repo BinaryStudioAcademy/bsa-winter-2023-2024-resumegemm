@@ -30,7 +30,6 @@ class StripeEventsService implements IStripeEventsService {
             this.appConfig.ENV.STRIPE.STRIPE_WEBHOOK_SECRET,
         );
         await this.eventDispatcher.dispatch(event.type, event.data);
-
         return { resolved: true };
     }
 }

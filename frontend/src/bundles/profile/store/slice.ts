@@ -9,7 +9,6 @@ import {
     disconnectSocialMedia,
     getUserProfileAndSocials,
     updateProfileAndEmail,
-    updateUserAvatar,
 } from './actions';
 
 type State = {
@@ -30,10 +29,7 @@ const { reducer, actions, name } = createSlice({
     reducers: {},
     extraReducers(builder) {
         builder.addMatcher(
-            isAnyOf(
-                updateUserAvatar.fulfilled,
-                updateProfileAndEmail.fulfilled,
-            ),
+            isAnyOf(updateProfileAndEmail.fulfilled),
             (state, action) => {
                 state.profile = action.payload;
                 state.dataStatus = DataStatus.FULFILLED;
@@ -44,7 +40,6 @@ const { reducer, actions, name } = createSlice({
                 disconnectSocialMedia.pending,
                 updateProfileAndEmail.pending,
                 getUserProfileAndSocials.pending,
-                updateUserAvatar.pending,
             ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
@@ -67,7 +62,6 @@ const { reducer, actions, name } = createSlice({
                 disconnectSocialMedia.rejected,
                 getUserProfileAndSocials.rejected,
                 updateProfileAndEmail.rejected,
-                updateUserAvatar.rejected,
             ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;

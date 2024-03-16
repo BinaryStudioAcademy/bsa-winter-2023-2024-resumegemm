@@ -5,6 +5,8 @@ import { actions } from '~/bundles/auth/store/slice';
 import { Modal, RegularButton } from '~/bundles/common/components/components';
 import {
     AppRoute,
+    ButtonSize,
+    ButtonType,
     ButtonVariant,
     ModalVariant,
 } from '~/bundles/common/enums/enums';
@@ -52,13 +54,33 @@ const DeleteAccount: React.FC = () => {
                 variant={ModalVariant.CONFIRM}
             >
                 <div className={styles.profile__delete__actions}>
-                    <p>Are you sure you want delete your profile?</p>
-                    <RegularButton
-                        variant={ButtonVariant.PRIMARY}
-                        onClick={handleDeleteAccount}
-                    >
-                        Delete
-                    </RegularButton>
+                    <div className={styles.modal_content}>
+                        <p>
+                            Are you sure you want to delete your account? Once
+                            deleted account cannot be restored.
+                        </p>
+                        <div className={styles.modal_buttons}>
+                            <RegularButton
+                                className={styles.modal__cancel__button}
+                                variant={ButtonVariant.GHOST}
+                                size={ButtonSize.MEDIUM}
+                                type={ButtonType.BUTTON}
+                                onClick={handleCloseModal}
+                            >
+                                Cancel
+                            </RegularButton>
+
+                            <RegularButton
+                                className={styles.modal__delete__button}
+                                variant={ButtonVariant.GHOST}
+                                size={ButtonSize.MEDIUM}
+                                type={ButtonType.BUTTON}
+                                onClick={handleDeleteAccount}
+                            >
+                                Delete
+                            </RegularButton>
+                        </div>
+                    </div>
                 </div>
             </Modal>
         </div>

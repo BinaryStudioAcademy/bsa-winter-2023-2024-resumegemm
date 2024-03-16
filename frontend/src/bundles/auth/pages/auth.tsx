@@ -38,7 +38,9 @@ const Auth: React.FC = () => {
             void dispatch(authActions.signUp(payload))
                 .unwrap()
                 .catch((error: Error) => {
-                    showToast(error.message, ToastType.ERROR);
+                    showToast(error.message, ToastType.ERROR, {
+                        position: 'top-right',
+                    });
                 });
         },
         [dispatch, showToast],

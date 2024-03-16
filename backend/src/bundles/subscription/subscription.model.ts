@@ -17,6 +17,10 @@ class SubscriptionModel extends AbstractModel {
 
     public 'subscriptionPlanId': string;
 
+    public 'startDate': Date;
+
+    public 'endDate': Date;
+
     public static override get tableName(): typeof DatabaseTableName.SUBSCRIPTION {
         return DatabaseTableName.SUBSCRIPTION;
     }
