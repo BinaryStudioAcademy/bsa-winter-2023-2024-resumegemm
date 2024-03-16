@@ -19,7 +19,7 @@ import {
 } from './content/content.js';
 
 class ResumeModel extends AbstractModel {
-    public 'title': string;
+    public 'resumeTitle': string;
     public 'image': string;
     public 'userId': string;
     public 'templateId': string;
