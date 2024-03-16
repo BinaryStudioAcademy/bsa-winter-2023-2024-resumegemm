@@ -107,6 +107,16 @@ class ResumeShareRepository {
             }
         }
     }
+
+    public async getShareLinkByResumeId(
+        resumeId: string,
+    ): Promise<ResumeShareGetResponseDto | undefined> {
+        return await this.resumeShareModel
+            .query()
+            .where('resumeId', resumeId)
+            .first()
+            .execute();
+    }
 }
 
 export { ResumeShareRepository };
