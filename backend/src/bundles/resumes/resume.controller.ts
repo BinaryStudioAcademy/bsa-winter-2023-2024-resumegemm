@@ -21,6 +21,7 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeViewsCountResponseDto,
 } from './types/types.js';
 
 class ResumeController extends Controller {
@@ -216,17 +217,7 @@ class ResumeController extends Controller {
 
     private async getResumeViews(
         options: ApiHandlerOptions<{ params: { userId: string } }>,
-    ): Promise<
-        ApiHandlerResponse<
-            {
-                resumeId: string;
-                views: number;
-                title: string;
-                image: string;
-                updatedAt: string | undefined;
-            }[]
-        >
-    > {
+    ): Promise<ApiHandlerResponse<ResumeViewsCountResponseDto[]>> {
         const views = await this.resumeService.getResumeViews(
             options.params.userId,
         );

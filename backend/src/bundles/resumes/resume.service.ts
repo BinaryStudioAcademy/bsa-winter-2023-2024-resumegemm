@@ -5,6 +5,7 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeViewsCountResponseDto,
 } from 'shared/build/index.js';
 
 import { PROMPTS } from '../open-ai/open-ai.js';
@@ -89,15 +90,9 @@ class ResumeService implements IResumeService {
         );
     }
 
-    public async getResumeViews(userId: string): Promise<
-        {
-            resumeId: string;
-            views: number;
-            title: string;
-            image: string;
-            updatedAt: string | undefined;
-        }[]
-    > {
+    public async getResumeViews(
+        userId: string,
+    ): Promise<ResumeViewsCountResponseDto[]> {
         const resumes =
             await this.resumeRepository.findAllByUserIdWithoutRelations(userId);
 
