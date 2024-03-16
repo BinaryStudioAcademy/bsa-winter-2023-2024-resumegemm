@@ -52,6 +52,14 @@ class ResumeShareAccessRepository {
             .returning('*')
             .execute();
     }
+
+    public async getAccessCount(resumeShareLinkId: string): Promise<number> {
+        const result = await this.resumeShareAccessModel
+            .query()
+            .where('resumeShareLinkId', resumeShareLinkId);
+
+        return result.length;
+    }
 }
 
 export { ResumeShareAccessRepository };

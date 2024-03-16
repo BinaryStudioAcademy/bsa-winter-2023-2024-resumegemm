@@ -27,6 +27,12 @@ class ResumeShareAccessService {
             resumeId,
         );
     }
+
+    public async getAccessCount(resumeShareLinkId: string): Promise<number> {
+        return await this.resumeShareAccessRepository.getAccessCount(
+            resumeShareLinkId,
+        );
+    }
 }
 
 export { ResumeShareAccessService };
