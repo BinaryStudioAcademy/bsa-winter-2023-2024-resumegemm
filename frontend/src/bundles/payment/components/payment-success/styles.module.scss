@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 50%;
+    width: 75%;
     margin: 50px auto;
     padding: 40px;
     color: var(--color-white);
@@ -19,8 +19,13 @@
 .payment_success__main_text {
     color: var(--color-accent-dark-yellow);
     font-weight: var(--font-weight-subtitle);
-    font-size: 26px;
+    font-size: var(--font-size-title-h3);
     line-height: 35px;
+}
+
+.payment_success__text {
+    text-align: justify;
+    text-indent: 20px;
 }
 
 .payment_success__date {
