@@ -54,12 +54,12 @@ const SubscriptionCard: React.FC<Properties> = ({
             <div className={styles.subscription_card__info_container}>
                 {price && (
                     <h3 className={styles.subscription_card__info}>
-                        <span className={styles.subscription_card__price}>
-                            {price.toFixed(2)}
-                        </span>{' '}
                         <span className={styles.subscription_card__currency}>
                             {currency}
                         </span>
+                        <span className={styles.subscription_card__price}>
+                            {price.toFixed(2)}
+                        </span>{' '}
                     </h3>
                 )}
                 {duration && (

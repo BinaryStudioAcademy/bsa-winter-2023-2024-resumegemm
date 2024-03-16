@@ -3,6 +3,8 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    width: 300px;
+    min-width: 25%;
     min-height: 400px;
     padding: 20px;
     color: var(--color-white);
@@ -39,6 +41,10 @@
 }
 
 .subscription_card__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
     font-weight: var(--font-weight-subtitle);
     font-size: 24px;
 }
@@ -50,7 +56,7 @@
 
 .subscription_card__currency {
     font-weight: 500;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .subscription_card__duration {
@@ -58,12 +64,12 @@
 }
 
 .subscription_card__description {
+    min-height: 150px;
     text-align: left;
 }
 
 .subscription_card__button {
     width: 100%;
-    margin: auto 0;
 }
 
 .subscription_card__button:hover {
