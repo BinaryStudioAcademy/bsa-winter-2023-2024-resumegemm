@@ -22,7 +22,7 @@ const ResumeCard: React.FC<Properties> = ({
             <div className={styles.resume_card__content}>
                 <div className={styles.resume_card__content_title}>
                     {title}
-                    {viewedResume && (
+                    {viewedResume !== undefined && (
                         <div
                             className={
                                 styles.resume_card__resume_views_container
