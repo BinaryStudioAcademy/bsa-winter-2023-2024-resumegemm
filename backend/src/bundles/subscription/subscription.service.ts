@@ -1,8 +1,10 @@
+import { formatDate } from './helpers/helpers.js';
 import { type SubscriptionRepository } from './subscription.repository';
 import {
     type CreateSubscription,
     type ISubscriptionService,
     type Subscription,
+    type SubscriptionResponseDto,
 } from './types/types';
 
 class SubscriptionService implements ISubscriptionService {
@@ -12,8 +14,18 @@ class SubscriptionService implements ISubscriptionService {
         this.subscriptionRepository = subscriptionRepository;
     }
 
-    public async find(id: string): Promise<Subscription | null> {
-        return await this.subscriptionRepository.find(id);
+    public async find(id: string): Promise<SubscriptionResponseDto | null> {
+        const subscription = await this.subscriptionRepository.find(id);
+
+        if (subscription) {
+            const { startDate, endDate } = subscription;
+            const start = formatDate(startDate);
+            const end = formatDate(endDate);
+
+            return { ...subscription, startDate: start, endDate: end };
+        }
+
+        return null;
     }
 
     public async create(data: CreateSubscription): Promise<Subscription> {
