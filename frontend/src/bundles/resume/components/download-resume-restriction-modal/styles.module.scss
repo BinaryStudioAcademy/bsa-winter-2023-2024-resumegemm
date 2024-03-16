@@ -1,52 +1,74 @@
-.preview {
+.modal__content_wrapper {
     display: flex;
-    flex-direction: column;
+    gap: 40px;
 }
 
-.list {
+.modal__content_image {
+    width: 50%;
+    height: 50%;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.7;
+}
+
+.modal__content {
+    font-size: 16px;
+}
+
+.modal__description {
+    margin-bottom: 20px;
+    line-height: 22px;
+}
+
+.modal__buttons {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    gap: 25px;
+    margin-left: auto;
 }
 
-.example {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    background-color: var(--color-background-light-purple);
+.modal__buttons .modal__upgrade_button,
+.modal__buttons .modal__cancel_button {
+    padding: 13px 24px 13px 20px;
+    font-weight: var(--font-weight-title);
+    font-size: 18px;
+    line-height: 22px;
+    border-radius: 4px;
 }
 
-.tooltip_small_example_container {
-    width: 10px;
-    height: 10px;
-    background-color: var(--color-error-red-bright);
+.modal__buttons .modal__upgrade_button {
+    color: var(--color-white);
+    background-color: var(--color-button-blue);
 }
 
-.tooltip_big_example_container {
-    width: 100px;
-    height: 100px;
-    background-color: var(--color-tooltip-blue);
+.modal__buttons .modal__upgrade_button:hover {
+    background-color: var(--color-hover-blue);
 }
 
-.auth {
-    height: 100vh;
+.modal__buttons .modal__skip_button {
+    box-shadow: var(--color-box-shadow-button) 0 0 10px 1px inset;
 }
 
-.buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    width: 200px;
+.modal__icon_close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
-.footer__actions {
-    display: flex;
-    gap: 10px;
+.modal__custom_list {
+    margin-top: 7px;
+    margin-bottom: 40px;
 }
 
-.dropdown {
-    max-width: 250px;
+.modal__custom_list li:not(:last-child) {
+    margin-bottom: 7px;
+}
+
+.modal__custom_list li::before {
+    content: "\2713 ";
+    margin-right: 7px;
+    color: var(--color-accent-dark-yellow);
+    font-weight: 600;
 }
