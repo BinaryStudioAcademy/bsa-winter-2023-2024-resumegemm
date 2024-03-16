@@ -24,7 +24,7 @@ import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-payment';
 import { PreviewPage } from './bundles/preview/preview';
-import { Resume } from './bundles/resume/pages/resumes';
+import { ResumePage } from './bundles/resume/pages/resume-page';
 import { ResumeAccess } from './bundles/resume-access/pages/resume-access';
 import { TemplatePage } from './bundles/templates-page/templates-page';
 import { Profile } from './bundles/users/pages/profile';
@@ -92,7 +92,15 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         },
                                         {
                                             path: AppRoute.RESUME,
-                                            element: <Resume />,
+                                            element: <ResumePage />,
+                                        },
+                                        {
+                                            path: `${AppRoute.RESUME_EDIT}/:id`,
+                                            element: 'EditResume',
+                                        },
+                                        {
+                                            path: AppRoute.RESUME_CREATE,
+                                            element: 'Create Resume',
                                         },
                                         {
                                             path: `${AppRoute.TEMPLATE}/:id`,
@@ -101,10 +109,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: `${AppRoute.TEMPLATE_EDITOR}/:id`,
                                             element: <EditTemplatePage />,
-                                        },
-                                        {
-                                            path: AppRoute.RESUME_CREATE,
-                                            element: 'Create Resume',
                                         },
                                     ],
                                 },
