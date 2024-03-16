@@ -39,6 +39,7 @@ $text-color: var(--color-text-profile);
 }
 
 .main__regular {
+    padding: 0 15px;
     color: $text-color;
     font-weight: var(--font-weight-text);
     font-size: var(--font-size-main-text);
@@ -47,6 +48,7 @@ $text-color: var(--color-text-profile);
 }
 
 .main__bold {
+    padding: 0 15px;
     color: $text-color;
     font-weight: var(--font-weight-title);
     font-size: var(--font-size-subtitle);
@@ -59,5 +61,6 @@ $text-color: var(--color-text-profile);
 }
 
 .cancel__button {
+    margin-left: 10px;
     color: var(--color-error-red);
 }
