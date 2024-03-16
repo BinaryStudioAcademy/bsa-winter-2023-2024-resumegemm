@@ -15,6 +15,7 @@ import {
     IconName,
     IconSize,
 } from '~/bundles/common/enums/enums';
+import { getCurrencySymbol } from '~/bundles/common/helpers/get-currency-symbol';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
 import { PaymentInfo } from '../../components/payment-info/payment-info';
@@ -26,7 +27,6 @@ type SubscriptionPaymentPageProperties = {
     onChangeEmail: (event: ChangeEvent<HTMLInputElement>) => void;
     onChangeName: (event: ChangeEvent<HTMLInputElement>) => void;
     onPaymentSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
-    onChangeActiveStep: () => void;
     price: GetPriceResponseDto | undefined;
     processing: boolean;
 };
@@ -38,7 +38,7 @@ const SubscriptionPaymentPage: React.FC<SubscriptionPaymentPageProperties> = ({
     processing,
 }) => {
     const priceUnitAmount = price?.unit_amount ?? 0;
-    const priceAmount = priceUnitAmount / COINS_IN_BANKNOTE;
+    const priceAmount = (priceUnitAmount / COINS_IN_BANKNOTE).toFixed(2);
 
     const handleSubmit = useCallback(
         (event: FormEvent<HTMLFormElement>) => {
@@ -59,9 +59,12 @@ const SubscriptionPaymentPage: React.FC<SubscriptionPaymentPageProperties> = ({
                         <div className={styles.payment__form_total}>
                             Total Due Today:
                         </div>
-                        <div className={styles.payment__form_price}>
-                            {priceAmount} {price?.currency}
-                        </div>
+                        {price && (
+                            <div className={styles.payment__form_price}>
+                                <span>{priceAmount}</span>
+                                <span>{getCurrencySymbol(price.currency)}</span>
+                            </div>
+                        )}
                     </div>
                     <div className={styles.payment__form_content}>
                         <div className={styles.payment__form_payment_method}>
