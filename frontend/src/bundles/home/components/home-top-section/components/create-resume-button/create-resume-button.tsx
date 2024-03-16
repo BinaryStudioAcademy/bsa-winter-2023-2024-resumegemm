@@ -13,19 +13,19 @@ import { ResumeIcon } from '../../../icons/resume-icon';
 import styles from './styles.module.scss';
 
 const CreateResumeButton: React.FC = () => {
+    const [showModal, setShowModal] = useState(false);
     const { user } = useAppSelector((state) => state.auth);
+    const { resumeViews } = useAppSelector((state) => state.resumes);
 
     const navigate = useNavigate();
 
-    const [showModal, setShowModal] = useState(false);
-
     const handleClickCreateResume = useCallback((): void => {
-        if (user?.stripeId === null) {
+        if (user?.stripeId === null && resumeViews?.length > 0) {
             setShowModal(true);
         } else {
-            navigate(AppRoute.RESUME_CREATE);
+            navigate({ pathname: AppRoute.RESUME_CREATE });
         }
-    }, [user, navigate]);
+    }, [user?.stripeId, resumeViews?.length, navigate]);
 
     const handleClickClose = useCallback((): void => {
         setShowModal(false);
