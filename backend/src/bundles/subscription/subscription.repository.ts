@@ -12,11 +12,14 @@ class SubscriptionRepository implements ISubscriptionRepository {
         this.subscriptionModel = subscriptionModel;
     }
 
-    public async find(id: string): Promise<Subscription | null> {
+    public async findUserSubscription(
+        userId: string,
+    ): Promise<Subscription | null> {
         const subscriptions = await this.subscriptionModel
             .query()
-            .where('subscription_id', id)
+            .where('user_id', userId)
             .returning('*');
+
         return subscriptions[0] ?? null;
     }
 

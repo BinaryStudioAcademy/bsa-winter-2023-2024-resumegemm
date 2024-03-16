@@ -14,8 +14,9 @@ class SubscriptionService implements ISubscriptionService {
         this.subscriptionRepository = subscriptionRepository;
     }
 
-    public async find(id: string): Promise<SubscriptionResponseDto | null> {
-        const subscription = await this.subscriptionRepository.find(id);
+    public async find(userId: string): Promise<SubscriptionResponseDto | null> {
+        const subscription =
+            await this.subscriptionRepository.findUserSubscription(userId);
 
         if (subscription) {
             const { startDate, endDate } = subscription;
