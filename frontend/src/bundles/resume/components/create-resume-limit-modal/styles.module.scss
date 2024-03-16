@@ -40,6 +40,10 @@
     background-color: var(--color-button-blue);
 }
 
+.modal__buttons .modal__upgrade_button:hover {
+    background-color: var(--color-hover-blue);
+}
+
 .modal__buttons .modal__skip_button {
     box-shadow: var(--color-box-shadow-button) 0 0 10px 1px inset;
 }

@@ -13,15 +13,12 @@ import {
 
 import styles from './styles.module.scss';
 
-type CreateResumeLimitModalProperties = {
+type Properties = {
     isOpen: boolean;
     onClose: () => void;
 };
 
-const CreateResumeLimitModal: React.FC<CreateResumeLimitModalProperties> = ({
-    isOpen,
-    onClose,
-}) => {
+const CreateResumeLimitModal: React.FC<Properties> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
 
     const handleClickUpgrade = useCallback((): void => {
