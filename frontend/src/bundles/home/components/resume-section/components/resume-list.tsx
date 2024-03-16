@@ -9,7 +9,7 @@ import { showToast } from '~/bundles/toast/helpers/show-toast';
 
 import { ResumeCard } from '../../components';
 
-const ResumeListPreview: React.FC = () => {
+const ResumeList: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const authUser = useAppSelector(({ auth }) => auth.user);
@@ -43,4 +43,4 @@ const ResumeListPreview: React.FC = () => {
     );
 };
 
-export { ResumeListPreview };
+export { ResumeList };

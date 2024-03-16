@@ -5,7 +5,7 @@ export { CreateResumeButton } from './home-top-section/components/create-resume-
 export { Greeting } from './home-top-section/components/greeting/greeting';
 export { HomeTopSection } from './home-top-section/home-top-section';
 export { PanelContainer } from './panel-container/panel-container';
-export { ResumeListPreview } from './resume-section/components/resume-list-preview';
+export { ResumeList } from './resume-section/components/resume-list';
 export { ResumeSection } from './resume-section/resume-section';
 export { TemplateList } from './template-section/components/template-list';
 export { TemplateSection } from './template-section/template-section';

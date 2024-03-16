@@ -6,7 +6,7 @@ import {
     Greeting,
     HomeTopSection,
     ResumeCard,
-    ResumeListPreview,
+    ResumeList,
     ResumeSection,
     TemplateList,
     TemplateSection,
@@ -32,7 +32,7 @@ const Home: React.FC = () => {
                 <CreateNewCard />
             </ResumeSection>
             <ResumeSection name="Users' resume">
-                <ResumeListPreview />
+                <ResumeList />
             </ResumeSection>
             <TemplateSection name="Templates">
                 <TemplateList templates={templates} />
