@@ -1,12 +1,14 @@
 import mockResume from '~/assets/img/mock-resume.png';
-import { useLoadTemplates } from '~/bundles/common/hooks/use-load-templates/use-load-templates.hook';
+import { useLoadTemplates } from '~/bundles/common/hooks/hooks';
 import {
     CreateNewCard,
     CreateResumeButton,
     Greeting,
     HomeTopSection,
     ResumeCard,
+    ResumeListPreview,
     ResumeSection,
+    TemplateList,
     TemplateSection,
 } from '~/bundles/home/components/components';
 
@@ -30,23 +32,10 @@ const Home: React.FC = () => {
                 <CreateNewCard />
             </ResumeSection>
             <ResumeSection name="Users' resume">
-                <ResumeCard
-                    title="My Resume"
-                    subtitle="Updated - Jan 25"
-                    image={mockResume}
-                />
+                <ResumeListPreview />
             </ResumeSection>
             <TemplateSection name="Templates">
-                {templates.length > 0 &&
-                    templates.map((template) => {
-                        return (
-                            <ResumeCard
-                                key={template.id}
-                                title="My Resume"
-                                image={template.image}
-                            />
-                        );
-                    })}
+                <TemplateList templates={templates} />
             </TemplateSection>
         </div>
     );
