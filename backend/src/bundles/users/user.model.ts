@@ -18,13 +18,15 @@ class UserModel extends AbstractModel {
 
     public 'profileId': string;
 
-    public 'passwordHash': string;
+    public 'passwordHash': string | null;
 
-    public 'passwordSalt': string;
+    public 'passwordSalt': string | null;
 
     public deletedAt!: string | null;
 
-    public 'stripeId': string;
+    public 'stripeId': string | null;
+
+    public 'pdfDownloads': number;
 
     public static override get tableName(): typeof DatabaseTableName.USERS {
         return DatabaseTableName.USERS;
@@ -41,6 +43,7 @@ class UserModel extends AbstractModel {
                     'updatedAt',
                     'deletedAt',
                     'stripeId',
+                    'pdfDownloads',
                 );
             },
         };

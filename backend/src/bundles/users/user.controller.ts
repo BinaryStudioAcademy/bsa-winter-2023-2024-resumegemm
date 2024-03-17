@@ -73,6 +73,19 @@ class UserController extends Controller {
                     }>,
                 ),
         });
+
+        this.addRoute({
+            path: UsersApiPath.ID_PDF_DOWNLOADS(),
+            method: 'PUT',
+            handler: (options) =>
+                this.incrementPDFDownloads(
+                    options as ApiHandlerOptions<{
+                        params: {
+                            id: string;
+                        };
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -178,6 +191,31 @@ class UserController extends Controller {
             return {
                 status: HttpCode.OK,
                 payload: user,
+            };
+        } catch (error: unknown) {
+            const { status } = error as HTTPError;
+            return {
+                status,
+                payload: {
+                    message: ExceptionMessage.INVALID_REFRESH_TOKEN,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async incrementPDFDownloads(
+        options: ApiHandlerOptions<{
+            params: {
+                id: string;
+            };
+        }>,
+    ): Promise<ApiHandlerResponse<void>> {
+        try {
+            await this.userService.incrementPDFDownloads(options.params.id);
+            return {
+                status: HttpCode.OK,
+                payload: {},
             };
         } catch (error: unknown) {
             const { status } = error as HTTPError;

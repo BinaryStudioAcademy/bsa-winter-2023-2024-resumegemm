@@ -15,6 +15,8 @@ class UserEntity implements IEntity {
 
     private 'stripeId': string | null;
 
+    private 'pdfDownloads': number;
+
     private constructor({
         id,
         email,
@@ -22,6 +24,7 @@ class UserEntity implements IEntity {
         passwordHash,
         passwordSalt,
         stripeId,
+        pdfDownloads,
     }: UserEntityFields) {
         this.id = id;
         this.email = email;
@@ -29,6 +32,7 @@ class UserEntity implements IEntity {
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
         this.stripeId = stripeId;
+        this.pdfDownloads = pdfDownloads;
     }
 
     public static initialize({
@@ -38,6 +42,7 @@ class UserEntity implements IEntity {
         passwordHash,
         passwordSalt,
         stripeId,
+        pdfDownloads,
     }: UserEntityFields): UserEntity {
         return new UserEntity({
             id,
@@ -46,6 +51,7 @@ class UserEntity implements IEntity {
             passwordHash,
             passwordSalt,
             stripeId,
+            pdfDownloads,
         });
     }
 
@@ -55,6 +61,7 @@ class UserEntity implements IEntity {
         passwordHash,
         passwordSalt,
         stripeId,
+        pdfDownloads,
     }: Omit<UserEntityFields, 'id'>): UserEntity {
         return {
             email,
@@ -62,6 +69,7 @@ class UserEntity implements IEntity {
             passwordHash,
             passwordSalt,
             stripeId,
+            pdfDownloads,
         } as unknown as UserEntity;
     }
 
@@ -80,6 +88,7 @@ class UserEntity implements IEntity {
             passwordHash: this.passwordHash,
             passwordSalt: this.passwordSalt,
             stripeId: this.stripeId,
+            pdfDownloads: this.pdfDownloads,
         };
     }
 }

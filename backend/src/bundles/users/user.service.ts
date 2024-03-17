@@ -102,6 +102,7 @@ class UserService
                     passwordHash: passwordHash ?? null,
                     profileId: id,
                     stripeId: null,
+                    pdfDownloads: 0,
                 }),
                 transaction,
             )) as UserEntityFields;
@@ -204,6 +205,22 @@ class UserService
             passwordHash,
             passwordSalt,
         });
+    }
+
+    public async incrementPDFDownloads(id: string): Promise<void> {
+        const user = await this.userRepository.getById(id);
+        if (!user) {
+            throw new HTTPError({
+                message: 'User not found',
+                status: HttpCode.NOT_FOUND,
+            });
+        }
+        const updatedData: Partial<Omit<UserModel, 'createdAt' | 'updatedAt'>> =
+            {
+                ...user,
+                pdfDownloads: (Number(user.pdfDownloads) || 0) + 1,
+            };
+        await this.userRepository.updateById(id, updatedData);
     }
 }
 
