@@ -15,22 +15,22 @@ import styles from './styles.module.scss';
 const CreateResumeButton: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
 
-    const { userStripeId, resumeViews } = useAppSelector(
+    const { userStripeId, resumeViewCount } = useAppSelector(
         ({ auth, resumes }) => ({
             userStripeId: auth.user?.stripeId,
-            resumeViews: resumes.resumeViews?.length,
+            resumeViewCount: resumes.resumeViews?.length,
         }),
     );
 
     const navigate = useNavigate();
 
     const handleClickCreateResume = useCallback((): void => {
-        if (userStripeId === null && resumeViews > 0) {
+        if (userStripeId === null && resumeViewCount > 0) {
             setShowModal(true);
         } else {
             navigate({ pathname: AppRoute.RESUME_CREATE });
         }
-    }, [userStripeId, resumeViews, navigate]);
+    }, [userStripeId, resumeViewCount, navigate]);
 
     const handleCloseClick = useCallback((): void => {
         setShowModal(false);
