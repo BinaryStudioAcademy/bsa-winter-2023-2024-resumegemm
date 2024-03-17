@@ -5,6 +5,7 @@ type User = {
     createdAt: string;
     updatedAt: string;
     stripeId: string | null;
+    pdfDownloads: number;
 };
 
 export { type User };
