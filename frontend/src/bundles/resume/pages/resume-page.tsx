@@ -1,6 +1,8 @@
+import { renderToString } from 'react-dom/server';
 import { NavLink, useParams } from 'react-router-dom';
 
 import shareIcon from '~/assets/img/share-icon.svg';
+import { actions as authActions } from '~/bundles/auth/store/auth.store.js';
 import {
     Header,
     Icon,
@@ -13,43 +15,81 @@ import {
     IconSize,
 } from '~/bundles/common/enums/enums';
 import {
+    useAppDispatch,
     useAppSelector,
     useCallback,
+    useEffect,
     useState,
 } from '~/bundles/common/hooks/hooks';
+import { actions as resumeActions } from '~/bundles/resume/store/index.js';
 import { ResumePreview } from '~/bundles/resume-preview/components/components';
+import { actions as userActions } from '~/bundles/users/store/user.store.js';
 
-import { DownloadResumeRestrictionModal } from '../components/download-resume-restriction-modal/download-resume-restriction-modal';
+import { DownloadResumeLimitModal } from '../components/download-resume-limit-modal/download-resume-limit-modal';
+import { ResumeEditor } from '../components/resume-editor/resume-editor';
 import styles from './styles.module.scss';
 
 const ResumePage: React.FC = () => {
-    const [showModal, setShowModal] = useState(false);
-
-    const { userStripeId, resumeViews } = useAppSelector(
-        ({ auth, resumes }) => ({
-            userStripeId: auth.user?.stripeId,
-            resumeViews: resumes.resumeViews,
-        }),
-    );
+    const dispatch = useAppDispatch();
 
     const { id } = useParams();
-    const currentResume = resumeViews.find((resume) => resume.resumeId === id);
 
-    const currentResumeViews = currentResume?.views;
+    const [showModal, setShowModal] = useState(false);
+    const [isDownloaded, setIsDownloaded] = useState(false);
 
-    const downloadedDPF = 1;
+    const { userId, userStripeId, pdfDownloads, resumes, templateSettings } =
+        useAppSelector(({ auth, resumes }) => ({
+            userId: auth.user?.id,
+            userStripeId: auth.user?.stripeId,
+            pdfDownloads: auth.user?.pdfDownloads,
+            resumes: resumes.resumeViews,
+            templateSettings: resumes.templateSettings,
+        }));
+
+    const currentResumeViews = resumes.find(
+        (resume) => resume.resumeId === id,
+    )?.views;
+
+    const downloadGeneratedFile = useCallback(
+        async (html: string) => {
+            void dispatch(resumeActions.downloadPDFDocument({ html }));
+            if (userId) {
+                await dispatch(userActions.incrementPDFDownloads(userId));
+                setIsDownloaded(true);
+            }
+        },
+        [dispatch, userId],
+    );
+
+    const HTMLFromComponentOrEmptyString = templateSettings
+        ? renderToString(<ResumeEditor templateSettings={templateSettings} />)
+        : '';
 
     const handleDownloadClick = useCallback(() => {
-        if (userStripeId === null && downloadedDPF > 0) {
+        if (userStripeId === null && pdfDownloads && pdfDownloads > 0) {
             setShowModal(true);
         } else {
-            return;
+            void downloadGeneratedFile(HTMLFromComponentOrEmptyString);
         }
-    }, [userStripeId]);
+    }, [
+        HTMLFromComponentOrEmptyString,
+        downloadGeneratedFile,
+        pdfDownloads,
+        userStripeId,
+    ]);
 
     const handleCloseClick = useCallback((): void => {
         setShowModal(false);
     }, []);
+
+    useEffect(() => {
+        if (isDownloaded) {
+            if (userId) {
+                void dispatch(authActions.getUser());
+            }
+            setIsDownloaded(false);
+        }
+    }, [dispatch, userId, isDownloaded]);
 
     return (
         <>
@@ -92,7 +132,7 @@ const ResumePage: React.FC = () => {
                 </div>
             </div>
             {showModal && (
-                <DownloadResumeRestrictionModal
+                <DownloadResumeLimitModal
                     isOpen={showModal}
                     onClose={handleCloseClick}
                 />
