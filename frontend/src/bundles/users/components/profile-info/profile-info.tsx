@@ -3,19 +3,32 @@ import { useNavigate } from 'react-router-dom';
 import PremiumQueen from '~/assets/img/premium-queen.svg?react';
 import { BaseButton } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
-import { useAppSelector, useCallback } from '~/bundles/common/hooks/hooks';
+import {
+    useAppDispatch,
+    useAppSelector,
+    useCallback,
+    useEffect,
+} from '~/bundles/common/hooks/hooks';
+import { actions as subscriptionActionCreator } from '~/bundles/subscription/store';
 
 import styles from './style.module.scss';
 
 const ProfileInfo: React.FC = () => {
+    const dispatch = useAppDispatch();
+
     const { subscription } = useAppSelector(({ subscription }) => ({
         subscription: subscription.subscription,
     }));
 
     const navigate = useNavigate();
+
     const handleClick = useCallback(() => {
         navigate(AppRoute.PAYMENT);
     }, [navigate]);
+
+    useEffect(() => {
+        void dispatch(subscriptionActionCreator.getById());
+    }, [dispatch]);
 
     return (
         <div className={styles.profile__info}>
