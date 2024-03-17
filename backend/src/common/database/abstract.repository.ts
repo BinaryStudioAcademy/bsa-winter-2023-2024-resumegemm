@@ -30,6 +30,7 @@ class AbstractRepository<T extends typeof AbstractModel, K>
             | 'email'
             | 'profileId'
             | 'stripeId'
+            | 'pdfDownloads'
         >,
         transaction: Transaction,
     ): Promise<K> {
