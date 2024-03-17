@@ -1,4 +1,4 @@
-import resume from '~/assets/img/resume.svg';
+import imageForModal from '~/assets/img/modal/download-modal.svg';
 import { RegularButton } from '~/bundles/common/components/components';
 import { Modal } from '~/bundles/common/components/modal/modal';
 import {
@@ -16,7 +16,7 @@ type Properties = {
     onClose: () => void;
 };
 
-const DownloadResumeRestrictionModal: React.FC<Properties> = ({
+const DownloadResumeLimitModal: React.FC<Properties> = ({
     isOpen,
     onClose,
 }) => {
@@ -35,7 +35,7 @@ const DownloadResumeRestrictionModal: React.FC<Properties> = ({
         >
             <div className={styles.modal__content_wrapper}>
                 <div className={styles.modal__content_image}>
-                    <img src={resume} alt="Resume" />
+                    <img src={imageForModal} alt="Resume" />
                 </div>
                 <div>
                     <p className={styles.modal__description}>
@@ -45,7 +45,7 @@ const DownloadResumeRestrictionModal: React.FC<Properties> = ({
                     </p>
                     <p>Also unlock:</p>
                     <ul className={styles.modal__custom_list}>
-                        <li>unlimit number of resume creation</li>
+                        <li>unlimited number of resume creation</li>
                         <li>other features</li>
                     </ul>
                     <div className={styles.modal__buttons}>
@@ -75,4 +75,4 @@ const DownloadResumeRestrictionModal: React.FC<Properties> = ({
     );
 };
 
-export { DownloadResumeRestrictionModal };
+export { DownloadResumeLimitModal };
