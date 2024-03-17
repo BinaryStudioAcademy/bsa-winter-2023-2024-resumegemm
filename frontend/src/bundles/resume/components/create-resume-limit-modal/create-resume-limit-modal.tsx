@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import resume from '~/assets/img/resume.svg';
+import resume from '~/assets/img/modal/resume.svg';
 import { RegularButton } from '~/bundles/common/components/components';
 import { Modal } from '~/bundles/common/components/modal/modal';
 import {
