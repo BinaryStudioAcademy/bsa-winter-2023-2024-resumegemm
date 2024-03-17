@@ -1,12 +1,16 @@
-import { type TPDFService } from 'shared/build';
-
-import { type ApiHandlerResponse } from '~/common/controller/controller.js';
 import { Controller } from '~/common/controller/controller.package.js';
 import { ApiPath } from '~/common/enums/enums.js';
-import { type HTTPError, HttpCode } from '~/common/http/http.js';
-import { type ILogger } from '~/common/logger/logger.js';
+import { HttpCode } from '~/common/http/http.js';
 
 import { PDFApiPath } from './enums/enums.js';
+import {
+    type ApiHandlerOptions,
+    type ApiHandlerResponse,
+    type GeneratePdfRequestDto,
+    type HTTPError,
+    type ILogger,
+    type TPDFService,
+} from './types/types.js';
 
 class PDFController extends Controller {
     private pdfService: TPDFService;
@@ -17,28 +21,26 @@ class PDFController extends Controller {
 
         this.addRoute({
             path: PDFApiPath.GENERATE,
-            method: 'GET',
-            handler: () => this.generatePDF(),
+            method: 'POST',
+            handler: (options) =>
+                this.generatePDF(
+                    options as ApiHandlerOptions<{
+                        body: GeneratePdfRequestDto;
+                    }>,
+                ),
         });
     }
 
-    private async generatePDF(): Promise<ApiHandlerResponse<Buffer>> {
-        const testHTML = `
-            <html>
-                <body>
-                    <h1>Hello, World!</h1>
-                </body>
-                <style>
-                    h1 {
-                        color: red;
-                    }
-                </style>
-            </html>
-        `;
+    private async generatePDF(
+        options: ApiHandlerOptions<{
+            body: GeneratePdfRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse<Buffer>> {
+        const { html } = options.body;
         try {
             return {
                 status: HttpCode.OK,
-                payload: await this.pdfService.generatePDF(testHTML),
+                payload: await this.pdfService.generatePDF(html),
                 contentType: 'application/pdf',
             };
         } catch (error: unknown) {
