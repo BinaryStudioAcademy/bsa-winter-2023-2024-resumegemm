@@ -31,15 +31,11 @@ type TabsPayload = {
 const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const dispatch = useAppDispatch();
-    const [
-        { blocks: firstBlocks },
-        { blocks: secondBlock },
-        { blocks: thirdBlock },
-    ] = tabs;
+    const allBlocks = tabs.map((tab) => tab.blocks);
 
     const mergedTemplateSettingsProperties = useMemo(
-        () => [...firstBlocks, ...secondBlock, ...thirdBlock],
-        [firstBlocks, secondBlock, thirdBlock],
+        () => allBlocks.flat(),
+        [allBlocks],
     );
 
     const templateSettingsContainerItems =
@@ -91,8 +87,8 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
             </nav>
             <div className={styles.editor_output__block}>
                 <div>
-                    {templateSettingsContainerItems.map((item) => (
-                        <FormGroup key={item.id} label={item.name}>
+                    {templateSettingsContainerItems.map((item, index) => (
+                        <FormGroup key={`${index}${item.id}`} label={item.name}>
                             <Input
                                 id={item.id}
                                 type="text"

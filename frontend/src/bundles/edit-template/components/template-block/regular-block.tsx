@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { type LayoutBlock } from '../../types/types';
 import { RegularItem } from '../template-item/regular-item';
 
@@ -11,8 +13,11 @@ const RegularBlock: React.FC<Properties> = ({ id, items, styles }) => {
                 ...styles,
             }}
         >
-            {items.map((item) => (
-                <RegularItem key={item.id} {...item} />
+            {items.map((item, index) => (
+                <React.Fragment key={`${index}${item.id}`}>
+                    {item.placeholder && <p>{item.placeholder}</p>}
+                    <RegularItem {...item} />
+                </React.Fragment>
             ))}
         </div>
     );

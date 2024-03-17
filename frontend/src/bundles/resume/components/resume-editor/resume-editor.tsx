@@ -1,5 +1,3 @@
-import styles from '~/bundles/edit-template/components/template-editor/styles.module.scss';
-
 import { type TemplateSettings } from '../../types/types';
 import { ResumeEditorContainer } from './resume-editor-container/resume-editor-container';
 
@@ -8,7 +6,7 @@ type ResumeEditorPayload = {
 };
 
 const ResumeEditor: React.FC<ResumeEditorPayload> = ({ templateSettings }) => (
-    <div style={templateSettings.styles} className={styles.template_editor}>
+    <div style={templateSettings.styles}>
         {templateSettings.containers.map((container) => (
             <ResumeEditorContainer key={container.id} {...container} />
         ))}

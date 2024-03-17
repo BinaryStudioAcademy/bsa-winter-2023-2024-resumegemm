@@ -10,7 +10,7 @@ const CreateResume: React.FC = () => {
     const { templateSettings, createResume } = useResumes();
 
     return (
-        <>
+        <div className={styles.create__resume__wrapper}>
             <Header />
             <div className={styles.create__resume}>
                 {templateSettings && (
@@ -22,6 +22,8 @@ const CreateResume: React.FC = () => {
                         <ResumeEditor templateSettings={templateSettings} />
                     </>
                 )}
+            </div>
+            <div className={styles.create__resume__actions}>
                 <RegularButton
                     variant={ButtonVariant.PRIMARY}
                     className={styles.create__resume__button}
@@ -30,7 +32,7 @@ const CreateResume: React.FC = () => {
                     Create Resume
                 </RegularButton>
             </div>
-        </>
+        </div>
     );
 };
 
