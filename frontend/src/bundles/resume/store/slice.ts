@@ -3,6 +3,7 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { updateTemplateSettings } from '~/bundles/resume/helpers/helpers';
 import {
     createResume,
+    deleteResume,
     getAllResumes,
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
@@ -54,10 +55,6 @@ const { reducer, actions, name } = createSlice({
         },
     },
     extraReducers(builder) {
-        builder.addCase(getAllResumes.fulfilled, (state, action) => {
-            state.dataStatus = DataStatus.FULFILLED;
-            state.resumes = action.payload;
-        });
         builder.addCase(createResume.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
             state.resumes = [...state.resumes, action.payload];
@@ -89,8 +86,16 @@ const { reducer, actions, name } = createSlice({
             },
         );
         builder.addMatcher(
+            isAnyOf(getAllResumes.fulfilled, deleteResume.fulfilled),
+            (state, action) => {
+                state.dataStatus = DataStatus.FULFILLED;
+                state.resumes = action.payload;
+            },
+        );
+        builder.addMatcher(
             isAnyOf(
                 getAllResumes.pending,
+                deleteResume.pending,
                 getCurrentResumeWithTemplate.pending,
                 getResumeReviewFromAI.pending,
             ),

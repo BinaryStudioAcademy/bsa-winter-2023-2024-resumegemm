@@ -30,6 +30,7 @@ type UseResumesReturnValues = {
     createResumeAccessLink: () => void;
     requestResumeReviewFromAI: () => void;
     createResume: (screenshot: string) => void;
+    deleteResume: (resumeId: string) => void;
     downloadGeneratedFile: (html: string) => void;
     resumeReview: ResumeAiScoreResponseDto | null;
     dataStatus: DataStatus;
@@ -65,6 +66,19 @@ const useResumes = (): UseResumesReturnValues => {
         templates: templates.templates,
         isTemplatesLoading: templates.dataStatus,
     }));
+
+    const deleteResume = useCallback(
+        (resumeId: string) => {
+            void dispatch(resumeActions.deleteResume(resumeId))
+                .unwrap()
+                .then(() =>
+                    showToast('Resume deleted.', ToastType.INFO, {
+                        position: 'top-right',
+                    }),
+                );
+        },
+        [dispatch],
+    );
 
     const requestResumeReviewFromAI = useCallback(() => {
         if (currentResume) {
@@ -151,6 +165,7 @@ const useResumes = (): UseResumesReturnValues => {
         downloadGeneratedFile,
         id,
         createResume,
+        deleteResume,
     };
 };
 

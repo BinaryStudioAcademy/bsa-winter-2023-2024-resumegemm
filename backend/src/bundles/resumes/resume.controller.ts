@@ -1,6 +1,7 @@
 import {
     type IdParameter,
     type UserAuthResponse,
+    ExceptionMessage,
     HTTPError,
     ResumesApiPath,
 } from 'shared/build/index.js';
@@ -160,13 +161,19 @@ class ResumeController extends Controller {
 
     private async delete(
         options: ApiHandlerOptions<{ params: IdParameter }>,
-    ): Promise<ApiHandlerResponse<boolean>> {
+    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto[]>> {
         const isDeleted = await this.resumeService.delete(options.params.id);
-
-        return {
-            status: HttpCode.OK,
-            payload: isDeleted,
-        };
+        if (isDeleted) {
+            const resumes = await this.resumeService.findAll();
+            return {
+                status: HttpCode.OK,
+                payload: resumes,
+            };
+        }
+        throw new HTTPError({
+            message: ExceptionMessage.RESUME_NOT_FOUND,
+            status: HttpCode.BAD_REQUEST,
+        });
     }
 
     private async update(

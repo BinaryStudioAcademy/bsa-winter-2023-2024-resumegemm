@@ -17,7 +17,7 @@ import styles from './styles.module.scss';
 
 const Home: React.FC = () => {
     const { templates } = useLoadTemplates();
-    const { resumes } = useResumes();
+    const { resumes, deleteResume } = useResumes();
 
     return (
         <div className={styles.layout}>
@@ -40,6 +40,8 @@ const Home: React.FC = () => {
                             title="My Resume"
                             subtitle="Updated - Jan 25"
                             image={image}
+                            id={id}
+                            onDelete={deleteResume}
                         />
                     </NavLink>
                 ))}

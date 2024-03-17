@@ -355,26 +355,22 @@ class ResumeRepository implements IResumeRepository {
     }
 
     public async delete(id: string): Promise<boolean> {
-        const transaction = await this.resumeModel.startTransaction();
+        const subRepositories = [
+            this.educationRepository,
+            this.experienceRepository,
+            this.technicalSkillsRepository,
+            this.personalInformationRepository,
+            this.contactsRepository,
+            this.certificationRepository,
+            this.languageRepository,
+            this.customSectionRepository,
+        ];
+        await Promise.all(
+            subRepositories.map((repository) => repository.delete(id)),
+        );
+        await this.resumeModel.query().deleteById(id);
 
-        try {
-            await this.educationRepository.delete(id, transaction);
-            await this.experienceRepository.delete(id, transaction);
-            await this.technicalSkillsRepository.delete(id, transaction);
-            await this.personalInformationRepository.delete(id, transaction);
-            await this.contactsRepository.delete(id, transaction);
-            await this.certificationRepository.delete(id, transaction);
-            await this.languageRepository.delete(id, transaction);
-            await this.customSectionRepository.delete(id, transaction);
-            await this.resumeModel.query().deleteById(id);
-
-            await transaction.commit();
-
-            return true;
-        } catch (error) {
-            await transaction.rollback();
-            throw error;
-        }
+        return true;
     }
 }
 

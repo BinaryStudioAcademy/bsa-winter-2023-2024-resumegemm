@@ -1,5 +1,6 @@
 import {
     createResume,
+    deleteResume,
     downloadPDFDocument,
     getAllResumes,
     getCurrentResumeWithTemplate,
@@ -18,6 +19,7 @@ const allActions = {
     updateCurrentResume,
     setTemplateSettingsOnResumeCreate,
     createResume,
+    deleteResume,
 };
 
 export { allActions as actions };

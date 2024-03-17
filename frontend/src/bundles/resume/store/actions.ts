@@ -29,6 +29,15 @@ const getAllResumes = createAsyncThunk<
     return resumeApi.getAllResumes();
 });
 
+const deleteResume = createAsyncThunk<
+    ResumeGetAllResponseDto[],
+    string,
+    AsyncThunkConfig
+>(`${sliceName}/delete-resume`, (resumeId, { extra }) => {
+    const { resumeApi } = extra;
+    return resumeApi.deleteResume(resumeId);
+});
+
 const createResume = createAsyncThunk<
     ResumeGetAllResponseDto,
     string,
@@ -194,6 +203,7 @@ const downloadPDFDocument = createAsyncThunk<
 
 export {
     createResume,
+    deleteResume,
     downloadPDFDocument,
     getAllResumes,
     getCurrentResumeWithTemplate,
