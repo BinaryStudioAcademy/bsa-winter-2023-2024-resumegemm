@@ -71,6 +71,7 @@ enum DatabaseColumnName {
     NEW_RESUME_ID = 'new_resume_id',
     NEW_TEMPLATE_ID = 'new_template_id',
     DESCRIPTION = 'description',
+    PDF_DOWNLOADS = 'pdf_downloads',
 }
 
 export { DatabaseColumnName };
