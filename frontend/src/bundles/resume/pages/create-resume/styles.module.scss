@@ -10,7 +10,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     flex: 1;
-    gap: 100px;
     padding: 45px;
     background-color: var(--color-input-field-gray);
     place-items: center;
@@ -20,9 +19,13 @@
     margin-left: 50px;
 }
 
+.create__resume__back__button {
+    width: 140px;
+}
+
 .create__resume__actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 25px 100px;
 }

@@ -1,6 +1,6 @@
 .editor__section {
     display: flex;
-    width: 100%;
+    width: 660px;
     height: 100%;
     background-color: var(--color-white);
     border: 1px solid var(--color-input-field-gray);
@@ -22,12 +22,24 @@
 
 .editor_sidebar__item {
     width: 100%;
+    margin: 10px 0;
     padding: 17px 65px 22px;
     color: var(--color-white);
     text-align: center;
     background-color: inherit;
     border: none;
     cursor: pointer;
+}
+
+.editor_sidebar__item:hover {
+    box-shadow: rgb(50 50 93 / 25%) 0 30px 60px -12px inset,
+        rgb(0 0 0 / 30%) 0 18px 36px -18px inset;
+}
+
+.template__settings__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .editor_sidebar__item__active {

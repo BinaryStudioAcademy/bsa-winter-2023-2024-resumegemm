@@ -34,12 +34,22 @@ const createResumeFromTemplateSettings = <T extends ResumeGetAllResponseDto>({
             city: '',
             country: '',
         },
-        experience: [
+        certification: [
             {
-                jobTitle: '',
-                companyName: '',
+                certificationName: '',
+                authority: '',
+                certificationUrlOrCode: '',
+                startDate: new Date(2015, 10),
+                endDate: new Date(2017, 15),
+            },
+        ],
+        education: [
+            {
+                institution: '',
+                degree: '',
                 city: '',
                 country: '',
+                description: '',
                 startDate: new Date(2015, 10),
                 endDate: new Date(2017, 15),
             },
@@ -69,7 +79,11 @@ const createResumeFromTemplateSettings = <T extends ResumeGetAllResponseDto>({
                     item,
                 );
                 updateResumeFieldsFromTemplateSettings(
-                    resumeShape.experience,
+                    resumeShape.education,
+                    item,
+                );
+                updateResumeFieldsFromTemplateSettings(
+                    resumeShape.certification,
                     item,
                 );
                 updateResumeFieldsFromTemplateSettings(

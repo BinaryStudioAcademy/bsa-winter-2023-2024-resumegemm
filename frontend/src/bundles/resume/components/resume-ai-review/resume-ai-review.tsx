@@ -46,8 +46,15 @@ const ResumeAiReview: React.FC<ResumeAiReviewPayload> = ({
             >
                 <div className={styles.modal__content}>
                     <div>
-                        <h1>Score: {resumeReview?.score}</h1>
-                        <p>{resumeReview?.overview}</p>
+                        <div className={styles.resume__score__wrapper}>
+                            <h2>Score:</h2>{' '}
+                            <h2 className={styles.resume__score}>
+                                {resumeReview?.score ?? 10}
+                            </h2>
+                        </div>
+                        <p className={styles.resume__overview}>
+                            {resumeReview?.overview}
+                        </p>
                     </div>
                     <RegularButton
                         variant={ButtonVariant.GHOST}
@@ -56,7 +63,7 @@ const ResumeAiReview: React.FC<ResumeAiReviewPayload> = ({
                         className={styles.modal__cancel__button}
                         onClick={toggleModal}
                     >
-                        Cancel
+                        Got it!
                     </RegularButton>
                 </div>
             </Modal>

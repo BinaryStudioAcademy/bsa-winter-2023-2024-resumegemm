@@ -95,6 +95,7 @@ const getCurrentResumeWithTemplate = createAsyncThunk<
         technicalSkills,
         customSections,
         certification,
+        languages,
         contacts,
         experience,
         education,
@@ -106,6 +107,7 @@ const getCurrentResumeWithTemplate = createAsyncThunk<
         ...experience,
         ...education,
         ...technicalSkills,
+        ...languages,
     ];
     const mergedResumeSectionsToObject = Object.assign(
         {},

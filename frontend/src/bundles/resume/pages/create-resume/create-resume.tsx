@@ -1,5 +1,8 @@
+import { NavLink } from 'react-router-dom';
+
 import { Header, RegularButton } from '~/bundles/common/components/components';
 import {
+    AppRoute,
     ButtonVariant,
     ContentType,
     ToastType,
@@ -46,6 +49,14 @@ const CreateResume: React.FC = () => {
                 )}
             </div>
             <div className={styles.create__resume__actions}>
+                <NavLink to={AppRoute.HOME}>
+                    <RegularButton
+                        variant={ButtonVariant.OUTLINED}
+                        className={styles.create__resume__back__button}
+                    >
+                        Back
+                    </RegularButton>
+                </NavLink>
                 <RegularButton
                     variant={ButtonVariant.PRIMARY}
                     className={styles.create__resume__button}

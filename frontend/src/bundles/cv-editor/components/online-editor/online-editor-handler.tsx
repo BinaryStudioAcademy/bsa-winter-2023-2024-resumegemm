@@ -1,9 +1,11 @@
 import { type ChangeEvent } from 'react';
+import { TemplateBlockTitles } from 'shared/build';
 
 import {
     FormGroup,
     Input,
     RegularButton,
+    TextArea,
 } from '~/bundles/common/components/components';
 import {
     ButtonSize,
@@ -42,15 +44,20 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
         mergedTemplateSettingsProperties[activeTabIndex].items;
 
     const onNextClick = useCallback(() => {
-        setActiveTabIndex(
-            (previousTabIndex) =>
+        setActiveTabIndex((previousTabIndex) => {
+            const newIndex =
                 (previousTabIndex + 1) %
-                mergedTemplateSettingsProperties.length,
-        );
+                mergedTemplateSettingsProperties.length;
+            const nextItem = mergedTemplateSettingsProperties[newIndex];
+            if (nextItem.name === TemplateBlockTitles.Divider) {
+                return previousTabIndex + 2;
+            }
+            return newIndex;
+        });
     }, [setActiveTabIndex, mergedTemplateSettingsProperties]);
 
     const handleInputResumeFieldChange = useCallback(
-        (event: ChangeEvent<HTMLInputElement>) => {
+        (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             const { name, value, id } = event.target;
             const updatedTemplateSettingsBlocks =
                 updateSettingsBlocksFromInputs(tabs, name, value);
@@ -74,30 +81,46 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
         <section className={styles.editor__section}>
             <nav className={styles.editor_sidebar__nav}>
                 <ul className={styles.editor_sidebar__list}>
-                    {mergedTemplateSettingsProperties.map((tab, index) => (
-                        <EditorTabs
-                            key={tab.id}
-                            tabName={tab.name}
-                            index={index}
-                            activeTabIndex={activeTabIndex}
-                            setActiveTabIndex={setActiveTabIndex}
-                        />
-                    ))}
+                    {mergedTemplateSettingsProperties.map((tab, index) =>
+                        tab.name === TemplateBlockTitles.Divider ? null : (
+                            <EditorTabs
+                                key={tab.id}
+                                tabName={tab.name}
+                                index={index}
+                                activeTabIndex={activeTabIndex}
+                                setActiveTabIndex={setActiveTabIndex}
+                            />
+                        ),
+                    )}
                 </ul>
             </nav>
             <div className={styles.editor_output__block}>
-                <div>
-                    {templateSettingsContainerItems.map((item, index) => (
-                        <FormGroup key={`${index}${item.id}`} label={item.name}>
-                            <Input
-                                id={item.id}
-                                type="text"
-                                name={item.name}
-                                value={item.content}
-                                onChange={handleInputResumeFieldChange}
-                            />
-                        </FormGroup>
-                    ))}
+                <div className={styles.template__settings__wrapper}>
+                    {templateSettingsContainerItems.map((item, index) =>
+                        item.name === 'Avatar' ? null : (
+                            <FormGroup
+                                key={`${index}${item.id}`}
+                                label={item.name}
+                            >
+                                {item.name === 'Description' ? (
+                                    <TextArea
+                                        id={item.id}
+                                        value={item.content}
+                                        name={item.name}
+                                        onChange={handleInputResumeFieldChange}
+                                    />
+                                ) : (
+                                    <Input
+                                        id={item.id}
+                                        type="text"
+                                        name={item.name}
+                                        value={item.content}
+                                        onChange={handleInputResumeFieldChange}
+                                    />
+                                )}
+                            </FormGroup>
+                        ),
+                    )}
                 </div>
                 <RegularButton
                     type={ButtonType.SUBMIT}
