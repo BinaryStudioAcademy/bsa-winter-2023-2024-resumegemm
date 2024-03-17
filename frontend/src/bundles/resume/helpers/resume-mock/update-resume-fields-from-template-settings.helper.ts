@@ -5,6 +5,11 @@ const updateResumeContent = (
     array: Record<string, unknown>[],
     item: LayoutItem,
 ): void => {
+    const itemExists = array.some((object) => object[item.id]);
+    if (itemExists) {
+        array.push({ [item.id]: item.content });
+        return;
+    }
     for (const object of array) {
         if (Object.prototype.hasOwnProperty.call(object, item.id)) {
             object[item.id] = item.content;

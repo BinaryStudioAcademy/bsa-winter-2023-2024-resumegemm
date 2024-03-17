@@ -13,6 +13,7 @@ const availableResumeKeys = new Set([
     'endDate',
     'institution',
     'degree',
+    'language',
     'description',
     'currentlyStudying',
     'skillName',

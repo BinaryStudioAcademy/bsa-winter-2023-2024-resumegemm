@@ -15,48 +15,44 @@ const createResumeFromTemplateSettings = <T extends ResumeGetAllResponseDto>({
     firstName,
     email,
     templateSettings,
-    avatar,
 }: CreateResumePayload): T => {
     const resumeShape = {
         resume: {
             resumeTitle: 'My Resume',
-            image: avatar ?? 'https://i.imgur.com/PhlZpUd.png',
+            image: 'https://i.imgur.com/PhlZpUd.png',
         },
         contacts: {
-            phoneNumber: '+4522323233',
+            phoneNumber: '',
         },
         personalInformation: {
             firstName,
-            lastName: 'Doe',
+            lastName: '',
             email,
-            profession: 'Senior',
-            industry: 'IT',
-            city: 'My city',
-            country: 'New York',
+            profession: '',
+            industry: '',
+            city: '',
+            country: '',
         },
         experience: [
             {
-                companyName: 'Facebook',
-                jobTitle: 'Developer',
-                city: 'Miami basd',
-                country: 'New York',
-                startDate: new Date(2015, 0),
-                endDate: new Date(2017, 10),
-            },
-        ],
-        education: [
-            {
-                institution: 'Harvard University',
-                degree: 'Master',
+                jobTitle: '',
+                companyName: '',
+                city: '',
+                country: '',
                 startDate: new Date(2015, 10),
                 endDate: new Date(2017, 15),
-                city: 'Milan',
-                country: 'Italy',
-                description: 'Description here ',
             },
         ],
-        technicalSkills: [],
-        languages: [],
+        languages: [
+            {
+                language: '',
+            },
+        ],
+        technicalSkills: [
+            {
+                skillName: '',
+            },
+        ],
         customSections: [],
     };
 
@@ -77,10 +73,6 @@ const createResumeFromTemplateSettings = <T extends ResumeGetAllResponseDto>({
                 );
                 updateResumeFieldsFromTemplateSettings(
                     resumeShape.technicalSkills,
-                    item,
-                );
-                updateResumeFieldsFromTemplateSettings(
-                    resumeShape.education,
                     item,
                 );
                 updateResumeFieldsFromTemplateSettings(
