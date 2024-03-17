@@ -2,7 +2,7 @@ import { type TemplateSettings } from 'shared/build/index.js';
 
 import { TemplateBlockTitles, TemplateItemTags } from '../enums/enums.js';
 
-const testTemplate: TemplateSettings = {
+const prettifiedTemplate: TemplateSettings = {
     containers: [
         {
             id: 'titleContainer',
@@ -89,7 +89,7 @@ const testTemplate: TemplateSettings = {
                         {
                             id: 'country',
                             name: 'Country',
-                            placeholder: 'Country',
+                            placeholder: 'COUNTRY',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'Italy',
                             styles: {
@@ -102,7 +102,7 @@ const testTemplate: TemplateSettings = {
                         {
                             id: 'city',
                             name: 'City',
-                            placeholder: 'City',
+                            placeholder: 'CITY',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'Milan',
                             styles: {
@@ -115,7 +115,7 @@ const testTemplate: TemplateSettings = {
                         {
                             id: 'phoneNumber',
                             name: 'Phone',
-                            placeholder: 'Phone',
+                            placeholder: 'PHONE',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: '+391234590',
                             styles: {
@@ -128,7 +128,7 @@ const testTemplate: TemplateSettings = {
                         {
                             id: 'email',
                             name: 'Email',
-                            placeholder: 'Email',
+                            placeholder: 'EMAIL',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'johndoe@gmail.com',
                             styles: {
@@ -141,35 +141,24 @@ const testTemplate: TemplateSettings = {
                         {
                             id: 'skillName',
                             name: 'Performance',
-                            placeholder: 'Performance',
+                            placeholder: 'TECHNICAL SKILL',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Performance optimization',
+                            content: 'TypeScript',
                             styles: {
                                 paddingBottom: '10px',
                                 fontSize: '1rem',
                                 color: '#828ba2',
-                                margin: '20px 0',
-                                borderBottom: '4px solid black',
-                            },
-                        },
-                        {
-                            id: 'skillName',
-                            name: 'Programming Language',
-                            placeholder: 'Programming Language',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'JavaScript',
-                            styles: {
-                                paddingBottom: '10px',
-                                fontSize: '1rem',
-                                color: '#828ba2',
-                                margin: '20px 0',
-                                borderBottom: '4px solid black',
+                                margin: '0',
                             },
                         },
                     ],
                     styles: {
                         flex: '0 25%',
                         height: 'fit-content',
+                        margin: '1rem 0',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-around',
                     },
                 },
 
@@ -192,12 +181,12 @@ const testTemplate: TemplateSettings = {
                 },
                 {
                     id: 'educationBlock1',
-                    name: TemplateBlockTitles.Experience,
+                    name: TemplateBlockTitles.Education,
                     items: [
                         {
                             id: 'institution',
                             name: 'University',
-                            placeholder: 'University',
+                            placeholder: 'UNIVERSITY',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'University of Computer Science',
                             styles: {
@@ -210,15 +199,15 @@ const testTemplate: TemplateSettings = {
                         {
                             id: 'degree',
                             name: 'Degree',
-                            placeholder: 'Degree',
+                            placeholder: 'DEGREE',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'Master Degree',
-                            styles: { fontSize: '20px', fontWeight: 'bold' },
+                            styles: { fontSize: '15px' },
                         },
                         {
                             id: 'description',
                             name: 'Description',
-                            placeholder: 'Description',
+                            placeholder: 'DESCRIPTION',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content:
                                 'Beyond academics, the University of Computer Science fosters a vibrant campus community characterized by diversity, inclusion, and collaboration. Students have ample opportunities to engage in extracurricular activities, clubs, and events, enabling them to develop leadership skills',
@@ -227,26 +216,13 @@ const testTemplate: TemplateSettings = {
                                 padding: '4px',
                             },
                         },
-                        {
-                            id: 'jobTitle',
-                            name: 'Job Title',
-                            placeholder: 'Job Title',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Software Engineer',
-                            styles: { fontSize: '20px', fontWeight: 'bold' },
-                        },
-                        {
-                            id: 'description',
-                            name: 'Description',
-                            placeholder: 'Description',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content:
-                                'During my tenure at Facebook, I contributed significantly to the development and enhancement of user-facing features, leveraging my expertise in software engineering and problem-solving skills. Collaborating closely with cross-functional teams, I played a pivotal role in driving innovation and delivering high-quality solutions that positively impacted millions of users worldwide.',
-                            styles: { fontSize: '15px' },
-                        },
                     ],
                     styles: {
                         flex: '1',
+                        margin: '1rem 0',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-around',
                     },
                 },
             ],
@@ -270,21 +246,56 @@ const testTemplate: TemplateSettings = {
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'English',
                             styles: {
-                                flex: '1',
-                            },
-                        },
-                        {
-                            id: 'language',
-                            name: 'Secondary Language',
-                            placeholder: 'Secondary Language',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'French',
-                            styles: {
-                                flex: '1',
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
                             },
                         },
                     ],
-                    styles: {},
+                    styles: {
+                        marginRight: 'auto',
+                        marginTop: '5px',
+                    },
+                },
+                {
+                    id: 'certification',
+                    name: TemplateBlockTitles.CERTIFICATION,
+                    items: [
+                        {
+                            id: 'certificationName',
+                            name: 'Certification Name',
+                            placeholder: 'CERTIFICATION',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content:
+                                'AWS Certified Solutions Architect (AWS-CSA)',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '0.75rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'authority',
+                            name: 'Authority',
+                            placeholder: 'AUTHORITY',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'Amazon Web Services (AWS)',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '0.75rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                    ],
+                    styles: {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        margin: 'auto',
+                        marginTop: '0.4rem',
+                    },
                 },
             ],
             styles: {
@@ -300,8 +311,9 @@ const testTemplate: TemplateSettings = {
         padding: '20px',
         display: 'grid',
         gridTemplateColumns: '1fr',
+        backgroundColor: '#fff',
         boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
     },
 };
 
-export { testTemplate };
+export { prettifiedTemplate };

@@ -10,16 +10,13 @@ import {
 interface IResumeRepository {
     find(id: string): Promise<Resume | undefined>;
 
-    findById(id: string): Promise<ResumeGetItemResponseDto | null>;
+    findById(
+        id: string,
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto | null>;
 
     findAll(): Promise<ResumeGetAllResponseDto[]>;
 
     findAllByUserId(userId: string): Promise<ResumeGetAllResponseDto[]>;
-
-    getByUserIdTemplateId(
-        userId: string,
-        templateId: string,
-    ): Promise<ResumeWithRelationsAndTemplateResponseDto>;
 
     create(
         payload: ResumeCreateItemRequestDto,

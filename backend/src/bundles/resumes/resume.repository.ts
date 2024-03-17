@@ -68,26 +68,15 @@ class ResumeRepository implements IResumeRepository {
 
     public async findById(
         id: string,
-    ): Promise<ResumeGetItemResponseDto | null> {
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto | null> {
         const resume = await this.resumeModel
             .query()
             .findById(id)
-            .withGraphFetched(resumeGraphFetchRelations)
+            .withGraphFetched(resumeGraphFetchWithTemplates)
             .returning('*')
-            .castTo<ResumeGetAllResponseDto>();
+            .castTo<ResumeWithRelationsAndTemplateResponseDto>();
 
         return resume ?? null;
-    }
-
-    public async getByUserIdTemplateId(
-        userId: string,
-        templateId: string,
-    ): Promise<ResumeWithRelationsAndTemplateResponseDto> {
-        return this.resumeModel
-            .query()
-            .findOne({ userId, templateId })
-            .withGraphFetched(resumeGraphFetchWithTemplates)
-            .castTo<ResumeWithRelationsAndTemplateResponseDto>();
     }
 
     public async findAll(): Promise<ResumeGetAllResponseDto[]> {

@@ -137,11 +137,11 @@ class ResumeController extends Controller {
 
     private async findByIdWithRelations(
         options: ApiHandlerOptions<{ params: IdParameter }>,
-    ): Promise<ApiHandlerResponse<ResumeWithRelationsAndTemplateResponseDto>> {
+    ): Promise<
+        ApiHandlerResponse<ResumeWithRelationsAndTemplateResponseDto | null>
+    > {
         try {
-            const resume = await this.resumeService.getByUserIdTemplateId(
-                options.params.id,
-            );
+            const resume = await this.resumeService.findById(options.params.id);
             return {
                 status: HttpCode.OK,
                 payload: resume,

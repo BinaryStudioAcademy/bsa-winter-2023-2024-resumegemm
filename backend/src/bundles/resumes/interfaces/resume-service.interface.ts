@@ -11,15 +11,13 @@ import {
 interface IResumeService {
     find(id: string): Promise<Resume | undefined>;
 
-    findById(id: string): Promise<ResumeGetItemResponseDto | null>;
+    findById(
+        id: string,
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto | null>;
 
     findAll(): Promise<ResumeGetItemResponseDto[]>;
 
     findAllByUserId(userId: string): Promise<ResumeGetItemResponseDto[]>;
-
-    getByUserIdTemplateId(
-        resumeId: string,
-    ): Promise<ResumeWithRelationsAndTemplateResponseDto>;
 
     create(
         payload: ResumeCreateItemRequestDto,

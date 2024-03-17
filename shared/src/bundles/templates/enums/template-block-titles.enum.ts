@@ -3,6 +3,7 @@ enum TemplateBlockTitles {
     Contacts = 'Contacts',
     Summary = 'Summary',
     Experience = 'Experience',
+    CERTIFICATION = 'Certification',
     Recommendations = 'Recommendations',
     Skills = 'Skills',
     Divider = 'Divider',
