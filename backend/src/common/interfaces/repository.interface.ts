@@ -14,6 +14,7 @@ interface IRepository<T = unknown> {
             | 'email'
             | 'profileId'
             | 'stripeId'
+            | 'pdfDownloads'
         >,
         transaction: Transaction,
     ): Promise<T>;
