@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type AuthException } from 'shared/build';
 import {
+    type AuthException,
     type UserResetPasswordRequestDto,
     type UserVerifyResetPasswordTokenRequestDto,
     type UserVerifyResetPasswordTokenResponse,

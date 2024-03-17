@@ -8,18 +8,19 @@ type CreateResumePayload = {
     firstName: string;
     email: string;
     templateSettings: TemplateSettings;
-    avatar?: string;
+    image: string;
 };
 
 const createResumeFromTemplateSettings = <T extends ResumeGetAllResponseDto>({
     firstName,
     email,
     templateSettings,
+    image,
 }: CreateResumePayload): T => {
     const resumeShape = {
         resume: {
             resumeTitle: 'My Resume',
-            image: 'https://i.imgur.com/PhlZpUd.png',
+            image,
         },
         contacts: {
             phoneNumber: '',

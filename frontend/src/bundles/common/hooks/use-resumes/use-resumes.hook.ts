@@ -29,7 +29,7 @@ type UseResumesReturnValues = {
     templateSettings: TemplateSettings | null;
     createResumeAccessLink: () => void;
     requestResumeReviewFromAI: () => void;
-    createResume: () => void;
+    createResume: (screenshot: string) => void;
     downloadGeneratedFile: (html: string) => void;
     resumeReview: ResumeAiScoreResponseDto | null;
     dataStatus: DataStatus;
@@ -82,16 +82,19 @@ const useResumes = (): UseResumesReturnValues => {
         [dispatch],
     );
 
-    const createResume = useCallback(() => {
-        void dispatch(resumeActions.createResume())
-            .unwrap()
-            .then(() => {
-                showToast('Resume created!', ToastType.SUCCESS, {
-                    position: 'top-right',
+    const createResume = useCallback(
+        (screenshot: string) => {
+            void dispatch(resumeActions.createResume(screenshot))
+                .unwrap()
+                .then(() => {
+                    showToast('Resume created!', ToastType.SUCCESS, {
+                        position: 'top-right',
+                    });
+                    navigate(AppRoute.HOME);
                 });
-                navigate(AppRoute.HOME);
-            });
-    }, [navigate, dispatch]);
+        },
+        [navigate, dispatch],
+    );
 
     const createResumeAccessLink = useCallback(() => {
         void dispatch(

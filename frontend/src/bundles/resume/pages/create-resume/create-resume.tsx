@@ -1,13 +1,32 @@
 import { Header, RegularButton } from '~/bundles/common/components/components';
-import { ButtonVariant } from '~/bundles/common/enums/enums';
-import { useResumes } from '~/bundles/common/hooks/hooks';
+import {
+    ButtonVariant,
+    ContentType,
+    ToastType,
+} from '~/bundles/common/enums/enums';
+import { useCallback, useRef, useResumes } from '~/bundles/common/hooks/hooks';
+import { useTakeScreenShot } from '~/bundles/common/hooks/use-take-screenshot/use-take-screenshot.hook';
 import { OnlineEditorTabsHandler } from '~/bundles/cv-editor/components/components';
 import { ResumeEditor } from '~/bundles/resume/components/resume-editor/resume-editor';
+import { showToast } from '~/bundles/toast/helpers/show-toast';
 
 import styles from './styles.module.scss';
 
 const CreateResume: React.FC = () => {
     const { templateSettings, createResume } = useResumes();
+    const { takeScreenshot } = useTakeScreenShot();
+    const resumeReference = useRef<HTMLDivElement>(null);
+
+    const handleTakeScreenshotAndCreateResume = useCallback((): void => {
+        takeScreenshot({
+            ref: resumeReference,
+            convertOptions: { quality: 1, type: ContentType.IMAGE_JPEG },
+        })
+            .then((screenshot) => createResume(screenshot as string))
+            .catch((error) =>
+                showToast((error as Error).message, ToastType.ERROR),
+            );
+    }, [createResume, takeScreenshot]);
 
     return (
         <div className={styles.create__resume__wrapper}>
@@ -19,7 +38,10 @@ const CreateResume: React.FC = () => {
                             tabs={templateSettings.containers}
                             isCreate
                         />
-                        <ResumeEditor templateSettings={templateSettings} />
+                        <ResumeEditor
+                            reference={resumeReference}
+                            templateSettings={templateSettings}
+                        />
                     </>
                 )}
             </div>
@@ -27,7 +49,7 @@ const CreateResume: React.FC = () => {
                 <RegularButton
                     variant={ButtonVariant.PRIMARY}
                     className={styles.create__resume__button}
-                    onClick={createResume}
+                    onClick={handleTakeScreenshotAndCreateResume}
                 >
                     Create Resume
                 </RegularButton>

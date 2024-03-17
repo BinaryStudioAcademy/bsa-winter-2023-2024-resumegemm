@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import { LanguageLevels, SkillLevel } from '~/bundles/resume/enums/enums';
 import {
     createResumeFromTemplateSettings,
     updateResumeKeysFromInputs,
@@ -30,13 +31,13 @@ const getAllResumes = createAsyncThunk<
 
 const createResume = createAsyncThunk<
     ResumeGetAllResponseDto,
-    undefined,
+    string,
     AsyncThunkConfig
->(`${sliceName}/create-resume`, (_, { extra, getState }) => {
+>(`${sliceName}/create-resume`, (image, { extra, getState }) => {
     const state = getState();
     const { resumeApi } = extra;
     const {
-        userProfile: { avatar, firstName },
+        userProfile: { firstName },
         email,
     } = state.auth.user as UserWithProfileRelation;
     const templateSettings = state.resumes.templateSettings as TemplateSettings;
@@ -45,11 +46,23 @@ const createResume = createAsyncThunk<
         firstName,
         email,
         templateSettings,
-        avatar: avatar ?? '',
+        image,
     });
 
+    const updatedResume = {
+        ...resume,
+        technicalSkills: resume.technicalSkills.map((skill) => ({
+            ...skill,
+            skillLevel: SkillLevel.Advanced,
+        })),
+        languages: resume.languages.map((language) => ({
+            ...language,
+            languageLevel: LanguageLevels.ELEMENTERY,
+        })),
+    };
+
     const templateId = state.resumes.currentTemplateId;
-    return resumeApi.createResume(resume, templateId as string);
+    return resumeApi.createResume(updatedResume, templateId as string);
 });
 
 const getCurrentResumeWithTemplate = createAsyncThunk<
