@@ -43,16 +43,14 @@ const EditTemplatePage: React.FC = () => {
             return;
         }
 
-        if (!template.id || template.id !== parameters.id) {
-            void dispatch(getTemplateById(parameters.id))
-                .unwrap()
-                .then((data) => {
-                    if (data) {
-                        setTemplateSettings(data.templateSettings);
-                    }
-                });
-        }
-    }, [parameters.id, template.id, dispatch]);
+        void dispatch(getTemplateById(parameters.id))
+            .unwrap()
+            .then((data) => {
+                if (data) {
+                    setTemplateSettings(data.templateSettings);
+                }
+            });
+    }, [dispatch, parameters.id, template.id]);
 
     const isBlockEnabled = useCallback(
         (blockName: string): boolean =>
