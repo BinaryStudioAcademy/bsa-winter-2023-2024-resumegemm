@@ -50,7 +50,7 @@ const EditTemplatePage: React.FC = () => {
                     setTemplateSettings(data.templateSettings);
                 }
             });
-    }, [dispatch, parameters.id, template.id]);
+    }, [dispatch, parameters.id]);
 
     const isBlockEnabled = useCallback(
         (blockName: string): boolean =>
