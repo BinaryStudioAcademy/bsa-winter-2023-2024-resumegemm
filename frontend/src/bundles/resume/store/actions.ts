@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type GeneratePdfRequestDto } from 'shared/build/bundles/pdf/pdf.js';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
+import { openDownloadLinkForPDF } from '~/helpers/helpers.js';
 
 import {
     type ResumeGetAllResponseDto,
@@ -28,4 +30,14 @@ const getViewsCountByUserId = createAsyncThunk<
     return resumeApi.getViewsCount(request.userId);
 });
 
-export { getAllResumesByUserId, getViewsCountByUserId };
+const downloadPDFDocument = createAsyncThunk<
+    unknown,
+    GeneratePdfRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/download-pdf-doc`, async (html, { extra }) => {
+    const { pdfApi } = extra;
+    const blob = await pdfApi.generatePDFFileFromHTMLString(html);
+    openDownloadLinkForPDF(blob);
+});
+
+export { downloadPDFDocument, getAllResumesByUserId, getViewsCountByUserId };

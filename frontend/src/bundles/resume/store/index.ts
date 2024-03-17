@@ -1,8 +1,9 @@
-import { getAllResumesByUserId } from './actions.js';
+import { downloadPDFDocument, getAllResumesByUserId } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
+    downloadPDFDocument,
     getAllResumesByUserId,
 };
 

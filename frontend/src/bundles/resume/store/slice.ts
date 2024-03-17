@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { type TemplateSettings } from 'shared/build/index.js';
 
 import {
     type ResumeGetItemResponseDto,
@@ -10,12 +11,14 @@ type State = {
     resumeId: string;
     resumes: ResumeGetItemResponseDto[];
     resumeViews: ResumeViewsCountResponseDto[];
+    templateSettings: TemplateSettings | null;
 };
 
 const initialState: State = {
     resumeId: '',
     resumes: [],
     resumeViews: [],
+    templateSettings: null,
 };
 
 const { reducer, actions, name } = createSlice({
