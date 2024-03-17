@@ -1,258 +1,306 @@
+import { type TemplateSettings } from 'shared/build/index.js';
+
 import { TemplateBlockTitles, TemplateItemTags } from '../enums/enums.js';
-import { type TemplateSettings } from '../types/types.js';
 
 const testTemplate: TemplateSettings = {
     containers: [
         {
-            id: 'personalInfoContainer',
-            name: 'Personal Information',
+            id: 'titleContainer',
+            name: 'Overview',
             blocks: [
                 {
                     id: 'profileBlock',
                     name: TemplateBlockTitles.Profile,
                     items: [
                         {
-                            id: 'nameItem',
-                            name: 'Name',
-                            tagName: TemplateItemTags.HEADING,
-                            content: 'John Doe',
-                            styles: { color: '#3498db' },
+                            id: 'firstName',
+                            name: 'First Name',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'TAYLOR',
+                            styles: {
+                                fontWeight: 'bolder',
+                                fontSize: '2rem',
+                                letterSpacing: '2px',
+                                margin: '0',
+                            },
                         },
                         {
-                            id: 'profileItem',
-                            name: 'Profile',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Web Developer',
-                            styles: { color: '#333', fontStyle: 'italic' },
+                            id: 'avatar',
+                            name: 'Avatar',
+                            tagName: TemplateItemTags.IMAGE,
+                            content:
+                                'https://i.pinimg.com/564x/29/55/59/295559e87b67fde4bbd5d5049d67e678.jpg',
+                            styles: {
+                                width: '65px',
+                                height: '65px',
+                                borderRadius: '50%',
+                                overflow: 'hidden',
+                                objectFit: 'cover',
+                                position: 'absolute',
+                                right: '0',
+                                top: '0',
+                                flex: '1',
+                            },
                         },
                         {
-                            id: 'emailItem',
-                            name: 'Email',
+                            id: 'lastName',
+                            name: 'Last Name',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'john.doe@example.com',
-                            styles: { color: '#333' },
+                            content: 'COOK',
+                            styles: {
+                                fontWeight: 'bolder',
+                                fontSize: '2rem',
+                                letterSpacing: '2px',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'profession',
+                            name: 'Profession',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'Software Developer',
+                            styles: {
+                                margin: '20px 0',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                            },
                         },
                     ],
-                    styles: { backgroundColor: '#f2f2f2', padding: '5px' },
+                    styles: {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        position: 'relative',
+                    },
                 },
-                {
-                    id: 'contactBlock',
-                    name: TemplateBlockTitles.Contacts,
-                    items: [
-                        {
-                            id: 'phoneItem',
-                            name: 'Phone',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: '+123 456 7890',
-                            styles: { color: '#333' },
-                        },
-                        {
-                            id: 'addressItem',
-                            name: 'Address',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: '123 Main Street, Cityville',
-                            styles: { color: '#333' },
-                        },
-                        {
-                            id: 'websiteItem',
-                            name: 'Website',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'www.johndoe.com',
-                            styles: { color: '#333' },
-                        },
-                    ],
-                    styles: { backgroundColor: '#e6f7ff', padding: '5px' },
-                },
-                {
-                    id: 'socialBlock',
-                    name: TemplateBlockTitles.Socials,
-                    items: [
-                        {
-                            id: 'linkedinItem',
-                            name: 'LinkedIn',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'linkedin.com/in/johndoe',
-                            styles: { color: '#333' },
-                        },
-                        {
-                            id: 'githubItem',
-                            name: 'GitHub',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'github.com/johndoe',
-                            styles: { color: '#333' },
-                        },
-                    ],
-                    styles: { backgroundColor: '#f9e6e6', padding: '5px' },
-                },
+            ],
+            styles: {
+                borderBottom: '2px solid #c7cacf',
+            },
+        },
+        {
+            id: 'mainContainer',
+            name: 'Main',
+            blocks: [
                 {
                     id: 'summaryBlock',
                     name: TemplateBlockTitles.Summary,
                     items: [
                         {
-                            id: 'summaryItem',
-                            name: 'Summary',
+                            id: 'country',
+                            name: 'Country',
+                            placeholder: 'Country',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content:
-                                'A passionate web developer with 5 years of experience',
-                            styles: { color: '#333' },
+                            content: 'Italy',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'city',
+                            name: 'City',
+                            placeholder: 'City',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'Milan',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'phoneNumber',
+                            name: 'Phone',
+                            placeholder: 'Phone',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: '+391234590',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'email',
+                            name: 'Email',
+                            placeholder: 'Email',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'johndoe@gmail.com',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'skillName',
+                            name: 'Performance',
+                            placeholder: 'Performance',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'Performance optimization',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '20px 0',
+                                borderBottom: '4px solid black',
+                            },
+                        },
+                        {
+                            id: 'skillName',
+                            name: 'Programming Language',
+                            placeholder: 'Programming Language',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'JavaScript',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '20px 0',
+                                borderBottom: '4px solid black',
+                            },
                         },
                     ],
-                    styles: { backgroundColor: '#e6f7ff', padding: '5px' },
+                    styles: {
+                        flex: '0 25%',
+                        height: 'fit-content',
+                    },
                 },
-            ],
-            styles: {
-                background: '#ffffff',
-                gridColumn: '1 / 3',
-            },
-        },
-        {
-            id: 'experienceContainer',
-            name: 'Work Experience',
-            blocks: [
+
                 {
-                    id: 'expBlock1',
+                    id: 'Divider',
+                    name: TemplateBlockTitles.Divider,
+                    items: [
+                        {
+                            id: 'divider',
+                            name: 'Divider',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: '',
+                            styles: {},
+                        },
+                    ],
+                    styles: {
+                        width: '2px',
+                        backgroundColor: '#c7cacf',
+                    },
+                },
+                {
+                    id: 'educationBlock1',
                     name: TemplateBlockTitles.Experience,
                     items: [
                         {
-                            id: 'expItem1',
-                            name: 'Job Title 1',
+                            id: 'institution',
+                            name: 'University',
+                            placeholder: 'University',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'University of Computer Science',
+                            styles: {
+                                color: 'white',
+                                backgroundColor: 'black',
+                                fontWeight: 'bold',
+                                padding: '4px',
+                            },
+                        },
+                        {
+                            id: 'degree',
+                            name: 'Degree',
+                            placeholder: 'Degree',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'Master Degree',
+                            styles: { fontSize: '20px', fontWeight: 'bold' },
+                        },
+                        {
+                            id: 'description',
+                            name: 'Description',
+                            placeholder: 'Description',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content:
+                                'Beyond academics, the University of Computer Science fosters a vibrant campus community characterized by diversity, inclusion, and collaboration. Students have ample opportunities to engage in extracurricular activities, clubs, and events, enabling them to develop leadership skills',
+                            styles: {
+                                fontWeight: 'bold',
+                                padding: '4px',
+                            },
+                        },
+                        {
+                            id: 'jobTitle',
+                            name: 'Job Title',
+                            placeholder: 'Job Title',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'Software Engineer',
-                            styles: { color: '#3498db' },
+                            styles: { fontSize: '20px', fontWeight: 'bold' },
                         },
                         {
-                            id: 'expItem2',
-                            name: 'Company 1',
+                            id: 'description',
+                            name: 'Description',
+                            placeholder: 'Description',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Tech Solutions Inc.',
-                            styles: { color: '#333', fontStyle: 'italic' },
-                        },
-                        {
-                            id: 'expItem3',
-                            name: 'Duration 1',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Jan 2020 - Present',
-                            styles: { color: '#333' },
+                            content:
+                                'During my tenure at Facebook, I contributed significantly to the development and enhancement of user-facing features, leveraging my expertise in software engineering and problem-solving skills. Collaborating closely with cross-functional teams, I played a pivotal role in driving innovation and delivering high-quality solutions that positively impacted millions of users worldwide.',
+                            styles: { fontSize: '15px' },
                         },
                     ],
-                    styles: { backgroundColor: '#f9e6e6' },
+                    styles: {
+                        flex: '1',
+                    },
                 },
             ],
-            styles: { background: '#ffffff' },
+            styles: {
+                display: 'flex',
+                gap: '10px',
+            },
         },
         {
-            id: 'educationContainer',
-            name: 'Education',
+            id: 'footerContainer',
+            name: 'Footer',
             blocks: [
                 {
-                    id: 'eduBlock1',
-                    name: TemplateBlockTitles.Education,
-                    items: [
-                        {
-                            id: 'eduItem1',
-                            name: 'Degree 1',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Bachelor of Science in Computer Science',
-                            styles: { color: '#3498db' },
-                        },
-                        {
-                            id: 'eduItem2',
-                            name: 'Institution 1',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'University of Technology',
-                            styles: { color: '#333', fontStyle: 'italic' },
-                        },
-                        {
-                            id: 'eduItem3',
-                            name: 'Graduation Year 1',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'May 2019',
-                            styles: { color: '#333' },
-                        },
-                    ],
-                    styles: { backgroundColor: '#e6f7ff', padding: '5px' },
-                },
-                {
-                    id: 'skillsBlock',
-                    name: TemplateBlockTitles.Skills,
-                    items: [
-                        {
-                            id: 'skillsItem',
-                            name: 'Skills',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Very skilled at web development',
-                            styles: { color: '#333' },
-                        },
-                    ],
-                    styles: { backgroundColor: '#f2f2f2', padding: '5px' },
-                },
-                {
-                    id: 'techStackBlock',
-                    name: TemplateBlockTitles.TechStack,
-                    items: [
-                        {
-                            id: 'techStackItem',
-                            name: 'Tech Stack',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'JavaScript, React, Node.js, MongoDB',
-                            styles: { color: '#333' },
-                        },
-                    ],
-                    styles: { backgroundColor: '#f9e6e6', padding: '5px' },
-                },
-                {
-                    id: 'languagesBlock',
+                    id: 'footerBlock',
                     name: TemplateBlockTitles.Languages,
                     items: [
                         {
-                            id: 'languagesItem',
+                            id: 'language',
                             name: 'Languages',
+                            placeholder: 'Primary Language',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'English, Spanish',
-                            styles: { color: '#333' },
+                            content: 'English',
+                            styles: {
+                                flex: '1',
+                            },
                         },
-                    ],
-                    styles: { backgroundColor: '#e6f7ff', padding: '5px' },
-                },
-                {
-                    id: 'portfolioBlock',
-                    name: TemplateBlockTitles.Portfolio,
-                    items: [
                         {
-                            id: 'portfolioItem',
-                            name: 'Portfolio',
+                            id: 'language',
+                            name: 'Secondary Language',
+                            placeholder: 'Secondary Language',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'www.johndoe.com/portfolio',
-                            styles: { color: '#333' },
+                            content: 'French',
+                            styles: {
+                                flex: '1',
+                            },
                         },
                     ],
-                    styles: { backgroundColor: '#f2f2f2', padding: '5px' },
-                },
-                {
-                    id: 'recommendationsBlock',
-                    name: TemplateBlockTitles.Recommendations,
-                    items: [
-                        {
-                            id: 'recommendationsItem',
-                            name: 'Recommendations',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'www.johndoe.com/recommendations',
-                            styles: { color: '#333' },
-                        },
-                    ],
-                    styles: { backgroundColor: '#f9e6e6', padding: '5px' },
+                    styles: {},
                 },
             ],
-            styles: { background: '#ffffff' },
+            styles: {
+                display: 'flex',
+                gap: '10px',
+                borderTop: '2px solid #c7cacf',
+            },
         },
     ],
     styles: {
-        fontFamily: 'Arial, sans-serif',
-        color: '#333',
-        padding: '5px',
+        fontFamily: 'Trebuchet MS, sans-serif',
+        fontSize: '12px',
+        padding: '20px',
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gridTemplateRows: 'auto 1fr',
+        gridTemplateColumns: '1fr',
+        boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
     },
 };
 

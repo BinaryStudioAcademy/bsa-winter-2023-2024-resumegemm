@@ -5,6 +5,7 @@ enum TemplateBlockTitles {
     Experience = 'Experience',
     Recommendations = 'Recommendations',
     Skills = 'Skills',
+    Divider = 'Divider',
     TechStack = 'TechStack',
     Portfolio = 'Portfolio',
     Languages = 'Languages',

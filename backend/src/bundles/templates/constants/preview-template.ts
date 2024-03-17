@@ -12,7 +12,7 @@ const testTemplate: TemplateSettings = {
                     name: TemplateBlockTitles.Profile,
                     items: [
                         {
-                            id: 'avatarItem',
+                            id: 'avatar',
                             name: 'Avatar',
                             tagName: TemplateItemTags.IMAGE,
                             content:
@@ -26,7 +26,7 @@ const testTemplate: TemplateSettings = {
                             },
                         },
                         {
-                            id: 'firstNameItem',
+                            id: 'firstName',
                             name: 'First Name',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'John Doe',
@@ -37,8 +37,8 @@ const testTemplate: TemplateSettings = {
                             },
                         },
                         {
-                            id: 'positionItem',
-                            name: 'Position',
+                            id: 'profession',
+                            name: 'Profession',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'Web Developer',
                             styles: { fontWeight: 'bold', fontSize: '14px' },
@@ -57,24 +57,24 @@ const testTemplate: TemplateSettings = {
                     name: TemplateBlockTitles.Contacts,
                     items: [
                         {
-                            id: 'phoneItem',
+                            id: 'phoneNumber',
                             name: 'Phone',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: '+123 456 7890',
                             styles: {},
                         },
                         {
-                            id: 'addressItem',
-                            name: 'Address',
+                            id: 'country',
+                            name: 'Country',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: '123 Main Street, Cityville',
+                            content: 'Greece',
                             styles: {},
                         },
                         {
-                            id: 'websiteItem',
-                            name: 'Website',
+                            id: 'email',
+                            name: 'Email',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'www.johndoe.com',
+                            content: 'three@gmail.com',
                             styles: {},
                         },
                     ],
@@ -135,54 +135,11 @@ const testTemplate: TemplateSettings = {
                     name: TemplateBlockTitles.Experience,
                     items: [
                         {
-                            id: 'titleItem1',
-                            name: 'Title 1',
+                            id: 'jobTitle',
+                            name: 'Job Title',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Employment history',
+                            content: 'Software Engineer',
                             styles: { fontSize: '20px', fontWeight: 'bold' },
-                        },
-                        {
-                            id: 'expItem2',
-                            name: 'Company 1',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Tech Solutions Inc.',
-                            styles: {
-                                color: 'white',
-                                backgroundColor: 'black',
-                                fontWeight: 'bold',
-                                padding: '4px',
-                            },
-                        },
-                        {
-                            id: 'expItem3',
-                            name: 'Duration 1',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Jan 2020 - Present',
-                            styles: { fontSize: '16px' },
-                        },
-                        {
-                            id: 'expItem4',
-                            name: 'Description 1',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content:
-                                '• Developed and maintained company website.',
-                            styles: { textAlign: 'justify' },
-                        },
-                        {
-                            id: 'expItem5',
-                            name: 'Description 2',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content:
-                                '• Implemented new features and functionality.',
-                            styles: { textAlign: 'justify' },
-                        },
-                        {
-                            id: 'expItem6',
-                            name: 'Description 3',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content:
-                                '• Collaborated with design and product teams on website development.',
-                            styles: { textAlign: 'justify' },
                         },
                     ],
                     styles: {},
@@ -192,14 +149,14 @@ const testTemplate: TemplateSettings = {
                     name: TemplateBlockTitles.Education,
                     items: [
                         {
-                            id: 'titleItem2',
-                            name: 'Title 2',
+                            id: 'degree',
+                            name: 'Degree',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Education',
+                            content: 'Master Degree',
                             styles: { fontSize: '20px', fontWeight: 'bold' },
                         },
                         {
-                            id: 'educationItem2',
+                            id: 'institution',
                             name: 'University',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'University of Computer Science',
@@ -209,21 +166,6 @@ const testTemplate: TemplateSettings = {
                                 fontWeight: 'bold',
                                 padding: '4px',
                             },
-                        },
-                        {
-                            id: 'educationItem4',
-                            name: 'Duration 2',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: '2016 - 2020',
-                            styles: { fontSize: '16px' },
-                        },
-                        {
-                            id: 'educationItem3',
-                            name: 'Degree',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content:
-                                '• Bachelor of Science in Computer Science',
-                            styles: {},
                         },
                     ],
                     styles: {},
@@ -261,27 +203,6 @@ const testTemplate: TemplateSettings = {
                             content: '• Communication',
                             styles: { color: '#333' },
                         },
-                        {
-                            id: 'skillsItem2',
-                            name: 'Skills',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: '• Teamwork',
-                            styles: { color: '#333' },
-                        },
-                        {
-                            id: 'skillsItem3',
-                            name: 'Skills',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: '• Problem-solving',
-                            styles: { color: '#333' },
-                        },
-                        {
-                            id: 'skillsItem4',
-                            name: 'Skills',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: '• Adaptability',
-                            styles: { color: '#333' },
-                        },
                     ],
                     styles: {
                         backgroundColor: '#EEEEEE',
@@ -294,29 +215,15 @@ const testTemplate: TemplateSettings = {
                     name: TemplateBlockTitles.Languages,
                     items: [
                         {
-                            id: 'languagesTitleItem',
+                            id: 'language',
                             name: 'Languages Title',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Languages',
+                            content: 'French',
                             styles: {
                                 fontSize: '20px',
                                 fontWeight: 'bold',
                                 textAlign: 'center',
                             },
-                        },
-                        {
-                            id: 'languagesItem1',
-                            name: 'Languages',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: '• English',
-                            styles: { color: '#333' },
-                        },
-                        {
-                            id: 'languagesItem2',
-                            name: 'Languages',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: '• Spanish',
-                            styles: { color: '#333' },
                         },
                     ],
                     styles: {
