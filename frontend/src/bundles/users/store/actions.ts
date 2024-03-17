@@ -31,4 +31,14 @@ const deleteProfile = createAsyncThunk<
     return userApi.getAll();
 });
 
-export { deleteProfile, loadAll };
+const incrementPDFDownloads = createAsyncThunk<null, string, AsyncThunkConfig>(
+    `${sliceName}/incrementPDFDownloads`,
+    async (userId, { extra }) => {
+        const { userApi } = extra;
+
+        await userApi.incrementPDFDownloads(userId);
+        return null;
+    },
+);
+
+export { deleteProfile, incrementPDFDownloads, loadAll };

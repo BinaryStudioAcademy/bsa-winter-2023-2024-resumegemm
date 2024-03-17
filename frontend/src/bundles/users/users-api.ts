@@ -68,6 +68,18 @@ class UserApi extends HttpApi {
 
         return await response.json<UserWithProfileRelation>();
     }
+
+    public async incrementPDFDownloads(id: string): Promise<void> {
+        await this.load(
+            this.getFullEndpoint(UsersApiPath.ID_PDF_DOWNLOADS(id), {}),
+            {
+                method: 'PUT',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify({}),
+            },
+        );
+    }
 }
 
 export { UserApi };
