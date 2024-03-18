@@ -1,4 +1,7 @@
+import { Link } from 'react-router-dom';
+
 import mockResume from '~/assets/img/mock-resume.png';
+import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { useLoadTemplates } from '~/bundles/common/hooks/use-load-templates/use-load-templates.hook';
 import {
     CreateNewCard,
@@ -40,11 +43,15 @@ const Home: React.FC = () => {
                 {templates.length > 0 &&
                     templates.map((template) => {
                         return (
-                            <ResumeCard
+                            <Link
+                                to={`${AppRoute.TEMPLATE}/${template.id}`}
                                 key={template.id}
-                                title="My Resume"
-                                image={template.image}
-                            />
+                            >
+                                <ResumeCard
+                                    title={template.name}
+                                    image={template.image}
+                                />
+                            </Link>
                         );
                     })}
             </TemplateSection>

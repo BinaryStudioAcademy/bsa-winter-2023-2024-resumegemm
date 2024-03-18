@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import {
     Icon,
@@ -58,7 +58,10 @@ const Templates: React.FC = () => {
                     }
                     className={styles.icon_input_wrapper}
                 />
-                <RegularButton onClick={handleCreateTemplate}>
+                <RegularButton
+                    onClick={handleCreateTemplate}
+                    className={styles.create_resume_button}
+                >
                     Create template
                 </RegularButton>
             </HomeTopSection>
@@ -70,11 +73,15 @@ const Templates: React.FC = () => {
                 {templates.length > 0 &&
                     templates.map((template) => {
                         return (
-                            <ResumeCard
+                            <Link
+                                to={`${AppRoute.TEMPLATE}/${template.id}`}
                                 key={template.id}
-                                title="My Resume"
-                                image={template.image}
-                            />
+                            >
+                                <ResumeCard
+                                    title={template.name}
+                                    image={template.image}
+                                />
+                            </Link>
                         );
                     })}
             </TemplateSection>

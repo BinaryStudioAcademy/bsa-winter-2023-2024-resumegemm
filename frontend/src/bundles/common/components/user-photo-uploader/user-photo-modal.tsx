@@ -3,19 +3,31 @@ import React, { useCallback, useState } from 'react';
 import { IconName } from '../../enums/enums';
 import { Icon, IconButton } from '../components';
 import styles from './styles.module.scss';
+import { type ImageBlob } from './types/image-blob.type';
 import { UserPhotoCropper } from './user-photo-cropper';
 import { UserPhotoUploader } from './user-photo-uploader';
 
 interface UploadModalProperties {
     onToggleModal: React.Dispatch<React.SetStateAction<boolean>>;
-    onHandleCurrentPhoto: React.Dispatch<React.SetStateAction<string>>;
+    onHandleCurrentPhoto: (
+        payload: {
+            src: string | ArrayBuffer | null;
+            blob: Blob;
+        } | null,
+    ) => void;
 }
 
 const PhotoUploaderModal: React.FC<UploadModalProperties> = ({
     onToggleModal,
     onHandleCurrentPhoto,
 }) => {
-    const [image, setImage] = useState<string | ArrayBuffer | null>('');
+    const [image, setImage] = useState<ImageBlob | null>(null);
+
+    const onCompleteHandler = useCallback(() => {
+        onHandleCurrentPhoto(image);
+
+        onToggleModal(false);
+    }, [onToggleModal, onHandleCurrentPhoto, image]);
 
     const handleClose = useCallback(() => {
         onToggleModal(false);
@@ -33,10 +45,9 @@ const PhotoUploaderModal: React.FC<UploadModalProperties> = ({
                 {!image && <UserPhotoUploader onImageUpload={setImage} />}
                 {image && (
                     <UserPhotoCropper
-                        image={image as string}
+                        image={image.src}
                         onImageUpload={setImage}
-                        onComplete={onToggleModal}
-                        onHandleCurrentPhoto={onHandleCurrentPhoto}
+                        onComplete={onCompleteHandler}
                     />
                 )}
             </div>

@@ -43,7 +43,6 @@ const fileUpload = fp<Options>((fastify, { extensions }, done) => {
             request.fileBuffer = {
                 buffer,
                 contentType: file.mimetype as ValueOf<typeof ContentType>,
-                fileName: file.filename,
             };
         },
     );
