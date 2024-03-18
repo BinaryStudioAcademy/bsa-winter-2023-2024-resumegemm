@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import mockResume from '~/assets/img/mock-resume.png';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
-import { useLoadTemplates } from '~/bundles/common/hooks/use-load-templates/use-load-templates.hook';
+import { useLoadTemplates, useResumes } from '~/bundles/common/hooks/hooks';
 import {
     CreateNewCard,
     CreateResumeButton,
@@ -17,6 +17,7 @@ import styles from './styles.module.scss';
 
 const Home: React.FC = () => {
     const { templates } = useLoadTemplates();
+    const { resumes, deleteResume } = useResumes();
 
     return (
         <div className={styles.layout}>
@@ -33,11 +34,17 @@ const Home: React.FC = () => {
                 <CreateNewCard />
             </ResumeSection>
             <ResumeSection name="Users' resume">
-                <ResumeCard
-                    title="My Resume"
-                    subtitle="Updated - Jan 25"
-                    image={mockResume}
-                />
+                {resumes.map(({ id, image }) => (
+                    <NavLink key={id} to={`/resumes/${id}`}>
+                        <ResumeCard
+                            title="My Resume"
+                            subtitle="Updated - Jan 25"
+                            image={image}
+                            id={id}
+                            onDelete={deleteResume}
+                        />
+                    </NavLink>
+                ))}
             </ResumeSection>
             <TemplateSection name="Templates">
                 {templates.length > 0 &&
