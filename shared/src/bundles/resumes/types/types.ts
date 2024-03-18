@@ -20,3 +20,4 @@ export { type ResumeShareDetailsGetResponseDto } from './resume-share-details-ge
 export { type ResumeShareGetRequestDto } from './resume-share-get-request-dto.type';
 export { type ResumeShareGetResponseDto } from './resume-share-get-response-dto.type';
 export { type ResumeUpdateItemRequestDto } from './resume-update-item-request-dto.type.js';
+export { type ResumeWithRelationsAndTemplateResponseDto } from './resume-with-relations-and-template-response-dto.type.js';
