@@ -32,7 +32,6 @@ export {
     paymentCreateSubscriptionValidationSchema,
 } from './bundles/payment/payment.js';
 export { type PaymentMethod } from './bundles/payment-method/types/types.js';
-export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
 export {
     type GeneratePdfRequestDto,
     type GeneratePdfResponseDto,
