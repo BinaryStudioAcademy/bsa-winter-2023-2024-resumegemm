@@ -7,6 +7,7 @@ import { AppRoute } from '../common/enums/app-route.enum';
 import { getUserAvatar } from '../common/helpers/get-user-avatar';
 import { useAppSelector } from '../common/hooks/hooks';
 import { Home } from '../home/pages/home';
+import { SubscriptionStatus } from './components/subscription-status/subscription-status';
 import styles from './styles.module.scss';
 
 const navbarItems = [
@@ -26,7 +27,10 @@ const MainPage = (): JSX.Element => {
             )}
             <Header>
                 <NavTabs items={navbarItems} />
-                <UserProfile image={getUserAvatar(user)} />
+                <div className={styles.main__profile}>
+                    <SubscriptionStatus />
+                    <UserProfile image={getUserAvatar(user)} />
+                </div>
             </Header>
             <Home />
         </>
