@@ -1,4 +1,5 @@
 .resume_card {
+    position: relative;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -6,6 +7,23 @@
     border: 2px solid var(--color-white);
     border-radius: 8px;
     box-shadow: 0 0 10px 0 var(--color-box-shadow-dark);
+    transition: transform 0.3s ease-in-out;
+}
+
+.resume_card:hover {
+    transform: scale(1.1);
+}
+
+.resume_card__button {
+    position: absolute;
+    right: 0;
+    margin: 10px;
+    color: var(--color-error-red);
+    font-size: 24px;
+}
+
+.resume_card__button:hover {
+    opacity: 0.8;
 }
 
 .resume_card__img {

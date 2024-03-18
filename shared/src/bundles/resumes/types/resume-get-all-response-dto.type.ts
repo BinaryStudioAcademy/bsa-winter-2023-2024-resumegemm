@@ -1,7 +1,5 @@
 import { type ResumeGetItemResponseDto } from './types.js';
 
-type ResumeGetAllResponseDto = {
-    resumes: ResumeGetItemResponseDto[];
-};
+type ResumeGetAllResponseDto = ResumeGetItemResponseDto;
 
 export { type ResumeGetAllResponseDto };
