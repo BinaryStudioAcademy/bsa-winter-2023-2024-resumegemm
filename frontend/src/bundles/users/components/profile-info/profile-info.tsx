@@ -123,9 +123,10 @@ const ProfileInfo: React.FC = () => {
                                     Your premium is cancelled
                                 </p>
                                 <p className={styles.main__regular}>
-                                    You trials ends on {subscription.endDate}.
-                                    At the end of trial period, access to the
-                                    service will be limited.
+                                    You subscription ends on{' '}
+                                    {subscription.endDate}. At the end of this
+                                    period, access to the service will be
+                                    limited.
                                 </p>
                             </div>
                             <div className={styles.profile__info__actions}>

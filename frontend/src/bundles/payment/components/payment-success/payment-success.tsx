@@ -42,7 +42,7 @@ const PaymentSuccess: React.FC<PaymentSuccessProperties> = ({
                     <span className={styles.payment_success__date}>
                         {startDate}
                     </span>{' '}
-                    and ending{' '}
+                    and auto-renew on{' '}
                     <span className={styles.payment_success__date}>
                         {endDate}
                     </span>
