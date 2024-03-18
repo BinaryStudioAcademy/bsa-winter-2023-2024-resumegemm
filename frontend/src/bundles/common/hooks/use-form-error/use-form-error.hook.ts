@@ -23,7 +23,8 @@ const useFormError = ({ setError }: UseFormErrorPayload): ReturnValue => {
     useEffect(() => {
         if (error) {
             const { errorType, message } = error;
-            const fieldName = errorType as keyof ErrorFieldValues;
+            const fieldName =
+                errorType?.toLowerCase() as keyof ErrorFieldValues;
             setError(fieldName, {
                 message,
             });

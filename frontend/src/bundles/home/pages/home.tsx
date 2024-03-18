@@ -55,7 +55,7 @@ const Home: React.FC = () => {
                                 key={template.id}
                             >
                                 <ResumeCard
-                                    title="My Resume"
+                                    title={template.name}
                                     image={template.image}
                                 />
                             </Link>

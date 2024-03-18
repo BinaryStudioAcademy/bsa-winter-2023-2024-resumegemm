@@ -1,4 +1,9 @@
-import { AppRoute, DataStatus, ToastType } from '~/bundles/common/enums/enums';
+import {
+    AppRoute,
+    CommonMessage,
+    DataStatus,
+    ToastType,
+} from '~/bundles/common/enums/enums';
 import {
     useAppDispatch,
     useAppSelector,
@@ -72,9 +77,13 @@ const useResumes = (): UseResumesReturnValues => {
             void dispatch(resumeActions.deleteResume(resumeId))
                 .unwrap()
                 .then(() =>
-                    showToast('Resume deleted.', ToastType.INFO, {
-                        position: 'top-right',
-                    }),
+                    showToast(
+                        CommonMessage.SUCCESS_DELETE_RESUME,
+                        ToastType.INFO,
+                        {
+                            position: 'top-right',
+                        },
+                    ),
                 );
         },
         [dispatch],
@@ -101,9 +110,13 @@ const useResumes = (): UseResumesReturnValues => {
             void dispatch(resumeActions.createResume(screenshot))
                 .unwrap()
                 .then(() => {
-                    showToast('Resume created!', ToastType.SUCCESS, {
-                        position: 'top-right',
-                    });
+                    showToast(
+                        CommonMessage.SUCCESS_CREATE_RESUME,
+                        ToastType.SUCCESS,
+                        {
+                            position: 'top-right',
+                        },
+                    );
                     navigate(AppRoute.HOME);
                 });
         },
