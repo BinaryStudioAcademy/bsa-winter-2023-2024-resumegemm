@@ -3,6 +3,7 @@ import React, {
     type ChangeEvent,
     useCallback,
     useEffect,
+    useRef,
     useState,
 } from 'react';
 import { useParams } from 'react-router-dom';
@@ -12,14 +13,22 @@ import {
     Input,
     RegularButton,
 } from '../common/components/components';
-import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
+import {
+    ButtonSize,
+    ButtonType,
+    ButtonVariant,
+    ContentType,
+} from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
+import { useTakeScreenShot } from '../common/hooks/use-take-screenshot/use-take-screenshot.hook';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
 import {
     type TemplateSettings,
     TemplateBlockTitles,
 } from '../templates-page/types/types';
+import { ToastType } from '../toast/enums/show-toast-types.enum';
+import { showToast } from '../toast/helpers/show-toast';
 import { TemplateEditor } from './components/template-editor/template-editor';
 import {
     changeBlockEnabling,
@@ -30,6 +39,8 @@ import { actions as editTemplateActions } from './store/slice';
 import templateStyles from './styles.module.scss';
 
 const EditTemplatePage: React.FC = () => {
+    const { takeScreenshot } = useTakeScreenShot();
+
     const dispatch = useAppDispatch();
     const template = useAppSelector((state) => state.editTemplate.template);
     const parameters = useParams<{ id: string }>();
@@ -38,6 +49,7 @@ const EditTemplatePage: React.FC = () => {
         containers: [],
         styles: {},
     });
+    const templateEditorReference = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!parameters.id) {
@@ -82,9 +94,20 @@ const EditTemplatePage: React.FC = () => {
         [dispatch],
     );
 
-    const handleSaveTemplate = useCallback(() => {
-        void dispatch(editTemplate(templateSettings));
-    }, [dispatch, templateSettings]);
+    const handleSaveTemplate = useCallback((): void => {
+        takeScreenshot({
+            ref: templateEditorReference,
+            convertOptions: { quality: 1, type: ContentType.IMAGE_JPEG },
+        })
+            .then((screenshot) => {
+                if (screenshot) {
+                    void dispatch(
+                        editTemplate({ templateSettings, image: screenshot }),
+                    );
+                }
+            })
+            .catch((error) => showToast(error, ToastType.ERROR));
+    }, [dispatch, takeScreenshot, templateSettings]);
 
     return (
         <section
@@ -138,6 +161,7 @@ const EditTemplatePage: React.FC = () => {
                 </div>
             </nav>
             <TemplateEditor
+                ref={templateEditorReference}
                 templateSettings={templateSettings}
                 setTemplateSettings={setTemplateSettings}
             />
