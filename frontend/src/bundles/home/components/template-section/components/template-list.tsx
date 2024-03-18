@@ -1,18 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { type TemplateDto } from 'shared/build/bundles/templates/types/template-dto.type';
 
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import { ResumeCard } from '~/bundles/home/components/components';
 
-type Template = {
-    id: string;
-    image: string;
-    title?: string;
-    subtitle?: string;
-};
-
 type ResumeCardsProperties = {
-    templates: Template[];
+    templates: TemplateDto[];
 };
 
 const TemplateList: React.FC<ResumeCardsProperties> = ({ templates }) => {
@@ -28,7 +22,10 @@ const TemplateList: React.FC<ResumeCardsProperties> = ({ templates }) => {
                         to={`${AppRoute.TEMPLATE}/${template.id}`}
                         key={template.id}
                     >
-                        <ResumeCard title="My Resume" image={template.image} />
+                        <ResumeCard
+                            title={template.name}
+                            image={template.image}
+                        />
                     </Link>
                 ))}
         </>
