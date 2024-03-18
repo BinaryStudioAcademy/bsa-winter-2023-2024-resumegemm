@@ -26,9 +26,9 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     padding: 50px;
-    background-color: var(--color-background-badge);
+    background-color: var(--color-disabled-gray);
 }
 
 .payment_page__text_content {

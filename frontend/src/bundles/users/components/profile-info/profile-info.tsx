@@ -57,7 +57,7 @@ const ProfileInfo: React.FC = () => {
         <div className={styles.profile__info}>
             <div className={styles.profile__info__content}>
                 {(!subscription ||
-                    subscription?.status === SubscriptionStatus.CANCELED) && (
+                    subscription.status === SubscriptionStatus.CANCELED) && (
                     <>
                         <div className={styles.profile__info__icon}>
                             <img

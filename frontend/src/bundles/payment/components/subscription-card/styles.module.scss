@@ -1,14 +1,16 @@
 .subscription_card__container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    width: 300px;
+    width: 350px;
     min-width: 25%;
+    min-height: 350px;
     padding: 30px;
-    color: var(--color-white);
-    background-color: var(--color-background-dark-blue);
-    border-radius: 8px;
+    color: var(--color-background-light-blue);
+    background-color: var(--color-white);
+    border-radius: 16px;
 }
 
 .subscription_card__container_selected {
@@ -16,13 +18,17 @@
 }
 
 .subscription_card__title_container {
+    position: absolute;
+    top: -28px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 8px;
-    width: 100%;
+    width: 75%;
     height: 15%;
+    background-color: var(--color-accent-dark-yellow);
+    border-radius: 30px;
 }
 
 .subscription_card__title_image {
@@ -30,10 +36,11 @@
 }
 
 .subscription_card__title {
-    color: var(--color-accent-dark-yellow);
+    color: var(--color-background-dark-blue);
     font-weight: var(--font-weight-subtitle);
-    font-size: var(--font-size-title-h2);
+    font-size: var(--font-size-title-h3);
     text-align: center;
+    text-transform: capitalize;
 }
 
 .subscription_card__info_container {
@@ -49,21 +56,25 @@
 }
 
 .subscription_card__price {
+    color: var(--color-text-dark-blue);
     font-weight: 500;
     font-size: 28px;
 }
 
-.subscription_card__currency {
-    font-weight: 500;
+.subscription_card__price_deleted {
     font-size: 16px;
+    text-decoration: line-through;
 }
 
 .subscription_card__duration {
-    font-size: 12px;
+    color: var(--color-text-profile);
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .subscription_card__description {
     min-height: 100px;
+    color: var(--color-text-profile);
     font-size: 16px;
     text-align: left;
 }
