@@ -34,4 +34,5 @@ export {
     type ResumeShareGetRequestDto,
     type ResumeShareGetResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
 } from './types/types.js';
