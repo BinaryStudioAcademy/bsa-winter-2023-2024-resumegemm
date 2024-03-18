@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column: 1 / -1;
+    column-gap: 25px;
     background-color: var(--color-background-dark-blue);
     border-radius: 30px;
 }

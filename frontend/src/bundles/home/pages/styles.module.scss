@@ -26,7 +26,6 @@
 
 .icon_input_wrapper {
     width: 70%;
-    margin: 0 auto;
 }
 
 .template_icon_input {
@@ -34,4 +33,21 @@
     color: var(--color-text-gray);
     background: var(--color-white);
     border-radius: 5px;
+}
+
+.create_resume_button {
+    width: 170px;
+    height: 40px;
+    padding: 24px, 8px;
+    color: var(--color-white);
+    background: var(--color-accent-dark-yellow);
+    border: none;
+    border-radius: 52px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.create_resume_button:hover {
+    color: white;
+    background-color: var(--color-light-gold);
 }
