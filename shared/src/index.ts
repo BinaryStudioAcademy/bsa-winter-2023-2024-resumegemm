@@ -165,6 +165,7 @@ export { type IStorage } from './framework/storage/storage.js';
 export {
     compareDateInDiapasonWithoutTime,
     configureString,
+    validateUrl,
 } from './helpers/helpers.js';
 export {
     type IdParameter,
