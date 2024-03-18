@@ -61,8 +61,8 @@ class TemplateService implements ITemplateService {
         const templates = await this.templateRepository.findAll();
 
         const templatesWithImageUrl = await Promise.all(
-            templates.items.map(async (template) => {
-                return await this.getTemplateWithImageUrl(template);
+            templates.items.map((template) => {
+                return this.getTemplateWithImageUrl(template);
             }),
         );
 
@@ -99,7 +99,7 @@ class TemplateService implements ITemplateService {
 
         editedSettings.image = uploadedImage.key;
 
-        return await this.templateRepository.update(templateId, editedSettings);
+        return this.templateRepository.update(templateId, editedSettings);
     }
 
     public async delete(id: string): Promise<boolean> {
