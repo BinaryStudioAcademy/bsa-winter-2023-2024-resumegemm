@@ -11,6 +11,8 @@ import { UserModel } from '../users/user.model.js';
 class SubscriptionModel extends AbstractModel {
     public 'status': string;
 
+    public 'isCancelled': boolean;
+
     public 'subscriptionId': string;
 
     public 'userId': string;
