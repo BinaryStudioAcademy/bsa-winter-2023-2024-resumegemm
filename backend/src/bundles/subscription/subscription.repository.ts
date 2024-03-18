@@ -1,8 +1,12 @@
+import { SubscriptionStatus } from './enums/enums.js';
 import { type SubscriptionModel } from './subscription.model';
 import {
     type CreateSubscription,
+    type FindSubscriptionQueryResult,
     type ISubscriptionRepository,
     type Subscription,
+    type SubscriptionResponseDto,
+    type SubscriptionWithPlan,
 } from './types/types';
 
 class SubscriptionRepository implements ISubscriptionRepository {
@@ -14,13 +18,21 @@ class SubscriptionRepository implements ISubscriptionRepository {
 
     public async findUserSubscription(
         userId: string,
-    ): Promise<Subscription | null> {
-        const subscriptions = await this.subscriptionModel
+    ): Promise<SubscriptionWithPlan> {
+        const subscriptions = (await this.subscriptionModel
             .query()
             .where('user_id', userId)
-            .returning('*');
+            .withGraphFetched('subscriptionPlan')
+            .returning('*')) as FindSubscriptionQueryResult[];
 
         return subscriptions[0] ?? null;
+    }
+
+    public async findById(id: string): Promise<Subscription> {
+        return await this.subscriptionModel
+            .query()
+            .findOne('id', id)
+            .returning('*');
     }
 
     public async create(data: CreateSubscription): Promise<Subscription> {
@@ -38,6 +50,20 @@ class SubscriptionRepository implements ISubscriptionRepository {
             .returning('*');
 
         return result[0];
+    }
+
+    public async update(
+        id: string,
+        data: Partial<Subscription>,
+    ): Promise<SubscriptionWithPlan> {
+        const subscriptions = (await this.subscriptionModel
+            .query()
+            .where('id', id)
+            .update(data)
+            .withGraphFetched('subscriptionPlan')
+            .returning('*')) as FindSubscriptionQueryResult[];
+
+        return subscriptions[0] ?? null;
     }
 
     public async delete(id: string): Promise<boolean> {
