@@ -16,6 +16,7 @@ import { type SubscriptionService } from './subscription.service.js';
 import {
     type ISubscriptionController,
     type SubscriptionResponseDto,
+    type SubscriptionWithPlan,
 } from './types/types.js';
 
 class SubscriptionController
@@ -35,6 +36,22 @@ class SubscriptionController
             method: 'GET',
             handler: (options) =>
                 this.find(options as ApiHandlerOptions<{ user: User }>),
+        });
+        this.addRoute({
+            path: SubscriptionApiPath.ID,
+            method: 'PUT',
+            handler: (options) =>
+                this.keepSubscription(
+                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                ),
+        });
+        this.addRoute({
+            path: SubscriptionApiPath.ID,
+            method: 'DELETE',
+            handler: (options) =>
+                this.cancelSubscription(
+                    options as ApiHandlerOptions<{ params: { id: string } }>,
+                ),
         });
     }
 
@@ -64,6 +81,48 @@ class SubscriptionController
                 },
             };
         }
+    }
+
+    public async cancelSubscription(
+        options: ApiHandlerOptions<{
+            params: { id: string };
+        }>,
+    ): Promise<ApiHandlerResponse<SubscriptionWithPlan>> {
+        const id = options.params.id;
+        const subscription = await this.subscriptionService.findById(id);
+
+        if (!subscription) {
+            throw new HTTPError({
+                status: HttpCode.BAD_REQUEST,
+                message: SubscriptionErrorMessage.SUBSCRIPTION_NOT_FOUND,
+            });
+        }
+
+        return {
+            status: HttpCode.OK,
+            payload: await this.subscriptionService.cancelSubscription(id),
+        };
+    }
+
+    public async keepSubscription(
+        options: ApiHandlerOptions<{
+            params: { id: string };
+        }>,
+    ): Promise<ApiHandlerResponse<SubscriptionWithPlan>> {
+        const id = options.params.id;
+        const subscription = await this.subscriptionService.findById(id);
+
+        if (!subscription) {
+            throw new HTTPError({
+                status: HttpCode.BAD_REQUEST,
+                message: SubscriptionErrorMessage.SUBSCRIPTION_NOT_FOUND,
+            });
+        }
+
+        return {
+            status: HttpCode.OK,
+            payload: await this.subscriptionService.keepSubscription(id),
+        };
     }
 }
 
