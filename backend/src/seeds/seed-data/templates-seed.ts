@@ -4,13 +4,21 @@ const templatesSeed = [
     {
         is_owner: true,
         template_settings: testTemplate,
+        name: 'Test template',
     },
     {
         is_owner: true,
         template_settings: testTemplate,
+        name: 'Test template 2',
     },
-    { is_owner: false },
-    { is_owner: false },
+    {
+        is_owner: false,
+        name: 'Test template 3',
+    },
+    {
+        is_owner: false,
+        name: 'Test template 4',
+    },
 ];
 
 export { templatesSeed };

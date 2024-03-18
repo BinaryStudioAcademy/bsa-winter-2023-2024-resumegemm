@@ -18,6 +18,7 @@
 
 .dropdown_content {
     position: absolute;
+    top: 40px;
     right: -15px;
     z-index: 1;
     display: none;
@@ -29,7 +30,8 @@
     box-shadow: 0 8px 16px 0 var(--color-box-shadow);
 }
 
-.dropdown:hover .dropdown_content {
+.dropdown:hover,
+.dropdown_content {
     display: block;
 }
 

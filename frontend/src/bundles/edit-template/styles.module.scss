@@ -2,7 +2,7 @@
     justify-content: space-between;
     width: 100%;
     max-width: 1220px;
-    margin: 0 auto;
+    margin: auto;
     padding: 20px;
 }
 
@@ -34,6 +34,15 @@
 }
 
 .editor_sidebar__checkbox {
+    color: var(--color-white);
+    cursor: pointer;
+}
+
+.editor_sidebar__name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
     color: var(--color-white);
 }
 
