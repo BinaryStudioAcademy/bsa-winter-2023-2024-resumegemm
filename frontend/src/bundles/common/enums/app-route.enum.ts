@@ -13,7 +13,7 @@ enum AppRoute {
     FORGOT_PASSWORD = '/forgot-password',
     QA = '/qa',
     STATISTICS = '/statistics',
-    BILLING = '/billing',
+    SUBSCRIPTION_CANCEL = '/subscription-cancel',
 }
 
 export { AppRoute };
