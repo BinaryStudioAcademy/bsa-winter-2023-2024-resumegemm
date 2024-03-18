@@ -63,6 +63,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                                     element: <Auth />,
                                                 },
                                                 {
+                                                    path: AppRoute.ROOT,
+                                                    element: <LandingPage />,
+                                                },
+                                                {
                                                     path: AppRoute.SIGN_UP,
                                                     element: <Auth />,
                                                 },
