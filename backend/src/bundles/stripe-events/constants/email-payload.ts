@@ -10,7 +10,6 @@ const EmailPayload = {
                 text-align: center;
                 padding: 20px;
             }
-
             .container {
                 max-width: 600px;
                 margin: 0 auto;
@@ -24,16 +23,13 @@ const EmailPayload = {
             img {
                 margin-bottom: 20px;
             }
-
             h1 {
                 color: #000;
                 text-align: center;
             }
-
             p {
                 color: #555;
             }
-
         </style>
     </head>
     <body>

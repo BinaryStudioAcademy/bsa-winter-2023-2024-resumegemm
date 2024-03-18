@@ -222,6 +222,12 @@ async function seed(knex: Knex): Promise<void> {
             .insert(mapResumeContent(languageSeed))
             .returning('*');
 
+        // LANGUAGE
+
+        await trx<Language>(DatabaseTableName.LANGUAGES)
+            .insert(mapResumeContent(languageSeed))
+            .returning('*');
+
         // USER_TEMPLATES junction table
 
         const userTemplatesSeed = Array.from({ length: NUMBER_OF_ROWS }).map(
@@ -249,6 +255,12 @@ async function seed(knex: Knex): Promise<void> {
 
         await trx(DatabaseTableName.RECENTLY_VIEWED)
             .insert(recentlyViewedSeed)
+            .returning('*');
+
+        // INDUSTRIES
+
+        await trx<Industry>(DatabaseTableName.INDUSTRIES)
+            .insert(industriesSeed)
             .returning('*');
 
         // RESUME_SHARE_LINK
@@ -285,14 +297,15 @@ async function seed(knex: Knex): Promise<void> {
             [DatabaseColumnName.ID]: guid.raw(),
         }));
 
-        await trx<SubscriptionPlan>(
-            DatabaseTableName.SUBSCRIPTION_PLANS,
-        ).insert(subscriptionPlansMappedSeed);
+        await trx<SubscriptionPlan>(DatabaseTableName.SUBSCRIPTION_PLANS)
+            .insert(subscriptionPlansMappedSeed)
+            .returning('*');
+
         // INDUSTRIES
 
-        await trx<Industry>(DatabaseTableName.INDUSTRIES)
-            .insert(industriesSeed)
-            .returning('*');
+        await trx<Industry>(DatabaseTableName.INDUSTRIES).insert(
+            industriesSeed,
+        );
     });
 }
 

@@ -11,6 +11,28 @@ body {
     font-size: 14px;
     font-family: Poppins, sans-serif;
     line-height: 1.5;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-background-dark-blue)
+        var(--color-background-gray);
+}
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-background-gray);
+    border-radius: 10px;
+    margin-block: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-background-dark-blue);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-background-light-blue);
 }
 
 main {

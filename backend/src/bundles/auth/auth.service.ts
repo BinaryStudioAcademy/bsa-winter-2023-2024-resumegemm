@@ -6,8 +6,6 @@ import {
     type UserForgotPasswordRequestDto,
     type UserResetPasswordRequestDto,
     type UserVerifyResetPasswordTokenRequestDto,
-} from 'shared/build/index.js';
-import {
     AuthException,
     ExceptionMessage,
     HttpCode,
@@ -59,9 +57,10 @@ class AuthService implements TAuthService {
         });
 
         if (foundUserByEmail?.emailConfirmed || foundUserByEmail?.deletedAt) {
-            throw new HTTPError({
+            throw new AuthException({
                 message: ExceptionMessage.EMAIL_TAKEN,
                 status: HttpCode.BAD_REQUEST,
+                errorType: ServerErrorType.EMAIL,
             });
         }
 
@@ -137,8 +136,8 @@ class AuthService implements TAuthService {
 
         if (!foundUserByEmail) {
             throw new AuthException({
-                message: ExceptionMessage.INVALID_EMAIL,
-                status: HttpCode.BAD_REQUEST,
+                message: ExceptionMessage.USER_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
                 errorType: ServerErrorType.EMAIL,
             });
         }
