@@ -17,7 +17,7 @@ const subscriptionPlanRepository = new SubscriptionPlanRepository(
 const subscriptionRepository = new SubscriptionRepository(SubscriptionModel);
 
 const subscriptionPlanCreatedEventHandler =
-    new SubscriptionPlanCreatedEventHandler(subscriptionPlanRepository);
+    new SubscriptionPlanCreatedEventHandler(subscriptionPlanRepository, config);
 
 const subscriptionUpdateStatusEventHandler =
     new SubscriptionStatusUpdateEventHandler(subscriptionRepository);
