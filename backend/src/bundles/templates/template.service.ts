@@ -14,7 +14,7 @@ import {
 
 import { type FileService } from '~/common/files/file.service.js';
 
-import { testTemplate } from './constants/test-template.js';
+import { prettifiedTemplate } from './constants/prettified-template.js';
 import { type Template } from './types/template.type';
 import {
     type ITemplateRepository,
@@ -72,7 +72,7 @@ class TemplateService implements ITemplateService {
     public async create(payload: { userId: string }): Promise<Template> {
         return await this.templateRepository.create({
             isOwner: true,
-            templateSettings: testTemplate,
+            templateSettings: prettifiedTemplate,
             image: 'https://s3-alpha.figma.com/hub/file/1849672021/64b2b02b-08cd-4afd-9f93-e05858d2fffd-cover.png',
             userId: payload.userId,
         });
