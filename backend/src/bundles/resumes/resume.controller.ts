@@ -1,5 +1,6 @@
 import {
     type IdParameter,
+    type User,
     HTTPError,
     ResumesApiPath,
 } from 'shared/build/index.js';
@@ -98,13 +99,11 @@ class ResumeController extends Controller {
                 ),
         });
         this.addRoute({
-            path: ResumesApiPath.USER_ID_VIEWS(),
+            path: ResumesApiPath.VIEWS,
             method: 'GET',
             handler: (options) =>
                 this.getResumeViews(
-                    options as ApiHandlerOptions<{
-                        params: { userId: string };
-                    }>,
+                    options as ApiHandlerOptions<{ user: User }>,
                 ),
         });
     }
@@ -216,11 +215,12 @@ class ResumeController extends Controller {
     }
 
     private async getResumeViews(
-        options: ApiHandlerOptions<{ params: { userId: string } }>,
+        options: ApiHandlerOptions<{
+            user: User;
+        }>,
     ): Promise<ApiHandlerResponse<ResumeViewsCountResponseDto[]>> {
-        const views = await this.resumeService.getResumeViews(
-            options.params.userId,
-        );
+        const userId = options.user.id;
+        const views = await this.resumeService.getResumeViews(userId);
         return {
             status: HttpCode.OK,
             payload: views,
