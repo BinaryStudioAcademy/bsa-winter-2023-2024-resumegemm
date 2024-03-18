@@ -28,6 +28,7 @@ import {
     useFormError,
 } from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
+import { type HintRow } from '~/bundles/common/types/hint/hint-row.type';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
@@ -35,8 +36,6 @@ import {
     type UserSignUpRequestDtoFrontend,
     userSignUpValidationFrontend,
 } from './validation/sign-up-validation';
-
-import { type HintRow } from '~/bundles/common/types/hint/hint-row.type';
 
 type Properties = {
     onSubmit: (payload: UserSignUpRequestDtoFrontend) => void;
