@@ -111,7 +111,7 @@ class ResumeShareRepository {
     public async getShareLinkByResumeId(
         resumeId: string,
     ): Promise<ResumeShareGetResponseDto | undefined> {
-        return await this.resumeShareModel
+        return this.resumeShareModel
             .query()
             .where('resumeId', resumeId)
             .first()
