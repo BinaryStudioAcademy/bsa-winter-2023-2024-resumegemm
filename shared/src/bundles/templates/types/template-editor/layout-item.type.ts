@@ -6,6 +6,7 @@ import { type CSSProperties } from './css-properties.type';
 type LayoutItem = {
     id: string;
     name: string;
+    placeholder?: string | null;
     tagName: ValueOf<typeof TemplateItemTags>;
     content: string;
     styles: Partial<CSSProperties>;

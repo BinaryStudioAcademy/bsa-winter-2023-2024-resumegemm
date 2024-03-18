@@ -12,9 +12,10 @@ import {
     type UserSignInResponseDto,
     type UserVerifyResetPasswordTokenRequestDto,
     type UserWithProfileRelation,
+    AuthApiPath,
     emailValidationSchema,
+    ExceptionMessage,
 } from 'shared/build/index.js';
-import { AuthApiPath, ExceptionMessage } from 'shared/build/index.js';
 
 import {
     generateRefreshToken,
@@ -37,6 +38,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 import { type IMailService } from '~/common/mail-service/mail-service.js';
+import { memoryStore } from '~/common/rate-limit/rate-limit.js';
 
 import { resetPasswordValidatioSchema } from '../users/validation-schemas/reset-password.validation-schema.js';
 import { resetPasswordTokenValidationSchema } from '../users/validation-schemas/reset-token.validation-schema.js';
@@ -488,7 +490,7 @@ class AuthController extends Controller {
                 password,
                 email,
             });
-
+        memoryStore.reset();
         return {
             status: HttpCode.OK,
             refreshToken,

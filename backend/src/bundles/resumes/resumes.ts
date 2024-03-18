@@ -1,3 +1,4 @@
+import { fileService } from '~/common/files/files.js';
 import { logger } from '~/common/logger/logger.js';
 
 import { openAIService } from '../open-ai/open-ai.js';
@@ -49,7 +50,11 @@ const resumeRepository = new ResumeRepository({
     customSectionRepository,
 });
 
-const resumeService = new ResumeService(resumeRepository, openAIService);
+const resumeService = new ResumeService(
+    resumeRepository,
+    openAIService,
+    fileService,
+);
 
 const resumeController = new ResumeController(logger, resumeService);
 

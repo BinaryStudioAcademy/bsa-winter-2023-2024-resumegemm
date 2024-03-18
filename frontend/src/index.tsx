@@ -21,6 +21,9 @@ import {
     StripeProvider,
 } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/enums';
+import { CreateResume } from '~/bundles/resume/pages/create-resume/create-resume';
+import { EditResume } from '~/bundles/resume/pages/edit-resume/edit-resume';
+import { ResumePage } from '~/bundles/resume/pages/resume-page';
 import { ToastProvider } from '~/bundles/toast/components/toast-provider';
 import { store } from '~/framework/store/store';
 
@@ -30,6 +33,7 @@ import { MainPage } from './bundles/main-page/main-page';
 import { NotFoundPage } from './bundles/not-found-page/not-found-page';
 import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-payment';
 import { PreviewPage } from './bundles/preview/preview';
+import { QuestionAndAnswerPage } from './bundles/question-and-answer-page/question-and-answer-page';
 import { ResumeAccess } from './bundles/resume-access/pages/resume-access';
 import { TemplatePage } from './bundles/templates-page/templates-page';
 import { Profile } from './bundles/users/pages/profile';
@@ -92,8 +96,24 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                     element: <PrivateRoute />,
                                     children: [
                                         {
+                                            path: AppRoute.QA,
+                                            element: <QuestionAndAnswerPage />,
+                                        },
+                                        {
                                             path: AppRoute.PROFILE,
                                             element: <Profile />,
+                                        },
+                                        {
+                                            path: AppRoute.RESUME,
+                                            element: <ResumePage />,
+                                        },
+                                        {
+                                            path: `${AppRoute.RESUME_EDIT}/:id`,
+                                            element: <EditResume />,
+                                        },
+                                        {
+                                            path: AppRoute.RESUME_CREATE,
+                                            element: <CreateResume />,
                                         },
                                         {
                                             path: AppRoute.HOME,
