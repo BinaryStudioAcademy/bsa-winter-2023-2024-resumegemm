@@ -13,6 +13,8 @@ class SubscriptionModel extends AbstractModel {
 
     public 'subscriptionId': string;
 
+    public 'isCancelled': boolean;
+
     public 'userId': string;
 
     public 'subscriptionPlanId': string;
