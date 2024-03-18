@@ -20,7 +20,11 @@ import {
     DividerVariant,
     SpinnerVariant,
 } from '~/bundles/common/enums/enums';
-import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
+import {
+    useAppForm,
+    useCallback,
+    useFormError,
+} from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
@@ -32,15 +36,18 @@ import {
 
 type Properties = {
     onSubmit: (payload: UserSignUpRequestDtoFrontend) => void;
-    dataStatus: ValueOf<typeof DataStatus>;
 };
 
-const SignUpForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
-    const { control, errors, handleSubmit } =
+const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
+    const { control, errors, handleSubmit, setError } =
         useAppForm<UserSignUpRequestDtoFrontend>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
             validationSchema: userSignUpValidationFrontend,
         });
+
+    const { dataStatus } = useFormError({
+        setError,
+    });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
