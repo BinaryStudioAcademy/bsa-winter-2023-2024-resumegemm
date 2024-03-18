@@ -8,14 +8,20 @@ import {
 import {
     faArrowDownLong,
     faArrowUpLong,
+    faChainBroken,
     faCheck,
     faChevronDown,
     faClose,
     faCreditCard,
+    faCrown,
+    faDoorClosed,
+    faDownload,
     faEye,
     faEyeSlash,
+    faFile,
     faMagnifyingGlass,
     faPlus,
+    faShieldAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -37,6 +43,12 @@ const iconNameToSvgIcon = {
     [IconName.CLOSE_CROSS]: faClose,
     [IconName.CREDIT_CARD]: faCreditCard,
     [IconName.CHECK]: faCheck,
+    [IconName.DOWNLOAD]: faDownload,
+    [IconName.FILE]: faFile,
+    [IconName.SHIELD_ALT]: faShieldAlt,
+    [IconName.CHAIN_BROKEN]: faChainBroken,
+    [IconName.DOOR_CLOSED]: faDoorClosed,
+    [IconName.CROWN]: faCrown,
 };
 
 type IconProperties = {
