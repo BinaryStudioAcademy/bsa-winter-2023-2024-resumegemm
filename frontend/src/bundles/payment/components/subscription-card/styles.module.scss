@@ -5,8 +5,7 @@
     gap: 20px;
     width: 300px;
     min-width: 25%;
-    min-height: 400px;
-    padding: 20px;
+    padding: 30px;
     color: var(--color-white);
     background-color: var(--color-background-dark-blue);
     border-radius: 8px;
@@ -33,6 +32,7 @@
 .subscription_card__title {
     color: var(--color-accent-dark-yellow);
     font-weight: var(--font-weight-subtitle);
+    font-size: var(--font-size-title-h2);
     text-align: center;
 }
 
@@ -45,8 +45,7 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    font-weight: var(--font-weight-subtitle);
-    font-size: 24px;
+    font-family: var(--font-family-main);
 }
 
 .subscription_card__price {
@@ -64,7 +63,8 @@
 }
 
 .subscription_card__description {
-    min-height: 150px;
+    min-height: 100px;
+    font-size: 16px;
     text-align: left;
 }
 

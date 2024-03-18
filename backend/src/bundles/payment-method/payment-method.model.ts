@@ -1,9 +1,11 @@
-import { type RelationMappings } from 'objection';
+import { type RelationMappings, Model } from 'objection';
 
 import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
+
+import { UserModel } from '../users/user.model.js';
 
 class PaymentMethodModel extends AbstractModel {
     public 'userId': string;
@@ -19,7 +21,16 @@ class PaymentMethodModel extends AbstractModel {
     }
 
     public static getRelationMappings(): RelationMappings {
-        return {};
+        return {
+            users: {
+                relation: Model.HasOneRelation,
+                modelClass: UserModel,
+                join: {
+                    from: `${DatabaseTableName.PAYMENT_METHOD}.userId`,
+                    to: `${DatabaseTableName.USERS}.id`,
+                },
+            },
+        };
     }
 }
 
