@@ -10,8 +10,7 @@ import {
 } from '../content/content.js';
 import { type Resume } from './resume.type.js';
 
-type ResumeGetItemResponseDto = {
-    resume: Resume;
+type ResumeGetItemResponseDto = Resume & {
     education: Education[] | [];
     experience: Experience[] | [];
     technicalSkills: TechnicalSkill[] | [];
