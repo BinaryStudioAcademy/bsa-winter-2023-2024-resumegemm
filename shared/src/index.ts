@@ -87,6 +87,7 @@ export {
     type SubscriptionResponseDto,
     SubscriptionApiPath,
     SubscriptionErrorMessage,
+    SubscriptionStatus,
 } from './bundles/subscription/subscription.js';
 export {
     type CSSProperties,
