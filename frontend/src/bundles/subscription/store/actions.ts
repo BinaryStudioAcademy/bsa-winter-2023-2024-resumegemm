@@ -9,10 +9,30 @@ const getById = createAsyncThunk<
     SubscriptionResponseDto,
     undefined,
     AsyncThunkConfig
->(`${sliceName}/subscription`, async (_, { extra }) => {
+>(`${sliceName}/get-subscription`, async (_, { extra }) => {
     const { subscriptionApi } = extra;
 
     return await subscriptionApi.getById();
 });
 
-export { getById };
+const cancelSubscription = createAsyncThunk<
+    SubscriptionResponseDto,
+    string,
+    AsyncThunkConfig
+>(`${sliceName}/cancel-subscription`, async (subscriptionId, { extra }) => {
+    const { subscriptionApi } = extra;
+
+    return await subscriptionApi.cancelSubscription(subscriptionId);
+});
+
+const keepSubscription = createAsyncThunk<
+    SubscriptionResponseDto,
+    string,
+    AsyncThunkConfig
+>(`${sliceName}/keep-subscription`, async (subscriptionId, { extra }) => {
+    const { subscriptionApi } = extra;
+
+    return await subscriptionApi.keepSubscription(subscriptionId);
+});
+
+export { cancelSubscription, getById, keepSubscription };
