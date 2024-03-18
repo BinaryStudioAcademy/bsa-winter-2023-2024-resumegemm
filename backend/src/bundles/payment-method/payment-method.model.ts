@@ -5,7 +5,7 @@ import {
     DatabaseTableName,
 } from '~/common/database/database.js';
 
-import { UserModel } from '../users/user.model';
+import { UserModel } from '../users/user.model.js';
 
 class PaymentMethodModel extends AbstractModel {
     public 'userId': string;
