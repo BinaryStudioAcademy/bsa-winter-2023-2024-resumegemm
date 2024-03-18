@@ -1,9 +1,11 @@
+import {
+    Header,
+    NavTabs,
+    UserProfile,
+} from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { getUserAvatar } from '~/bundles/common/helpers/get-user-avatar';
 import { useAppSelector } from '~/bundles/common/hooks/hooks';
-
-import { Header, NavTabs } from '../../../components';
-import { UserProfile } from '../../../layout/header/user-profile/user-profile';
 
 const navbarItems = [
     { label: 'Home', path: AppRoute.HOME },
