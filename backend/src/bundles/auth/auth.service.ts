@@ -49,9 +49,10 @@ class AuthService implements TAuthService {
             });
         }
         if (foundUserByEmail) {
-            throw new HTTPError({
+            throw new AuthException({
                 message: ExceptionMessage.EMAIL_TAKEN,
                 status: HttpCode.BAD_REQUEST,
+                errorType: ServerErrorType.EMAIL,
             });
         }
 

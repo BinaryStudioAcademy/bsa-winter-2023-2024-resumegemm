@@ -33,7 +33,6 @@ import styles from './styles.module.scss';
 
 type Properties = {
     onSubmit: (payload: UserSignInRequestDto) => void;
-    dataStatus: ValueOf<typeof DataStatus>;
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
