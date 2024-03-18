@@ -13,6 +13,8 @@ enum IconName {
     CLOSE_CROSS = 'close_button',
     CREDIT_CARD = 'credit_card',
     CHECK = 'check',
+    QUESTION_CIRCLE = 'circle_question',
+    CHECK_CIRCLE = 'circle_check',
 }
 
 export { IconName };

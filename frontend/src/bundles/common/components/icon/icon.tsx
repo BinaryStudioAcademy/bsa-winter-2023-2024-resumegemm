@@ -10,6 +10,8 @@ import {
     faArrowUpLong,
     faCheck,
     faChevronDown,
+    faCircleCheck,
+    faCircleQuestion,
     faClose,
     faCreditCard,
     faEye,
@@ -37,6 +39,8 @@ const iconNameToSvgIcon = {
     [IconName.CLOSE_CROSS]: faClose,
     [IconName.CREDIT_CARD]: faCreditCard,
     [IconName.CHECK]: faCheck,
+    [IconName.QUESTION_CIRCLE]: faCircleQuestion,
+    [IconName.CHECK_CIRCLE]: faCircleCheck,
 };
 
 type IconProperties = {
