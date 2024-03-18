@@ -26,6 +26,7 @@ import { Payment } from './bundles/payment/pages/payment/payment';
 import { PreviewPage } from './bundles/preview/preview';
 import { ResumeAccess } from './bundles/resume-access/pages/resume-access';
 import { TemplatePage } from './bundles/templates-page/templates-page';
+import { SubscriptionCancel } from './bundles/users/components/subscription-cancel/subscription-cancel';
 import { Profile } from './bundles/users/pages/profile';
 import { ViewTemplatePage } from './bundles/view-template-page/view-template-page';
 
@@ -97,16 +98,21 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             path: `${AppRoute.TEMPLATE_EDITOR}/:id`,
                                             element: <EditTemplatePage />,
                                         },
+                                        {
+                                            path: AppRoute.PAYMENT,
+                                            element: (
+                                                <StripeProvider>
+                                                    <Payment />
+                                                </StripeProvider>
+                                            ),
+                                        },
+                                        {
+                                            path: AppRoute.SUBSCRIPTION_CANCEL,
+                                            element: <SubscriptionCancel />,
+                                        },
                                     ],
                                 },
-                                {
-                                    path: AppRoute.PAYMENT,
-                                    element: (
-                                        <StripeProvider>
-                                            <Payment />
-                                        </StripeProvider>
-                                    ),
-                                },
+
                                 {
                                     path: AppRoute.PREVIEW,
                                     element: <PreviewPage />,
