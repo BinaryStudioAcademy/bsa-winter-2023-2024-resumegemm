@@ -14,18 +14,14 @@ const ResumeList: React.FC = () => {
 
     const { authUser, resumeViews } = useAppSelector(({ auth, resumes }) => ({
         authUser: auth.user,
-        resumeViews: resumes.resumeViews
+        resumeViews: resumes.resumeViews,
     }));
-
-    const resumeViews = useAppSelector(({ resumes }) => resumes.resumeViews);
 
     useEffect(() => {
         if (authUser) {
-            dispatch(getViewsCountByUserId({ userId: authUser.id })).catch(
-                (error: Error) => {
-                    showToast(error.message, ToastType.ERROR);
-                },
-            );
+            dispatch(getViewsCountByUserId()).catch((error: Error) => {
+                showToast(error.message, ToastType.ERROR);
+            });
         }
     }, [authUser, dispatch]);
 
