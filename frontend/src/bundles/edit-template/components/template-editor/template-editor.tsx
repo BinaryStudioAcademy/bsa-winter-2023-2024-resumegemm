@@ -78,21 +78,23 @@ const TemplateEditor = forwardRef<HTMLDivElement, Properties>(
                     collisionDetection={closestCorners}
                     sensors={sensors}
                 >
-                    <div
-                        style={templateSettings.styles}
-                        ref={reference}
-                        className={styles.template_editor}
-                    >
-                        {templateSettings.containers.map((container) => (
-                            <TemplateContainer
-                                key={container.id}
-                                {...container}
-                            />
-                        ))}
-                        <DragOverlay>
-                            {activeDraggable &&
-                                handleDragOverlay(activeDraggable)}
-                        </DragOverlay>
+                    <div>
+                        <div
+                            style={templateSettings.styles}
+                            className={styles.template_editor}
+                            ref={reference}
+                        >
+                            {templateSettings.containers.map((container) => (
+                                <TemplateContainer
+                                    key={container.id}
+                                    {...container}
+                                />
+                            ))}
+                            <DragOverlay>
+                                {activeDraggable &&
+                                    handleDragOverlay(activeDraggable)}
+                            </DragOverlay>
+                        </div>
                     </div>
                 </DndContext>
             </TemplateContext.Provider>

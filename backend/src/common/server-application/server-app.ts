@@ -35,7 +35,10 @@ import {
 } from '~/common/types/types.js';
 
 import { fileUpload as fileUploadPlugin } from '../plugins/file-upload/file-upload-plugin.js';
-import { resetPasswordLimiter } from '../rate-limit/reset-password.rate-limit.js';
+import {
+    loginRegistrationRateLimiter,
+    resetPasswordLimiter,
+} from '../rate-limit/rate-limit.js';
 import {
     type IServerApp,
     type IServerAppApi,
@@ -113,6 +116,14 @@ class ServerApp implements IServerApp {
                         publicRoutes[AuthApiPath.RESET_PASSWORD],
                     ],
                     resetPasswordLimiter,
+                );
+
+                await this.app.use(
+                    [
+                        publicRoutes[AuthApiPath.SIGN_IN],
+                        publicRoutes[AuthApiPath.SIGN_UP],
+                    ],
+                    loginRegistrationRateLimiter,
                 );
 
                 await this.app.register(authorizationPlugin, {

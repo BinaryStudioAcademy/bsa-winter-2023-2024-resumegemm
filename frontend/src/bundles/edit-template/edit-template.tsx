@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom';
 
 import {
     Checkbox,
-    FormGroup,
     Input,
     RegularButton,
 } from '../common/components/components';
@@ -24,8 +23,10 @@ import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import { useTakeScreenShot } from '../common/hooks/use-take-screenshot/use-take-screenshot.hook';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
 import styles from '../resume-preview/components/resume-preview/styles.module.scss';
-import { type TemplateSettings } from '../templates-page/types/types';
-import { TemplateBlockTitles } from '../templates-page/types/types';
+import {
+    type TemplateSettings,
+    TemplateBlockTitles,
+} from '../templates-page/types/types';
 import { ToastType } from '../toast/enums/show-toast-types.enum';
 import { showToast } from '../toast/helpers/show-toast';
 import { TemplateEditor } from './components/template-editor/template-editor';
@@ -55,16 +56,14 @@ const EditTemplatePage: React.FC = () => {
             return;
         }
 
-        if (!template.id || template.id !== parameters.id) {
-            void dispatch(getTemplateById(parameters.id))
-                .unwrap()
-                .then((data) => {
-                    if (data) {
-                        setTemplateSettings(data.templateSettings);
-                    }
-                });
-        }
-    }, [parameters.id, template.id, dispatch, takeScreenshot]);
+        void dispatch(getTemplateById(parameters.id))
+            .unwrap()
+            .then((data) => {
+                if (data) {
+                    setTemplateSettings(data.templateSettings);
+                }
+            });
+    }, [dispatch, parameters.id]);
 
     const isBlockEnabled = useCallback(
         (blockName: string): boolean =>
@@ -123,13 +122,13 @@ const EditTemplatePage: React.FC = () => {
                     templateStyles.editor_sidebar__nav,
                 )}
             >
-                <FormGroup label="Template name">
+                <div className={templateStyles.editor_sidebar__name}>
+                    <p>Template Name</p>
                     <Input
                         title="Enter template name"
                         onInput={handleInputChange}
                     />
-                </FormGroup>
-
+                </div>
                 <ul className={editorStyles.editor_sidebar__list}>
                     {templateBlockTitles.map((block) => (
                         <li
