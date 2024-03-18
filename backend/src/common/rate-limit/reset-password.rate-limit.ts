@@ -1,11 +1,11 @@
 import { rateLimit } from 'express-rate-limit';
 
 import { HttpCode } from '../http/http.js';
-import { RESET_PASSWORD } from './enums/reset-password.js';
+import { RetrySettings } from './enums/enums.js';
 
 const resetPasswordLimiter = rateLimit({
-    windowMs: RESET_PASSWORD.TIMEOUT,
-    limit: RESET_PASSWORD.MAX_ATTEMPTS,
+    windowMs: RetrySettings.TIMEOUT,
+    limit: RetrySettings.MAX_ATTEMPTS,
     statusCode: HttpCode.BAD_REQUEST,
     skipSuccessfulRequests: true,
 });
