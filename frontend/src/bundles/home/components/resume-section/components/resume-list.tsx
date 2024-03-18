@@ -12,7 +12,10 @@ import { ResumeCard } from '../../components';
 const ResumeList: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    const authUser = useAppSelector(({ auth }) => auth.user);
+    const { authUser, resumeViews } = useAppSelector(({ auth, resumes }) => ({
+        authUser: auth.user,
+        resumeViews: resumes.resumeViews
+    }));
 
     const resumeViews = useAppSelector(({ resumes }) => resumes.resumeViews);
 
