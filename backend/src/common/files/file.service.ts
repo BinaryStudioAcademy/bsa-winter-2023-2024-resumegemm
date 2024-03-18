@@ -16,11 +16,12 @@ class FileService {
     public async create(
         fileBuffer: FileUploadRequestDto,
     ): Promise<FileUploadResponseDto> {
-        const { buffer, contentType } = fileBuffer;
+        const { buffer, contentType, contentEncoding } = fileBuffer;
 
         return await this.fileUploadClient.upload({
             buffer,
             contentType,
+            contentEncoding,
         });
     }
 
