@@ -16,7 +16,11 @@ import { type ILogger } from '~/common/logger/logger.js';
 
 import { type User } from '../users/types/types.js';
 import { TemplateErrorMessage, TemplatesApiPath } from './enums/enums.js';
-import { type ITemplateService, type Template } from './types/types.js';
+import {
+    type FindAllOptions,
+    type ITemplateService,
+    type Template,
+} from './types/types.js';
 
 class TemplateController extends Controller {
     private templateService: ITemplateService;
@@ -47,7 +51,15 @@ class TemplateController extends Controller {
         this.addRoute({
             path: TemplatesApiPath.ROOT,
             method: 'GET',
-            handler: () => this.findAll(),
+            handler: (options) =>
+                this.findAll(
+                    options as ApiHandlerOptions<{
+                        query: {
+                            sortBy?: string;
+                            filterByName?: string;
+                        };
+                    }>,
+                ),
         });
         this.addRoute({
             path: TemplatesApiPath.TEMPLATE_ID,
@@ -102,10 +114,10 @@ class TemplateController extends Controller {
         };
     }
 
-    private async findAll(): Promise<
-        ApiHandlerResponse<TemplateGetAllResponseDto>
-    > {
-        const templateList = await this.templateService.findAll();
+    private async findAll(
+        options: ApiHandlerOptions<{ query: FindAllOptions }>,
+    ): Promise<ApiHandlerResponse<TemplateGetAllResponseDto>> {
+        const templateList = await this.templateService.findAll(options.query);
         return {
             status: HttpCode.OK,
             payload: templateList,

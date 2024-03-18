@@ -7,6 +7,7 @@ import {
 import { testTemplate } from './constants/test-template.js';
 import { type Template } from './types/template.type';
 import {
+    type FindAllOptions,
     type ITemplateRepository,
     type ITemplateService,
 } from './types/types.js';
@@ -20,10 +21,10 @@ class TemplateService implements ITemplateService {
     public async find(id: string): Promise<Template | undefined> {
         return await this.templateRepository.find(id);
     }
-    public async findAll(): Promise<{
+    public async findAll(options?: FindAllOptions): Promise<{
         items: TemplateGetAllItemResponseDto[];
     }> {
-        return await this.templateRepository.findAll();
+        return await this.templateRepository.findAll(options);
     }
     public async create(payload: { userId: string }): Promise<Template> {
         return await this.templateRepository.create({
