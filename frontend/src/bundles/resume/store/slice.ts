@@ -14,6 +14,7 @@ type State = {
 
 const initialState: State = {
     resumeId: '',
+    resumeId: '',
     resumes: [],
     resumeViews: [],
 };
