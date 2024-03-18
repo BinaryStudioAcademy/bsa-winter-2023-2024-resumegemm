@@ -10,8 +10,8 @@ interface ISubscriptionService {
     findById(id: string): Promise<Subscription | null>;
     create(data: CreateSubscription): Promise<Subscription>;
     updateStatus(id: string, status: string): Promise<Subscription>;
-    cancelSubscription(id: string): Promise<SubscriptionWithPlan>;
-    keepSubscription(id: string): Promise<SubscriptionWithPlan>;
+    cancelSubscription(id: string): Promise<SubscriptionResponseDto>;
+    keepSubscription(id: string): Promise<SubscriptionResponseDto>;
 }
 
 export { type ISubscriptionService };

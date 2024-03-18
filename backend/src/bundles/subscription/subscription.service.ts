@@ -2,14 +2,13 @@ import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
 
-import { formatDate } from './helpers/helpers.js';
+import { formatSubscriptionDate } from './helpers/helpers.js';
 import { type SubscriptionRepository } from './subscription.repository';
 import {
     type CreateSubscription,
     type ISubscriptionService,
     type Subscription,
     type SubscriptionResponseDto,
-    type SubscriptionWithPlan,
 } from './types/types';
 
 class SubscriptionService implements ISubscriptionService {
@@ -31,11 +30,7 @@ class SubscriptionService implements ISubscriptionService {
             await this.subscriptionRepository.findUserSubscription(userId);
 
         if (subscription) {
-            const { startDate, endDate } = subscription;
-            const start = formatDate(startDate);
-            const end = formatDate(endDate);
-
-            return { ...subscription, startDate: start, endDate: end };
+            return formatSubscriptionDate(subscription);
         }
 
         return null;
@@ -56,28 +51,42 @@ class SubscriptionService implements ISubscriptionService {
         return await this.subscriptionRepository.updateStatus(id, status);
     }
 
-    public async cancelSubscription(id: string): Promise<SubscriptionWithPlan> {
+    public async cancelSubscription(
+        id: string,
+    ): Promise<SubscriptionResponseDto> {
         const subscription = await this.subscriptionRepository.findById(id);
 
         await this.stripe.subscriptions.update(subscription.subscriptionId, {
             cancel_at_period_end: true,
         });
 
-        return await this.subscriptionRepository.update(id, {
-            isCancelled: true,
-        });
+        const updatedSubscription = await this.subscriptionRepository.update(
+            id,
+            {
+                isCancelled: true,
+            },
+        );
+
+        return formatSubscriptionDate(updatedSubscription);
     }
 
-    public async keepSubscription(id: string): Promise<SubscriptionWithPlan> {
+    public async keepSubscription(
+        id: string,
+    ): Promise<SubscriptionResponseDto> {
         const subscription = await this.subscriptionRepository.findById(id);
 
         await this.stripe.subscriptions.update(subscription.subscriptionId, {
             cancel_at_period_end: false,
         });
 
-        return await this.subscriptionRepository.update(id, {
-            isCancelled: false,
-        });
+        const updatedSubscription = await this.subscriptionRepository.update(
+            id,
+            {
+                isCancelled: false,
+            },
+        );
+
+        return formatSubscriptionDate(updatedSubscription);
     }
 }
 

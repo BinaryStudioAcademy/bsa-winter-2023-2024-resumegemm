@@ -14,10 +14,10 @@ interface ISubscriptionController {
     }): Promise<ApiHandlerResponse<SubscriptionResponseDto | null>>;
     cancelSubscription(options: {
         params: { id: string };
-    }): Promise<ApiHandlerResponse<Subscription>>;
+    }): Promise<ApiHandlerResponse<SubscriptionResponseDto>>;
     keepSubscription(options: {
         params: { id: string };
-    }): Promise<ApiHandlerResponse<SubscriptionWithPlan>>;
+    }): Promise<ApiHandlerResponse<SubscriptionResponseDto>>;
 }
 
 export { type ISubscriptionController };

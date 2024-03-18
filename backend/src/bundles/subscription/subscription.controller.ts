@@ -80,7 +80,7 @@ class SubscriptionController
         options: ApiHandlerOptions<{
             params: { id: string };
         }>,
-    ): Promise<ApiHandlerResponse<SubscriptionWithPlan>> {
+    ): Promise<ApiHandlerResponse<SubscriptionResponseDto>> {
         const id = options.params.id;
         const subscription = await this.subscriptionService.findById(id);
 
@@ -101,7 +101,7 @@ class SubscriptionController
         options: ApiHandlerOptions<{
             params: { id: string };
         }>,
-    ): Promise<ApiHandlerResponse<SubscriptionWithPlan>> {
+    ): Promise<ApiHandlerResponse<SubscriptionResponseDto>> {
         const id = options.params.id;
         const subscription = await this.subscriptionService.findById(id);
 
