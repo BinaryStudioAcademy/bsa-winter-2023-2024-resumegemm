@@ -11,6 +11,8 @@ enum IconName {
     ARROW_UP = 'arrow_up',
     ARROW_DOWN = 'arrow_down',
     CLOSE_CROSS = 'close_button',
+    QUESTION_CIRCLE = 'circle_question',
+    CHECK_CIRCLE = 'circle_check',
 }
 
 export { IconName };
