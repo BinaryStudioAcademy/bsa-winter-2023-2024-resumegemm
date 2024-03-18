@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import PremiumQueen from '~/assets/img/premium-queen.svg?react';
+import PremiumCrown from '~/assets/img/premium-crown.svg?react';
 import { BaseButton } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import {
@@ -22,8 +22,12 @@ const ProfileInfo: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const handleClick = useCallback(() => {
+    const handleClickUpgrade = useCallback(() => {
         navigate(AppRoute.PAYMENT);
+    }, [navigate]);
+
+    const handleCancelSubscription = useCallback(() => {
+        navigate(AppRoute.SUBSCRIPTION_CANCEL);
     }, [navigate]);
 
     useEffect(() => {
@@ -33,7 +37,7 @@ const ProfileInfo: React.FC = () => {
     return (
         <div className={styles.profile__info}>
             <div className={styles.profile__info__content}>
-                {!subscription && (
+                {(!subscription || subscription.isCancelled) && (
                     <>
                         <div className={styles.profile__info__icon}>
                             <img
@@ -53,7 +57,7 @@ const ProfileInfo: React.FC = () => {
                         </div>
                         <div className={styles.profile__info__actions}>
                             <BaseButton
-                                onClick={handleClick}
+                                onClick={handleClickUpgrade}
                                 className={styles.upgrade__button}
                             >
                                 Upgrade
@@ -61,20 +65,28 @@ const ProfileInfo: React.FC = () => {
                         </div>
                     </>
                 )}
-                {subscription && (
+                {subscription && !subscription.isCancelled && (
                     <>
                         <div className={styles.profile__info__icon}>
-                            <PremiumQueen />
+                            <PremiumCrown />
                         </div>
                         <div className={styles.profile__info__text}>
                             <p className={styles.main__bold}>Premium account</p>
                             <p className={styles.main__regular}>
-                                You are on premium subscription. Your account
-                                will auto-renew on {subscription.endDate}
+                                You are on{' '}
+                                {
+                                    subscription.subscriptionPlan
+                                        .stripeProductName
+                                }
+                                . Your account will auto-renew on{' '}
+                                {subscription.endDate}
                             </p>
                         </div>
                         <div className={styles.profile__info__actions}>
-                            <BaseButton className={styles.cancel__button}>
+                            <BaseButton
+                                onClick={handleCancelSubscription}
+                                className={styles.cancel__button}
+                            >
                                 Cancel
                             </BaseButton>
                         </div>
