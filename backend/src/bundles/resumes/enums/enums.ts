@@ -1,1 +1,5 @@
-export { ResumesApiPath } from 'shared/build';
+export {
+    ContentEncoding,
+    ContentType,
+    ResumesApiPath,
+} from 'shared/build/index.js';

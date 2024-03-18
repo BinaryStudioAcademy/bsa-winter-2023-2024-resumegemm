@@ -31,7 +31,12 @@ export {
     PaymentApiPath,
     paymentCreateSubscriptionValidationSchema,
 } from './bundles/payment/payment.js';
-export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
+export {
+    type GeneratePdfRequestDto,
+    type GeneratePdfResponseDto,
+    type TPDFService,
+    PDFApiPath,
+} from './bundles/pdf/pdf.js';
 export {
     type IProfileService,
     type Profile,
@@ -75,6 +80,7 @@ export {
     type ResumeShareGetRequestDto,
     type ResumeShareGetResponseDto,
     type ResumeUpdateItemRequestDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
     type TechnicalSkill,
     LanguageLevels,
     ResumesApiPath,
@@ -127,6 +133,7 @@ export {
 export {
     ApiPath,
     AppEnvironment,
+    ContentEncoding,
     ContentType,
     CookieName,
     ExceptionMessage,
@@ -147,7 +154,7 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type IStorage } from './framework/storage/storage.js';
-export { configureString } from './helpers/helpers.js';
+export { configureString, validateUrl } from './helpers/helpers.js';
 export {
     type IdParameter,
     type ServerCommonErrorResponse,
