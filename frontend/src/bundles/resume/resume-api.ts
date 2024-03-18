@@ -40,11 +40,9 @@ class ResumeApi extends HttpApi {
         return await response.json();
     }
 
-    public async getViewsCount(
-        userId: string,
-    ): Promise<ResumeViewsCountResponseDto[]> {
+    public async getViewsCount(): Promise<ResumeViewsCountResponseDto[]> {
         const response = await this.load(
-            this.getFullEndpoint(ResumesApiPath.USER_ID_VIEWS(userId), {}),
+            this.getFullEndpoint(ResumesApiPath.VIEWS, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
