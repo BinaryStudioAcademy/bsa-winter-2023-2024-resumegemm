@@ -29,6 +29,38 @@ class SubscriptionApi extends HttpApi {
 
         return await response.json<SubscriptionResponseDto>();
     }
+
+    public async cancelSubscription(
+        id: string,
+    ): Promise<SubscriptionResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(`${SubscriptionApiPath.ROOT}${id}`, {}),
+            {
+                method: 'DELETE',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify({}),
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<SubscriptionResponseDto>();
+    }
+
+    public async keepSubscription(
+        id: string,
+    ): Promise<SubscriptionResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(`${SubscriptionApiPath.ROOT}${id}`, {}),
+            {
+                method: 'PUT',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify({}),
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<SubscriptionResponseDto>();
+    }
 }
 
 export { SubscriptionApi };
