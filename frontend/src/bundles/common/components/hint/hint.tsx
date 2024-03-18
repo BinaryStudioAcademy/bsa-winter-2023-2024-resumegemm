@@ -1,43 +1,31 @@
-import clsx from 'clsx';
 import { type FC } from 'react';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
 
-import { Icon } from '~/bundles/common/components/components';
+import { Icon, Tooltip } from '~/bundles/common/components/components';
+import { HintRow } from '~/bundles/common/components/hint/components/hint-row';
 import { IconName } from '~/bundles/common/enums/enums';
-import { type HintRow } from '~/bundles/common/types/types';
+import { type HintRow as HintRowType } from '~/bundles/common/types/types';
 
 import styles from './styles.module.scss';
 
 type Properties = {
-    className?: string;
-    rows?: HintRow[];
+    rows?: HintRowType[];
 };
 
-const Hint: FC<Properties> = ({ className = '', rows }) => {
+const Hint: FC<Properties> = ({ rows }) => {
     return (
-        <div className={clsx(className, styles.hint__container)}>
+        <Tooltip
+            component={
+                rows?.length &&
+                rows.map((row: HintRowType, index_: number) => (
+                    <HintRow key={index_} row={row} />
+                ))
+            }
+        >
             <Icon
                 name={IconName.QUESTION_CIRCLE}
                 className={styles.hint__anchor_container}
             />
-            <ReactTooltip
-                anchorSelect={`.${styles.hint__anchor_container}`}
-                className={styles.hint__popup}
-            >
-                {rows?.length &&
-                    rows.map((row: HintRow) => (
-                        <div key={row.text} className={styles.hint__row}>
-                            <Icon
-                                name={IconName.CHECK_CIRCLE}
-                                className={styles.hint__row_icon}
-                            />
-                            <span className={styles.hint__row_text}>
-                                {row.text}
-                            </span>
-                        </div>
-                    ))}
-            </ReactTooltip>
-        </div>
+        </Tooltip>
     );
 };
 
