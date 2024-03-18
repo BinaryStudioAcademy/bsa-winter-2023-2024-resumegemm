@@ -65,3 +65,10 @@ $text-color: var(--color-text-profile);
     margin-left: 10px;
     color: var(--color-error-red);
 }
+
+.keep_premium__button {
+    width: 150px;
+    padding: 0 8px;
+    font-weight: 500;
+    font-size: 15px;
+}

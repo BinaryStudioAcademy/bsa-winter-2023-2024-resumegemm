@@ -1,1 +1,1 @@
-export { SubscriptionApiPath } from 'shared/build/index';
+export { SubscriptionApiPath, SubscriptionStatus } from 'shared/build/index.js';
