@@ -8,6 +8,7 @@ import {
 class SubscriptionPlanModel extends AbstractModel {
     public 'stripePlanId': string;
     public 'stripeProductId': string;
+    public 'stripeProductName': string;
     public 'isActive': boolean;
 
     public static override get tableName(): typeof DatabaseTableName.SUBSCRIPTION_PLANS {
