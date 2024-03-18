@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { type SubscriptionResponseDto } from '../types/types';
-import { getById } from './actions.js';
+import { cancelSubscription, getById, keepSubscription } from './actions.js';
 
 type State = {
     subscription: SubscriptionResponseDto | null;
@@ -21,17 +21,37 @@ const { reducer, actions, name } = createSlice({
     name: 'subscription',
     reducers: {},
     extraReducers(builder) {
-        builder.addCase(getById.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
-        });
-        builder.addCase(getById.fulfilled, (state, action) => {
-            state.subscription = action.payload;
-            state.dataStatus = DataStatus.FULFILLED;
-        });
         builder.addCase(getById.rejected, (state) => {
             state.subscription = null;
             state.dataStatus = DataStatus.REJECTED;
         });
+        builder.addMatcher(
+            isAnyOf(cancelSubscription.rejected, keepSubscription.rejected),
+            (state) => {
+                state.dataStatus = DataStatus.REJECTED;
+            },
+        );
+        builder.addMatcher(
+            isAnyOf(
+                getById.fulfilled,
+                cancelSubscription.fulfilled,
+                keepSubscription.fulfilled,
+            ),
+            (state, action) => {
+                state.subscription = action.payload;
+                state.dataStatus = DataStatus.FULFILLED;
+            },
+        );
+        builder.addMatcher(
+            isAnyOf(
+                getById.pending,
+                cancelSubscription.pending,
+                keepSubscription.pending,
+            ),
+            (state) => {
+                state.dataStatus = DataStatus.PENDING;
+            },
+        );
     },
 });
 
