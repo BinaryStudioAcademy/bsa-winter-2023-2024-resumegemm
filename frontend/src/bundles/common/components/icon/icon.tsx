@@ -11,6 +11,8 @@ import {
     faChainBroken,
     faCheck,
     faChevronDown,
+    faCircleCheck,
+    faCircleQuestion,
     faClose,
     faCreditCard,
     faCrown,
@@ -49,6 +51,8 @@ const iconNameToSvgIcon = {
     [IconName.CHAIN_BROKEN]: faChainBroken,
     [IconName.DOOR_CLOSED]: faDoorClosed,
     [IconName.CROWN]: faCrown,
+    [IconName.QUESTION_CIRCLE]: faCircleQuestion,
+    [IconName.CHECK_CIRCLE]: faCircleCheck,
 };
 
 type IconProperties = {

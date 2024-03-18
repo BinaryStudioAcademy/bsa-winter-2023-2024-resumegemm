@@ -19,6 +19,8 @@ enum IconName {
     CHAIN_BROKEN = 'chain_broken',
     DOOR_CLOSED = 'door_closed',
     CROWN = 'crown',
+    QUESTION_CIRCLE = 'circle_question',
+    CHECK_CIRCLE = 'circle_check',
 }
 
 export { IconName };
