@@ -20,12 +20,12 @@ const getAllResumesByUserId = createAsyncThunk<
 
 const getViewsCountByUserId = createAsyncThunk<
     ResumeViewsCountResponseDto[],
-    { userId: string },
+    undefined,
     AsyncThunkConfig
 >(`${sliceName}/getViewsCountByUserId`, (request, { extra }) => {
     const { resumeApi } = extra;
 
-    return resumeApi.getViewsCount(request.userId);
+    return resumeApi.getViewsCount();
 });
 
 export { getAllResumesByUserId, getViewsCountByUserId };

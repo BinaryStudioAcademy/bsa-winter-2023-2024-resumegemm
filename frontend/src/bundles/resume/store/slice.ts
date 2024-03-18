@@ -7,14 +7,11 @@ import {
 import { getAllResumesByUserId, getViewsCountByUserId } from './actions.js';
 
 type State = {
-    resumeId: string;
     resumes: ResumeGetItemResponseDto[];
     resumeViews: ResumeViewsCountResponseDto[];
 };
 
 const initialState: State = {
-    resumeId: '',
-    resumeId: '',
     resumes: [],
     resumeViews: [],
 };
