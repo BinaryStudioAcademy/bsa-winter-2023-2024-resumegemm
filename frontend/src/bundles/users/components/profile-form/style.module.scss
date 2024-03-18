@@ -11,6 +11,11 @@ form {
     flex-direction: column;
 }
 
+.profile__button_wrapper button {
+    margin-top: 15px;
+    padding: 5px 25px;
+}
+
 @media only screen and (max-device-width: $layout-breakpoint-small) {
     .profile__form {
         justify-content: flex-start;
