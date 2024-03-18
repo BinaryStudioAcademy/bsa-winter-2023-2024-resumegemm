@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { type ValueOf, userSignInValidationSchema } from 'shared/build';
+import { userSignInValidationSchema } from 'shared/build';
 
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
