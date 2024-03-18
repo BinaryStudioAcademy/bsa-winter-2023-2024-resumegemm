@@ -13,6 +13,7 @@ export { DividerVariant } from './divider/divider-variant.enum.js';
 export { ModalVariant } from './modal/modal-variant.enum.js';
 export { SpinnerVariant } from './spinner/spinner-variant.enum.js';
 export { TooltipDimensions } from './tooltip/dimension-type.enum.js';
+export { CommonMessage, ToastType } from '~/bundles/toast/enums/enums.js';
 export {
     ApiPath,
     AppEnvironment,

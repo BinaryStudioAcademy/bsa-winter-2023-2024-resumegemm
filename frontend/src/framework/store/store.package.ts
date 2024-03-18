@@ -15,10 +15,11 @@ import { reducer as industriesReducer } from '~/bundles/industries/store/';
 import { openAuthApi } from '~/bundles/open-auth/open-auth.js';
 import { paymentApi } from '~/bundles/payment/payment.js';
 import { reducer as paymentReducer } from '~/bundles/payment/store/payment.store';
+import { pdfApi } from '~/bundles/pdf/pdf.js';
 import { profileApi } from '~/bundles/profile/profile';
 import { reducer as profileReducer } from '~/bundles/profile/store/profile.store';
-import { resumeApi } from '~/bundles/resume/resume.js';
-import { reducer as resumeReducer } from '~/bundles/resume/store/index.js';
+import { resumeApi } from '~/bundles/resume/resume';
+import { reducer as resumeReducer } from '~/bundles/resume/store/resume.store';
 import { resumeAccessApi } from '~/bundles/resume-access/resume-access';
 import { reducer as resumeAccessReducer } from '~/bundles/resume-access/store/';
 import { reducer as templatesReducer } from '~/bundles/templates-page/store';
@@ -51,6 +52,7 @@ type ExtraArguments = {
     resumeApi: typeof resumeApi;
     resumeAccessApi: typeof resumeAccessApi;
     profileApi: typeof profileApi;
+    pdfApi: typeof pdfApi;
 };
 
 class Store {
@@ -100,6 +102,7 @@ class Store {
             resumeAccessApi,
             openAuthApi,
             profileApi,
+            pdfApi,
         };
     }
 }

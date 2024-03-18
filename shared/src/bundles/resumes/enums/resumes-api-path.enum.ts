@@ -1,7 +1,7 @@
 const ResumesApiPath = {
     ROOT: '/',
     ID: '/:id',
-    USER_ID: '/user/:userId',
+    USER_ID: '/user',
     SCORE: '/score',
     VIEWS: '/views',
     ID_SHARE: (id = ':id'): string => `/${id}/share`,

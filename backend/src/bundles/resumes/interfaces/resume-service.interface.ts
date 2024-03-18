@@ -6,25 +6,24 @@ import {
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
     type ResumeViewsCountResponseDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
 } from 'shared/build/index.js';
 
 interface IResumeService {
     find(id: string): Promise<Resume | undefined>;
 
-    findWithRelations(
+    findById(
         id: string,
-    ): Promise<ResumeGetItemResponseDto | undefined>;
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto | null>;
 
-    findAll(): Promise<{
-        resumes: ResumeGetItemResponseDto[];
-    }>;
+    findAll(): Promise<ResumeGetItemResponseDto[]>;
 
-    findAllByUserId(userId: string): Promise<{
-        resumes: ResumeGetItemResponseDto[];
-    }>;
+    findAllByUserId(userId: string): Promise<ResumeGetItemResponseDto[]>;
 
     create(
         payload: ResumeCreateItemRequestDto,
+        userId: string,
+        templateId: string,
     ): Promise<ResumeGetItemResponseDto>;
 
     update(

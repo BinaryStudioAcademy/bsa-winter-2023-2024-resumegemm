@@ -1,6 +1,8 @@
 import {
     type IdParameter,
     type User,
+    type UserAuthResponse,
+    ExceptionMessage,
     HTTPError,
     ResumesApiPath,
 } from 'shared/build/index.js';
@@ -23,6 +25,7 @@ import {
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
     type ResumeViewsCountResponseDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
 } from './types/types.js';
 
 class ResumeController extends Controller {
@@ -34,12 +37,14 @@ class ResumeController extends Controller {
         this.resumeService = resumeService;
 
         this.addRoute({
-            path: ResumesApiPath.ROOT,
+            path: ResumesApiPath.ID,
             method: 'POST',
             handler: (options) =>
                 this.create(
                     options as ApiHandlerOptions<{
                         body: ResumeCreateItemRequestDto;
+                        user: UserAuthResponse['user'];
+                        params: IdParameter;
                     }>,
                 ),
         });
@@ -83,7 +88,7 @@ class ResumeController extends Controller {
             handler: (options) =>
                 this.findAllByUserId(
                     options as ApiHandlerOptions<{
-                        params: { userId: string };
+                        user: UserAuthResponse['user'];
                     }>,
                 ),
         });
@@ -111,9 +116,17 @@ class ResumeController extends Controller {
     private async create(
         options: ApiHandlerOptions<{
             body: ResumeCreateItemRequestDto;
+            user: UserAuthResponse['user'];
+            params: IdParameter;
         }>,
     ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
-        const resume = await this.resumeService.create(options.body);
+        const { id: userId } = options.user;
+        const { id: templateId } = options.params;
+        const resume = await this.resumeService.create(
+            options.body,
+            userId,
+            templateId,
+        );
 
         return {
             status: HttpCode.CREATED,
@@ -122,7 +135,7 @@ class ResumeController extends Controller {
     }
 
     private async findAll(): Promise<
-        ApiHandlerResponse<ResumeGetAllResponseDto>
+        ApiHandlerResponse<ResumeGetAllResponseDto[]>
     > {
         const resumes = await this.resumeService.findAll();
 
@@ -134,33 +147,43 @@ class ResumeController extends Controller {
 
     private async findByIdWithRelations(
         options: ApiHandlerOptions<{ params: IdParameter }>,
-    ): Promise<ApiHandlerResponse<ResumeGetItemResponseDto>> {
-        const resume = await this.resumeService.findWithRelations(
-            options.params.id,
-        );
-
-        if (!resume) {
-            throw new HTTPError({
-                status: HttpCode.BAD_REQUEST,
-                message: `Resume with id ${options.params.id} not found`,
-            });
+    ): Promise<
+        ApiHandlerResponse<ResumeWithRelationsAndTemplateResponseDto | null>
+    > {
+        try {
+            const resume = await this.resumeService.findById(options.params.id);
+            return {
+                status: HttpCode.OK,
+                payload: resume,
+            };
+        } catch (error: unknown) {
+            const { status = HttpCode.INTERNAL_SERVER_ERROR, message } =
+                error as HTTPError;
+            return {
+                status,
+                payload: {
+                    status,
+                    message,
+                },
+            };
         }
-
-        return {
-            status: HttpCode.OK,
-            payload: resume,
-        };
     }
 
     private async delete(
         options: ApiHandlerOptions<{ params: IdParameter }>,
-    ): Promise<ApiHandlerResponse<boolean>> {
+    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto[]>> {
         const isDeleted = await this.resumeService.delete(options.params.id);
-
-        return {
-            status: HttpCode.OK,
-            payload: isDeleted,
-        };
+        if (isDeleted) {
+            const resumes = await this.resumeService.findAll();
+            return {
+                status: HttpCode.OK,
+                payload: resumes,
+            };
+        }
+        throw new HTTPError({
+            message: ExceptionMessage.RESUME_NOT_FOUND,
+            status: HttpCode.BAD_REQUEST,
+        });
     }
 
     private async update(
@@ -190,11 +213,11 @@ class ResumeController extends Controller {
     }
 
     private async findAllByUserId(
-        options: ApiHandlerOptions<{ params: { userId: string } }>,
-    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto>> {
-        const resumes = await this.resumeService.findAllByUserId(
-            options.params.userId,
-        );
+        options: ApiHandlerOptions<{ user: UserAuthResponse['user'] }>,
+    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto[]>> {
+        const { id } = options.user;
+
+        const resumes = await this.resumeService.findAllByUserId(id);
 
         return {
             status: HttpCode.OK,

@@ -1,5 +1,9 @@
+import { FaTrash } from 'react-icons/fa6';
+
 import { Icon } from '~/bundles/common/components/components';
+import { IconButton } from '~/bundles/common/components/icon-button/icon-button';
 import { IconName, IconSize } from '~/bundles/common/enums/enums';
+import { useCallback } from '~/bundles/common/hooks/hooks';
 
 import styles from './styles.module.scss';
 
@@ -8,6 +12,8 @@ type Properties = {
     image: string;
     subtitle?: string;
     viewedResume?: number;
+    id?: string;
+    onDelete?: (resumeId: string) => void;
 };
 
 const ResumeCard: React.FC<Properties> = ({
@@ -15,7 +21,19 @@ const ResumeCard: React.FC<Properties> = ({
     image,
     subtitle,
     viewedResume,
+    onDelete,
+    id,
 }: Properties) => {
+    const handleDelete = useCallback(
+        (event: React.MouseEvent) => {
+            event.preventDefault();
+            if (!onDelete) {
+                return;
+            }
+            onDelete(id as NonNullable<string>);
+        },
+        [onDelete, id],
+    );
     return (
         <div className={styles.resume_card}>
             <img src={image} alt="Resume" className={styles.resume_card__img} />
@@ -48,6 +66,12 @@ const ResumeCard: React.FC<Properties> = ({
                     </span>
                 )}
             </div>
+            <IconButton
+                className={styles.resume_card__button}
+                onClick={handleDelete}
+            >
+                <FaTrash />
+            </IconButton>
         </div>
     );
 };

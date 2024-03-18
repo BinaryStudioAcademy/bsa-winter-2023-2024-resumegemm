@@ -1,9 +1,9 @@
-import { getAllResumesByUserId } from './actions.js';
+import { getViewsCountByUserId } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
-    getAllResumesByUserId,
+    getViewsCountByUserId,
 };
 
 export { reducer } from './slice.js';

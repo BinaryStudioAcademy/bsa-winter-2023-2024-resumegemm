@@ -35,7 +35,7 @@ import { DragAndDropPreview } from '../drag-and-drop/components/drag-and-drop-pr
 import { EditTemplatePage } from '../edit-template/edit-template';
 import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
-import { QuestionAndAnswer } from '../question-and-answer/question-and-answer';
+import { QuestionAndAnswer } from '../question-and-answer-page/components/question-and-answer/question-and-answer.js';
 import { DeleteResumeButton } from '../resume/components/delete-resume-button/delete-resume-button.js';
 import { Resume } from '../resume/pages/resumes.js';
 import styles from './styles.module.scss';

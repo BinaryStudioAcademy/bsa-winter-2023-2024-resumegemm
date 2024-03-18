@@ -1,44 +1,137 @@
-import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
-import { type IHttp } from '~/framework/http/http.js';
-import { type IStorage } from '~/framework/storage/storage.js';
 
-import { ResumesApiPath } from './enums/enums.js';
+import { ApiPath, ContentType, ResumesApiPath } from './enums/enums';
 import {
-    type ResumeGetAllRequestDto,
+    type IHttp,
+    type IStorage,
+    type ResumeAiScoreRequestDto,
+    type ResumeAiScoreResponseDto,
+    // type ResumeGetAllRequestDto,
     type ResumeGetAllResponseDto,
     type ResumeViewsCountResponseDto,
-} from './types/types.js';
+    type ResumeWithRelationsAndTemplateResponseDto,
+} from './types/types';
 
-type ResumeApiConfig = {
+type Constructor = {
     baseUrl: string;
     http: IHttp;
     storage: IStorage;
 };
 
 class ResumeApi extends HttpApi {
-    public constructor({ baseUrl, http, storage }: ResumeApiConfig) {
+    public constructor({ baseUrl, http, storage }: Constructor) {
         super({ path: ApiPath.RESUMES, baseUrl, http, storage });
     }
 
-    public async getAllByUserId(
-        request: ResumeGetAllRequestDto,
-    ): Promise<ResumeGetAllResponseDto> {
-        const userIdPath = ResumesApiPath.USER_ID.replace(
-            ':userId',
-            request.userId,
-        );
+    public async getAllResumes(): Promise<ResumeGetAllResponseDto[]> {
         const response = await this.load(
-            this.getFullEndpoint(`${userIdPath}`, {}),
+            this.getFullEndpoint(ResumesApiPath.ROOT, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: true,
             },
         );
-
-        return await response.json();
+        return await response.json<ResumeGetAllResponseDto[]>();
     }
+
+    public async getOneWithTemplate(
+        resumeId: string,
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}${resumeId}`, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<ResumeWithRelationsAndTemplateResponseDto>();
+    }
+
+    public async updateResume(
+        payload: Omit<
+            ResumeWithRelationsAndTemplateResponseDto,
+            'templates'
+        > & { resume: object },
+        resumeId: string,
+    ): Promise<ResumeWithRelationsAndTemplateResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}/${resumeId}`, {}),
+            {
+                method: 'PUT',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify(payload),
+            },
+        );
+        return await response.json<ResumeWithRelationsAndTemplateResponseDto>();
+    }
+
+    public async createResume(
+        payload: Partial<ResumeWithRelationsAndTemplateResponseDto>,
+        templateId: string,
+    ): Promise<ResumeGetAllResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}/${templateId}`, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify(payload),
+            },
+        );
+        return await response.json<ResumeGetAllResponseDto>();
+    }
+
+    public async deleteResume(
+        resumeId: string,
+    ): Promise<ResumeGetAllResponseDto[]> {
+        const response = await this.load(
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}/${resumeId}`, {}),
+            {
+                method: 'DELETE',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify({}),
+            },
+        );
+        return await response.json<ResumeGetAllResponseDto[]>();
+    }
+
+    public async requestResumeReviewFromAI(
+        resume: ResumeAiScoreRequestDto,
+    ): Promise<ResumeAiScoreResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(`${ResumesApiPath.SCORE}`, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify(resume),
+            },
+        );
+        return await response.json<ResumeAiScoreResponseDto>();
+    }
+
+    // public async getAllByUserId(
+    //     request: ResumeGetAllRequestDto,
+    // ): Promise<ResumeGetAllResponseDto> {
+    //     const userIdPath = ResumesApiPath.USER_ID.replace(
+    //         ':userId',
+    //         request.userId,
+    //     );
+    //     const response = await this.load(
+    //         this.getFullEndpoint(`${userIdPath}`, {}),
+    //         {
+    //             method: 'GET',
+    //             contentType: ContentType.JSON,
+    //             hasAuth: true,
+    //         },
+    //     );
+
+    //     return await response.json();
+    // }
 
     public async getViewsCount(): Promise<ResumeViewsCountResponseDto[]> {
         const response = await this.load(

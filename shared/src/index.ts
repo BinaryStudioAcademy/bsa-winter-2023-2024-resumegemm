@@ -31,7 +31,12 @@ export {
     PaymentApiPath,
     paymentCreateSubscriptionValidationSchema,
 } from './bundles/payment/payment.js';
-export { type TPDFService, PDFApiPath } from './bundles/pdf/pdf.js';
+export {
+    type GeneratePdfRequestDto,
+    type GeneratePdfResponseDto,
+    type TPDFService,
+    PDFApiPath,
+} from './bundles/pdf/pdf.js';
 export {
     type IProfileService,
     type Profile,
@@ -77,6 +82,7 @@ export {
     type ResumeShareResponseDto,
     type ResumeUpdateItemRequestDto,
     type ResumeViewsCountResponseDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
     type TechnicalSkill,
     LanguageLevels,
     ResumesApiPath,
@@ -129,6 +135,7 @@ export {
 export {
     ApiPath,
     AppEnvironment,
+    ContentEncoding,
     ContentType,
     CookieName,
     ExceptionMessage,
