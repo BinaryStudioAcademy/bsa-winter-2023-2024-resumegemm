@@ -140,7 +140,7 @@ const prettifiedTemplate: TemplateSettings = {
                         },
                         {
                             id: 'skillName',
-                            name: 'Performance',
+                            name: 'Skill',
                             placeholder: 'TECHNICAL SKILL',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'TypeScript',
