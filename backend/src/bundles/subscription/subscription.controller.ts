@@ -57,17 +57,10 @@ class SubscriptionController
 
     public async find(
         options: ApiHandlerOptions<{ user: User }>,
-    ): Promise<ApiHandlerResponse<SubscriptionResponseDto>> {
+    ): Promise<ApiHandlerResponse<SubscriptionResponseDto | null>> {
         try {
             const userId = options.user.id;
             const subscription = await this.subscriptionService.find(userId);
-
-            if (!subscription) {
-                throw new HTTPError({
-                    status: HttpCode.BAD_REQUEST,
-                    message: SubscriptionErrorMessage.SUBSCRIPTION_NOT_FOUND,
-                });
-            }
 
             return {
                 status: HttpCode.OK,

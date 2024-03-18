@@ -30,11 +30,15 @@ class SubscriptionService implements ISubscriptionService {
         const subscription =
             await this.subscriptionRepository.findUserSubscription(userId);
 
-        const { startDate, endDate } = subscription;
-        const start = formatDate(startDate);
-        const end = formatDate(endDate);
+        if (subscription) {
+            const { startDate, endDate } = subscription;
+            const start = formatDate(startDate);
+            const end = formatDate(endDate);
 
-        return { ...subscription, startDate: start, endDate: end };
+            return { ...subscription, startDate: start, endDate: end };
+        }
+
+        return null;
     }
 
     public async findById(id: string): Promise<Subscription | null> {
