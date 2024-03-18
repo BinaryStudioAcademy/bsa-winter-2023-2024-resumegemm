@@ -43,11 +43,16 @@ const ViewTemplatePage: React.FC = () => {
             <Header />
             <section className={styles.template_section}>
                 {template && (
-                    <img
-                        className={styles.template__image}
-                        src={template.image}
-                        alt="Template"
-                    />
+                    <>
+                        <h3 className={styles.template__name}>
+                            {template.name}
+                        </h3>
+                        <img
+                            className={styles.template__image}
+                            src={template.image}
+                            alt="Template"
+                        />
+                    </>
                 )}
             </section>
             <Footer>

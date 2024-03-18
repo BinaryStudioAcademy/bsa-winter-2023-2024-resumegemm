@@ -272,12 +272,13 @@ class AuthController extends Controller {
                 payload,
             };
         } catch (error: unknown) {
-            const { message, status } = error as HTTPError;
+            const { message, status, errorType } = error as AuthException;
             return {
                 status,
                 payload: {
                     message,
                     status,
+                    errorType,
                 },
             };
         }

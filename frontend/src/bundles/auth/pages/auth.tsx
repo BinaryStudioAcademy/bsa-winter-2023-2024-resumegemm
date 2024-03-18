@@ -1,14 +1,9 @@
-import { useContext } from 'react';
-
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
-    useAppSelector,
     useCallback,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
-import { ToastContext } from '~/bundles/toast/context/toast-context.js';
-import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
 import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
@@ -20,9 +15,6 @@ import styles from './styles.module.scss';
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    const { dataStatus } = useAppSelector((state) => state.auth);
-
-    const { showToast } = useContext(ToastContext);
     const { pathname } = useLocation();
 
     const handleSignInSubmit = useCallback(
@@ -35,34 +27,18 @@ const Auth: React.FC = () => {
     const handleSignUpSubmit = useCallback(
         (payload: UserSignUpRequestDtoFrontend): void => {
             delete payload.confirmPassword;
-            void dispatch(authActions.signUp(payload))
-                .unwrap()
-                .catch((error: Error) => {
-                    showToast(error.message, ToastType.ERROR, {
-                        position: 'top-right',
-                    });
-                });
+            void dispatch(authActions.signUp(payload));
         },
-        [dispatch, showToast],
+        [dispatch],
     );
 
     const getScreen = (screen: string): React.ReactNode => {
         switch (screen) {
             case AppRoute.LOG_IN: {
-                return (
-                    <SignInForm
-                        onSubmit={handleSignInSubmit}
-                        dataStatus={dataStatus}
-                    />
-                );
+                return <SignInForm onSubmit={handleSignInSubmit} />;
             }
             case AppRoute.SIGN_UP: {
-                return (
-                    <SignUpForm
-                        onSubmit={handleSignUpSubmit}
-                        dataStatus={dataStatus}
-                    />
-                );
+                return <SignUpForm onSubmit={handleSignUpSubmit} />;
             }
             case AppRoute.FORGOT_PASSWORD: {
                 return <PasswordRecovery />;
