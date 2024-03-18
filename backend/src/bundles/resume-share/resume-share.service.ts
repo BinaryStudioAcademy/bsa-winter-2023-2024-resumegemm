@@ -66,16 +66,15 @@ class ResumeShareService implements IResumeShareService {
         id: string,
     ): Promise<GetUserResumeSharesResponse> {
         try {
-            const { resumes: resumesWithInfo } =
-                await this.resumeService.findAllByUserId(id);
+            const resumes = await this.resumeService.findAllByUserId(id);
 
-            if (resumesWithInfo.length === 0) {
+            if (resumes.length === 0) {
                 return {
                     resumes: [],
                 };
             }
 
-            const resumesIds = resumesWithInfo.map(({ resume }) => resume.id);
+            const resumesIds = resumes.map((resume) => resume.id);
 
             const resumesWithLink =
                 await this.resumeShareRepository.getShareLinksByIds(resumesIds);
