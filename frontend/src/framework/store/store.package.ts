@@ -14,14 +14,17 @@ import { industriesApi } from '~/bundles/industries/industries';
 import { reducer as industriesReducer } from '~/bundles/industries/store/';
 import { openAuthApi } from '~/bundles/open-auth/open-auth.js';
 import { paymentApi } from '~/bundles/payment/payment.js';
-import { reducer as paymentReducer } from '~/bundles/payment/store/payment.store.js';
-import { profileApi } from '~/bundles/profile/profile.js';
-import { reducer as profileReducer } from '~/bundles/profile/store/profile.store.js';
+import { reducer as paymentReducer } from '~/bundles/payment/store/payment.store';
+import { pdfApi } from '~/bundles/pdf/pdf.js';
+import { profileApi } from '~/bundles/profile/profile';
+import { reducer as profileReducer } from '~/bundles/profile/store/profile.store';
 import { recentlyViewedApi } from '~/bundles/recently-viewed/recently-viewed';
 import { reducer as recentlyViewedReducer } from '~/bundles/recently-viewed/store/index.js';
-import { resumeAccessApi } from '~/bundles/resume-access/resume-access.js';
-import { reducer as resumeAccessReducer } from '~/bundles/resume-access/store/index.js';
-import { reducer as templatesReducer } from '~/bundles/templates-page/store/index.js';
+import { resumeApi } from '~/bundles/resume/resume';
+import { reducer as resumeReducer } from '~/bundles/resume/store/resume.store';
+import { resumeAccessApi } from '~/bundles/resume-access/resume-access';
+import { reducer as resumeAccessReducer } from '~/bundles/resume-access/store/';
+import { reducer as templatesReducer } from '~/bundles/templates-page/store';
 import { reducer as usersReducer } from '~/bundles/users/store/user.store';
 import { userApi } from '~/bundles/users/users.js';
 import { type IConfig } from '~/framework/config/config.js';
@@ -38,6 +41,7 @@ type RootReducer = {
     profile: ReturnType<typeof profileReducer>;
     editTemplate: ReturnType<typeof editTemplateReducer>;
     recentlyViewed: ReturnType<typeof recentlyViewedReducer>;
+    resumes: ReturnType<typeof resumeReducer>;
 };
 
 type ExtraArguments = {
@@ -51,6 +55,8 @@ type ExtraArguments = {
     resumeAccessApi: typeof resumeAccessApi;
     profileApi: typeof profileApi;
     recentlyViewedApi: typeof recentlyViewedApi;
+    resumeApi: typeof resumeApi;
+    pdfApi: typeof pdfApi;
 };
 
 class Store {
@@ -77,6 +83,7 @@ class Store {
                 profile: profileReducer,
                 editTemplate: editTemplateReducer,
                 recentlyViewed: recentlyViewedReducer,
+                resumes: resumeReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
@@ -100,6 +107,8 @@ class Store {
             openAuthApi,
             profileApi,
             recentlyViewedApi,
+            resumeApi,
+            pdfApi,
         };
     }
 }

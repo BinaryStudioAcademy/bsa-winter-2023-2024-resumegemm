@@ -1,51 +1,127 @@
-import clsx from 'clsx';
-import React, { useCallback, useState } from 'react';
+import { type ChangeEvent } from 'react';
+import { TemplateBlockTitles } from 'shared/build';
 
-import { RegularButton } from '~/bundles/common/components/components';
+import {
+    FormGroup,
+    Input,
+    RegularButton,
+    TextArea,
+} from '~/bundles/common/components/components';
 import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
 } from '~/bundles/common/enums/enums';
+import {
+    useAppDispatch,
+    useCallback,
+    useMemo,
+    useState,
+} from '~/bundles/common/hooks/hooks';
+import { EditorTabs } from '~/bundles/cv-editor/components/editor-tabs/editor-tabs';
+import { updateSettingsBlocksFromInputs } from '~/bundles/resume/helpers/helpers';
+import { actions as resumeActions } from '~/bundles/resume/store/resume.store';
+import { type TemplateSettings } from '~/bundles/resume/types/types';
 
-import { type TabsProps as TabsProperties } from '../../types/interface';
 import styles from './online-editor-handler.module.scss';
 
-const OnlineEditorTabsHandler: React.FC<TabsProperties> = ({ tabs }) => {
-    const [activeTabIndex, setActiveTabIndex] = useState(0);
+type TabsPayload = {
+    tabs: TemplateSettings['containers'];
+    isCreate?: boolean;
+};
 
-    const handleTabClick = (tabIndex: number) => (event_: React.MouseEvent) => {
-        event_.preventDefault();
-        setActiveTabIndex(tabIndex);
-    };
+const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
+    const [activeTabIndex, setActiveTabIndex] = useState(0);
+    const dispatch = useAppDispatch();
+    const allBlocks = tabs.map((tab) => tab.blocks);
+
+    const mergedTemplateSettingsProperties = useMemo(
+        () => allBlocks.flat(),
+        [allBlocks],
+    );
+
+    const templateSettingsContainerItems =
+        mergedTemplateSettingsProperties[activeTabIndex].items;
 
     const onNextClick = useCallback(() => {
-        setActiveTabIndex(
-            (previousTabIndex) => (previousTabIndex + 1) % tabs.length,
-        );
-    }, [setActiveTabIndex, tabs]);
+        setActiveTabIndex((previousTabIndex) => {
+            const newIndex =
+                (previousTabIndex + 1) %
+                mergedTemplateSettingsProperties.length;
+            const nextItem = mergedTemplateSettingsProperties[newIndex];
+            if (nextItem.name === TemplateBlockTitles.Divider) {
+                return previousTabIndex + 2;
+            }
+            return newIndex;
+        });
+    }, [setActiveTabIndex, mergedTemplateSettingsProperties]);
+
+    const handleInputResumeFieldChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            const { name, value, id } = event.target;
+            const updatedTemplateSettingsBlocks =
+                updateSettingsBlocksFromInputs(tabs, name, value);
+
+            void dispatch(
+                resumeActions.setNewTemplateSettings(
+                    updatedTemplateSettingsBlocks,
+                ),
+            );
+            if (isCreate) {
+                return;
+            }
+            void dispatch(
+                resumeActions.updateCurrentResume({ itemId: id, value }),
+            );
+        },
+        [dispatch, tabs, isCreate],
+    );
 
     return (
         <section className={styles.editor__section}>
             <nav className={styles.editor_sidebar__nav}>
                 <ul className={styles.editor_sidebar__list}>
-                    {tabs.map((tab, index) => (
-                        <li key={tab.label}>
-                            <button
-                                className={clsx(styles.editor_sidebar__item, {
-                                    [styles.editor_sidebar__item__active]:
-                                        activeTabIndex === index,
-                                })}
-                                onClick={handleTabClick(index)}
-                            >
-                                {tab.label}
-                            </button>
-                        </li>
-                    ))}
+                    {mergedTemplateSettingsProperties.map((tab, index) =>
+                        tab.name === TemplateBlockTitles.Divider ? null : (
+                            <EditorTabs
+                                key={tab.id}
+                                tabName={tab.name}
+                                index={index}
+                                activeTabIndex={activeTabIndex}
+                                setActiveTabIndex={setActiveTabIndex}
+                            />
+                        ),
+                    )}
                 </ul>
             </nav>
             <div className={styles.editor_output__block}>
-                <div>{tabs[activeTabIndex].content}</div>
+                <div className={styles.template__settings__wrapper}>
+                    {templateSettingsContainerItems.map((item, index) =>
+                        item.name === 'Avatar' ? null : (
+                            <FormGroup
+                                key={`${index}${item.id}`}
+                                label={item.name}
+                            >
+                                {item.name === 'Description' ? (
+                                    <TextArea
+                                        id={item.id}
+                                        value={item.content}
+                                        name={item.name}
+                                        onChange={handleInputResumeFieldChange}
+                                    />
+                                ) : (
+                                    <Input
+                                        id={item.id}
+                                        type="text"
+                                        name={item.name}
+                                        value={item.content}
+                                        onChange={handleInputResumeFieldChange}
+                                    />
+                                )}
+                            </FormGroup>
+                        ),
+                    )}
+                </div>
                 <RegularButton
                     type={ButtonType.SUBMIT}
                     size={ButtonSize.MEDIUM}

@@ -1,4 +1,4 @@
-import { QuestionAndAnswerItem } from './components/question-and-answer-item';
+import { QuestionAndAnswerItem } from '../question-and-answer-item/question-and-answer-item';
 import styles from './styles.module.scss';
 
 const QuestionAndAnswer: React.FC = () => {
