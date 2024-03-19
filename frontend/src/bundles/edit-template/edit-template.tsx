@@ -32,6 +32,7 @@ import {
 import { ToastType } from '../toast/enums/show-toast-types.enum';
 import { showToast } from '../toast/helpers/show-toast';
 import { TemplateEditor } from './components/template-editor/template-editor';
+import { TemplatesMessage } from './enums/enums';
 import {
     changeBlockEnabling,
     isBlockEnabled as isBlockEnabledByName,
@@ -110,7 +111,10 @@ const EditTemplatePage: React.FC = () => {
                         .unwrap()
                         .then((data) => {
                             if (data) {
-                                showToast('Changes saved.', ToastType.SUCCESS);
+                                showToast(
+                                    TemplatesMessage.TEMPLATE_EDITED,
+                                    ToastType.SUCCESS,
+                                );
                             }
                         });
                 }
