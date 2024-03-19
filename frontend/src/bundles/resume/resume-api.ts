@@ -1,3 +1,5 @@
+import { type FindAllOptions } from 'shared/build/index.js';
+
 import { HttpApi } from '~/framework/api/api.js';
 
 import { ApiPath, ContentType, ResumesApiPath } from './enums/enums';
@@ -21,9 +23,15 @@ class ResumeApi extends HttpApi {
         super({ path: ApiPath.RESUMES, baseUrl, http, storage });
     }
 
-    public async getAllResumes(): Promise<ResumeGetAllResponseDto[]> {
+    public async getAllResumes(
+        query: FindAllOptions,
+    ): Promise<ResumeGetAllResponseDto[]> {
+        const { name, direction } = query;
         const response = await this.load(
-            this.getFullEndpoint(ResumesApiPath.ROOT, {}),
+            this.getFullEndpoint(
+                `${ResumesApiPath.ROOT}?name=${name}&direction=${direction}`,
+                {},
+            ),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
