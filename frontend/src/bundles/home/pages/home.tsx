@@ -34,10 +34,10 @@ const Home: React.FC = () => {
                 <CreateNewCard />
             </ResumeSection>
             <ResumeSection name="Users' resume">
-                {resumes.map(({ id, image }) => (
+                {resumes.map(({ id, image, resumeTitle }) => (
                     <NavLink key={id} to={`/resumes/${id}`}>
                         <ResumeCard
-                            title="My Resume"
+                            title={resumeTitle as string}
                             subtitle="Updated - Jan 25"
                             image={image}
                             id={id}
