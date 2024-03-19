@@ -1,3 +1,5 @@
+import { type FindAllOptions } from 'shared/build/index.js';
+
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
@@ -5,12 +7,11 @@ import { type IStorage } from '~/framework/storage/storage.js';
 
 import { TemplatesApiPath } from './enums/enums';
 import {
-    type getAllTemplatesQuery,
     type TemplateDto,
+    type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
 } from './types/types';
-import { type TemplateGetAllResponseDto } from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -72,11 +73,11 @@ class TemplateApi extends HttpApi {
     }
 
     public async getAll(
-        options: getAllTemplatesQuery,
+        options: FindAllOptions,
     ): Promise<TemplateGetAllResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(
-                `${TemplatesApiPath.ROOT}?direction=${options.direction}`,
+                `${TemplatesApiPath.ROOT}?name=${options.name}&direction=${options.direction}`,
                 {},
             ),
             {
