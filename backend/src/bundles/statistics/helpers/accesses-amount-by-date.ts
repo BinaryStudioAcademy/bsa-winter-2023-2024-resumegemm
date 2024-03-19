@@ -1,7 +1,7 @@
 import { isSameDay } from 'date-fns';
 import { type ResumeShareAccessResponseDto } from 'shared/build/bundles/resumes/types/resume-share-access-response-dto.type';
 
-import { compareDateInDiapasonWithoutTime } from './helpers';
+import { dateWithinRange } from './helpers';
 
 function accessesAmountByDate(
     accesses: ResumeShareAccessResponseDto[],
@@ -18,7 +18,7 @@ function accessesAmountByDateDiapason(
     endDate: Date,
 ): number {
     return accesses.filter((access) => {
-        return compareDateInDiapasonWithoutTime(
+        return dateWithinRange(
             new Date(access.resumeShareAccessTime),
             day,
             endDate,

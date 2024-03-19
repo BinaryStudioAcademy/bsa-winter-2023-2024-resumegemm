@@ -1,6 +1,6 @@
 import { isAfter, isBefore, isSameDay } from 'date-fns';
 
-function compareDateInDiapasonWithoutTime(
+function dateWithinRange(
     compareDate: Date,
     dateStart: Date,
     dateEnd: Date,
@@ -12,4 +12,4 @@ function compareDateInDiapasonWithoutTime(
     );
 }
 
-export { compareDateInDiapasonWithoutTime };
+export { dateWithinRange };

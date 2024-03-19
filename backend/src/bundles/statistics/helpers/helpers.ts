@@ -3,4 +3,4 @@ export {
     accessesAmountByDateDiapason,
 } from './accesses-amount-by-date';
 export { calculateViewsSum } from './calculate-votes-sum';
-export { compareDateInDiapasonWithoutTime } from 'shared/build';
+export { dateWithinRange } from 'shared/build';
