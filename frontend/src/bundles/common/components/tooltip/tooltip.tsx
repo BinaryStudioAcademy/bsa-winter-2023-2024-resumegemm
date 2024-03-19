@@ -8,7 +8,8 @@ import styles from './styles.module.scss';
 type Properties = {
     className?: string;
     children?: React.ReactNode;
-    text: string;
+    text?: string;
+    component?: React.ReactNode;
     dimensionType?: ValueOf<typeof TooltipDimensions>;
 };
 
@@ -21,6 +22,7 @@ const Tooltip: React.FC<Properties> = ({
     className = '',
     children,
     text,
+    component,
     dimensionType = TooltipDimensions.fitContent,
 }) => {
     return (
@@ -37,6 +39,7 @@ const Tooltip: React.FC<Properties> = ({
                 className={styles.tooltip__popup}
             >
                 {text}
+                {component}
             </ReactTooltip>
         </div>
     );

@@ -1,0 +1,8 @@
+.edit__resume {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    padding: 100px;
+    background-color: var(--color-input-field-gray);
+    place-items: center;
+}
