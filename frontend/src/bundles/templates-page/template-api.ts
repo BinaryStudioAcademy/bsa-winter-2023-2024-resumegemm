@@ -1,3 +1,5 @@
+import { SearchParameters } from 'shared/build/index.js';
+
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { HttpApi } from '~/framework/api/api.js';
 import { type IHttp } from '~/framework/http/http.js';
@@ -70,9 +72,14 @@ class TemplateApi extends HttpApi {
         return await response.json();
     }
 
-    public async getAll(): Promise<TemplateGetAllResponseDto> {
+    public async getAll(
+        searchParameters?: URLSearchParams,
+    ): Promise<TemplateGetAllResponseDto> {
+        const name =
+            searchParameters?.get(SearchParameters.TEMPLATE_NAME) ?? '';
+
         const response = await this.load(
-            this.getFullEndpoint(TemplatesApiPath.ROOT, {}),
+            this.getFullEndpoint(`${TemplatesApiPath.ROOT}?name=${name}`, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,

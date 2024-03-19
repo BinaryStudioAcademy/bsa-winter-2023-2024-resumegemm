@@ -5,11 +5,11 @@ import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
 const loadAllTemplates = createAsyncThunk<
     TemplateGetAllItemResponseDto[],
-    undefined,
+    URLSearchParams | undefined,
     AsyncThunkConfig
->('templates2/load-all', async (_, { extra }) => {
+>('templates2/load-all', async (searchParameters, { extra }) => {
     const { templateApi } = extra;
-    const { items } = await templateApi.getAll();
+    const { items } = await templateApi.getAll(searchParameters);
     return items;
 });
 
