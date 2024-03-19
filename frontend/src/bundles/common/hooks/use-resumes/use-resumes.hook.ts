@@ -165,7 +165,7 @@ const useResumes = (options?: FindAllOptions): UseResumesReturnValues => {
 
     useEffect(() => {
         void dispatch(resumeActions.getAllResumes({ name: options?.name }));
-    }, [dispatch, options]);
+    }, [dispatch, options?.name]);
 
     return {
         userId,
