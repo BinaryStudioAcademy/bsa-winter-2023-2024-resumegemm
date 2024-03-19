@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { type FindAllOptions } from 'shared/build';
 import { type TemplateDto } from 'shared/build/bundles/templates/templates';
 
 import { loadAllTemplates } from '~/bundles/templates-page/store/actions';
@@ -9,13 +10,13 @@ type ReturnValue = {
     templates: TemplateDto[];
 };
 
-const useLoadTemplates = (searchParameters?: URLSearchParams): ReturnValue => {
+const useLoadTemplates = ({ name }: FindAllOptions): ReturnValue => {
     const dispatch = useAppDispatch();
     const { templates } = useAppSelector((state) => state.templates);
 
     useEffect(() => {
-        void dispatch(loadAllTemplates(searchParameters));
-    }, [dispatch, searchParameters]);
+        void dispatch(loadAllTemplates({ name }));
+    }, [dispatch, name]);
 
     return {
         templates,

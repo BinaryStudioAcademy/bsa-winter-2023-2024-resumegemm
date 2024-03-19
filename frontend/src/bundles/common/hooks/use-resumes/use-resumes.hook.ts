@@ -1,3 +1,5 @@
+import { type FindAllOptions } from 'shared/build';
+
 import {
     AppRoute,
     CommonMessage,
@@ -47,9 +49,7 @@ const getRandomItem = (template: TemplateDto[]): TemplateDto | null => {
     return template[randomIndex];
 };
 
-const useResumes = (
-    searchParameters?: URLSearchParams,
-): UseResumesReturnValues => {
+const useResumes = (options?: FindAllOptions): UseResumesReturnValues => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
@@ -164,8 +164,8 @@ const useResumes = (
     }, [currentResume, isTemplatesLoading, dispatch, templates.length]);
 
     useEffect(() => {
-        void dispatch(resumeActions.getAllResumes(searchParameters));
-    }, [dispatch, searchParameters]);
+        void dispatch(resumeActions.getAllResumes({ name: options?.name }));
+    }, [dispatch, options]);
 
     return {
         userId,

@@ -23,8 +23,16 @@ import styles from './styles.module.scss';
 const Home: React.FC = () => {
     const [searchParameters] = useSearchParams();
 
-    const { templates } = useLoadTemplates(searchParameters);
-    const { resumes, deleteResume } = useResumes(searchParameters);
+    const templateName =
+        searchParameters.get(SearchParameters.TEMPLATE_NAME) ?? '';
+
+    const { templates } = useLoadTemplates({
+        name: templateName,
+    });
+
+    const resumeName = searchParameters.get(SearchParameters.RESUME_NAME) ?? '';
+
+    const { resumes, deleteResume } = useResumes({ name: resumeName });
 
     const handleResumeSearch = useSearch(SearchParameters.RESUME_NAME);
 

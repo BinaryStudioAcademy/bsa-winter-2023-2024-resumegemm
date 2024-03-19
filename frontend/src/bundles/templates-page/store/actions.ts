@@ -1,15 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type TemplateGetAllItemResponseDto } from 'shared/build/index.js';
+import {
+    type FindAllOptions,
+    type TemplateGetAllItemResponseDto,
+} from 'shared/build/index.js';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
 const loadAllTemplates = createAsyncThunk<
     TemplateGetAllItemResponseDto[],
-    URLSearchParams | undefined,
+    FindAllOptions | undefined,
     AsyncThunkConfig
->('templates2/load-all', async (searchParameters, { extra }) => {
+>('templates2/load-all', async (options, { extra }) => {
     const { templateApi } = extra;
-    const { items } = await templateApi.getAll(searchParameters);
+    const query = {
+        direction: options?.direction ?? 'desc',
+        name: options?.name ?? '',
+    };
+
+    const { items } = await templateApi.getAll(query);
     return items;
 });
 

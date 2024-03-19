@@ -30,7 +30,11 @@ import styles from './styles.module.scss';
 
 const Templates: React.FC = () => {
     const [searchParameters] = useSearchParams();
-    const { templates } = useLoadTemplates(searchParameters);
+
+    const templateName =
+        searchParameters.get(SearchParameters.TEMPLATE_NAME) ?? '';
+
+    const { templates } = useLoadTemplates({ name: templateName });
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
