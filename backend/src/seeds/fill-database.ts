@@ -300,12 +300,6 @@ async function seed(knex: Knex): Promise<void> {
         await trx<SubscriptionPlan>(DatabaseTableName.SUBSCRIPTION_PLANS)
             .insert(subscriptionPlansMappedSeed)
             .returning('*');
-
-        // INDUSTRIES
-
-        await trx<Industry>(DatabaseTableName.INDUSTRIES).insert(
-            industriesSeed,
-        );
     });
 }
 

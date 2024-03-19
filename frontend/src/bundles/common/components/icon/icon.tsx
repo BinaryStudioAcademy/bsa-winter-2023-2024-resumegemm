@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import {
     faArrowCircleRight,
+    faArrowCircleLeft,
     faArrowDownLong,
     faArrowUpLong,
     faChevronDown,
@@ -17,6 +18,7 @@ import {
     faEyeSlash,
     faMagnifyingGlass,
     faPlus,
+    faSave,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -34,9 +36,11 @@ const iconNameToSvgIcon = {
     [IconName.EYE_SLASH]: faEyeSlash,
     [IconName.SEARCH]: faMagnifyingGlass,
     [IconName.ARROW_DOWN]: faArrowDownLong,
+    [IconName.ARROW_LEFT]: faArrowCircleLeft,
     [IconName.ARROW_UP]: faArrowUpLong,
     [IconName.CLOSE_CROSS]: faClose,
     [IconName.ARROW_RIGHT]: faArrowCircleRight,
+    [IconName.SAVE]: faSave,
     [IconName.QUESTION_CIRCLE]: faCircleQuestion,
     [IconName.CHECK_CIRCLE]: faCircleCheck,
 };

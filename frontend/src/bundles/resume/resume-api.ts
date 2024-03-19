@@ -55,7 +55,7 @@ class ResumeApi extends HttpApi {
         resumeId: string,
     ): Promise<ResumeWithRelationsAndTemplateResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(`${ResumesApiPath.ROOT}/${resumeId}`, {}),
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}${resumeId}`, {}),
             {
                 method: 'PUT',
                 contentType: ContentType.JSON,
@@ -71,7 +71,7 @@ class ResumeApi extends HttpApi {
         templateId: string,
     ): Promise<ResumeGetAllResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(`${ResumesApiPath.ROOT}/${templateId}`, {}),
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}${templateId}`, {}),
             {
                 method: 'POST',
                 contentType: ContentType.JSON,
@@ -86,7 +86,7 @@ class ResumeApi extends HttpApi {
         resumeId: string,
     ): Promise<ResumeGetAllResponseDto[]> {
         const response = await this.load(
-            this.getFullEndpoint(`${ResumesApiPath.ROOT}/${resumeId}`, {}),
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}${resumeId}`, {}),
             {
                 method: 'DELETE',
                 contentType: ContentType.JSON,
