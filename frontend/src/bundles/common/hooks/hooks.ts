@@ -6,6 +6,7 @@ export { useLoadTemplates } from './use-load-templates/use-load-templates.hook.j
 export { useModal } from './use-modal/use-modal';
 export { useRedirect } from './use-redirect/use-redirect';
 export { useResumes } from './use-resumes/use-resumes.hook.js';
+export { useSearch } from './use-search/use-search.hook.js';
 export { useTemplateSensors } from './use-template-sensors/use-template-sensors.hook';
 export {
     useCallback,
