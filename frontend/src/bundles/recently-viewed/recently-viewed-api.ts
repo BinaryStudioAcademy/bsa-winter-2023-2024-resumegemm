@@ -21,11 +21,11 @@ class RecentlyViewedApi extends HttpApi {
     public async getRecentlyViewedTemplates(
         limit = TEMPLATES_LIMIT,
     ): Promise<RecentlyViewedTemplatesResponseDto[]> {
-        const query = `?limit=${limit}`;
+        const query = `limit=${limit}`;
         const response = await this.load(
             this.getFullEndpoint(
-                RecentlyViewedApiPath.RECENTLY_VIEWED_TEMPLATES,
-                { query },
+                `${RecentlyViewedApiPath.RECENTLY_VIEWED_TEMPLATES}?${query}`,
+                {},
             ),
             {
                 method: 'GET',
