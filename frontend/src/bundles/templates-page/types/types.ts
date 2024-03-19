@@ -1,4 +1,4 @@
-export { TemplateBlockTitles } from 'shared/build/bundles/templates/enums/enums.js';
+export { type getAllTemplatesQuery } from './get-all-templates-query.type.js';
 export {
     type CSSProperties,
     type LayoutBlock,
@@ -10,4 +10,5 @@ export {
     type TemplateSettings,
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
+    TemplateBlockTitles,
 } from 'shared/build/bundles/templates/templates.js';
