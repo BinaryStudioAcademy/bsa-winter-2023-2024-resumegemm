@@ -78,8 +78,12 @@ const TemplateEditor = forwardRef<HTMLDivElement, Properties>(
                     collisionDetection={closestCorners}
                     sensors={sensors}
                 >
-                    <div className={styles.template_editor}>
-                        <div style={templateSettings.styles} ref={reference}>
+                    <div>
+                        <div
+                            style={templateSettings.styles}
+                            className={styles.template_editor}
+                            ref={reference}
+                        >
                             {templateSettings.containers.map((container) => (
                                 <TemplateContainer
                                     key={container.id}
