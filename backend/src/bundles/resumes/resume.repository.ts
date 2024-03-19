@@ -1,5 +1,7 @@
 import { Guid as guid } from 'guid-typescript';
 
+import { type FindAllOptions } from '~/common/types/types.js';
+
 import {
     resumeGraphFetchRelations,
     resumeGraphFetchWithTemplates,
@@ -24,6 +26,8 @@ import {
     type ResumeUpdateItemRequestDto,
     type ResumeWithRelationsAndTemplateResponseDto,
 } from './types/types.js';
+
+const SORTING_FIELD = 'resume_title';
 
 interface ResumeRepositoryConfiguration {
     resumeModel: typeof ResumeModel;
@@ -79,9 +83,24 @@ class ResumeRepository implements IResumeRepository {
         return resume ?? null;
     }
 
-    public async findAll(): Promise<ResumeGetAllResponseDto[]> {
-        return this.resumeModel
-            .query()
+    public async findAll(
+        options?: FindAllOptions,
+    ): Promise<ResumeGetAllResponseDto[]> {
+        let query = this.resumeModel.query();
+
+        if (options?.direction) {
+            query = query.orderBy(SORTING_FIELD, options.direction);
+        }
+
+        if (options?.name) {
+            const nameLower = options.name.toLowerCase();
+
+            query = query.whereRaw('LOWER(resume_title) LIKE ?', [
+                `%${nameLower}%`,
+            ]);
+        }
+
+        return await query
             .withGraphFetched(resumeGraphFetchRelations)
             .returning('*')
             .castTo<ResumeGetAllResponseDto[]>();
@@ -90,7 +109,7 @@ class ResumeRepository implements IResumeRepository {
     public async findAllByUserId(
         userId: string,
     ): Promise<ResumeGetAllResponseDto[]> {
-        return this.resumeModel
+        return await this.resumeModel
             .query()
             .where('user_id', userId)
             .withGraphFetched(resumeGraphFetchRelations)
