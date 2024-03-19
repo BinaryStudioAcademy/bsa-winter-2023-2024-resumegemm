@@ -33,7 +33,6 @@ const CreateResume: React.FC = () => {
 
     return (
         <div className={styles.create__resume__wrapper}>
-            <Header />
             <div className={styles.create__resume}>
                 {templateSettings && (
                     <>
