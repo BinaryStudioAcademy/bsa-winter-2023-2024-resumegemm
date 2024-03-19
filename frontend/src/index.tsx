@@ -9,6 +9,7 @@ import {
     App,
     ErrorFallback,
     GuestRoute,
+    HeaderWrapper,
     PrivateRoute,
     RouterProvider,
     StoreProvider,
@@ -51,89 +52,95 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             children: [
                                 {
                                     path: AppRoute.ROOT,
-                                    element: <GuestRoute />,
+                                    element: <HeaderWrapper />,
                                     children: [
                                         {
                                             path: AppRoute.ROOT,
-                                            element: <LandingPage />,
+                                            element: <GuestRoute />,
+                                            children: [
+                                                {
+                                                    path: AppRoute.LOG_IN,
+                                                    element: <Auth />,
+                                                },
+                                                {
+                                                    path: AppRoute.ROOT,
+                                                    element: <LandingPage />,
+                                                },
+                                                {
+                                                    path: AppRoute.SIGN_UP,
+                                                    element: <Auth />,
+                                                },
+                                                {
+                                                    path: AppRoute.FORGOT_PASSWORD,
+                                                    element: <Auth />,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            path: AppRoute.ROOT,
+                                            element: <PrivateRoute />,
+                                            children: [
+                                                {
+                                                    path: AppRoute.QA,
+                                                    element: (
+                                                        <QuestionAndAnswerPage />
+                                                    ),
+                                                },
+                                                {
+                                                    path: AppRoute.PROFILE,
+                                                    element: <Profile />,
+                                                },
+                                                {
+                                                    path: AppRoute.RESUME,
+                                                    element: <ResumePage />,
+                                                },
+                                                {
+                                                    path: `${AppRoute.RESUME_EDIT}/:id`,
+                                                    element: <EditResume />,
+                                                },
+                                                {
+                                                    path: AppRoute.RESUME_CREATE,
+                                                    element: <CreateResume />,
+                                                },
+                                                {
+                                                    path: AppRoute.HOME,
+                                                    element: <MainPage />,
+                                                },
+                                                {
+                                                    path: AppRoute.TEMPLATES,
+                                                    element: <TemplatePage />,
+                                                },
+                                                {
+                                                    path: `${AppRoute.TEMPLATE}/:id`,
+                                                    element: (
+                                                        <ViewTemplatePage />
+                                                    ),
+                                                },
+                                                {
+                                                    path: `${AppRoute.TEMPLATE_EDITOR}/:id`,
+                                                    element: (
+                                                        <EditTemplatePage />
+                                                    ),
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            path: AppRoute.PAYMENT,
+                                            element: (
+                                                <StripeProvider>
+                                                    <SubscriptionPaymentPage />
+                                                </StripeProvider>
+                                            ),
+                                        },
+                                        {
+                                            path: AppRoute.PREVIEW,
+                                            element: <PreviewPage />,
+                                        },
+                                        {
+                                            path: AppRoute.RESUME_ACCESS,
+                                            element: <ResumeAccess />,
                                         },
                                     ],
-                                },
-                                {
-                                    path: AppRoute.ROOT,
-                                    element: <GuestRoute />,
-                                    children: [
-                                        {
-                                            path: AppRoute.LOG_IN,
-                                            element: <Auth />,
-                                        },
-                                        {
-                                            path: AppRoute.SIGN_UP,
-                                            element: <Auth />,
-                                        },
-                                        {
-                                            path: AppRoute.FORGOT_PASSWORD,
-                                            element: <Auth />,
-                                        },
-                                    ],
-                                },
-                                {
-                                    path: AppRoute.ROOT,
-                                    element: <PrivateRoute />,
-                                    children: [
-                                        {
-                                            path: AppRoute.QA,
-                                            element: <QuestionAndAnswerPage />,
-                                        },
-                                        {
-                                            path: AppRoute.PROFILE,
-                                            element: <Profile />,
-                                        },
-                                        {
-                                            path: AppRoute.RESUME,
-                                            element: <ResumePage />,
-                                        },
-                                        {
-                                            path: `${AppRoute.RESUME_EDIT}/:id`,
-                                            element: <EditResume />,
-                                        },
-                                        {
-                                            path: AppRoute.RESUME_CREATE,
-                                            element: <CreateResume />,
-                                        },
-                                        {
-                                            path: AppRoute.HOME,
-                                            element: <MainPage />,
-                                        },
-                                        {
-                                            path: AppRoute.TEMPLATES,
-                                            element: <TemplatePage />,
-                                        },
-                                        {
-                                            path: `${AppRoute.TEMPLATE}/:id`,
-                                            element: <ViewTemplatePage />,
-                                        },
-                                        {
-                                            path: `${AppRoute.TEMPLATE_EDITOR}/:id`,
-                                            element: <EditTemplatePage />,
-                                        },
-                                    ],
-                                },
-                                {
-                                    path: AppRoute.PAYMENT,
-                                    element: (
-                                        <StripeProvider>
-                                            <SubscriptionPaymentPage />
-                                        </StripeProvider>
-                                    ),
-                                },
-                                {
-                                    path: AppRoute.PREVIEW,
-                                    element: <PreviewPage />,
-                                },
-                                {
-                                    path: AppRoute.RESUME_ACCESS,
-                                    element: <ResumeAccess />,
                                 },
                             ],
                         },
