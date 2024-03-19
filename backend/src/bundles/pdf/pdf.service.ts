@@ -11,7 +11,7 @@ class PDFService implements TPDFService {
     public async generatePDF(html: string): Promise<Buffer> {
         const page = await this.browser.newPage();
         await page.setContent(html, {
-            waitUntil: 'domcontentloaded',
+            waitUntil: 'networkidle0',
         });
         const pdf = await page.pdf({
             format: 'A4',
