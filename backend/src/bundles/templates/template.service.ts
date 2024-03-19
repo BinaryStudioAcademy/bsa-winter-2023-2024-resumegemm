@@ -17,6 +17,7 @@ import { type FileService } from '~/common/files/file.service.js';
 import { prettifiedTemplate } from './constants/prettified-template.js';
 import { type Template } from './types/template.type';
 import {
+    type FindAllOptions,
     type ITemplateRepository,
     type ITemplateService,
 } from './types/types.js';
@@ -55,10 +56,10 @@ class TemplateService implements ITemplateService {
         }
     }
 
-    public async findAll(): Promise<{
+    public async findAll(options?: FindAllOptions): Promise<{
         items: TemplateGetAllItemResponseDto[];
     }> {
-        const templates = await this.templateRepository.findAll();
+        const templates = await this.templateRepository.findAll(options);
 
         const templatesWithImageUrl = await Promise.all(
             templates.items.map((template) => {
