@@ -6,7 +6,6 @@ import { IconInput } from '~/bundles/common/components/icon-input/icon-input';
 import { SortButton } from '~/bundles/common/components/sort-button/sort-button';
 import { IconName, IconSize } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks';
-import { loadAllTemplates } from '~/bundles/templates-page/store/actions';
 
 import { Filter } from '../components';
 import styles from './styles.module.scss';
@@ -16,6 +15,7 @@ type Properties = {
     name: string;
     hasIconInput?: boolean;
     className?: string;
+    onSort: (sortMethod: SortDirection) => void;
 };
 
 const PanelContainer: React.FC<Properties> = ({
@@ -23,18 +23,15 @@ const PanelContainer: React.FC<Properties> = ({
     name,
     hasIconInput = true,
     className,
+    onSort,
 }: Properties) => {
     const dispatch = useAppDispatch();
 
     const sortHandle = useCallback(
         (sortMethod: SortDirection): void => {
-            if (sortMethod === null) {
-                void dispatch(loadAllTemplates());
-            } else {
-                void dispatch(loadAllTemplates({ direction: sortMethod }));
-            }
+            onSort(sortMethod);
         },
-        [dispatch],
+        [dispatch, onSort],
     );
 
     return (
