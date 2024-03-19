@@ -3,6 +3,7 @@ import React, {
     type ChangeEvent,
     useCallback,
     useEffect,
+    useRef,
     useState,
 } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -18,9 +19,11 @@ import {
     ButtonSize,
     ButtonType,
     ButtonVariant,
+    ContentType,
     IconName,
 } from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
+import { useTakeScreenShot } from '../common/hooks/use-take-screenshot/use-take-screenshot.hook';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
 import {
     type TemplateSettings,
@@ -38,6 +41,8 @@ import { actions as editTemplateActions } from './store/slice';
 import templateStyles from './styles.module.scss';
 
 const EditTemplatePage: React.FC = () => {
+    const { takeScreenshot } = useTakeScreenShot();
+
     const dispatch = useAppDispatch();
     const template = useAppSelector((state) => state.editTemplate.template);
     const navigate = useNavigate();
@@ -47,6 +52,7 @@ const EditTemplatePage: React.FC = () => {
         containers: [],
         styles: {},
     });
+    const templateEditorReference = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!parameters.id) {
@@ -91,15 +97,26 @@ const EditTemplatePage: React.FC = () => {
         [dispatch],
     );
 
-    const handleSaveTemplate = useCallback(() => {
-        void dispatch(editTemplate(templateSettings))
-            .unwrap()
-            .then((data) => {
-                if (data) {
-                    showToast('Changes saved.', ToastType.SUCCESS);
+    const handleSaveTemplate = useCallback((): void => {
+        takeScreenshot({
+            ref: templateEditorReference,
+            convertOptions: { quality: 1, type: ContentType.IMAGE_JPEG },
+        })
+            .then((screenshot) => {
+                if (screenshot) {
+                    void dispatch(
+                        editTemplate({ templateSettings, image: screenshot }),
+                    )
+                        .unwrap()
+                        .then((data) => {
+                            if (data) {
+                                showToast('Changes saved.', ToastType.SUCCESS);
+                            }
+                        });
                 }
-            });
-    }, [dispatch, templateSettings]);
+            })
+            .catch((error) => showToast(error, ToastType.ERROR));
+    }, [dispatch, takeScreenshot, templateSettings]);
 
     const handleReturn = useCallback(() => {
         navigate(AppRoute.TEMPLATES);
@@ -168,6 +185,7 @@ const EditTemplatePage: React.FC = () => {
                 </div>
             </nav>
             <TemplateEditor
+                ref={templateEditorReference}
                 templateSettings={templateSettings}
                 setTemplateSettings={setTemplateSettings}
             />

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { forwardRef } from 'react';
+import { type ReactNode, forwardRef } from 'react';
 import { type FieldError } from 'react-hook-form';
 
 import {
@@ -18,6 +18,7 @@ type PasswordInputProperties = {
     placeholder?: string;
     error: FieldError | undefined;
     className?: string;
+    hint?: ReactNode;
 };
 
 const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProperties>(
@@ -27,6 +28,7 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProperties>(
             placeholder = 'Password',
             error,
             className,
+            hint,
             ...otherProperties
         },
         reference,
@@ -43,6 +45,7 @@ const PasswordInput = forwardRef<HTMLDivElement, PasswordInputProperties>(
                     className={styles.password_form}
                     label={label}
                     error={error}
+                    hint={hint}
                     width="100%"
                 >
                     <Input

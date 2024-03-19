@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type AuthException } from 'shared/build';
 import {
+    type AuthException,
     type UserResetPasswordRequestDto,
     type UserVerifyResetPasswordTokenRequestDto,
     type UserVerifyResetPasswordTokenResponse,
-} from 'shared/build/index.js';
+} from 'shared/build';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {

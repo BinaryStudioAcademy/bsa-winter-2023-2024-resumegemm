@@ -8,7 +8,7 @@ import {
     S3Client,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { type IConfig } from 'shared/build';
+import { type IConfig, ContentEncoding } from 'shared/build/index.js';
 
 import { type EnvironmentSchema } from '../config/types/environment-schema.type.js';
 import { type IFileUploadClient } from './interfaces/interfaces.js';
@@ -55,23 +55,39 @@ class FileUploadClient implements IFileUploadClient {
     public async upload({
         buffer,
         contentType,
+        contentEncoding,
+        key,
     }: FileUploadRequestDto): Promise<FileUploadResponseDto> {
         const { AWS } = this.config.ENV;
 
-        const key = this.generateFileKey();
+        const fileKey = key ?? this.generateFileKey();
+
+        let body = buffer;
+
+        if (contentEncoding === ContentEncoding.BASE64) {
+            const regexSearchValue = /^data:image\/\w+;base64,/;
+
+            const parsedBase64 = (buffer as string).replace(
+                regexSearchValue,
+                '',
+            );
+
+            body = Buffer.from(parsedBase64, ContentEncoding.BASE64);
+        }
 
         const putObjectCommand = new PutObjectCommand({
             Bucket: AWS.BUCKET_NAME,
-            Key: key,
-            Body: buffer,
+            Key: fileKey,
+            Body: body,
             ContentType: contentType,
+            ContentEncoding: contentEncoding,
         });
 
         await this.s3Client.send(putObjectCommand);
 
-        const url = await this.getFileUrl(key);
+        const url = await this.getFileUrl(fileKey);
 
-        return { key, url };
+        return { key: fileKey, url };
     }
 
     public async delete(key: string): Promise<DeleteObjectCommandOutput> {
