@@ -25,13 +25,13 @@ const StatisticsPage = (): JSX.Element => {
 
     const [statisticsIds, setStatisticsIds] = useState<string[]>([]);
 
-    const statisticsRecords = useAppSelector(
-        ({ statistics }) => statistics.statisticsRecords,
+    const { statisticsRecords, resumes, views } = useAppSelector(
+        ({ statistics, resumeAccess }) => ({
+            statisticsRecords: statistics.statisticsRecords,
+            resumes: resumeAccess.resumes,
+            views: statistics.views,
+        }),
     );
-
-    const resumes = useAppSelector(({ resumeAccess }) => resumeAccess.resumes);
-
-    const views = useAppSelector(({ statistics }) => statistics.views);
 
     const handleDropdownChange = useCallback((value: string | undefined) => {
         if (!value) {

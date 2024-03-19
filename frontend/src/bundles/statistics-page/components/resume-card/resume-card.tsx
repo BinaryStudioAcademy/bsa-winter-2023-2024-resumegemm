@@ -5,14 +5,14 @@ import { Checkbox } from '~/bundles/common/components/components';
 
 import styles from './styles.module.scss';
 
-type Properties = {
+type StatisticResumeCardPayload = {
     src: string;
     label: string;
     className?: string;
     onCheck: () => void;
 };
 
-const StatisticResumeCard: React.FC<Properties> = ({
+const StatisticResumeCard: React.FC<StatisticResumeCardPayload> = ({
     src,
     label,
     className = '',

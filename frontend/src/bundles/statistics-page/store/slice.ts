@@ -20,7 +20,7 @@ const { reducer, actions, name } = createSlice({
     extraReducers(builder) {
         builder.addCase(getStatistics.fulfilled, (state, action) => {
             state.statisticsRecords = action.payload.data;
-            state.views = action.payload.sum;
+            state.views = action.payload.viewsOverPeriod;
         });
     },
 });
