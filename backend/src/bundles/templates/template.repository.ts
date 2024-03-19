@@ -6,7 +6,7 @@ import {
     type TemplateUpdateItemRequestDto,
     HttpCode,
     HTTPError,
-} from 'shared/build';
+} from 'shared/build/index.js';
 
 import { type TemplateModel } from './template.model';
 import { type Template } from './types/template.type';
@@ -28,7 +28,7 @@ class TemplateRepository implements ITemplateRepository {
     ): Promise<TemplateGetAllResponseDto> {
         let query = this.templateModel.query();
 
-        if (options && options.sortBy) {
+        if (options?.sortBy) {
             const [field, order] = options.sortBy.split(':');
             if (
                 field &&
@@ -47,8 +47,9 @@ class TemplateRepository implements ITemplateRepository {
             }
         }
 
-        if (options && options.name) {
-            query = query.where('name', 'like', `%${options.name}%`);
+        if (options?.name) {
+            const nameLower = options.name.toLowerCase();
+            query = query.whereRaw('LOWER(name) LIKE ?', [`%${nameLower}%`]);
         }
 
         const response = await query;
