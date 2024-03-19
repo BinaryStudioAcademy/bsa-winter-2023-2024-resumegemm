@@ -5,7 +5,7 @@ import {
     DatabaseTableName,
 } from '~/common/database/database.js';
 
-import { UserModel } from '../users/user.model';
+import { UserModel } from '../users/user.model.js';
 
 class PaymentMethodModel extends AbstractModel {
     public 'userId': string;
@@ -22,7 +22,7 @@ class PaymentMethodModel extends AbstractModel {
 
     public static getRelationMappings(): RelationMappings {
         return {
-            users: {
+            user: {
                 relation: Model.HasOneRelation,
                 modelClass: UserModel,
                 join: {
