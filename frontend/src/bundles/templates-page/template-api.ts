@@ -5,6 +5,7 @@ import { type IStorage } from '~/framework/storage/storage.js';
 
 import { TemplatesApiPath } from './enums/enums';
 import {
+    type getAllTemplatesQuery,
     type TemplateDto,
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
@@ -70,9 +71,14 @@ class TemplateApi extends HttpApi {
         return await response.json();
     }
 
-    public async getAll(): Promise<TemplateGetAllResponseDto> {
+    public async getAll(
+        options: getAllTemplatesQuery,
+    ): Promise<TemplateGetAllResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(TemplatesApiPath.ROOT, {}),
+            this.getFullEndpoint(
+                `${TemplatesApiPath.ROOT}?direction=${options.direction}`,
+                {},
+            ),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
