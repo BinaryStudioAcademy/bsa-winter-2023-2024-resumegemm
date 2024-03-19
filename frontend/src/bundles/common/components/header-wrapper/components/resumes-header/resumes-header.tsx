@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { renderToString } from 'react-dom/server';
 
-import shareIcon from '~/assets/img/share-icon.svg';
+import ShareIcon from '~/assets/img/share-icon.svg?react';
 import { ButtonVariant } from '~/bundles/common/enums/enums';
 import { useResumes } from '~/bundles/common/hooks/hooks';
 import { ResumeAiReview } from '~/bundles/resume/components/components';
@@ -35,10 +35,7 @@ const ResumesHeader: React.FC = () => {
                     onClick={createResumeAccessLink}
                     variant={ButtonVariant.GHOST}
                 >
-                    <div
-                        className={styles.share__icon}
-                        style={{ maskImage: `url(${shareIcon})` }}
-                    ></div>
+                    <ShareIcon className={styles.share__icon} />
                 </RegularButton>
                 <ResumeAiReview
                     resumeReview={resumeReview}
