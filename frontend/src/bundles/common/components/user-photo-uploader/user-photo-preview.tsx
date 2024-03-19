@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import { ButtonSize, ButtonVariant } from '../../enums/enums';
 import { useCallback } from '../../hooks/hooks';
 import { RegularButton } from '../components';
@@ -34,9 +36,9 @@ const UserPhotoPreview: React.FC<UserPhotoProperties> = ({
             <div className={styles.uploader_preview__buttonThumb}>
                 <RegularButton
                     size={ButtonSize.SMALL}
-                    variant={ButtonVariant.GHOST}
+                    variant={ButtonVariant.PRIMARY}
                     onClick={handleEditClick}
-                    className={styles.uploader_preview__button}
+                    className={styles.uploader_preview__button_edit}
                 >
                     Edit
                 </RegularButton>
@@ -44,7 +46,10 @@ const UserPhotoPreview: React.FC<UserPhotoProperties> = ({
                     size={ButtonSize.SMALL}
                     variant={ButtonVariant.GHOST}
                     onClick={handleDeleteClick}
-                    className={styles.uploader_preview__button}
+                    className={clsx(
+                        styles.uploader_preview__button_edit,
+                        styles.uploader_preview__button,
+                    )}
                 >
                     Delete
                 </RegularButton>
