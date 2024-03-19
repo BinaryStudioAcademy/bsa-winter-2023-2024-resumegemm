@@ -126,14 +126,6 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                             ],
                                         },
                                         {
-                                            path: AppRoute.PAYMENT,
-                                            element: (
-                                                <StripeProvider>
-                                                    <SubscriptionPaymentPage />
-                                                </StripeProvider>
-                                            ),
-                                        },
-                                        {
                                             path: AppRoute.PREVIEW,
                                             element: <PreviewPage />,
                                         },

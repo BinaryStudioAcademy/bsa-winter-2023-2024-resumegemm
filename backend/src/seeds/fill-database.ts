@@ -222,12 +222,6 @@ async function seed(knex: Knex): Promise<void> {
             .insert(mapResumeContent(languageSeed))
             .returning('*');
 
-        // LANGUAGE
-
-        await trx<Language>(DatabaseTableName.LANGUAGES)
-            .insert(mapResumeContent(languageSeed))
-            .returning('*');
-
         // USER_TEMPLATES junction table
 
         const userTemplatesSeed = Array.from({ length: NUMBER_OF_ROWS }).map(
