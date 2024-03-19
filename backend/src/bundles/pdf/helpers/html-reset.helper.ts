@@ -10,7 +10,7 @@ const wrapHtml = (html: string): string => `
     <html lang="en">
 
     <body>
-        <div style="width: 500px; min-height: calc(500px * 1.414); transform: scale(calc(793 / 500)); transform-origin: top left;">
+        <div class="reset">
     ${html}
         </div>
     </body>

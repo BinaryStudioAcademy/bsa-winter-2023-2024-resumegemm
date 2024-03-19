@@ -13,14 +13,12 @@ const ResumeEditor: React.FC<ResumeEditorPayload> = ({
     templateSettings,
     reference,
 }) => (
-    <div
-        ref={reference}
-        style={templateSettings.styles}
-        className={styles.resume__editor__wrapper}
-    >
-        {templateSettings.containers.map((container) => (
-            <ResumeEditorContainer key={container.id} {...container} />
-        ))}
+    <div className={styles.resume__editor__wrapper}>
+        <div ref={reference} style={templateSettings.styles}>
+            {templateSettings.containers.map((container) => (
+                <ResumeEditorContainer key={container.id} {...container} />
+            ))}
+        </div>
     </div>
 );
 

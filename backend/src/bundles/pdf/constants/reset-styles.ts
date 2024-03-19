@@ -72,6 +72,13 @@ const resetStyles = `
   input::-ms-clear {
       display: none;
   }
+
+  .reset {
+    width: 500px; 
+    min-height: calc(500px * 1.414); 
+    transform: scale(calc(793 / 500)); 
+    transform-origin: top left;
+  }
   
     </style>
 
