@@ -2,7 +2,7 @@ import { type StatisticsRecord } from './statistics-record.dto';
 
 type StatisticsResponseDto = {
     data: StatisticsRecord[];
-    sum: number;
+    viewsOverPeriod: number;
 };
 
 export { type StatisticsResponseDto };

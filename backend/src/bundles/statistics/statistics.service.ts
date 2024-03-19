@@ -16,6 +16,7 @@ import {
 } from 'shared/build/index.js';
 
 import { type ResumeShareService } from '../resume-share/resume-share.service.js';
+import { calculateVotesSum } from './helpers/calculate-votes-sum.js';
 import {
     type GetStatisticsResponseDto,
     type ResumeShareDetailsGetResponseDto,
@@ -53,10 +54,7 @@ class StatisticsService {
 
         return {
             data: statistics,
-            sum: statistics.reduce(
-                (accumulator, currentValue) => accumulator + currentValue[1],
-                0,
-            ),
+            viewsOverPeriod: calculateVotesSum(statistics),
         };
     }
 
@@ -99,10 +97,7 @@ class StatisticsService {
 
         return {
             data: statistics,
-            sum: statistics.reduce(
-                (accumulator, currentValue) => accumulator + currentValue[1],
-                0,
-            ),
+            viewsOverPeriod: calculateVotesSum(statistics),
         };
     }
 
@@ -143,10 +138,7 @@ class StatisticsService {
 
         return {
             data: statistics,
-            sum: statistics.reduce(
-                (accumulator, currentValue) => accumulator + currentValue[1],
-                0,
-            ),
+            viewsOverPeriod: calculateVotesSum(statistics),
         };
     }
 
