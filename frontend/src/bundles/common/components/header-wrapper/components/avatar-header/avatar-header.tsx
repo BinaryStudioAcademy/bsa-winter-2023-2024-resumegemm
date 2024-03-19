@@ -6,6 +6,7 @@ import {
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { getUserAvatar } from '~/bundles/common/helpers/get-user-avatar';
 import { useAppSelector } from '~/bundles/common/hooks/hooks';
+import { SubscriptionStatus } from '~/bundles/main-page/components/subscription-status/subscription-status';
 
 const navbarItems = [
     { label: 'Home', path: AppRoute.HOME },
@@ -18,6 +19,7 @@ const AvatarHeader: React.FC = () => {
     return (
         <Header>
             <NavTabs items={navbarItems} />
+            <SubscriptionStatus />
             <UserProfile image={getUserAvatar(user)} />
         </Header>
     );
