@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 
-import { type Transaction } from 'objection';
+import { type OrderByDirection, type Transaction } from 'objection';
 import {
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
@@ -9,6 +9,7 @@ import {
 import { type TemplateModel } from './template.model';
 import { type Template } from './types/template.type';
 import { type ITemplateRepository } from './types/template-repository.type';
+import { type FindAllOptions } from './types/types';
 
 class TemplateRepository implements ITemplateRepository {
     private templateModel: typeof TemplateModel;
@@ -20,8 +21,33 @@ class TemplateRepository implements ITemplateRepository {
         return await this.templateModel.query().findById(id);
     }
 
-    public async findAll(): Promise<TemplateGetAllResponseDto> {
-        const response = await this.templateModel.query();
+    public async findAll(
+        options?: FindAllOptions,
+    ): Promise<TemplateGetAllResponseDto> {
+        let query = this.templateModel.query();
+
+        if (options && options.sortBy) {
+            const [field, order] = options.sortBy.split(':');
+            if (
+                field &&
+                order &&
+                ['asc', 'desc'].includes(order.toLowerCase())
+            ) {
+                query = query.orderBy(
+                    field,
+                    order.toLowerCase() as OrderByDirection,
+                );
+            } else {
+                throw new Error('Invalid sorting criteria. Use field:order');
+            }
+        }
+
+        if (options && options.filterByName) {
+            query = query.where('name', 'like', `%${options.filterByName}%`);
+        }
+
+        const response = await query;
+
         return {
             items: response,
         };
