@@ -6,7 +6,6 @@ import {
     type IStorage,
     type ResumeAiScoreRequestDto,
     type ResumeAiScoreResponseDto,
-    // type ResumeGetAllRequestDto,
     type ResumeGetAllResponseDto,
     type ResumeViewsCountResponseDto,
     type ResumeWithRelationsAndTemplateResponseDto,
@@ -113,25 +112,6 @@ class ResumeApi extends HttpApi {
         );
         return await response.json<ResumeAiScoreResponseDto>();
     }
-
-    // public async getAllByUserId(
-    //     request: ResumeGetAllRequestDto,
-    // ): Promise<ResumeGetAllResponseDto> {
-    //     const userIdPath = ResumesApiPath.USER_ID.replace(
-    //         ':userId',
-    //         request.userId,
-    //     );
-    //     const response = await this.load(
-    //         this.getFullEndpoint(`${userIdPath}`, {}),
-    //         {
-    //             method: 'GET',
-    //             contentType: ContentType.JSON,
-    //             hasAuth: true,
-    //         },
-    //     );
-
-    //     return await response.json();
-    // }
 
     public async getViewsCount(): Promise<ResumeViewsCountResponseDto[]> {
         const response = await this.load(
