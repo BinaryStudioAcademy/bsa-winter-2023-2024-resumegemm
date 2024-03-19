@@ -1,6 +1,6 @@
 type FindAllOptions = {
     sortBy?: string;
-    filterByName?: string;
+    name?: string;
 };
 
 export { type FindAllOptions };
