@@ -137,6 +137,7 @@ export {
     ContentType,
     CookieName,
     ExceptionMessage,
+    SearchParameters,
     ServerErrorType,
 } from './enums/enums.js';
 export { type IConfig } from './framework/config/config.js';
@@ -156,6 +157,7 @@ export {
 export { type IStorage } from './framework/storage/storage.js';
 export { configureString } from './helpers/helpers.js';
 export {
+    type FindAllOptions,
     type IdParameter,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
