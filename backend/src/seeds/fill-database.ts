@@ -37,11 +37,9 @@ import {
     languageSeed,
     oauthConnectionSeed,
     oauthUserSeed,
-    personalInformationSeed,
-    profileSeed,
-    resumeSharedAccessSeed,
     personalInformationsSeed,
     profilesSeed,
+    resumeSharedAccessSeed,
     resumesSeed,
     reviewsSeed,
     subscriptionPlan,
@@ -294,6 +292,44 @@ async function seed(knex: Knex): Promise<void> {
 
         await trx<Industry>(DatabaseTableName.INDUSTRIES)
             .insert(industriesSeed)
+            .returning('*');
+
+        // RESUME_SHARE_LINK
+        const resumeSharedLinkSeed = Array.from({ length: NUMBER_OF_ROWS }).map(
+            (_, index) => ({
+                [DatabaseColumnName.ID]: guid.raw(),
+                [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
+            }),
+        );
+
+        const insertedResumeSharedLInk = await trx(
+            DatabaseTableName.RESUME_SHARE_LINK,
+        )
+            .insert(resumeSharedLinkSeed)
+            .returning('*');
+
+        // RESUME_SHARE_ACCESS
+        const resumeSharedAccessMappedSeed = resumeSharedAccessSeed.map(
+            (resumeSharedAccess, index) => ({
+                ...resumeSharedAccess,
+                [DatabaseColumnName.ID]: guid.raw(),
+                [DatabaseColumnName.RESUME_SHARE_LINK_ID]:
+                    insertedResumeSharedLInk[index].id,
+            }),
+        );
+
+        await trx<ResumeSharedAccess>(DatabaseTableName.RESUME_SHARE_ACCESS)
+            .insert(resumeSharedAccessMappedSeed)
+            .returning('*');
+
+        // SUBSCRIPTION_PLANS
+        const subscriptionPlansMappedSeed = subscriptionPlan.map((plan) => ({
+            ...plan,
+            [DatabaseColumnName.ID]: guid.raw(),
+        }));
+
+        await trx<SubscriptionPlan>(DatabaseTableName.SUBSCRIPTION_PLANS)
+            .insert(subscriptionPlansMappedSeed)
             .returning('*');
     });
 }
