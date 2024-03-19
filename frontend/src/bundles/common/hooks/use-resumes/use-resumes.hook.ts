@@ -17,7 +17,6 @@ import {
     type ConvertResumeItemToStringPayload,
     type ResumeAiScoreResponseDto,
     type ResumeGetAllResponseDto,
-    type ResumeViewsCountResponseDto,
     type TemplateDto,
     type TemplateSettings,
 } from '~/bundles/resume/types/types';
@@ -41,7 +40,6 @@ type UseResumesReturnValues = {
     resumeReview: ResumeAiScoreResponseDto | null;
     dataStatus: DataStatus;
     id?: string;
-    resumeViews: ResumeViewsCountResponseDto[];
 };
 
 const getRandomItem = (template: TemplateDto[]): TemplateDto | null => {
@@ -63,7 +61,6 @@ const useResumes = (): UseResumesReturnValues => {
         resumeReview,
         templates,
         isTemplatesLoading,
-        resumeViews,
     } = useAppSelector(({ auth, resumes, templates }) => ({
         userId: auth.user?.id,
         resumes: resumes.resumes,
@@ -73,7 +70,6 @@ const useResumes = (): UseResumesReturnValues => {
         resumeReview: resumes.resumeReview,
         templates: templates.templates,
         isTemplatesLoading: templates.dataStatus,
-        resumeViews: resumes.resumeViews,
     }));
 
     const deleteResume = useCallback(
@@ -171,14 +167,6 @@ const useResumes = (): UseResumesReturnValues => {
         }
     }, [dataStatus, dispatch]);
 
-    useEffect(() => {
-        dispatch(resumeActions.getViewsCountByUserId()).catch(
-            (error: Error) => {
-                showToast(error.message, ToastType.ERROR);
-            },
-        );
-    }, [dispatch]);
-
     return {
         userId,
         resumes,
@@ -191,7 +179,6 @@ const useResumes = (): UseResumesReturnValues => {
         id,
         createResume,
         deleteResume,
-        resumeViews,
     };
 };
 
