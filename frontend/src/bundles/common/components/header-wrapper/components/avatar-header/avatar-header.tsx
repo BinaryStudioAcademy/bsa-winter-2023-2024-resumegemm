@@ -8,6 +8,8 @@ import { getUserAvatar } from '~/bundles/common/helpers/get-user-avatar';
 import { useAppSelector } from '~/bundles/common/hooks/hooks';
 import { SubscriptionStatus } from '~/bundles/main-page/components/subscription-status/subscription-status';
 
+import styles from './styles.module.scss';
+
 const navbarItems = [
     { label: 'Home', path: AppRoute.HOME },
     { label: 'Templates', path: AppRoute.TEMPLATES },
@@ -19,8 +21,10 @@ const AvatarHeader: React.FC = () => {
     return (
         <Header>
             <NavTabs items={navbarItems} />
-            <SubscriptionStatus />
-            <UserProfile image={getUserAvatar(user)} />
+            <div className={styles.avatar_wrapper}>
+                <SubscriptionStatus />
+                <UserProfile image={getUserAvatar(user)} />
+            </div>
         </Header>
     );
 };
