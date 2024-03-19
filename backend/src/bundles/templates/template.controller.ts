@@ -54,10 +54,7 @@ class TemplateController extends Controller {
             handler: (options) =>
                 this.findAll(
                     options as ApiHandlerOptions<{
-                        query: {
-                            sortBy?: string;
-                            filterByName?: string;
-                        };
+                        query: FindAllOptions;
                     }>,
                 ),
         });
