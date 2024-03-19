@@ -121,19 +121,14 @@ class TemplateController extends Controller {
                 payload: templates,
             };
         } catch (error: unknown) {
-            return error instanceof HTTPError
-                ? {
-                      status: error.status,
-                      payload: {
-                          message: error.message,
-                      },
-                  }
-                : {
-                      status: HttpCode.INTERNAL_SERVER_ERROR,
-                      payload: {
-                          message: 'Server error.',
-                      },
-                  };
+            const { message, status } = error as HTTPError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
         }
     }
 
