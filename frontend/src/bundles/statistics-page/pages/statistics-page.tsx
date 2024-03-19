@@ -1,16 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { type ResumeWithShare } from 'shared/build/bundles/resumes/types/resume-with-share.type';
 
-import {
-    ColumnChart,
-    Dropdown,
-    Footer,
-    Header,
-    NavTabs,
-} from '~/bundles/common/components/components';
-import { UserProfile } from '~/bundles/common/components/layout/header/user-profile/user-profile';
-import { AppRoute } from '~/bundles/common/enums/app-route.enum';
-import { getUserAvatar } from '~/bundles/common/helpers/get-user-avatar';
+import { ColumnChart, Dropdown } from '~/bundles/common/components/components';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 
 import { getUserResumesWithLinks } from '../../resume-access/store/actions';
@@ -19,10 +10,6 @@ import { StatisticsPeriodsLabels } from '../enums/periods.enum';
 import { actions } from '../store/statistics.store';
 import styles from './styles.module.scss';
 
-const headerItems = [
-    { label: 'Home', path: AppRoute.ROOT },
-    { label: 'Templates', path: AppRoute.TEMPLATES },
-];
 const dropdownOptions = [
     StatisticsPeriodsLabels.WEEKLY,
     StatisticsPeriodsLabels.MONTHLY,
@@ -41,8 +28,6 @@ const StatisticsPage = (): JSX.Element => {
     const statisticsRecords = useAppSelector(
         ({ statistics }) => statistics.statisticsRecords,
     );
-
-    const { user } = useAppSelector((state) => state.auth);
 
     const resumes = useAppSelector(({ resumeAccess }) => resumeAccess.resumes);
 
@@ -112,65 +97,54 @@ const StatisticsPage = (): JSX.Element => {
     }, [dispatch]);
 
     return (
-        <>
-            <Header>
-                <NavTabs items={headerItems}></NavTabs>
-                <UserProfile image={getUserAvatar(user)} />
-            </Header>
+        <div className={styles.statistics__container}>
+            <section className={styles.statistics__view_container}>
+                <div className={styles.statistics__title_container}>
+                    <h2>{handleTitle(viewsPeriod)}</h2>
+                    <Dropdown
+                        name="language"
+                        className={styles.statistics__dropdown}
+                        options={dropdownOptions}
+                        placeholder="Select range"
+                        onChange={handleDropdownChange}
+                    />
+                </div>
 
-            <div className={styles.statistics__container}>
-                <section className={styles.statistics__view_container}>
-                    <div className={styles.statistics__title_container}>
-                        <h2>{handleTitle(viewsPeriod)}</h2>
-                        <Dropdown
-                            name="language"
-                            className={styles.statistics__dropdown}
-                            options={dropdownOptions}
-                            placeholder="Select range"
-                            onChange={handleDropdownChange}
-                        />
+                <h2>Statistics</h2>
+
+                {statisticsIds.length === 0 ? (
+                    <div className={styles.statistics__message_container}>
+                        <h1>No resumes selected</h1>
+                    </div>
+                ) : (
+                    <ColumnChart
+                        className={styles.statistics__column_chart}
+                        measure="Views"
+                        data={statisticsRecords}
+                    />
+                )}
+
+                <p>Views: {views}</p>
+            </section>
+
+            <section className={styles.statistics__select_container}>
+                <h1 className={styles.statistics__select_title}>My Resume</h1>
+
+                <hr className={styles.statistics__select_hr} />
+
+                <div className={styles.statistics__select_resume}>
+                    <div
+                        className={styles.statistics__select_reverse_arrow}
+                    ></div>
+
+                    <div className={styles.statistics__resumes_container}>
+                        {mapResumeCards(resumes)}
                     </div>
 
-                    <h2>Statistics</h2>
-
-                    {statisticsIds.length === 0 ? (
-                        <div className={styles.statistics__message_container}>
-                            <h1>No resumes selected</h1>
-                        </div>
-                    ) : (
-                        <ColumnChart
-                            className={styles.statistics__column_chart}
-                            measure="Views"
-                            data={statisticsRecords}
-                        />
-                    )}
-
-                    <p>Views: {views}</p>
-                </section>
-
-                <section className={styles.statistics__select_container}>
-                    <h1 className={styles.statistics__select_title}>
-                        My Resume
-                    </h1>
-
-                    <hr className={styles.statistics__select_hr} />
-
-                    <div className={styles.statistics__select_resume}>
-                        <div
-                            className={styles.statistics__select_reverse_arrow}
-                        ></div>
-
-                        <div className={styles.statistics__resumes_container}>
-                            {mapResumeCards(resumes)}
-                        </div>
-
-                        <div className={styles.statistics__select_arrow}></div>
-                    </div>
-                </section>
-            </div>
-
-            <Footer></Footer>
-        </>
+                    <div className={styles.statistics__select_arrow}></div>
+                </div>
+            </section>
+        </div>
     );
 };
 
