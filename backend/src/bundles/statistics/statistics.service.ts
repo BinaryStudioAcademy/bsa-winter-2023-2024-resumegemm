@@ -18,7 +18,7 @@ import {
     accessesAmountByDate,
     accessesAmountByDateDiapason,
 } from './helpers/accesses-amount-by-date.js';
-import { calculateVotesSum } from './helpers/calculate-votes-sum.js';
+import { calculateViewsSum } from './helpers/calculate-votes-sum.js';
 import {
     type GetStatisticsResponseDto,
     type ResumeShareDetailsGetResponseDto,
@@ -51,7 +51,7 @@ class StatisticsService {
 
         return {
             data: statistics,
-            viewsOverPeriod: calculateVotesSum(statistics),
+            viewsOverPeriod: calculateViewsSum(statistics),
         };
     }
 
@@ -88,7 +88,7 @@ class StatisticsService {
 
         return {
             data: statistics,
-            viewsOverPeriod: calculateVotesSum(statistics),
+            viewsOverPeriod: calculateViewsSum(statistics),
         };
     }
 
@@ -123,7 +123,7 @@ class StatisticsService {
 
         return {
             data: statistics,
-            viewsOverPeriod: calculateVotesSum(statistics),
+            viewsOverPeriod: calculateViewsSum(statistics),
         };
     }
 

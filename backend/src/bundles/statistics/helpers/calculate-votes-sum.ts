@@ -1,6 +1,6 @@
 import { type StatisticsRecord } from 'shared/build';
 
-function calculateVotesSum(records: StatisticsRecord[]): number {
+function calculateViewsSum(records: StatisticsRecord[]): number {
     let sum = 0;
     for (const record of records) {
         sum += record[1];
@@ -8,4 +8,4 @@ function calculateVotesSum(records: StatisticsRecord[]): number {
     return sum;
 }
 
-export { calculateVotesSum };
+export { calculateViewsSum };
