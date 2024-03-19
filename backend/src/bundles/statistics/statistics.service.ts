@@ -3,7 +3,6 @@ import {
     addMonths,
     addWeeks,
     format,
-    isSameDay,
     min,
     subDays,
     subMonths,
@@ -11,11 +10,14 @@ import {
 } from 'date-fns';
 import {
     type StatisticsRecord,
-    compareDateInDiapasonWithoutTime,
     StatisticsPeriods,
 } from 'shared/build/index.js';
 
 import { type ResumeShareService } from '../resume-share/resume-share.service.js';
+import {
+    accessesAmountByDate,
+    accessesAmountByDateDiapason,
+} from './helpers/accesses-amount-by-date.js';
 import { calculateVotesSum } from './helpers/calculate-votes-sum.js';
 import {
     type GetStatisticsResponseDto,
@@ -43,12 +45,7 @@ class StatisticsService {
         for (let day = dateWeekAgo; day <= currentDate; day = addDays(day, 1)) {
             statistics.push([
                 format(day, 'MMM d'),
-                accesses.filter((access) => {
-                    return isSameDay(
-                        new Date(access.resumeShareAccessTime),
-                        day,
-                    );
-                }).length,
+                accessesAmountByDate(accesses, day),
             ]);
         }
 
@@ -85,13 +82,7 @@ class StatisticsService {
 
             statistics.push([
                 stringDate,
-                accesses.filter((access) => {
-                    return compareDateInDiapasonWithoutTime(
-                        new Date(access.resumeShareAccessTime),
-                        day,
-                        dayLimit,
-                    );
-                }).length,
+                accessesAmountByDateDiapason(accesses, day, dayLimit),
             ]);
         }
 
@@ -126,13 +117,7 @@ class StatisticsService {
 
             statistics.push([
                 stringDate,
-                accesses.filter((access) => {
-                    return compareDateInDiapasonWithoutTime(
-                        new Date(access.resumeShareAccessTime),
-                        day,
-                        dayLimit,
-                    );
-                }).length,
+                accessesAmountByDateDiapason(accesses, day, dayLimit),
             ]);
         }
 
