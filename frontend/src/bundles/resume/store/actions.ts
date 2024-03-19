@@ -22,11 +22,11 @@ import { name as sliceName } from './slice.js';
 
 const getAllResumes = createAsyncThunk<
     ResumeGetAllResponseDto[],
-    undefined,
+    URLSearchParams | undefined,
     AsyncThunkConfig
->(`${sliceName}/get-all-resumes`, (_, { extra }) => {
+>(`${sliceName}/get-all-resumes`, (searchParameters, { extra }) => {
     const { resumeApi } = extra;
-    return resumeApi.getAllResumes();
+    return resumeApi.getAllResumes(searchParameters);
 });
 
 const deleteResume = createAsyncThunk<
