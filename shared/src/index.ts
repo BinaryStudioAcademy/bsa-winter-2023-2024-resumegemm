@@ -156,6 +156,7 @@ export {
 export { type IStorage } from './framework/storage/storage.js';
 export { configureString, validateUrl } from './helpers/helpers.js';
 export {
+    type FindAllOptions,
     type IdParameter,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
