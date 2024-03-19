@@ -11,6 +11,7 @@ export {
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
     type ResumeViewsCountResponseDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
     type TechnicalSkill,
     ResumesApiPath,
     SkillLevel,

@@ -81,6 +81,7 @@ export {
     type ResumeShareGetResponseDto,
     type ResumeUpdateItemRequestDto,
     type ResumeViewsCountResponseDto,
+    type ResumeWithRelationsAndTemplateResponseDto,
     type TechnicalSkill,
     LanguageLevels,
     ResumesApiPath,
@@ -133,6 +134,7 @@ export {
 export {
     ApiPath,
     AppEnvironment,
+    ContentEncoding,
     ContentType,
     CookieName,
     ExceptionMessage,
@@ -153,7 +155,7 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type IStorage } from './framework/storage/storage.js';
-export { configureString } from './helpers/helpers.js';
+export { configureString, validateUrl } from './helpers/helpers.js';
 export {
     type IdParameter,
     type ServerCommonErrorResponse,

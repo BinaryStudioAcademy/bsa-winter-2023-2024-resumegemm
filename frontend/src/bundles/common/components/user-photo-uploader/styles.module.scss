@@ -182,21 +182,10 @@
     margin-left: 30px;
 }
 
-.uploader_preview__buttonThumb .uploader_preview__button {
-    display: flex;
-    justify-content: start;
-    width: 100px;
-    color: var(--color-text-gray);
-    font-size: var(--font-size-title-h4);
-    border: none;
+.uploader_preview__button_edit {
+    width: 90px;
 }
 
-.uploader_preview__buttonThumb .uploader_preview__button:hover {
-    color: var(--color-hover-blue);
-    border: none;
-}
-
-.uploader_preview__button:last-child:hover {
+.uploader_preview__button:hover {
     color: var(--color-error-red);
-    border: none;
 }

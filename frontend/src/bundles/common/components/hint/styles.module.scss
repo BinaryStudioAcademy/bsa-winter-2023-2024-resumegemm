@@ -1,0 +1,32 @@
+.hint__container {
+    position: relative;
+    display: flex;
+}
+
+.hint__popup {
+    max-width: 30vw;
+    padding: 10px;
+}
+
+.hint__anchor_container {
+    width: 18px;
+    height: 18px;
+}
+
+.hint__row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.hint__row_icon {
+    width: 14px;
+    height: 14px;
+    filter: invert(50%) sepia(50%);
+}
+
+.hint__row_text {
+    margin-left: 5px;
+}

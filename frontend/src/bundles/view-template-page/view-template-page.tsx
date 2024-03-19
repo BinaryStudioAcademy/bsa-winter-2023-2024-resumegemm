@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Footer, Header, RegularButton } from '../common/components/components';
+import { Footer, RegularButton } from '../common/components/components';
 import { AppRoute, ButtonType, ButtonVariant } from '../common/enums/enums';
 import {
     useAppDispatch,
@@ -40,14 +40,18 @@ const ViewTemplatePage: React.FC = () => {
 
     return (
         <>
-            <Header />
             <section className={styles.template_section}>
                 {template && (
-                    <img
-                        className={styles.template__image}
-                        src={template.image}
-                        alt="Template"
-                    />
+                    <>
+                        <h3 className={styles.template__name}>
+                            {template.name}
+                        </h3>
+                        <img
+                            className={styles.template__image}
+                            src={template.image}
+                            alt="Template"
+                        />
+                    </>
                 )}
             </section>
             <Footer>

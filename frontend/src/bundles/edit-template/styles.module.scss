@@ -2,7 +2,7 @@
     justify-content: space-between;
     width: 100%;
     max-width: 1220px;
-    margin: 0 auto;
+    margin: auto;
     padding: 20px;
 }
 
@@ -13,7 +13,18 @@
     border-radius: 15px;
 }
 
+.output__block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 0 80px;
+}
+
 .output__button {
+    justify-content: space-between;
     width: 100%;
     max-width: 1000px;
     padding: 20px;
@@ -28,5 +39,14 @@
 }
 
 .editor_sidebar__checkbox {
+    color: var(--color-white);
+    cursor: pointer;
+}
+
+.editor_sidebar__name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
     color: var(--color-white);
 }

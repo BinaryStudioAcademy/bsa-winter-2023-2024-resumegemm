@@ -1,5 +1,5 @@
 import { renderToString } from 'react-dom/server';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import shareIcon from '~/assets/img/share-icon.svg';
 import { actions as authActions } from '~/bundles/auth/store/auth.store.js';
@@ -19,10 +19,11 @@ import {
     useAppSelector,
     useCallback,
     useEffect,
+    useResumes,
     useState,
 } from '~/bundles/common/hooks/hooks';
+import { ResumeAiReview } from '~/bundles/resume/components/components';
 import { actions as resumeActions } from '~/bundles/resume/store/index.js';
-import { ResumePreview } from '~/bundles/resume-preview/components/components';
 import { actions as userActions } from '~/bundles/users/store/user.store.js';
 
 import { DownloadResumeLimitModal } from '../components/download-resume-limit-modal/download-resume-limit-modal';
@@ -30,21 +31,28 @@ import { ResumeEditor } from '../components/resume-editor/resume-editor';
 import styles from './styles.module.scss';
 
 const ResumePage: React.FC = () => {
-    const dispatch = useAppDispatch();
+    const {
+        templateSettings,
+        createResumeAccessLink,
+        resumeReview,
+        requestResumeReviewFromAI,
+        dataStatus,
+        id,
+    } = useResumes();
 
-    const { id } = useParams();
+    const dispatch = useAppDispatch();
 
     const [showModal, setShowModal] = useState(false);
     const [isDownloaded, setIsDownloaded] = useState(false);
 
-    const { userId, userStripeId, pdfDownloads, resumes, templateSettings } =
-        useAppSelector(({ auth, resumes }) => ({
+    const { userId, userStripeId, pdfDownloads, resumes } = useAppSelector(
+        ({ auth, resumes }) => ({
             userId: auth.user?.id,
             userStripeId: auth.user?.stripeId,
             pdfDownloads: auth.user?.pdfDownloads,
             resumes: resumes.resumeViews,
-            templateSettings: resumes.templateSettings,
-        }));
+        }),
+    );
 
     const currentResumeViews = resumes.find(
         (resume) => resume.resumeId === id,
@@ -97,7 +105,7 @@ const ResumePage: React.FC = () => {
                 <Header>
                     <div className={styles.resume__actions}>
                         <RegularButton
-                            // onClick={createResumeAccessLink}
+                            onClick={createResumeAccessLink}
                             variant={ButtonVariant.GHOST}
                         >
                             <div
@@ -105,6 +113,14 @@ const ResumePage: React.FC = () => {
                                 style={{ maskImage: `url(${shareIcon})` }}
                             ></div>
                         </RegularButton>
+                        <ResumeAiReview
+                            resumeReview={resumeReview}
+                            dataStatus={dataStatus}
+                            requestResumeReviewFromAI={
+                                requestResumeReviewFromAI
+                            }
+                        />
+
                         <RegularButton
                             onClick={handleDownloadClick}
                             variant={ButtonVariant.PRIMARY}
@@ -122,7 +138,11 @@ const ResumePage: React.FC = () => {
                         </span>
                     </div>
                 </div>
-                <ResumePreview />
+                <div className={styles.resume__page}>
+                    {templateSettings && (
+                        <ResumeEditor templateSettings={templateSettings} />
+                    )}
+                </div>
                 <div className={styles.resume__wrapper_footer}>
                     <NavLink to={`${AppRoute.RESUME_EDIT}/${id}`}>
                         <RegularButton variant={ButtonVariant.DEFAULT}>

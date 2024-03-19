@@ -3,23 +3,36 @@ import React, {
     type ChangeEvent,
     useCallback,
     useEffect,
+    useRef,
     useState,
 } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
     Checkbox,
-    FormGroup,
+    Icon,
     Input,
     RegularButton,
 } from '../common/components/components';
-import { ButtonSize, ButtonType, ButtonVariant } from '../common/enums/enums';
+import {
+    AppRoute,
+    ButtonSize,
+    ButtonType,
+    ButtonVariant,
+    ContentType,
+    IconName,
+} from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
+import { useTakeScreenShot } from '../common/hooks/use-take-screenshot/use-take-screenshot.hook';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
-import styles from '../resume-preview/components/resume-preview/styles.module.scss';
-import { type TemplateSettings } from '../templates-page/types/types';
-import { TemplateBlockTitles } from '../templates-page/types/types';
+import {
+    type TemplateSettings,
+    TemplateBlockTitles,
+} from '../templates-page/types/types';
+import { ToastType } from '../toast/enums/show-toast-types.enum';
+import { showToast } from '../toast/helpers/show-toast';
 import { TemplateEditor } from './components/template-editor/template-editor';
+import { TemplatesMessage } from './enums/enums';
 import {
     changeBlockEnabling,
     isBlockEnabled as isBlockEnabledByName,
@@ -29,30 +42,32 @@ import { actions as editTemplateActions } from './store/slice';
 import templateStyles from './styles.module.scss';
 
 const EditTemplatePage: React.FC = () => {
+    const { takeScreenshot } = useTakeScreenShot();
+
     const dispatch = useAppDispatch();
     const template = useAppSelector((state) => state.editTemplate.template);
+    const navigate = useNavigate();
     const parameters = useParams<{ id: string }>();
 
     const [templateSettings, setTemplateSettings] = useState<TemplateSettings>({
         containers: [],
         styles: {},
     });
+    const templateEditorReference = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!parameters.id) {
             return;
         }
 
-        if (!template.id || template.id !== parameters.id) {
-            void dispatch(getTemplateById(parameters.id))
-                .unwrap()
-                .then((data) => {
-                    if (data) {
-                        setTemplateSettings(data.templateSettings);
-                    }
-                });
-        }
-    }, [parameters.id, template.id, dispatch]);
+        void dispatch(getTemplateById(parameters.id))
+            .unwrap()
+            .then((data) => {
+                if (data) {
+                    setTemplateSettings(data.templateSettings);
+                }
+            });
+    }, [dispatch, parameters.id]);
 
     const isBlockEnabled = useCallback(
         (blockName: string): boolean =>
@@ -83,9 +98,33 @@ const EditTemplatePage: React.FC = () => {
         [dispatch],
     );
 
-    const handleSaveTemplate = useCallback(() => {
-        void dispatch(editTemplate(templateSettings));
-    }, [dispatch, templateSettings]);
+    const handleSaveTemplate = useCallback((): void => {
+        takeScreenshot({
+            ref: templateEditorReference,
+            convertOptions: { quality: 1, type: ContentType.IMAGE_JPEG },
+        })
+            .then((screenshot) => {
+                if (screenshot) {
+                    void dispatch(
+                        editTemplate({ templateSettings, image: screenshot }),
+                    )
+                        .unwrap()
+                        .then((data) => {
+                            if (data) {
+                                showToast(
+                                    TemplatesMessage.TEMPLATE_EDITED,
+                                    ToastType.SUCCESS,
+                                );
+                            }
+                        });
+                }
+            })
+            .catch((error) => showToast(error, ToastType.ERROR));
+    }, [dispatch, takeScreenshot, templateSettings]);
+
+    const handleReturn = useCallback(() => {
+        navigate(AppRoute.TEMPLATES);
+    }, [navigate]);
 
     return (
         <section
@@ -100,13 +139,14 @@ const EditTemplatePage: React.FC = () => {
                     templateStyles.editor_sidebar__nav,
                 )}
             >
-                <FormGroup label="Template name">
+                <div className={templateStyles.editor_sidebar__name}>
+                    <p>Template Name</p>
                     <Input
                         title="Enter template name"
                         onInput={handleInputChange}
+                        value={template.name}
                     />
-                </FormGroup>
-
+                </div>
                 <ul className={editorStyles.editor_sidebar__list}>
                     {templateBlockTitles.map((block) => (
                         <li
@@ -126,7 +166,7 @@ const EditTemplatePage: React.FC = () => {
                         </li>
                     ))}
                 </ul>
-                <div className={styles.editor_output__block}>
+                <div className={templateStyles.output__block}>
                     <RegularButton
                         type={ButtonType.SUBMIT}
                         size={ButtonSize.MEDIUM}
@@ -134,11 +174,22 @@ const EditTemplatePage: React.FC = () => {
                         onClick={handleSaveTemplate}
                         className={clsx(templateStyles.output__button)}
                     >
-                        Save Template
+                        <Icon name={IconName.SAVE}></Icon>Save Template
+                    </RegularButton>
+                    <RegularButton
+                        type={ButtonType.RESET}
+                        size={ButtonSize.MEDIUM}
+                        variant={ButtonVariant.DEFAULT}
+                        onClick={handleReturn}
+                        className={clsx(templateStyles.output__button)}
+                    >
+                        <Icon name={IconName.ARROW_LEFT}></Icon>Back to
+                        Templates
                     </RegularButton>
                 </div>
             </nav>
             <TemplateEditor
+                ref={templateEditorReference}
                 templateSettings={templateSettings}
                 setTemplateSettings={setTemplateSettings}
             />

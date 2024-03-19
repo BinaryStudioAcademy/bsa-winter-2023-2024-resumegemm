@@ -20,11 +20,9 @@ const ResumeList: React.FC = () => {
 
     useEffect(() => {
         if (authUser) {
-            dispatch(getViewsCountByUserId({ userId: authUser.id })).catch(
-                (error: Error) => {
-                    showToast(error.message, ToastType.ERROR);
-                },
-            );
+            dispatch(getViewsCountByUserId()).catch((error: Error) => {
+                showToast(error.message, ToastType.ERROR);
+            });
         }
     }, [authUser, dispatch]);
 
