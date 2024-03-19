@@ -4,6 +4,8 @@ import { type OrderByDirection, type Transaction } from 'objection';
 import {
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
+    HttpCode,
+    HTTPError,
 } from 'shared/build';
 
 import { type TemplateModel } from './template.model';
@@ -38,12 +40,15 @@ class TemplateRepository implements ITemplateRepository {
                     order.toLowerCase() as OrderByDirection,
                 );
             } else {
-                throw new Error('Invalid sorting criteria. Use field:order');
+                throw new HTTPError({
+                    message: 'Invalid sorting criteria. Use field:order',
+                    status: HttpCode.BAD_REQUEST,
+                });
             }
         }
 
-        if (options && options.filterByName) {
-            query = query.where('name', 'like', `%${options.filterByName}%`);
+        if (options && options.name) {
+            query = query.where('name', 'like', `%${options.name}%`);
         }
 
         const response = await query;
