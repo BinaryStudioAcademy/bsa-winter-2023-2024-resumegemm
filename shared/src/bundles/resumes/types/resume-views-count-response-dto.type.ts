@@ -3,7 +3,7 @@ type ResumeViewsCountResponseDto = {
     views: number;
     title: string;
     image: string;
-    updatedAt: string | undefined;
+    updatedAt?: string;
 };
 
 export { type ResumeViewsCountResponseDto };
