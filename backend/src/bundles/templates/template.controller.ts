@@ -54,10 +54,7 @@ class TemplateController extends Controller {
             handler: (options) =>
                 this.findAll(
                     options as ApiHandlerOptions<{
-                        query: {
-                            sortBy?: string;
-                            filterByName?: string;
-                        };
+                        query: FindAllOptions;
                     }>,
                 ),
         });
@@ -117,11 +114,27 @@ class TemplateController extends Controller {
     private async findAll(
         options: ApiHandlerOptions<{ query: FindAllOptions }>,
     ): Promise<ApiHandlerResponse<TemplateGetAllResponseDto>> {
-        const templateList = await this.templateService.findAll(options.query);
-        return {
-            status: HttpCode.OK,
-            payload: templateList,
-        };
+        try {
+            const templates = await this.templateService.findAll(options.query);
+            return {
+                status: HttpCode.OK,
+                payload: templates,
+            };
+        } catch (error: unknown) {
+            return error instanceof HTTPError
+                ? {
+                      status: error.status,
+                      payload: {
+                          message: error.message,
+                      },
+                  }
+                : {
+                      status: HttpCode.INTERNAL_SERVER_ERROR,
+                      payload: {
+                          message: 'Server error.',
+                      },
+                  };
+        }
     }
 
     private async delete(

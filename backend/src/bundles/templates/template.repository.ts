@@ -1,15 +1,17 @@
 import crypto from 'node:crypto';
 
-import { type OrderByDirection, type Transaction } from 'objection';
+import { type Transaction } from 'objection';
 import {
     type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
-} from 'shared/build';
+} from 'shared/build/index.js';
 
 import { type TemplateModel } from './template.model';
 import { type Template } from './types/template.type';
 import { type ITemplateRepository } from './types/template-repository.type';
 import { type FindAllOptions } from './types/types';
+
+const SORTING_FIELD = 'name';
 
 class TemplateRepository implements ITemplateRepository {
     private templateModel: typeof TemplateModel;
@@ -26,24 +28,13 @@ class TemplateRepository implements ITemplateRepository {
     ): Promise<TemplateGetAllResponseDto> {
         let query = this.templateModel.query();
 
-        if (options && options.sortBy) {
-            const [field, order] = options.sortBy.split(':');
-            if (
-                field &&
-                order &&
-                ['asc', 'desc'].includes(order.toLowerCase())
-            ) {
-                query = query.orderBy(
-                    field,
-                    order.toLowerCase() as OrderByDirection,
-                );
-            } else {
-                throw new Error('Invalid sorting criteria. Use field:order');
-            }
+        if (options?.direction) {
+            query = query.orderBy(SORTING_FIELD, options.direction);
         }
 
-        if (options && options.filterByName) {
-            query = query.where('name', 'like', `%${options.filterByName}%`);
+        if (options?.name) {
+            const nameLower = options.name.toLowerCase();
+            query = query.whereRaw('LOWER(name) LIKE ?', [`%${nameLower}%`]);
         }
 
         const response = await query;

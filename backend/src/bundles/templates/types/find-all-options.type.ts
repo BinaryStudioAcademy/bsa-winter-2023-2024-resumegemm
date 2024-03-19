@@ -1,6 +1,8 @@
+import { type OrderByDirection } from 'objection';
+
 type FindAllOptions = {
-    sortBy?: string;
-    filterByName?: string;
+    direction?: OrderByDirection;
+    name?: string;
 };
 
 export { type FindAllOptions };
