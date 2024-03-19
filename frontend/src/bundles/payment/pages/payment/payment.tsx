@@ -192,24 +192,11 @@ const Payment: React.FC = () => {
     return (
         <div className={styles.payment_page}>
             <div className={styles.payment_page__head}>
-                <div className={styles.payment_page__logo}>
-                    <Link to={AppRoute.HOME}>
-                        <Logo />
-                    </Link>
-                </div>
                 <Stepper
                     className={styles.payment_page__stepper}
                     steps={steps}
                     activeStep={activeStep}
                 />
-                <div className={styles.payment_page__cross_button}>
-                    <IconButton onClick={handleClose}>
-                        <Icon
-                            size={IconSize.LARGE}
-                            name={IconName.CLOSE_CROSS}
-                        />
-                    </IconButton>
-                </div>
             </div>
 
             {activeStep === steps[0].order && (
