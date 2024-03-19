@@ -1,4 +1,3 @@
-export { type getAllTemplatesQuery } from './get-all-templates-query.type.js';
 export {
     type CSSProperties,
     type LayoutBlock,
