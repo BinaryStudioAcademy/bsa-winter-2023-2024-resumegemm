@@ -6,27 +6,29 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
     Checkbox,
     Dropdown,
+    Icon,
     IconButton,
     Input,
     Modal,
     RegularButton,
 } from '../common/components/components';
 import {
+    AppRoute,
     ButtonSize,
     ButtonType,
     ButtonVariant,
     ContentType,
+    IconName,
     ModalVariant,
 } from '../common/enums/enums';
 import { useAppDispatch, useAppSelector } from '../common/hooks/hooks';
 import { useTakeScreenShot } from '../common/hooks/use-take-screenshot/use-take-screenshot.hook';
 import editorStyles from '../cv-editor/components/online-editor/online-editor-handler.module.scss';
-import styles from '../resume-preview/components/resume-preview/styles.module.scss';
 import { TemplateItemTags } from '../templates-page/enums/enums';
 import {
     type TemplateSettings,
@@ -37,6 +39,7 @@ import { showToast } from '../toast/helpers/show-toast';
 import { TemplateEditor } from './components/template-editor/template-editor';
 import { dropdownOptions } from './constants/constants';
 import { EditorStyles } from './enums/editor-styles.enum';
+import { TemplatesMessage } from './enums/enums';
 import { FontStyles } from './enums/font-styles';
 import {
     changeBlockEnabling,
@@ -57,6 +60,7 @@ const EditTemplatePage: React.FC = () => {
 
     const dispatch = useAppDispatch();
     const template = useAppSelector((state) => state.editTemplate.template);
+    const navigate = useNavigate();
     const parameters = useParams<{ id: string }>();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -125,7 +129,16 @@ const EditTemplatePage: React.FC = () => {
                 if (screenshot) {
                     void dispatch(
                         editTemplate({ templateSettings, image: screenshot }),
-                    );
+                    )
+                        .unwrap()
+                        .then((data) => {
+                            if (data) {
+                                showToast(
+                                    TemplatesMessage.TEMPLATE_EDITED,
+                                    ToastType.SUCCESS,
+                                );
+                            }
+                        });
                 }
             })
             .catch((error) => showToast(error, ToastType.ERROR));
@@ -236,6 +249,9 @@ const EditTemplatePage: React.FC = () => {
         },
         [showModal],
     );
+    const handleReturn = useCallback(() => {
+        navigate(AppRoute.TEMPLATES);
+    }, [navigate]);
 
     return (
         <section
@@ -255,6 +271,7 @@ const EditTemplatePage: React.FC = () => {
                     <Input
                         title="Enter template name"
                         onInput={handleInputChange}
+                        value={template.name}
                     />
                 </div>
 
@@ -371,7 +388,7 @@ const EditTemplatePage: React.FC = () => {
                         </li>
                     ))}
                 </ul>
-                <div className={styles.editor_output__block}>
+                <div className={templateStyles.output__block}>
                     <RegularButton
                         type={ButtonType.SUBMIT}
                         size={ButtonSize.MEDIUM}
@@ -379,7 +396,17 @@ const EditTemplatePage: React.FC = () => {
                         onClick={handleSaveTemplate}
                         className={clsx(templateStyles.output__button)}
                     >
-                        Save Template
+                        <Icon name={IconName.SAVE}></Icon>Save Template
+                    </RegularButton>
+                    <RegularButton
+                        type={ButtonType.RESET}
+                        size={ButtonSize.MEDIUM}
+                        variant={ButtonVariant.DEFAULT}
+                        onClick={handleReturn}
+                        className={clsx(templateStyles.output__button)}
+                    >
+                        <Icon name={IconName.ARROW_LEFT}></Icon>Back to
+                        Templates
                     </RegularButton>
                 </div>
             </nav>

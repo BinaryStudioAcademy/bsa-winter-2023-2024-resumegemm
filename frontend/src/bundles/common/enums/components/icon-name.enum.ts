@@ -9,8 +9,10 @@ enum IconName {
     EYE_SLASH = 'eye_slash',
     SEARCH = 'search_glass',
     ARROW_UP = 'arrow_up',
+    ARROW_LEFT = 'arrow_left',
     ARROW_DOWN = 'arrow_down',
     CLOSE_CROSS = 'close_button',
+    SAVE = 'save',
     QUESTION_CIRCLE = 'circle_question',
     CHECK_CIRCLE = 'circle_check',
 }
