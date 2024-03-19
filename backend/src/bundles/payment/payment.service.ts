@@ -7,6 +7,7 @@ import { paymentMethodService } from '../payment-method/payment-method.js';
 import { subscriptionPlanRepository } from '../stripe-events/repositories/subscription-plan.repository.js';
 import { subscriptionService } from '../subscription/subscription.js';
 import { type UserService } from '../users/user.service.js';
+import { UNIX_TIMESTAMP_MULTIPLIER } from './constants/unix-timestamp-multiplier.js';
 import { PaymentErrorMessage } from './enums/error-message.js';
 import { getCardExpireDate, mapPrices } from './helpers/helpers.js';
 import {
@@ -136,8 +137,12 @@ class PaymentService implements IPaymentService {
         const { current_period_start, current_period_end, items } =
             retrievedSubscription;
 
-        const startDate = new Date(current_period_start * 1000);
-        const endDate = new Date(current_period_end * 1000);
+        const startDate = new Date(
+            current_period_start * UNIX_TIMESTAMP_MULTIPLIER,
+        );
+        const endDate = new Date(
+            current_period_end * UNIX_TIMESTAMP_MULTIPLIER,
+        );
 
         const { id: stripePlanId } = items.data[0].plan;
         const subscriptionPlan =
