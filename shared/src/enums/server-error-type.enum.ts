@@ -1,8 +1,8 @@
 enum ServerErrorType {
     COMMON = 'COMMON',
     VALIDATION = 'VALIDATION',
-    EMAIL = 'email',
-    PASSWORD = 'password',
+    EMAIL = 'EMAIL',
+    PASSWORD = 'PASSWORD',
 }
 
 export { ServerErrorType };

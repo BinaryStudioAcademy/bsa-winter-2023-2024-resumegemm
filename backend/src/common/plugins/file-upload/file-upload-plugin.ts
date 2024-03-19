@@ -2,9 +2,12 @@ import { type MultipartFile } from '@fastify/multipart';
 import { type FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
 import { FileUploadValidationMessage } from 'shared/build/bundles/files/enums/enums.js';
-import { HttpCode, HTTPError } from 'shared/build/index.js';
-import { type ContentType } from 'shared/src/enums/content-type.enum';
-import { type ValueOf } from 'shared/src/types/value-of.type';
+import {
+    type ContentType,
+    type ValueOf,
+    HttpCode,
+    HTTPError,
+} from 'shared/build/index.js';
 
 import { ControllerHook } from '~/common/controller/enums/controller-hook.enum.js';
 

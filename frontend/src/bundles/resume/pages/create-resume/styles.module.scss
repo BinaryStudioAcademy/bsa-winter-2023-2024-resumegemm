@@ -1,0 +1,31 @@
+.create__resume__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+.create__resume {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex: 1;
+    padding: 45px;
+    background-color: var(--color-input-field-gray);
+    place-items: center;
+}
+
+.create__resume__button {
+    margin-left: 50px;
+}
+
+.create__resume__back__button {
+    width: 140px;
+}
+
+.create__resume__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 100px;
+}

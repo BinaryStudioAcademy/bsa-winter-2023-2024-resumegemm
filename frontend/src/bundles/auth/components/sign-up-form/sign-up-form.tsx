@@ -9,7 +9,9 @@ import {
     PasswordInput,
     RegularButton,
     Spinner,
+    Tooltip,
 } from '~/bundles/common/components/components';
+import { Hint } from '~/bundles/common/components/hint/hint';
 import {
     AppRoute,
     ButtonSize,
@@ -20,8 +22,13 @@ import {
     DividerVariant,
     SpinnerVariant,
 } from '~/bundles/common/enums/enums';
-import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks';
+import {
+    useAppForm,
+    useCallback,
+    useFormError,
+} from '~/bundles/common/hooks/hooks';
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
+import { type HintRow } from '~/bundles/common/types/hint/hint-row.type';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
@@ -32,15 +39,28 @@ import {
 
 type Properties = {
     onSubmit: (payload: UserSignUpRequestDtoFrontend) => void;
-    dataStatus: ValueOf<typeof DataStatus>;
 };
 
-const SignUpForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
-    const { control, errors, handleSubmit } =
+const hintRows: HintRow[] = [
+    { text: 'Use 8 to 64 characters.' },
+    { text: 'Mix in upper and lower case letters.' },
+    { text: 'Include numbers.' },
+    { text: 'Add special characters like !, @, #.' },
+    { text: 'Avoid using common words and phrases.' },
+    { text: 'No white spaces allowed.' },
+    { text: 'Make it unique.' },
+];
+
+const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
+    const { control, errors, handleSubmit, setError } =
         useAppForm<UserSignUpRequestDtoFrontend>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
             validationSchema: userSignUpValidationFrontend,
         });
+
+    const { dataStatus } = useFormError({
+        setError,
+    });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -101,6 +121,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, dataStatus }) => {
                     />
                 </FormGroup>
                 <PasswordInput
+                    hint={<Hint rows={hintRows} />}
                     label="Your Password"
                     placeholder="Your password"
                     error={errors.password}

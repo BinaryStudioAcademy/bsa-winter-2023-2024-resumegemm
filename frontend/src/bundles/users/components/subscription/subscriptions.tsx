@@ -5,11 +5,11 @@ const Subscriptions: React.FC = () => {
     return (
         <div className={styles.subscription}>
             <SubscriptionItem
-                title="Resume Analytics"
+                title="Updates and Offers"
                 info="Discounts, special offers, new features and more."
             />
             <SubscriptionItem
-                title="Resume and Job Tips Newsletter"
+                title="Resume Analytics"
                 info="Views, downloads and monthly statistics for each resume."
             />
             <SubscriptionItem
