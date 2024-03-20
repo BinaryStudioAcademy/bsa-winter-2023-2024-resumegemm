@@ -1,4 +1,5 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { type ResumeWithShare } from 'shared/build/bundles/resumes/types/resume-with-share.type.js';
 
 import { type ResumeShareAccessGetResponseDto } from '../types/types.js';
 import {
@@ -6,17 +7,20 @@ import {
     accessResumeDetails,
     deleteAccessResume,
     getResumeAccessByResumeId,
+    getUserResumesWithLinks,
 } from './actions.js';
 
 type State = {
     resumeId: string | null;
     details: ResumeShareAccessGetResponseDto[];
     resumeViewHistory: Record<string, ResumeShareAccessGetResponseDto[]>;
+    resumes: ResumeWithShare[];
 };
 
 const initialState: State = {
     resumeId: null,
     details: [],
+    resumes: [],
     resumeViewHistory: {},
 };
 
@@ -27,6 +31,10 @@ const { reducer, actions, name } = createSlice({
     extraReducers(builder) {
         builder.addCase(accessResume.fulfilled, (state, action) => {
             state.resumeId = action.payload.resumeId;
+        });
+
+        builder.addCase(getUserResumesWithLinks.fulfilled, (state, action) => {
+            state.resumes = action.payload.resumes;
         });
 
         builder.addCase(accessResumeDetails.fulfilled, (state, action) => {

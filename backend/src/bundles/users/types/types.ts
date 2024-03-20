@@ -1,6 +1,8 @@
 export {
     type User,
     type UserAuthResponse,
+    type UserConfirmEmailRequestDto,
+    type UserConfirmEmailResponse,
     type UserEntityFields,
     type UserGetAllResponseDto,
     type UserSignInRequestDto,

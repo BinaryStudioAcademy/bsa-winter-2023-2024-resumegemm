@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
 import {
+    type GetUserResumeSharesResponse,
     type ResumeShareCreateResponseDto,
     type ResumeShareDetailsGetResponseDto,
     type ResumeShareGetResponseDto,
@@ -17,6 +18,16 @@ const accessResume = createAsyncThunk<
     const { resumeAccessApi } = extra;
 
     return resumeAccessApi.accessResume(request.id);
+});
+
+const getUserResumesWithLinks = createAsyncThunk<
+    GetUserResumeSharesResponse,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/getUserResumesWithLinks`, (request, { extra }) => {
+    const { resumeAccessApi } = extra;
+
+    return resumeAccessApi.getUserResumesWithLinks();
 });
 
 const accessResumeDetails = createAsyncThunk<
@@ -65,4 +76,5 @@ export {
     createResumeAccess,
     deleteAccessResume,
     getResumeAccessByResumeId,
+    getUserResumesWithLinks,
 };

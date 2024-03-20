@@ -76,6 +76,13 @@ class UserRepository
             .returning(['id', 'email', 'deleted_at', 'profile_id'])
             .castTo<UserEntityFields>();
     }
+    public async confirmEmail(id: string): Promise<void> {
+        await this.model
+            .query()
+            .update({ emailConfirmed: true })
+            .where('id', id)
+            .execute();
+    }
 
     public async addStripeId(
         userUpdate: Pick<UserModel, 'email' | 'stripeId'>,

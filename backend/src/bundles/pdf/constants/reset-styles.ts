@@ -1,80 +1,80 @@
 const resetStyles = `
-  <style>
+<style>
 
-  body {
-    line-height: 1.5; 
+body {
+line-height: 1.5;
 }
 
-  *,
-  *::before,
-  *::after {
-      box-sizing: border-box;
-  }
+*,
+*::before,
+*::after {
+box-sizing: border-box;
+}
 
-  a {
-      color: inherit;
-      text-decoration: none;
-      cursor: pointer;
-  }
+a {
+color: inherit;
+text-decoration: none;
+cursor: pointer;
+}
 
-  button {
-      padding: 0;
-      color: inherit;
-      background-color: transparent;
-      border-width: 0;
-      cursor: pointer;
-  }
+button {
+padding: 0;
+color: inherit;
+background-color: transparent;
+border-width: 0;
+cursor: pointer;
+}
 
-  figure {
-      margin: 0;
-  }
+figure {
+margin: 0;
+}
 
-  input::-moz-focus-inner {
-      margin: 0;
-      padding: 0;
-      border: 0;
-  }
+input::-moz-focus-inner {
+margin: 0;
+padding: 0;
+border: 0;
+}
 
-  ul,
-  ol,
-  dd {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-  }
+ul,
+ol,
+dd {
+margin: 0;
+padding: 0;
+list-style: none;
+}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-      margin: 0;
-      font-weight: inherit;
-      font-size: inherit;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin: 0;
+font-weight: inherit;
+font-size: inherit;
+}
 
-  p {
-      margin: 0;
-  }
+p {
+margin: 0;
+}
 
-  cite {
-      font-style: normal;
-  }
+cite {
+font-style: normal;
+}
 
-  fieldset {
-      margin: 0;
-      padding: 0;
-      border-width: 0;
-  }
+fieldset {
+margin: 0;
+padding: 0;
+border-width: 0;
+}
 
-  input::-ms-reveal,
-  input::-ms-clear {
-      display: none;
-  }
+input::-ms-reveal,
+input::-ms-clear {
+display: none;
+}
 
-    </style>
+</style>
 
-  `;
+`;
 
 export { resetStyles };

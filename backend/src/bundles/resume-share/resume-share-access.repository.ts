@@ -1,9 +1,6 @@
 import { Guid } from 'guid-typescript';
-import {
-    type ResumeShareAccessGetResponseDto,
-    HttpCode,
-    HTTPError,
-} from 'shared/build/index.js';
+import { type ResumeShareAccessResponseDto } from 'shared/build/bundles/resumes/types/resume-share-access-response-dto.type.js';
+import { HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { ResumeShareErrorMessage } from './enums/error-messages.js';
 import { type ResumeShareAccessModel } from './resume-share-access.model.js';
@@ -45,7 +42,7 @@ class ResumeShareAccessRepository {
 
     public async getResumeAccesses(
         resumeShareId: string,
-    ): Promise<ResumeShareAccessGetResponseDto | unknown> {
+    ): Promise<ResumeShareAccessResponseDto[]> {
         return await this.resumeShareAccessModel
             .query()
             .where('resumeShareLinkId', resumeShareId)

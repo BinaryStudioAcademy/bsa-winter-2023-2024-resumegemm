@@ -5,6 +5,7 @@ import { type IStorage } from '~/framework/storage/storage.js';
 
 import { ResumesApiPath } from './enums/enums';
 import {
+    type GetUserResumeSharesResponse,
     type ResumeShareCreateResponseDto,
     type ResumeShareDeleteResponseDto,
     type ResumeShareDetailsGetResponseDto,
@@ -42,6 +43,19 @@ class ResumeAccessApi extends HttpApi {
     ): Promise<ResumeShareDetailsGetResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(ResumesApiPath.SHARE_ID_DETAILS(resumeId), {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+
+        return await response.json();
+    }
+
+    public async getUserResumesWithLinks(): Promise<GetUserResumeSharesResponse> {
+        const response = await this.load(
+            this.getFullEndpoint(ResumesApiPath.SHARE, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,

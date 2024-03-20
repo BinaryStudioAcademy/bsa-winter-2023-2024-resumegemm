@@ -1,4 +1,5 @@
 import { Guid } from 'guid-typescript';
+import { type ResumeWithShare } from 'shared/build/bundles/resumes/types/resume-with-share.type.js';
 import {
     type ResumeShareDeleteResponseDto,
     type ResumeShareGetResponseDto,
@@ -24,6 +25,24 @@ class ResumeShareRepository {
             .findOne('resumeId', resumeId)
             .returning('*')
             .execute();
+    }
+
+    public async getShareLinksByIds(
+        resumeIds: string[],
+    ): Promise<ResumeWithShare[]> {
+        const shareLinks = await this.resumeShareModel
+            .query()
+            .whereIn('resumeId', resumeIds)
+            .withGraphFetched('[resume]');
+
+        return shareLinks.map((link) => {
+            const { id, ...resumeData } = link;
+
+            return {
+                resume: resumeData.resume,
+                shareId: id,
+            };
+        });
     }
 
     public async getResumeShareLink(
@@ -57,7 +76,7 @@ class ResumeShareRepository {
 
     public async createResumeShareLink(
         resumeId: string,
-    ): Promise<ResumeShareCreateResponseDto | unknown> {
+    ): Promise<ResumeShareCreateResponseDto | undefined> {
         try {
             const resumeShareModel = {
                 resumeId: resumeId,
