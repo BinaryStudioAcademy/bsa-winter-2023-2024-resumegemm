@@ -159,9 +159,9 @@ class ResumeService implements IResumeService {
             const imageUrl = await this.fileService.getFileUrl(resume.image);
 
             viewCounts.push({
-                resumeId: resume.id,
+                id: resume.id,
                 views: viewCount,
-                title: resume.resumeTitle,
+                resumeTitle: resume.resumeTitle,
                 image: imageUrl,
                 updatedAt: formattedDate,
             });
