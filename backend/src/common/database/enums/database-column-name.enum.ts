@@ -14,6 +14,8 @@ enum DatabaseColumnName {
     CREATED_AT = 'created_at',
     UPDATED_AT = 'updated_at',
     DELETED_AT = 'deleted_at',
+    RESET_PASSWORD_TOKEN = 'reset_password_token',
+    RESET_PASSWORD_TOKEN_EXPIRY = 'reset_password_token_expiry',
     AVATAR = 'avatar',
     PROFESSION = 'profession',
     ADDRESS = 'address',

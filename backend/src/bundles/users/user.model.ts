@@ -26,6 +26,10 @@ class UserModel extends AbstractModel {
 
     public 'stripeId': string;
 
+    public 'resetPasswordToken': string | null;
+
+    public 'resetPasswordTokenExpiry': number | null;
+
     public static override get tableName(): typeof DatabaseTableName.USERS {
         return DatabaseTableName.USERS;
     }
