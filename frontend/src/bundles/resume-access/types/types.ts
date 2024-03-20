@@ -1,4 +1,5 @@
 export {
+    type GetUserResumeSharesResponse,
     type ResumeShareAccessGetResponseDto,
     type ResumeShareCreateResponseDto,
     type ResumeShareDeleteResponseDto,
