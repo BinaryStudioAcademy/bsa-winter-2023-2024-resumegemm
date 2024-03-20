@@ -4,6 +4,7 @@ import { type JwtPayload } from 'jsonwebtoken';
 import {
     type FindByEmailRequestDto,
     type UpdateUserProfileAndEmailRequestDto,
+    validateUrl,
 } from 'shared/build/index.js';
 import { HttpCode, HTTPError } from 'shared/build/index.js';
 
@@ -144,6 +145,12 @@ class UserService
         const { userProfile } = user;
 
         if (userProfile.avatar) {
+            const isValidAvatarUrl = validateUrl(userProfile.avatar);
+
+            if (isValidAvatarUrl) {
+                return user;
+            }
+
             const generatedAvatarUrl = await this.fileService.getFileUrl(
                 userProfile.avatar,
             );
