@@ -10,10 +10,8 @@ type EnvironmentSchema = {
     JWT: {
         ACCESS_TOKEN_SECRET: string;
         REFRESH_TOKEN_SECRET: string;
-        RESET_TOKEN_SECRET: string;
         ACCESS_TOKEN_EXPIRES_IN: string;
         REFRESH_TOKEN_EXPIRES_IN: string;
-        RESET_TOKEN_EXPIRES_IN: string;
     };
     OAUTH: {
         GITHUB: {
@@ -61,6 +59,9 @@ type EnvironmentSchema = {
         SECRET_ACCESS_KEY: string;
         ACCESS_KEY: string;
         BUCKET_NAME: string;
+    };
+    RESET_PASSWORD_TOKEN: {
+        EXPIRES_IN: number;
     };
 };
 

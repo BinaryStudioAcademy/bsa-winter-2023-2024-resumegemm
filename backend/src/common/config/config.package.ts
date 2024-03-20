@@ -65,15 +65,8 @@ class Config implements IConfig {
                     env: 'REFRESH_TOKEN_SECRET',
                     default: null,
                 },
-                RESET_TOKEN_SECRET: {
-                    doc: 'Secret key for password reset token generation',
-                    format: String,
-                    env: 'RESET_TOKEN_SECRET',
-                    default: null,
-                },
                 ACCESS_TOKEN_EXPIRES_IN: '24h',
                 REFRESH_TOKEN_EXPIRES_IN: '30d',
-                RESET_TOKEN_EXPIRES_IN: '10m',
             },
             OAUTH: {
                 GITHUB: {
@@ -231,6 +224,9 @@ class Config implements IConfig {
                     env: 'AWS_BUCKET_NAME',
                     default: null,
                 },
+            },
+            RESET_PASSWORD_TOKEN: {
+                EXPIRES_IN: 10 * 60_000,
             },
         });
     }
