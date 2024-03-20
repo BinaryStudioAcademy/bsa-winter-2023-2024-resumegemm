@@ -41,10 +41,18 @@ class ResumeService implements IResumeService {
         return await this.resumeRepository.find(id);
     }
 
-    public findById(
+    public async findById(
         id: string,
     ): Promise<ResumeWithRelationsAndTemplateResponseDto | null> {
-        return this.resumeRepository.findById(id);
+        const resume = await this.resumeRepository.findById(id);
+
+        if (resume) {
+            const { image } = await this.getResumeWithImage(resume);
+
+            return { ...resume, image };
+        }
+
+        return resume;
     }
 
     public async getResumeWithImage(
