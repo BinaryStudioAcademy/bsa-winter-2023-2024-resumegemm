@@ -6,8 +6,8 @@ import {
     faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
 import {
-    faArrowCircleRight,
     faArrowCircleLeft,
+    faArrowCircleRight,
     faArrowDownLong,
     faArrowUpLong,
     faChevronDown,
