@@ -110,7 +110,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                                     element: <EditResume />,
                                                 },
                                                 {
-                                                    path: AppRoute.RESUME_CREATE,
+                                                    path: `${AppRoute.RESUME_CREATE}/:id`,
                                                     element: <CreateResume />,
                                                 },
                                                 {

@@ -22,7 +22,12 @@ const HeaderWrapper: React.FC = () => {
             return <GetStartedHeader />;
         }
 
-        if (AvatarHeaderRoutes.includes(location.pathname as AppRoute)) {
+        const pathWithoutId = location.pathname
+            .split('/')
+            .slice(0, 3)
+            .join('/');
+
+        if (AvatarHeaderRoutes.includes(pathWithoutId as AppRoute)) {
             return <AvatarHeader />;
         }
 
