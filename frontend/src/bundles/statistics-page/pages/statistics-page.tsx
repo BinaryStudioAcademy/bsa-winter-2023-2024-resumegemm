@@ -133,15 +133,9 @@ const StatisticsPage = (): JSX.Element => {
                 <hr className={styles.statistics__select_hr} />
 
                 <div className={styles.statistics__select_resume}>
-                    <div
-                        className={styles.statistics__select_reverse_arrow}
-                    ></div>
-
                     <div className={styles.statistics__resumes_container}>
                         {mapResumeCards(resumes)}
                     </div>
-
-                    <div className={styles.statistics__select_arrow}></div>
                 </div>
             </section>
         </div>

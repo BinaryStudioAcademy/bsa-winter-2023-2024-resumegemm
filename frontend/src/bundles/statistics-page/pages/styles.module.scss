@@ -58,31 +58,9 @@
     border: 3px white solid;
 }
 
-:is(.statistics__select_arrow, .statistics__select_reverse_arrow) {
-    width: 5%;
-    min-width: 30px;
-    height: 100%;
-    min-height: 30px;
-    background-color: var(--color-black);
-    mask-image: url("../../../assets/img/arrow.svg");
-    mask-repeat: no-repeat;
-    mask-size: 100% 100%;
-    mask-position: center;
-    transition: background-color 0.2s ease;
-}
-
-.statistics__select_reverse_arrow {
-    transform: scaleX(-1);
-}
-
-:is(.statistics__select_arrow, .statistics__select_reverse_arrow):hover {
-    background-color: var(--color-accent-dark-yellow);
-    transition: background-color 0.2s ease;
-}
-
 .statistics__select_resume {
     display: flex;
-    height: 45vh;
+    justify-content: center;
     padding: 30px;
 }
 
