@@ -1,3 +1,4 @@
+export { type FindAllOptions } from './find-all-options.type.js';
 export { type Template } from './template.type.js';
 export { type ITemplateRepository } from './template-repository.type.js';
 export { type ITemplateService } from './template-service.type.js';
