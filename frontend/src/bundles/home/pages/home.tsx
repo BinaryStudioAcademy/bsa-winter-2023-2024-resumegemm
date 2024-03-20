@@ -89,10 +89,10 @@ const Home: React.FC = () => {
                 onHandleSearch={handleResumeSearch}
             >
                 {resumes.length > 0 ? (
-                    resumes.map(({ id, image }) => (
+                    resumes.map(({ id, image, resumeTitle }) => (
                         <NavLink key={id} to={`/resumes/${id}`}>
                             <ResumeCard
-                                title="My Resume"
+                                title={resumeTitle as string}
                                 subtitle="Updated - Jan 25"
                                 image={image}
                                 id={id}

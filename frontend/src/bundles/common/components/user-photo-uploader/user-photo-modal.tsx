@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React, { useCallback, useState } from 'react';
 
 import { IconName } from '../../enums/enums';
@@ -9,6 +10,7 @@ import { UserPhotoUploader } from './user-photo-uploader';
 
 interface UploadModalProperties {
     onToggleModal: React.Dispatch<React.SetStateAction<boolean>>;
+    isResumeEditorAction?: boolean;
     onHandleCurrentPhoto: (
         payload: {
             src: string | ArrayBuffer | null;
@@ -20,6 +22,7 @@ interface UploadModalProperties {
 const PhotoUploaderModal: React.FC<UploadModalProperties> = ({
     onToggleModal,
     onHandleCurrentPhoto,
+    isResumeEditorAction,
 }) => {
     const [image, setImage] = useState<ImageBlob | null>(null);
 
@@ -34,8 +37,19 @@ const PhotoUploaderModal: React.FC<UploadModalProperties> = ({
     }, [onToggleModal]);
 
     return (
-        <div className={styles.uploader_modal__backdrop}>
-            <div className={styles.uploader_modal__overlay}>
+        <div
+            className={clsx(
+                styles.uploader_modal__backdrop,
+                isResumeEditorAction && styles.uploader_modal__backdrop__hidden,
+            )}
+        >
+            <div
+                className={clsx(
+                    styles.uploader_modal__overlay,
+                    isResumeEditorAction &&
+                        styles.uploader_modal__overlay__small,
+                )}
+            >
                 <IconButton
                     onClick={handleClose}
                     className={styles.uploader_modal__button__close}
