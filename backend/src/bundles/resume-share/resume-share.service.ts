@@ -79,8 +79,22 @@ class ResumeShareService implements IResumeShareService {
             const resumesWithLink =
                 await this.resumeShareRepository.getShareLinksByIds(resumesIds);
 
+            const resumesWithLinkAndImages = resumesWithLink.map(
+                (resumeWithLink) => {
+                    const resumeWithImage = resumes.find(
+                        (resume) => resume.id === resumeWithLink.resume?.id,
+                    );
+
+                    if (resumeWithImage && resumeWithLink.resume) {
+                        resumeWithLink.resume.image = resumeWithImage.image;
+                    }
+
+                    return resumeWithLink;
+                },
+            );
+
             return {
-                resumes: resumesWithLink,
+                resumes: resumesWithLinkAndImages,
             };
         } catch {
             throw new HTTPError({
