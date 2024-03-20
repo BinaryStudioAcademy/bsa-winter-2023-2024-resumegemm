@@ -144,7 +144,8 @@ class UserService
 
         const { userProfile } = user;
 
-        const isValidAvatarUrl = validateUrl(String(userProfile.avatar));
+        const isValidAvatarUrl =
+            userProfile.avatar && validateUrl(userProfile.avatar);
 
         if (userProfile.avatar && !isValidAvatarUrl) {
             const generatedAvatarUrl = await this.fileService.getFileUrl(
