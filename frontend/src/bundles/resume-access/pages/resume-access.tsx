@@ -8,19 +8,7 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import { ApiPath } from 'shared/build';
 
-import {
-    BaseButton,
-    Header,
-    Input,
-    RegularButton,
-} from '~/bundles/common/components/components';
-import { UserProfile } from '~/bundles/common/components/layout/header/user-profile/user-profile';
-import {
-    AppRoute,
-    ButtonSize,
-    ButtonVariant,
-} from '~/bundles/common/enums/enums';
-import { getUserAvatar } from '~/bundles/common/helpers/get-user-avatar';
+import { BaseButton, Input } from '~/bundles/common/components/components';
 import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
 import { ResumePreview } from '~/bundles/resume-preview/components/components';
 import { ToastContext } from '~/bundles/toast/context/toast-context';
@@ -55,7 +43,7 @@ const ResumeAccess: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const { resumeIdSelector, details, user } = useAppSelector(
+    const { resumeIdSelector, details } = useAppSelector(
         ({ resumeAccess, auth }) => ({
             resumeIdSelector: resumeAccess.resumeId,
             details: resumeAccess.details,
@@ -107,43 +95,22 @@ const ResumeAccess: React.FC = () => {
         void dispatch(accessResumeDetails({ id }));
     }, [dispatch, id]);
 
-    const handleCreateResumeAccess = useCallback(() => {
-        navigate(AppRoute.LOG_IN);
-    }, [navigate]);
-
     return (
-        <>
-            <Header>
-                {user ? (
-                    <UserProfile image={getUserAvatar(user)} />
-                ) : (
-                    <RegularButton
-                        variant={ButtonVariant.PRIMARY}
-                        size={ButtonSize.MEDIUM}
-                        onClick={handleCreateResumeAccess}
-                    >
-                        Create resume for free
-                    </RegularButton>
-                )}
-            </Header>
-            <div>
-                <p>resume id: {resumeIdSelector}</p>
-                <div className={styles.resume_access__input_container}>
-                    <Input onChange={handleIdChange}></Input>
-                    <BaseButton onClick={createResumeAccessCallback}>
-                        Create share link
-                    </BaseButton>
-                </div>
-                <div>
-                    <p>Details:</p>
-                    {JSON.stringify(details)}
-                </div>
-                <BaseButton onClick={deleteResumeAccess}>
-                    Delete link
+        <div>
+            <p>resume id: {resumeIdSelector}</p>
+            <div className={styles.resume_access__input_container}>
+                <Input onChange={handleIdChange}></Input>
+                <BaseButton onClick={createResumeAccessCallback}>
+                    Create share link
                 </BaseButton>
-                <ResumePreview />
             </div>
-        </>
+            <div>
+                <p>Details:</p>
+                {JSON.stringify(details)}
+            </div>
+            <BaseButton onClick={deleteResumeAccess}>Delete link</BaseButton>
+            <ResumePreview />
+        </div>
     );
 };
 

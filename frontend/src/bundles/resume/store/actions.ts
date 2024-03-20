@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type FindAllOptions } from 'shared/build';
 
 import { LanguageLevels, SkillLevel } from '~/bundles/resume/enums/enums';
 import {
@@ -22,11 +23,16 @@ import { name as sliceName } from './slice.js';
 
 const getAllResumes = createAsyncThunk<
     ResumeGetAllResponseDto[],
-    undefined,
+    FindAllOptions | undefined,
     AsyncThunkConfig
->(`${sliceName}/get-all-resumes`, (_, { extra }) => {
+>(`${sliceName}/get-all-resumes`, (options, { extra }) => {
     const { resumeApi } = extra;
-    return resumeApi.getAllResumes();
+
+    const query = {
+        direction: options?.direction ?? 'desc',
+        name: options?.name ?? '',
+    };
+    return resumeApi.getAllResumes(query);
 });
 
 const deleteResume = createAsyncThunk<
