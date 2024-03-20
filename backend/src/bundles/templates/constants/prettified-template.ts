@@ -58,7 +58,7 @@ const prettifiedTemplate: TemplateSettings = {
                             id: 'email',
                             name: 'Email',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'someemail@gmail.com',
+                            content: 'taylorcook@gmail.com',
                             styles: {
                                 fontWeight: 'bolder',
                                 fontSize: '1rem',
@@ -84,7 +84,7 @@ const prettifiedTemplate: TemplateSettings = {
                             id: 'industry',
                             name: 'Industry',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Information Tech',
+                            content: 'Information Technology',
                             styles: {
                                 fontWeight: 'bolder',
                                 fontSize: '1rem',
@@ -333,7 +333,7 @@ const prettifiedTemplate: TemplateSettings = {
                             name: 'Link',
                             placeholder: 'Link',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'https://www.linkedin.com/feed/',
+                            content: 'https://www.linkedin.com',
                             styles: {
                                 paddingBottom: '10px',
                                 fontSize: '1rem',
