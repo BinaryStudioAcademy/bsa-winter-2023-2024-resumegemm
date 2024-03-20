@@ -4,6 +4,12 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import {
+    CheckEmailPage,
+    EmailConfirmationFailPage,
+    EmailConfirmationPage,
+    EmailConfirmationSuccessPage,
+} from '~/bundles/auth/components/components.js';
 import { Auth } from '~/bundles/auth/pages/auth';
 import {
     App,
@@ -75,6 +81,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                                     path: AppRoute.FORGOT_PASSWORD,
                                                     element: <Auth />,
                                                 },
+                                                {
+                                                    path: AppRoute.CHECK_EMAIL,
+                                                    element: <CheckEmailPage />,
+                                                },
                                             ],
                                         },
                                         {
@@ -144,6 +154,22 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: AppRoute.RESUME_ACCESS,
                                             element: <ResumeAccess />,
+                                        },
+                                        {
+                                            path: AppRoute.EMAIL_CONFIRMATION,
+                                            element: <EmailConfirmationPage />,
+                                        },
+                                        {
+                                            path: AppRoute.EMAIL_CONFIRMATION_FAIL,
+                                            element: (
+                                                <EmailConfirmationFailPage />
+                                            ),
+                                        },
+                                        {
+                                            path: AppRoute.EMAIL_CONFIRMATION_SUCCESS,
+                                            element: (
+                                                <EmailConfirmationSuccessPage />
+                                            ),
                                         },
                                     ],
                                 },

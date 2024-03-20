@@ -14,6 +14,7 @@ enum IconName {
     CLOSE_CROSS = 'close_button',
     CREDIT_CARD = 'credit_card',
     CHECK = 'check',
+    ARROW_RIGHT = 'arrow_right',
     SAVE = 'save',
     QUESTION_CIRCLE = 'circle_question',
     CHECK_CIRCLE = 'circle_check',

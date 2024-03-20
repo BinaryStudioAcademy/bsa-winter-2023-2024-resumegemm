@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import {
     faArrowCircleLeft,
+    faArrowCircleRight,
     faArrowDownLong,
     faArrowUpLong,
     faCheck,
@@ -42,6 +43,7 @@ const iconNameToSvgIcon = {
     [IconName.CLOSE_CROSS]: faClose,
     [IconName.CREDIT_CARD]: faCreditCard,
     [IconName.CHECK]: faCheck,
+    [IconName.ARROW_RIGHT]: faArrowCircleRight,
     [IconName.SAVE]: faSave,
     [IconName.QUESTION_CIRCLE]: faCircleQuestion,
     [IconName.CHECK_CIRCLE]: faCircleCheck,

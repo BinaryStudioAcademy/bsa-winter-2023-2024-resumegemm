@@ -9,6 +9,10 @@ const titles: Titles = {
     '/profile': 'Profile | ResumeGemm',
     '/home': 'Home | ResumeGemm',
     '/templates': 'Templates | ResumeGemm',
+    '/email-confirmation': 'Email Confirmation | ResumeGemm',
+    '/email-confirmation-fail': 'Email Confirmation Fail | ResumeGemm',
+    '/email-confirmation-success': 'Email Confirmation Success | ResumeGemm',
+    '/check-email': 'Check Email | ResumeGemm',
 };
 
 export { titles };
