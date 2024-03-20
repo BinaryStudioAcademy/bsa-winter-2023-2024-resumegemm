@@ -115,7 +115,6 @@ class ResumeRepository implements IResumeRepository {
             .where('user_id', userId)
             .withGraphFetched(resumeGraphFetchRelations)
             .returning('*');
-        // .castTo<ResumeGetAllResponseDto[]>();
 
         if (options?.direction) {
             query = query.orderBy(SORTING_FIELD, options.direction);

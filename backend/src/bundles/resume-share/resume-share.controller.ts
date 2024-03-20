@@ -1,4 +1,3 @@
-// import { resumeShareController } from '~/bundles/resume-share/resume-share.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -22,7 +21,6 @@ import {
     type ResumeShareDetailsGetResponseDto,
     type ResumeShareGetRequestDto,
     type ResumeShareGetResponseDto,
-    type ResumeShareResponseDto,
 } from './types/types.js';
 
 /**
