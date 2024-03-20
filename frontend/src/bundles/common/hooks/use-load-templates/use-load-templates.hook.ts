@@ -1,26 +1,22 @@
 import { useEffect } from 'react';
+import { type FindAllOptions } from 'shared/build';
 import { type TemplateDto } from 'shared/build/bundles/templates/templates';
 
 import { loadAllTemplates } from '~/bundles/templates-page/store/actions';
 
-import { DataStatus } from '../../enums/data-status.enum';
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 type ReturnValue = {
     templates: TemplateDto[];
 };
 
-const useLoadTemplates = (): ReturnValue => {
+const useLoadTemplates = ({ name }: FindAllOptions): ReturnValue => {
     const dispatch = useAppDispatch();
-    const { templates, dataStatus } = useAppSelector(
-        (state) => state.templates,
-    );
+    const { templates } = useAppSelector((state) => state.templates);
 
     useEffect(() => {
-        if (dataStatus === DataStatus.IDLE) {
-            void dispatch(loadAllTemplates());
-        }
-    }, [dispatch, templates, dataStatus]);
+        void dispatch(loadAllTemplates({ name }));
+    }, [dispatch, name]);
 
     return {
         templates,

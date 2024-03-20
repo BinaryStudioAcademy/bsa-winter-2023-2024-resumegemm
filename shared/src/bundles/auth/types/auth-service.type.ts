@@ -1,4 +1,6 @@
 import {
+    type UserConfirmEmailRequestDto,
+    type UserConfirmEmailResponse,
     type UserEntityFields,
     type UserForgotPasswordRequestDto,
     type UserResetPasswordRequestDto,
@@ -27,6 +29,9 @@ type AuthService = {
     compare(encryptionData: EncryptionDataPayload): Promise<boolean>;
     getUserWithProfile(id: string): Promise<UserWithProfileRelation>;
     verifyToken<T>(token: string, tokenSecret: string): T;
+    confirmUserEmail(
+        payload: UserConfirmEmailRequestDto,
+    ): Promise<Omit<UserConfirmEmailResponse, 'message'>>;
     tokenEqualsEmail(
         payload: UserVerifyResetPasswordTokenRequestDto,
     ): Promise<UserEntityFields>;

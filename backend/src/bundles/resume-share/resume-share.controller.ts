@@ -7,9 +7,11 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { type HTTPError, HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
+import { type User } from '../users/types/types.js';
 import { ResumesApiPath } from './enums/enums.js';
 import { type ResumeShareService } from './resume-share.service.js';
 import {
+    type GetUserResumeSharesResponse,
     type ResumeShareCreateRequestDto,
     type ResumeShareCreateResponseDto,
     type ResumeShareDeleteRequestDto,
@@ -90,7 +92,7 @@ class ResumeShareController extends Controller {
             method: 'POST',
             validation: {},
             handler: (options) =>
-                this.CreateShareLink(
+                this.createShareLink(
                     options as ApiHandlerOptions<ResumeShareCreateRequestDto>,
                 ),
         });
@@ -100,7 +102,7 @@ class ResumeShareController extends Controller {
             method: 'GET',
             validation: {},
             handler: (options) =>
-                this.GetShareLink(
+                this.getShareLink(
                     options as ApiHandlerOptions<ResumeShareGetRequestDto>,
                 ),
         });
@@ -110,8 +112,20 @@ class ResumeShareController extends Controller {
             method: 'DELETE',
             validation: {},
             handler: (options) =>
-                this.DeleteShareLink(
+                this.deleteShareLink(
                     options as ApiHandlerOptions<ResumeShareDeleteRequestDto>,
+                ),
+        });
+
+        this.addRoute({
+            path: ResumesApiPath.SHARE,
+            method: 'GET',
+            validation: {},
+            handler: (options) =>
+                this.getUserShareLinksWithResumes(
+                    options as ApiHandlerOptions<{
+                        user: User;
+                    }>,
                 ),
         });
 
@@ -120,7 +134,7 @@ class ResumeShareController extends Controller {
             method: 'GET',
             validation: {},
             handler: (options) =>
-                this.GetShareLinkDetails(
+                this.getShareLinkDetails(
                     options as ApiHandlerOptions<ResumeShareDetailsGetRequestDto>,
                 ),
         });
@@ -228,7 +242,7 @@ class ResumeShareController extends Controller {
      *          description: Bad request
      *
      */
-    private async CreateShareLink(
+    private async createShareLink(
         options: ApiHandlerOptions<ResumeShareCreateRequestDto>,
     ): Promise<ApiHandlerResponse<ResumeShareCreateResponseDto | unknown>> {
         try {
@@ -236,7 +250,7 @@ class ResumeShareController extends Controller {
 
             return {
                 status: HttpCode.CREATED,
-                payload: await this.resumeShareService.CreateShareLink(id),
+                payload: await this.resumeShareService.createShareLink(id),
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;
@@ -250,7 +264,7 @@ class ResumeShareController extends Controller {
         }
     }
 
-    private async GetShareLink(
+    private async getShareLink(
         options: ApiHandlerOptions<ResumeShareGetRequestDto>,
     ): Promise<ApiHandlerResponse<ResumeShareGetResponseDto | unknown>> {
         try {
@@ -259,7 +273,7 @@ class ResumeShareController extends Controller {
 
             return {
                 status: HttpCode.OK,
-                payload: await this.resumeShareService.GetShareLink(id, ip),
+                payload: await this.resumeShareService.getShareLink(id, ip),
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;
@@ -273,7 +287,34 @@ class ResumeShareController extends Controller {
         }
     }
 
-    private async GetShareLinkDetails(
+    private async getUserShareLinksWithResumes(
+        options: ApiHandlerOptions<{
+            user: User;
+        }>,
+    ): Promise<ApiHandlerResponse<GetUserResumeSharesResponse>> {
+        try {
+            const id = options.user.id;
+
+            return {
+                status: HttpCode.OK,
+                payload:
+                    await this.resumeShareService.getUserShareLinksWithResumes(
+                        id,
+                    ),
+            };
+        } catch (error: unknown) {
+            const { message, status } = error as HTTPError;
+            return {
+                status,
+                payload: {
+                    message,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async getShareLinkDetails(
         options: ApiHandlerOptions<ResumeShareDetailsGetRequestDto>,
     ): Promise<ApiHandlerResponse<ResumeShareDetailsGetResponseDto | unknown>> {
         try {
@@ -281,7 +322,7 @@ class ResumeShareController extends Controller {
 
             return {
                 status: HttpCode.OK,
-                payload: await this.resumeShareService.GetShareLinkDetails(id),
+                payload: await this.resumeShareService.getShareLinkDetails(id),
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;
@@ -295,7 +336,7 @@ class ResumeShareController extends Controller {
         }
     }
 
-    private async DeleteShareLink(
+    private async deleteShareLink(
         options: ApiHandlerOptions<ResumeShareDeleteRequestDto>,
     ): Promise<ApiHandlerResponse<ResumeShareDeleteResponseDto | unknown>> {
         try {
@@ -303,7 +344,7 @@ class ResumeShareController extends Controller {
 
             return {
                 status: HttpCode.OK,
-                payload: await this.resumeShareService.DeleteShareLink(id),
+                payload: await this.resumeShareService.deleteShareLink(id),
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;
