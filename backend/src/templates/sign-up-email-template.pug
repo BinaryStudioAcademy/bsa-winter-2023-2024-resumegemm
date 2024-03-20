@@ -1,0 +1,51 @@
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title= title
+    style(type='text/css').
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: Poppins, sans-serif; }
+      .header-container { background-color: #fdf3d3; height: 50px; width: 100%; }
+      .main-container { background-color: #dbae2d; width: 100%; }
+      .email-thumb { background-color: #ffff; border-radius: 1.5rem; width: 100%; padding: 30px 55px; text-align: start; }
+      .email-text { font-weight: 400; font-size: 16px; line-height: 27px; color: #434c66; margin-top: 20px; }
+      .email-list { list-style: decimal; padding-left: 18px; }
+      .image-container { padding: 20px 0; }
+      .email-container { padding: 0 150px; padding-bottom: 30px; box-shadow: 0px 2px 12px rgba(56, 109, 246, 0.12); }
+      .button-container { width: 100%; padding: 30px 0; text-align: center; }
+      .button { margin: auto auto; vertical-align: middle; background-color: #434c66; border: none; font-weight: 500; font-size: 18px; line-height: 16px; width: 170px; height: 40px; text-align: center; border-radius: 25px; color: #ffff; cursor: pointer; }
+      .link { color: #3f557e; text-decoration-line: underline; cursor: pointer; }
+
+      @media only screen and (max-width: 360px) {
+        .email-container { padding: 0 20px; }
+        .email-thumb { padding: 20px; }
+        .button { width: 150px; font-size: 16px; line-height: 14px; }
+      }
+
+      @media only screen and (min-width: 361px) and (max-width: 768px) {
+        .email-container { padding: 0 50px; }
+        .email-thumb { padding: 25px; }
+        .button { width: 160px; font-size: 16px; line-height: 14px; }
+      }
+  body
+    section.main-container
+      div.header-container
+      div.image-container
+      div.email-container
+        .email-thumb
+            p.email-text
+                | Congratulations! You are successfully registered in ResumeGemm.
+                | Since now you have got a great opportunity to find the job you dream about!
+                | Our very understandable and convenient service is created to make your job searching much more pleasant.
+                | Improve your CV and find your best job!
+            .button-container
+                a(href=dashboardLink, target='_blank')
+                  button.button Get Started
+            p.email-text What are the main advantages of ResumeGemm?
+            ul.email-list
+                li.email-text Created by experts
+                li.email-text Improved by data
+                li.email-text Trusted by millions of professionals
+            p.email-text Try the best resume builder now!

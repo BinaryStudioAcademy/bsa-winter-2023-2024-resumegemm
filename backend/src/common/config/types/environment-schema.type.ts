@@ -10,6 +10,8 @@ type EnvironmentSchema = {
     JWT: {
         ACCESS_TOKEN_SECRET: string;
         REFRESH_TOKEN_SECRET: string;
+        EMAIL_CONFIRM_TOKEN_SECRET: string;
+        EMAIL_CONFIRM_TOKEN_EXPIRES_IN: string;
         ACCESS_TOKEN_EXPIRES_IN: string;
         REFRESH_TOKEN_EXPIRES_IN: string;
     };
@@ -45,6 +47,14 @@ type EnvironmentSchema = {
         DIALECT: string;
         POOL_MIN: number;
         POOL_MAX: number;
+    };
+    EMAIL: {
+        SMTP_HOST: string;
+        SMTP_PORT: string;
+        SMTP_USER: string;
+        SMTP_PASSWORD: string;
+        SMTP_DASHBOARD: string;
+        SMTP_LOGO: string;
     };
     STRIPE: {
         STRIPE_SECRET_KEY: string;

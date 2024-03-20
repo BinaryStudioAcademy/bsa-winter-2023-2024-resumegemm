@@ -13,8 +13,11 @@ const userApi = new UserApi({
 export { userApi };
 export {
     type OauthConnectionEntityFields,
+    type Profile,
     type SocialMediaProfiles,
     type UserAuthResponse,
+    type UserConfirmEmailRequestDto,
+    type UserConfirmEmailResponse,
     type UserForgotPasswordRequestDto,
     type UserForgotPasswordResponse,
     type UserGetAllItemResponseDto,

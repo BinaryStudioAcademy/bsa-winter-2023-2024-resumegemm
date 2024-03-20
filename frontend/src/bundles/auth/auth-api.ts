@@ -9,6 +9,8 @@ import {
 
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import {
+    type UserConfirmEmailRequestDto,
+    type UserConfirmEmailResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
@@ -45,7 +47,6 @@ class AuthApi extends HttpApi {
                 hasAuth: false,
             },
         );
-
         return await response.json<UserSignUpResponseDto>();
     }
 
@@ -63,6 +64,21 @@ class AuthApi extends HttpApi {
         );
 
         return await response.json<UserSignInResponseDto>();
+    }
+
+    public async confirmEmail(
+        payload: UserConfirmEmailRequestDto,
+    ): Promise<UserConfirmEmailResponse> {
+        const response = await this.load(
+            this.getFullEndpoint(AuthApiPath.CONFIRM_EMAIL, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify(payload),
+                hasAuth: false,
+            },
+        );
+        return await response.json<UserConfirmEmailResponse>();
     }
 
     public async getUser(): Promise<UserWithProfileRelation> {
