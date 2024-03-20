@@ -30,6 +30,7 @@ import { Payment } from './bundles/payment/pages/payment/payment';
 import { PreviewPage } from './bundles/preview/preview';
 import { QuestionAndAnswerPage } from './bundles/question-and-answer-page/question-and-answer-page';
 import { ResumeAccess } from './bundles/resume-access/pages/resume-access';
+import { StatisticsPage } from './bundles/statistics-page/pages/statistics-page';
 import { TemplatePage } from './bundles/templates-page/templates-page';
 import { SubscriptionCancel } from './bundles/users/components/subscription-cancel/subscription-cancel';
 import { Profile } from './bundles/users/pages/profile';
@@ -110,6 +111,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                                 {
                                                     path: AppRoute.TEMPLATES,
                                                     element: <TemplatePage />,
+                                                },
+                                                {
+                                                    path: AppRoute.STATISTICS,
+                                                    element: <StatisticsPage />,
                                                 },
                                                 {
                                                     path: `${AppRoute.TEMPLATE}/:id`,

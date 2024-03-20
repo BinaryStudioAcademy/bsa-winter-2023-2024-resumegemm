@@ -12,6 +12,7 @@ enum ApiPath {
     WEBHOOKS = '/webhooks',
     AVATAR = '/avatar',
     SUBSCRIPTION = '/subscription',
+    STATISTICS = '/statistics',
 }
 
 export { ApiPath };
