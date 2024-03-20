@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type FindAllOptions } from 'shared/build';
+import { type FindAllOptions } from 'shared/build/index.js';
 
 import { LanguageLevels, SkillLevel } from '~/bundles/resume/enums/enums';
 import {
@@ -27,7 +27,6 @@ const getAllResumes = createAsyncThunk<
     AsyncThunkConfig
 >(`${sliceName}/get-all-resumes`, (options, { extra }) => {
     const { resumeApi } = extra;
-
     const query = {
         direction: options?.direction ?? 'desc',
         name: options?.name ?? '',
