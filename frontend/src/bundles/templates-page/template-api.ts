@@ -8,10 +8,10 @@ import { type IStorage } from '~/framework/storage/storage.js';
 import { TemplatesApiPath } from './enums/enums';
 import {
     type TemplateDto,
-    type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
 } from './types/types';
+import { type TemplateGetAllResponseDto } from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -58,6 +58,20 @@ class TemplateApi extends HttpApi {
         return await response.json();
     }
 
+    public async delete(templateId: string): Promise<boolean> {
+        const response = await this.load(
+            this.getFullEndpoint(`${TemplatesApiPath.ROOT}${templateId}`, {}),
+            {
+                method: 'DELETE',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify({}),
+            },
+        );
+
+        return await response.json();
+    }
+
     public async createTemplate(): Promise<TemplateDto> {
         const response = await this.load(
             this.getFullEndpoint(TemplatesApiPath.ROOT, {}),
@@ -75,11 +89,9 @@ class TemplateApi extends HttpApi {
     public async getAll(
         options: FindAllOptions,
     ): Promise<TemplateGetAllResponseDto> {
-        const { name, direction } = options;
-
         const response = await this.load(
             this.getFullEndpoint(
-                `${TemplatesApiPath.ROOT}?name=${name}&direction=${direction}`,
+                this.getFindAllEndpoint(TemplatesApiPath.ROOT, options),
                 {},
             ),
             {
@@ -90,6 +102,26 @@ class TemplateApi extends HttpApi {
         );
 
         return await response.json<TemplateGetAllResponseDto>();
+    }
+
+    //TODO this is stub since there is no time to handle this problem properly please ignore it
+    private getFindAllEndpoint(
+        baseUrl: string,
+        parameters: FindAllOptions,
+    ): string {
+        let endpoint = baseUrl;
+
+        if (parameters.name) {
+            endpoint += `?name=${parameters.name}`;
+        }
+
+        if (parameters.direction) {
+            endpoint += `${parameters.name ? '&' : '?'}direction=${
+                parameters.direction
+            }`;
+        }
+
+        return endpoint;
     }
 }
 
