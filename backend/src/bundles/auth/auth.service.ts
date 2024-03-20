@@ -23,9 +23,6 @@ import {
     type UserSignUpRequestDto,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
-import { config } from '~/common/config/config.js';
-
-import { generateResetPasswordToken } from './helpers/token/token.js';
 
 class AuthService implements TAuthService {
     private userService: UserService;
@@ -169,14 +166,13 @@ class AuthService implements TAuthService {
     > {
         const user = await this.userService.findByEmail({ email });
 
-        const resetPasswordTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
+        const areTokensNotEqual =
+            user?.resetPasswordToken !== resetPasswordToken;
 
-        const tokenPayload = this.verifyToken<{ email: string }>(
-            resetPasswordToken,
-            resetPasswordTokenSecret,
-        );
+        const isTokenExpired =
+            Date.now() > Number(user?.resetPasswordTokenExpiry);
 
-        if (user?.email !== tokenPayload.email) {
+        if (areTokensNotEqual || isTokenExpired) {
             throw new HTTPError({
                 message: ExceptionMessage.INVALID_RESET_TOKEN,
                 status: HttpCode.NOT_FOUND,
@@ -229,7 +225,7 @@ class AuthService implements TAuthService {
             });
         }
 
-        return generateResetPasswordToken({ email });
+        return await this.userService.createResetPasswordToken(user.id);
     }
 }
 
