@@ -11,6 +11,7 @@ import { type IStorage } from '~/framework/storage/storage.js';
 import { UsersApiPath } from './enums/enums.js';
 import {
     type UserGetAllResponseDto,
+    type UserSignUpResponseDto,
     type UserWithProfileRelation,
 } from './types/types.js';
 
@@ -38,6 +39,18 @@ class UserApi extends HttpApi {
         return await response.json<UserGetAllResponseDto>();
     }
 
+    public async loadUser(): Promise<UserSignUpResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(UsersApiPath.GET_USER, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<UserSignUpResponseDto>();
+    }
+
     public async deleteProfile(): Promise<UserEntityFields> {
         const response = await this.load(
             this.getFullEndpoint(`${UsersApiPath.ROOT}`, {}),
@@ -48,7 +61,6 @@ class UserApi extends HttpApi {
                 payload: JSON.stringify({}),
             },
         );
-
         return await response.json<UserEntityFields>();
     }
 

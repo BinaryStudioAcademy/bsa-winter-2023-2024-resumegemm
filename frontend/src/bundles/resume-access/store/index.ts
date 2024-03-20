@@ -3,6 +3,7 @@ import {
     accessResumeDetails,
     createResumeAccess,
     deleteAccessResume,
+    getUserResumesWithLinks,
 } from './actions';
 import { actions } from './slice';
 
@@ -12,6 +13,7 @@ const allActions = {
     deleteAccessResume,
     createResumeAccess,
     accessResumeDetails,
+    getUserResumesWithLinks,
 };
 
 export { reducer } from './slice';

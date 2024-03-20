@@ -21,11 +21,12 @@ const updateTemplateSettingsBlocks = (
 ): Containers =>
     containers.map((container) => ({
         ...container,
-        blocks: container.blocks.map((block) => ({
-            ...block,
-            enabled: true,
-            items: updateItemsWithResumeFields(block.items, resumePayload),
-        })),
+        blocks: container.blocks
+            .filter((block) => block.enabled)
+            .map((block) => ({
+                ...block,
+                items: updateItemsWithResumeFields(block.items, resumePayload),
+            })),
     }));
 
 export { updateTemplateSettingsBlocks };

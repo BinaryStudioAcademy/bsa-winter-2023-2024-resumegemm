@@ -10,13 +10,15 @@ import { ResumeModel } from '../resumes/resume.model.js';
 class ResumeShareModel extends AbstractModel {
     public 'resumeId': string;
 
+    public resume?: ResumeModel;
+
     public static override get tableName(): typeof DatabaseTableName.RESUME_SHARE_LINK {
         return DatabaseTableName.RESUME_SHARE_LINK;
     }
 
     public static getRelationMappings(): RelationMappings {
         return {
-            resumes: {
+            resume: {
                 relation: Model.HasOneRelation,
                 modelClass: ResumeModel,
                 join: {
