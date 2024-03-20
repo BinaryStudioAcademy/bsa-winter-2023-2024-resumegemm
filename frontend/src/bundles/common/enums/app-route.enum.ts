@@ -11,11 +11,11 @@ enum AppRoute {
     RESUME_ACCESS = '/resumes/share/:id',
     HOME = '/home',
     TEMPLATES = '/templates',
+    STATISTICS = '/statistics',
     TEMPLATE = '/template',
     TEMPLATE_EDITOR = '/template-editor',
     FORGOT_PASSWORD = '/forgot-password',
     QA = '/qa',
-    STATISTICS = '/statistics',
 }
 
 export { AppRoute };

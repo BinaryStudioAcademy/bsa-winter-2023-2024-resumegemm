@@ -1,11 +1,11 @@
 import clsx from 'clsx';
-import { useCallback } from 'react';
-import { type SortDirection } from 'shared/build';
+import { type SortDirection } from 'shared/build/index.js';
 
 import { Icon, Input } from '~/bundles/common/components/components';
 import { IconInput } from '~/bundles/common/components/icon-input/icon-input';
 import { SortButton } from '~/bundles/common/components/sort-button/sort-button';
 import { IconName, IconSize } from '~/bundles/common/enums/enums';
+import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks';
 
 import { Filter } from '../components';
 import styles from './styles.module.scss';
@@ -17,6 +17,7 @@ type Properties = {
     defaultSearchValue: string;
     hasIconInput?: boolean;
     className?: string;
+    onSort: (sortMethod: SortDirection) => void;
 };
 
 const PanelContainer: React.FC<Properties> = ({
@@ -26,11 +27,16 @@ const PanelContainer: React.FC<Properties> = ({
     defaultSearchValue = '',
     hasIconInput = true,
     className,
+    onSort,
 }: Properties) => {
-    const sortHandle = useCallback((sortMethod: SortDirection): void => {
-        // TODO: handle sort action
-        sortMethod;
-    }, []);
+    const dispatch = useAppDispatch();
+
+    const sortHandle = useCallback(
+        (sortMethod: SortDirection): void => {
+            onSort(sortMethod);
+        },
+        [dispatch, onSort],
+    );
 
     return (
         <div className={clsx(styles.panel_container, className)}>
@@ -55,7 +61,6 @@ const PanelContainer: React.FC<Properties> = ({
                             }
                         />
                     )}
-
                     <SortButton onSort={sortHandle}>Sort</SortButton>
                     <Filter />
                 </div>

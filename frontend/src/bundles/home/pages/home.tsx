@@ -1,9 +1,11 @@
 import { Link, NavLink, useSearchParams } from 'react-router-dom';
-import { SearchParameters } from 'shared/build/index.js';
+import { type SortDirection, SearchParameters } from 'shared/build/index.js';
 
 import mockResume from '~/assets/img/mock-resume.png';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import {
+    useAppDispatch,
+    useCallback,
     useLoadTemplates,
     useResumes,
     useSearch,
@@ -17,10 +19,13 @@ import {
     ResumeSection,
     TemplateSection,
 } from '~/bundles/home/components/components';
+import { actions as resumeActions } from '~/bundles/resume/store/resume.store';
+import { loadAllTemplates } from '~/bundles/templates-page/store/actions';
 
 import styles from './styles.module.scss';
 
 const Home: React.FC = () => {
+    const dispatch = useAppDispatch();
     const [searchParameters] = useSearchParams();
 
     const templateName =
@@ -44,6 +49,26 @@ const Home: React.FC = () => {
         SearchParameters.RECENTLY_VIEWED_RESUME_NAME,
     );
 
+    const handleResumesSort = useCallback(
+        (sortMethod: SortDirection) => {
+            const direction = sortMethod ?? undefined;
+            void dispatch(resumeActions.getAllResumes({ direction }));
+        },
+        [dispatch],
+    );
+
+    const handleTemplatesSort = useCallback(
+        (sortMethod: SortDirection) => {
+            const direction = sortMethod ?? undefined;
+            void dispatch(loadAllTemplates({ direction }));
+        },
+        [dispatch],
+    );
+
+    const handleRecentlyViewedSort = useCallback(() => {
+        // TODO: add after adding recently viewed resumes
+    }, []);
+
     return (
         <div className={styles.layout}>
             <HomeTopSection>
@@ -51,6 +76,7 @@ const Home: React.FC = () => {
                 <CreateResumeButton />
             </HomeTopSection>
             <ResumeSection
+                onSort={handleRecentlyViewedSort}
                 name="Recently viewed"
                 onHandleSearch={handleRecentlyViewedResumeSearch}
                 defaultSearchValue={recentlyViewedResumeName}
@@ -63,15 +89,16 @@ const Home: React.FC = () => {
                 <CreateNewCard />
             </ResumeSection>
             <ResumeSection
+                onSort={handleResumesSort}
                 name="Users' resume"
                 onHandleSearch={handleResumeSearch}
                 defaultSearchValue={resumeName}
             >
                 {resumes.length > 0 ? (
-                    resumes.map(({ id, image }) => (
+                    resumes.map(({ id, image, resumeTitle }) => (
                         <NavLink key={id} to={`/resumes/${id}`}>
                             <ResumeCard
-                                title="My Resume"
+                                title={resumeTitle as string}
                                 subtitle="Updated - Jan 25"
                                 image={image}
                                 id={id}
@@ -85,7 +112,7 @@ const Home: React.FC = () => {
                     </p>
                 )}
             </ResumeSection>
-            <TemplateSection name="Templates">
+            <TemplateSection onSort={handleTemplatesSort} name="Templates">
                 {templates.length > 0 ? (
                     templates.map((template) => {
                         return (

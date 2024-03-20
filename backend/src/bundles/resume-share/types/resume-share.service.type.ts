@@ -4,11 +4,11 @@ import {
 } from './types.js';
 
 type IResumeShareService = {
-    CreateShareLink(
+    createShareLink(
         id: string,
     ): Promise<ResumeShareCreateResponseDto | unknown>;
 
-    GetShareLink(
+    getShareLink(
         id: string,
         ip: string,
     ): Promise<ResumeShareGetResponseDto | unknown>;

@@ -53,6 +53,10 @@
     background-color: var(--color-background-blue);
 }
 
+.uploader_modal__backdrop__hidden {
+    height: 0;
+}
+
 .uploader_modal__overlay {
     position: fixed;
     top: 50%;
@@ -62,6 +66,11 @@
     padding: 40px;
     background-color: var(--color-text-blue);
     transform: translate(-50%, -50%);
+}
+
+.uploader_modal__overlay__small {
+    width: 25%;
+    height: 40%;
 }
 
 .uploader_modal__button__close {

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useSearchParams } from 'react-router-dom';
-import { SearchParameters } from 'shared/build/index.js';
+import { type SortDirection, SearchParameters } from 'shared/build/index.js';
 
 import { useSearch } from '~/bundles/common/hooks/hooks';
 
@@ -12,6 +12,7 @@ type Properties = {
     name: string;
     hasIconInput?: boolean;
     cardLayout?: string;
+    onSort: (sortMethod: SortDirection) => void;
 };
 
 const TemplateSection: React.FC<Properties> = ({
@@ -19,6 +20,7 @@ const TemplateSection: React.FC<Properties> = ({
     name,
     hasIconInput = true,
     cardLayout,
+    onSort,
 }: Properties) => {
     const [searchParameters] = useSearchParams();
 
@@ -29,6 +31,7 @@ const TemplateSection: React.FC<Properties> = ({
 
     return (
         <PanelContainer
+            onSort={onSort}
             hasIconInput={hasIconInput}
             name={name}
             className={styles.template_section}
