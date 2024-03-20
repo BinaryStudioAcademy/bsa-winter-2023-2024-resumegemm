@@ -8,6 +8,7 @@ type Properties = {
     name: string;
     onSort: (sortMethod: SortDirection) => void;
     onHandleSearch: React.ChangeEventHandler<HTMLInputElement>;
+    defaultSearchValue: string;
 };
 
 const ResumeSection: React.FC<Properties> = ({
@@ -15,12 +16,14 @@ const ResumeSection: React.FC<Properties> = ({
     name,
     onSort,
     onHandleSearch,
+    defaultSearchValue = '',
 }: Properties) => {
     return (
         <PanelContainer
             name={name}
             onSort={onSort}
             onHandleSearch={onHandleSearch}
+            defaultSearchValue={defaultSearchValue}
         >
             <div className={styles.resume_section__cards}>{children}</div>
         </PanelContainer>
