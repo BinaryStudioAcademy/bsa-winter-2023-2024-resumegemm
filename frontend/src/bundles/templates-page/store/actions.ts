@@ -21,4 +21,16 @@ const loadAllTemplates = createAsyncThunk<
     return items;
 });
 
-export { loadAllTemplates };
+const deleteTemplate = createAsyncThunk<
+    TemplateGetAllItemResponseDto[],
+    string,
+    AsyncThunkConfig
+>('templates2/delete', async (id, { extra }) => {
+    const { templateApi } = extra;
+    await templateApi.delete(id);
+    const { items } = await templateApi.getAll({});
+
+    return items;
+});
+
+export { deleteTemplate, loadAllTemplates };
