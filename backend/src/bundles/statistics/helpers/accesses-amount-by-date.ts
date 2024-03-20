@@ -1,7 +1,6 @@
 import { isSameDay } from 'date-fns';
 import { type ResumeShareAccessResponseDto } from 'shared/build/bundles/resumes/types/resume-share-access-response-dto.type';
-
-import { dateWithinRange } from './helpers';
+import { dateWithinRange } from 'shared/build/index.js';
 
 function accessesAmountByDate(
     accesses: ResumeShareAccessResponseDto[],
