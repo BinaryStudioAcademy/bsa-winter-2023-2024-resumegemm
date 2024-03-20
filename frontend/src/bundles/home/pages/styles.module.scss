@@ -51,3 +51,8 @@
     color: white;
     background-color: var(--color-light-gold);
 }
+
+.template_not_found_message {
+    grid-column: span 7;
+    justify-self: center;
+}
