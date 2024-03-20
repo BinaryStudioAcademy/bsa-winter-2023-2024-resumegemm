@@ -79,6 +79,7 @@ enum DatabaseColumnName {
     STATUS = 'status',
     SUBSCRIPTION_PLAN_ID = 'subscription_plan_id',
     SUBSCRIPTION_ID = 'subscription_id',
+    EMAIL_CONFIRMED = 'email_confirmed',
     TEMPLATE_SETTINGS = 'template_settings',
     STRIPE_PRODUCT_NAME = 'stripe_product_name',
     IS_CANCELLED = 'is_cancelled',

@@ -62,7 +62,7 @@ const StatisticsPage = (): JSX.Element => {
             return resumesWithShare.map((resumeWithShare) => {
                 const { resume, shareId } = resumeWithShare;
 
-                if (!resume?.resumeTitle) {
+                if (!resume?.title) {
                     return;
                 }
 
@@ -70,7 +70,7 @@ const StatisticsPage = (): JSX.Element => {
                     <StatisticResumeCard
                         onCheck={handleCheck(shareId)}
                         key={resume.id}
-                        label={resume.resumeTitle}
+                        label={resume.title}
                         src={resume.image}
                     />
                 );

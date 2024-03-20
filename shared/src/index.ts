@@ -124,6 +124,8 @@ export {
     type UpdateUserProfileAndEmailRequestDto,
     type User,
     type UserAuthResponse,
+    type UserConfirmEmailRequestDto,
+    type UserConfirmEmailResponse,
     type UserEntityFields,
     type UserForgotPasswordRequestDto,
     type UserForgotPasswordResponse,

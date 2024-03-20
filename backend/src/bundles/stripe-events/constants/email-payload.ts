@@ -27,11 +27,9 @@ const EmailPayload = {
                 color: #000;
                 text-align: center;
             }
-
             p {
                 color: #555;
             }
-
         </style>
     </head>
     <body>

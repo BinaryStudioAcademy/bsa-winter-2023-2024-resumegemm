@@ -8,9 +8,9 @@
     },
     "scripts": {
         "lint:type": "npx tsc --noEmit",
-        "lint:js": "npx eslint \"src/**/*.ts\"",
+        "lint:js": "npx eslint --fix \"src/**/*.ts\"",
         "lint": "npm run lint:type && npm run lint:js",
-        "start:dev": "nodemon --exec node --loader ts-paths-esm-loader src/index.ts",
+        "start:dev": "nodemon --exec node --trace-warnings --loader ts-paths-esm-loader src/index.ts",
         "migrate:dev": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:latest",
         "seed:run": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js seed:run",
         "migrate:dev:make": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:make -x ts",
@@ -24,6 +24,7 @@
         "@types/convict": "6.1.1",
         "@types/jsonwebtoken": "9.0.5",
         "@types/nodemailer": "6.4.14",
+        "@types/pug": "2.0.10",
         "@types/swagger-jsdoc": "6.0.1",
         "nodemon": "2.0.21",
         "ts-node": "10.9.1",
@@ -59,6 +60,7 @@
         "pino": "8.8.0",
         "pino-pretty": "9.1.1",
         "puppeteer": "22.1.0",
+        "pug": "3.0.2",
         "stripe": "14.17.0",
         "swagger-jsdoc": "6.2.8"
     }

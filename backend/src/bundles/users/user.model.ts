@@ -22,6 +22,8 @@ class UserModel extends AbstractModel {
 
     public 'passwordSalt': string;
 
+    public 'emailConfirmed': boolean;
+
     public deletedAt!: string | null;
 
     public 'stripeId': string;
@@ -39,6 +41,7 @@ class UserModel extends AbstractModel {
                     'profileId',
                     'createdAt',
                     'updatedAt',
+                    'emailConfirmed',
                     'deletedAt',
                     'stripeId',
                 );
