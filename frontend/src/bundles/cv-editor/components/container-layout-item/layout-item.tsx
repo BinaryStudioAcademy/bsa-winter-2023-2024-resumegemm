@@ -4,19 +4,16 @@ import {
     LanguageLevels,
 } from 'shared/build';
 
-import { Dropdown } from '~/bundles/common/components/dropdown/dropdown';
-import { FormGroup } from '~/bundles/common/components/form-group/form-group';
-import { Input } from '~/bundles/common/components/input/input';
-import { TextArea } from '~/bundles/common/components/text-area/text-area';
+import {
+    Dropdown,
+    FormGroup,
+    Input,
+    TextArea,
+} from '~/bundles/common/components/components';
+import { LayoutItemName } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks';
-import { updateSettingsBlocksFromInputs } from '~/bundles/resume/helpers/update-settings-blocks-from-inputs.helper';
+import { updateSettingsBlocksFromInputs } from '~/bundles/resume/helpers/helpers';
 import { actions as resumeActions } from '~/bundles/resume/store/resume.store';
-
-enum LayoutItemName {
-    AVATAR = 'Avatar',
-    DESCRIPTION = 'Description',
-    LANGUAGE_LEVEL = 'Language Level',
-}
 
 type LayoutItemPayload = {
     isCreate?: boolean;
