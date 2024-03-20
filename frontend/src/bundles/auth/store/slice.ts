@@ -9,6 +9,7 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 import { actions as profileActions } from '~/bundles/profile/store/profile.store.js';
 
 import {
+    confirmEmail,
     forgotPassword,
     getUser,
     requestNewAccessToken,
@@ -54,6 +55,7 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(
             isAnyOf(
+                confirmEmail.pending,
                 signUp.pending,
                 signIn.pending,
                 getUser.pending,
@@ -68,7 +70,6 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(
             isAnyOf(
-                signUp.fulfilled,
                 signIn.fulfilled,
                 getUser.fulfilled,
                 resetPassword.fulfilled,
@@ -82,6 +83,7 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(
             isAnyOf(
+                signUp.fulfilled,
                 verifyResetPasswordToken.fulfilled,
                 forgotPassword.fulfilled,
             ),
@@ -92,6 +94,19 @@ const { reducer, actions, name } = createSlice({
 
         builder.addMatcher(
             isAnyOf(
+                confirmEmail.fulfilled,
+                signIn.fulfilled,
+                getUser.fulfilled,
+            ),
+            (state, action) => {
+                state.dataStatus = DataStatus.FULFILLED;
+                state.user = action.payload;
+            },
+        );
+
+        builder.addMatcher(
+            isAnyOf(
+                confirmEmail.rejected,
                 signUp.rejected,
                 signIn.rejected,
                 getUser.rejected,

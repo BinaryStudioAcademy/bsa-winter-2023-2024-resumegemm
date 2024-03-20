@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { type ValueOf } from 'shared/build';
 
 import { Divider } from '~/bundles/auth/components/divider/divider';
 import { SocialMediaLinks } from '~/bundles/auth/components/social-media-links/social-media-links';
@@ -9,7 +8,6 @@ import {
     PasswordInput,
     RegularButton,
     Spinner,
-    Tooltip,
 } from '~/bundles/common/components/components';
 import { Hint } from '~/bundles/common/components/hint/hint';
 import {

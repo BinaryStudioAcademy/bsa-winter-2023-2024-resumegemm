@@ -1,4 +1,5 @@
 import {
+    confirmEmail,
     forgotPassword,
     getUser,
     requestNewAccessToken,
@@ -11,6 +12,7 @@ import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
+    confirmEmail,
     signUp,
     signIn,
     getUser,

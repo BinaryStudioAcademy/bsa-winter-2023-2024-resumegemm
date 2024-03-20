@@ -9,6 +9,7 @@ import {
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
     type UserAuthResponse,
+    type UserConfirmEmailRequestDto,
     type UserForgotPasswordRequestDto,
     type UserForgotPasswordResponse,
     type UserSignInRequestDto,
@@ -23,24 +24,12 @@ const signUp = createAsyncThunk<
     UserAuthResponse['user'],
     UserSignUpRequestDto,
     AsyncThunkConfig
->(
-    `${sliceName}/sign-up`,
-    async (registerPayload, { extra, rejectWithValue }) => {
-        const { authApi, storageApi } = extra;
-        try {
-            const { user, token: accessToken } = await authApi.signUp(
-                registerPayload,
-            );
+>(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
+    const { authApi } = extra;
+    const { user } = await authApi.signUp(registerPayload);
 
-            await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
-
-            return user;
-        } catch (error: unknown) {
-            const { message, errorType } = error as AuthException;
-            return rejectWithValue({ message, errorType });
-        }
-    },
-);
+    return user;
+});
 
 const signIn = createAsyncThunk<
     UserWithProfileRelation,
@@ -58,6 +47,19 @@ const signIn = createAsyncThunk<
         const { message, errorType } = error as AuthException;
         return rejectWithValue({ message, errorType });
     }
+});
+
+const confirmEmail = createAsyncThunk<
+    UserWithProfileRelation,
+    UserConfirmEmailRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/confirm-email`, async (payload, { extra }) => {
+    const { authApi, storageApi } = extra;
+    const { user, accessToken } = await authApi.confirmEmail(payload);
+
+    await storageApi.set(StorageKey.ACCESS_TOKEN, accessToken);
+
+    return user;
 });
 
 const getUser = createAsyncThunk<
@@ -123,6 +125,7 @@ const resetPassword = createAsyncThunk<
 });
 
 export {
+    confirmEmail,
     forgotPassword,
     getUser,
     requestNewAccessToken,

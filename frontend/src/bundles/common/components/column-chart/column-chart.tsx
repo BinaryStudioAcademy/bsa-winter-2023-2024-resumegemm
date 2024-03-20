@@ -1,9 +1,10 @@
 import { Chart } from 'react-google-charts';
+import { type StatisticsRecord } from 'shared/build';
 
 type Properties = {
     color?: string;
     measure: string;
-    data: [string, number][];
+    data: StatisticsRecord[];
     className?: string;
 };
 

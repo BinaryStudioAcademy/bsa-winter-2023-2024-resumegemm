@@ -4,6 +4,7 @@ import {
     deleteUserAvatar,
     updateUserAvatar,
 } from '~/bundles/profile/store/actions';
+import { actions as resumeActions } from '~/bundles/resume/store/resume.store';
 
 import {
     useAppDispatch,
@@ -17,7 +18,13 @@ import { UserPhotoMockup } from './user-photo-mockup';
 import { PhotoUploaderModal } from './user-photo-modal';
 import { UserPhotoPreview } from './user-photo-preview';
 
-const UserPhotoWrapper: React.FC = () => {
+type UserPhotoWrapperPayload = {
+    isResumeEditorAction?: boolean;
+};
+
+const UserPhotoWrapper: React.FC<UserPhotoWrapperPayload> = ({
+    isResumeEditorAction,
+}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const avatar = useAppSelector(({ auth }) => {
@@ -32,10 +39,20 @@ const UserPhotoWrapper: React.FC = () => {
                 const formData = new FormData();
                 formData.append('file', payload.blob);
 
-                void dispatch(updateUserAvatar(formData));
+                void dispatch(updateUserAvatar(formData))
+                    .unwrap()
+                    .then((payload) => {
+                        if (isResumeEditorAction) {
+                            void dispatch(
+                                resumeActions.setUserAvatarInTemplateSettings(
+                                    payload.avatar,
+                                ),
+                            );
+                        }
+                    });
             }
         },
-        [dispatch],
+        [isResumeEditorAction, dispatch],
     );
 
     const onCurrentPhotoHandler = useCallback(() => {
@@ -55,6 +72,7 @@ const UserPhotoWrapper: React.FC = () => {
             )}
             {isModalOpen && (
                 <PhotoUploaderModal
+                    isResumeEditorAction={isResumeEditorAction}
                     onToggleModal={setIsModalOpen}
                     onHandleCurrentPhoto={onHandlePhoto}
                 />
