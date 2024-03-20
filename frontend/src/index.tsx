@@ -36,6 +36,7 @@ import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-pa
 import { PreviewPage } from './bundles/preview/preview';
 import { QuestionAndAnswerPage } from './bundles/question-and-answer-page/question-and-answer-page';
 import { ResumeAccess } from './bundles/resume-access/pages/resume-access';
+import { StatisticsPage } from './bundles/statistics-page/pages/statistics-page';
 import { TemplatePage } from './bundles/templates-page/templates-page';
 import { Profile } from './bundles/users/pages/profile';
 import { ViewTemplatePage } from './bundles/view-template-page/view-template-page';
@@ -119,6 +120,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                                 {
                                                     path: AppRoute.TEMPLATES,
                                                     element: <TemplatePage />,
+                                                },
+                                                {
+                                                    path: AppRoute.STATISTICS,
+                                                    element: <StatisticsPage />,
                                                 },
                                                 {
                                                     path: `${AppRoute.TEMPLATE}/:id`,
