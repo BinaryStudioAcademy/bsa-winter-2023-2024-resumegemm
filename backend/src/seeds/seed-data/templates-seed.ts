@@ -5,25 +5,14 @@ const templatesSeed = [
     {
         is_owner: true,
         template_settings: testTemplate,
-        name: 'Test template',
-    },
-    {
-        is_owner: true,
-        template_settings: testTemplate,
-        name: 'Test template 2',
+        name: 'Web Developer',
+        image: 'https://i.imgur.com/AL5xDql.png',
     },
     {
         is_owner: true,
         template_settings: prettifiedTemplate,
-        name: 'Test template 3',
-    },
-    {
-        is_owner: false,
-        name: 'Test template 3',
-    },
-    {
-        is_owner: false,
-        name: 'Test template 4',
+        name: 'Software Developer',
+        image: 'https://i.imgur.com/eh44KC0.png',
     },
 ];
 

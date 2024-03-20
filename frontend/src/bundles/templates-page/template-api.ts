@@ -8,10 +8,10 @@ import { type IStorage } from '~/framework/storage/storage.js';
 import { TemplatesApiPath } from './enums/enums';
 import {
     type TemplateDto,
+    type TemplateGetAllResponseDto,
     type TemplateUpdateItemRequestDto,
     type TemplateUpdateItemResponseDto,
 } from './types/types';
-import { type TemplateGetAllResponseDto } from './types/types.js';
 
 type Constructor = {
     baseUrl: string;

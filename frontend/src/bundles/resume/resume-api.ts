@@ -1,4 +1,4 @@
-import { type FindAllOptions } from 'shared/build';
+import { type FindAllOptions } from 'shared/build/index.js';
 
 import { HttpApi } from '~/framework/api/api.js';
 
