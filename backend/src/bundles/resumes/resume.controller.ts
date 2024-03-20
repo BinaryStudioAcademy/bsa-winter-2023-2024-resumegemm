@@ -13,9 +13,11 @@ import {
     Controller,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
+import { type FileService } from '~/common/files/file.service.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 
+import { formatDate } from './helpers/format-date.helper.js';
 import { type IResumeService } from './interfaces/resume-service.interface.js';
 import {
     type ResumeAiScoreRequestDto,
@@ -24,17 +26,22 @@ import {
     type ResumeGetAllResponseDto,
     type ResumeGetItemResponseDto,
     type ResumeUpdateItemRequestDto,
-    type ResumeViewsCountResponseDto,
     type ResumeWithRelationsAndTemplateResponseDto,
 } from './types/types.js';
 
 class ResumeController extends Controller {
     private resumeService: IResumeService;
+    private fileService: FileService;
 
-    public constructor(logger: ILogger, resumeService: IResumeService) {
+    public constructor(
+        logger: ILogger,
+        resumeService: IResumeService,
+        fileService: FileService,
+    ) {
         super(logger, ApiPath.RESUMES);
 
         this.resumeService = resumeService;
+        this.fileService = fileService;
 
         this.addRoute({
             path: ResumesApiPath.ID,
@@ -241,12 +248,33 @@ class ResumeController extends Controller {
         options: ApiHandlerOptions<{
             user: User;
         }>,
-    ): Promise<ApiHandlerResponse<ResumeViewsCountResponseDto[]>> {
+    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto[]>> {
         const userId = options.user.id;
         const views = await this.resumeService.getResumeViews(userId);
+        const resumes = await this.resumeService.findAllByUserId(userId);
+
+        const resumesWithViews = await Promise.all(
+            resumes.map(async (resume) => {
+                const view = views.find((v) => v.id === resume.id);
+                const imageUrl = await this.fileService.getFileUrl(
+                    resume.image,
+                );
+                let formattedDate;
+                if (resume.updatedAt) {
+                    formattedDate = formatDate(resume.updatedAt);
+                }
+                return {
+                    ...resume,
+                    image: imageUrl,
+                    updatedAt: formattedDate,
+                    views: view ? view.views : 0,
+                };
+            }),
+        );
+
         return {
             status: HttpCode.OK,
-            payload: views,
+            payload: resumesWithViews,
         };
     }
 }
