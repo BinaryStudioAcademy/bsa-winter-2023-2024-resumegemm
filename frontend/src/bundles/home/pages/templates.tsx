@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { SearchParameters } from 'shared/build/index.js';
+import { type SortDirection, SearchParameters } from 'shared/build/index.js';
 
 import {
     Icon,
@@ -22,6 +22,7 @@ import {
     TemplateSection,
 } from '~/bundles/home/components/components';
 import { TemplateErrorMessage } from '~/bundles/templates-page/enums/enums';
+import { loadAllTemplates } from '~/bundles/templates-page/store/actions';
 import { type TemplateDto } from '~/bundles/templates-page/types/types';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
@@ -37,6 +38,14 @@ const Templates: React.FC = () => {
     const { templates } = useLoadTemplates({ name: templateName });
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
+    const handleTemplatesSort = useCallback(
+        (sortMethod: SortDirection) => {
+            const direction = sortMethod ?? undefined;
+            void dispatch(loadAllTemplates({ direction }));
+        },
+        [dispatch],
+    );
 
     const handleCreateTemplate = useCallback(() => {
         dispatch(createTemplate())
@@ -79,6 +88,7 @@ const Templates: React.FC = () => {
                 </RegularButton>
             </HomeTopSection>
             <TemplateSection
+                onSort={handleTemplatesSort}
                 name="Templates"
                 hasIconInput={false}
                 cardLayout={styles.template_page__card_layout}

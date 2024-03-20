@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { type FindAllOptions } from 'shared/build';
+import { type FindAllOptions } from 'shared/build/index.js';
 
-import { LanguageLevels, SkillLevel } from '~/bundles/resume/enums/enums';
 import {
     createResumeFromTemplateSettings,
     updateResumeKeysFromInputs,
@@ -27,7 +26,6 @@ const getAllResumes = createAsyncThunk<
     AsyncThunkConfig
 >(`${sliceName}/get-all-resumes`, (options, { extra }) => {
     const { resumeApi } = extra;
-
     const query = {
         direction: options?.direction ?? 'desc',
         name: options?.name ?? '',
@@ -52,32 +50,20 @@ const createResume = createAsyncThunk<
     const state = getState();
     const { resumeApi } = extra;
     const {
-        userProfile: { firstName },
+        userProfile: { firstName, lastName },
         email,
     } = state.auth.user as UserWithProfileRelation;
     const templateSettings = state.resumes.templateSettings as TemplateSettings;
 
     const resume = createResumeFromTemplateSettings({
         firstName,
+        lastName,
         email,
         templateSettings,
         image,
     });
-
-    const updatedResume = {
-        ...resume,
-        technicalSkills: resume.technicalSkills.map((skill) => ({
-            ...skill,
-            skillLevel: SkillLevel.Advanced,
-        })),
-        languages: resume.languages.map((language) => ({
-            ...language,
-            languageLevel: LanguageLevels.ELEMENTERY,
-        })),
-    };
-
     const templateId = state.resumes.currentTemplateId;
-    return resumeApi.createResume(updatedResume, templateId as string);
+    return resumeApi.createResume(resume, templateId as string);
 });
 
 const getCurrentResumeWithTemplate = createAsyncThunk<
@@ -186,6 +172,7 @@ const updateCurrentResume = createAsyncThunk<
         const { resumeApi } = extra;
         const { templates, ...restResumeProperties } = getState().resumes
             .currentResume as ResumeWithRelationsAndTemplateResponseDto;
+
         const updatedResumeData = updateResumeKeysFromInputs(
             restResumeProperties,
             itemId,
