@@ -1,5 +1,6 @@
 enum ExceptionMessage {
     EMAIL_TAKEN = 'Email is already taken.',
+    DELETED_ACCOUNT_WITH_THIS_EMAIL = 'This email is already taken. Please try another one.',
     INVALID_EMAIL = 'Invalid email. Please check and try again.',
     USER_EXISTS = 'Such a user exists.',
     USER_NOT_FOUND = 'User was not found.',
