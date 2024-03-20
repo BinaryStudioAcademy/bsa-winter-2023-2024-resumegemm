@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { Link, useNavigate } from 'react-router-dom';
-import { type SortDirection } from 'shared/build/index.js';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { type SortDirection, SearchParameters } from 'shared/build/index.js';
 
 import {
     Icon,
@@ -9,7 +9,11 @@ import {
 } from '~/bundles/common/components/components';
 import { IconInput } from '~/bundles/common/components/icon-input/icon-input';
 import { AppRoute, IconName, IconSize } from '~/bundles/common/enums/enums';
-import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks';
+import {
+    useAppDispatch,
+    useCallback,
+    useSearch,
+} from '~/bundles/common/hooks/hooks';
 import { useLoadTemplates } from '~/bundles/common/hooks/use-load-templates/use-load-templates.hook';
 import { createTemplate } from '~/bundles/edit-template/store/actions';
 import {
@@ -26,7 +30,12 @@ import { showToast } from '~/bundles/toast/helpers/show-toast';
 import styles from './styles.module.scss';
 
 const Templates: React.FC = () => {
-    const { templates } = useLoadTemplates();
+    const [searchParameters] = useSearchParams();
+
+    const templateName =
+        searchParameters.get(SearchParameters.TEMPLATE_NAME) ?? '';
+
+    const { templates } = useLoadTemplates({ name: templateName });
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -52,6 +61,8 @@ const Templates: React.FC = () => {
             });
     }, [dispatch, navigate]);
 
+    const handleTemplateSearch = useSearch(SearchParameters.TEMPLATE_NAME);
+
     return (
         <div className={clsx(styles.layout, styles.templates_layout)}>
             <HomeTopSection className={styles.flex_home_wrapper}>
@@ -64,6 +75,7 @@ const Templates: React.FC = () => {
                             width="100%"
                             className={styles.template_icon_input}
                             placeholder="Search"
+                            onChange={handleTemplateSearch}
                         />
                     }
                     className={styles.icon_input_wrapper}
@@ -81,7 +93,7 @@ const Templates: React.FC = () => {
                 hasIconInput={false}
                 cardLayout={styles.template_page__card_layout}
             >
-                {templates.length > 0 &&
+                {templates.length > 0 ? (
                     templates.map((template) => {
                         return (
                             <Link
@@ -94,7 +106,12 @@ const Templates: React.FC = () => {
                                 />
                             </Link>
                         );
-                    })}
+                    })
+                ) : (
+                    <p className={styles.template_not_found_message}>
+                        No results found for your search
+                    </p>
+                )}
             </TemplateSection>
         </div>
     );

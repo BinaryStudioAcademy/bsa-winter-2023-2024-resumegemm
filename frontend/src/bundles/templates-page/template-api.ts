@@ -75,9 +75,11 @@ class TemplateApi extends HttpApi {
     public async getAll(
         options: FindAllOptions,
     ): Promise<TemplateGetAllResponseDto> {
+        const { name, direction } = options;
+
         const response = await this.load(
             this.getFullEndpoint(
-                `${TemplatesApiPath.ROOT}?name=${options.name}&direction=${options.direction}`,
+                `${TemplatesApiPath.ROOT}?name=${name}&direction=${direction}`,
                 {},
             ),
             {

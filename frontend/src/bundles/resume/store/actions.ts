@@ -31,7 +31,6 @@ const getAllResumes = createAsyncThunk<
         direction: options?.direction ?? 'desc',
         name: options?.name ?? '',
     };
-
     return resumeApi.getAllResumes(query);
 });
 

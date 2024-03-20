@@ -18,7 +18,6 @@ const loadAllTemplates = createAsyncThunk<
     };
 
     const { items } = await templateApi.getAll(query);
-
     return items;
 });
 

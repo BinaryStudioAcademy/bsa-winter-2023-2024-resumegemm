@@ -67,7 +67,7 @@ class ResumeRepository implements IResumeRepository {
     }
 
     public async find(id: string): Promise<Resume | undefined> {
-        return this.resumeModel.query().findById(id);
+        return await this.resumeModel.query().findById(id);
     }
 
     public async findById(

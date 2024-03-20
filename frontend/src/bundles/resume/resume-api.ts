@@ -27,6 +27,7 @@ class ResumeApi extends HttpApi {
         query: FindAllOptions,
     ): Promise<ResumeGetAllResponseDto[]> {
         const { name, direction } = query;
+
         const response = await this.load(
             this.getFullEndpoint(
                 `${ResumesApiPath.ROOT}?name=${name}&direction=${direction}`,
