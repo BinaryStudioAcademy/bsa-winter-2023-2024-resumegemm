@@ -43,9 +43,10 @@ class AuthService implements TAuthService {
             withDeleted: true,
         });
         if (foundUserByEmail?.deletedAt) {
-            throw new HTTPError({
-                message: ExceptionMessage.EMAIL_TAKEN,
+            throw new AuthException({
+                message: ExceptionMessage.DELETED_ACCOUNT_WITH_THIS_EMAIL,
                 status: HttpCode.BAD_REQUEST,
+                errorType: ServerErrorType.EMAIL,
             });
         }
         if (foundUserByEmail) {
@@ -85,9 +86,10 @@ class AuthService implements TAuthService {
         });
 
         if (foundUserByEmail?.deletedAt) {
-            throw new HTTPError({
+            throw new AuthException({
                 message: ExceptionMessage.NO_ACTIVE_ACCOUNT,
                 status: HttpCode.BAD_REQUEST,
+                errorType: ServerErrorType.EMAIL,
             });
         }
 
