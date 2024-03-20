@@ -6,7 +6,6 @@ import {
     accessResume,
     accessResumeDetails,
     deleteAccessResume,
-    getResumeAccessByResumeId,
     getUserResumesWithLinks,
 } from './actions.js';
 
@@ -41,12 +40,6 @@ const { reducer, actions, name } = createSlice({
             state.resumeViewHistory[action.payload.resumeId] =
                 action.payload.accesses;
         });
-        builder.addCase(
-            getResumeAccessByResumeId.fulfilled,
-            (state, action) => {
-                state.resumeId = action.payload.resumeId;
-            },
-        );
 
         builder.addMatcher(
             isAnyOf(

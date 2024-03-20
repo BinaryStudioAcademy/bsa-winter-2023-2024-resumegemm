@@ -15,13 +15,13 @@ const useSearch = (searchParameter: Properties): ReturnType => {
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const { value } = event.target;
 
-            if (value.trim() === '') {
-                return setSearchParameters((parameters) => {
-                    parameters.delete(searchParameter);
-                    return parameters;
-                });
-            }
-            setSearchParameters({ [searchParameter]: value });
+            setSearchParameters((parameters) => {
+                value.trim() === ''
+                    ? parameters.delete(searchParameter)
+                    : parameters.set(searchParameter, value);
+
+                return parameters;
+            });
         },
         [setSearchParameters, searchParameter],
     );

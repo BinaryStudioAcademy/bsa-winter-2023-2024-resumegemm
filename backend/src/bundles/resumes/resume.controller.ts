@@ -269,18 +269,15 @@ class ResumeController extends Controller {
         );
 
         const resumesWithViews = await Promise.all(
-            resumes.map(async (resume) => {
+            resumes.map((resume) => {
                 const view = views.find((v) => v.id === resume.id);
-                const imageUrl = await this.fileService.getFileUrl(
-                    resume.image,
-                );
+
                 let formattedDate;
                 if (resume.updatedAt) {
                     formattedDate = formatDate(resume.updatedAt);
                 }
                 return {
                     ...resume,
-                    image: imageUrl,
                     updatedAt: formattedDate,
                     views: view ? view.views : 0,
                 };

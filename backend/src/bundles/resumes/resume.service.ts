@@ -88,11 +88,14 @@ class ResumeService implements IResumeService {
         );
     }
 
-    public findAllByUserId(
+    public async findAllByUserId(
         userId: string,
-        options?: FindAllOptions,
     ): Promise<ResumeGetAllResponseDto[]> {
-        return this.resumeRepository.findAllByUserId(userId, options);
+        const resumes = await this.resumeRepository.findAllByUserId(userId);
+
+        return Promise.all(
+            resumes.map((resume) => this.getResumeWithImage(resume)),
+        );
     }
 
     public async create(

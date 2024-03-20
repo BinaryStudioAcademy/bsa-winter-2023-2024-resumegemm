@@ -97,21 +97,6 @@ class ResumeAccessApi extends HttpApi {
 
         return await response.json();
     }
-
-    public async getResumeShareLinkByResumeId(
-        resumeId: string,
-    ): Promise<ResumeShareCreateResponseDto> {
-        const response = await this.load(
-            this.getFullEndpoint(ResumesApiPath.SHARE_RESUME_ID(resumeId), {}),
-            {
-                method: 'GET',
-                contentType: ContentType.JSON,
-                hasAuth: true,
-            },
-        );
-
-        return await response.json();
-    }
 }
 
 export { ResumeAccessApi };

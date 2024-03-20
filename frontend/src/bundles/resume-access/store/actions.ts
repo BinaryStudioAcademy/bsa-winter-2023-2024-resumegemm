@@ -60,21 +60,10 @@ const createResumeAccess = createAsyncThunk<
     return resumeAccessApi.createResumeAccess(request.resumeId);
 });
 
-const getResumeAccessByResumeId = createAsyncThunk<
-    ResumeShareGetResponseDto,
-    { resumeId: string },
-    AsyncThunkConfig
->(`${sliceName}/getResumeAccessByResumeId`, (request, { extra }) => {
-    const { resumeAccessApi } = extra;
-
-    return resumeAccessApi.getResumeShareLinkByResumeId(request.resumeId);
-});
-
 export {
     accessResume,
     accessResumeDetails,
     createResumeAccess,
     deleteAccessResume,
-    getResumeAccessByResumeId,
     getUserResumesWithLinks,
 };

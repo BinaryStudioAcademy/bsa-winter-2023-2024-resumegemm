@@ -14,13 +14,16 @@ import {
 
 class ResumeShareService implements IResumeShareService {
     private resumeShareRepository: ResumeShareRepository;
+    // private resumeService: ResumeService;
     private resumeShareAccessService: ResumeShareAccessService;
 
     public constructor(
         resumeShareRepository: ResumeShareRepository,
+        // resumeService: ResumeService,
         resumeShareAccessService: ResumeShareAccessService,
     ) {
         this.resumeShareRepository = resumeShareRepository;
+        // this.resumeService = resumeService;
         this.resumeShareAccessService = resumeShareAccessService;
     }
 
