@@ -54,6 +54,30 @@ const { reducer, actions, name } = createSlice({
                 );
             }
         },
+        setUserAvatarInTemplateSettings: (state, action) => {
+            if (state.templateSettings) {
+                state.templateSettings.containers =
+                    state.templateSettings.containers.map((container) => {
+                        return {
+                            ...container,
+                            blocks: container.blocks.map((block) => {
+                                return {
+                                    ...block,
+                                    items: block.items.map((item) => {
+                                        if (item.id === 'avatar') {
+                                            return {
+                                                ...item,
+                                                content: action.payload,
+                                            };
+                                        }
+                                        return item;
+                                    }),
+                                };
+                            }),
+                        };
+                    });
+            }
+        },
         setCurrentTemplateId: (state, action) => {
             state.currentTemplateId = action.payload;
         },

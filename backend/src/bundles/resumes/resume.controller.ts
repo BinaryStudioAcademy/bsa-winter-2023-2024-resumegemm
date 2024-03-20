@@ -16,6 +16,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { type FileService } from '~/common/files/file.service.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
+import { type FindAllOptions } from '~/common/types/types.js';
 
 import { formatDate } from './helpers/format-date.helper.js';
 import { type IResumeService } from './interfaces/resume-service.interface.js';
@@ -58,7 +59,10 @@ class ResumeController extends Controller {
         this.addRoute({
             path: ResumesApiPath.ROOT,
             method: 'GET',
-            handler: () => this.findAll(),
+            handler: (options) =>
+                this.findAll(
+                    options as ApiHandlerOptions<{ query: FindAllOptions }>,
+                ),
         });
 
         this.addRoute({
@@ -115,7 +119,10 @@ class ResumeController extends Controller {
             method: 'GET',
             handler: (options) =>
                 this.getResumeViews(
-                    options as ApiHandlerOptions<{ user: User }>,
+                    options as ApiHandlerOptions<{
+                        user: User;
+                        query: FindAllOptions;
+                    }>,
                 ),
         });
     }
@@ -141,10 +148,10 @@ class ResumeController extends Controller {
         };
     }
 
-    private async findAll(): Promise<
-        ApiHandlerResponse<ResumeGetAllResponseDto[]>
-    > {
-        const resumes = await this.resumeService.findAll();
+    private async findAll(
+        options: ApiHandlerOptions<{ query: FindAllOptions }>,
+    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto[]>> {
+        const resumes = await this.resumeService.findAll(options.query);
 
         return {
             status: HttpCode.OK,
@@ -247,11 +254,19 @@ class ResumeController extends Controller {
     private async getResumeViews(
         options: ApiHandlerOptions<{
             user: User;
+            query: FindAllOptions;
         }>,
     ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto[]>> {
         const userId = options.user.id;
-        const views = await this.resumeService.getResumeViews(userId);
-        const resumes = await this.resumeService.findAllByUserId(userId);
+
+        const views = await this.resumeService.getResumeViews(
+            userId,
+            options.query,
+        );
+        const resumes = await this.resumeService.findAllByUserId(
+            userId,
+            options.query,
+        );
 
         const resumesWithViews = await Promise.all(
             resumes.map(async (resume) => {

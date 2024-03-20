@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { Header, RegularButton } from '~/bundles/common/components/components';
+import { RegularButton } from '~/bundles/common/components/components';
 import {
     AppRoute,
     ButtonVariant,
@@ -33,7 +33,6 @@ const CreateResume: React.FC = () => {
 
     return (
         <div className={styles.create__resume__wrapper}>
-            <Header />
             <div className={styles.create__resume}>
                 {templateSettings && (
                     <>

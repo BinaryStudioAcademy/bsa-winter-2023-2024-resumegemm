@@ -65,10 +65,14 @@ class FileUploadClient implements IFileUploadClient {
         let body = buffer;
 
         if (contentEncoding === ContentEncoding.BASE64) {
-            body = Buffer.from(
-                (buffer as string).replace(/^data:image\/\w+;base64,/, ''),
-                'base64',
+            const regexSearchValue = /^data:image\/\w+;base64,/;
+
+            const parsedBase64 = (buffer as string).replace(
+                regexSearchValue,
+                '',
             );
+
+            body = Buffer.from(parsedBase64, ContentEncoding.BASE64);
         }
 
         const putObjectCommand = new PutObjectCommand({

@@ -1,4 +1,9 @@
 import {
+    type FindAllOptions,
+    type ResumeViewsCountResponseDto,
+} from 'shared/build';
+
+import {
     AppRoute,
     CommonMessage,
     DataStatus,
@@ -40,6 +45,7 @@ type UseResumesReturnValues = {
     resumeReview: ResumeAiScoreResponseDto | null;
     dataStatus: DataStatus;
     id?: string;
+    resumeViews: ResumeViewsCountResponseDto[];
 };
 
 const getRandomItem = (template: TemplateDto[]): TemplateDto | null => {
@@ -47,7 +53,7 @@ const getRandomItem = (template: TemplateDto[]): TemplateDto | null => {
     return template[randomIndex];
 };
 
-const useResumes = (): UseResumesReturnValues => {
+const useResumes = (options?: FindAllOptions): UseResumesReturnValues => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
@@ -61,6 +67,7 @@ const useResumes = (): UseResumesReturnValues => {
         resumeReview,
         templates,
         isTemplatesLoading,
+        resumeViews,
     } = useAppSelector(({ auth, resumes, templates }) => ({
         userId: auth.user?.id,
         resumes: resumes.resumes,
@@ -70,21 +77,23 @@ const useResumes = (): UseResumesReturnValues => {
         resumeReview: resumes.resumeReview,
         templates: templates.templates,
         isTemplatesLoading: templates.dataStatus,
+        resumeViews: resumes.resumeViews,
     }));
 
     const deleteResume = useCallback(
         (resumeId: string) => {
             void dispatch(resumeActions.deleteResume(resumeId))
                 .unwrap()
-                .then(() =>
+                .then(() => {
                     showToast(
                         CommonMessage.SUCCESS_DELETE_RESUME,
                         ToastType.INFO,
                         {
                             position: 'top-right',
                         },
-                    ),
-                );
+                    );
+                    void dispatch(resumeActions.getViewsCountByUserId());
+                });
         },
         [dispatch],
     );
@@ -162,10 +171,16 @@ const useResumes = (): UseResumesReturnValues => {
     }, [currentResume, isTemplatesLoading, dispatch, templates.length]);
 
     useEffect(() => {
-        if (dataStatus === DataStatus.IDLE) {
-            void dispatch(resumeActions.getAllResumes());
-        }
-    }, [dataStatus, dispatch]);
+        void dispatch(resumeActions.getAllResumes({ name: options?.name }));
+    }, [dispatch, options?.name]);
+
+    useEffect(() => {
+        dispatch(
+            resumeActions.getViewsCountByUserId({ name: options?.name }),
+        ).catch((error: Error) => {
+            showToast(error.message, ToastType.ERROR);
+        });
+    }, [dispatch, options?.name]);
 
     return {
         userId,
@@ -179,6 +194,7 @@ const useResumes = (): UseResumesReturnValues => {
         id,
         createResume,
         deleteResume,
+        resumeViews,
     };
 };
 

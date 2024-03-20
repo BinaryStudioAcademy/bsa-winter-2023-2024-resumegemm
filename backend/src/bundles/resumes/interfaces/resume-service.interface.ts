@@ -9,6 +9,8 @@ import {
     type ResumeWithRelationsAndTemplateResponseDto,
 } from 'shared/build/index.js';
 
+import { type FindAllOptions } from '~/common/types/types.js';
+
 interface IResumeService {
     find(id: string): Promise<Resume | undefined>;
 
@@ -16,9 +18,12 @@ interface IResumeService {
         id: string,
     ): Promise<ResumeWithRelationsAndTemplateResponseDto | null>;
 
-    findAll(): Promise<ResumeGetItemResponseDto[]>;
+    findAll(options?: FindAllOptions): Promise<ResumeGetItemResponseDto[]>;
 
-    findAllByUserId(userId: string): Promise<ResumeGetItemResponseDto[]>;
+    findAllByUserId(
+        userId: string,
+        options?: FindAllOptions,
+    ): Promise<ResumeGetItemResponseDto[]>;
 
     create(
         payload: ResumeCreateItemRequestDto,
@@ -37,7 +42,10 @@ interface IResumeService {
         resumeAiScoreRequestDto: ResumeAiScoreRequestDto,
     ) => Promise<ResumeAiScoreResponseDto>;
 
-    getResumeViews(userId: string): Promise<ResumeViewsCountResponseDto[]>;
+    getResumeViews(
+        userId: string,
+        optios?: FindAllOptions,
+    ): Promise<ResumeViewsCountResponseDto[]>;
 }
 
 export { type IResumeService };

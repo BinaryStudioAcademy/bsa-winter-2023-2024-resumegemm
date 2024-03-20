@@ -1,3 +1,5 @@
+import { type FindAllOptions } from 'shared/build/index.js';
+
 import { HttpApi } from '~/framework/api/api.js';
 
 import { ApiPath, ContentType, ResumesApiPath } from './enums/enums';
@@ -22,9 +24,16 @@ class ResumeApi extends HttpApi {
         super({ path: ApiPath.RESUMES, baseUrl, http, storage });
     }
 
-    public async getAllResumes(): Promise<ResumeGetAllResponseDto[]> {
+    public async getAllResumes(
+        query: FindAllOptions,
+    ): Promise<ResumeGetAllResponseDto[]> {
+        const { name, direction } = query;
+
         const response = await this.load(
-            this.getFullEndpoint(ResumesApiPath.ROOT, {}),
+            this.getFullEndpoint(
+                `${ResumesApiPath.ROOT}?name=${name}&direction=${direction}`,
+                {},
+            ),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
@@ -56,7 +65,7 @@ class ResumeApi extends HttpApi {
         resumeId: string,
     ): Promise<ResumeWithRelationsAndTemplateResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(`${ResumesApiPath.ROOT}/${resumeId}`, {}),
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}${resumeId}`, {}),
             {
                 method: 'PUT',
                 contentType: ContentType.JSON,
@@ -72,7 +81,7 @@ class ResumeApi extends HttpApi {
         templateId: string,
     ): Promise<ResumeGetAllResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(`${ResumesApiPath.ROOT}/${templateId}`, {}),
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}${templateId}`, {}),
             {
                 method: 'POST',
                 contentType: ContentType.JSON,
@@ -87,7 +96,7 @@ class ResumeApi extends HttpApi {
         resumeId: string,
     ): Promise<ResumeGetAllResponseDto[]> {
         const response = await this.load(
-            this.getFullEndpoint(`${ResumesApiPath.ROOT}/${resumeId}`, {}),
+            this.getFullEndpoint(`${ResumesApiPath.ROOT}${resumeId}`, {}),
             {
                 method: 'DELETE',
                 contentType: ContentType.JSON,
@@ -113,9 +122,16 @@ class ResumeApi extends HttpApi {
         return await response.json<ResumeAiScoreResponseDto>();
     }
 
-    public async getViewsCount(): Promise<ResumeViewsCountResponseDto[]> {
+    public async getViewsCount(
+        query?: FindAllOptions,
+    ): Promise<ResumeViewsCountResponseDto[]> {
+        const { name, direction } = query ?? {};
+
         const response = await this.load(
-            this.getFullEndpoint(ResumesApiPath.VIEWS, {}),
+            this.getFullEndpoint(
+                `${ResumesApiPath.VIEWS}?name=${name}&direction=${direction}`,
+                {},
+            ),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
