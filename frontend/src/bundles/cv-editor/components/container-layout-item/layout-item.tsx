@@ -10,6 +10,7 @@ import {
     Input,
     TextArea,
 } from '~/bundles/common/components/components';
+import { UserPhotoWrapper } from '~/bundles/common/components/user-photo-uploader/user-photo-wrapper';
 import { LayoutItemName } from '~/bundles/common/enums/enums';
 import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks';
 import { updateSettingsBlocksFromInputs } from '~/bundles/resume/helpers/helpers';
@@ -107,6 +108,7 @@ const ContainerLayoutItem: React.FC<LayoutItemPayload> = ({
             }
         },
         [
+            defaultValue,
             handleInputResumeFieldChange,
             handleDropdownChange,
             languageLevelOptions,
@@ -114,7 +116,7 @@ const ContainerLayoutItem: React.FC<LayoutItemPayload> = ({
     );
 
     if (item.name === LayoutItemName.AVATAR) {
-        return null;
+        return <UserPhotoWrapper isResumeEditorAction />;
     }
 
     return (

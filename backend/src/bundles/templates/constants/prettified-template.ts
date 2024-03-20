@@ -13,6 +13,24 @@ const prettifiedTemplate: TemplateSettings = {
                     name: TemplateBlockTitles.Profile,
                     items: [
                         {
+                            id: 'avatar',
+                            name: 'Avatar',
+                            tagName: TemplateItemTags.IMAGE,
+                            content:
+                                'https://i.pinimg.com/564x/29/55/59/295559e87b67fde4bbd5d5049d67e678.jpg',
+                            styles: {
+                                width: '65px',
+                                height: '65px',
+                                borderRadius: '50%',
+                                overflow: 'hidden',
+                                objectFit: 'cover',
+                                position: 'absolute',
+                                right: '0',
+                                top: '0',
+                                flex: '1',
+                            },
+                        },
+                        {
                             id: 'firstName',
                             name: 'First Name',
                             tagName: TemplateItemTags.PARAGRAPH,
@@ -34,24 +52,6 @@ const prettifiedTemplate: TemplateSettings = {
                                 fontSize: '1.5rem',
                                 letterSpacing: '2px',
                                 margin: '0',
-                            },
-                        },
-                        {
-                            id: 'avatar',
-                            name: 'Avatar',
-                            tagName: TemplateItemTags.IMAGE,
-                            content:
-                                'https://i.pinimg.com/564x/29/55/59/295559e87b67fde4bbd5d5049d67e678.jpg',
-                            styles: {
-                                width: '65px',
-                                height: '65px',
-                                borderRadius: '50%',
-                                overflow: 'hidden',
-                                objectFit: 'cover',
-                                position: 'absolute',
-                                right: '0',
-                                top: '0',
-                                flex: '1',
                             },
                         },
                         {
