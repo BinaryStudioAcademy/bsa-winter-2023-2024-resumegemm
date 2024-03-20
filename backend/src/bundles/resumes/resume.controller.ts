@@ -14,6 +14,7 @@ import {
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
+import { type FindAllOptions } from '~/common/types/types.js';
 
 import { type IResumeService } from './interfaces/resume-service.interface.js';
 import {
@@ -49,7 +50,10 @@ class ResumeController extends Controller {
         this.addRoute({
             path: ResumesApiPath.ROOT,
             method: 'GET',
-            handler: () => this.findAll(),
+            handler: (options) =>
+                this.findAll(
+                    options as ApiHandlerOptions<{ query: FindAllOptions }>,
+                ),
         });
 
         this.addRoute({
@@ -124,10 +128,10 @@ class ResumeController extends Controller {
         };
     }
 
-    private async findAll(): Promise<
-        ApiHandlerResponse<ResumeGetAllResponseDto[]>
-    > {
-        const resumes = await this.resumeService.findAll();
+    private async findAll(
+        options: ApiHandlerOptions<{ query: FindAllOptions }>,
+    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto[]>> {
+        const resumes = await this.resumeService.findAll(options.query);
 
         return {
             status: HttpCode.OK,

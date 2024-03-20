@@ -13,6 +13,7 @@ import styles from './styles.module.scss';
 type Properties = {
     children?: React.ReactNode;
     name: string;
+    onHandleSearch: React.ChangeEventHandler<HTMLInputElement>;
     hasIconInput?: boolean;
     className?: string;
 };
@@ -20,6 +21,7 @@ type Properties = {
 const PanelContainer: React.FC<Properties> = ({
     children,
     name,
+    onHandleSearch,
     hasIconInput = true,
     className,
 }: Properties) => {
@@ -45,6 +47,7 @@ const PanelContainer: React.FC<Properties> = ({
                                 <Input
                                     placeholder=" Search"
                                     className={styles.panel_container__input}
+                                    onChange={onHandleSearch}
                                 />
                             }
                         />
