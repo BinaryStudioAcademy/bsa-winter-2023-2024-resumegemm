@@ -100,6 +100,7 @@ const testTemplate: TemplateSettings = {
                         width: '100%',
                         position: 'relative',
                     },
+                    enabled: true,
                 },
             ],
             styles: {
@@ -188,6 +189,7 @@ const testTemplate: TemplateSettings = {
                         flexDirection: 'column',
                         justifyContent: 'space-around',
                     },
+                    enabled: true,
                 },
                 {
                     id: 'footerBlock',
@@ -224,6 +226,7 @@ const testTemplate: TemplateSettings = {
                         marginRight: 'auto',
                         marginTop: '5px',
                     },
+                    enabled: true,
                 },
                 {
                     id: 'contactsBlock',
@@ -273,6 +276,7 @@ const testTemplate: TemplateSettings = {
                         marginRight: 'auto',
                         marginTop: '5px',
                     },
+                    enabled: true,
                 },
                 {
                     id: 'certificationBlock',
@@ -325,6 +329,7 @@ const testTemplate: TemplateSettings = {
                         margin: 'auto',
                         marginTop: '0.4rem',
                     },
+                    enabled: true,
                 },
             ],
             styles: {
@@ -383,6 +388,7 @@ const testTemplate: TemplateSettings = {
                         flexDirection: 'column',
                         justifyContent: 'space-around',
                     },
+                    enabled: true,
                 },
             ],
             styles: {
