@@ -80,11 +80,12 @@ class UserService
         avatar,
         passwordSalt,
         passwordHash,
+        emailConfirmed,
     }: UserSignUpRequestDto & {
         passwordSalt?: string;
         passwordHash?: string;
         avatar?: string;
-    }): Promise<Pick<UserEntityFields, 'id'>> {
+    }): Promise<Pick<UserEntityFields, 'id' | 'email'>> {
         const transaction = await this.userRepository.model.startTransaction();
         try {
             const { id } = await this.profileRepository.createWithTransaction(
@@ -101,6 +102,7 @@ class UserService
                     passwordSalt: passwordSalt ?? null,
                     passwordHash: passwordHash ?? null,
                     profileId: id,
+                    emailConfirmed,
                 }),
                 transaction,
             )) as UserEntityFields;
@@ -154,6 +156,10 @@ class UserService
         return user;
     }
 
+    public async confirmEmail(id: string): Promise<void> {
+        return this.userRepository.confirmEmail(id);
+    }
+
     public async delete(
         headers: IncomingHttpHeaders,
     ): Promise<UserEntityFields> {
@@ -167,16 +173,7 @@ class UserService
         }
 
         const { id } = decodeToken(token) as JwtPayload;
-        const deletedUser = await this.userRepository.delete(id);
-
-        if (!deletedUser) {
-            throw new HTTPError({
-                message: 'User not found',
-                status: HttpCode.NOT_FOUND,
-            });
-        }
-
-        return deletedUser;
+        return await this.userRepository.delete(id);
     }
 
     public async addStripeId(
