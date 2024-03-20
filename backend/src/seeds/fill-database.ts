@@ -49,6 +49,7 @@ import {
 } from './seed-data/seed-data.js';
 
 const NUMBER_OF_ROWS = 4;
+const NUMBER_OF_TEMPLATES = templatesSeed.length;
 
 const deleteFromTables = async (
     trx: Knex.Transaction,
@@ -114,7 +115,6 @@ async function seed(knex: Knex): Promise<void> {
             ...template,
             [DatabaseColumnName.ID]: guid.raw(),
             [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
-            [DatabaseColumnName.IMAGE]: imagesSeed[index].image,
         }));
 
         const insertedTemplates = await trx<Template>(
@@ -230,13 +230,13 @@ async function seed(knex: Knex): Promise<void> {
 
         // USER_TEMPLATES junction table
 
-        const userTemplatesSeed = Array.from({ length: NUMBER_OF_ROWS }).map(
-            (_, index) => ({
-                [DatabaseColumnName.ID]: guid.raw(),
-                [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
-                [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
-            }),
-        );
+        const userTemplatesSeed = Array.from({
+            length: NUMBER_OF_TEMPLATES,
+        }).map((_, index) => ({
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
+            [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
+        }));
 
         await trx(DatabaseTableName.USER_TEMPLATES)
             .insert(userTemplatesSeed)
@@ -249,7 +249,7 @@ async function seed(knex: Knex): Promise<void> {
                 [DatabaseColumnName.ID]: guid.raw(),
                 [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
                 [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
-                [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
+                [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[0].id,
             }),
         );
 
