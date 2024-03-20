@@ -34,6 +34,10 @@ const Home: React.FC = () => {
 
     const { resumes, deleteResume } = useResumes({ name: resumeName });
 
+    const recentlyViewedResumeName =
+        searchParameters.get(SearchParameters.RECENTLY_VIEWED_RESUME_NAME) ??
+        '';
+
     const handleResumeSearch = useSearch(SearchParameters.RESUME_NAME);
 
     const handleRecentlyViewedResumeSearch = useSearch(
@@ -49,6 +53,7 @@ const Home: React.FC = () => {
             <ResumeSection
                 name="Recently viewed"
                 onHandleSearch={handleRecentlyViewedResumeSearch}
+                defaultSearchValue={recentlyViewedResumeName}
             >
                 <ResumeCard
                     title="My Resume"
@@ -60,6 +65,7 @@ const Home: React.FC = () => {
             <ResumeSection
                 name="Users' resume"
                 onHandleSearch={handleResumeSearch}
+                defaultSearchValue={resumeName}
             >
                 {resumes.length > 0 ? (
                     resumes.map(({ id, image }) => (
