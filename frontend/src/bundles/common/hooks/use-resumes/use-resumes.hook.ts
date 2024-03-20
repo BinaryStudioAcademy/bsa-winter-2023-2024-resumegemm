@@ -92,10 +92,14 @@ const useResumes = (options?: FindAllOptions): UseResumesReturnValues => {
                             position: 'top-right',
                         },
                     );
-                    void dispatch(resumeActions.getViewsCountByUserId());
+                    void dispatch(
+                        resumeActions.getViewsCountByUserId({
+                            name: options?.name,
+                        }),
+                    );
                 });
         },
-        [dispatch],
+        [dispatch, options?.name],
     );
 
     const requestResumeReviewFromAI = useCallback(() => {

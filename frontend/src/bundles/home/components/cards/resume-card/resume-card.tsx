@@ -13,7 +13,7 @@ type Properties = {
     subtitle?: string;
     viewedResume?: number;
     id?: string;
-    onDelete?: (resumeId: string) => void;
+    onDelete?: (id: string) => void;
 };
 
 const ResumeCard: React.FC<Properties> = ({
