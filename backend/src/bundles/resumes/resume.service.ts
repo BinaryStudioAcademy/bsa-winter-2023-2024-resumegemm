@@ -13,6 +13,7 @@ import {
 } from 'shared/build/index.js';
 
 import { type FileService } from '~/common/files/file.service.js';
+import { type FindAllOptions } from '~/common/types/types.js';
 
 import { PROMPTS } from '../open-ai/open-ai.js';
 import { type OpenAIService } from '../open-ai/open-ai.service.js';
@@ -78,8 +79,10 @@ class ResumeService implements IResumeService {
         return { ...resume, image: imageUrl };
     }
 
-    public async findAll(): Promise<ResumeGetAllResponseDto[]> {
-        const resumes = await this.resumeRepository.findAll();
+    public async findAll(
+        options?: FindAllOptions,
+    ): Promise<ResumeGetAllResponseDto[]> {
+        const resumes = await this.resumeRepository.findAll(options);
         return Promise.all(
             resumes.map((resume) => this.getResumeWithImage(resume)),
         );

@@ -9,6 +9,8 @@ import {
     type ResumeWithRelationsAndTemplateResponseDto,
 } from 'shared/build/index.js';
 
+import { type FindAllOptions } from '~/common/types/types.js';
+
 interface IResumeService {
     find(id: string): Promise<Resume | undefined>;
 
@@ -16,7 +18,7 @@ interface IResumeService {
         id: string,
     ): Promise<ResumeWithRelationsAndTemplateResponseDto | null>;
 
-    findAll(): Promise<ResumeGetItemResponseDto[]>;
+    findAll(options?: FindAllOptions): Promise<ResumeGetItemResponseDto[]>;
 
     findAllByUserId(userId: string): Promise<ResumeGetItemResponseDto[]>;
 

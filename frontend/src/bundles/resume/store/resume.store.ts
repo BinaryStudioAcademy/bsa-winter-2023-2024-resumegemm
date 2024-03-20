@@ -5,6 +5,7 @@ import {
     getAllResumes,
     getCurrentResumeWithTemplate,
     getResumeReviewFromAI,
+    getViewsCountByUserId,
     setTemplateSettingsOnResumeCreate,
     updateCurrentResume,
 } from './actions.js';
@@ -17,6 +18,7 @@ const allActions = {
     getResumeReviewFromAI,
     downloadPDFDocument,
     updateCurrentResume,
+    getViewsCountByUserId,
     setTemplateSettingsOnResumeCreate,
     createResume,
     deleteResume,

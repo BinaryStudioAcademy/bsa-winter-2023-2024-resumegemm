@@ -11,7 +11,7 @@ type Properties = {
     title: string;
     image: string;
     subtitle?: string;
-    resumeViews?: number;
+    viewedResume?: number;
     id?: string;
     onDelete?: (resumeId: string) => void;
 };
@@ -20,7 +20,7 @@ const ResumeCard: React.FC<Properties> = ({
     title,
     image,
     subtitle,
-    resumeViews,
+    viewedResume,
     onDelete,
     id,
 }: Properties) => {
@@ -40,7 +40,7 @@ const ResumeCard: React.FC<Properties> = ({
             <div className={styles.resume_card__content}>
                 <div className={styles.resume_card__content_title}>
                     {title}
-                    {resumeViews !== undefined && (
+                    {viewedResume !== undefined && (
                         <div
                             className={
                                 styles.resume_card__resume_views_container
@@ -55,7 +55,7 @@ const ResumeCard: React.FC<Properties> = ({
                                     styles.resume_card__resume_views_number
                                 }
                             >
-                                {resumeViews}
+                                {viewedResume}
                             </span>
                         </div>
                     )}
