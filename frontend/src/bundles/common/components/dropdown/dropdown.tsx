@@ -17,6 +17,7 @@ type Properties = {
     isDisabled?: boolean;
     placeholder?: string;
     className?: string;
+    defaultValue?: Option;
 };
 
 const Dropdown: React.FC<Properties> = ({
@@ -27,6 +28,7 @@ const Dropdown: React.FC<Properties> = ({
     placeholder,
     isDisabled,
     options,
+    defaultValue,
 }) => {
     const handleOptionChange = useCallback(
         (option: Option | null) => {
@@ -43,6 +45,7 @@ const Dropdown: React.FC<Properties> = ({
                 placeholder={placeholder}
                 name={name}
                 options={options}
+                defaultValue={defaultValue}
                 isDisabled={isDisabled}
                 onChange={handleOptionChange}
             />

@@ -1,8 +1,7 @@
 .template_editor {
     box-sizing: border-box;
     width: 500px;
-    height: 100%;
-    aspect-ratio: 1 / 1.41;
+    min-height: calc(500px * 1.414);
     margin: 0 auto;
     overflow: hidden;
     border-radius: 20px;

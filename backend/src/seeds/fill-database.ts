@@ -49,6 +49,7 @@ import {
 } from './seed-data/seed-data.js';
 
 const NUMBER_OF_ROWS = 4;
+const NUMBER_OF_TEMPLATES = templatesSeed.length;
 
 const deleteFromTables = async (
     trx: Knex.Transaction,
@@ -114,7 +115,6 @@ async function seed(knex: Knex): Promise<void> {
             ...template,
             [DatabaseColumnName.ID]: guid.raw(),
             [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
-            [DatabaseColumnName.IMAGE]: imagesSeed[index].image,
         }));
 
         const insertedTemplates = await trx<Template>(
@@ -222,15 +222,21 @@ async function seed(knex: Knex): Promise<void> {
             .insert(mapResumeContent(languageSeed))
             .returning('*');
 
+        // LANGUAGE
+
+        await trx<Language>(DatabaseTableName.LANGUAGES)
+            .insert(mapResumeContent(languageSeed))
+            .returning('*');
+
         // USER_TEMPLATES junction table
 
-        const userTemplatesSeed = Array.from({ length: NUMBER_OF_ROWS }).map(
-            (_, index) => ({
-                [DatabaseColumnName.ID]: guid.raw(),
-                [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
-                [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
-            }),
-        );
+        const userTemplatesSeed = Array.from({
+            length: NUMBER_OF_TEMPLATES,
+        }).map((_, index) => ({
+            [DatabaseColumnName.ID]: guid.raw(),
+            [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
+            [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
+        }));
 
         await trx(DatabaseTableName.USER_TEMPLATES)
             .insert(userTemplatesSeed)
@@ -243,7 +249,7 @@ async function seed(knex: Knex): Promise<void> {
                 [DatabaseColumnName.ID]: guid.raw(),
                 [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
                 [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
-                [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
+                [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[0].id,
             }),
         );
 
@@ -251,43 +257,6 @@ async function seed(knex: Knex): Promise<void> {
             .insert(recentlyViewedSeed)
             .returning('*');
 
-        // RESUME_SHARE_LINK
-        const resumeSharedLinkSeed = Array.from({ length: NUMBER_OF_ROWS }).map(
-            (_, index) => ({
-                [DatabaseColumnName.ID]: guid.raw(),
-                [DatabaseColumnName.RESUME_ID]: insertedResumes[index].id,
-            }),
-        );
-
-        const insertedResumeSharedLInk = await trx(
-            DatabaseTableName.RESUME_SHARE_LINK,
-        )
-            .insert(resumeSharedLinkSeed)
-            .returning('*');
-
-        // RESUME_SHARE_ACCESS
-        const resumeSharedAccessMappedSeed = resumeSharedAccessSeed.map(
-            (resumeSharedAccess, index) => ({
-                ...resumeSharedAccess,
-                [DatabaseColumnName.ID]: guid.raw(),
-                [DatabaseColumnName.RESUME_SHARE_LINK_ID]:
-                    insertedResumeSharedLInk[index].id,
-            }),
-        );
-
-        await trx<ResumeSharedAccess>(DatabaseTableName.RESUME_SHARE_ACCESS)
-            .insert(resumeSharedAccessMappedSeed)
-            .returning('*');
-
-        // SUBSCRIPTION_PLANS
-        const subscriptionPlansMappedSeed = subscriptionPlan.map((plan) => ({
-            ...plan,
-            [DatabaseColumnName.ID]: guid.raw(),
-        }));
-
-        await trx<SubscriptionPlan>(
-            DatabaseTableName.SUBSCRIPTION_PLANS,
-        ).insert(subscriptionPlansMappedSeed);
         // INDUSTRIES
 
         await trx<Industry>(DatabaseTableName.INDUSTRIES)
