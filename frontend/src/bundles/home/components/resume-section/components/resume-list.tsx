@@ -24,15 +24,16 @@ const ResumeList: React.FC = () => {
         (resumeId: string) => {
             void dispatch(resumeActions.deleteResume(resumeId))
                 .unwrap()
-                .then(() =>
+                .then(() => {
                     showToast(
                         CommonMessage.SUCCESS_DELETE_RESUME,
                         ToastType.INFO,
                         {
                             position: 'top-right',
                         },
-                    ),
-                );
+                    );
+                    void dispatch(resumeActions.getViewsCountByUserId());
+                });
         },
         [dispatch],
     );
@@ -56,6 +57,7 @@ const ResumeList: React.FC = () => {
                             subtitle={`Updated - ${updatedAt}`}
                             viewedResume={views}
                             onDelete={deleteResume}
+                            id={resumeId}
                         />
                     </NavLink>
                 );
