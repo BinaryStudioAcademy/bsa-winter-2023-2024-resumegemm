@@ -40,6 +40,9 @@ const { reducer, actions, name } = createSlice({
         ) => {
             state.user = action.payload;
         },
+        setError: (state, action: PayloadAction<AuthExceptionError | null>) => {
+            state.error = action.payload;
+        },
     },
     extraReducers(builder) {
         builder.addCase(requestNewAccessToken.fulfilled, (state) => {

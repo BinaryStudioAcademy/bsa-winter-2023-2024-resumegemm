@@ -23,6 +23,7 @@ import {
     SpinnerVariant,
 } from '~/bundles/common/enums/enums';
 import {
+    useAppDispatch,
     useAppForm,
     useCallback,
     useFormError,
@@ -30,6 +31,7 @@ import {
 import { useFormFieldCreator } from '~/bundles/common/hooks/use-form-field-creator/use-form-field-creator.hook';
 import { type HintRow } from '~/bundles/common/types/hint/hint-row.type';
 
+import { actions as authActions } from '../../store/auth.store';
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants';
 import styles from './styles.module.scss';
 import {
@@ -52,6 +54,7 @@ const hintRows: HintRow[] = [
 ];
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
+    const dispatch = useAppDispatch();
     const { control, errors, handleSubmit, setError } =
         useAppForm<UserSignUpRequestDtoFrontend>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
@@ -68,6 +71,9 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
         },
         [handleSubmit, onSubmit],
     );
+    const handleLinkClick = useCallback(() => {
+        dispatch(authActions.setError(null));
+    }, [dispatch]);
 
     return (
         <>
@@ -76,6 +82,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 <p className={styles.registration__message}>
                     Already have an account? Go to
                     <Link
+                        onClick={handleLinkClick}
                         to={AppRoute.LOG_IN}
                         className={styles.registration__link}
                     >
