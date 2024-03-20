@@ -48,16 +48,16 @@ const ResumeList: React.FC = () => {
 
     return (
         <>
-            {resumeViews.map(({ resumeId, image, updatedAt, views, title }) => {
+            {resumeViews.map(({ id, image, updatedAt, views, resumeTitle }) => {
                 return (
-                    <NavLink key={resumeId} to={`/resumes/${resumeId}`}>
+                    <NavLink key={id} to={`/resumes/${id}`}>
                         <ResumeCard
-                            title={title}
+                            title={resumeTitle}
                             image={image ?? ''}
                             subtitle={`Updated - ${updatedAt}`}
                             viewedResume={views}
                             onDelete={deleteResume}
-                            id={resumeId}
+                            id={id}
                         />
                     </NavLink>
                 );

@@ -1,7 +1,7 @@
 type ResumeViewsCountResponseDto = {
-    resumeId: string;
+    id: string;
     views: number;
-    title: string;
+    resumeTitle: string;
     image: string;
     updatedAt: string | undefined;
 };
