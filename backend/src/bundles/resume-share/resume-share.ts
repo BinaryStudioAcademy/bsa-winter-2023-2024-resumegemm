@@ -11,7 +11,6 @@ import { resumeShareAccessService } from './resume-share-access.js';
 const resumeShareRepository = new ResumeShareRepository(ResumeShareModel);
 const resumeShareService = new ResumeShareService(
     resumeShareRepository,
-    // resumeService,
     resumeShareAccessService,
 );
 
