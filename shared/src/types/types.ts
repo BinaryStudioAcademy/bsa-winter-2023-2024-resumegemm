@@ -1,3 +1,4 @@
+export { type FindAllOptions } from './find-all-options.type.js';
 export { type IdParameter } from './id-parameter.type.js';
 export { type ServerErrorDetail } from './server-error-detail.type.js';
 export {

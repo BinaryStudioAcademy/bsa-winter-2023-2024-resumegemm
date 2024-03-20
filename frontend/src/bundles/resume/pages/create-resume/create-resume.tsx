@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { Header, RegularButton } from '~/bundles/common/components/components';
+import { RegularButton } from '~/bundles/common/components/components';
 import {
     AppRoute,
     ButtonVariant,
