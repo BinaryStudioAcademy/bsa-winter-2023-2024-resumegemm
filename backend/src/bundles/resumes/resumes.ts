@@ -76,7 +76,11 @@ const resumeService = new ResumeService({
     resumeShareAccessService,
 });
 
-const resumeController = new ResumeController(logger, resumeService);
+const resumeController = new ResumeController(
+    logger,
+    resumeService,
+    fileService,
+);
 
 export { resumeController, resumeService };
 export { ResumeModel } from './resume.model.js';
