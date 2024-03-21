@@ -16,8 +16,7 @@ const prettifiedTemplate: TemplateSettings = {
                             id: 'avatar',
                             name: 'Avatar',
                             tagName: TemplateItemTags.IMAGE,
-                            content:
-                                'https://i.pinimg.com/564x/29/55/59/295559e87b67fde4bbd5d5049d67e678.jpg',
+                            content: 'https://i.imgur.com/kZypAmC.png',
                             styles: {
                                 width: '65px',
                                 height: '65px',
