@@ -16,7 +16,10 @@ interface IResumeRepository {
         id: string,
     ): Promise<ResumeWithRelationsAndTemplateResponseDto | null>;
 
-    findAll(options?: FindAllOptions): Promise<ResumeGetAllResponseDto[]>;
+    findAll(
+        userId?: string,
+        options?: FindAllOptions,
+    ): Promise<ResumeGetAllResponseDto[]>;
 
     findAllByUserId(userId: string): Promise<ResumeGetAllResponseDto[]>;
 
