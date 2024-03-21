@@ -58,14 +58,18 @@ class AuthService implements TAuthService {
 
         if (foundUserByEmail?.emailConfirmed || foundUserByEmail?.deletedAt) {
             throw new AuthException({
-                message: ExceptionMessage.EMAIL_TAKEN,
+                message: ExceptionMessage.DELETED_ACCOUNT_WITH_THIS_EMAIL,
                 status: HttpCode.BAD_REQUEST,
                 errorType: ServerErrorType.EMAIL,
             });
         }
 
-        if (foundUserByEmail && !foundUserByEmail.emailConfirmed) {
-            return await this.getUserAfterSendEmail(email, foundUserByEmail.id);
+        if (foundUserByEmail) {
+            throw new AuthException({
+                message: ExceptionMessage.EMAIL_TAKEN,
+                status: HttpCode.BAD_REQUEST,
+                errorType: ServerErrorType.EMAIL,
+            });
         }
 
         const passwordSalt = await this.generateSalt();
@@ -138,7 +142,7 @@ class AuthService implements TAuthService {
         if (!foundUserByEmail) {
             throw new AuthException({
                 message: ExceptionMessage.USER_NOT_FOUND,
-                status: HttpCode.NOT_FOUND,
+                status: HttpCode.BAD_REQUEST,
                 errorType: ServerErrorType.EMAIL,
             });
         }

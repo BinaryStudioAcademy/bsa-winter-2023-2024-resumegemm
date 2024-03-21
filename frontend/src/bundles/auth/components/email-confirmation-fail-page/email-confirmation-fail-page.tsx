@@ -21,10 +21,10 @@ const EmailConfirmationFailPage = (): JSX.Element => {
                         Oops! Something went wrong with email confirmation
                     </h3>
                     <p className={styles.email_confirmation_fail__text}>
-                        Email confirmation failed. Please sing up again.
+                        Email confirmation failed. Please log in again.
                     </p>
                     <p className={styles.email_confirmation_fail__text}>
-                        <Link to={AppRoute.SIGN_UP}>
+                        <Link to={AppRoute.LOG_IN}>
                             <RegularButton
                                 className={
                                     styles.email_confirmation_fail__button
