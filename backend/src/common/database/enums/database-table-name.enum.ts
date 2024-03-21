@@ -22,6 +22,8 @@ enum DatabaseTableName {
     CERTIFICATION = 'certification',
     LANGUAGES = 'languages',
     CUSTOM_SECTIONS = 'custom_sections',
+    PAYMENT_METHOD = 'payment_method',
+    SUBSCRIPTION = 'subscription',
 }
 
 export { DatabaseTableName };

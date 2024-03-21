@@ -1,0 +1,62 @@
+.payment__container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.payment_form__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 35%;
+    padding: 32px 40px;
+    background-color: var(--color-white);
+    border-radius: 6px;
+    box-shadow: var(--dropdown-shadow);
+}
+
+.payment__form_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.payment__form_total,
+.payment__form_price {
+    font-weight: 400;
+    font-size: 23px;
+    line-height: 28px;
+}
+
+.payment__form_content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+.payment__form_payment_method {
+    display: flex;
+    gap: 20px;
+}
+
+.payment__modal_input {
+    width: 100%;
+}
+
+.payment_input_card {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    background-color: var(--color-input-field-gray);
+    border-radius: 5px;
+}
+
+.payment__confirm_button {
+    max-height: 50px;
+    border-radius: 15px;
+}

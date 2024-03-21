@@ -66,6 +66,9 @@ enum DatabaseColumnName {
     LANGUAGE_LEVEL = 'language_level',
     ACTIVITY = 'activity',
     OWNER_ID = 'owner_id',
+    PAYMENT_METHOD_ID = 'payment_method_id',
+    TYPE = 'type',
+    CUSTOMER_ID = 'customer_id',
     NEW_ID = 'new_id',
     NEW_USER_ID = 'new_user_id',
     NEW_PROFILE_ID = 'new_profile_id',
@@ -73,8 +76,15 @@ enum DatabaseColumnName {
     NEW_TEMPLATE_ID = 'new_template_id',
     DESCRIPTION = 'description',
     NEW_RESUME_SHARE_LINK_ID = 'new_resume_share_link_id',
+    CARD = 'card',
+    EXPIRE_DATE = 'expire_date',
+    STATUS = 'status',
+    SUBSCRIPTION_PLAN_ID = 'subscription_plan_id',
+    SUBSCRIPTION_ID = 'subscription_id',
     EMAIL_CONFIRMED = 'email_confirmed',
     TEMPLATE_SETTINGS = 'template_settings',
+    STRIPE_PRODUCT_NAME = 'stripe_product_name',
+    IS_CANCELLED = 'is_cancelled',
 }
 
 export { DatabaseColumnName };

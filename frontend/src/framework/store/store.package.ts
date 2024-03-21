@@ -23,6 +23,8 @@ import { resumeAccessApi } from '~/bundles/resume-access/resume-access';
 import { reducer as resumeAccessReducer } from '~/bundles/resume-access/store/';
 import { statisticsApi } from '~/bundles/statistics-page/statistics';
 import { reducer as statisticsReducer } from '~/bundles/statistics-page/store/statistics.store';
+import { reducer as subscriptionReducer } from '~/bundles/subscription/store';
+import { subscriptionApi } from '~/bundles/subscription/subscription';
 import { reducer as templatesReducer } from '~/bundles/templates-page/store';
 import { templateApi } from '~/bundles/templates-page/templates.js';
 import { reducer as usersReducer } from '~/bundles/users/store/user.store';
@@ -42,6 +44,7 @@ type RootReducer = {
     profile: ReturnType<typeof profileReducer>;
     statistics: ReturnType<typeof statisticsReducer>;
     editTemplate: ReturnType<typeof editTemplateReducer>;
+    subscription: ReturnType<typeof subscriptionReducer>;
 };
 
 type ExtraArguments = {
@@ -55,6 +58,7 @@ type ExtraArguments = {
     resumeApi: typeof resumeApi;
     resumeAccessApi: typeof resumeAccessApi;
     profileApi: typeof profileApi;
+    subscriptionApi: typeof subscriptionApi;
     statisticsApi: typeof statisticsApi;
     pdfApi: typeof pdfApi;
 };
@@ -84,6 +88,7 @@ class Store {
                 profile: profileReducer,
                 statistics: statisticsReducer,
                 editTemplate: editTemplateReducer,
+                subscription: subscriptionReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
@@ -107,6 +112,7 @@ class Store {
             resumeAccessApi,
             openAuthApi,
             profileApi,
+            subscriptionApi,
             statisticsApi,
             pdfApi,
         };

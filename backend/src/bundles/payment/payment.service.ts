@@ -3,9 +3,12 @@ import Stripe from 'stripe';
 
 import { type IConfig } from '~/common/config/config';
 
+import { paymentMethodService } from '../payment-method/payment-method.js';
+import { subscriptionPlanRepository } from '../stripe-events/repositories/subscription-plan.repository.js';
+import { subscriptionService } from '../subscription/subscription.js';
 import { type UserService } from '../users/user.service.js';
 import { PaymentErrorMessage } from './enums/error-message.js';
-import { mapPrices } from './helpers/price-mapper.js';
+import { getCardExpireDate, mapPrices } from './helpers/helpers.js';
 import {
     type CreateSubscriptionRequestDto,
     type CreateSubscriptionResponseDto,
@@ -58,7 +61,7 @@ class PaymentService implements IPaymentService {
         paymentMethod: string,
     ): Promise<Stripe.Customer> {
         try {
-            const customer = await this.stripe.customers.create({
+            return this.stripe.customers.create({
                 name: name,
                 email: email,
                 payment_method: paymentMethod,
@@ -66,9 +69,6 @@ class PaymentService implements IPaymentService {
                     default_payment_method: paymentMethod,
                 },
             });
-            const { id: stripeId } = customer;
-            await this.userService.addStripeId(stripeId, email);
-            return customer;
         } catch {
             throw new HTTPError({
                 message: PaymentErrorMessage.STRIPE_USER_CREATE_ERROR,
@@ -119,7 +119,7 @@ class PaymentService implements IPaymentService {
         const subscription: Stripe.Subscription =
             await this.createStripeSubscription(customer.id, priceId);
 
-        const { latest_invoice, id } = subscription;
+        const { latest_invoice, id, status } = subscription;
 
         if (!latest_invoice || typeof latest_invoice === 'string') {
             return {
@@ -127,9 +127,57 @@ class PaymentService implements IPaymentService {
                 subscriptionId: id,
             };
         }
-
-        const { client_secret } =
+        const { client_secret, payment_method } =
             latest_invoice.payment_intent as Stripe.PaymentIntent;
+
+        const retrievedSubscription = await this.stripe.subscriptions.retrieve(
+            id,
+        );
+        const { current_period_start, current_period_end, items } =
+            retrievedSubscription;
+
+        const startDate = new Date(current_period_start * 1000);
+        const endDate = new Date(current_period_end * 1000);
+
+        const { id: stripePlanId } = items.data[0].plan;
+        const subscriptionPlan =
+            await subscriptionPlanRepository.findByStripePlanId(stripePlanId);
+
+        const customerId = customer.id;
+        const user = await this.userService.addStripeId(customerId, email);
+
+        const paymentMethodId = payment_method?.toString();
+
+        if (paymentMethodId) {
+            const { card } = await this.stripe.paymentMethods.retrieve(
+                paymentMethodId,
+            );
+
+            if (card && user) {
+                const { last4 } = card;
+                const expireDate = getCardExpireDate(card);
+
+                const newPaymentMethod = {
+                    paymentMethodId,
+                    card: last4,
+                    expireDate,
+                    userId: user.id,
+                };
+                await paymentMethodService.create(newPaymentMethod);
+            }
+        }
+
+        if (user && subscriptionPlan) {
+            const newSubscription = {
+                subscriptionId: id,
+                userId: user.id,
+                status: status,
+                subscriptionPlanId: subscriptionPlan.id,
+                startDate,
+                endDate,
+            };
+            await subscriptionService.create(newSubscription);
+        }
 
         return {
             clientSecret: client_secret,
