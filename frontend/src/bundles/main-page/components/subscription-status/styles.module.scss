@@ -1,0 +1,23 @@
+.subscription_status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.subscription_status_days {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 16px;
+    background-color: var(--color-background-light-gray);
+    border-radius: 52px;
+}
+
+.subscription_status__icon {
+    padding: 0 5px;
+    color: var(--color-background-blue);
+    border: 1px solid var(--color-background-blue);
+    border-radius: 55px;
+}

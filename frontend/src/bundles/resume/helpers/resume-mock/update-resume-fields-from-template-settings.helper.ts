@@ -1,20 +1,10 @@
 import { type LayoutItem } from '../../types/types';
 import { availableResumeKeys } from './available-resume-keys.helper';
 
-const checkEmptyFieldsInArray = (array: Record<string, unknown>[]): boolean => {
-    return array.some((item) => {
-        return Object.values(item).every((field) => field === '');
-    });
-};
-
 const updateResumeContent = (
     array: Record<string, unknown>[],
     item: LayoutItem,
 ): void => {
-    if (checkEmptyFieldsInArray(array)) {
-        array.length = 0;
-        return;
-    }
     for (const object of array) {
         if (Object.prototype.hasOwnProperty.call(object, item.id)) {
             object[item.id] = item.content;

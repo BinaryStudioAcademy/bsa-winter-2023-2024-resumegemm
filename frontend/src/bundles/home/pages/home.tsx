@@ -73,7 +73,7 @@ const Home: React.FC = () => {
         <div className={styles.layout}>
             <HomeTopSection>
                 <Greeting />
-                <CreateResumeButton />
+                <CreateResumeButton templates={templates} />
             </HomeTopSection>
             <ResumeSection
                 onSort={handleRecentlyViewedSort}
@@ -95,10 +95,10 @@ const Home: React.FC = () => {
                 defaultSearchValue={resumeName}
             >
                 {resumes.length > 0 ? (
-                    resumes.map(({ id, image, resumeTitle }) => (
+                    resumes.map(({ id, image, title }) => (
                         <NavLink key={id} to={`/resumes/${id}`}>
                             <ResumeCard
-                                title={resumeTitle as string}
+                                title={title}
                                 subtitle="Updated - Jan 25"
                                 image={image}
                                 id={id}

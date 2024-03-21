@@ -11,6 +11,7 @@ enum ApiPath {
     RESUMES = '/resumes',
     WEBHOOKS = '/webhooks',
     AVATAR = '/avatar',
+    SUBSCRIPTION = '/subscription',
     STATISTICS = '/statistics',
 }
 

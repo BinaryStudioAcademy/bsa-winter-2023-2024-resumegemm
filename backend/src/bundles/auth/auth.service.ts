@@ -26,12 +26,11 @@ import {
     type UserSignUpResponseDto,
 } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
-import { type IConfig, config } from '~/common/config/config.js';
+import { type IConfig } from '~/common/config/config.js';
 import { mailService } from '~/common/mail-service/mail-service.js';
 
 import { EmailConfirmMessages } from './enums/message.enum.js';
 import { generateEmailConfirmToken } from './helpers/token/email-confirm-token/email-confirm-token.js';
-import { generateResetPasswordToken } from './helpers/token/token.js';
 
 type ConstructorType = {
     userService: UserService;
@@ -268,14 +267,13 @@ class AuthService implements TAuthService {
     > {
         const user = await this.userService.findByEmail({ email });
 
-        const resetPasswordTokenSecret = config.ENV.JWT.RESET_TOKEN_SECRET;
+        const areTokensNotEqual =
+            user?.resetPasswordToken !== resetPasswordToken;
 
-        const tokenPayload = this.verifyToken<{ email: string }>(
-            resetPasswordToken,
-            resetPasswordTokenSecret,
-        );
+        const isTokenExpired =
+            Date.now() > Number(user?.resetPasswordTokenExpiry);
 
-        if (user?.email !== tokenPayload.email) {
+        if (areTokensNotEqual || isTokenExpired) {
             throw new HTTPError({
                 message: ExceptionMessage.INVALID_RESET_TOKEN,
                 status: HttpCode.NOT_FOUND,
@@ -328,7 +326,7 @@ class AuthService implements TAuthService {
             });
         }
 
-        return generateResetPasswordToken({ email });
+        return await this.userService.createResetPasswordToken(user.id);
     }
 }
 

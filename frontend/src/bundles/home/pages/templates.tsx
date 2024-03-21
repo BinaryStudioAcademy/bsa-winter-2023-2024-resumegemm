@@ -22,7 +22,10 @@ import {
     TemplateSection,
 } from '~/bundles/home/components/components';
 import { TemplateErrorMessage } from '~/bundles/templates-page/enums/enums';
-import { loadAllTemplates } from '~/bundles/templates-page/store/actions';
+import {
+    deleteTemplate,
+    loadAllTemplates,
+} from '~/bundles/templates-page/store/actions';
 import { type TemplateDto } from '~/bundles/templates-page/types/types';
 import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
 import { showToast } from '~/bundles/toast/helpers/show-toast';
@@ -60,6 +63,13 @@ const Templates: React.FC = () => {
                 );
             });
     }, [dispatch, navigate]);
+
+    const handleDelete = useCallback(
+        (id: string) => {
+            void dispatch(deleteTemplate(id));
+        },
+        [dispatch],
+    );
 
     const handleTemplateSearch = useSearch(SearchParameters.TEMPLATE_NAME);
 
@@ -101,6 +111,8 @@ const Templates: React.FC = () => {
                                 key={template.id}
                             >
                                 <ResumeCard
+                                    id={template.id}
+                                    onDelete={handleDelete}
                                     title={template.name}
                                     image={template.image}
                                 />

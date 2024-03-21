@@ -1,5 +1,6 @@
 enum StripeEvents {
     SUBSCRIPTION_CREATED = 'customer.subscription.created',
+    SUBSCRIPTION_UPDATED = 'customer.subscription.updated',
     PLAN_CREATED = 'plan.created',
     PLAN_DELETED = 'plan.deleted',
     PLAN_UPDATED = 'plan.updated',

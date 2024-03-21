@@ -1,3 +1,16 @@
-.resume_access__input_container {
-    display: flex;
+.resume_container {
+    display: grid;
+    place-content: center;
+    padding-block: 20px;
+    background-color: var(--color-input-field-gray);
+}
+
+.resume__title {
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.resume__image {
+    border-radius: 20px;
+    outline: 1px solid var(--color-background-dark-blue);
 }
