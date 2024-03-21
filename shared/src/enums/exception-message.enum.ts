@@ -5,7 +5,7 @@ enum ExceptionMessage {
     DELETED_ACCOUNT_WITH_THIS_EMAIL = 'This email is already taken. Please try another one.',
     INVALID_EMAIL = 'Invalid email. Please check and try again.',
     USER_EXISTS = 'Such a user exists.',
-    USER_NOT_FOUND = 'User was not found.',
+    USER_NOT_FOUND = 'User with this email was not found.',
     INVALID_PASSWORD = 'Invalid password. Please check and try again.',
     TOKEN_EXPIRED = 'Token expired.',
     AUTH_FAILED = 'Authorization failed, please sign in again.',
