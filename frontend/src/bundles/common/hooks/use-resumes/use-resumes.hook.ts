@@ -41,6 +41,7 @@ type UseResumesReturnValues = {
     downloadGeneratedFile: (html: string) => void;
     resumeReview: ResumeAiScoreResponseDto | null;
     dataStatus: DataStatus;
+    hasSubscription: boolean;
     id?: string;
 };
 
@@ -58,6 +59,7 @@ const useResumes = (options?: FindAllOptions): UseResumesReturnValues => {
         resumeReview,
         templates,
         isTemplatesLoading,
+        hasSubscription,
     } = useAppSelector(({ auth, resumes, templates }) => ({
         userId: auth.user?.id,
         resumes: resumes.resumes,
@@ -67,6 +69,7 @@ const useResumes = (options?: FindAllOptions): UseResumesReturnValues => {
         resumeReview: resumes.resumeReview,
         templates: templates.templates,
         isTemplatesLoading: templates.dataStatus,
+        hasSubscription: auth.hasSubscription,
     }));
 
     const deleteResume = useCallback(
@@ -197,6 +200,7 @@ const useResumes = (options?: FindAllOptions): UseResumesReturnValues => {
         id,
         createResume,
         deleteResume,
+        hasSubscription,
     };
 };
 

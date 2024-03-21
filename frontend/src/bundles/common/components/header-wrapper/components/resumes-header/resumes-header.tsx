@@ -18,6 +18,7 @@ const ResumesHeader: React.FC = () => {
         requestResumeReviewFromAI,
         downloadGeneratedFile,
         dataStatus,
+        hasSubscription,
     } = useResumes();
 
     const HTMLFromComponentOrEmptyString = templateSettings
@@ -42,12 +43,14 @@ const ResumesHeader: React.FC = () => {
                     dataStatus={dataStatus}
                     requestResumeReviewFromAI={requestResumeReviewFromAI}
                 />
-                <RegularButton
-                    onClick={handleDownloadClick}
-                    variant={ButtonVariant.PRIMARY}
-                >
-                    Download
-                </RegularButton>
+                {hasSubscription && (
+                    <RegularButton
+                        onClick={handleDownloadClick}
+                        variant={ButtonVariant.PRIMARY}
+                    >
+                        Download
+                    </RegularButton>
+                )}
             </div>
         </Header>
     );
