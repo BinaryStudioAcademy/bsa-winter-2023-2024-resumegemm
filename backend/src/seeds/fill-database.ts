@@ -153,7 +153,6 @@ async function seed(knex: Knex): Promise<void> {
             [DatabaseColumnName.ID]: guid.raw(),
             [DatabaseColumnName.USER_ID]: insertedUsers[index].id,
             [DatabaseColumnName.TEMPLATE_ID]: insertedTemplates[index].id,
-            [DatabaseColumnName.IMAGE]: imagesSeed[index].image,
         }));
 
         const insertedResumes = await trx<Resume>(DatabaseTableName.RESUMES)
