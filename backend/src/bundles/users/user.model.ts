@@ -22,9 +22,15 @@ class UserModel extends AbstractModel {
 
     public 'passwordSalt': string;
 
+    public 'emailConfirmed': boolean;
+
     public deletedAt!: string | null;
 
     public 'stripeId': string;
+
+    public 'resetPasswordToken': string | null;
+
+    public 'resetPasswordTokenExpiry': number | null;
 
     public static override get tableName(): typeof DatabaseTableName.USERS {
         return DatabaseTableName.USERS;
@@ -39,6 +45,7 @@ class UserModel extends AbstractModel {
                     'profileId',
                     'createdAt',
                     'updatedAt',
+                    'emailConfirmed',
                     'deletedAt',
                     'stripeId',
                 );

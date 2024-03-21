@@ -37,6 +37,7 @@ import { Home } from '../home/pages/home';
 import { Templates } from '../home/pages/templates';
 import { QuestionAndAnswer } from '../question-and-answer-page/components/question-and-answer/question-and-answer.js';
 import { DeleteResumeButton } from '../resume/components/delete-resume-button/delete-resume-button.js';
+import { type StatisticsRecord } from '../statistics-page/types/types.js';
 import styles from './styles.module.scss';
 
 const steps = [
@@ -73,7 +74,7 @@ const dropdownOptions = [
     },
 ];
 
-const ColumnChartDate: [string, number][] = [
+const ColumnChartDate: StatisticsRecord[] = [
     ['Monday', 23],
     ['Tuesday', 34],
     ['Wednesday', 5],

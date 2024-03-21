@@ -23,6 +23,8 @@ import { resumeApi } from '~/bundles/resume/resume';
 import { reducer as resumeReducer } from '~/bundles/resume/store/resume.store';
 import { resumeAccessApi } from '~/bundles/resume-access/resume-access';
 import { reducer as resumeAccessReducer } from '~/bundles/resume-access/store/';
+import { statisticsApi } from '~/bundles/statistics-page/statistics';
+import { reducer as statisticsReducer } from '~/bundles/statistics-page/store/statistics.store';
 import { reducer as templatesReducer } from '~/bundles/templates-page/store';
 import { templateApi } from '~/bundles/templates-page/templates.js';
 import { reducer as usersReducer } from '~/bundles/users/store/user.store';
@@ -39,6 +41,7 @@ type RootReducer = {
     templates: ReturnType<typeof templatesReducer>;
     resumeAccess: ReturnType<typeof resumeAccessReducer>;
     profile: ReturnType<typeof profileReducer>;
+    statistics: ReturnType<typeof statisticsReducer>;
     editTemplate: ReturnType<typeof editTemplateReducer>;
     recentlyViewed: ReturnType<typeof recentlyViewedReducer>;
     resumes: ReturnType<typeof resumeReducer>;
@@ -55,6 +58,7 @@ type ExtraArguments = {
     resumeAccessApi: typeof resumeAccessApi;
     profileApi: typeof profileApi;
     recentlyViewedApi: typeof recentlyViewedApi;
+    statisticsApi: typeof statisticsApi;
     resumeApi: typeof resumeApi;
     pdfApi: typeof pdfApi;
 };
@@ -81,6 +85,7 @@ class Store {
                 templates: templatesReducer,
                 resumeAccess: resumeAccessReducer,
                 profile: profileReducer,
+                statistics: statisticsReducer,
                 editTemplate: editTemplateReducer,
                 recentlyViewed: recentlyViewedReducer,
                 resumes: resumeReducer,
@@ -107,6 +112,7 @@ class Store {
             openAuthApi,
             profileApi,
             recentlyViewedApi,
+            statisticsApi,
             resumeApi,
             pdfApi,
         };

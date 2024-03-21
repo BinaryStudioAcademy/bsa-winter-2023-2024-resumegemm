@@ -100,6 +100,7 @@ const prettifiedTemplate: TemplateSettings = {
                         width: '100%',
                         position: 'relative',
                     },
+                    enabled: true,
                 },
             ],
             styles: {
@@ -188,6 +189,7 @@ const prettifiedTemplate: TemplateSettings = {
                         flexDirection: 'column',
                         justifyContent: 'space-around',
                     },
+                    enabled: true,
                 },
                 {
                     id: 'Divider',
@@ -205,6 +207,7 @@ const prettifiedTemplate: TemplateSettings = {
                         width: '2px',
                         backgroundColor: '#c7cacf',
                     },
+                    enabled: true,
                 },
                 {
                     id: 'educationBlock1',
@@ -251,6 +254,7 @@ const prettifiedTemplate: TemplateSettings = {
                         flexDirection: 'column',
                         justifyContent: 'space-around',
                     },
+                    enabled: true,
                 },
             ],
             styles: {
@@ -297,6 +301,7 @@ const prettifiedTemplate: TemplateSettings = {
                         marginRight: 'auto',
                         marginTop: '5px',
                     },
+                    enabled: true,
                 },
                 {
                     id: 'contactsBlock',
@@ -346,6 +351,7 @@ const prettifiedTemplate: TemplateSettings = {
                         marginRight: 'auto',
                         marginTop: '5px',
                     },
+                    enabled: true,
                 },
                 {
                     id: 'certificationBlock',
@@ -398,6 +404,7 @@ const prettifiedTemplate: TemplateSettings = {
                         margin: 'auto',
                         marginTop: '0.4rem',
                     },
+                    enabled: true,
                 },
             ],
             styles: {

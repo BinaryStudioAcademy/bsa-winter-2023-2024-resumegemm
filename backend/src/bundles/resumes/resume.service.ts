@@ -41,10 +41,18 @@ class ResumeService implements IResumeService {
         return await this.resumeRepository.find(id);
     }
 
-    public findById(
+    public async findById(
         id: string,
     ): Promise<ResumeWithRelationsAndTemplateResponseDto | null> {
-        return this.resumeRepository.findById(id);
+        const resume = await this.resumeRepository.findById(id);
+
+        if (resume) {
+            const { image } = await this.getResumeWithImage(resume);
+
+            return { ...resume, image };
+        }
+
+        return resume;
     }
 
     public async getResumeWithImage(
@@ -70,8 +78,30 @@ class ResumeService implements IResumeService {
         );
     }
 
-    public findAllByUserId(userId: string): Promise<ResumeGetAllResponseDto[]> {
-        return this.resumeRepository.findAllByUserId(userId);
+    public async findAllByUserId(
+        userId: string,
+    ): Promise<ResumeGetAllResponseDto[]> {
+        const resumes = await this.resumeRepository.findAllByUserId(userId);
+
+        return Promise.all(
+            resumes.map((resume) => this.getResumeWithImage(resume)),
+        );
+    }
+
+    private async uploadResumeImage(
+        imageBuffer: string,
+        uniqueId: string,
+    ): Promise<string> {
+        const timeNow = Date.now();
+
+        const uploadedImage = await this.fileService.create({
+            buffer: imageBuffer,
+            contentEncoding: ContentEncoding.BASE64,
+            contentType: ContentType.IMAGE_JPEG,
+            key: `${uniqueId}${timeNow}`,
+        });
+
+        return uploadedImage.key;
     }
 
     public async create(
@@ -79,16 +109,10 @@ class ResumeService implements IResumeService {
         userId: string,
         templateId: string,
     ): Promise<ResumeGetItemResponseDto> {
-        const timeNow = Date.now();
-
-        const uploadedImage = await this.fileService.create({
-            buffer: payload.resume.image,
-            contentEncoding: ContentEncoding.BASE64,
-            contentType: ContentType.IMAGE_JPEG,
-            key: `${payload.resume.userId}${timeNow}`,
-        });
-
-        payload.resume.image = uploadedImage.key;
+        payload.resume.image = await this.uploadResumeImage(
+            payload.resume.image,
+            payload.resume.userId,
+        );
         const resume = await this.resumeRepository.create(
             payload,
             userId,
@@ -101,7 +125,13 @@ class ResumeService implements IResumeService {
         id: string,
         data: ResumeUpdateItemRequestDto,
     ): Promise<ResumeGetItemResponseDto> {
-        return await this.resumeRepository.update(id, data);
+        data.resume.image = await this.uploadResumeImage(
+            data.resume.image as string,
+            data.resume.templateId as string,
+        );
+
+        const updatedResume = await this.resumeRepository.update(id, data);
+        return this.getResumeWithImage(updatedResume);
     }
 
     public async delete(id: string): Promise<boolean> {

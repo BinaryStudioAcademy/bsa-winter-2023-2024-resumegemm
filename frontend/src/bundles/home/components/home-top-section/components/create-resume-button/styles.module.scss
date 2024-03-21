@@ -1,4 +1,5 @@
 .container {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,6 +16,26 @@
     padding: 20px;
     background-color: white;
     border-radius: 20px;
+}
+
+.templates__container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: rgb(0 0 0 / 5%) 0 6px 24px 0, rgb(0 0 0 / 8%) 0 0 0 5px;
+}
+
+.templates__container__image {
+    width: 150px;
+    height: 200px;
+}
+
+.templates__container__image:hover {
+    filter: drop-shadow(2px 4px 6px black);
 }
 
 .create_resume_button__icon {

@@ -4,6 +4,12 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import {
+    CheckEmailPage,
+    EmailConfirmationFailPage,
+    EmailConfirmationPage,
+    EmailConfirmationSuccessPage,
+} from '~/bundles/auth/components/components.js';
 import { Auth } from '~/bundles/auth/pages/auth';
 import {
     App,
@@ -30,6 +36,7 @@ import { SubscriptionPaymentPage } from './bundles/payment/pages/subscription-pa
 import { PreviewPage } from './bundles/preview/preview';
 import { QuestionAndAnswerPage } from './bundles/question-and-answer-page/question-and-answer-page';
 import { ResumeAccess } from './bundles/resume-access/pages/resume-access';
+import { StatisticsPage } from './bundles/statistics-page/pages/statistics-page';
 import { TemplatePage } from './bundles/templates-page/templates-page';
 import { Profile } from './bundles/users/pages/profile';
 import { ViewTemplatePage } from './bundles/view-template-page/view-template-page';
@@ -74,6 +81,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                                     path: AppRoute.FORGOT_PASSWORD,
                                                     element: <Auth />,
                                                 },
+                                                {
+                                                    path: AppRoute.CHECK_EMAIL,
+                                                    element: <CheckEmailPage />,
+                                                },
                                             ],
                                         },
                                         {
@@ -99,7 +110,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                                     element: <EditResume />,
                                                 },
                                                 {
-                                                    path: AppRoute.RESUME_CREATE,
+                                                    path: `${AppRoute.RESUME_CREATE}/:id`,
                                                     element: <CreateResume />,
                                                 },
                                                 {
@@ -109,6 +120,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                                 {
                                                     path: AppRoute.TEMPLATES,
                                                     element: <TemplatePage />,
+                                                },
+                                                {
+                                                    path: AppRoute.STATISTICS,
+                                                    element: <StatisticsPage />,
                                                 },
                                                 {
                                                     path: `${AppRoute.TEMPLATE}/:id`,
@@ -139,6 +154,22 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                         {
                                             path: AppRoute.RESUME_ACCESS,
                                             element: <ResumeAccess />,
+                                        },
+                                        {
+                                            path: AppRoute.EMAIL_CONFIRMATION,
+                                            element: <EmailConfirmationPage />,
+                                        },
+                                        {
+                                            path: AppRoute.EMAIL_CONFIRMATION_FAIL,
+                                            element: (
+                                                <EmailConfirmationFailPage />
+                                            ),
+                                        },
+                                        {
+                                            path: AppRoute.EMAIL_CONFIRMATION_SUCCESS,
+                                            element: (
+                                                <EmailConfirmationSuccessPage />
+                                            ),
                                         },
                                     ],
                                 },

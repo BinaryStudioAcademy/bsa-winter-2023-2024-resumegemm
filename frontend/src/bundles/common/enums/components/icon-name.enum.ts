@@ -12,6 +12,7 @@ enum IconName {
     ARROW_LEFT = 'arrow_left',
     ARROW_DOWN = 'arrow_down',
     CLOSE_CROSS = 'close_button',
+    ARROW_RIGHT = 'arrow_right',
     SAVE = 'save',
     QUESTION_CIRCLE = 'circle_question',
     CHECK_CIRCLE = 'circle_check',

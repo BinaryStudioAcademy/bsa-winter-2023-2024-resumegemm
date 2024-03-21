@@ -1,9 +1,10 @@
-import { deleteProfile, loadAll } from './actions.js';
+import { deleteProfile, loadAll, loadUser } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     loadAll,
+    loadUser,
     deleteProfile,
 };
 
