@@ -23,12 +23,14 @@ type State = {
     user: UserWithProfileRelation | null;
     dataStatus: ValueOf<typeof DataStatus>;
     error: null | AuthExceptionError;
+    hasSubscription: boolean;
 };
 
 const initialState: State = {
     user: null,
     dataStatus: DataStatus.IDLE,
     error: null,
+    hasSubscription: false,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -43,6 +45,9 @@ const { reducer, actions, name } = createSlice({
         },
         setError: (state, action: PayloadAction<AuthExceptionError | null>) => {
             state.error = action.payload;
+        },
+        setSubscription: (state, action) => {
+            state.hasSubscription = action.payload ?? false;
         },
     },
     extraReducers(builder) {

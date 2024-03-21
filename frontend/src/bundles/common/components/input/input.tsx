@@ -15,7 +15,7 @@ const Input = forwardRef<HTMLInputElement, Properties>(
             hasError = false,
             width = 'auto',
             className = '',
-            disabled,
+            disabled = false,
             type,
             ...otherProperties
         },
@@ -31,6 +31,7 @@ const Input = forwardRef<HTMLInputElement, Properties>(
                 className,
             )}
             {...otherProperties}
+            disabled={disabled}
             style={{ width }}
             ref={reference}
             type={type}

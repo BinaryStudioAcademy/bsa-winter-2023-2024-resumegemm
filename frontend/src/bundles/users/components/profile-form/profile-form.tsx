@@ -58,6 +58,7 @@ const ProfileForm: React.FC<Properties> = ({ onSubmit, user }) => {
                                 name: 'email',
                                 control,
                             })}
+                            disabled={true}
                         />
                     </FormGroup>
                     <p className={styles.profile__form__section__paragraph}>
