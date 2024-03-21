@@ -1,4 +1,5 @@
 import { Guid } from 'guid-typescript';
+import { type ResumeWithShare } from 'shared/build/bundles/resumes/types/resume-with-share.type.js';
 import {
     type ResumeShareDeleteResponseDto,
     type ResumeShareGetResponseDto,
@@ -18,7 +19,7 @@ class ResumeShareRepository {
 
     public async getResumeShareLinkByResumeId(
         resumeId: string,
-    ): Promise<ResumeShareGetResponseDto | undefined> {
+    ): Promise<Omit<ResumeShareGetResponseDto, 'resume'> | undefined> {
         return await this.resumeShareModel
             .query()
             .findOne('resumeId', resumeId)
@@ -26,9 +27,27 @@ class ResumeShareRepository {
             .execute();
     }
 
+    public async getShareLinksByIds(
+        resumeIds: string[],
+    ): Promise<ResumeWithShare[]> {
+        const shareLinks = await this.resumeShareModel
+            .query()
+            .whereIn('resumeId', resumeIds)
+            .withGraphFetched('[resume]');
+
+        return shareLinks.map((link) => {
+            const { id, ...resumeData } = link;
+
+            return {
+                resume: resumeData.resume,
+                shareId: id,
+            };
+        });
+    }
+
     public async getResumeShareLink(
         id: string,
-    ): Promise<ResumeShareGetResponseDto | undefined> {
+    ): Promise<Omit<ResumeShareGetResponseDto, 'resume'> | undefined> {
         try {
             const resumeShare = await this.resumeShareModel
                 .query()
@@ -57,7 +76,7 @@ class ResumeShareRepository {
 
     public async createResumeShareLink(
         resumeId: string,
-    ): Promise<ResumeShareCreateResponseDto | unknown> {
+    ): Promise<Omit<ResumeShareCreateResponseDto, 'resume'> | undefined> {
         try {
             const resumeShareModel = {
                 resumeId: resumeId,

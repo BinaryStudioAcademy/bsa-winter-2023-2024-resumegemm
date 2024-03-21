@@ -1,8 +1,11 @@
 export {
     type AuthTokenResponse,
     type OauthConnectionEntityFields,
+    type Profile,
     type SocialMediaProfiles,
     type UserAuthResponse,
+    type UserConfirmEmailRequestDto,
+    type UserConfirmEmailResponse,
     type UserForgotPasswordRequestDto,
     type UserForgotPasswordResponse,
     type UserGetAllItemResponseDto,

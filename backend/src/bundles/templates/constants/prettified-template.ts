@@ -9,21 +9,9 @@ const prettifiedTemplate: TemplateSettings = {
             name: 'Overview',
             blocks: [
                 {
-                    id: 'profileBlock',
+                    id: 'personalInformationBlock',
                     name: TemplateBlockTitles.Profile,
                     items: [
-                        {
-                            id: 'firstName',
-                            name: 'First Name',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'TAYLOR',
-                            styles: {
-                                fontWeight: 'bolder',
-                                fontSize: '2rem',
-                                letterSpacing: '2px',
-                                margin: '0',
-                            },
-                        },
                         {
                             id: 'avatar',
                             name: 'Avatar',
@@ -43,25 +31,65 @@ const prettifiedTemplate: TemplateSettings = {
                             },
                         },
                         {
+                            id: 'firstName',
+                            name: 'First Name',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'TAYLOR',
+                            styles: {
+                                fontWeight: 'bolder',
+                                fontSize: '1.5rem',
+                                letterSpacing: '2px',
+                                margin: '0',
+                            },
+                        },
+                        {
                             id: 'lastName',
                             name: 'Last Name',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'COOK',
                             styles: {
                                 fontWeight: 'bolder',
-                                fontSize: '2rem',
+                                fontSize: '1.5rem',
                                 letterSpacing: '2px',
                                 margin: '0',
+                            },
+                        },
+                        {
+                            id: 'email',
+                            name: 'Email',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'taylorcook@gmail.com',
+                            styles: {
+                                fontWeight: 'bolder',
+                                fontSize: '1rem',
+                                letterSpacing: '1px',
+                                margin: '0',
+                                color: '#828ba2',
                             },
                         },
                         {
                             id: 'profession',
                             name: 'Profession',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Software Developer',
+                            content: 'JavaScript Dev',
                             styles: {
-                                margin: '20px 0',
+                                fontWeight: 'bolder',
                                 fontSize: '1rem',
+                                letterSpacing: '1px',
+                                margin: '0',
+                                color: '#828ba2',
+                            },
+                        },
+                        {
+                            id: 'industry',
+                            name: 'Industry',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'Information Technology',
+                            styles: {
+                                fontWeight: 'bolder',
+                                fontSize: '1rem',
+                                letterSpacing: '1px',
+                                margin: '0',
                                 color: '#828ba2',
                             },
                         },
@@ -72,6 +100,7 @@ const prettifiedTemplate: TemplateSettings = {
                         width: '100%',
                         position: 'relative',
                     },
+                    enabled: true,
                 },
             ],
             styles: {
@@ -83,15 +112,41 @@ const prettifiedTemplate: TemplateSettings = {
             name: 'Main',
             blocks: [
                 {
-                    id: 'summaryBlock',
-                    name: TemplateBlockTitles.Summary,
+                    id: 'experienceBlock',
+                    name: TemplateBlockTitles.Experience,
                     items: [
                         {
-                            id: 'country',
-                            name: 'Country',
-                            placeholder: 'COUNTRY',
+                            id: 'jobTitle',
+                            name: 'Job Title',
+                            placeholder: 'Job Title',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'Italy',
+                            content: 'Software Engineer',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'companyName',
+                            name: 'Company Name',
+                            placeholder: 'Company Name',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'Facebook',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'employmentType',
+                            name: 'Employment Type',
+                            placeholder: 'Employment Type',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'Full-Time',
                             styles: {
                                 paddingBottom: '10px',
                                 fontSize: '1rem',
@@ -102,7 +157,7 @@ const prettifiedTemplate: TemplateSettings = {
                         {
                             id: 'city',
                             name: 'City',
-                            placeholder: 'CITY',
+                            placeholder: 'City',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'Milan',
                             styles: {
@@ -113,37 +168,11 @@ const prettifiedTemplate: TemplateSettings = {
                             },
                         },
                         {
-                            id: 'phoneNumber',
-                            name: 'Phone',
-                            placeholder: 'PHONE',
+                            id: 'country',
+                            name: 'Country',
+                            placeholder: 'Country',
                             tagName: TemplateItemTags.PARAGRAPH,
-                            content: '+391234590',
-                            styles: {
-                                paddingBottom: '10px',
-                                fontSize: '1rem',
-                                color: '#828ba2',
-                                margin: '0',
-                            },
-                        },
-                        {
-                            id: 'email',
-                            name: 'Email',
-                            placeholder: 'EMAIL',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'johndoe@gmail.com',
-                            styles: {
-                                paddingBottom: '10px',
-                                fontSize: '1rem',
-                                color: '#828ba2',
-                                margin: '0',
-                            },
-                        },
-                        {
-                            id: 'skillName',
-                            name: 'Skill',
-                            placeholder: 'TECHNICAL SKILL',
-                            tagName: TemplateItemTags.PARAGRAPH,
-                            content: 'TypeScript',
+                            content: 'Italy',
                             styles: {
                                 paddingBottom: '10px',
                                 fontSize: '1rem',
@@ -160,8 +189,8 @@ const prettifiedTemplate: TemplateSettings = {
                         flexDirection: 'column',
                         justifyContent: 'space-around',
                     },
+                    enabled: true,
                 },
-
                 {
                     id: 'Divider',
                     name: TemplateBlockTitles.Divider,
@@ -178,6 +207,7 @@ const prettifiedTemplate: TemplateSettings = {
                         width: '2px',
                         backgroundColor: '#c7cacf',
                     },
+                    enabled: true,
                 },
                 {
                     id: 'educationBlock1',
@@ -186,7 +216,7 @@ const prettifiedTemplate: TemplateSettings = {
                         {
                             id: 'institution',
                             name: 'University',
-                            placeholder: 'UNIVERSITY',
+                            placeholder: 'University',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'University of Computer Science',
                             styles: {
@@ -199,7 +229,7 @@ const prettifiedTemplate: TemplateSettings = {
                         {
                             id: 'degree',
                             name: 'Degree',
-                            placeholder: 'DEGREE',
+                            placeholder: 'Degree',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'Master Degree',
                             styles: { fontSize: '15px' },
@@ -207,7 +237,7 @@ const prettifiedTemplate: TemplateSettings = {
                         {
                             id: 'description',
                             name: 'Description',
-                            placeholder: 'DESCRIPTION',
+                            placeholder: 'Description',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content:
                                 'Beyond academics, the University of Computer Science fosters a vibrant campus community characterized by diversity, inclusion, and collaboration. Students have ample opportunities to engage in extracurricular activities, clubs, and events, enabling them to develop leadership skills',
@@ -224,6 +254,7 @@ const prettifiedTemplate: TemplateSettings = {
                         flexDirection: 'column',
                         justifyContent: 'space-around',
                     },
+                    enabled: true,
                 },
             ],
             styles: {
@@ -252,20 +283,84 @@ const prettifiedTemplate: TemplateSettings = {
                                 margin: '0',
                             },
                         },
+                        {
+                            id: 'languageLevel',
+                            name: 'Language Level',
+                            placeholder: 'Language Level',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'Elementary',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
                     ],
                     styles: {
                         marginRight: 'auto',
                         marginTop: '5px',
                     },
+                    enabled: true,
                 },
                 {
-                    id: 'certification',
-                    name: TemplateBlockTitles.CERTIFICATION,
+                    id: 'contactsBlock',
+                    name: TemplateBlockTitles.Contacts,
+                    items: [
+                        {
+                            id: 'phoneNumber',
+                            name: 'Phone Number',
+                            placeholder: 'Phone Number',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: '+380951643917',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'socialContact',
+                            name: 'Social Contact',
+                            placeholder: 'Social Contact',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'LinkedIn',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'link',
+                            name: 'Link',
+                            placeholder: 'Link',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: 'https://www.linkedin.com',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '1rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                    ],
+                    styles: {
+                        marginRight: 'auto',
+                        marginTop: '5px',
+                    },
+                    enabled: true,
+                },
+                {
+                    id: 'certificationBlock',
+                    name: TemplateBlockTitles.Certification,
                     items: [
                         {
                             id: 'certificationName',
-                            name: 'Certification Name',
-                            placeholder: 'CERTIFICATION',
+                            name: 'Certification',
+                            placeholder: 'Certification',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content:
                                 'AWS Certified Solutions Architect (AWS-CSA)',
@@ -279,9 +374,22 @@ const prettifiedTemplate: TemplateSettings = {
                         {
                             id: 'authority',
                             name: 'Authority',
-                            placeholder: 'AUTHORITY',
+                            placeholder: 'Authority',
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'Amazon Web Services (AWS)',
+                            styles: {
+                                paddingBottom: '10px',
+                                fontSize: '0.75rem',
+                                color: '#828ba2',
+                                margin: '0',
+                            },
+                        },
+                        {
+                            id: 'certificationUrlOrCode',
+                            name: 'Certification Code',
+                            placeholder: 'Certification Code',
+                            tagName: TemplateItemTags.PARAGRAPH,
+                            content: '(AWS E3256)',
                             styles: {
                                 paddingBottom: '10px',
                                 fontSize: '0.75rem',
@@ -296,12 +404,14 @@ const prettifiedTemplate: TemplateSettings = {
                         margin: 'auto',
                         marginTop: '0.4rem',
                     },
+                    enabled: true,
                 },
             ],
             styles: {
                 display: 'flex',
                 gap: '10px',
                 borderTop: '2px solid #c7cacf',
+                alignItems: 'baseline',
             },
         },
     ],

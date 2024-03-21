@@ -4,6 +4,7 @@ import { type JwtPayload } from 'jsonwebtoken';
 import {
     type FindByEmailRequestDto,
     type UpdateUserProfileAndEmailRequestDto,
+    validateUrl,
 } from 'shared/build/index.js';
 import { HttpCode, HTTPError } from 'shared/build/index.js';
 
@@ -80,11 +81,12 @@ class UserService
         avatar,
         passwordSalt,
         passwordHash,
+        emailConfirmed,
     }: UserSignUpRequestDto & {
         passwordSalt?: string;
         passwordHash?: string;
         avatar?: string;
-    }): Promise<Pick<UserEntityFields, 'id'>> {
+    }): Promise<Pick<UserEntityFields, 'id' | 'email'>> {
         const transaction = await this.userRepository.model.startTransaction();
         try {
             const { id } = await this.profileRepository.createWithTransaction(
@@ -101,6 +103,7 @@ class UserService
                     passwordSalt: passwordSalt ?? null,
                     passwordHash: passwordHash ?? null,
                     profileId: id,
+                    emailConfirmed,
                 }),
                 transaction,
             )) as UserEntityFields;
@@ -143,7 +146,10 @@ class UserService
 
         const { userProfile } = user;
 
-        if (userProfile.avatar) {
+        const isValidAvatarUrl =
+            userProfile.avatar && validateUrl(userProfile.avatar);
+
+        if (userProfile.avatar && !isValidAvatarUrl) {
             const generatedAvatarUrl = await this.fileService.getFileUrl(
                 userProfile.avatar,
             );
@@ -152,6 +158,10 @@ class UserService
         }
 
         return user;
+    }
+
+    public async confirmEmail(id: string): Promise<void> {
+        return this.userRepository.confirmEmail(id);
     }
 
     public async delete(
@@ -167,16 +177,7 @@ class UserService
         }
 
         const { id } = decodeToken(token) as JwtPayload;
-        const deletedUser = await this.userRepository.delete(id);
-
-        if (!deletedUser) {
-            throw new HTTPError({
-                message: 'User not found',
-                status: HttpCode.NOT_FOUND,
-            });
-        }
-
-        return deletedUser;
+        return await this.userRepository.delete(id);
     }
 
     public async addStripeId(

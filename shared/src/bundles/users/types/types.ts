@@ -2,6 +2,8 @@ export { type FindByEmailRequestDto } from './find-by-email-request-dto.js';
 export { type SocialMediaProfiles } from './social-media-profiles.type.js';
 export { type User } from './user.type.js';
 export { type UserAuthResponse } from './user-auth-response.type.js';
+export { type UserConfirmEmailRequestDto } from './user-confirm-email-request-dto.type.js';
+export { type UserConfirmEmailResponse } from './user-confirm-email-response.type.js';
 export { type UserEntityFields } from './user-entity-fields.type.js';
 export { type UserForgotPasswordRequestDto } from './user-forgot-password-request-dto.type.js';
 export { type UserForgotPasswordResponse } from './user-forgot-password-response.type.js';

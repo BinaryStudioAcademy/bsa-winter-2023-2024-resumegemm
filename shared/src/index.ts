@@ -57,6 +57,7 @@ export {
     type CustomSection,
     type Education,
     type Experience,
+    type GetUserResumeSharesResponse,
     type IResumeService,
     type PersonalInformation,
     type Resume,
@@ -86,6 +87,13 @@ export {
     ResumesApiPath,
     SkillLevel,
 } from './bundles/resumes/resumes.js';
+export {
+    type GetStatisticsRequestDto,
+    type GetStatisticsResponseDto,
+    type StatisticsRecord,
+    StatisticsApiPath,
+    StatisticsPeriods,
+} from './bundles/statistics/statistics.js';
 export { StripeEventsApiPath } from './bundles/stripe-events/stripe-events.js';
 export {
     type CSSProperties,
@@ -108,6 +116,8 @@ export {
     type UpdateUserProfileAndEmailRequestDto,
     type User,
     type UserAuthResponse,
+    type UserConfirmEmailRequestDto,
+    type UserConfirmEmailResponse,
     type UserEntityFields,
     type UserForgotPasswordRequestDto,
     type UserForgotPasswordResponse,
@@ -137,6 +147,7 @@ export {
     ContentType,
     CookieName,
     ExceptionMessage,
+    SearchParameters,
     ServerErrorType,
 } from './enums/enums.js';
 export { type IConfig } from './framework/config/config.js';
@@ -154,8 +165,13 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type IStorage } from './framework/storage/storage.js';
-export { configureString, validateUrl } from './helpers/helpers.js';
 export {
+    configureString,
+    dateWithinRange,
+    validateUrl,
+} from './helpers/helpers.js';
+export {
+    type FindAllOptions,
     type IdParameter,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,

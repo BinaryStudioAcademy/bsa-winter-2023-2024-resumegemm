@@ -3,12 +3,13 @@ import {
     type AuthException,
     type HTTPError,
     type UserAuthResponse,
+    type UserConfirmEmailRequestDto,
+    type UserConfirmEmailResponse,
     type UserForgotPasswordRequestDto,
     type UserResetPasswordRequestDto,
     type UserResetPasswordResponse,
     type UserSignInRequestDto,
     type UserSignInResponseDto,
-    type UserSignUpResponseDto,
     type UserVerifyResetPasswordTokenRequestDto,
     type UserWithProfileRelation,
     AuthApiPath,
@@ -22,6 +23,7 @@ import {
 } from '~/bundles/auth/helpers/helpers.js';
 import {
     type UserSignUpRequestDto,
+    type UserSignUpResponseDto,
     userSignInValidationSchema,
     userSignUpValidationSchema,
 } from '~/bundles/users/users.js';
@@ -43,6 +45,7 @@ import { resetPasswordTokenValidationSchema } from '../users/validation-schemas/
 import { type AuthService } from './auth.service.js';
 import { AuthMail } from './enums/auth-mail.js';
 import { AuthMessage } from './enums/auth-message.js';
+import { EmailConfirmMessages } from './enums/message.enum.js';
 
 class AuthController extends Controller {
     private authService: AuthService;
@@ -103,6 +106,16 @@ class AuthController extends Controller {
                     options as ApiHandlerOptions<{
                         cookies: FastifyRequest['cookies'];
                         unsignCookie: FastifyRequest['unsignCookie'];
+                    }>,
+                ),
+        });
+        this.addRoute({
+            path: AuthApiPath.CONFIRM_EMAIL,
+            method: 'POST',
+            handler: (options) =>
+                this.confirmEmail(
+                    options as ApiHandlerOptions<{
+                        body: UserConfirmEmailRequestDto;
                     }>,
                 ),
         });
@@ -267,11 +280,11 @@ class AuthController extends Controller {
         }>,
     ): Promise<ApiHandlerResponse<UserSignUpResponseDto>> {
         try {
-            const payload = await this.authService.signUp(options.body);
+            const userData = await this.authService.signUp(options.body);
 
             return {
                 status: HttpCode.CREATED,
-                payload,
+                payload: userData,
             };
         } catch (error: unknown) {
             const { message, status, errorType } = error as AuthException;
@@ -373,6 +386,46 @@ class AuthController extends Controller {
                 status,
                 payload: {
                     message: ExceptionMessage.INVALID_REFRESH_TOKEN,
+                    status,
+                },
+            };
+        }
+    }
+
+    private async confirmEmail(
+        options: ApiHandlerOptions<{ body: UserConfirmEmailRequestDto }>,
+    ): Promise<ApiHandlerResponse<UserConfirmEmailResponse>> {
+        try {
+            const { emailConfirmToken } = options.body;
+
+            if (!emailConfirmToken) {
+                return {
+                    status: HttpCode.BAD_REQUEST,
+                    payload: {
+                        message: ExceptionMessage.EMAIL_CONFIRM_TOKEN_NOT_FOUND,
+                        status: HttpCode.BAD_REQUEST,
+                    },
+                };
+            }
+            const userData = await this.authService.confirmUserEmail({
+                emailConfirmToken,
+            });
+
+            return {
+                status: HttpCode.OK,
+                payload: {
+                    ...userData,
+                    message:
+                        EmailConfirmMessages.EMAIL_CONFIRM_TOKEN_IS_CORRECT,
+                    status: HttpCode.OK,
+                },
+            };
+        } catch (error: unknown) {
+            const { status } = error as HTTPError;
+            return {
+                status,
+                payload: {
+                    message: ExceptionMessage.USER_NOT_FOUND,
                     status,
                 },
             };
