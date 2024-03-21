@@ -164,11 +164,11 @@ const getResumeReviewFromAI = createAsyncThunk<
 
 const updateCurrentResume = createAsyncThunk<
     ResumeWithRelationsAndTemplateResponseDto,
-    { itemId: string; value: string },
+    { itemId: string; value: string; image: string },
     AsyncThunkConfig
 >(
     `${sliceName}/update-current-resume`,
-    ({ itemId, value }, { extra, getState }) => {
+    ({ itemId, value, image }, { extra, getState }) => {
         const { resumeApi } = extra;
         const { templates, ...restResumeProperties } = getState().resumes
             .currentResume as ResumeWithRelationsAndTemplateResponseDto;
@@ -178,9 +178,8 @@ const updateCurrentResume = createAsyncThunk<
             itemId,
             value,
         );
-
         return resumeApi.updateResume(
-            { ...updatedResumeData, resume: {} },
+            { ...updatedResumeData, resume: { image } },
             restResumeProperties.id,
         );
     },

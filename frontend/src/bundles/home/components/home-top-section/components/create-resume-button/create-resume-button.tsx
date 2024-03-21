@@ -1,15 +1,56 @@
 import { NavLink } from 'react-router-dom';
+import { type TemplateDto } from 'shared/build/bundles/templates/types/template-dto.type';
 
+import { RegularButton } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/enums';
+import { useReducer } from '~/bundles/common/hooks/hooks';
 
 import { PlusCircleIcon } from '../../../icons/plus-circle-icon';
 import { ResumeIcon } from '../../../icons/resume-icon';
 import styles from './styles.module.scss';
 
-const CreateResumeButton: React.FC = () => (
-    <NavLink to={AppRoute.RESUME_CREATE}>
+type CreateResumeButtonPayload = {
+    templates: TemplateDto[];
+};
+
+const CreateResumeButton: React.FC<CreateResumeButtonPayload> = ({
+    templates,
+}) => {
+    const [isPopUpShown, togglePopUp] = useReducer(
+        (isShown) => !isShown,
+        false,
+    );
+
+    const [firstTemplate, secondTemplate] = templates;
+
+    return (
         <div className={styles.container}>
-            <div className={styles.create_resume_button}>
+            {isPopUpShown && (
+                <div className={styles.templates__container}>
+                    <NavLink
+                        to={`${AppRoute.RESUME_CREATE}/${firstTemplate.id}`}
+                    >
+                        <img
+                            className={styles.templates__container__image}
+                            src={firstTemplate.image}
+                            alt={firstTemplate.name}
+                        />
+                    </NavLink>
+                    <NavLink
+                        to={`${AppRoute.RESUME_CREATE}/${secondTemplate.id}`}
+                    >
+                        <img
+                            className={styles.templates__container__image}
+                            src={secondTemplate.image}
+                            alt={secondTemplate.name}
+                        />
+                    </NavLink>
+                </div>
+            )}
+            <RegularButton
+                onClick={togglePopUp}
+                className={styles.create_resume_button}
+            >
                 <div className={styles.create_resume_button__icon}>
                     <PlusCircleIcon
                         className={
@@ -23,9 +64,9 @@ const CreateResumeButton: React.FC = () => (
                 <span className={styles.create_resume_button__text}>
                     Create a resume
                 </span>
-            </div>
+            </RegularButton>
         </div>
-    </NavLink>
-);
+    );
+};
 
 export { CreateResumeButton };

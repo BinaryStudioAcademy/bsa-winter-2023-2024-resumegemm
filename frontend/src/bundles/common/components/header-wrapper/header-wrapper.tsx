@@ -29,7 +29,6 @@ const HeaderWrapper: React.FC = () => {
         ) {
             return <GetStartedHeader />;
         }
-
         if (
             AvatarHeaderRoutes.some((route) =>
                 matchPath(route, location.pathname as AppRoute),
