@@ -62,7 +62,7 @@ const StatisticsPage = (): JSX.Element => {
             return resumesWithShare.map((resumeWithShare) => {
                 const { resume, shareId } = resumeWithShare;
 
-                if (!resume?.title) {
+                if (!resume) {
                     return;
                 }
 
