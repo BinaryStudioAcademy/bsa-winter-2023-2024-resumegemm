@@ -37,7 +37,11 @@ import {
 import { ToastType } from '../toast/enums/show-toast-types.enum';
 import { showToast } from '../toast/helpers/show-toast';
 import { TemplateEditor } from './components/template-editor/template-editor';
-import { dropdownOptions } from './constants/constants';
+import {
+    dropdownFontFamilyOptions,
+    dropdownFontSizeOptions,
+    dropdownFontStyleOptions,
+} from './constants/constants';
 import { EditorStyles } from './enums/editor-styles.enum';
 import { TemplatesMessage } from './enums/enums';
 import { FontStyles } from './enums/font-styles';
@@ -204,20 +208,6 @@ const EditTemplatePage: React.FC = () => {
         [],
     );
 
-    const handleFontFamilyChange = useCallback(
-        (event: ChangeEvent<HTMLInputElement>) => {
-            setFontFamily(event.currentTarget.value);
-        },
-        [],
-    );
-
-    const handleFontSizeChange = useCallback(
-        (event: ChangeEvent<HTMLInputElement>) => {
-            setFontSize(event.currentTarget.value);
-        },
-        [],
-    );
-
     const closeModal = useCallback(() => {
         setIsModalOpen(false);
     }, []);
@@ -226,13 +216,38 @@ const EditTemplatePage: React.FC = () => {
         setIsModalOpen(true);
     }, []);
 
-    const handleDropdownChange = useCallback((value: string | undefined) => {
-        if (!value) {
-            return;
-        }
+    const handleDropdownFontStyleChange = useCallback(
+        (value: string | undefined) => {
+            if (!value) {
+                return;
+            }
 
-        setFontStyle(value as FontStyles);
-    }, []);
+            setFontStyle(value as FontStyles);
+        },
+        [],
+    );
+
+    const handleDropdownFontFamilyChange = useCallback(
+        (value: string | undefined) => {
+            if (!value) {
+                return;
+            }
+
+            setFontFamily(value as FontStyles);
+        },
+        [],
+    );
+
+    const handleDropdownFontSizeChange = useCallback(
+        (value: string | undefined) => {
+            if (!value) {
+                return;
+            }
+
+            setFontSize(value as FontStyles);
+        },
+        [],
+    );
 
     const handleModalSubmit = useCallback(() => {
         setIsModalOpen(false);
@@ -423,20 +438,25 @@ const EditTemplatePage: React.FC = () => {
                 <div className={templateStyles.editor_sidebar__modal_container}>
                     <Dropdown
                         name="font-style"
-                        onChange={handleDropdownChange}
-                        options={dropdownOptions}
+                        onChange={handleDropdownFontStyleChange}
+                        options={dropdownFontStyleOptions}
                         placeholder="font style"
                     />
-                    <Input
-                        value={fontFamily}
-                        onChange={handleFontFamilyChange}
+
+                    <Dropdown
+                        name="font-family"
+                        onChange={handleDropdownFontFamilyChange}
+                        options={dropdownFontFamilyOptions}
                         placeholder="font family"
-                    ></Input>
-                    <Input
-                        value={fontSize}
-                        onChange={handleFontSizeChange}
+                    />
+
+                    <Dropdown
+                        name="font-size"
+                        onChange={handleDropdownFontSizeChange}
+                        options={dropdownFontSizeOptions}
                         placeholder="font size"
-                    ></Input>
+                    />
+
                     <RegularButton onClick={handleModalSubmit}>
                         Confirm
                     </RegularButton>
