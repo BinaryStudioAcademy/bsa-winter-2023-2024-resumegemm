@@ -39,7 +39,10 @@ const useTakeScreenShot = (): ReturnValue => {
                 throw new Error('Reference is required');
             }
             setLoading(true);
-            const canvas = await html2canvas(ref.current, options);
+            const canvas = await html2canvas(ref.current, {
+                ...options,
+                allowTaint: true,
+            });
             const data = canvas.toDataURL(type, quality);
             setScreenshot(data);
 
