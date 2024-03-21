@@ -91,20 +91,20 @@
     width: 15px;
     height: 15px;
     mask-image: url("../../assets/img/color-select-svgrepo-com.svg");
-    mask-size: 100% 100%;
+    mask-size: 80% 80%;
     mask-repeat: no-repeat;
     mask-position: center;
-    background-color: black;
+    background-color: var(--color-accent-dark-yellow);
 }
 
 .editor_sidebar__color_font_icon {
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
     mask-image: url("../../assets/img/font-svgrepo-com.svg");
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
     mask-position: center;
-    background-color: black;
+    background-color: var(--color-accent-dark-yellow);
 }
 
 .editor_sidebar__modal_container {
