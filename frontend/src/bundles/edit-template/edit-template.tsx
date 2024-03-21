@@ -457,7 +457,10 @@ const EditTemplatePage: React.FC = () => {
                         placeholder="font size"
                     />
 
-                    <RegularButton onClick={handleModalSubmit}>
+                    <RegularButton
+                        variant={ButtonVariant.PRIMARY}
+                        onClick={handleModalSubmit}
+                    >
                         Confirm
                     </RegularButton>
                 </div>
