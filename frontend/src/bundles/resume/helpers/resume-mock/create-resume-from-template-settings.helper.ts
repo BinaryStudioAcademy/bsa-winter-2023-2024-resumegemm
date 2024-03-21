@@ -118,11 +118,17 @@ const createResumeFromTemplateSettings = <T extends ResumeGetAllResponseDto>({
             }
         }
     }
+    const checkLanguagesFields = resumeShape.languages.every(
+        (lang) => lang.language === '',
+    );
     return {
         ...resumeShape,
         resume: {
             ...resumeShape.resume,
             resumeTitle: resumeShape.personalInformation.profession,
+            languages: checkLanguagesFields
+                ? (resumeShape.languages.length = 0)
+                : resumeShape.languages,
         },
     } as unknown as T;
 };

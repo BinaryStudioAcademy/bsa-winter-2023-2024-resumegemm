@@ -17,8 +17,9 @@ $text-color: var(--color-text-profile);
 
 .profile__info__content {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .profile__info__icon {
@@ -39,17 +40,35 @@ $text-color: var(--color-text-profile);
 }
 
 .main__regular {
+    padding: 0 15px;
     color: $text-color;
     font-weight: var(--font-weight-text);
     font-size: var(--font-size-main-text);
     font-family: var(--font-family-main);
-    line-height: 20px;
+    line-height: 24px;
 }
 
 .main__bold {
+    padding: 0 15px;
     color: $text-color;
     font-weight: var(--font-weight-title);
     font-size: var(--font-size-subtitle);
     font-family: var(--font-family-main);
-    line-height: 20px;
+    line-height: 26px;
+}
+
+.upgrade__button:hover {
+    color: var(--color-button-blue);
+}
+
+.cancel__button {
+    margin-left: 10px;
+    color: var(--color-error-red);
+}
+
+.keep_premium__button {
+    width: 150px;
+    padding: 0 8px;
+    font-weight: 500;
+    font-size: 15px;
 }
