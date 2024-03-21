@@ -1,0 +1,14 @@
+.payment_plans__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.payment_plans__cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+    min-height: 100%;
+    padding: 25px;
+}

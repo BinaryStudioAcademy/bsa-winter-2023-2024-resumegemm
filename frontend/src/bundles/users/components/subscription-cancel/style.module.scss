@@ -1,0 +1,64 @@
+.subscription_cancel_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    width: 50%;
+    min-height: 50vh;
+    margin: auto;
+    padding: 45px;
+    box-shadow: 0 0 10px var(--color-box-shadow);
+}
+
+.cancel_info__content_item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.subscription_cancel_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.subscription_cancel_info__title {
+    font-weight: 600;
+    font-size: 28px;
+}
+
+.subscription_cancel_info__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.cancel_info__main_text {
+    font-weight: 500;
+}
+
+.cancel_info__text {
+    font-size: 18px;
+}
+
+.subscription_cancel_buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 50%;
+}
+
+.cancel_info__icon {
+    color: var(--color-button-blue);
+}
+
+.subscription_cancel_spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}

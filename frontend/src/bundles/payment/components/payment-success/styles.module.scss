@@ -1,0 +1,40 @@
+.payment_success {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 55%;
+    margin: 50px auto;
+    padding: 40px;
+    color: var(--color-white);
+    font-size: 18px;
+    background-color: var(--color-background-dark-blue);
+    border-radius: 25px;
+}
+
+.payment_success__title {
+    font-weight: var(--font-weight-title);
+    font-size: var(--font-size-title-h2);
+}
+
+.payment_success__main_text {
+    color: var(--color-accent-dark-yellow);
+    font-weight: var(--font-weight-subtitle);
+    font-size: var(--font-size-title-h3);
+    line-height: 35px;
+}
+
+.payment_success__text {
+    text-align: justify;
+    text-indent: 20px;
+}
+
+.payment_success__date {
+    color: var(--color-accent-dark-yellow);
+    font-weight: var(--font-weight-title);
+}
+
+.payment_success__button,
+.payment_success__button:hover {
+    width: 50%;
+    margin: 25px auto;
+}

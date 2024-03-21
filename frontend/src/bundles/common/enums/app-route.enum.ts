@@ -20,6 +20,7 @@ enum AppRoute {
     CHECK_EMAIL = '/check-email',
     FORGOT_PASSWORD = '/forgot-password',
     QA = '/qa',
+    SUBSCRIPTION_CANCEL = '/subscription-cancel',
 }
 
 export { AppRoute };
