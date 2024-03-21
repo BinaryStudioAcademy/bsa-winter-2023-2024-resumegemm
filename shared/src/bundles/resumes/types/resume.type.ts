@@ -1,6 +1,7 @@
 type Resume = {
     id: string;
-    resumeTitle: string;
+    title: string;
+    resumeTitle?: string;
     image: string;
     createdAt: string;
     updatedAt?: string;
