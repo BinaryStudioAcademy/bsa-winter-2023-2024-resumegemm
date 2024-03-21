@@ -10,21 +10,17 @@ import {
     type ResumeShareCreateResponseDto,
     type ResumeShareDeleteResponseDto,
     type ResumeShareDetailsGetResponseDto,
-    // type ResumeShareGetResponseDto,
 } from './types/types.js';
 
 class ResumeShareService implements IResumeShareService {
     private resumeShareRepository: ResumeShareRepository;
-    // private resumeService: ResumeService;
     private resumeShareAccessService: ResumeShareAccessService;
 
     public constructor(
         resumeShareRepository: ResumeShareRepository,
-        // resumeService: ResumeService,
         resumeShareAccessService: ResumeShareAccessService,
     ) {
         this.resumeShareRepository = resumeShareRepository;
-        // this.resumeService = resumeService;
         this.resumeShareAccessService = resumeShareAccessService;
     }
 
@@ -50,28 +46,6 @@ class ResumeShareService implements IResumeShareService {
 
         return createdAccess;
     }
-
-    // public async getShareLink(
-    //     id: string,
-    //     ip: string,
-    // ): Promise<ResumeShareGetResponseDto | unknown> {
-    //     await this.resumeShareAccessService.createShareAccess(id, ip);
-
-    //     const sharedResume =
-    //         await this.resumeShareRepository.getResumeShareLink(id);
-
-    //     if (!sharedResume) {
-    //         return;
-    //     }
-
-    //     const resume = await this.resumeService.findById(sharedResume.resumeId);
-
-    //     if (resume) {
-    //         const { image, resumeTitle } = resume;
-
-    //         return { ...sharedResume, resume: { image, resumeTitle } };
-    //     }
-    // }
 
     public async getShareLinkDetails(
         id: string,

@@ -5,7 +5,6 @@ import {
     HTTPError,
 } from 'shared/build/index.js';
 
-// import { type Resume } from 'shared/build/index.js';
 import { type ResumeService } from '../resumes/resume.service.js';
 import { ResumeShareErrorMessage } from './enums/error-messages.js';
 import { type ResumeShareRepository } from './resume-share.repository.js';
