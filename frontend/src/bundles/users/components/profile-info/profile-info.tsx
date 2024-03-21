@@ -1,14 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
 import PremiumCrown from '~/assets/img/premium-crown.svg?react';
-import {
-    BaseButton,
-    Icon,
-    RegularButton,
-} from '~/bundles/common/components/components';
+import { Icon, RegularButton } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import {
-    ButtonSize,
     ButtonVariant,
     IconName,
     IconSize,
@@ -76,12 +71,13 @@ const ProfileInfo: React.FC = () => {
                             </p>
                         </div>
                         <div className={styles.profile__info__actions}>
-                            <BaseButton
+                            <RegularButton
+                                variant={ButtonVariant.PRIMARY}
                                 onClick={handleClickUpgrade}
                                 className={styles.upgrade__button}
                             >
                                 Upgrade
-                            </BaseButton>
+                            </RegularButton>
                         </div>
                     </>
                 )}
@@ -97,18 +93,19 @@ const ProfileInfo: React.FC = () => {
                                 {
                                     subscription.subscriptionPlan
                                         .stripeProductName
-                                }
-                                . Your account will auto-renew on{' '}
+                                }{' '}
+                                plan . Your account will auto-renew on{' '}
                                 {subscription.endDate}
                             </p>
                         </div>
                         <div className={styles.profile__info__actions}>
-                            <BaseButton
+                            <RegularButton
+                                variant={ButtonVariant.PRIMARY}
                                 onClick={handleCancelSubscription}
                                 className={styles.cancel__button}
                             >
                                 Cancel
-                            </BaseButton>
+                            </RegularButton>
                         </div>
                     </>
                 )}
@@ -132,7 +129,6 @@ const ProfileInfo: React.FC = () => {
                             <div className={styles.profile__info__actions}>
                                 <RegularButton
                                     variant={ButtonVariant.PRIMARY}
-                                    size={ButtonSize.MEDIUM}
                                     onClick={handleKeepSubscription}
                                     className={styles.keep_premium__button}
                                 >
