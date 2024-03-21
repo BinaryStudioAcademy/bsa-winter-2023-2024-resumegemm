@@ -10,6 +10,7 @@ export {
 } from './components/components.js';
 export { DataStatus } from './data-status.enum.js';
 export { DividerVariant } from './divider/divider-variant.enum.js';
+export { LayoutItemName } from './layout-item-name/layout-item-name.enum.js';
 export { ModalVariant } from './modal/modal-variant.enum.js';
 export { SpinnerVariant } from './spinner/spinner-variant.enum.js';
 export { TooltipDimensions } from './tooltip/dimension-type.enum.js';

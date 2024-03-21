@@ -6,6 +6,7 @@ import { updateResumeFieldsFromTemplateSettings } from './update-resume-fields-f
 
 type CreateResumePayload = {
     firstName: string;
+    lastName: string | null;
     email: string;
     templateSettings: TemplateSettings;
     image: string;
@@ -13,27 +14,58 @@ type CreateResumePayload = {
 
 const createResumeFromTemplateSettings = <T extends ResumeGetAllResponseDto>({
     firstName,
+    lastName,
     email,
     templateSettings,
     image,
 }: CreateResumePayload): T => {
     const resumeShape = {
         resume: {
-            resumeTitle: 'My Resume',
+            resumeTitle: '',
             image,
         },
         contacts: {
             phoneNumber: '',
+            socialContact: '',
+            link: '',
         },
         personalInformation: {
             firstName,
-            lastName: '',
+            lastName,
             email,
             profession: '',
             industry: '',
             city: '',
             country: '',
         },
+        experience: [
+            {
+                jobTitle: '',
+                companyName: '',
+                employmentType: '',
+                city: '',
+                country: '',
+                startDate: new Date(2015, 10),
+                endDate: new Date(2017, 15),
+            },
+        ],
+        education: [
+            {
+                institution: '',
+                degree: '',
+                description: '',
+                startDate: new Date(2015, 10),
+                endDate: new Date(2017, 15),
+                city: '',
+                country: '',
+            },
+        ],
+        languages: [
+            {
+                language: '',
+                languageLevel: '',
+            },
+        ],
         certification: [
             {
                 certificationName: '',
@@ -43,28 +75,8 @@ const createResumeFromTemplateSettings = <T extends ResumeGetAllResponseDto>({
                 endDate: new Date(2017, 15),
             },
         ],
-        education: [
-            {
-                institution: '',
-                degree: '',
-                city: '',
-                country: '',
-                description: '',
-                startDate: new Date(2015, 10),
-                endDate: new Date(2017, 15),
-            },
-        ],
-        languages: [
-            {
-                language: '',
-            },
-        ],
-        technicalSkills: [
-            {
-                skillName: '',
-            },
-        ],
         customSections: [],
+        technicalSkills: [],
     };
 
     for (const container of templateSettings.containers) {
@@ -80,6 +92,10 @@ const createResumeFromTemplateSettings = <T extends ResumeGetAllResponseDto>({
                 );
                 updateResumeFieldsFromTemplateSettings(
                     resumeShape.education,
+                    item,
+                );
+                updateResumeFieldsFromTemplateSettings(
+                    resumeShape.experience,
                     item,
                 );
                 updateResumeFieldsFromTemplateSettings(
@@ -102,7 +118,19 @@ const createResumeFromTemplateSettings = <T extends ResumeGetAllResponseDto>({
             }
         }
     }
-    return resumeShape as unknown as T;
+    const checkLanguagesFields = resumeShape.languages.every(
+        (lang) => lang.language === '',
+    );
+    return {
+        ...resumeShape,
+        resume: {
+            ...resumeShape.resume,
+            resumeTitle: resumeShape.personalInformation.profession,
+            languages: checkLanguagesFields
+                ? (resumeShape.languages.length = 0)
+                : resumeShape.languages,
+        },
+    } as unknown as T;
 };
 
 export { createResumeFromTemplateSettings };

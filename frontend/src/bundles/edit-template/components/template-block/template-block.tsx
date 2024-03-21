@@ -10,7 +10,7 @@ import {
     useSortable,
 } from '@dnd-kit/sortable';
 import clsx from 'clsx';
-import { useCallback, useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 
 import { useState, useTemplateSensors } from '~/bundles/common/hooks/hooks';
 import { type LayoutBlock } from '~/bundles/templates-page/types/types';
@@ -109,7 +109,10 @@ const TemplateBlock: React.FC<Properties> = ({ id, items, styles }) => {
                     strategy={rectSortingStrategy}
                 >
                     {items.map((item) => (
-                        <TemplateItem key={item.id} {...item} blockId={id} />
+                        <React.Fragment key={item.id}>
+                            <span>{item.placeholder}</span>
+                            <TemplateItem {...item} blockId={id} />
+                        </React.Fragment>
                     ))}
                 </SortableContext>
                 <DragOverlay>

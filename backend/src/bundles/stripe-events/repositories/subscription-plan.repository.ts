@@ -6,7 +6,7 @@ import {
     type SubscriptionPlanCreateDto,
 } from '~/bundles/stripe-events/types/types.js';
 
-import { type SubscriptionPlanModel } from '../models/subscription-plan.model.js';
+import { SubscriptionPlanModel } from '../models/subscription-plan.model.js';
 
 class SubscriptionPlanRepository implements ISubscriptionPlanRepository {
     private subscriptionPlanModel: typeof SubscriptionPlanModel;
@@ -19,6 +19,17 @@ class SubscriptionPlanRepository implements ISubscriptionPlanRepository {
         stripePlanId: string;
     }): Promise<SubscriptionPlan | undefined> {
         return await this.subscriptionPlanModel.query().findOne(query);
+    }
+
+    public async findByStripePlanId(
+        stripePlanId: string,
+    ): Promise<SubscriptionPlan | null> {
+        const subscriptionPlan = await this.subscriptionPlanModel
+            .query()
+            .where('stripePlanId', stripePlanId)
+            .returning('*');
+
+        return subscriptionPlan[0] ?? null;
     }
 
     public async create(
@@ -45,4 +56,8 @@ class SubscriptionPlanRepository implements ISubscriptionPlanRepository {
     }
 }
 
-export { SubscriptionPlanRepository };
+const subscriptionPlanRepository = new SubscriptionPlanRepository(
+    SubscriptionPlanModel,
+);
+
+export { SubscriptionPlanRepository, subscriptionPlanRepository };

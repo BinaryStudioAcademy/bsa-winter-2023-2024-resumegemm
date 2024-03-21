@@ -1,6 +1,9 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
-import { updateTemplateSettings } from '~/bundles/resume/helpers/helpers';
+import {
+    updateTemplateSettings,
+    updateTemplateSettingsAvatar,
+} from '~/bundles/resume/helpers/helpers';
 import {
     createResume,
     deleteResume,
@@ -48,6 +51,15 @@ const { reducer, actions, name } = createSlice({
                     state.templateSettings.containers,
                     action.payload,
                 );
+            }
+        },
+        setUserAvatarInTemplateSettings: (state, action) => {
+            if (state.templateSettings) {
+                state.templateSettings.containers =
+                    updateTemplateSettingsAvatar(
+                        state.templateSettings.containers,
+                        action.payload,
+                    );
             }
         },
         setCurrentTemplateId: (state, action) => {
@@ -113,7 +125,6 @@ const { reducer, actions, name } = createSlice({
                 state.resumes = [];
                 state.currentResume = null;
                 state.resumeReview = null;
-                state.templateSettings = null;
             },
         );
     },

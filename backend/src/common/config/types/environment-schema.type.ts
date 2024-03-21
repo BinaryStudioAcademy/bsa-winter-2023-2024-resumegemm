@@ -10,10 +10,10 @@ type EnvironmentSchema = {
     JWT: {
         ACCESS_TOKEN_SECRET: string;
         REFRESH_TOKEN_SECRET: string;
-        RESET_TOKEN_SECRET: string;
+        EMAIL_CONFIRM_TOKEN_SECRET: string;
+        EMAIL_CONFIRM_TOKEN_EXPIRES_IN: string;
         ACCESS_TOKEN_EXPIRES_IN: string;
         REFRESH_TOKEN_EXPIRES_IN: string;
-        RESET_TOKEN_EXPIRES_IN: string;
     };
     OAUTH: {
         GITHUB: {
@@ -48,6 +48,14 @@ type EnvironmentSchema = {
         POOL_MIN: number;
         POOL_MAX: number;
     };
+    EMAIL: {
+        SMTP_HOST: string;
+        SMTP_PORT: string;
+        SMTP_USER: string;
+        SMTP_PASSWORD: string;
+        SMTP_DASHBOARD: string;
+        SMTP_LOGO: string;
+    };
     STRIPE: {
         STRIPE_SECRET_KEY: string;
         STRIPE_PUBLISHABLE_KEY: string;
@@ -61,6 +69,9 @@ type EnvironmentSchema = {
         SECRET_ACCESS_KEY: string;
         ACCESS_KEY: string;
         BUCKET_NAME: string;
+    };
+    RESET_PASSWORD_TOKEN: {
+        EXPIRES_IN: number;
     };
 };
 

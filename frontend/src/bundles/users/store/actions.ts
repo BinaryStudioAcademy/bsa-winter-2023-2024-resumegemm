@@ -1,7 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
-import { type UserGetAllResponseDto } from '~/bundles/users/users.js';
+import {
+    type UserGetAllResponseDto,
+    type UserSignUpResponseDto,
+} from '~/bundles/users/users.js';
 import { StorageKey } from '~/framework/storage/storage.js';
 
 import { name as sliceName } from './slice.js';
@@ -15,6 +18,7 @@ const loadAll = createAsyncThunk<
 
     return userApi.getAll();
 });
+
 const deleteProfile = createAsyncThunk<
     UserGetAllResponseDto,
     undefined,
@@ -22,13 +26,21 @@ const deleteProfile = createAsyncThunk<
 >(`${sliceName}/delete`, async (_, { extra }) => {
     const { userApi, storageApi } = extra;
 
-    const user = await userApi.deleteProfile();
+    await userApi.deleteProfile();
 
-    if (user) {
-        await storageApi.drop(StorageKey.ACCESS_TOKEN);
-    }
+    await storageApi.drop(StorageKey.ACCESS_TOKEN);
 
     return userApi.getAll();
 });
 
-export { deleteProfile, loadAll };
+const loadUser = createAsyncThunk<
+    UserSignUpResponseDto,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/authenticated-user`, async (_registerPayload, { extra }) => {
+    const { userApi } = extra;
+
+    return await userApi.loadUser();
+});
+
+export { deleteProfile, loadAll, loadUser };

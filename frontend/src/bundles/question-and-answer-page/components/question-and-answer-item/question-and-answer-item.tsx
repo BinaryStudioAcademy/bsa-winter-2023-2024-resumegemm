@@ -5,7 +5,6 @@ import {
     BaseButton,
     RegularButton,
 } from '~/bundles/common/components/components';
-import { ButtonVariant } from '~/bundles/common/enums/enums';
 
 import styles from './styles.module.scss';
 
@@ -33,7 +32,6 @@ const QuestionAndAnswerItem: React.FC<Properties> = ({ title, children }) => {
                 <RegularButton
                     onClick={handleClick}
                     className={styles.question_and_answer_item__title}
-                    variant={ButtonVariant.GHOST}
                 >
                     {title}
                 </RegularButton>

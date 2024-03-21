@@ -17,9 +17,7 @@ class SubscriptionCreatedEventHandler
 
     public constructor(config: IConfig) {
         this.appConfig = config;
-        this.stripe = new Stripe(
-            this.appConfig.ENV.STRIPE.STRIPE_WEBHOOK_SECRET,
-        );
+        this.stripe = new Stripe(this.appConfig.ENV.STRIPE.STRIPE_SECRET_KEY);
         this.mailService = MailService.getInstance();
     }
 

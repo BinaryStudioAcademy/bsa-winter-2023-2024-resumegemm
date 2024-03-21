@@ -1,8 +1,10 @@
 import clsx from 'clsx';
 
 import { RegularButton } from '~/bundles/common/components/components';
-import { ButtonVariant } from '~/bundles/common/enums/enums';
+import { ButtonSize, ButtonVariant } from '~/bundles/common/enums/enums';
+import { useCallback } from '~/bundles/common/hooks/hooks';
 
+import { DeletedPrices } from '../../enums/deleted-prices';
 import styles from './styles.module.scss';
 
 type Properties = {
@@ -11,9 +13,10 @@ type Properties = {
     duration?: string;
     description: string | null;
     price: number | null;
-    onClick: () => void;
+    onClick: (priceId: string) => void;
     selected: boolean;
     image: string[];
+    priceId: string;
 };
 
 const SubscriptionCard: React.FC<Properties> = ({
@@ -25,7 +28,12 @@ const SubscriptionCard: React.FC<Properties> = ({
     onClick,
     selected,
     image,
+    priceId,
 }) => {
+    const handleSelectPrice = useCallback(() => {
+        onClick(priceId);
+    }, [onClick, priceId]);
+
     return (
         <div
             className={clsx(
@@ -46,12 +54,28 @@ const SubscriptionCard: React.FC<Properties> = ({
 
             <div className={styles.subscription_card__info_container}>
                 {price && (
-                    <h3 className={styles.subscription_card__info}>
-                        {price.toFixed(2)} {currency}
-                    </h3>
+                    <>
+                        <h3 className={styles.subscription_card__info}>
+                            <span className={styles.subscription_card__price}>
+                                {price.toFixed(2)}
+                                {currency}
+                            </span>
+                        </h3>
+                        <h4 className={styles.subscription_card__price_deleted}>
+                            {price < DeletedPrices.MIN_AMOUNT &&
+                                (
+                                    price * DeletedPrices.DISCOUNT_FOR_TEST_PLAN
+                                ).toFixed(2)}
+                            {price > DeletedPrices.MIN_AMOUNT &&
+                                (
+                                    price *
+                                    DeletedPrices.DISCOUNT_FOR_PREMIUM_PLAN
+                                ).toFixed(2)}
+                        </h4>
+                    </>
                 )}
                 {duration && (
-                    <h3 className={styles.subscription_card__info}>
+                    <h3 className={styles.subscription_card__duration}>
                         {duration}
                     </h3>
                 )}
@@ -65,10 +89,11 @@ const SubscriptionCard: React.FC<Properties> = ({
 
             <RegularButton
                 className={styles.subscription_card__button}
-                onClick={onClick}
-                variant={ButtonVariant.SQUARE_ORANGE}
+                onClick={handleSelectPrice}
+                variant={ButtonVariant.PRIMARY}
+                size={ButtonSize.MEDIUM}
             >
-                Select
+                SUBSCRIBE
             </RegularButton>
         </div>
     );

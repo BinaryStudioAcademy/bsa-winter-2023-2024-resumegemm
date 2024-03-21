@@ -4,16 +4,19 @@ import { type JwtPayload } from 'jsonwebtoken';
 import {
     type FindByEmailRequestDto,
     type UpdateUserProfileAndEmailRequestDto,
+    validateUrl,
 } from 'shared/build/index.js';
 import { HttpCode, HTTPError } from 'shared/build/index.js';
 
 import { type ProfileRepository } from '~/bundles/profile/profile.repository.js';
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
+import { config } from '~/common/config/config.js';
 import { type FileService } from '~/common/files/file.service.js';
 import { type IService } from '~/common/interfaces/interfaces.js';
 
 import { decodeToken, getToken } from '../auth/helpers/helpers.js';
+import { generateResetPasswordToken } from '../auth/helpers/token/token.js';
 import {
     type UserEntityFields,
     type UserGetAllResponseDto,
@@ -80,11 +83,12 @@ class UserService
         avatar,
         passwordSalt,
         passwordHash,
+        emailConfirmed,
     }: UserSignUpRequestDto & {
         passwordSalt?: string;
         passwordHash?: string;
         avatar?: string;
-    }): Promise<Pick<UserEntityFields, 'id'>> {
+    }): Promise<Pick<UserEntityFields, 'id' | 'email'>> {
         const transaction = await this.userRepository.model.startTransaction();
         try {
             const { id } = await this.profileRepository.createWithTransaction(
@@ -101,6 +105,7 @@ class UserService
                     passwordSalt: passwordSalt ?? null,
                     passwordHash: passwordHash ?? null,
                     profileId: id,
+                    emailConfirmed,
                 }),
                 transaction,
             )) as UserEntityFields;
@@ -143,7 +148,10 @@ class UserService
 
         const { userProfile } = user;
 
-        if (userProfile.avatar) {
+        const isValidAvatarUrl =
+            userProfile.avatar && validateUrl(userProfile.avatar);
+
+        if (userProfile.avatar && !isValidAvatarUrl) {
             const generatedAvatarUrl = await this.fileService.getFileUrl(
                 userProfile.avatar,
             );
@@ -152,6 +160,24 @@ class UserService
         }
 
         return user;
+    }
+
+    public async confirmEmail(id: string): Promise<void> {
+        return await this.userRepository.confirmEmail(id);
+    }
+
+    public async createResetPasswordToken(id: string): Promise<string> {
+        const resetPasswordToken = generateResetPasswordToken();
+
+        const resetPasswordTokenExpiry =
+            Date.now() + Number(config.ENV.RESET_PASSWORD_TOKEN.EXPIRES_IN);
+
+        await this.userRepository.updateById(id, {
+            resetPasswordTokenExpiry,
+            resetPasswordToken,
+        });
+
+        return resetPasswordToken;
     }
 
     public async delete(
@@ -167,16 +193,7 @@ class UserService
         }
 
         const { id } = decodeToken(token) as JwtPayload;
-        const deletedUser = await this.userRepository.delete(id);
-
-        if (!deletedUser) {
-            throw new HTTPError({
-                message: 'User not found',
-                status: HttpCode.NOT_FOUND,
-            });
-        }
-
-        return deletedUser;
+        return await this.userRepository.delete(id);
     }
 
     public async addStripeId(
@@ -198,6 +215,11 @@ class UserService
         passwordHash: string;
         passwordSalt: string;
     }): Promise<void> {
+        await this.userRepository.updateById(id, {
+            resetPasswordToken: null,
+            resetPasswordTokenExpiry: null,
+        });
+
         await this.userRepository.changePassword({
             id,
             passwordHash,

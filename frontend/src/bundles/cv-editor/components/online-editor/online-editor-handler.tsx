@@ -1,12 +1,6 @@
-import { type ChangeEvent } from 'react';
 import { TemplateBlockTitles } from 'shared/build';
 
-import {
-    FormGroup,
-    Input,
-    RegularButton,
-    TextArea,
-} from '~/bundles/common/components/components';
+import { RegularButton } from '~/bundles/common/components/components';
 import {
     ButtonSize,
     ButtonType,
@@ -18,6 +12,7 @@ import {
     useMemo,
     useState,
 } from '~/bundles/common/hooks/hooks';
+import { ContainerLayoutItem } from '~/bundles/cv-editor/components/container-layout-item/layout-item';
 import { EditorTabs } from '~/bundles/cv-editor/components/editor-tabs/editor-tabs';
 import { updateSettingsBlocksFromInputs } from '~/bundles/resume/helpers/helpers';
 import { actions as resumeActions } from '~/bundles/resume/store/resume.store';
@@ -28,9 +23,14 @@ import styles from './online-editor-handler.module.scss';
 type TabsPayload = {
     tabs: TemplateSettings['containers'];
     isCreate?: boolean;
+    onResumeUpdate?: () => Promise<string | null>;
 };
 
-const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
+const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({
+    tabs,
+    isCreate,
+    onResumeUpdate,
+}) => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const dispatch = useAppDispatch();
     const allBlocks = tabs.map((tab) => tab.blocks);
@@ -41,7 +41,7 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
     );
 
     const templateSettingsContainerItems =
-        mergedTemplateSettingsProperties[activeTabIndex].items;
+        mergedTemplateSettingsProperties[activeTabIndex]?.items;
 
     const onNextClick = useCallback(() => {
         setActiveTabIndex((previousTabIndex) => {
@@ -57,7 +57,7 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
     }, [setActiveTabIndex, mergedTemplateSettingsProperties]);
 
     const handleInputResumeFieldChange = useCallback(
-        (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             const { name, value, id } = event.target;
             const updatedTemplateSettingsBlocks =
                 updateSettingsBlocksFromInputs(tabs, name, value);
@@ -70,11 +70,21 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
             if (isCreate) {
                 return;
             }
-            void dispatch(
-                resumeActions.updateCurrentResume({ itemId: id, value }),
-            );
+            const onResumeUpdateResult = onResumeUpdate
+                ? onResumeUpdate()
+                : null;
+
+            void onResumeUpdateResult?.then((screenshot) => {
+                void dispatch(
+                    resumeActions.updateCurrentResume({
+                        itemId: id,
+                        value,
+                        image: screenshot as string,
+                    }),
+                );
+            });
         },
-        [dispatch, tabs, isCreate],
+        [dispatch, tabs, isCreate, onResumeUpdate],
     );
 
     return (
@@ -96,31 +106,18 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
             </nav>
             <div className={styles.editor_output__block}>
                 <div className={styles.template__settings__wrapper}>
-                    {templateSettingsContainerItems.map((item, index) =>
-                        item.name === 'Avatar' ? null : (
-                            <FormGroup
-                                key={`${index}${item.id}`}
-                                label={item.name}
-                            >
-                                {item.name === 'Description' ? (
-                                    <TextArea
-                                        id={item.id}
-                                        value={item.content}
-                                        name={item.name}
-                                        onChange={handleInputResumeFieldChange}
-                                    />
-                                ) : (
-                                    <Input
-                                        id={item.id}
-                                        type="text"
-                                        name={item.name}
-                                        value={item.content}
-                                        onChange={handleInputResumeFieldChange}
-                                    />
-                                )}
-                            </FormGroup>
-                        ),
-                    )}
+                    {templateSettingsContainerItems?.map((item, index) => (
+                        <ContainerLayoutItem
+                            key={`${item.id}-${index}`}
+                            tabs={tabs}
+                            item={item}
+                            isCreate={isCreate}
+                            onResumeUpdate={onResumeUpdate}
+                            handleInputResumeFieldChange={
+                                handleInputResumeFieldChange
+                            }
+                        />
+                    ))}
                 </div>
                 <RegularButton
                     type={ButtonType.SUBMIT}

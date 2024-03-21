@@ -60,7 +60,7 @@ const ProfileForm: React.FC<Properties> = ({ onSubmit, user }) => {
                             })}
                         />
                     </FormGroup>
-                    <p>
+                    <p className={styles.profile__form__section__paragraph}>
                         Use this email to log in to your ResumeGemm account and
                         receive notifications.
                     </p>

@@ -1,0 +1,40 @@
+.payment_info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 30%;
+    padding: 0 40px 32px;
+}
+
+.payment_info__title {
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 33px;
+    line-height: 36px;
+}
+
+.payment_info_features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.payment_info_features__item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.payment_info_questions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.payment_info_questions__title {
+    margin-bottom: 2px;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 24px;
+}

@@ -9,11 +9,23 @@
 .editor_sidebar__nav {
     width: 100%;
     max-width: 400px;
+    height: 100vh;
     padding: 20px;
     border-radius: 15px;
 }
 
+.output__block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 0 80px;
+}
+
 .output__button {
+    justify-content: space-between;
     width: 100%;
     max-width: 1000px;
     padding: 20px;
@@ -27,6 +39,11 @@
     background-color: var(--color-accent-dark-yellow);
 }
 
+.editor_sidebar__list {
+    margin: 25px 0;
+    overflow-y: scroll;
+}
+
 .editor_sidebar__checkbox {
     color: var(--color-white);
     cursor: pointer;
@@ -38,4 +55,61 @@
     align-items: center;
     gap: 12px;
     color: var(--color-white);
+}
+
+.editor_sidebar__item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.editor_sidebar__item_customize {
+    margin-left: 30px;
+    text-align: left;
+}
+
+.editor_sidebar__customize_list_container {
+    display: flex;
+}
+
+.editor_sidebar__customize_list_container::before {
+    display: inline-block;
+    width: 5px;
+    margin-right: 10px;
+    background-color: var(--color-accent-dark-yellow);
+    border-radius: 50px;
+    content: "";
+}
+
+.editor_sidebar__customize_list_item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.editor_sidebar__color_picker {
+    width: 15px;
+    height: 15px;
+    mask-image: url("../../assets/img/color-select-svgrepo-com.svg");
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    background-color: black;
+}
+
+.editor_sidebar__color_font_icon {
+    width: 15px;
+    height: 15px;
+    mask-image: url("../../assets/img/font-svgrepo-com.svg");
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    background-color: black;
+}
+
+.editor_sidebar__modal_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 30vh;
 }
