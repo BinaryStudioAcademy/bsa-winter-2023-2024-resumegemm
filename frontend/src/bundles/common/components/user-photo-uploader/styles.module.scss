@@ -180,6 +180,9 @@
 }
 
 .uploader_preview__photo {
+    aspect-ratio: 1/1;
+    width: 80px;
+    object-fit: cover;
     border-radius: 50%;
 }
 
