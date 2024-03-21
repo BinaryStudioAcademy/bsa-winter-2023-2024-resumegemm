@@ -42,6 +42,7 @@ const useTakeScreenShot = (): ReturnValue => {
             const canvas = await html2canvas(ref.current, {
                 ...options,
                 allowTaint: true,
+                useCORS: true,
             });
             const data = canvas.toDataURL(type, quality);
             setScreenshot(data);
