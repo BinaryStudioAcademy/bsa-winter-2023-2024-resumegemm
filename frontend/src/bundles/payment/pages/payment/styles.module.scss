@@ -8,10 +8,14 @@
 
 .payment_page__head {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 20px 60px;
+    padding: 35px 60px;
+}
+
+.payment_page__logo {
+    width: 215px;
 }
 
 .payment_page__stepper {
@@ -49,4 +53,11 @@
     font-size: var(--font-size-title-h5);
     font-family: var(--font-family-resume-buttons);
     text-align: center;
+}
+
+.payment_page__spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
 }
