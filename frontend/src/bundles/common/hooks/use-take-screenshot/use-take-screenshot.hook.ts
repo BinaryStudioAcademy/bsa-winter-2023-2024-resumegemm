@@ -43,6 +43,7 @@ const useTakeScreenShot = (): ReturnValue => {
                 ...options,
                 allowTaint: true,
                 useCORS: true,
+                scale: 1,
             });
             const data = canvas.toDataURL(type, quality);
             setScreenshot(data);
