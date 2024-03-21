@@ -1,1 +1,5 @@
-export { dropdownOptions } from './dropdown-items.constant';
+export {
+    dropdownFontFamilyOptions,
+    dropdownFontSizeOptions,
+    dropdownFontStyleOptions,
+} from './dropdown-items.constant';
