@@ -18,7 +18,7 @@ import {
 } from '~/bundles/users/users.js';
 import { StorageKey } from '~/framework/storage/storage.js';
 
-import { name as sliceName } from './slice.js';
+import { actions as authActions, name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
     UserAuthResponse['user'],
@@ -66,10 +66,13 @@ const getUser = createAsyncThunk<
     UserWithProfileRelation,
     undefined,
     AsyncThunkConfig
->(`${sliceName}/get-user`, async (_, { extra }) => {
-    const { authApi } = extra;
-
-    return await authApi.getUser();
+>(`${sliceName}/get-user`, async (_, { extra, dispatch }) => {
+    const { authApi, subscriptionApi } = extra;
+    const hasSubscription = await subscriptionApi.getById();
+    if (hasSubscription) {
+        dispatch(authActions.setSubscription(!hasSubscription.isCancelled));
+    }
+    return authApi.getUser();
 });
 
 const requestNewAccessToken = createAsyncThunk<
