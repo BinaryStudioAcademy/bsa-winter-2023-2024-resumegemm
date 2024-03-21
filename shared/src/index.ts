@@ -45,6 +45,7 @@ export {
 export { ProfileApiPath } from './bundles/profile/profile.js';
 export {
     type RecentlyViewed,
+    type RecentlyViewedQuery,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesResponseDto,

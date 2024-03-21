@@ -17,6 +17,8 @@ import { reducer as paymentReducer } from '~/bundles/payment/store/payment.store
 import { pdfApi } from '~/bundles/pdf/pdf.js';
 import { profileApi } from '~/bundles/profile/profile';
 import { reducer as profileReducer } from '~/bundles/profile/store/profile.store';
+import { recentlyViewedApi } from '~/bundles/recently-viewed/recently-viewed.js';
+import { reducer as recentlyViewedReducer } from '~/bundles/recently-viewed/store/index.js';
 import { resumeApi } from '~/bundles/resume/resume';
 import { reducer as resumeReducer } from '~/bundles/resume/store/resume.store';
 import { resumeAccessApi } from '~/bundles/resume-access/resume-access';
@@ -45,6 +47,7 @@ type RootReducer = {
     editTemplate: ReturnType<typeof editTemplateReducer>;
     subscription: ReturnType<typeof subscriptionReducer>;
     resumes: ReturnType<typeof resumeReducer>;
+    recentlyViewed: ReturnType<typeof recentlyViewedReducer>;
 };
 
 type ExtraArguments = {
@@ -61,6 +64,7 @@ type ExtraArguments = {
     statisticsApi: typeof statisticsApi;
     resumeApi: typeof resumeApi;
     pdfApi: typeof pdfApi;
+    recentlyViewedApi: typeof recentlyViewedApi;
 };
 
 class Store {
@@ -89,6 +93,7 @@ class Store {
                 editTemplate: editTemplateReducer,
                 subscription: subscriptionReducer,
                 resumes: resumeReducer,
+                recentlyViewed: recentlyViewedReducer,
             },
             middleware: (getDefaultMiddleware) => {
                 return getDefaultMiddleware({
@@ -115,6 +120,7 @@ class Store {
             statisticsApi,
             resumeApi,
             pdfApi,
+            recentlyViewedApi,
         };
     }
 }
