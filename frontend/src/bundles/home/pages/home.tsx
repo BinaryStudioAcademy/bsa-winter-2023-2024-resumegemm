@@ -20,7 +20,10 @@ import {
     TemplateSection,
 } from '~/bundles/home/components/components';
 import { actions as resumeActions } from '~/bundles/resume/store/resume.store';
-import { loadAllTemplates } from '~/bundles/templates-page/store/actions';
+import {
+    deleteTemplate,
+    loadAllTemplates,
+} from '~/bundles/templates-page/store/actions';
 import { formatDateToLocaleString } from '~/helpers/format-date-to-locale-string.helper';
 
 import styles from './styles.module.scss';
@@ -69,6 +72,13 @@ const Home: React.FC = () => {
     const handleRecentlyViewedSort = useCallback(() => {
         // TODO: add after adding recently viewed resumes
     }, []);
+
+    const handleTemplateDelete = useCallback(
+        (id: string) => {
+            void dispatch(deleteTemplate(id));
+        },
+        [dispatch],
+    );
 
     return (
         <div className={styles.layout}>
@@ -124,8 +134,10 @@ const Home: React.FC = () => {
                                 key={template.id}
                             >
                                 <ResumeCard
+                                    id={template.id}
                                     title={template.name}
                                     image={template.image}
+                                    onDelete={handleTemplateDelete}
                                     subtitle={`Updated - ${formatDateToLocaleString(
                                         template.updatedAt,
                                     )}`}
