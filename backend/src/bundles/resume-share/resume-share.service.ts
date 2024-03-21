@@ -33,7 +33,7 @@ class ResumeShareService implements IResumeShareService {
 
     public async createShareLink(
         id: string,
-    ): Promise<ResumeShareCreateResponseDto> {
+    ): Promise<Omit<ResumeShareCreateResponseDto, 'resume'>> {
         const shareLink =
             await this.resumeShareRepository.getResumeShareLinkByResumeId(id);
 
@@ -59,7 +59,21 @@ class ResumeShareService implements IResumeShareService {
         ip: string,
     ): Promise<ResumeShareGetResponseDto | unknown> {
         await this.resumeShareAccessService.createShareAccess(id, ip);
-        return await this.resumeShareRepository.getResumeShareLink(id);
+
+        const sharedResume =
+            await this.resumeShareRepository.getResumeShareLink(id);
+
+        if (!sharedResume) {
+            return;
+        }
+
+        const resume = await this.resumeService.findById(sharedResume.resumeId);
+
+        if (resume) {
+            const { image, resumeTitle } = resume;
+
+            return { ...sharedResume, resume: { image, resumeTitle } };
+        }
     }
 
     public async getUserShareLinksWithResumes(
@@ -106,7 +120,7 @@ class ResumeShareService implements IResumeShareService {
 
     public async getShareLinkDetails(
         id: string,
-    ): Promise<ResumeShareDetailsGetResponseDto> {
+    ): Promise<Omit<ResumeShareDetailsGetResponseDto, 'resume'>> {
         const sharerLink = await this.resumeShareRepository.getResumeShareLink(
             id,
         );
