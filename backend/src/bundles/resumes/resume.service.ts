@@ -80,21 +80,31 @@ class ResumeService implements IResumeService {
         );
     }
 
+    private async uploadResumeImage(
+        imageBuffer: string,
+        uniqueId: string,
+    ): Promise<string> {
+        const timeNow = Date.now();
+
+        const uploadedImage = await this.fileService.create({
+            buffer: imageBuffer,
+            contentEncoding: ContentEncoding.BASE64,
+            contentType: ContentType.IMAGE_JPEG,
+            key: `${uniqueId}${timeNow}`,
+        });
+
+        return uploadedImage.key;
+    }
+
     public async create(
         payload: ResumeCreateItemRequestDto,
         userId: string,
         templateId: string,
     ): Promise<ResumeGetItemResponseDto> {
-        const timeNow = Date.now();
-
-        const uploadedImage = await this.fileService.create({
-            buffer: payload.resume.image,
-            contentEncoding: ContentEncoding.BASE64,
-            contentType: ContentType.IMAGE_JPEG,
-            key: `${payload.resume.userId}${timeNow}`,
-        });
-
-        payload.resume.image = uploadedImage.key;
+        payload.resume.image = await this.uploadResumeImage(
+            payload.resume.image,
+            payload.resume.userId,
+        );
         const resume = await this.resumeRepository.create(
             payload,
             userId,
@@ -107,7 +117,13 @@ class ResumeService implements IResumeService {
         id: string,
         data: ResumeUpdateItemRequestDto,
     ): Promise<ResumeGetItemResponseDto> {
-        return await this.resumeRepository.update(id, data);
+        data.resume.image = await this.uploadResumeImage(
+            data.resume.image as string,
+            data.resume.templateId as string,
+        );
+
+        const updatedResume = await this.resumeRepository.update(id, data);
+        return this.getResumeWithImage(updatedResume);
     }
 
     public async delete(id: string): Promise<boolean> {
