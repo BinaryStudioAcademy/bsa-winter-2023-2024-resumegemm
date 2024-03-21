@@ -7,6 +7,7 @@ import {
 } from '~/common/controller/controller';
 
 import {
+    type RecentlyViewedQuery,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesResponseDto,
@@ -20,7 +21,7 @@ interface IRecentlyViewedController {
 
     findRecentlyViewedResumes(options: {
         user: User;
-        query: { limit: number };
+        query: RecentlyViewedQuery;
     }): Promise<ApiHandlerResponse<RecentlyViewedResumesResponseDto[]>>;
 
     findRecentlyViewedTemplates(options: {
