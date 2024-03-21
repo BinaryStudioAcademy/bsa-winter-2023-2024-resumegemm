@@ -1,115 +1,49 @@
-import {
-    type ChangeEvent,
-    useCallback,
-    useContext,
-    useEffect,
-    useState,
-} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { ApiPath } from 'shared/build';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { BaseButton, Input } from '~/bundles/common/components/components';
-import { useAppDispatch, useAppSelector } from '~/bundles/common/hooks/hooks';
-import { ResumePreview } from '~/bundles/resume-preview/components/components';
-import { ToastContext } from '~/bundles/toast/context/toast-context';
-import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum';
-import { baseUrl } from '~/helpers/base-url';
+import { useAppDispatch } from '~/bundles/common/hooks/hooks';
 
-import { ResumesApiPath } from '../enums/enums';
-import { ResumeAccessMessage } from '../enums/messages';
-import {
-    accessResume,
-    accessResumeDetails,
-    createResumeAccess,
-    deleteAccessResume,
-} from '../store/actions';
+import { accessResume } from '../store/actions';
+import { type ResumeShareGetResponseDto } from '../types/types';
 import styles from './styles.module.scss';
 
 const ResumeAccess: React.FC = () => {
-    const [resumeIdInput, setResumeIdInput] = useState<string | null>(null);
-
-    const { showToast } = useContext(ToastContext);
-
-    const handleIdChange = useCallback(
-        (event: ChangeEvent<HTMLInputElement>) => {
-            setResumeIdInput(event.currentTarget.value);
-        },
-        [],
-    );
-
-    const navigate = useNavigate();
+    const [resume, setResume] = useState<
+        ResumeShareGetResponseDto['resume'] | null
+    >(null);
 
     const { id } = useParams();
 
     const dispatch = useAppDispatch();
-
-    const { resumeIdSelector, details } = useAppSelector(
-        ({ resumeAccess, auth }) => ({
-            resumeIdSelector: resumeAccess.resumeId,
-            details: resumeAccess.details,
-            user: auth.user,
-        }),
-    );
-
-    const deleteResumeAccess = useCallback(() => {
-        if (!id) {
-            return;
-        }
-
-        void dispatch(deleteAccessResume({ id }))
-            .unwrap()
-            .then(() => {
-                navigate('/');
-            });
-    }, [dispatch, id, navigate]);
-
-    const createResumeAccessCallback = useCallback(() => {
-        if (!resumeIdInput) {
-            showToast(ResumeAccessMessage.EMPTY_ID, ToastType.ERROR);
-            return;
-        }
-
-        void dispatch(createResumeAccess({ resumeId: resumeIdInput }))
-            .unwrap()
-            .then((payload) => {
-                const linkId = payload.id;
-
-                showToast(
-                    `Created link: ${baseUrl()}${
-                        ApiPath.RESUMES
-                    }${ResumesApiPath.SHARE_ID(linkId)}`,
-                    ToastType.SUCCESS,
-                );
-            })
-            .catch((error: Error) => {
-                showToast(error.message, ToastType.ERROR);
-            });
-    }, [dispatch, resumeIdInput, showToast]);
 
     useEffect(() => {
         if (!id) {
             return;
         }
 
-        void dispatch(accessResume({ id }));
-        void dispatch(accessResumeDetails({ id }));
+        const getResume = async (): Promise<void> => {
+            const { resume } = await dispatch(accessResume({ id })).unwrap();
+
+            setResume(resume);
+        };
+
+        void getResume();
     }, [dispatch, id]);
 
     return (
-        <div>
-            <p>resume id: {resumeIdSelector}</p>
-            <div className={styles.resume_access__input_container}>
-                <Input onChange={handleIdChange}></Input>
-                <BaseButton onClick={createResumeAccessCallback}>
-                    Create share link
-                </BaseButton>
-            </div>
-            <div>
-                <p>Details:</p>
-                {JSON.stringify(details)}
-            </div>
-            <BaseButton onClick={deleteResumeAccess}>Delete link</BaseButton>
-            <ResumePreview />
+        <div className={styles.resume_container}>
+            {resume && (
+                <>
+                    <h3 className={styles.resume__title}>
+                        {resume.resumeTitle}
+                    </h3>
+                    <img
+                        className={styles.resume__image}
+                        src={resume.image}
+                        alt="Resume preview"
+                    />
+                </>
+            )}
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { matchPath, Outlet, useLocation } from 'react-router-dom';
 
 import { type AppRoute } from '../../enums/app-route.enum';
 import { AvatarHeader } from './components/avatar-header/avatar-header';
@@ -14,32 +14,32 @@ const HeaderWrapper: React.FC = () => {
     const location = useLocation();
 
     const handleHeader = useCallback(() => {
-        if (NoHeaderRoutes.includes(location.pathname as AppRoute)) {
+        if (
+            NoHeaderRoutes.some((route) =>
+                matchPath(route, location.pathname as AppRoute),
+            )
+        ) {
             return;
         }
 
-        if (GetStartedHeaderRoutes.includes(location.pathname as AppRoute)) {
+        if (
+            GetStartedHeaderRoutes.some((route) =>
+                matchPath(route, location.pathname as AppRoute),
+            )
+        ) {
             return <GetStartedHeader />;
         }
-
-        const pathWithoutId = location.pathname
-            .split('/')
-            .slice(0, 3)
-            .join('/');
-
-        if (AvatarHeaderRoutes.includes(pathWithoutId as AppRoute)) {
+        if (
+            AvatarHeaderRoutes.some((route) =>
+                matchPath(route, location.pathname as AppRoute),
+            )
+        ) {
             return <AvatarHeader />;
         }
 
-        const preprocessedResumesHeaderRoute = ResumesHeaderRoutes.map(
-            (route) => {
-                return route.replace('/:id', '/.*');
-            },
-        );
-
         if (
-            preprocessedResumesHeaderRoute.some((route) =>
-                new RegExp(route).test(location.pathname),
+            ResumesHeaderRoutes.some((route) =>
+                matchPath(route, location.pathname as AppRoute),
             )
         ) {
             return <ResumesHeader />;

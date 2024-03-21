@@ -32,7 +32,7 @@ class StatisticsService {
     }
 
     private getStatisticsHandleWeek(
-        data: ResumeShareDetailsGetResponseDto[],
+        data: Omit<ResumeShareDetailsGetResponseDto, 'resume'>[],
     ): GetStatisticsResponseDto {
         const statistics: StatisticsRecord[] = [];
 
@@ -56,7 +56,7 @@ class StatisticsService {
     }
 
     private getStatisticsHandleMonth(
-        data: ResumeShareDetailsGetResponseDto[],
+        data: Omit<ResumeShareDetailsGetResponseDto, 'resume'>[],
     ): GetStatisticsResponseDto {
         const statistics: StatisticsRecord[] = [];
 
@@ -93,7 +93,7 @@ class StatisticsService {
     }
 
     private getStatisticsHandleTotal(
-        data: ResumeShareDetailsGetResponseDto[],
+        data: Omit<ResumeShareDetailsGetResponseDto, 'resume'>[],
     ): GetStatisticsResponseDto {
         const statistics: StatisticsRecord[] = [];
 
@@ -130,7 +130,7 @@ class StatisticsService {
     public async getStatistics(
         resumeId: string[],
         period: string,
-    ): Promise<GetStatisticsResponseDto | undefined> {
+    ): Promise<Omit<GetStatisticsResponseDto, 'resume'> | undefined> {
         const details = await Promise.all(
             resumeId.map(
                 async (id) =>

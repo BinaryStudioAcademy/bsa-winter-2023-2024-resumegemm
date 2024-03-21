@@ -128,9 +128,10 @@ class AuthService implements TAuthService {
         });
 
         if (foundUserByEmail?.deletedAt) {
-            throw new HTTPError({
+            throw new AuthException({
                 message: ExceptionMessage.NO_ACTIVE_ACCOUNT,
                 status: HttpCode.BAD_REQUEST,
+                errorType: ServerErrorType.EMAIL,
             });
         }
 

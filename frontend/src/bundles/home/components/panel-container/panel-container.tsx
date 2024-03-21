@@ -14,6 +14,7 @@ type Properties = {
     children?: React.ReactNode;
     name: string;
     onHandleSearch: React.ChangeEventHandler<HTMLInputElement>;
+    defaultSearchValue: string;
     hasIconInput?: boolean;
     className?: string;
     onSort: (sortMethod: SortDirection) => void;
@@ -23,6 +24,7 @@ const PanelContainer: React.FC<Properties> = ({
     children,
     name,
     onHandleSearch,
+    defaultSearchValue = '',
     hasIconInput = true,
     className,
     onSort,
@@ -53,6 +55,7 @@ const PanelContainer: React.FC<Properties> = ({
                                 <Input
                                     placeholder=" Search"
                                     className={styles.panel_container__input}
+                                    defaultValue={defaultSearchValue}
                                     onChange={onHandleSearch}
                                 />
                             }
