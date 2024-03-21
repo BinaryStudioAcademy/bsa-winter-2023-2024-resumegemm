@@ -23,9 +23,14 @@ import styles from './online-editor-handler.module.scss';
 type TabsPayload = {
     tabs: TemplateSettings['containers'];
     isCreate?: boolean;
+    onResumeUpdate?: () => Promise<string | null>;
 };
 
-const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
+const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({
+    tabs,
+    isCreate,
+    onResumeUpdate,
+}) => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const dispatch = useAppDispatch();
     const allBlocks = tabs.map((tab) => tab.blocks);
@@ -44,7 +49,7 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
                 (previousTabIndex + 1) %
                 mergedTemplateSettingsProperties.length;
             const nextItem = mergedTemplateSettingsProperties[newIndex];
-            if (nextItem.name === TemplateBlockTitles.Divider) {
+            if (nextItem?.name === TemplateBlockTitles.Divider) {
                 return previousTabIndex + 2;
             }
             return newIndex;
@@ -65,11 +70,21 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
             if (isCreate) {
                 return;
             }
-            void dispatch(
-                resumeActions.updateCurrentResume({ itemId: id, value }),
-            );
+            const onResumeUpdateResult = onResumeUpdate
+                ? onResumeUpdate()
+                : null;
+
+            void onResumeUpdateResult?.then((screenshot) => {
+                void dispatch(
+                    resumeActions.updateCurrentResume({
+                        itemId: id,
+                        value,
+                        image: screenshot as string,
+                    }),
+                );
+            });
         },
-        [dispatch, tabs, isCreate],
+        [dispatch, tabs, isCreate, onResumeUpdate],
     );
 
     return (
@@ -97,6 +112,7 @@ const OnlineEditorTabsHandler: React.FC<TabsPayload> = ({ tabs, isCreate }) => {
                             tabs={tabs}
                             item={item}
                             isCreate={isCreate}
+                            onResumeUpdate={onResumeUpdate}
                             handleInputResumeFieldChange={
                                 handleInputResumeFieldChange
                             }

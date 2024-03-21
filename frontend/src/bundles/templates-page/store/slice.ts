@@ -22,6 +22,7 @@ const { reducer, actions, name } = createSlice({
     reducers: {},
     extraReducers(builder) {
         builder.addCase(loadAllTemplates.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
             state.templates = action.payload;
         });
         builder.addMatcher(isAnyOf(loadAllTemplates.pending), (state) => {

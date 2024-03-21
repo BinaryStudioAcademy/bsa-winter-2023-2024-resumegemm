@@ -23,6 +23,7 @@ type LayoutItemPayload = {
     handleInputResumeFieldChange: (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => void;
+    onResumeUpdate?: () => Promise<string | null>;
 };
 
 const ContainerLayoutItem: React.FC<LayoutItemPayload> = ({
@@ -30,6 +31,7 @@ const ContainerLayoutItem: React.FC<LayoutItemPayload> = ({
     tabs,
     handleInputResumeFieldChange,
     isCreate,
+    onResumeUpdate,
 }) => {
     const dispatch = useAppDispatch();
     const languageLevelOptions = Object.values(LanguageLevels).map(
@@ -57,15 +59,21 @@ const ContainerLayoutItem: React.FC<LayoutItemPayload> = ({
                 if (isCreate) {
                     return;
                 }
-                void dispatch(
-                    resumeActions.updateCurrentResume({
-                        itemId: 'languageLevel',
-                        value: selectedOption,
-                    }),
-                );
+                const onResumeUpdateResult = onResumeUpdate
+                    ? onResumeUpdate()
+                    : null;
+                void onResumeUpdateResult?.then((screenshot) => {
+                    void dispatch(
+                        resumeActions.updateCurrentResume({
+                            itemId: 'languageLevel',
+                            value: selectedOption,
+                            image: screenshot as string,
+                        }),
+                    );
+                });
             }
         },
-        [dispatch, tabs, isCreate],
+        [dispatch, tabs, isCreate, onResumeUpdate],
     );
 
     const renderContainerLayoutItem = useCallback(

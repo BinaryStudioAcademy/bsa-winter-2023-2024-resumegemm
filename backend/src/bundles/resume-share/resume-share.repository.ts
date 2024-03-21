@@ -19,7 +19,7 @@ class ResumeShareRepository {
 
     public async getResumeShareLinkByResumeId(
         resumeId: string,
-    ): Promise<ResumeShareGetResponseDto | undefined> {
+    ): Promise<Omit<ResumeShareGetResponseDto, 'resume'> | undefined> {
         return await this.resumeShareModel
             .query()
             .findOne('resumeId', resumeId)
@@ -47,7 +47,7 @@ class ResumeShareRepository {
 
     public async getResumeShareLink(
         id: string,
-    ): Promise<ResumeShareGetResponseDto | undefined> {
+    ): Promise<Omit<ResumeShareGetResponseDto, 'resume'> | undefined> {
         try {
             const resumeShare = await this.resumeShareModel
                 .query()
@@ -76,7 +76,7 @@ class ResumeShareRepository {
 
     public async createResumeShareLink(
         resumeId: string,
-    ): Promise<ResumeShareCreateResponseDto | undefined> {
+    ): Promise<Omit<ResumeShareCreateResponseDto, 'resume'> | undefined> {
         try {
             const resumeShareModel = {
                 resumeId: resumeId,
@@ -129,7 +129,7 @@ class ResumeShareRepository {
 
     public async getShareLinkByResumeId(
         resumeId: string,
-    ): Promise<ResumeShareGetResponseDto | undefined> {
+    ): Promise<ResumeShareModel | undefined> {
         return await this.resumeShareModel
             .query()
             .where('resumeId', resumeId)

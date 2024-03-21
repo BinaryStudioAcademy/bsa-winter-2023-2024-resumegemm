@@ -24,6 +24,7 @@ class ResumeModel extends AbstractModel {
     public 'userId': string;
     public 'templateId': string;
     public 'deletedAt': string | null;
+    public 'title': string;
 
     public education?: EducationModel[];
     public experience?: ExperienceModel[];

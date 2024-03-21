@@ -5,7 +5,7 @@ import { type IResumeEntity } from './interfaces/resume-entity.interface.js';
 
 class ResumeEntity implements IResumeEntity {
     public 'id': string | null;
-    public 'title': string;
+    public 'title': string | undefined;
     public 'image': string;
     public 'userId': string;
     public 'templateId': string;
@@ -26,14 +26,14 @@ class ResumeEntity implements IResumeEntity {
 
     public static initialize({
         id,
-        resumeTitle,
+        title,
         image,
         userId,
         templateId,
     }: ResumeEntityFields): ResumeEntity {
         return new ResumeEntity({
             id,
-            resumeTitle,
+            title,
             image,
             userId,
             templateId,
@@ -41,14 +41,14 @@ class ResumeEntity implements IResumeEntity {
     }
 
     public static initializeNew({
-        resumeTitle,
+        title,
         image,
         userId,
         templateId,
     }: Omit<ResumeEntityFields, 'id'>): ResumeEntity {
         return new ResumeEntity({
             id: guid.raw(),
-            resumeTitle,
+            title,
             image,
             userId,
             templateId,
@@ -69,7 +69,7 @@ class ResumeEntity implements IResumeEntity {
     public toNewObject(): ResumeEntityFields {
         return {
             id: this.id as NonNullable<string>,
-            resumeTitle: this.title,
+            title: this.title ?? '',
             image: this.image,
             userId: this.userId,
             templateId: this.templateId,

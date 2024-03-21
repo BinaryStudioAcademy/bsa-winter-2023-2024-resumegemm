@@ -1,23 +1,51 @@
 import {
     type GetUserResumeSharesResponse,
+    type ResumeShareGetResponseDto,
     HttpCode,
     HTTPError,
 } from 'shared/build/index.js';
 
+// import { type Resume } from 'shared/build/index.js';
 import { type ResumeService } from '../resumes/resume.service.js';
 import { ResumeShareErrorMessage } from './enums/error-messages.js';
 import { type ResumeShareRepository } from './resume-share.repository.js';
+import { type ResumeShareAccessService } from './resume-share-access.service.js';
 
 class ResumeShareCoordinator {
     private resumeShareRepository: ResumeShareRepository;
     private resumeService: ResumeService;
+    private resumeShareAccessService: ResumeShareAccessService;
 
     public constructor(
         resumeService: ResumeService,
         resumeShareRepository: ResumeShareRepository,
+        resumeShareAccessService: ResumeShareAccessService,
     ) {
         this.resumeShareRepository = resumeShareRepository;
         this.resumeService = resumeService;
+        this.resumeShareAccessService = resumeShareAccessService;
+    }
+
+    public async getShareLink(
+        id: string,
+        ip: string,
+    ): Promise<ResumeShareGetResponseDto | unknown> {
+        await this.resumeShareAccessService.createShareAccess(id, ip);
+
+        const sharedResume =
+            await this.resumeShareRepository.getResumeShareLink(id);
+
+        if (!sharedResume) {
+            return;
+        }
+
+        const resume = await this.resumeService.findById(sharedResume.resumeId);
+
+        if (resume) {
+            const { image, resumeTitle } = resume;
+
+            return { ...sharedResume, resume: { image, resumeTitle } };
+        }
     }
 
     public async getUserShareLinksWithResumes(

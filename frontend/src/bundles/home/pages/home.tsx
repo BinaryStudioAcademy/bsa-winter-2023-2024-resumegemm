@@ -86,7 +86,7 @@ const Home: React.FC = () => {
         <div className={styles.layout}>
             <HomeTopSection>
                 <Greeting />
-                <CreateResumeButton />
+                <CreateResumeButton templates={templates} />
             </HomeTopSection>
             <ResumeSection
                 onSort={handleRecentlyViewedSort}

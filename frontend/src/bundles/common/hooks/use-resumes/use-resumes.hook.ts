@@ -48,11 +48,6 @@ type UseResumesReturnValues = {
     resumeViews: ResumeViewsCountResponseDto[];
 };
 
-const getRandomItem = (template: TemplateDto[]): TemplateDto | null => {
-    const randomIndex = Math.floor(Math.random() * template.length);
-    return template[randomIndex];
-};
-
 const useResumes = (options?: FindAllOptions): UseResumesReturnValues => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -153,26 +148,49 @@ const useResumes = (options?: FindAllOptions): UseResumesReturnValues => {
         }
     }, [id, dispatch]);
 
+    const handleSetCurrentTemplateIdAndSettings = useCallback(
+        (template: TemplateDto) => {
+            if (template) {
+                void dispatch(
+                    resumeActions.setTemplateSettingsOnResumeCreate(
+                        template.templateSettings,
+                    ),
+                );
+                void dispatch(resumeActions.setCurrentTemplateId(template.id));
+            }
+        },
+        [dispatch],
+    );
+
     useEffect(() => {
         if (currentResume) {
             return;
         }
-        if (isTemplatesLoading === DataStatus.IDLE && templates.length === 0) {
+        const findTemplateById = (templates: TemplateDto[]): TemplateDto =>
+            templates.find((template) => template.id === id) as TemplateDto;
+
+        if (templates.length > 0) {
+            const template = findTemplateById(templates);
+            handleSetCurrentTemplateIdAndSettings(template);
+            return;
+        }
+        if (isTemplatesLoading === DataStatus.IDLE) {
             void dispatch(templateActions.loadAllTemplates())
                 .unwrap()
                 .then((templates) => {
-                    const template = getRandomItem(templates);
-                    void dispatch(
-                        resumeActions.setTemplateSettingsOnResumeCreate(
-                            template?.templateSettings as TemplateSettings,
-                        ),
-                    );
-                    void dispatch(
-                        resumeActions.setCurrentTemplateId(template?.id),
-                    );
+                    const template = findTemplateById(templates);
+                    handleSetCurrentTemplateIdAndSettings(template);
                 });
         }
-    }, [currentResume, isTemplatesLoading, dispatch, templates.length]);
+    }, [
+        handleSetCurrentTemplateIdAndSettings,
+        currentResume,
+        isTemplatesLoading,
+        dispatch,
+        templates.length,
+        id,
+        templates,
+    ]);
 
     useEffect(() => {
         void dispatch(resumeActions.getAllResumes({ name: options?.name }));

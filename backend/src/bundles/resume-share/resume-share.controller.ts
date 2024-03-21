@@ -278,7 +278,7 @@ class ResumeShareController extends Controller {
 
             return {
                 status: HttpCode.OK,
-                payload: await this.resumeShareService.getShareLink(id, ip),
+                payload: await this.resumeShareCoordinator.getShareLink(id, ip),
             };
         } catch (error: unknown) {
             const { message, status } = error as HTTPError;

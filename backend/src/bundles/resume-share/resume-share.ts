@@ -17,6 +17,7 @@ const resumeShareService = new ResumeShareService(
 const resumeShareCoordinator = new ResumeShareCoordinator(
     resumeService,
     resumeShareRepository,
+    resumeShareAccessService,
 );
 const resumeShareController = new ResumeShareController(
     logger,

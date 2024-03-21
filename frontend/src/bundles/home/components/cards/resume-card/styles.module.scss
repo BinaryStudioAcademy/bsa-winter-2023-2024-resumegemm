@@ -29,8 +29,10 @@
 .resume_card__img {
     flex-grow: 1;
     width: 100%;
-    object-fit: contain;
+    height: 225px;
+    overflow: hidden;
     border-radius: 8px;
+    object-fit: contain;
 }
 
 .resume_card__content {

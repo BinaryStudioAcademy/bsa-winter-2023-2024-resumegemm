@@ -1,6 +1,6 @@
 import {
     type ResumeShareCreateResponseDto,
-    type ResumeShareGetResponseDto,
+    // type ResumeShareGetResponseDto,
 } from './types.js';
 
 type IResumeShareService = {
@@ -8,10 +8,10 @@ type IResumeShareService = {
         id: string,
     ): Promise<ResumeShareCreateResponseDto | unknown>;
 
-    getShareLink(
-        id: string,
-        ip: string,
-    ): Promise<ResumeShareGetResponseDto | unknown>;
+    // getShareLink(
+    //     id: string,
+    //     ip: string,
+    // ): Promise<ResumeShareGetResponseDto | unknown>;
 };
 
 export { type IResumeShareService };

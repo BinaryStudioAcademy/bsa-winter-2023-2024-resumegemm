@@ -2,6 +2,7 @@ import { HTTPError } from 'shared/build/index.js';
 
 import { HttpCode } from '../oauth/enums/enums.js';
 import { ResumeShareErrorMessage } from './enums/error-messages.js';
+import { type ResumeShareModel } from './resume-share.model.js';
 import { type ResumeShareRepository } from './resume-share.repository.js';
 import { type ResumeShareAccessService } from './resume-share-access.service.js';
 import { type IResumeShareService } from './types/resume-share.service.type.js';
@@ -9,7 +10,7 @@ import {
     type ResumeShareCreateResponseDto,
     type ResumeShareDeleteResponseDto,
     type ResumeShareDetailsGetResponseDto,
-    type ResumeShareGetResponseDto,
+    // type ResumeShareGetResponseDto,
 } from './types/types.js';
 
 class ResumeShareService implements IResumeShareService {
@@ -29,7 +30,7 @@ class ResumeShareService implements IResumeShareService {
 
     public async createShareLink(
         id: string,
-    ): Promise<ResumeShareCreateResponseDto> {
+    ): Promise<Omit<ResumeShareCreateResponseDto, 'resume'>> {
         const shareLink =
             await this.resumeShareRepository.getResumeShareLinkByResumeId(id);
 
@@ -50,17 +51,31 @@ class ResumeShareService implements IResumeShareService {
         return createdAccess;
     }
 
-    public async getShareLink(
-        id: string,
-        ip: string,
-    ): Promise<ResumeShareGetResponseDto | unknown> {
-        await this.resumeShareAccessService.createShareAccess(id, ip);
-        return await this.resumeShareRepository.getResumeShareLink(id);
-    }
+    // public async getShareLink(
+    //     id: string,
+    //     ip: string,
+    // ): Promise<ResumeShareGetResponseDto | unknown> {
+    //     await this.resumeShareAccessService.createShareAccess(id, ip);
+
+    //     const sharedResume =
+    //         await this.resumeShareRepository.getResumeShareLink(id);
+
+    //     if (!sharedResume) {
+    //         return;
+    //     }
+
+    //     const resume = await this.resumeService.findById(sharedResume.resumeId);
+
+    //     if (resume) {
+    //         const { image, resumeTitle } = resume;
+
+    //         return { ...sharedResume, resume: { image, resumeTitle } };
+    //     }
+    // }
 
     public async getShareLinkDetails(
         id: string,
-    ): Promise<ResumeShareDetailsGetResponseDto> {
+    ): Promise<Omit<ResumeShareDetailsGetResponseDto, 'resume'>> {
         const sharerLink = await this.resumeShareRepository.getResumeShareLink(
             id,
         );
@@ -94,7 +109,7 @@ class ResumeShareService implements IResumeShareService {
 
     public async getShareLinkByResumeId(
         resumeId: string,
-    ): Promise<ResumeShareGetResponseDto | undefined> {
+    ): Promise<ResumeShareModel | undefined> {
         return await this.resumeShareRepository.getShareLinkByResumeId(
             resumeId,
         );
