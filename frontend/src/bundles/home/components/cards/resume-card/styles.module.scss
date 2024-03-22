@@ -17,13 +17,14 @@
 .resume_card__button {
     position: absolute;
     right: 0;
-    bottom: 0;
+    display: none;
     margin: 10px;
     color: var(--color-background-blue);
     font-size: 20px;
 }
 
-.resume_card__button:hover {
+.resume_card:hover .resume_card__button {
+    display: block;
     opacity: 0.8;
 }
 
