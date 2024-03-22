@@ -4,6 +4,7 @@ import { type TemplateDto } from 'shared/build/bundles/templates/types/template-
 import { RegularButton } from '~/bundles/common/components/components';
 import { AppRoute } from '~/bundles/common/enums/enums';
 import { useReducer } from '~/bundles/common/hooks/hooks';
+import { getRandomTemplates } from '~/helpers/helpers';
 
 import { PlusCircleIcon } from '../../../icons/plus-circle-icon';
 import { ResumeIcon } from '../../../icons/resume-icon';
@@ -21,30 +22,27 @@ const CreateResumeButton: React.FC<CreateResumeButtonPayload> = ({
         false,
     );
 
-    const [firstTemplate, secondTemplate] = templates;
+    const randomTemplates = getRandomTemplates(templates);
 
     return (
         <div className={styles.container}>
             {isPopUpShown && (
                 <div className={styles.templates__container}>
-                    <NavLink
-                        to={`${AppRoute.RESUME_CREATE}/${firstTemplate.id}`}
-                    >
-                        <img
-                            className={styles.templates__container__image}
-                            src={firstTemplate.image}
-                            alt={firstTemplate.name}
-                        />
-                    </NavLink>
-                    <NavLink
-                        to={`${AppRoute.RESUME_CREATE}/${secondTemplate.id}`}
-                    >
-                        <img
-                            className={styles.templates__container__image}
-                            src={secondTemplate.image}
-                            alt={secondTemplate.name}
-                        />
-                    </NavLink>
+                    {randomTemplates.length > 0 &&
+                        randomTemplates.map((template) => (
+                            <NavLink
+                                key={template.id}
+                                to={`${AppRoute.RESUME_CREATE}/${template.id}`}
+                            >
+                                <img
+                                    className={
+                                        styles.templates__container__image
+                                    }
+                                    src={template.image}
+                                    alt={template.name}
+                                />
+                            </NavLink>
+                        ))}
                 </div>
             )}
             <RegularButton

@@ -37,9 +37,11 @@ const deleteResume = createAsyncThunk<
     ResumeGetAllResponseDto[],
     string,
     AsyncThunkConfig
->(`${sliceName}/delete-resume`, (resumeId, { extra }) => {
+>(`${sliceName}/delete-resume`, async (resumeId, { extra, getState }) => {
     const { resumeApi } = extra;
-    return resumeApi.deleteResume(resumeId);
+    const { resumes } = getState().resumes;
+    await resumeApi.deleteResume(resumeId);
+    return resumes.filter((resume) => resume.id !== resumeId);
 });
 
 const createResume = createAsyncThunk<
