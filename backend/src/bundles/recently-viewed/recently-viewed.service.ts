@@ -1,3 +1,5 @@
+import { type ResumeService } from '../resumes/resume.service';
+import { type ResumeGetItemResponseDto } from '../resumes/types/types';
 import { type RecentlyViewedRepository } from './recently-viewed.repository';
 import {
     type IRecentlyViewedService,
@@ -11,9 +13,14 @@ import {
 
 class RecentlyViewedService implements IRecentlyViewedService {
     private recentlyViewedRepository: RecentlyViewedRepository;
+    private resumeService: ResumeService;
 
-    public constructor(recentViewedRepository: RecentlyViewedRepository) {
+    public constructor(
+        recentViewedRepository: RecentlyViewedRepository,
+        resumeService: ResumeService,
+    ) {
         this.recentlyViewedRepository = recentViewedRepository;
+        this.resumeService = resumeService;
     }
 
     public async findAll(data: {
@@ -35,8 +42,26 @@ class RecentlyViewedService implements IRecentlyViewedService {
         userId: string;
         options: RecentlyViewedQuery;
     }): Promise<RecentlyViewedResumesResponseDto[]> {
-        return await this.recentlyViewedRepository.findRecentlyViewedResumesByUser(
-            data,
+        const recentlyViewedResumesByUser =
+            await this.recentlyViewedRepository.findRecentlyViewedResumesByUser(
+                data,
+            );
+
+        return Promise.all(
+            recentlyViewedResumesByUser.map(async (recentlyViewedResume) => {
+                const { resumes } = recentlyViewedResume;
+
+                if (resumes) {
+                    const { image } =
+                        await this.resumeService.getResumeWithImage(
+                            resumes as ResumeGetItemResponseDto,
+                        );
+
+                    resumes.image = image;
+                }
+
+                return recentlyViewedResume;
+            }),
         );
     }
 
