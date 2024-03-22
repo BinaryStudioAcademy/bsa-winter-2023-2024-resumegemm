@@ -5,5 +5,6 @@ export { CreateResumeButton } from './home-top-section/components/create-resume-
 export { Greeting } from './home-top-section/components/greeting/greeting';
 export { HomeTopSection } from './home-top-section/home-top-section';
 export { PanelContainer } from './panel-container/panel-container';
+export { RecentlyViewedResumes } from './recently-viewed-resumes/recently-viewed-resumes.js';
 export { ResumeSection } from './resume-section/resume-section';
 export { TemplateSection } from './template-section/template-section';
