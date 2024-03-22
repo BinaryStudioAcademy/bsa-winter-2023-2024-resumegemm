@@ -16,7 +16,8 @@
         "migrate:dev:make": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:make -x ts",
         "migrate:dev:down": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:down",
         "migrate:dev:rollback": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:rollback --all",
-        "build": "tsc && tsc-alias"
+        "copy-files": "copyfiles -u 1 src/**/*.pug build/src",
+        "build": "tsc && tsc-alias && npm run copy-files "
     },
     "devDependencies": {
         "@fastify/cors": "9.0.1",
@@ -26,6 +27,7 @@
         "@types/nodemailer": "6.4.14",
         "@types/pug": "2.0.10",
         "@types/swagger-jsdoc": "6.0.1",
+        "copyfiles": "2.4.1",
         "nodemon": "2.0.21",
         "ts-node": "10.9.1",
         "ts-paths-esm-loader": "1.4.1",
@@ -59,8 +61,8 @@
         "pg": "8.9.0",
         "pino": "8.8.0",
         "pino-pretty": "9.1.1",
-        "puppeteer": "22.1.0",
         "pug": "3.0.2",
+        "puppeteer": "22.1.0",
         "stripe": "14.17.0",
         "swagger-jsdoc": "6.2.8"
     }
