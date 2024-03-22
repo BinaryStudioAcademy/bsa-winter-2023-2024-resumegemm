@@ -16,7 +16,6 @@
         "migrate:dev:make": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:make -x ts",
         "migrate:dev:down": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:down",
         "migrate:dev:rollback": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:rollback --all",
-        "clean": "rimraf build/",
         "copy-files": "copyfiles -u 1 src/**/*.pug build/src",
         "build": "tsc && tsc-alias && npm run copy-files "
     },
@@ -30,7 +29,6 @@
         "@types/swagger-jsdoc": "6.0.1",
         "copyfiles": "2.4.1",
         "nodemon": "2.0.21",
-        "rimraf": "5.0.5",
         "ts-node": "10.9.1",
         "ts-paths-esm-loader": "1.4.1",
         "tsconfig-paths": "3.12.0"
