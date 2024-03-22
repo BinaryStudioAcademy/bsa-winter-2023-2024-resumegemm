@@ -79,7 +79,6 @@ class AuthService implements TAuthService {
             passwordSalt,
             passwordHash,
         });
-
         return await this.getUserAfterSendEmail(email, id);
     }
 
@@ -87,38 +86,52 @@ class AuthService implements TAuthService {
         email: string,
         id: string,
     ): Promise<UserSignUpResponseDto> {
-        const emailConfirmToken = generateEmailConfirmToken({ email });
-        await this.sendAfterSignUpEmail(email, emailConfirmToken);
+        try {
+            const emailConfirmToken = generateEmailConfirmToken({ email });
+            await this.sendAfterSignUpEmail(email, emailConfirmToken);
 
-        const user = await this.getUserWithProfile(id);
-        const token = generateToken({ id });
+            const user = await this.getUserWithProfile(id);
+            const token = generateToken({ id });
 
-        return {
-            user,
-            token,
-        };
+            return {
+                user,
+                token,
+            };
+        } catch (error: unknown) {
+            throw new HTTPError({
+                message: (error as Error).message,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+            });
+        }
     }
 
     private async sendAfterSignUpEmail(
         email: string,
         emailConfirmToken: string,
     ): Promise<void> {
-        const verificationLink = `${this.config.ENV.APP.ORIGIN_URL}/email-confirmation?token=${emailConfirmToken}`;
-        const emailMockup = getTemplate({
-            name: 'sign-up-email-template',
-            context: {
-                title: 'ResumeGemm',
-                dashboardLink: verificationLink,
-                logoLink: this.config.ENV.EMAIL.SMTP_LOGO,
-            },
-        });
+        try {
+            const verificationLink = `${this.config.ENV.APP.ORIGIN_URL}/email-confirmation?token=${emailConfirmToken}`;
+            const emailMockup = getTemplate({
+                name: 'sign-up-email-template',
+                context: {
+                    title: 'ResumeGemm',
+                    dashboardLink: verificationLink,
+                    logoLink: this.config.ENV.EMAIL.SMTP_LOGO,
+                },
+            });
 
-        await mailService.sendMail({
-            to: email,
-            subject: EmailConfirmMessages.SUCCESSFULLY_REGISTERED,
-            text: EmailConfirmMessages.SUCCESSFULLY_REGISTERED,
-            html: emailMockup,
-        });
+            await mailService.sendMail({
+                to: email,
+                subject: EmailConfirmMessages.SUCCESSFULLY_REGISTERED,
+                text: EmailConfirmMessages.SUCCESSFULLY_REGISTERED,
+                html: emailMockup,
+            });
+        } catch (error: unknown) {
+            throw new HTTPError({
+                message: (error as Error).message,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+            });
+        }
     }
 
     public async login({

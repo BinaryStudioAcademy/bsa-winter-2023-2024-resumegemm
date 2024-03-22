@@ -186,13 +186,12 @@ class ResumeController extends Controller {
 
     private async delete(
         options: ApiHandlerOptions<{ params: IdParameter }>,
-    ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto[]>> {
+    ): Promise<ApiHandlerResponse<null>> {
         const isDeleted = await this.resumeService.delete(options.params.id);
         if (isDeleted) {
-            const resumes = await this.resumeService.findAll();
             return {
                 status: HttpCode.OK,
-                payload: resumes,
+                payload: null,
             };
         }
         throw new HTTPError({
