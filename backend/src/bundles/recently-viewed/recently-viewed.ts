@@ -1,5 +1,6 @@
 import { logger } from '~/common/logger/logger.js';
 
+import { resumeService } from '../resumes/resumes.js';
 import { RecentlyViewedController } from './recently-viewed.controller.js';
 import { RecentlyViewedModel } from './recently-viewed.model.js';
 import { RecentlyViewedRepository } from './recently-viewed.repository.js';
@@ -11,6 +12,7 @@ const recentlyViewedRepository = new RecentlyViewedRepository(
 
 const recentlyViewedService = new RecentlyViewedService(
     recentlyViewedRepository,
+    resumeService,
 );
 
 const recentlyViewedController = new RecentlyViewedController(
