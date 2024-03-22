@@ -7,6 +7,7 @@ type HttpApiOptions = Omit<HttpOptions, 'headers' | 'payload'> & {
     contentType: ValueOf<typeof ContentType>;
     payload?: HttpOptions['payload'];
     withCredentials?: boolean;
+    query?: Record<string, unknown>;
 };
 
 export { type HttpApiOptions };

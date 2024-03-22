@@ -57,6 +57,7 @@ class HTTPApi implements IHttpApi {
             payload = null,
             hasAuth,
             withCredentials = false,
+            query,
         } = options;
 
         const headers = await this.getHeaders(contentType, hasAuth);
@@ -66,6 +67,7 @@ class HTTPApi implements IHttpApi {
             headers,
             payload,
             withCredentials,
+            query,
         });
 
         if (response.status === HttpCode.EXPIRED_TOKEN) {
@@ -76,6 +78,7 @@ class HTTPApi implements IHttpApi {
                     headers,
                     payload,
                     withCredentials,
+                    query,
                 },
             );
 
