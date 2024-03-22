@@ -359,10 +359,8 @@ const testTemplate: TemplateSettings = {
                             tagName: TemplateItemTags.PARAGRAPH,
                             content: 'University of Computer Science',
                             styles: {
-                                color: 'white',
-                                backgroundColor: 'black',
-                                fontWeight: 'bold',
-                                padding: '4px',
+                                color: 'black',
+                                fontSize: '15px',
                             },
                         },
                         {
@@ -382,7 +380,6 @@ const testTemplate: TemplateSettings = {
                                 'Beyond academics, the University of Computer Science fosters a vibrant campus community characterized by diversity, inclusion, and collaboration. Students have ample opportunities to engage in extracurricular activities, clubs, and events, enabling them to develop leadership skills',
                             styles: {
                                 fontWeight: 'bold',
-                                padding: '4px',
                             },
                         },
                     ],
