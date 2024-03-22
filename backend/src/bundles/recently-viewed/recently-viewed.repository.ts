@@ -1,7 +1,6 @@
 import { Guid as guid } from 'guid-typescript';
 
 import { RESUME_COUNT_INTERVAL } from './constants/resume-count-interval.js';
-import { getUniqueResumesViewedByUser } from './helpers/get-unique-resumes-viewed-by-user.js';
 import { type RecentlyViewedModel } from './recently-viewed.model.js';
 import {
     type getResumesViewedByUserQueryResult,
