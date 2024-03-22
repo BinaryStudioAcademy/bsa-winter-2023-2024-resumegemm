@@ -50,7 +50,7 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
         options: RecentlyViewedQuery;
     }): Promise<RecentlyViewedResumesResponseDto[]> {
         const { userId, options } = data;
-        const { limit, direction } = options;
+        const { limit, direction, name } = options;
         let query = this.recentlyViewedModel.query();
 
         if (direction) {
@@ -61,6 +61,11 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             .whereNotNull('resumeId')
             .where('userId', userId)
             .withGraphFetched('[resumes]')
+            .modifyGraph('resumes', (builder) => {
+                void builder.whereRaw('LOWER(resume_title) LIKE ?', [
+                    `%${name?.toLowerCase() ?? ''}%`,
+                ]);
+            })
             .limit(limit)) as getResumesViewedByUserQueryResult[];
     }
 
