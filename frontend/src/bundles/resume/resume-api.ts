@@ -26,17 +26,13 @@ class ResumeApi extends HttpApi {
     public async getAllResumes(
         query: FindAllOptions,
     ): Promise<ResumeGetAllResponseDto[]> {
-        const { name, direction } = query;
-
         const response = await this.load(
-            this.getFullEndpoint(
-                `${ResumesApiPath.ROOT}?name=${name}&direction=${direction}`,
-                {},
-            ),
+            this.getFullEndpoint(ResumesApiPath.ROOT, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: true,
+                query,
             },
         );
         return await response.json<ResumeGetAllResponseDto[]>();
