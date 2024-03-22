@@ -1,6 +1,7 @@
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { SearchParameters } from 'shared/build';
 
+import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import {
     useAppDispatch,
     useAppSelector,
@@ -41,11 +42,19 @@ const RecentlyViewedResumes: React.FC = () => {
                     .filter((recentlyViewed) => recentlyViewed.resumes)
                     .map((recentlyViewed) => {
                         return (
-                            <ResumeCard
+                            <Link
                                 key={recentlyViewed.id}
-                                title={recentlyViewed.resumes.resumeTitle ?? ''}
-                                image={recentlyViewed.resumes.image}
-                            />
+                                to={`${AppRoute.RESUME.replace(/:id/, '')}${
+                                    recentlyViewed.resumeId
+                                }`}
+                            >
+                                <ResumeCard
+                                    title={
+                                        recentlyViewed.resumes.resumeTitle ?? ''
+                                    }
+                                    image={recentlyViewed.resumes.image}
+                                />
+                            </Link>
                         );
                     })}
         </>
