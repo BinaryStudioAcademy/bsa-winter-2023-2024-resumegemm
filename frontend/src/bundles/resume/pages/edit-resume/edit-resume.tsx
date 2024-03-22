@@ -15,10 +15,22 @@ const EditResume: React.FC = () => {
     const handleTakeScreenshotOnResumeUpdate = useCallback((): Promise<
         string | null
     > => {
-        return takeScreenshot({
-            ref: resumeEditorReference,
-            convertOptions: { quality: 1, type: ContentType.IMAGE_JPEG },
-        });
+        const DELAY = 100;
+        return new Promise((resolve) =>
+            setTimeout(
+                () =>
+                    resolve(
+                        takeScreenshot({
+                            ref: resumeEditorReference,
+                            convertOptions: {
+                                quality: 1,
+                                type: ContentType.IMAGE_JPEG,
+                            },
+                        }),
+                    ),
+                DELAY,
+            ),
+        );
     }, [takeScreenshot]);
 
     return (

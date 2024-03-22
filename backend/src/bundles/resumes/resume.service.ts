@@ -70,9 +70,10 @@ class ResumeService implements IResumeService {
     }
 
     public async findAll(
+        userId?: string,
         options?: FindAllOptions,
     ): Promise<ResumeGetAllResponseDto[]> {
-        const resumes = await this.resumeRepository.findAll(options);
+        const resumes = await this.resumeRepository.findAll(userId, options);
         return Promise.all(
             resumes.map((resume) => this.getResumeWithImage(resume)),
         );

@@ -179,7 +179,14 @@ const updateCurrentResume = createAsyncThunk<
             value,
         );
         return resumeApi.updateResume(
-            { ...updatedResumeData, resume: { image } },
+            {
+                ...updatedResumeData,
+                resume: {
+                    image,
+                    resumeTitle:
+                        updatedResumeData.personalInformation?.profession,
+                },
+            },
             restResumeProperties.id,
         );
     },
