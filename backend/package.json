@@ -16,7 +16,8 @@
         "migrate:dev:make": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:make -x ts",
         "migrate:dev:down": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:down",
         "migrate:dev:rollback": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:rollback --all",
-        "build": "tsc && tsc-alias"
+        "build": "tsc && tsc-alias && npm run compile:pug",
+        "compile:pug": "cd src/templates && pug sign-up-email-template.pug --out ../../build/src/templates"
     },
     "devDependencies": {
         "@fastify/cors": "9.0.1",
