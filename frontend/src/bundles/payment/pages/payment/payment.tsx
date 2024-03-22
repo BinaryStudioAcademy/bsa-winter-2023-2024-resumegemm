@@ -6,9 +6,16 @@ import Logo from '~/assets/img/logo.svg?react';
 import {
     Icon,
     IconButton,
+    Spinner,
     Stepper,
 } from '~/bundles/common/components/components';
-import { AppRoute, IconName, IconSize } from '~/bundles/common/enums/enums';
+import {
+    AppRoute,
+    DataStatus,
+    IconName,
+    IconSize,
+    SpinnerVariant,
+} from '~/bundles/common/enums/enums';
 import {
     useAppDispatch,
     useAppSelector,
@@ -40,8 +47,9 @@ const Payment: React.FC = () => {
     const stripe = useStripe();
     const navigate = useNavigate();
 
-    const { prices } = useAppSelector(({ payment }) => ({
+    const { prices, dataStatus } = useAppSelector(({ payment }) => ({
         prices: payment.prices,
+        dataStatus: payment.dataStatus,
     }));
 
     const { startDate, endDate } = useAppSelector(({ subscription }) => ({
@@ -62,10 +70,6 @@ const Payment: React.FC = () => {
         void dispatch(SubscriptionActionCreator.getById());
     }, [dispatch]);
 
-    const handleClose = useCallback(() => {
-        navigate(AppRoute.HOME);
-    }, [navigate]);
-
     const handleNameChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
             setName(event.currentTarget.value);
@@ -83,6 +87,10 @@ const Payment: React.FC = () => {
     const handleChangeActiveStep = useCallback(() => {
         setActiveStep((activeStep) => activeStep + 1);
     }, []);
+
+    const handleClose = useCallback(() => {
+        navigate(AppRoute.HOME);
+    }, [navigate]);
 
     const handlePriceChange = useCallback(
         (id: string) => {
@@ -192,11 +200,17 @@ const Payment: React.FC = () => {
     return (
         <div className={styles.payment_page}>
             <div className={styles.payment_page__head}>
+                <Link to={AppRoute.HOME}>
+                    <Logo className={styles.payment_page__logo} />
+                </Link>
                 <Stepper
                     className={styles.payment_page__stepper}
                     steps={steps}
                     activeStep={activeStep}
                 />
+                <IconButton onClick={handleClose}>
+                    <Icon name={IconName.CLOSE_CROSS} size={IconSize.LARGE} />
+                </IconButton>
             </div>
 
             {activeStep === steps[0].order && (
@@ -211,11 +225,18 @@ const Payment: React.FC = () => {
                             instant access to our Premium Templates and Color
                             Palette.
                         </div>
-                        <SubscriptionPlans
-                            priceId={priceId}
-                            prices={prices}
-                            onSelectPrice={handlePriceChange}
-                        />
+                        {dataStatus === DataStatus.PENDING && (
+                            <div className={styles.payment_page__spinner}>
+                                <Spinner variant={SpinnerVariant.MEDIUM} />
+                            </div>
+                        )}
+                        {dataStatus === DataStatus.FULFILLED && (
+                            <SubscriptionPlans
+                                priceId={priceId}
+                                prices={prices}
+                                onSelectPrice={handlePriceChange}
+                            />
+                        )}
                     </div>
                 </div>
             )}

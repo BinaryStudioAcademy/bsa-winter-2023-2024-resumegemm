@@ -8,6 +8,7 @@ const NoHeaderRoutes = [
     AppRoute.EMAIL_CONFIRMATION,
     AppRoute.EMAIL_CONFIRMATION_FAIL,
     AppRoute.EMAIL_CONFIRMATION_SUCCESS,
+    AppRoute.PAYMENT,
 ];
 
 export { NoHeaderRoutes };

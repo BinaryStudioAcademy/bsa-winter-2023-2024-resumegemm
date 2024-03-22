@@ -84,6 +84,7 @@ class ResumeRepository implements IResumeRepository {
     }
 
     public async findAll(
+        userId: string | undefined,
         options?: FindAllOptions,
     ): Promise<ResumeGetAllResponseDto[]> {
         let query = this.resumeModel.query();
@@ -100,7 +101,11 @@ class ResumeRepository implements IResumeRepository {
             ]);
         }
 
-        return await query
+        if (userId) {
+            query = query.where('user_id', userId);
+        }
+
+        return query
             .withGraphFetched(resumeGraphFetchRelations)
             .returning('*')
             .castTo<ResumeGetAllResponseDto[]>();
