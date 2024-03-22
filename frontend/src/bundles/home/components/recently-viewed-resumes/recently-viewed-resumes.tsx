@@ -1,3 +1,6 @@
+import { useSearchParams } from 'react-router-dom';
+import { SearchParameters } from 'shared/build';
+
 import {
     useAppDispatch,
     useAppSelector,
@@ -9,13 +12,23 @@ import { actions as recentlyViewedActionCreator } from '~/bundles/recently-viewe
 
 const RecentlyViewedResumes: React.FC = () => {
     const dispatch = useAppDispatch();
+    const [searchParameters] = useSearchParams();
+
+    const recentlyViewedResumeName =
+        searchParameters.get(SearchParameters.RECENTLY_VIEWED_RESUME_NAME) ??
+        '';
+
     const { recentlyViewedResumes } = useAppSelector(({ recentlyViewed }) => ({
         recentlyViewedResumes: recentlyViewed.recentlyViewedResumes,
     }));
 
     const loadRecentlyViewedResumes = useCallback(() => {
-        void dispatch(recentlyViewedActionCreator.getRecentlyViewedResumes());
-    }, [dispatch]);
+        void dispatch(
+            recentlyViewedActionCreator.getRecentlyViewedResumes({
+                name: recentlyViewedResumeName,
+            }),
+        );
+    }, [dispatch, recentlyViewedResumeName]);
 
     useEffect(() => {
         loadRecentlyViewedResumes();
@@ -24,15 +37,17 @@ const RecentlyViewedResumes: React.FC = () => {
     return (
         <>
             {recentlyViewedResumes.length > 0 &&
-                recentlyViewedResumes.map((recentlyViewed) => {
-                    return (
-                        <ResumeCard
-                            key={recentlyViewed.id}
-                            title={recentlyViewed.resumes.resumeTitle ?? ''}
-                            image={recentlyViewed.resumes.image}
-                        />
-                    );
-                })}
+                recentlyViewedResumes
+                    .filter((recentlyViewed) => recentlyViewed.resumes)
+                    .map((recentlyViewed) => {
+                        return (
+                            <ResumeCard
+                                key={recentlyViewed.id}
+                                title={recentlyViewed.resumes.resumeTitle ?? ''}
+                                image={recentlyViewed.resumes.image}
+                            />
+                        );
+                    })}
         </>
     );
 };
