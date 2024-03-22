@@ -16,8 +16,7 @@ const prettifiedTemplate: TemplateSettings = {
                             id: 'avatar',
                             name: 'Avatar',
                             tagName: TemplateItemTags.IMAGE,
-                            content:
-                                'https://i.pinimg.com/564x/29/55/59/295559e87b67fde4bbd5d5049d67e678.jpg',
+                            content: 'https://i.imgur.com/kZypAmC.png',
                             styles: {
                                 width: '65px',
                                 height: '65px',
@@ -99,6 +98,7 @@ const prettifiedTemplate: TemplateSettings = {
                         flexDirection: 'column',
                         width: '100%',
                         position: 'relative',
+                        padding: '15px',
                     },
                     enabled: true,
                 },
@@ -184,7 +184,8 @@ const prettifiedTemplate: TemplateSettings = {
                     styles: {
                         flex: '0 25%',
                         height: 'fit-content',
-                        margin: '1rem 0',
+                        margin: '0 0',
+                        padding: '15px',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-around',
@@ -249,7 +250,8 @@ const prettifiedTemplate: TemplateSettings = {
                     ],
                     styles: {
                         flex: '1',
-                        margin: '1rem 0',
+                        margin: '0 0',
+                        padding: '15px',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-around',
@@ -259,7 +261,7 @@ const prettifiedTemplate: TemplateSettings = {
             ],
             styles: {
                 display: 'flex',
-                gap: '10px',
+                gap: '0px',
             },
         },
         {
@@ -299,7 +301,8 @@ const prettifiedTemplate: TemplateSettings = {
                     ],
                     styles: {
                         marginRight: 'auto',
-                        marginTop: '5px',
+                        marginTop: '0px',
+                        padding: '15px',
                     },
                     enabled: true,
                 },
@@ -349,7 +352,8 @@ const prettifiedTemplate: TemplateSettings = {
                     ],
                     styles: {
                         marginRight: 'auto',
-                        marginTop: '5px',
+                        marginTop: '0px',
+                        padding: '15px',
                     },
                     enabled: true,
                 },
@@ -402,14 +406,15 @@ const prettifiedTemplate: TemplateSettings = {
                         display: 'flex',
                         flexDirection: 'column',
                         margin: 'auto',
-                        marginTop: '0.4rem',
+                        marginTop: '0',
+                        padding: '15px',
                     },
                     enabled: true,
                 },
             ],
             styles: {
                 display: 'flex',
-                gap: '10px',
+                gap: '0px',
                 borderTop: '2px solid #c7cacf',
                 alignItems: 'baseline',
             },

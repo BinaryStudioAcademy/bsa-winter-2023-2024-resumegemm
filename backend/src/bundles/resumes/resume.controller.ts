@@ -52,7 +52,10 @@ class ResumeController extends Controller {
             method: 'GET',
             handler: (options) =>
                 this.findAll(
-                    options as ApiHandlerOptions<{ query: FindAllOptions }>,
+                    options as ApiHandlerOptions<{
+                        query: FindAllOptions;
+                        user: UserAuthResponse['user'];
+                    }>,
                 ),
         });
 
@@ -129,9 +132,13 @@ class ResumeController extends Controller {
     }
 
     private async findAll(
-        options: ApiHandlerOptions<{ query: FindAllOptions }>,
+        options: ApiHandlerOptions<{
+            query: FindAllOptions;
+            user: UserAuthResponse['user'];
+        }>,
     ): Promise<ApiHandlerResponse<ResumeGetAllResponseDto[]>> {
-        const resumes = await this.resumeService.findAll(options.query);
+        const userId = options.user.id;
+        const resumes = await this.resumeService.findAll(userId, options.query);
 
         return {
             status: HttpCode.OK,

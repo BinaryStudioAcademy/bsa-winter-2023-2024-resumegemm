@@ -5,8 +5,6 @@ import {
     useLocation,
     useNavigate,
 } from '~/bundles/common/hooks/hooks.js';
-import { ToastType } from '~/bundles/toast/enums/show-toast-types.enum.js';
-import { showToast } from '~/bundles/toast/helpers/show-toast.js';
 import { type UserSignInRequestDto } from '~/bundles/users/users.js';
 
 import { Logo, SignInForm, SignUpForm } from '../components/components.js';
@@ -30,8 +28,6 @@ const Auth: React.FC = () => {
                 .catch((error: Error) => {
                     if (error.message === ExceptionMessage.EMAIL_CONFIRM) {
                         navigate(AppRoute.CHECK_EMAIL);
-                    } else {
-                        showToast(error.message, ToastType.ERROR);
                     }
                 });
         },
@@ -45,11 +41,6 @@ const Auth: React.FC = () => {
                 .unwrap()
                 .then(() => {
                     navigate(AppRoute.CHECK_EMAIL);
-                })
-                .catch((error: Error) => {
-                    showToast(error.message, ToastType.ERROR, {
-                        position: 'top-right',
-                    });
                 });
         },
         [dispatch, navigate],

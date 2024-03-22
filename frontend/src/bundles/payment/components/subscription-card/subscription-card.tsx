@@ -71,6 +71,7 @@ const SubscriptionCard: React.FC<Properties> = ({
                                     price *
                                     DeletedPrices.DISCOUNT_FOR_PREMIUM_PLAN
                                 ).toFixed(2)}
+                            {currency}
                         </h4>
                     </>
                 )}

@@ -17,7 +17,10 @@ interface IResumeService {
         id: string,
     ): Promise<ResumeWithRelationsAndTemplateResponseDto | null>;
 
-    findAll(options?: FindAllOptions): Promise<ResumeGetItemResponseDto[]>;
+    findAll(
+        userId?: string,
+        options?: FindAllOptions,
+    ): Promise<ResumeGetItemResponseDto[]>;
 
     findAllByUserId(userId: string): Promise<ResumeGetItemResponseDto[]>;
 

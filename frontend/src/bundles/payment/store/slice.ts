@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
+
 import { type GetPriceResponseDto } from '../types/types.js';
 import { createSubscription, getPrices, getPublishableKey } from './actions.js';
 
@@ -8,6 +10,7 @@ type State = {
     clientSecret: string | null;
     subscriptionId: string | null;
     prices: GetPriceResponseDto[];
+    dataStatus: DataStatus;
 };
 
 const initialState: State = {
@@ -15,6 +18,7 @@ const initialState: State = {
     clientSecret: null,
     subscriptionId: null,
     prices: [],
+    dataStatus: DataStatus.IDLE,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -40,9 +44,14 @@ const { reducer, actions, name } = createSlice({
 
         builder.addCase(getPrices.fulfilled, (state, action) => {
             state.prices = action.payload.prices;
+            state.dataStatus = DataStatus.FULFILLED;
+        });
+        builder.addCase(getPrices.pending, (state, action) => {
+            state.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(getPrices.rejected, (state) => {
             state.prices = [];
+            state.dataStatus = DataStatus.REJECTED;
         });
     },
 });
