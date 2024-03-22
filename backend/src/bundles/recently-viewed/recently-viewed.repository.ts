@@ -130,6 +130,17 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             count: +item.count,
         }));
     }
+
+    public async findRecentlyViewedByResumeId(
+        userId: string,
+        resumeId: string,
+    ): Promise<RecentlyViewedResponseDto | null> {
+        return (
+            (await this.recentlyViewedModel
+                .query()
+                .findOne({ userId, resumeId })) ?? null
+        );
+    }
 }
 
 export { RecentlyViewedRepository };

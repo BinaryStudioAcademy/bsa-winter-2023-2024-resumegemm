@@ -16,6 +16,7 @@ import { HttpCode } from '~/common/http/http.js';
 import { type ILogger } from '~/common/logger/logger.js';
 import { type FindAllOptions } from '~/common/types/types.js';
 
+import { recentlyViewedService } from '../recently-viewed/recently-viewed.js';
 import { type IResumeService } from './interfaces/resume-service.interface.js';
 import {
     type ResumeAiScoreRequestDto,
@@ -64,7 +65,10 @@ class ResumeController extends Controller {
             method: 'GET',
             handler: (options) =>
                 this.findByIdWithRelations(
-                    options as ApiHandlerOptions<{ params: IdParameter }>,
+                    options as ApiHandlerOptions<{
+                        params: IdParameter;
+                        user: UserAuthResponse['user'];
+                    }>,
                 ),
         });
         this.addRoute({
@@ -147,12 +151,22 @@ class ResumeController extends Controller {
     }
 
     private async findByIdWithRelations(
-        options: ApiHandlerOptions<{ params: IdParameter }>,
+        options: ApiHandlerOptions<{
+            params: IdParameter;
+            user: UserAuthResponse['user'];
+        }>,
     ): Promise<
         ApiHandlerResponse<ResumeWithRelationsAndTemplateResponseDto | null>
     > {
         try {
             const resume = await this.resumeService.findById(options.params.id);
+
+            if (resume) {
+                await recentlyViewedService.create(options.user.id, {
+                    resumeId: resume.id,
+                    templateId: resume.templateId,
+                });
+            }
             return {
                 status: HttpCode.OK,
                 payload: resume,
