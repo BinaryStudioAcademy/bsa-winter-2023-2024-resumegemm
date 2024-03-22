@@ -287,7 +287,11 @@ class AuthController extends Controller {
                 payload: userData,
             };
         } catch (error: unknown) {
-            const { message, status, errorType } = error as AuthException;
+            const {
+                message,
+                status = HttpCode.INTERNAL_SERVER_ERROR,
+                errorType,
+            } = error as AuthException;
             return {
                 status,
                 payload: {
