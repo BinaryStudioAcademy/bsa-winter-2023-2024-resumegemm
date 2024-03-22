@@ -14,6 +14,7 @@ import { RecentlyViewedApiPath } from './enums/enums.js';
 import { type RecentlyViewedService } from './recently-viewed.service';
 import {
     type IRecentlyViewedController,
+    type RecentlyViewedQuery,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesResponseDto,
@@ -47,7 +48,7 @@ class RecentlyViewedController
                 this.findRecentlyViewedResumes(
                     options as ApiHandlerOptions<{
                         user: User;
-                        query: { limit: number };
+                        query: RecentlyViewedQuery;
                     }>,
                 ),
         });
@@ -117,17 +118,17 @@ class RecentlyViewedController
     public async findRecentlyViewedResumes(
         options: ApiHandlerOptions<{
             user: User;
-            query: { limit: number };
+            query: RecentlyViewedQuery;
         }>,
     ): Promise<ApiHandlerResponse<RecentlyViewedResumesResponseDto[]>> {
         try {
-            const limit = options.query.limit;
-            const userId = options.user.id;
+            const { query, user } = options;
+            const { id: userId } = user;
             const recentlyViewedResumes =
                 await this.recentlyViewedService.findRecentlyViewedResumesByUser(
                     {
                         userId,
-                        limit,
+                        options: query,
                     },
                 );
 

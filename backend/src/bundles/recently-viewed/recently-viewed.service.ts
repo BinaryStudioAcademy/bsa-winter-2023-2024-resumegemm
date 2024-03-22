@@ -1,6 +1,7 @@
 import { type RecentlyViewedRepository } from './recently-viewed.repository';
 import {
     type IRecentlyViewedService,
+    type RecentlyViewedQuery,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesResponseDto,
@@ -32,7 +33,7 @@ class RecentlyViewedService implements IRecentlyViewedService {
 
     public async findRecentlyViewedResumesByUser(data: {
         userId: string;
-        limit: number;
+        options: RecentlyViewedQuery;
     }): Promise<RecentlyViewedResumesResponseDto[]> {
         return await this.recentlyViewedRepository.findRecentlyViewedResumesByUser(
             data,

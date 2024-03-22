@@ -15,10 +15,12 @@ import {
     CreateResumeButton,
     Greeting,
     HomeTopSection,
+    RecentlyViewedResumes,
     ResumeCard,
     ResumeSection,
     TemplateSection,
 } from '~/bundles/home/components/components';
+import { getRecentlyViewedResumes } from '~/bundles/recently-viewed/store/actions';
 import { actions as resumeActions } from '~/bundles/resume/store/resume.store';
 import {
     deleteTemplate,
@@ -69,9 +71,13 @@ const Home: React.FC = () => {
         [dispatch],
     );
 
-    const handleRecentlyViewedSort = useCallback(() => {
-        // TODO: add after adding recently viewed resumes
-    }, []);
+    const handleRecentlyViewedSort = useCallback(
+        (sortMethod: SortDirection) => {
+            const direction = sortMethod ?? undefined;
+            void dispatch(getRecentlyViewedResumes({ direction }));
+        },
+        [dispatch],
+    );
 
     const handleTemplateDelete = useCallback(
         (id: string) => {
@@ -92,11 +98,7 @@ const Home: React.FC = () => {
                 onHandleSearch={handleRecentlyViewedResumeSearch}
                 defaultSearchValue={recentlyViewedResumeName}
             >
-                <ResumeCard
-                    title="My Resume"
-                    subtitle="Updated - Jan 25"
-                    image={mockResume}
-                />
+                <RecentlyViewedResumes />
                 <CreateNewCard />
             </ResumeSection>
             <ResumeSection
