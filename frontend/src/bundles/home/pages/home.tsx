@@ -1,7 +1,6 @@
 import { Link, NavLink, useSearchParams } from 'react-router-dom';
 import { type SortDirection, SearchParameters } from 'shared/build/index.js';
 
-import mockResume from '~/assets/img/mock-resume.png';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum';
 import {
     useAppDispatch,
