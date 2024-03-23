@@ -1,4 +1,5 @@
 import {
+    type RecentlyViewedQuery,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesWithCount,
@@ -11,7 +12,7 @@ interface IRecentlyViewedRepository {
 
     findRecentlyViewedResumesByUser(data: {
         userId: string;
-        limit: number;
+        options: RecentlyViewedQuery;
     }): Promise<RecentlyViewedResponseDto[]>;
 
     findRecentlyViewedTemplatesByUser(data: {

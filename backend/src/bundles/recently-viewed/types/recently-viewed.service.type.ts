@@ -1,4 +1,5 @@
 import {
+    type RecentlyViewedQuery,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesWithCount,
@@ -14,7 +15,7 @@ interface IRecentlyViewedService {
 
     findRecentlyViewedResumesByUser(data: {
         userId: string;
-        limit: number;
+        options: RecentlyViewedQuery;
     }): Promise<RecentlyViewedResponseDto[] | null>;
 
     create(

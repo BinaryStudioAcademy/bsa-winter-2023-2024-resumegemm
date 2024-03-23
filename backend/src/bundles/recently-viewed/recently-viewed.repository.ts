@@ -3,7 +3,9 @@ import { Guid as guid } from 'guid-typescript';
 import { RESUME_COUNT_INTERVAL } from './constants/resume-count-interval.js';
 import { type RecentlyViewedModel } from './recently-viewed.model.js';
 import {
+    type getResumesViewedByUserQueryResult,
     type IRecentlyViewedRepository,
+    type RecentlyViewedQuery,
     type RecentlyViewedRequestDto,
     type RecentlyViewedResponseDto,
     type RecentlyViewedResumesQueryResult,
@@ -11,6 +13,8 @@ import {
     type RecentlyViewedResumesWithCount,
     type RecentlyViewedTemplatesResponseDto,
 } from './types/types';
+
+const SORTING_FIELD = 'viewed_at';
 
 class RecentlyViewedRepository implements IRecentlyViewedRepository {
     private recentlyViewedModel: typeof RecentlyViewedModel;
@@ -42,17 +46,26 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
 
     public async findRecentlyViewedResumesByUser(data: {
         userId: string;
-        limit: number;
+        options: RecentlyViewedQuery;
     }): Promise<RecentlyViewedResumesResponseDto[]> {
-        const { limit, userId } = data;
+        const { userId, options } = data;
+        const { limit, direction, name } = options;
+        let query = this.recentlyViewedModel.query();
 
-        return await this.recentlyViewedModel
-            .query()
+        if (direction) {
+            query = query.orderBy(SORTING_FIELD, direction);
+        }
+
+        return (await query
             .whereNotNull('resumeId')
             .where('userId', userId)
             .withGraphFetched('[resumes]')
-            .orderBy('viewedAt', 'desc')
-            .limit(limit);
+            .modifyGraph('resumes', (builder) => {
+                void builder.whereRaw('LOWER(resume_title) LIKE ?', [
+                    `%${name?.toLowerCase() ?? ''}%`,
+                ]);
+            })
+            .limit(limit)) as getResumesViewedByUserQueryResult[];
     }
 
     public async findRecentlyViewedTemplatesByUser(data: {
@@ -120,6 +133,17 @@ class RecentlyViewedRepository implements IRecentlyViewedRepository {
             userId: item.resumes.userId,
             count: +item.count,
         }));
+    }
+
+    public async findRecentlyViewedByResumeId(
+        userId: string,
+        resumeId: string,
+    ): Promise<RecentlyViewedResponseDto | null> {
+        return (
+            (await this.recentlyViewedModel
+                .query()
+                .findOne({ userId, resumeId })) ?? null
+        );
     }
 }
 
