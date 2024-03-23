@@ -90,38 +90,16 @@ class TemplateApi extends HttpApi {
         options: FindAllOptions,
     ): Promise<TemplateGetAllResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(
-                this.getFindAllEndpoint(TemplatesApiPath.ROOT, options),
-                {},
-            ),
+            this.getFullEndpoint(TemplatesApiPath.ROOT, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: true,
+                query: options,
             },
         );
 
         return await response.json<TemplateGetAllResponseDto>();
-    }
-
-    //TODO this is stub since there is no time to handle this problem properly please ignore it
-    private getFindAllEndpoint(
-        baseUrl: string,
-        parameters: FindAllOptions,
-    ): string {
-        let endpoint = baseUrl;
-
-        if (parameters.name) {
-            endpoint += `?name=${parameters.name}`;
-        }
-
-        if (parameters.direction) {
-            endpoint += `${parameters.name ? '&' : '?'}direction=${
-                parameters.direction
-            }`;
-        }
-
-        return endpoint;
     }
 }
 

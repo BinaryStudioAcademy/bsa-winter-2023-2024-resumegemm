@@ -5,6 +5,7 @@ type HttpOptions = {
     payload: BodyInit | null;
     headers: Headers;
     withCredentials?: boolean;
+    query?: Record<string, string>;
 };
 
 export { type HttpOptions };
