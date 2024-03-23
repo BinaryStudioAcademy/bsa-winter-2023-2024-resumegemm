@@ -50,9 +50,10 @@ const RecentlyViewedResumes: React.FC = () => {
                             >
                                 <ResumeCard
                                     title={
-                                        recentlyViewed.resumes.resumeTitle ?? ''
+                                        recentlyViewed.resumes?.resumeTitle ??
+                                        ''
                                     }
-                                    image={recentlyViewed.resumes.image}
+                                    image={recentlyViewed.resumes?.image ?? ''}
                                 />
                             </Link>
                         );
